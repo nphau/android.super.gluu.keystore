@@ -1,0 +1,63 @@
+/* 
+  Localizable.strings
+  oxPush2-IOS
+
+  Created by Nazar Yavornytskyy on 2/2/16.
+  Copyright © 2016 Nazar Yavornytskyy. All rights reserved.
+*/
+
+"AppName" = "oxPush2-ios";
+
+"OneStep" = "1 step: ";
+"TwoStep" = "2 step: ";
+
+"OneStepMode" = "One step";
+"TwoStepMode" = "Two step";
+
+"ScanButtonTitle" = "QR-Code scannen";
+
+//AlertView
+"AlertTitle" = "Info";
+"AlertTitleSuccess" = "Erfolg";
+"AlertTitleFailed" = "Gescheitert";
+"AlertMessageNoQRScanning" = "Ihr Gerät unterstützt nicht QR-Scanning";
+"WrongQRImage" = "Scheint ihnen szene falsch QR Code Bild!";
+"OK" = "OK";
+"Cancel" = "Stornieren";
+"Approve" = "Approve";
+"Decline" = "Decline";
+
+"QRCodeScanning" = "QR Code Scanning...";
+"QRCodeCalceled" = "QR Scannen abgebrochen!";
+
+"UnsupportedU2FV2Version" = "Nicht unterstützte U2F_V2 Version!";
+
+//Statuses
+"StartAuthentication" = "Beglaubigung...";
+"SuccessAuthentication" = "Herzlichen glückwunsch , sie haben erfolgreich authentifiziert!";
+"FailedAuthentication" = "Fehlgeschlagen, authentifizierung!";
+"SuccessEnrollment" = "Herzlichen glückwunsch , sie haben erfolg registrieren!";
+"FailedEnrollment" = "Fehlgeschlagen registrieren!";
+
+"AvailableKeyHandles" = "Erhältlich Schlüsselgriffe";
+
+"Delete" = "Delete";
+"YES" = "YES";
+"NO" = "NO";
+
+"keyHandleFor" = "keyHandle for";
+
+"ChangeKeyHandleName" = "Do you want to change keyHandle display name?";
+"RenameKeyNameInfo" = "To change name of key hold down on name for 3 seconds";
+
+"FailedKeyHandle" = "Failed keyHandles, please try again to generate new one";
+
+"PushTimeOver" = "Timeover for push notification authentication";
+
+"ClearLogs" = "Do you want to clear logs?";
+
+"ApproveDeclineTitle" = "To continue press %@, to stop %@";
+
+
+
+
