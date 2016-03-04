@@ -28,7 +28,6 @@
     NSString* issuer = [parameters objectForKey:@"issuer"];
     NSString* username = [parameters objectForKey:@"username"];
     oneStep = username == nil ? YES : NO;
-    
     if (app != nil && state != nil && created != nil && issuer != nil){
         OxPush2Request* oxRequest = [[OxPush2Request alloc] initWithName:username app:app issuer:issuer state:state method:@"GET" created:created];
         NSMutableDictionary* parameters = [[NSMutableDictionary alloc] init];

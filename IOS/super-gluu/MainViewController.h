@@ -9,28 +9,21 @@
 #import <UIKit/UIKit.h>
 #import "QRCodeReaderDelegate.h"
 #import "TJSpinner.h"
+#import "ApproveDenyViewController.h"
 #import "UserLoginInfo.h"
+#import "LecenseAgreementDelegate.h"
 
-@interface MainViewController : UIViewController <QRCodeReaderDelegate>{
-
-    IBOutlet UILabel* titleLabel;
+@interface MainViewController : UIViewController <QRCodeReaderDelegate, LicenseAgreementDelegate>{
     
     IBOutlet UIButton* scanButton;
     IBOutlet UIButton* infoButton;
     IBOutlet UILabel* statusLabel;
     IBOutlet UIView* statusView;
     
-    IBOutlet UIView* userInfoView;
-    IBOutlet UILabel* userNameLabel;
-    IBOutlet UILabel* userApplicationLabel;
-    IBOutlet UILabel* userIssuerLabel;
-    IBOutlet UILabel* userCreatedLabel;
-    IBOutlet UILabel* userAuthencicationModeLabel;
-    IBOutlet UILabel* userAuthencicationTypeLabel;
+    IBOutlet UILabel* welcomeLabel;
+    IBOutlet UILabel* scanTextLabel;
     
-    IBOutlet UIView* hiddenView;
-    IBOutlet UIButton* approveButton;
-    IBOutlet UIButton* declineButton;
+    IBOutlet UIView* contentView;
     
     TJSpinner *circularSpinner;
 

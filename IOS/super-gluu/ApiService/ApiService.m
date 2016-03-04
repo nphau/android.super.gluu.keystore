@@ -44,11 +44,12 @@
 }
 
 -(void)callGETAPIService:(NSString*)url andParameters:(NSDictionary*)parameters andCallback:(RequestCompletionHandler)handler{
-    
+    NSLog(@"WE'RE THERE 2");
     AFHTTPRequestOperationManager *manager = [self getAFHTTPRequestManager];
     
     [manager GET:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
+        NSLog(@"WE'RE THERE 3");
         handler(responseObject ,nil);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);

@@ -6,8 +6,9 @@
 //  Copyright © 2016 Gluu. All rights reserved.
 //
 
-#ifndef LecenseAgreementDelegate_h
-#define LecenseAgreementDelegate_h
+@protocol LicenseAgreementDelegate
 
+-(void)approveRequest;
+-(void)denyRequest;
 
-#endif /* LecenseAgreementDelegate_h */
+@end

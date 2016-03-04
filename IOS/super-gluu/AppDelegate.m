@@ -9,6 +9,11 @@
 #import "AppDelegate.h"
 #import "TokenDevice.h"
 #import "Constants.h"
+#import "OXPushManager.h"
+
+NSString * const NotificationCategoryIdent  = @"ACTIONABLE";
+NSString * const NotificationActionOneIdent = @"ACTION_DENY";
+NSString * const NotificationActionTwoIdent = @"ACTION_APPROVE";
 
 @interface AppDelegate ()
 
@@ -25,6 +30,7 @@
         [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
         [[UIApplication sharedApplication] registerForRemoteNotifications];
     }
+    [self registerForNotification];
 //    else {//for ios 7
 //        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
 //    }
@@ -33,6 +39,42 @@
 }
 
 #pragma Push Notification
+
+- (void)registerForNotification {
+    
+    UIMutableUserNotificationAction *action1;
+    action1 = [[UIMutableUserNotificationAction alloc] init];
+    [action1 setActivationMode:UIUserNotificationActivationModeForeground];
+    [action1 setTitle:NSLocalizedString(@"Approve", @"Approve")];
+    [action1 setIdentifier:NotificationActionOneIdent];
+    [action1 setDestructive:NO];
+    [action1 setAuthenticationRequired:NO];
+    
+    UIMutableUserNotificationAction *action2;
+    action2 = [[UIMutableUserNotificationAction alloc] init];
+    [action2 setActivationMode:UIUserNotificationActivationModeBackground];
+    [action2 setTitle:NSLocalizedString(@"Deny", @"Deny")];
+    [action2 setIdentifier:NotificationActionTwoIdent];
+    [action2 setDestructive:YES];
+    [action2 setAuthenticationRequired:NO];
+    
+    UIMutableUserNotificationCategory *actionCategory;
+    actionCategory = [[UIMutableUserNotificationCategory alloc] init];
+    [actionCategory setIdentifier:NotificationCategoryIdent];
+    [actionCategory setActions:@[action1, action2]
+                    forContext:UIUserNotificationActionContextDefault];
+    
+    NSSet *categories = [NSSet setWithObject:actionCategory];
+    UIUserNotificationType types = (UIUserNotificationTypeAlert|
+                                    UIUserNotificationTypeSound|
+                                    UIUserNotificationTypeBadge);
+    
+    UIUserNotificationSettings *settings;
+    settings = [UIUserNotificationSettings settingsForTypes:types
+                                                 categories:categories];
+    
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+}
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken  {
     NSString* token = [NSString stringWithFormat:@"%@", deviceToken];
@@ -57,6 +99,25 @@
     NSLog(@"Received notification: %@", userInfo);
 }
 
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler {
+    
+    if ([identifier isEqualToString:NotificationActionOneIdent]) {
+        
+        NSLog(@"You chose action Approve.");
+        pushNotificationRequest = userInfo;
+    }
+    else if ([identifier isEqualToString:NotificationActionTwoIdent]) {
+        
+        NSLog(@"You chose action Deny.");
+        pushNotificationRequest = nil;
+    }
+    if (completionHandler) {
+        
+        completionHandler();
+    }
+    [self sendQRReuest:YES];
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -73,16 +134,37 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     NSLog(@"APP STARTING.....");
+    [self sendQRReuest:NO];
+    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+}
+
+-(void)sendQRReuest:(BOOL)isAction{
     if (pushNotificationRequest != nil) {
+        NSData *data;
         NSString* requestString = [pushNotificationRequest objectForKey:@"request"];
-        NSData *data = [requestString dataUsingEncoding:NSUTF8StringEncoding];
+        if ([requestString isKindOfClass:[NSDictionary class]]){
+            data = [NSJSONSerialization dataWithJSONObject:requestString options:NSJSONWritingPrettyPrinted error:nil];
+        } else {
+            data = [requestString dataUsingEncoding:NSUTF8StringEncoding];
+        }
         NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-        if (jsonDictionary != nil && [self isTimeOver:jsonDictionary]){
+        if (jsonDictionary != nil){// && [self isTimeOver:jsonDictionary]){
+            if (!isAction){
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_RECEIVED object:jsonDictionary];
+            } else {
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_RECEIVED_APPROVE object:jsonDictionary];
+//                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//                    // update UI on the main thread
+//                    dispatch_async(dispatch_get_main_queue(), ^{
+//                        OXPushManager* oxPushManager = [[OXPushManager alloc] init];
+//                        [oxPushManager onOxPushApproveRequest:jsonDictionary];
+//                    });
+//                    
+//                });
+            }
             pushNotificationRequest = nil;
         }
     }
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
 -(BOOL)isTimeOver:(NSDictionary*)jsonDictionary{

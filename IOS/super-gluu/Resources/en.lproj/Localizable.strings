@@ -8,6 +8,15 @@
 
 "AppName" = "oxPush2-ios";
 
+//Strings for License Agreement View
+"LicenseAgreementTitle" = "License Agreement";
+"AcceptButtonTitle" = "Accept";
+
+"ScanText" = "Pair this device by scanning the QR code on a Super GLUU enabled service";
+"Welcome" = "Welcome";
+
+"PressApprove" = "To continue, press Approve";
+
 "OneStep" = "1 step: ";
 "TwoStep" = "2 step: ";
 
@@ -25,7 +34,7 @@
 "OK" = "OK";
 "Cancel" = "Cancel";
 "Approve" = "Approve";
-"Decline" = "Decline";
+"Deny" = "Deny";
 
 "QRCodeScanning" = "QR Code Scanning...";
 "QRCodeCalceled" = "QR Scanning canceled!";
@@ -35,9 +44,9 @@
 //Statuses
 "StartAuthentication" = "Authentication...";
 "StartRegistration" = "Registering...";
-"SuccessAuthentication" = "Congratulations, you've success authenticated!";
+"SuccessAuthentication" = "You have successfully authenticated!";
 "FailedAuthentication" = "Failed, authentication!";
-"SuccessEnrollment" = "Congratulations, you've success sign up!";
+"SuccessEnrollment" = "You have successfully sign up!";
 "FailedEnrollment" = "Failed, sign up!";
 
 "AvailableKeyHandles" = "Available KeyHandles";
@@ -58,5 +67,7 @@
 "ClearLogs" = "Do you want to clear logs?";
 
 "ApproveDeclineTitle" = "To continue press %@, to stop %@";
+
+"FailedGettingCityName" = "Failed to recieve city name";
 
 
