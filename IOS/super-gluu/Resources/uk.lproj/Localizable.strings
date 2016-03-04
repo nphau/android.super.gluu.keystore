@@ -8,6 +8,10 @@
 
 "AppName" = "oxPush2-ios";
 
+//Strings for License Agreement View
+"LicenseAgreementTitle" = "License Agreement";
+"AcceptButtonTitle" = "Accept";
+
 "OneStep" = "1 етап: ";
 "TwoStep" = "2-й етап: ";
 

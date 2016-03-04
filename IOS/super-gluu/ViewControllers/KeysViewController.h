@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CustomIOS7AlertView.h"
 
-@interface SettingsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, CustomIOS7AlertViewDelegate, UITextFieldDelegate>{
+@interface KeysViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, CustomIOS7AlertViewDelegate, UITextFieldDelegate>{
 
     NSMutableArray* keyHandleArray;
     IBOutlet UITableView* keyHandleTableView;

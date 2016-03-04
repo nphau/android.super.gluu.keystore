@@ -14,7 +14,7 @@
 
 
 #define kCustomIOS7DefaultButtonColor [UIColor colorWithRed:0.670f green:0.670f blue:0.670f alpha:1.0f]
-#define kCustomIOS7GreenButtonColor [UIColor colorWithRed:0.0f green:0.680f blue:0.0f alpha:1.0f]
+#define kCustomIOS7GreenButtonColor [UIColor colorWithRed:1/255.0 green:161/255.0 blue:97/255.0 alpha:1.0]
 
 const static CGFloat kCustomIOS7AlertViewDefaultButtonHeight       = 50;
 const static CGFloat kCustomIOS7AlertViewDefaultButtonSpacerHeight = 1;

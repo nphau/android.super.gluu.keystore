@@ -14,6 +14,7 @@
     NSMutableArray* logsArray;
     IBOutlet UITableView* logsTableView;
     IBOutlet UIButton* cleanLogs;
+    IBOutlet UILabel* noLogsLabel;
 }
 
 @end

@@ -18,6 +18,12 @@
     [self getLogs];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self getLogs];
+    [logsTableView reloadData];
+}
+
 -(void)getLogs{
     NSString* logs = [[LogManager sharedInstance] getLogs];
     if (logs != nil || ![logs isEqualToString:@""]){
@@ -90,11 +96,6 @@
     [cell setData:[logsArray objectAtIndex:indexPath.row]];
     
     return cell;
-}
-
-
--(IBAction)back:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

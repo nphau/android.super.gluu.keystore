@@ -6,28 +6,33 @@
 //  Copyright © 2016 Nazar Yavornytskyy. All rights reserved.
 //
 
-#import "SettingsViewController.h"
+#import "KeysViewController.h"
 #import "KeyHandleCell.h"
 #import "TokenEntity.h"
 #import "DataStoreManager.h"
 
-#define CORNER_RADIUS 5.0
-
-@implementation SettingsViewController
+@implementation KeysViewController
 
 -(void)viewDidLoad{
     [super viewDidLoad];
     [self loadKeyHandlesFromDatabase];
     [self initIfoView];
     
-    logsButton.layer.cornerRadius = CORNER_RADIUS;
-    infoButton.layer.cornerRadius = CORNER_RADIUS;
-    
     UILongPressGestureRecognizer* longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(onLongPress:)];
     [longPressRecognizer setMinimumPressDuration:3.0];
     [keyHandleTableView addGestureRecognizer:longPressRecognizer];
     
+    keyHandleTableView.layer.borderColor = [UIColor blackColor].CGColor;
+    keyHandleTableView.layer.borderWidth = 2.0;
+    [keyHandleTableView.layer setMasksToBounds:YES];
+    
     keyRenameInfoLabel.text = NSLocalizedString(@"RenameKeyNameInfo", @"Rename Key's Name");
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self loadKeyHandlesFromDatabase];
+    [keyHandleTableView reloadData];
 }
 
 -(void)onLongPress:(UILongPressGestureRecognizer*)pGesture
@@ -74,11 +79,6 @@
         [keyHandleLabel setText:[NSString stringWithFormat:@"%@:", NSLocalizedString(@"AvailableKeyHandles", @"Available KeyHandles")]];
         [keyRenameInfoLabel setHidden:YES];
     }
-}
-
--(IBAction)back:(id)sender{
-    
-    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 -(IBAction)onInfoClick:(id)sender{
