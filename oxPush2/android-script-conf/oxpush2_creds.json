@@ -1,0 +1,16 @@
+{
+    "android":{
+        "gcm":{
+            "enabled":true,
+            "api_key":"AIzaSyCMW3npgWT5wz_soZPYV3MJgT_CLeLFZSs"
+        }
+    },
+    "ios":{
+        "apns":{
+            "enabled":true,
+ 	    "p12_file_path":"/etc/certs/oxPushDistributionAPNSCertificates.p12",
+            "p12_password":"oxPush2",
+            "production":true
+        }
+    }
+}
