@@ -6,15 +6,20 @@
   Copyright © 2016 Nazar Yavornytskyy. All rights reserved.
 */
 
-"AppName" = "oxPush2-ios";
+"AppName" = "super-gluu";
 
 //Strings for License Agreement View
-"LicenseAgreementTitle" = "License Agreement";
-"AcceptButtonTitle" = "Accept";
+"LicenseAgreementTitle" = "Ліцензійна угода";
+"AcceptButtonTitle" = "Підтвердити";
 
-"Home" = "Home";
-"Logs" = "Logs";
-"Keys" = "Keys";
+"Home" = "Дім";
+"Logs" = "Журнал";
+"Keys" = "Ключі";
+
+"ScanText" = "Підключіть пристрій до Super GLUU сервісу відсканувавши QR код";
+"Welcome" = "Ласкаво просимо";
+
+"PressApprove" = "Щоб продовжити, нажміть Підтвердити";
 
 "OneStep" = "1 етап: ";
 "TwoStep" = "2-й етап: ";
@@ -31,9 +36,9 @@
 "AlertMessageNoQRScanning" = "Цей пристрій не підтримує сканування QR коду";
 "WrongQRImage" = "Здається ви відсканували поганий QR код!";
 "OK" = "OK";
-"Cancel" = "Cancel";
-"Approve" = "Approve";
-"Decline" = "Decline";
+"Cancel" = "Відміна";
+"Approve" = "Підтвердити";
+"Decline" = "Відхилити";
 
 "QRCodeScanning" = "Сканування QR коду ...";
 "QRCodeCalceled" = "Відміна сканування QR коду!";
@@ -66,7 +71,7 @@
 
 "ApproveDeclineTitle" = "To continue press %@, to stop %@";
 
-"FaiedGetLocation" = "Failed to get location";
+"FaiedGetLocation" = "Невдале визначення місцезнаходження";
 
 
 

@@ -9,6 +9,9 @@
 #import "LicenseAgreementView.h"
 #import "Constants.h"
 
+#define LICENSE_AGREEMENT @"LicenseAgreement"
+#define MAIN_VIEW @"MainTabView"
+
 @implementation LicenseAgreementView
 
 -(void)viewDidLoad{
@@ -22,6 +25,8 @@
     locationManager.delegate = self;
     [locationManager startUpdatingLocation];
     [locationManager requestWhenInUseAuthorization];
+    
+    [self performSelector:@selector(checkLicenseAgreement) withObject:nil afterDelay:0.01];
 }
 
 -(void)initWiget{
@@ -34,6 +39,18 @@
 -(void)initLocalization{
     [_titleLabel setText:NSLocalizedString(@"LicenseAgreementTitle", @"License Agreement")];
     [_acceptButton setTitle:NSLocalizedString(@"AcceptButtonTitle", @"Accept") forState:UIControlStateNormal];
+}
+
+-(IBAction)onLicenseAgreement:(id)sender{
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:LICENSE_AGREEMENT];
+    [self performSegueWithIdentifier:MAIN_VIEW sender:self];
+}
+
+-(void)checkLicenseAgreement{
+    BOOL isLicenseAgreement = [[NSUserDefaults standardUserDefaults] boolForKey:LICENSE_AGREEMENT];
+    if (isLicenseAgreement){
+        [self performSegueWithIdentifier:MAIN_VIEW sender:self];
+    }
 }
 
 @end
