@@ -50,7 +50,6 @@
 		BB37DF301C7E0B8E0016D422 /* gluuIcon60x2.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEEE1C7E0B8E0016D422 /* gluuIcon60x2.png */; };
 		BB37DF311C7E0B8E0016D422 /* gluuIcon60x3.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEEF1C7E0B8E0016D422 /* gluuIcon60x3.png */; };
 		BB37DF321C7E0B8E0016D422 /* infoIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEF01C7E0B8E0016D422 /* infoIcon.png */; };
-		BB37DF331C7E0B8E0016D422 /* keyIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEF11C7E0B8E0016D422 /* keyIcon.png */; };
 		BB37DF341C7E0B8E0016D422 /* settingsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEF21C7E0B8E0016D422 /* settingsIcon.png */; };
 		BB37DF351C7E0B8E0016D422 /* gl.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEF41C7E0B8E0016D422 /* gl.png */; };
 		BB37DF361C7E0B8E0016D422 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DEF91C7E0B8E0016D422 /* Base64.m */; };
@@ -66,16 +65,10 @@
 		BB37DF421C7E0CBC0016D422 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB37DF411C7E0CBC0016D422 /* CoreData.framework */; };
 		BB3BE1641C87022C00817A46 /* LicenseAgreementView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB3BE1631C87022C00817A46 /* LicenseAgreementView.m */; };
 		BB3BE1661C8815C100817A46 /* gl.png in Resources */ = {isa = PBXBuildFile; fileRef = BB3BE1651C8815C100817A46 /* gl.png */; };
-		BB3BE1691C88214600817A46 /* homeIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BB3BE1681C88214600817A46 /* homeIcon.png */; };
-		BB3BE16B1C88230100817A46 /* homeIconSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = BB3BE16A1C88230100817A46 /* homeIconSelected.png */; };
-		BB3BE16D1C88243600817A46 /* logsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BB3BE16C1C88243600817A46 /* logsIcon.png */; };
-		BB3BE16F1C8825D800817A46 /* keysIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BB3BE16E1C8825D800817A46 /* keysIcon.png */; };
 		BB3BE1721C882D0600817A46 /* ApproveDenyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB3BE1711C882D0600817A46 /* ApproveDenyViewController.m */; };
 		BBB7C0E71C884E2600833B12 /* approveIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0E61C884E2600833B12 /* approveIcon.png */; };
 		BBB7C0E91C8851B900833B12 /* denyIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0E81C8851B900833B12 /* denyIcon.png */; };
 		BBB7C0EB1C88569400833B12 /* personIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0EA1C88569400833B12 /* personIcon.png */; };
-		BBB7C0ED1C8857B300833B12 /* locationIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0EC1C8857B300833B12 /* locationIcon.png */; };
-		BBB7C0EF1C885A5E00833B12 /* timeIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0EE1C885A5E00833B12 /* timeIcon.png */; };
 		BBB7C0F81C88933100833B12 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBB7C0F71C88933100833B12 /* CoreLocation.framework */; };
 		BBB7C0FC1C89FE3100833B12 /* gluuIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0FB1C89FE3100833B12 /* gluuIcon.png */; };
 /* End PBXBuildFile section */
@@ -172,7 +165,6 @@
 		BB37DEEE1C7E0B8E0016D422 /* gluuIcon60x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gluuIcon60x2.png; sourceTree = "<group>"; };
 		BB37DEEF1C7E0B8E0016D422 /* gluuIcon60x3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gluuIcon60x3.png; sourceTree = "<group>"; };
 		BB37DEF01C7E0B8E0016D422 /* infoIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = infoIcon.png; sourceTree = "<group>"; };
-		BB37DEF11C7E0B8E0016D422 /* keyIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyIcon.png; sourceTree = "<group>"; };
 		BB37DEF21C7E0B8E0016D422 /* settingsIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsIcon.png; sourceTree = "<group>"; };
 		BB37DEF41C7E0B8E0016D422 /* gl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gl.png; sourceTree = "<group>"; };
 		BB37DEF51C7E0B8E0016D422 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -202,18 +194,12 @@
 		BB3BE1631C87022C00817A46 /* LicenseAgreementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LicenseAgreementView.m; sourceTree = "<group>"; };
 		BB3BE1651C8815C100817A46 /* gl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gl.png; sourceTree = "<group>"; };
 		BB3BE1671C88165800817A46 /* Super-gluu_PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Super-gluu_PrefixHeader.pch"; sourceTree = "<group>"; };
-		BB3BE1681C88214600817A46 /* homeIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homeIcon.png; sourceTree = "<group>"; };
-		BB3BE16A1C88230100817A46 /* homeIconSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homeIconSelected.png; sourceTree = "<group>"; };
-		BB3BE16C1C88243600817A46 /* logsIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logsIcon.png; sourceTree = "<group>"; };
-		BB3BE16E1C8825D800817A46 /* keysIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keysIcon.png; sourceTree = "<group>"; };
 		BB3BE1701C882D0600817A46 /* ApproveDenyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApproveDenyViewController.h; sourceTree = "<group>"; };
 		BB3BE1711C882D0600817A46 /* ApproveDenyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApproveDenyViewController.m; sourceTree = "<group>"; };
 		BB3BE1741C883B8900817A46 /* LecenseAgreementDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LecenseAgreementDelegate.h; sourceTree = "<group>"; };
 		BBB7C0E61C884E2600833B12 /* approveIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = approveIcon.png; sourceTree = "<group>"; };
 		BBB7C0E81C8851B900833B12 /* denyIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = denyIcon.png; sourceTree = "<group>"; };
 		BBB7C0EA1C88569400833B12 /* personIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = personIcon.png; sourceTree = "<group>"; };
-		BBB7C0EC1C8857B300833B12 /* locationIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = locationIcon.png; sourceTree = "<group>"; };
-		BBB7C0EE1C885A5E00833B12 /* timeIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = timeIcon.png; sourceTree = "<group>"; };
 		BBB7C0F71C88933100833B12 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		BBB7C0FB1C89FE3100833B12 /* gluuIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gluuIcon.png; sourceTree = "<group>"; };
 		C3CC168E00F2364CCCFAAF3C /* Pods-super-gluu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-super-gluu.release.xcconfig"; path = "Pods/Target Support Files/Pods-super-gluu/Pods-super-gluu.release.xcconfig"; sourceTree = "<group>"; };
@@ -539,16 +525,9 @@
 				BB37DEEE1C7E0B8E0016D422 /* gluuIcon60x2.png */,
 				BB37DEEF1C7E0B8E0016D422 /* gluuIcon60x3.png */,
 				BBB7C0E81C8851B900833B12 /* denyIcon.png */,
-				BBB7C0EC1C8857B300833B12 /* locationIcon.png */,
-				BBB7C0EE1C885A5E00833B12 /* timeIcon.png */,
 				BB37DEF01C7E0B8E0016D422 /* infoIcon.png */,
 				BBB7C0E61C884E2600833B12 /* approveIcon.png */,
 				BBB7C0EA1C88569400833B12 /* personIcon.png */,
-				BB37DEF11C7E0B8E0016D422 /* keyIcon.png */,
-				BB3BE16E1C8825D800817A46 /* keysIcon.png */,
-				BB3BE16C1C88243600817A46 /* logsIcon.png */,
-				BB3BE1681C88214600817A46 /* homeIcon.png */,
-				BB3BE16A1C88230100817A46 /* homeIconSelected.png */,
 				BB37DEF21C7E0B8E0016D422 /* settingsIcon.png */,
 			);
 			path = Icons;
@@ -772,23 +751,16 @@
 				BB3BE1661C8815C100817A46 /* gl.png in Resources */,
 				BB37DF351C7E0B8E0016D422 /* gl.png in Resources */,
 				BB37DF2A1C7E0B8E0016D422 /* gluuIcon29x3.png in Resources */,
-				BB37DF331C7E0B8E0016D422 /* keyIcon.png in Resources */,
 				BB37DE671C7E08320016D422 /* LaunchScreen.storyboard in Resources */,
 				BB37DF281C7E0B8E0016D422 /* gluuIcon29.png in Resources */,
-				BBB7C0ED1C8857B300833B12 /* locationIcon.png in Resources */,
 				BB37DF241C7E0B8E0016D422 /* Localizable.strings in Resources */,
 				BB37DF311C7E0B8E0016D422 /* gluuIcon60x3.png in Resources */,
-				BB3BE16D1C88243600817A46 /* logsIcon.png in Resources */,
 				BBB7C0E71C884E2600833B12 /* approveIcon.png in Resources */,
 				BBB7C0E91C8851B900833B12 /* denyIcon.png in Resources */,
 				BB37DE641C7E08320016D422 /* Assets.xcassets in Resources */,
-				BB3BE16B1C88230100817A46 /* homeIconSelected.png in Resources */,
-				BBB7C0EF1C885A5E00833B12 /* timeIcon.png in Resources */,
-				BB3BE16F1C8825D800817A46 /* keysIcon.png in Resources */,
 				BB37DF301C7E0B8E0016D422 /* gluuIcon60x2.png in Resources */,
 				BB37DF321C7E0B8E0016D422 /* infoIcon.png in Resources */,
 				BB37DE5F1C7E08320016D422 /* Main.storyboard in Resources */,
-				BB3BE1691C88214600817A46 /* homeIcon.png in Resources */,
 				BB37DF261C7E0B8E0016D422 /* clearLogIcon.png in Resources */,
 				BB37DF271C7E0B8E0016D422 /* gluuIcon1024.png in Resources */,
 				BBB7C0EB1C88569400833B12 /* personIcon.png in Resources */,

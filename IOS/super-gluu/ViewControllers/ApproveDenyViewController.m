@@ -13,6 +13,8 @@
 #define RELEASE_SERVER @"Gluu Server CE Release"
 #define DEV_SERVER @"Gluu Server CE Dev"
 
+#define moveUpY 70
+
 @interface ApproveDenyViewController ()
 
 @end
@@ -24,6 +26,7 @@
     [super viewDidLoad];
     [self initLocalization];
     [self initLocation];
+    [self initBackButtonUI];
     [self updateInfo];
 }
 
@@ -45,7 +48,13 @@
 }
 
 -(void)updateInfo{
-    userNameLabel.text = [[UserLoginInfo sharedInstance] userName];
+    if ([[UserLoginInfo sharedInstance] userName] == nil){
+        [userNameView setHidden:YES];
+        [self moveUpViews];
+    } else {
+        [userNameView setHidden:NO];
+        userNameLabel.text = [[UserLoginInfo sharedInstance] userName];
+    }
     NSString* server = [[UserLoginInfo sharedInstance] application];
     serverUrlLabel.text = server;
     if (server != nil){
@@ -57,11 +66,26 @@
     }
     createdTimeLabel.text = [self getTime:[[UserLoginInfo sharedInstance] created]];
     createdDateLabel.text = [self getDate:[[UserLoginInfo sharedInstance] created]];
-//    UIDevice* device = [[UIDevice alloc] init];
     locationLabel.text = [self getIPAddress];
-//    userIssuerLabel.text = [[UserLoginInfo sharedInstance] issuer];
-//    userAuthencicationModeLabel.text = [[UserLoginInfo sharedInstance] authenticationMode];
-//    userAuthencicationTypeLabel.text = [[UserLoginInfo sharedInstance] authenticationType];
+
+    if (_isLogInfo){
+        [backButton setHidden:NO];
+        [titleLabel setHidden:YES];
+        [approveRequest setHidden:YES];
+        [denyRequest setHidden:YES];
+    }
+}
+
+-(void)moveUpViews{
+    [locationView setCenter:CGPointMake(locationView.center.x, locationView.center.y - moveUpY)];
+    [timeView setCenter:CGPointMake(timeView.center.x, timeView.center.y - moveUpY)];
+}
+
+-(void)initBackButtonUI{
+    [[backButton layer] setMasksToBounds:YES];
+    [[backButton layer] setCornerRadius:CORNER_RADIUS];
+    [[backButton layer] setBorderWidth:2.0f];
+    [[backButton layer] setBorderColor:[UIColor blackColor].CGColor];
 }
 
 -(IBAction)onApprove:(id)sender{
@@ -72,38 +96,52 @@
     [delegate denyRequest];
 }
 
+-(IBAction)back:(id)sender{
+    [delegate denyRequest];
+}
+
 // this delegate is called when the app successfully finds your current location
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-    // this creates a CLGeocoder to find a placemark using the found coordinates
-    CLGeocoder *ceo = [[CLGeocoder alloc]init];
-    CLLocation *loc = [[CLLocation alloc]initWithLatitude:newLocation.coordinate.latitude longitude:newLocation.coordinate.longitude]; //insert your coordinates
-    
-    [ceo reverseGeocodeLocation:loc
-              completionHandler:^(NSArray *placemarks, NSError *error) {
-                  CLPlacemark *placemark = [placemarks objectAtIndex:0];
-                  NSLog(@"placemark %@",placemark);
-                  //String to hold address
-                  NSString *locatedAt = [[placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@", "];
-                  NSLog(@"addressDictionary %@", placemark.addressDictionary);
-                  
-                  NSLog(@"placemark %@",placemark.region);
-                  NSLog(@"placemark %@",placemark.country);  // Give Country Name
-                  NSLog(@"placemark %@",placemark.locality); // Extract the city name
-                  
-                  cityNameLabel.text = [NSString stringWithFormat:@"%@, %@", placemark.locality, [placemark.addressDictionary valueForKey:@"State"]];
-                  
-                  NSLog(@"location %@",placemark.name);
-                  NSLog(@"location %@",placemark.ocean);
-                  NSLog(@"location %@",placemark.postalCode);
-                  NSLog(@"location %@",placemark.subLocality);
-                  
-                  NSLog(@"location %@",placemark.location);
-                  //Print the location to console
-                  NSLog(@"I am currently at %@",locatedAt);
-              }
-     ];
-    
+    if (!isLocation){
+        // this creates a CLGeocoder to find a placemark using the found coordinates
+        CLGeocoder *ceo = [[CLGeocoder alloc]init];
+        CLLocation *loc = [[CLLocation alloc]initWithLatitude:newLocation.coordinate.latitude longitude:newLocation.coordinate.longitude]; //insert your coordinates
+        
+        [ceo reverseGeocodeLocation:loc
+                  completionHandler:^(NSArray *placemarks, NSError *error) {
+                      CLPlacemark *placemark = [placemarks objectAtIndex:0];
+                      //                  NSLog(@"placemark %@",placemark);
+                      //String to hold address
+                      //                  NSString *locatedAt = [[placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@", "];
+                      //                  NSLog(@"addressDictionary %@", placemark.addressDictionary);
+                      
+                      //                  NSLog(@"placemark %@",placemark.region);
+                      //                  NSLog(@"placemark %@",placemark.country);  // Give Country Name
+                      //                  NSLog(@"placemark %@",placemark.locality); // Extract the city name
+                      
+                      NSString* address = @"";
+                      
+                      if (placemark.locality == nil || [placemark.addressDictionary valueForKey:@"State"] == nil){
+                          address = NSLocalizedString(@"FaiedGetLocation", @"Failed to get location");
+                      } else {
+                          address = [NSString stringWithFormat:@"%@, %@", placemark.locality, [placemark.addressDictionary valueForKey:@"State"]];
+                          isLocation = YES;
+                      }
+                      
+                      cityNameLabel.text = address;
+                      
+                      //                  NSLog(@"location %@",placemark.name);
+                      //                  NSLog(@"location %@",placemark.ocean);
+                      //                  NSLog(@"location %@",placemark.postalCode);
+                      //                  NSLog(@"location %@",placemark.subLocality);
+                      //                  
+                      //                  NSLog(@"location %@",placemark.location);
+                      //                  //Print the location to console
+                      //                  NSLog(@"I am currently at %@",locatedAt);
+                  }
+         ];
+    }
 }
 
 // this delegate method is called if an error occurs in locating your current location

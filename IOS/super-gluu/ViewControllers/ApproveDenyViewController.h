@@ -30,9 +30,19 @@
     
     IBOutlet UILabel* createdTimeLabel;
     IBOutlet UILabel* createdDateLabel;
+    
+    IBOutlet UIView* serverView;
+    IBOutlet UIView* userNameView;
+    IBOutlet UIView* locationView;
+    IBOutlet UIView* timeView;
+    
+    IBOutlet UIButton* backButton;
+    
+    BOOL isLocation;
 }
 
 @property (nonatomic,assign)  id <LicenseAgreementDelegate> delegate;
+@property (assign, nonatomic) BOOL isLogInfo;
 
 -(void)updateInfo;
 

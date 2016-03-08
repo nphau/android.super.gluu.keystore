@@ -7,6 +7,7 @@
 //
 
 #import "LogsTableCell.h"
+#import "ApproveDenyViewController.h"
 
 @implementation LogsTableCell
 

@@ -9,8 +9,11 @@
 #import "LogsViewController.h"
 #import "LogManager.h"
 #import "LogsTableCell.h"
+#import "ApproveDenyViewController.h"
 
-@implementation LogsViewController
+@implementation LogsViewController{
+    ApproveDenyViewController* approveDenyView;
+}
 
 -(void)viewDidLoad{
 
@@ -25,22 +28,25 @@
 }
 
 -(void)getLogs{
-    NSString* logs = [[LogManager sharedInstance] getLogs];
-    if (logs != nil || ![logs isEqualToString:@""]){
-        NSArray* logsAr = [logs componentsSeparatedByString:@"\n"];
-        if ([logs length] > 0){
-            logsArray = [[NSMutableArray alloc] initWithArray:logsAr];
-            [logsTableView reloadData];
-            [logsTableView setHidden:NO];
-            [logsTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:logsArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-        } else {
-            [logsTableView setHidden:YES];
-            [cleanLogs setEnabled:NO];
-        }
-    }else{
-        [logsTableView setHidden:YES];
-        [cleanLogs setEnabled:NO];
-    }
+    logsArray = [[NSMutableArray alloc] init];
+    [logsArray addObject:[NSString stringWithFormat:@"CE Release"]];
+    [logsArray addObject:[NSString stringWithFormat:@"CE Release"]];
+//    NSString* logs = [[LogManager sharedInstance] getLogs];
+//    if (logs != nil || ![logs isEqualToString:@""]){
+//        NSArray* logsAr = [logs componentsSeparatedByString:@"\n"];
+//        if ([logs length] > 0){
+//            logsArray = [[NSMutableArray alloc] initWithArray:logsAr];
+//            [logsTableView reloadData];
+//            [logsTableView setHidden:NO];
+//            [logsTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:logsArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+//        } else {
+//            [logsTableView setHidden:YES];
+//            [cleanLogs setEnabled:NO];
+//        }
+//    }else{
+//        [logsTableView setHidden:YES];
+//        [cleanLogs setEnabled:NO];
+//    }
 }
 
 #pragma mark CustomIOS7AlertView Delegate
@@ -93,9 +99,46 @@
     
     NSString *CellIdentifier= @"LogsTableCellID";
     LogsTableCell *cell = (LogsTableCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    [cell setData:[logsArray objectAtIndex:indexPath.row]];
+    cell.cellBackground.layer.cornerRadius = CORNER_RADIUS;
+    //[cell setData:[logsArray objectAtIndex:indexPath.row]];
     
     return cell;
+}
+
+-(IBAction)showUserInfo:(id)sender{
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    approveDenyView = [storyBoard instantiateViewControllerWithIdentifier:@"ApproveDenyView"];
+    approveDenyView.delegate = self;
+    [approveDenyView setIsLogInfo:YES];
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.5;
+    transition.type = kCATransitionPush;
+    transition.subtype = kCATransitionFromRight;
+    [transition setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+    [contentView.layer addAnimation:transition forKey:nil];
+    [contentView addSubview:approveDenyView.view];
+}
+
+#pragma LicenseAgreementDelegates
+
+-(void)approveRequest{
+    [approveDenyView.view removeFromSuperview];
+    approveDenyView = nil;
+}
+
+-(void)denyRequest{
+    [approveDenyView.view removeFromSuperview];
+    [self initAnimationFromRigthToLeft];
+    approveDenyView = nil;
+}
+
+-(void)initAnimationFromRigthToLeft{
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.5;
+    transition.type = kCATransitionPush;
+    transition.subtype = kCATransitionFromLeft;
+    [transition setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+    [contentView.layer addAnimation:transition forKey:nil];
 }
 
 @end

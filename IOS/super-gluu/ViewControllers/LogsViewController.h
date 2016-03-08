@@ -8,13 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "CustomIOS7AlertView.h"
+#import "LecenseAgreementDelegate.h"
 
-@interface LogsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate,CustomIOS7AlertViewDelegate>{
+@interface LogsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate,CustomIOS7AlertViewDelegate, LicenseAgreementDelegate>{
 
     NSMutableArray* logsArray;
     IBOutlet UITableView* logsTableView;
     IBOutlet UIButton* cleanLogs;
     IBOutlet UILabel* noLogsLabel;
+    IBOutlet UIView* contentView;
 }
 
 @end

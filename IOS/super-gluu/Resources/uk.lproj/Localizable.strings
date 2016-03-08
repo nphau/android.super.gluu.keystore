@@ -12,6 +12,10 @@
 "LicenseAgreementTitle" = "License Agreement";
 "AcceptButtonTitle" = "Accept";
 
+"Home" = "Home";
+"Logs" = "Logs";
+"Keys" = "Keys";
+
 "OneStep" = "1 етап: ";
 "TwoStep" = "2-й етап: ";
 
@@ -61,6 +65,8 @@
 "ClearLogs" = "Ви дійсно бажаєте вилучити всі записи?";
 
 "ApproveDeclineTitle" = "To continue press %@, to stop %@";
+
+"FaiedGetLocation" = "Failed to get location";
 
 
 

@@ -12,6 +12,10 @@
 "LicenseAgreementTitle" = "License Agreement";
 "AcceptButtonTitle" = "Accept";
 
+"Home" = "Home";
+"Logs" = "Logs";
+"Keys" = "Keys";
+
 "OneStep" = "1 step: ";
 "TwoStep" = "2 step: ";
 
@@ -61,6 +65,8 @@
 "ClearLogs" = "Do you want to clear logs?";
 
 "ApproveDeclineTitle" = "To continue press %@, to stop %@";
+
+"FaiedGetLocation" = "Failed to get location";
 
 
 

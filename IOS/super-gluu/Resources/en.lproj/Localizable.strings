@@ -12,6 +12,10 @@
 "LicenseAgreementTitle" = "License Agreement";
 "AcceptButtonTitle" = "Accept";
 
+"Home" = "Home";
+"Logs" = "Logs";
+"Keys" = "Keys";
+
 "ScanText" = "Pair this device by scanning the QR code on a Super GLUU enabled service";
 "Welcome" = "Welcome";
 
@@ -69,5 +73,7 @@
 "ApproveDeclineTitle" = "To continue press %@, to stop %@";
 
 "FailedGettingCityName" = "Failed to recieve city name";
+
+"FaiedGetLocation" = "Failed to get location";
 
 

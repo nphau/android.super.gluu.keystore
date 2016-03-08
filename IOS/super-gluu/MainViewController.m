@@ -57,6 +57,9 @@ NSString *const kTJCircularSpinner = @"TJCircularSpinner";
 -(void)initLocalization{
     welcomeLabel.text = NSLocalizedString(@"Welcome", @"Welcome");
     scanTextLabel.text = NSLocalizedString(@"ScanText", @"Scan Text");
+    [[self.tabBarController.tabBar.items objectAtIndex:0] setTitle:NSLocalizedString(@"Home", @"Home")];
+    [[self.tabBarController.tabBar.items objectAtIndex:1] setTitle:NSLocalizedString(@"Logs", @"Logs")];
+    [[self.tabBarController.tabBar.items objectAtIndex:2] setTitle:NSLocalizedString(@"Keys", @"Keys")];
 //    [scanButton setTitle:NSLocalizedString(@"ScanButtonTitle", @"Scan Title") forState:UIControlStateNormal];
 //    titleLabel.text = NSLocalizedString(@"AppNameTitle", @"App Title");
 }
@@ -157,9 +160,9 @@ NSString *const kTJCircularSpinner = @"TJCircularSpinner";
         [self sendQRCodeRequest:pushRequest];
     } else
         if ([[notification name] isEqualToString:NOTIFICATION_PUSH_RECEIVED_APPROVE]){
-//            NSDictionary* pushRequest = (NSDictionary*)notification.object;
-//            scanJsonDictionary = pushRequest;
-//            [self onApprove];
+            NSDictionary* pushRequest = (NSDictionary*)notification.object;
+            scanJsonDictionary = pushRequest;
+            [self onApprove];
             [self.tabBarController setSelectedIndex:0];
             return;
         }

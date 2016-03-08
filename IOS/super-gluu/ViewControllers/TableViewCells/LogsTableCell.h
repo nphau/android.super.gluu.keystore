@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) IBOutlet UILabel* logTime;
 @property (strong, nonatomic) IBOutlet UILabel* logLabel;
+@property (strong, nonatomic) IBOutlet UIView* cellBackground;
 
 -(void)setData:(NSString*)logs;
 
