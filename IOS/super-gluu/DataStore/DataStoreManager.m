@@ -9,8 +9,24 @@
 #import "DataStoreManager.h"
 #import "AppDelegate.h"
 #import <CoreData/CoreData.h>
+#import "UserLoginInfo.h"
 
 #define KEY_ENTITY @"TokenEntity"
+#define USER_INFO_ENTITY @"LoginInfoEntity"
+
+#define USER_NAME_KEY @"userName"
+#define APPLICATION_KEY @"application"
+#define ISSUER_KEY @"issuer"
+#define CREATED_KEY @"created"
+#define AUTHENTICATION_MODE @"authenticationMode"
+#define AUTHENTICATION_TYPE @"authenticationType"
+
+#define ID_KEY @"id"
+#define KEYHANDLE_KEY @"keyHandle"
+#define PRIVATE_KEY @"privateKey"
+#define PUBLIC_KEY @"publicKey"
+#define COUNT_KEY @"count"
+
 
 @implementation DataStoreManager{
 
@@ -39,13 +55,17 @@
             newMetaData = [eccKeyFetchedArray objectAtIndex:0];
         }
     }
-    [newMetaData setValue:[tokenEntity ID] forKey:@"id"];
-    [newMetaData setValue:[tokenEntity application] forKey:@"application"];
-    [newMetaData setValue:[tokenEntity issuer] forKey:@"issuer"];
-    [newMetaData setValue:[tokenEntity keyHandle] forKey:@"keyHandle"];
-    [newMetaData setValue:[tokenEntity privateKey] forKey:@"privateKey"];
-    [newMetaData setValue:[tokenEntity publicKey] forKey:@"publicKey"];
-    [newMetaData setValue:[NSNumber numberWithInt:[tokenEntity count]] forKey:@"count"];
+    [newMetaData setValue:[tokenEntity ID] forKey:ID_KEY];
+    [newMetaData setValue:[tokenEntity application] forKey:APPLICATION_KEY];
+    [newMetaData setValue:[tokenEntity issuer] forKey:ISSUER_KEY];
+    [newMetaData setValue:[tokenEntity keyHandle] forKey:KEYHANDLE_KEY];
+    [newMetaData setValue:[tokenEntity privateKey] forKey:PRIVATE_KEY];
+    [newMetaData setValue:[tokenEntity publicKey] forKey:PUBLIC_KEY];
+    [newMetaData setValue:[tokenEntity userName] forKey:USER_NAME_KEY];
+    [newMetaData setValue:[tokenEntity pairingTime] forKey:CREATED_KEY];
+    [newMetaData setValue:[tokenEntity authenticationMode] forKey:AUTHENTICATION_MODE];
+    [newMetaData setValue:[tokenEntity authenticationType] forKey:AUTHENTICATION_TYPE];
+    [newMetaData setValue:[NSNumber numberWithInt:[tokenEntity count]] forKey:COUNT_KEY];
     
     error = nil;
     // Save the object to persistent store
@@ -64,21 +84,49 @@
     NSArray* eccKeyFetchedArray = [appDelegate.managedObjectContext executeFetchRequest:request error:&error];
     if (eccKeyFetchedArray != nil && [eccKeyFetchedArray count] > 0){
         for (NSManagedObject *eccKeyFetched in eccKeyFetchedArray){
-            if (eccKeyFetched != nil && [eccKeyFetched valueForKey:@"keyHandle"] != nil){
+            if (eccKeyFetched != nil && [eccKeyFetched valueForKey:KEYHANDLE_KEY] != nil){
                 TokenEntity* tokenEntity = [[TokenEntity alloc] init];
-                [tokenEntity setID:[eccKeyFetched valueForKey:@"id"]];
-                [tokenEntity setApplication:[eccKeyFetched valueForKey:@"application"]];
-                [tokenEntity setIssuer:[eccKeyFetched valueForKey:@"issuer"]];
-                [tokenEntity setKeyHandle:[eccKeyFetched valueForKey:@"keyHandle"]];
-                [tokenEntity setPrivateKey:[eccKeyFetched valueForKey:@"privateKey"]];
-                [tokenEntity setPublicKey:[eccKeyFetched valueForKey:@"publicKey"]];
-                NSNumber* count = [eccKeyFetched valueForKey:@"count"];
+                [tokenEntity setID:[eccKeyFetched valueForKey:ID_KEY]];
+                [tokenEntity setApplication:[eccKeyFetched valueForKey:APPLICATION_KEY]];
+                [tokenEntity setIssuer:[eccKeyFetched valueForKey:ISSUER_KEY]];
+                [tokenEntity setKeyHandle:[eccKeyFetched valueForKey:KEYHANDLE_KEY]];
+                [tokenEntity setPrivateKey:[eccKeyFetched valueForKey:PRIVATE_KEY]];
+                [tokenEntity setPublicKey:[eccKeyFetched valueForKey:PUBLIC_KEY]];
+                [tokenEntity setUserName:[eccKeyFetched valueForKey:USER_NAME_KEY]];
+                [tokenEntity setPairingTime:[eccKeyFetched valueForKey:CREATED_KEY]];
+                [tokenEntity setAuthenticationMode:[eccKeyFetched valueForKey:AUTHENTICATION_MODE]];
+                [tokenEntity setAuthenticationType:[eccKeyFetched valueForKey:AUTHENTICATION_TYPE]];
+                NSNumber* count = [eccKeyFetched valueForKey:COUNT_KEY];
                 [tokenEntity setCount:[count intValue]];
                 [entities addObject:tokenEntity];
             }
         }
     }
     return entities;
+}
+
+-(TokenEntity*)getTokenEntityByKeyHandle:(NSString*)keyHandle{
+    appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:KEY_ENTITY];
+    NSError *error = nil;
+    NSArray* eccKeyFetchedArray = [appDelegate.managedObjectContext executeFetchRequest:request error:&error];
+    if (eccKeyFetchedArray != nil && [eccKeyFetchedArray count] > 0){
+        for (NSManagedObject *eccKeyFetched in eccKeyFetchedArray){
+            if (eccKeyFetched != nil && [eccKeyFetched valueForKey:KEYHANDLE_KEY] != nil && [keyHandle isEqualToString:[eccKeyFetched valueForKey:KEYHANDLE_KEY]]){
+                TokenEntity* tokenEntity = [[TokenEntity alloc] init];
+                [tokenEntity setID:[eccKeyFetched valueForKey:ID_KEY]];
+                [tokenEntity setApplication:[eccKeyFetched valueForKey:APPLICATION_KEY]];
+                [tokenEntity setIssuer:[eccKeyFetched valueForKey:ISSUER_KEY]];
+                [tokenEntity setKeyHandle:[eccKeyFetched valueForKey:KEYHANDLE_KEY]];
+                [tokenEntity setPrivateKey:[eccKeyFetched valueForKey:PRIVATE_KEY]];
+                [tokenEntity setPublicKey:[eccKeyFetched valueForKey:PUBLIC_KEY]];
+                NSNumber* count = [eccKeyFetched valueForKey:COUNT_KEY];
+                [tokenEntity setCount:[count intValue]];
+                return tokenEntity;
+            }
+        }
+    }
+    return nil;
 }
 
 -(int)incrementCountForToken:(TokenEntity*)tokenEntity{
@@ -93,7 +141,7 @@
         TokenEntity* eccKeyFetched = [eccKeyFetchedArray objectAtIndex:0];
         if (eccKeyFetched != nil){
             newMetaData = [eccKeyFetchedArray objectAtIndex:0];
-            [newMetaData setValue:[NSNumber numberWithInt:count] forKey:@"count"];
+            [newMetaData setValue:[NSNumber numberWithInt:count] forKey:COUNT_KEY];
         }
     }
     
@@ -121,6 +169,50 @@
         return YES;
     }
     return NO;
+}
+
+-(void)saveUserLoginInfo:(UserLoginInfo*)userLoginInfo{
+    appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    NSError *error = nil;
+    NSManagedObject *newMetaData = [NSEntityDescription insertNewObjectForEntityForName:USER_INFO_ENTITY inManagedObjectContext:appDelegate.managedObjectContext];
+    [newMetaData setValue:[userLoginInfo userName] forKey:USER_NAME_KEY];
+    [newMetaData setValue:[userLoginInfo application] forKey:APPLICATION_KEY];
+    [newMetaData setValue:[userLoginInfo issuer] forKey:ISSUER_KEY];
+    [newMetaData setValue:[userLoginInfo created] forKey:CREATED_KEY];
+    [newMetaData setValue:[userLoginInfo authenticationMode] forKey:AUTHENTICATION_MODE];
+    [newMetaData setValue:[userLoginInfo authenticationType] forKey:AUTHENTICATION_TYPE];
+    
+    error = nil;
+    // Save the object to persistent store
+    if (![appDelegate.managedObjectContext save:&error]) {
+        NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+        return;
+    }
+    NSLog(@"Saved UserLoginInfoEntity to database success");
+}
+
+-(NSArray*)getUserLoginInfo{
+    appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    NSMutableArray* entities = [[NSMutableArray alloc] init];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:USER_INFO_ENTITY];
+    NSError *error = nil;
+    NSArray* eccKeyFetchedArray = [appDelegate.managedObjectContext executeFetchRequest:request error:&error];
+    if (eccKeyFetchedArray != nil && [eccKeyFetchedArray count] > 0){
+        for (NSManagedObject *eccKeyFetched in eccKeyFetchedArray){
+            if (eccKeyFetched != nil){
+                UserLoginInfo* userInfoEntity = [[UserLoginInfo alloc] init];
+                [userInfoEntity setCreated:[eccKeyFetched valueForKey:CREATED_KEY]];
+                [userInfoEntity setApplication:[eccKeyFetched valueForKey:APPLICATION_KEY]];
+                [userInfoEntity setIssuer:[eccKeyFetched valueForKey:ISSUER_KEY]];
+                [userInfoEntity setUserName:[eccKeyFetched valueForKey:USER_NAME_KEY]];
+                [userInfoEntity setAuthenticationMode:[eccKeyFetched valueForKey:AUTHENTICATION_MODE]];
+                [userInfoEntity setAuthenticationType:[eccKeyFetched valueForKey:AUTHENTICATION_TYPE]];
+                [entities addObject:userInfoEntity];
+            }
+        }
+    }
+    return entities;
 }
 
 @end

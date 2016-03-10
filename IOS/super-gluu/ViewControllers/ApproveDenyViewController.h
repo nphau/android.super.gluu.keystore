@@ -10,8 +10,9 @@
 #import "MainViewController.h"
 #import "LecenseAgreementDelegate.h"
 #import "CoreLocation/CoreLocation.h"
+#import "UserLoginInfo.h"
 
-@interface ApproveDenyViewController : UIViewController <CLLocationManagerDelegate> {
+@interface ApproveDenyViewController : UIViewController <CLLocationManagerDelegate, UIScrollViewDelegate> {
     
     CLLocationManager *locationManager;
  
@@ -38,11 +39,18 @@
     
     IBOutlet UIButton* backButton;
     
+    IBOutlet UIView* buttonView;
+    
+    IBOutlet UIScrollView* scrollView;
+    
     BOOL isLocation;
+    
+    BOOL isLandScape;
 }
 
 @property (nonatomic,assign)  id <LicenseAgreementDelegate> delegate;
 @property (assign, nonatomic) BOOL isLogInfo;
+@property (strong, nonatomic) UserLoginInfo* userInfo;
 
 -(void)updateInfo;
 

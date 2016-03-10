@@ -55,6 +55,10 @@ int keyHandleLength = 64;
     [newTokenEntity setKeyHandle:[keyHandle base64EncodedString]];
     [newTokenEntity setPublicKey:crypto.publicKeyBase64];
     [newTokenEntity setPrivateKey:crypto.privateKeyBase64];
+    [newTokenEntity setUserName:[[UserLoginInfo sharedInstance] userName]];
+    [newTokenEntity setPairingTime:[[UserLoginInfo sharedInstance] created]];
+    [newTokenEntity setAuthenticationMode:[[UserLoginInfo sharedInstance] authenticationMode]];
+    [newTokenEntity setAuthenticationType:[[UserLoginInfo sharedInstance] authenticationType]];
     [[DataStoreManager sharedInstance] saveTokenEntity:newTokenEntity];
     
     NSData* applicationSha256 = [[application SHA256] dataUsingEncoding:NSUTF8StringEncoding];

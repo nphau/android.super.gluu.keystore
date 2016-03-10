@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "TokenEntity.h"
+#import "UserLoginInfo.h"
 
 @interface DataStoreManager : NSObject
 
@@ -16,6 +17,10 @@
 -(void)saveTokenEntity:(TokenEntity*)tokenEntity;
 -(int)incrementCountForToken:(TokenEntity*)tokenEntity;
 -(NSArray*)getTokenEntitiesByID:(NSString*)keyID;
+-(TokenEntity*)getTokenEntityByKeyHandle:(NSString*)keyHandle;
 -(BOOL)deleteTokenEntitiesByID:(NSString*)keyID;
+
+-(void)saveUserLoginInfo:(UserLoginInfo*)userLoginInfo;
+-(NSArray*)getUserLoginInfo;
 
 @end

@@ -189,7 +189,7 @@ NSString *const kTJCircularSpinner = @"TJCircularSpinner";
         transition.duration = 0.5;
         transition.type = kCATransitionPush;
         transition.subtype = kCATransitionFromRight;
-        [transition setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+        //[transition setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
         [contentView.layer addAnimation:transition forKey:nil];
         [contentView addSubview:approveDenyView.view];
     }
@@ -267,7 +267,7 @@ NSString *const kTJCircularSpinner = @"TJCircularSpinner";
 -(void)sendQRCodeRequest:(NSDictionary*)jsonDictionary{
     if (jsonDictionary != nil){
         scanJsonDictionary = jsonDictionary;
-//        [self initUserInfo:jsonDictionary];
+        [self initUserInfo:jsonDictionary];
         [self performSelector:@selector(provideScanRequest) withObject:nil afterDelay:1.0];
     } else {
         [self updateStatus:NSLocalizedString(@"WrongQRImage", @"Wrong QR Code image")];
@@ -279,35 +279,8 @@ NSString *const kTJCircularSpinner = @"TJCircularSpinner";
     [circularSpinner setHidden:YES];
     isUserInfo = NO;
     [scanButton setEnabled:NO];
-//    [self showApproveDeclineView];
     [self showApproveDenyView];
 }
-
-//-(void)showApproveDeclineView{
-//    [UIView animateWithDuration:0.5 animations:^{
-//        NSString* message = [NSString stringWithFormat:NSLocalizedString(@"ApproveDeclineTitle", @"ApproveDeclineTitle"), NSLocalizedString(@"Approve", @"Approve"), NSLocalizedString(@"Decline", @"Decline")];
-//        statusLabel.text = message;
-//        [statusView setCenter:CGPointMake(statusView.center.x, 5)];
-//        [statusView setAlpha:1.0];
-//        [self showUserInfo];
-////        [hiddenView setHidden:NO];
-////        [approveButton setCenter:CGPointMake(self.view.center.x - approveButton.frame.size.width/2-4, approveButton.center.y)];
-////        [declineButton setCenter:CGPointMake(self.view.center.x + declineButton.frame.size.width/2+4, declineButton.center.y)];
-//    } completion:^(BOOL finished) {
-//        //
-//    }];
-//}
-//
-//-(void)hideApproveDeclineView{
-//    [UIView animateWithDuration:0.5 animations:^{
-////        [approveButton setCenter:CGPointMake(HIDE_POSITION_APPROVE_BUTTON, approveButton.center.y)];
-////        [declineButton setCenter:CGPointMake(HIDE_POSITION_DECLINE_BUTTON, declineButton.center.y)];
-////        [self resetStatusView];
-////        [hiddenView setHidden:YES];
-//    } completion:^(BOOL finished) {
-//        //
-//    }];
-//}
 
 #pragma mark - Action Methods
 
@@ -335,7 +308,6 @@ NSString *const kTJCircularSpinner = @"TJCircularSpinner";
 
 -(void)onDecline{
     [scanButton setEnabled:YES];
-//    [self hideApproveDeclineView];
     NSString* message = @"Authentication was Declined";
     [self updateStatus:message];
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];

@@ -16,6 +16,8 @@
 "Logs" = "Logs";
 "Keys" = "Keys";
 
+"LoggedIn" = "Logged in to %@";
+
 "ScanText" = "Pair this device by scanning the QR code on a Super GLUU enabled service";
 "Welcome" = "Welcome";
 
@@ -75,5 +77,14 @@
 "FailedGettingCityName" = "Failed to recieve city name";
 
 "FaiedGetLocation" = "Failed to get location";
+
+"Information" = "Information";
+"UserName" = "User name";
+"Created" = "Created";
+"Application" = "Application";
+"Issuer" = "Issuer";
+"AuthenticationMode" = "Authentication mode";
+"AuthenticationType" = "Authentication type";
+"CloseButton" = "Close";
 
 

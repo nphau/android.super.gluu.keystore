@@ -16,6 +16,8 @@
 "Logs" = "Журнал";
 "Keys" = "Ключі";
 
+"LoggedIn" = "Ви увійшли до %@";
+
 "ScanText" = "Підключіть пристрій до Super GLUU сервісу відсканувавши QR код";
 "Welcome" = "Ласкаво просимо";
 
@@ -38,7 +40,7 @@
 "OK" = "OK";
 "Cancel" = "Відміна";
 "Approve" = "Підтвердити";
-"Decline" = "Відхилити";
+"Deny" = "Відхилити";
 
 "QRCodeScanning" = "Сканування QR коду ...";
 "QRCodeCalceled" = "Відміна сканування QR коду!";
@@ -72,6 +74,15 @@
 "ApproveDeclineTitle" = "To continue press %@, to stop %@";
 
 "FaiedGetLocation" = "Невдале визначення місцезнаходження";
+
+"Information" = "Інформація";
+"UserName" = "Ім'я користувача";
+"Created" = "Створено";
+"Application" = "Звернення";
+"Issuer" = "Видавець";
+"AuthenticationMode" = "Режим автентичності";
+"AuthenticationType" = "Тип автентичності";
+"CloseButton" = "Закрити";
 
 
 

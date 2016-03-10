@@ -71,6 +71,8 @@
 		BBB7C0EB1C88569400833B12 /* personIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0EA1C88569400833B12 /* personIcon.png */; };
 		BBB7C0F81C88933100833B12 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBB7C0F71C88933100833B12 /* CoreLocation.framework */; };
 		BBB7C0FC1C89FE3100833B12 /* gluuIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0FB1C89FE3100833B12 /* gluuIcon.png */; };
+		BBB7C1021C9042AF00833B12 /* NSDate+NVTimeAgo.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB7C1011C9042AF00833B12 /* NSDate+NVTimeAgo.m */; };
+		BBB7C1051C90723300833B12 /* InformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB7C1041C90723300833B12 /* InformationViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -202,6 +204,10 @@
 		BBB7C0EA1C88569400833B12 /* personIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = personIcon.png; sourceTree = "<group>"; };
 		BBB7C0F71C88933100833B12 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		BBB7C0FB1C89FE3100833B12 /* gluuIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gluuIcon.png; sourceTree = "<group>"; };
+		BBB7C1001C9042AF00833B12 /* NSDate+NVTimeAgo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+NVTimeAgo.h"; path = "NSDate-Time-Ago/NSDate+NVTimeAgo.h"; sourceTree = "<group>"; };
+		BBB7C1011C9042AF00833B12 /* NSDate+NVTimeAgo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+NVTimeAgo.m"; path = "NSDate-Time-Ago/NSDate+NVTimeAgo.m"; sourceTree = "<group>"; };
+		BBB7C1031C90723300833B12 /* InformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformationViewController.h; sourceTree = "<group>"; };
+		BBB7C1041C90723300833B12 /* InformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformationViewController.m; sourceTree = "<group>"; };
 		C3CC168E00F2364CCCFAAF3C /* Pods-super-gluu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-super-gluu.release.xcconfig"; path = "Pods/Target Support Files/Pods-super-gluu/Pods-super-gluu.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -544,6 +550,7 @@
 		BB37DEF61C7E0B8E0016D422 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				BBB7C0FF1C9042A000833B12 /* NSDate-Time-Ago */,
 				BB37DEF71C7E0B8E0016D422 /* Base64 */,
 				BB37DEFC1C7E0B8E0016D422 /* CustomAlertView */,
 				BB37DEFF1C7E0B8E0016D422 /* ECC */,
@@ -595,6 +602,8 @@
 		BB37DF071C7E0B8E0016D422 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				BBB7C1031C90723300833B12 /* InformationViewController.h */,
+				BBB7C1041C90723300833B12 /* InformationViewController.m */,
 				BB3BE1701C882D0600817A46 /* ApproveDenyViewController.h */,
 				BB3BE1711C882D0600817A46 /* ApproveDenyViewController.m */,
 				BB3BE1621C87022C00817A46 /* LicenseAgreementView.h */,
@@ -625,6 +634,15 @@
 				BB3BE1741C883B8900817A46 /* LecenseAgreementDelegate.h */,
 			);
 			name = Delegates;
+			sourceTree = "<group>";
+		};
+		BBB7C0FF1C9042A000833B12 /* NSDate-Time-Ago */ = {
+			isa = PBXGroup;
+			children = (
+				BBB7C1001C9042AF00833B12 /* NSDate+NVTimeAgo.h */,
+				BBB7C1011C9042AF00833B12 /* NSDate+NVTimeAgo.m */,
+			);
+			name = "NSDate-Time-Ago";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -839,6 +857,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB37DF3B1C7E0B8E0016D422 /* TJSpinner.m in Sources */,
+				BBB7C1021C9042AF00833B12 /* NSDate+NVTimeAgo.m in Sources */,
 				BB37DF381C7E0B8E0016D422 /* CustomIOS7AlertView.m in Sources */,
 				BB37DF221C7E0B8E0016D422 /* OXPushManager.m in Sources */,
 				BB37DF391C7E0B8E0016D422 /* GMEllipticCurveCrypto+hash.m in Sources */,
@@ -858,6 +877,7 @@
 				BB37DF1A1C7E0B8E0016D422 /* EnrollmentResponse.m in Sources */,
 				BB37DF161C7E0B8E0016D422 /* TokenEntity.m in Sources */,
 				BB37DE591C7E08320016D422 /* AppDelegate.m in Sources */,
+				BBB7C1051C90723300833B12 /* InformationViewController.m in Sources */,
 				BB37DF171C7E0B8E0016D422 /* AuthenticateRequest.m in Sources */,
 				BB37DF1C1C7E0B8E0016D422 /* TokenDevice.m in Sources */,
 				BB37DF191C7E0B8E0016D422 /* AuthenticateResponse.m in Sources */,
@@ -1024,15 +1044,15 @@
 			baseConfigurationReference = AF96591ABBB795E2D9A6DA5E /* Pods-super-gluu.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Gluu, Incorporated (FLRS8NH8Y9)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/super-gluu/Super-gluu_PrefixHeader.pch";
 				INFOPLIST_FILE = "super-gluu/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.gluu.super-gluu";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ios.gluu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4efbea76-397c-4487-ab7f-11a039f82c2b";
+				PROVISIONING_PROFILE = "7625f979-0747-4e16-8175-28dbd6ce7ae0";
 			};
 			name = Debug;
 		};
@@ -1041,15 +1061,15 @@
 			baseConfigurationReference = C3CC168E00F2364CCCFAAF3C /* Pods-super-gluu.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Gluu, Incorporated (FLRS8NH8Y9)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/super-gluu/Super-gluu_PrefixHeader.pch";
 				INFOPLIST_FILE = "super-gluu/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.gluu.super-gluu";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ios.gluu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4efbea76-397c-4487-ab7f-11a039f82c2b";
+				PROVISIONING_PROFILE = "7625f979-0747-4e16-8175-28dbd6ce7ae0";
 			};
 			name = Release;
 		};

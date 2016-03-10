@@ -39,7 +39,7 @@
                                         <rect key="frame" x="93" y="211" width="133" height="21"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="131" sectionHeaderHeight="28" sectionFooterHeight="28" id="rek-sC-UUS">
@@ -71,9 +71,9 @@
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logged in to CE Release" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0WW-ao-SFN">
                                                                     <rect key="frame" x="55" y="8" width="189" height="32"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gluuIcon.png" id="2VM-h2-jpK">
@@ -97,6 +97,7 @@
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <connections>
                                                     <outlet property="cellBackground" destination="gbl-CT-0e2" id="qJ8-KX-IfD"/>
+                                                    <outlet property="infoButton" destination="kFY-F0-vAU" id="KP6-Wa-0Xf"/>
                                                     <outlet property="logLabel" destination="0WW-ao-SFN" id="w1x-yx-Nbz"/>
                                                     <outlet property="logTime" destination="Lji-VJ-XKA" id="Sks-uh-MYO"/>
                                                 </connections>
@@ -113,7 +114,7 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Logs" image="menuIconImages" selectedImage="menuIconImages" id="2FH-Te-dZB">
+                    <tabBarItem key="tabBarItem" title="Logs" image="menuIconImages" selectedImage="menuIconSelectedImages" id="2FH-Te-dZB">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
                                 <color key="value" red="0.0039215686274509803" green="0.63137254901960782" blue="0.38039215686274508" alpha="1" colorSpace="calibratedRGB"/>
@@ -130,6 +131,178 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nGx-c4-kc4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1841" y="396"/>
+        </scene>
+        <!--Information View Controller-->
+        <scene sceneID="IfX-os-H52">
+            <objects>
+                <viewController storyboardIdentifier="InformationViewControllerID" id="Oeu-8W-g4d" customClass="InformationViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="clh-VC-Ds5">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="Khk-RP-d7l" userLabel="NavigationView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="66"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gl.png" id="Ipi-Br-v9g">
+                                        <rect key="frame" x="103" y="20" width="114" height="43"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.95627003209999994" green="0.95627003209999994" blue="0.95627003209999994" alpha="0.89302262929999998" colorSpace="calibratedRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="zEg-yg-XS2" userLabel="ContentView">
+                                <rect key="frame" x="0.0" y="68" width="320" height="500"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" id="FFl-1E-9h4">
+                                        <rect key="frame" x="0.0" y="82" width="320" height="260"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" id="v2S-Bp-jaL">
+                                                <rect key="frame" x="0.0" y="258" width="320" height="2"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.95627003209999994" green="0.95627003209999994" blue="0.95627003209999994" alpha="0.89302262929999998" colorSpace="calibratedRGB"/>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Information" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KCV-01-XJj">
+                                        <rect key="frame" x="22" y="53" width="276" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Ykg-pV-4Gb">
+                                        <rect key="frame" x="8" y="8" width="62" height="37"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Close">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="back:" destination="Oeu-8W-g4d" eventType="touchUpInside" id="Jbv-zy-huH"/>
+                                        </connections>
+                                    </button>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="utU-Fo-FbI">
+                                        <rect key="frame" x="0.0" y="82" width="320" height="259"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DMx-h3-IoA">
+                                                <rect key="frame" x="8" y="20" width="140" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Created" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jKc-1C-0cl">
+                                                <rect key="frame" x="10" y="65" width="140" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Application" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="TiD-XX-Sao">
+                                                <rect key="frame" x="8" y="109" width="140" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Issuer" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yDp-b2-0Xm">
+                                                <rect key="frame" x="8" y="148" width="140" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Authentication mode" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8KZ-zB-b9F">
+                                                <rect key="frame" x="8" y="194" width="140" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Authentication type" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZAc-RT-ZY6">
+                                                <rect key="frame" x="8" y="229" width="140" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="created" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="u0M-1Z-HPe">
+                                                <rect key="frame" x="158" y="65" width="154" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="application" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3x3-d5-Eag">
+                                                <rect key="frame" x="158" y="109" width="154" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="issuer" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="R3p-R8-6Q5">
+                                                <rect key="frame" x="158" y="141" width="154" height="36"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="authentication mode" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="SBT-dv-7bE">
+                                                <rect key="frame" x="158" y="191" width="154" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="authentication type" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="F6P-0i-O7Q">
+                                                <rect key="frame" x="158" y="230" width="154" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="user name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="uoC-Qk-F7t">
+                                                <rect key="frame" x="158" y="18" width="154" height="26"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <connections>
+                                            <outlet property="delegate" destination="Oeu-8W-g4d" id="eUP-D1-ton"/>
+                                        </connections>
+                                    </scrollView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="applicationLabel" destination="TiD-XX-Sao" id="B91-BC-x9Y"/>
+                        <outlet property="applicationValueLabel" destination="3x3-d5-Eag" id="91w-MU-b7x"/>
+                        <outlet property="authenticationModeLabel" destination="8KZ-zB-b9F" id="yKf-bB-HDR"/>
+                        <outlet property="authenticationTypeLabel" destination="ZAc-RT-ZY6" id="j8x-Sp-LrG"/>
+                        <outlet property="authenticationValueModeLabel" destination="SBT-dv-7bE" id="clt-c2-7hN"/>
+                        <outlet property="authenticationValueTypeLabel" destination="F6P-0i-O7Q" id="bWc-9j-z5D"/>
+                        <outlet property="closeButton" destination="Ykg-pV-4Gb" id="6R6-r7-1lM"/>
+                        <outlet property="createdLabel" destination="jKc-1C-0cl" id="qg5-ze-mCB"/>
+                        <outlet property="createdValueLabel" destination="u0M-1Z-HPe" id="yex-vO-LKz"/>
+                        <outlet property="issuerLabel" destination="yDp-b2-0Xm" id="de8-Ly-MT0"/>
+                        <outlet property="issuerValueLabel" destination="R3p-R8-6Q5" id="pmO-wj-Wkx"/>
+                        <outlet property="scrollView" destination="utU-Fo-FbI" id="XuU-qa-viF"/>
+                        <outlet property="userNameLabel" destination="DMx-h3-IoA" id="9c2-7a-mnI"/>
+                        <outlet property="userNameValueLabel" destination="uoC-Qk-F7t" id="AnW-cd-rGQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tus-rQ-Wsl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="854" y="817"/>
         </scene>
         <!--Keys-->
         <scene sceneID="hnK-d7-J9C">
@@ -158,20 +331,27 @@
                                         <rect key="frame" x="8" y="8" width="258" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="rename" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="g63-4O-uuc">
                                         <rect key="frame" x="8" y="28" width="304" height="21"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No keyHandles" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lGe-IW-Igg">
+                                        <rect key="frame" x="77" y="114" width="166" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="RP3-gx-BOp">
                                         <rect key="frame" x="8" y="49" width="304" height="392"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="KeyHandleCellID" id="fEM-pi-ogh" customClass="KeyHandleCell">
@@ -191,6 +371,11 @@
                                                             <rect key="frame" x="8" y="7" width="27" height="28"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
+                                                        <view contentMode="scaleToFill" id="pUu-lR-jea" userLabel="separatorView">
+                                                            <rect key="frame" x="36" y="40" width="246" height="1"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </view>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </tableViewCellContentView>
@@ -211,7 +396,7 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Keys" image="keysIconImages" selectedImage="keysIconImages" id="3FA-zV-5Af">
+                    <tabBarItem key="tabBarItem" title="Keys" image="keysIconImages" selectedImage="keysIconSelectedImages" id="3FA-zV-5Af">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
                                 <color key="value" red="0.0039215686274509803" green="0.63137254901960782" blue="0.38039215686274508" alpha="1" colorSpace="calibratedRGB"/>
@@ -240,7 +425,7 @@
                                 <rect key="frame" x="62" y="273" width="197" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" id="ogb-Jc-RlP" userLabel="MainContentView">
@@ -251,8 +436,8 @@
                                         <rect key="frame" x="28" y="-40" width="270" height="38"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To continue, press + button" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0s9-Pu-KnT">
-                                                <rect key="frame" x="7" y="8" width="255" height="21"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To continue, press + button" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0s9-Pu-KnT">
+                                                <rect key="frame" x="7" y="4" width="255" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -261,38 +446,45 @@
                                         </subviews>
                                         <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FDP-Hk-qh3">
-                                        <rect key="frame" x="40" y="111" width="240" height="49"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <view contentMode="scaleToFill" id="MvU-v9-edm">
-                                        <rect key="frame" x="28" y="168" width="270" height="96"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                    <view contentMode="scaleToFill" id="WkL-NJ-ypG" userLabel="WelcomeView">
+                                        <rect key="frame" x="28" y="91" width="270" height="173"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pair this device by scanning the QR code on a Super GLUU enabled service" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mMq-pl-qUw">
-                                                <rect key="frame" x="81" y="16" width="180" height="64"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FDP-Hk-qh3">
+                                                <rect key="frame" x="15" y="0.0" width="240" height="49"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ffN-SG-7rx">
-                                                <rect key="frame" x="8" y="16" width="65" height="65"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="backgroundColor" red="0.22164822916331628" green="0.49733651318285532" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="46"/>
-                                                <state key="normal" title="+">
-                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="scanAction:" destination="OWT-hQ-veb" eventType="touchUpInside" id="1eX-9l-bzY"/>
-                                                </connections>
-                                            </button>
+                                            <view contentMode="scaleToFill" id="MvU-v9-edm" userLabel="PairingView">
+                                                <rect key="frame" x="0.0" y="55" width="270" height="96"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pair this device by scanning the QR code on a Super GLUU enabled service" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mMq-pl-qUw">
+                                                        <rect key="frame" x="81" y="16" width="180" height="64"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ffN-SG-7rx">
+                                                        <rect key="frame" x="8" y="16" width="65" height="65"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <color key="backgroundColor" red="0.22164822916331628" green="0.49733651318285532" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="46"/>
+                                                        <state key="normal" title="+">
+                                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="scanAction:" destination="OWT-hQ-veb" eventType="touchUpInside" id="1eX-9l-bzY"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
+                                            </view>
                                         </subviews>
-                                        <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -311,7 +503,7 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" tag="1" title="Home" image="homeIconImages" selectedImage="homeIconImages" id="tcB-HC-Tjm">
+                    <tabBarItem key="tabBarItem" tag="1" title="Home" image="homeIconImages" selectedImage="homeIconSelectedImages" id="tcB-HC-Tjm">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
                                 <color key="value" red="0.0039215686274509803" green="0.63137254901960782" blue="0.38039215686274508" alpha="1" colorSpace="calibratedRGB"/>
@@ -336,164 +528,184 @@
             <objects>
                 <viewController storyboardIdentifier="ApproveDenyView" id="qPA-Ry-Ghp" customClass="ApproveDenyViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fsT-UK-oLr" userLabel="Main View">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="550"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" id="NZS-hn-11L">
-                                <rect key="frame" x="0.0" y="421" width="160" height="127"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="Approve">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="bYN-qN-Plc">
+                                <rect key="frame" x="0.0" y="20" width="320" height="404"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To continue, press Approve" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="djE-nb-tL9">
+                                        <rect key="frame" x="20" y="10" width="280" height="83"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" id="h8U-Nq-TLU" userLabel="InfoView">
+                                        <rect key="frame" x="20" y="90" width="280" height="49"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gluu Server CE Release" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fch-j5-bfM">
+                                                <rect key="frame" x="51" y="8" width="229" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="https://ce-release.gluu.org" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qzz-5M-0lP">
+                                                <rect key="frame" x="53" y="28" width="233" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <color key="textColor" red="0.22164822919999999" green="0.4973365132" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gluuIcon.png" id="OzQ-Jw-iTA">
+                                                <rect key="frame" x="0.0" y="11" width="30" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" id="g54-fa-ibW" userLabel="personView">
+                                        <rect key="frame" x="20" y="160" width="280" height="70"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="personIcon.png" id="jSe-Pu-zoF">
+                                                <rect key="frame" x="0.0" y="20" width="30" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Person Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eiQ-aW-3Gu">
+                                                <rect key="frame" x="52" y="24" width="228" height="26"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" id="4jC-k4-8EK" userLabel="locationView">
+                                        <rect key="frame" x="20" y="243" width="280" height="62"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="62.65.120.22" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EEY-Ss-Dan">
+                                                <rect key="frame" x="53" y="14" width="219" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Austin, TX" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fth-Iq-onf">
+                                                <rect key="frame" x="53" y="33" width="219" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="locationIconImages" id="OrZ-he-FZP">
+                                                <rect key="frame" x="-3" y="14" width="35" height="38"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" id="rAy-IJ-a7M" userLabel="timeView">
+                                        <rect key="frame" x="20" y="321" width="280" height="63"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timeIconImages" id="8lI-rU-Mc9">
+                                                <rect key="frame" x="0.0" y="13" width="30" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00 PM CST" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PJH-Fq-Iwi">
+                                                <rect key="frame" x="53" y="8" width="219" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="March 1, 2016" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="z9N-LG-bjv">
+                                                <rect key="frame" x="53" y="34" width="219" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="3Ib-ba-3Ec">
+                                        <rect key="frame" x="20" y="10" width="72" height="41"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <state key="normal" title="&lt; Back">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="back:" destination="qPA-Ry-Ghp" eventType="touchUpInside" id="rah-O4-WSs"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <connections>
-                                    <action selector="onApprove:" destination="qPA-Ry-Ghp" eventType="touchUpInside" id="wDN-nC-vNk"/>
+                                    <outlet property="delegate" destination="qPA-Ry-Ghp" id="74g-nc-3fu"/>
                                 </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5y3-pI-8Jg">
-                                <rect key="frame" x="160" y="421" width="160" height="127"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.98431372549999996" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="Deny">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="onDeny:" destination="qPA-Ry-Ghp" eventType="touchUpInside" id="NpY-WX-utL"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To continue, press Approve" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="djE-nb-tL9">
-                                <rect key="frame" x="20" y="20" width="280" height="83"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" id="h8U-Nq-TLU" userLabel="InfoView">
-                                <rect key="frame" x="20" y="100" width="280" height="49"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </scrollView>
+                            <view contentMode="scaleToFill" id="Jmo-5i-sWD" userLabel="ButtonView">
+                                <rect key="frame" x="0.0" y="422" width="320" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gluu Server CE Release" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fch-j5-bfM">
-                                        <rect key="frame" x="51" y="8" width="229" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" id="NZS-hn-11L">
+                                        <rect key="frame" x="0.0" y="1" width="160" height="127"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="https://ce-release.gluu.org" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qzz-5M-0lP">
-                                        <rect key="frame" x="53" y="28" width="233" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="textColor" red="0.22164822919999999" green="0.4973365132" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gluuIcon.png" id="OzQ-Jw-iTA">
-                                        <rect key="frame" x="0.0" y="11" width="30" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Approve">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onApprove:" destination="qPA-Ry-Ghp" eventType="touchUpInside" id="wDN-nC-vNk"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5y3-pI-8Jg">
+                                        <rect key="frame" x="160" y="1" width="160" height="127"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <color key="backgroundColor" red="0.98431372549999996" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <state key="normal" title="Deny">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onDeny:" destination="qPA-Ry-Ghp" eventType="touchUpInside" id="NpY-WX-utL"/>
+                                        </connections>
+                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="denyIcon.png" id="TCK-0a-MsC">
+                                        <rect key="frame" x="210" y="34" width="60" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="approveIcon.png" id="xXF-w0-eE6">
+                                        <rect key="frame" x="45" y="34" width="70" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <view contentMode="scaleToFill" id="g54-fa-ibW" userLabel="personView">
-                                <rect key="frame" x="20" y="157" width="280" height="70"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="personIcon.png" id="jSe-Pu-zoF">
-                                        <rect key="frame" x="0.0" y="20" width="30" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Person Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eiQ-aW-3Gu">
-                                        <rect key="frame" x="52" y="24" width="228" height="26"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <view contentMode="scaleToFill" id="4jC-k4-8EK" userLabel="locationView">
-                                <rect key="frame" x="20" y="226" width="280" height="62"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="62.65.120.22" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EEY-Ss-Dan">
-                                        <rect key="frame" x="53" y="14" width="219" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Austin, TX" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fth-Iq-onf">
-                                        <rect key="frame" x="53" y="33" width="219" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="locationIconImages" id="OrZ-he-FZP">
-                                        <rect key="frame" x="-3" y="14" width="35" height="38"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <view contentMode="scaleToFill" id="rAy-IJ-a7M" userLabel="timeView">
-                                <rect key="frame" x="20" y="296" width="280" height="63"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timeIconImages" id="8lI-rU-Mc9">
-                                        <rect key="frame" x="0.0" y="13" width="30" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00 PM CST" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PJH-Fq-Iwi">
-                                        <rect key="frame" x="53" y="8" width="219" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="March 1, 2016" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="z9N-LG-bjv">
-                                        <rect key="frame" x="53" y="34" width="219" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="approveIcon.png" id="xXF-w0-eE6">
-                                <rect key="frame" x="45" y="453" width="70" height="60"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="denyIcon.png" id="TCK-0a-MsC">
-                                <rect key="frame" x="210" y="453" width="60" height="60"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="3Ib-ba-3Ec">
-                                <rect key="frame" x="45" y="25" width="72" height="41"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="&lt; Back">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="back:" destination="qPA-Ry-Ghp" eventType="touchUpInside" id="rah-O4-WSs"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="550"/>
                     <connections>
                         <outlet property="approveRequest" destination="NZS-hn-11L" id="YzR-Of-iqh"/>
                         <outlet property="backButton" destination="3Ib-ba-3Ec" id="PLH-fF-Khz"/>
+                        <outlet property="buttonView" destination="Jmo-5i-sWD" id="1lf-FU-eox"/>
                         <outlet property="cityNameLabel" destination="fth-Iq-onf" id="F2Q-p2-3cx"/>
                         <outlet property="createdDateLabel" destination="z9N-LG-bjv" id="CPZ-jj-5mc"/>
                         <outlet property="createdTimeLabel" destination="PJH-Fq-Iwi" id="vE0-XX-sfT"/>
                         <outlet property="denyRequest" destination="5y3-pI-8Jg" id="fVY-WB-EK1"/>
                         <outlet property="locationLabel" destination="EEY-Ss-Dan" id="8JJ-tX-QKr"/>
                         <outlet property="locationView" destination="4jC-k4-8EK" id="Oon-pk-i4M"/>
+                        <outlet property="scrollView" destination="bYN-qN-Plc" id="4GB-xM-fEE"/>
                         <outlet property="serverNameLabel" destination="fch-j5-bfM" id="NA3-Jo-T6J"/>
                         <outlet property="serverUrlLabel" destination="qzz-5M-0lP" id="mVo-dn-dvP"/>
                         <outlet property="serverView" destination="h8U-Nq-TLU" id="J7o-1J-4dL"/>
@@ -552,73 +764,213 @@
                                 <rect key="frame" x="2" y="62" width="316" height="420"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <mutableString key="text">Sample Software License Agreement
+                                <string key="text">Short Version
+You may only use the SUPER GLUU mobile application in connection with GLUU’s services and third-party OATH-compliant OTP tokens, and in full compliance with the terms and conditions of the full End User License Agreement, set forth below. In order to provide and improve our services, we collect certain information about you, your use of SUPER GLUU and your devices. To learn more about your rights and our obligations regarding this information, please read the full End User License Agreement, below, as well as our Privacy Policy, which is available on our website at https://www.gluu.org/privacy-policy/.
+Long Version
+GLUU, INC. 
+END USER LICENSE AGREEMENT 
 
+EFFECTIVE AS OF March 10, 2015 
 
-This Software License is made by (AV COMPANY NAME), (address of AV COMPANY NAME), to the Customer as an essential element of the services to be rendered by (AV COMPANY NAME) as defined in the system specification and any associated documents and agreement. System shall mean the deliverable product as defined in these documents.
+PLEASE READ CAREFULLY THE TERMS AND CONDITIONS OF THIS END USER LICENSE AGREEMENT (THIS "EULA") BEFORE DOWNLOADING, INSTALLING OR USING ANY SERVICES (AS DEFINED BELOW) OR SOFTWARE (AS DEFINED BELOW) PROVIDED BY GLUU, INC. ("GLUU") OR ENABLING ANY SUCH SERVICES AND/OR OR SOFTWARE.
 
-Customer and (AV COMPANY NAME) agree that this Software License is deemed to be part of, and subject to, the terms of the Agreement applicable to both parties.
+THE SOFTWARE IS TO BE USED EXCLUSIVELY IN CONNECTION WITH GLUU'S SERVICES. GLUU OFFERS THE SERVICES ONLY TO CUSTOMERS (AS DEFINED BELOW) THAT HAVE ORDERED THE SERVICES SUBJECT TO OUR ORDER FORM(S) (DEFINED BELOW) AND SERVICE TERMS AND CONDITIONS. YOU MAY ONLY USE THE SERVICES, INCLUDING SOFTWARE, IF YOU ARE A CUSTOMER OR A USER (AS DEFINED BELOW). 
 
-SECTION 1	LICENSE GRANT AND OWNERSHIP
+IF YOU RECEIVE THE SERVICES AND/OR SOFTWARE AS A USER (AS DEFINED BELOW) THROUGH AN ENTITY (SUCH AS IN YOUR CAPACITY AS AN EMPLOYEE OR CUSTOMER OF SUCH ENTITY), THEN THE WRITTEN AGREEMENT OR GLUU SERVICE TERMS AND CONDITIONS AVAILABLE ON GLUU’S WEBSITE THAT HAVE BEEN AGREED TO BETWEEN GLUU, INC. AND THAT ENTITY (AS APPLICABLE, THE “SERVICE TERMS AND CONDITIONS”) WILL ALSO GOVERN YOUR USE OF THE SERVICES AND/OR SOFTWARE. IF THERE IS A CONFLICT BETWEEN ANY TERM IN THIS EULA AND ANY TERM IN THE SERVICE TERMS AND CONDITIONS, THEN THE TERM IN THE SERVICE TERMS AND CONDITIONS WILL APPLY, UNLESS EXPLICITLY STATED OTHERWISE IN THIS EULA. 
 
-1.1	(AV COMPANY NAME) hereby grants to Customer a worldwide, perpetual, non-exclusive, non-transferable license to all software for Customer’s use in connection with the establishment, use, maintenance and modification of the system implemented by (AV COMPANY NAME). Software shall mean executable object code of software programs and the patches, scripts, modifications, enhancements, designs, concepts or other materials that constitute the software programs necessary for the proper function and operation of the system as delivered by the (AV COMPANY NAME) and accepted by the Customer.
-1.2	Except as expressly set forth in this paragraph, (AV COMPANY NAME) shall at all times own all intellectual property rights in the software. Any and all licenses, product warranties or service contracts provided by third parties in connection with any software, hardware or other software or services provided in the system shall be delivered to Customer for the sole benefit of Customer.
-1.3	Customer may supply to (AV COMPANY NAME) or allow the (AV COMPANY NAME) to use certain proprietary information, including service marks, logos, graphics, software, documents and business information and plans that have been authored or pre-owned by Customer. All such intellectual property shall remain the exclusive property of Customer and shall not be used by (AV COMPANY NAME) for any purposes other than those associated with delivery of the system.
+TERMS AND CONDITIONS
+1. DEFINITIONS
 
-SECTION 2	COPIES, MODIFICATION, AND USE
+1.1 “Customer” means the customer that has signed up for the Services and agreed to the terms of this Agreement.
 
-2.1	Customer may make copies of the software for archival purposes and as required for modifications to the system. All copies and distribution of the software shall remain within the direct control of Customer and its representatives.
-2.2	Customer may make modifications to the source code version of the software, if and only if the results of all such modifications are applied solely to the system. In no way does this Software License confer any right in Customer to license, sublicense, sell, or otherwise authorize the use of the software, whether in executable form, source code or otherwise, by any third parties, except in connection with the use of the system as part of Customer’s business.
-2.3	All express or implied warranties relating to the software shall be deemed null and void in case of any modification to the software made by any party other than (AV COMPANY NAME).
+1.2 “Customer Data” means any information or data about Customer or Users (and its and their staff, customers or suppliers, as applicable), that is supplied to GLUU by or on behalf of Customer or any User in connection with the Services, or which GLUU is required to access, generate, process, store or transmit pursuant to this Agreement, including (but without limitation) information about Customer’s and Users’ respective devices, computers and use of the Services. 
 
-SECTION 3	WARRANTIES AND REPRESENTATIONS
+1.3 “Customer Personal Data” means any Customer Data that is personal data (as defined under the DPA). 
 
-(AV COMPANY NAME) represents and warrants to Customer that:
+1.4 “Data Protection Laws” means the DPA, EC Directive 95/46/EEC, EC Directive 2002/58/EC, the UK Privacy and Electronic Communications (EC Directive) Regulations 2003 and any other applicable data protection laws, regulations and legally binding codes of practice from time to time in force applicable to the performance of a party's obligations under this Agreement.
 
-it has all necessary rights and authority to execute and deliver this Software License and perform its obligations hereunder and to grant the rights granted under this Software License to Customer; 
-the goods and services provided by contractor under this Software License, including the software and all intellectual property provided hereunder, are original to (AV COMPANY NAME) or its subcontractors or partners; and
-the software, as delivered as part of the system, will not infringe or otherwise violate the rights of any third party, or violate any applicable law, rule or regulation.
-3.4	(AV COMPANY NAME) further represents and warrants that, throughout the System Warranty Period, the executable object code of software and the system will perform substantially in accordance with the System Specifications and Agreement. If the software fails to perform as specified and accepted all remedies are pursuant to the policies set forth in the Specification and in the Agreement. No warranty of any type or nature is provided for the source code version of the software which is delivered as is.
-3.5	Except as expressly stated in this Agreement, there are no warranties, express or implied, including, but not limited to, the implied warranties of fitness for a particular purpose, of merchantability, or warranty of no infringement of third party intellectual property rights.
+1.5 “Documentation” means guides, instructions, policies and reference materials provided to Customer by GLUU in connection with the Services, including the documentation located at https://www.gluu.org/docs, which may be amended from time to time.
 
-SECTION 4	INDEMNIFICATION
+1.6 “DPA” means the UK Data Protection Act of 1998.
 
-4.1	(AV COMPANY NAME) hereby indemnifies and shall defend and hold harmless Customer, its parent companies and its and their subsidiaries, affiliates, officers, directors, employees, agents and subcontractors from and against all liability, damages, loss, cost or expense, including but not limited to reasonable attorneys’ fees and expenses, arising out of or in connection with any breach or alleged breach of the Agreement or any third party claims that the software or system here provided by (AV COMPANY NAME) infringes or otherwise violates any rights of any such third party.
-4.2	Customer hereby indemnifies and shall defend and hold harmless (AV COMPANY NAME), its and their subsidiaries, affiliates, officers, directors, employees, agents and subcontractors from and against all liability, damages, loss, cost or expense, including but not limited to reasonable attorneys’ fees and expenses, arising out of or in connection with any third party claims that Customer’s use of the software in contravention of the grant of rights infringes or otherwise violates any rights of any such third party.
-4.3	Upon the assertion of any claim or the commencement of any suit or proceeding against an indemnitee by any third party that may give rise to liability of an indemnitor hereunder, the indemnitee shall promptly notify the indemnitor of the existence of such a claim and shall give the indemnitor reasonable opportunity to defend and to settle the claim at its own expense and with counsel of its own selection. The indemnitee shall cooperate with the indemnitor, shall at all times have the right full to participate in such a defense at its own expense and shall not be obligated, against its consent, to participate in any settlement which it reasonably believes would have an adverse effect on its business.
+1.7 “SUPER GLUU Software” means all GLUU proprietary mobile applications (available on iPhone, Android, Palm, Blackberry, Windows Mobile and other supported mobile devices) used in providing the Services, and any updates, fixes and/or patches developed from time to time.
 
-SECTION 5	TRANSFER AND TERMINATION
+1.8 “Fees” means the applicable fees as set forth on the Order Form.
 
-This license will automatically terminate upon the disassembly of the system cited above, unless the system is reassembled in its original configuration in another location.
+1.9 “Hardware Tokens” mean hardware security tokens purchased by Customer under an Order Form.
 
-(AV COMPANY NAME) may terminate this license upon notice for failure to comply with any of terms set forth in this Software License. Upon termination, Customer is obligated to immediately destroy the software, including all copies and modifications.
+1.10 “Integration Software” means (a) GLUU proprietary software and (b) open source software used in providing the Services which integrates with Customer’s network or application, including SSL or other VPN, Unix operating system, and/or web application, as provided in the Documentation and any updates, fixes and/or patches developed from time to time. 
 
-As Customer’s duly authorized representative, I have read and agree to this License.
+1.11 “Intellectual Property Rights” means all patents, registered designs, unregistered designs, design rights, utility models, database rights, copyright and other similar statutory rights, trademark, service mark and any know how relating to algorithms, drawings, tests, reports and procedures, models, manuals, formulae, methods, processes and the like (including applications for any of the preceding rights) or any other intellectual or industrial property rights of whatever nature in each case in any part of the world and whether or not registered or registerable, for the full period and all extensions and renewals where applicable.
 
-Customer	
+1.12 “Order Form(s)” means the invoice or other forms from GLUU for the initial order for the Service, and any subsequent invoice or other forms from GLUU (submitted in written form or online), specifying, among other things, the maximum number of Users, the initial Term, the purchase of any Hardware Tokens, the Fees, telephony credits (if any), and such other charges and terms as agreed between the parties. 
 
-Printed name of signatory	
+1.13 “Payment Schedule” means the schedule selected by Customer for payment of Fees (on either an order webpage or an attached Order Form), which may be either monthly by credit card or annually or multi-year and invoiced in advance, with payment due within thirty days of receipt of invoice.
 
-Signature	 	Date 	
+1.14 “Performance Data” means data with respect to usage and other aggregate measures of the Services’ performance that GLUU may collect from time to time.
 
+1.15 “Services” means the products and services that are ordered by and/or made available to Customer under a free trial or an Order Form (including, where applicable, the Software, Hardware Tokens and services using only the SUPER GLUU Software) and made available online by GLUU, including associated offline components, as described in the Documentation. The term “Services” does not include the Third Party Services.
 
-Rev4. Sept 2003
+1.16 “Service Level Agreement” or “SLA” means the description of support provided to Customers and its Users and of the availability of the Services, which descriptions may be found at: https://www.gluu.org/entitlements.
 
-Disclaimer: ICIA® provides this Sample Software License Agreement for illustration purposes only and makes no warranty, express or implied, including the warranties of merchantability and fitness for a particular purpose, or assumes any legal liability or responsibility for the accuracy, completeness, or usefulness of any information, or represents that its use would not infringe privately owned rights.
+1.17 “Software” means the Integration Software and SUPER GLUU Software. 
 
+1.18 “Telephony Credits” mean credits for Customer’s Users to provide authentication by telephone or SMS. 
 
+1.19 “Term” means the subscription term indicated on the Order Form and any subsequent renewal terms. 
 
+1.20 “User” means any user of the Services who Customer may authorize to enroll to use the Services under the terms of this Agreement.
 
+2. SERVICES FOR CUSTOMER; GLUU OBLIGATIONS
 
+2.1 Subject to and conditioned on Customer's payment of the Fees and full compliance with all other terms and conditions of this Agreement, GLUU grants Customer and Users a non-exclusive, non-sublicensable, non-transferable license to access and use the Services, along with such Documentation as GLUU may make available during the Term. 
 
+2.2 The Services and SLA are subject to modification from time to time at GLUU’s sole discretion, provided the modifications do not materially diminish the functionality of the Services provided by GLUU and the Services continue to perform according to the description of the Services specified in Section 2.3 in all material aspects. Customer shall have the right to terminate the Agreement pursuant to Section 10.2 without any penalty if (i) a material modification to the Services or the SLA is made which materially diminishes the functionality of the Services or materially diminishes the SLA, (ii) GLUU has not obtained Customer’s consent for such modifications and (iii) Gluu, Inc. does not provide a remedy in the cure period stated in Section 10.2.
 
+2.3 GLUU will make the Services available and the Services will perform substantially in accordance with the description of the services found at http://www.gluu.org/pricing. Notwithstanding the foregoing, GLUU reserves the right to suspend Customer’s (or any of its Users’) access to the Services: (i) for scheduled or emergency maintenance, (ii) in the event Customer is in breach of this Agreement, including failure to pay any amounts due to GLUU, and fails to correct that breach within the applicable cure period; (iii) in the event that Customer breaches Section 4 or Section 7 of this Agreement, (iv) as it deems reasonably necessary to respond to any actual or potential security concerns or (v) based on GLUU’s reasonable belief that Customer and/or the Users use of the Services are excessive, interfering with use by other customers and users or are violating applicable laws, rules or regulations.
 
+2.4 For Customers enrolled in one of the editions of Services requiring purchase, subject to full compliance with the terms and conditions of this Agreement, GLUU will use commercially reasonable efforts to provide support to Customer as described in the Service Level Agreement. The SLA shall apply only with respect to Customers who have enrolled in one of the editions of Services requiring purchase. Certain parts of the Services or types of Services provided by GLUU are free to use and do not require payment (“Free Services”). In the event that Customer earns 15 days of service credits, determined in accordance with the terms of the Service Level Agreement, in each of three consecutive months, Customer may terminate this Agreement and, as its sole and exclusive remedy, receive a refund of any pre-paid subscription Fees paid by Customer to GLUU for Services not rendered as of the termination date. The SLA shall not apply with respect to Customers who use only Free Services and, without limitation, such Customers will not receive any support from GLUU.
 
+2.5 GLUU collects certain information about Customer and its Users as well as their respective devices, computers and use of the Services. GLUU uses, discloses and protects this information as described in this Agreement and GLUU’s privacy policy, which is incorporated herein by reference and the current version of which is available at https://www.gluu.org/privacy-policy/ (the “Privacy Policy”). 
 
+2.6 Use of the Services by Customer and its Users is also governed by GLUU’s Service Terms and Conditions which is available at https://www.Gluu, Inc..com/legal/terms, which is incorporated herein by reference.
 
+2.7 Users will be required to review and agree to the terms of an end user license agreement (“EULA”) on their device(s) prior to accessing the Services. With respect to the relationship between GLUU, Customer and the Users, the EULA will generally provide that the terms of any agreements between GLUU and its Customers will govern instead of the EULA with respect to use by Users with access to the Services through such Customers. 
 
+3. CUSTOMER RESPONSIBILITIES 
 
-</mutableString>
+3.1 Customer may only use the Services in accordance with the Documentation and as explicitly set forth in this Agreement. Customer will cooperate with GLUU in connection with the performance of this Agreement as may be necessary, which may include making available such personnel and information as may be reasonably required to provide the Services or support. Customer is solely responsible for determining whether the Services are sufficient for its purposes, including but not limited to, whether the Services satisfy Customer’s legal and/or regulatory requirements.
+
+3.2 Use of the Services may require Users to install SUPER GLUU Software on their mobile devices. Such use shall be subject to the terms of the EULA. Notwithstanding a conflict with any of the terms of this Agreement or the Service Terms and Conditions, the terms found at Exhibit A, and as updated from time to time at store.apple.com, apply to Customer’s and Customer’s Users’ use of the Services on any platform, including iPhone and iPad applications, available via the Apple, Inc. (“Apple”) App Store. Other terms may apply with respect to other third party products and software accessible via the Services and with respect to devices using other third party operating systems or software or in the event that SUPER GLUU Software is downloaded from other third party sites (collectively, along with the Apple App Store, “Third Party Services”). Customer’s access and use of Third Party Services is governed solely by the terms and conditions of such Third Party Services. GLUU does not endorse, is not responsible or liable for, makes no representations or warranties and provides no indemnification with respect to any aspect of the Third Party Services, notwithstanding anything in this Agreement to the contrary. Customer agrees to waive any claim against GLUU with respect to the Third Party Services. GLUU is not liable for any damage or loss caused or alleged to be caused by or in connection with enablement, access or use of any such Third Party Services, or Customer’s reliance on the privacy practices, data security processes or other policies of such Third Party Services.  Gluu, Inc. does not provide customer support or assistance with respect to the Third Party Services. Users may be required to register for or log into such Third Party Services on their respective websites or apps.  
+
+3.3 Customer acknowledges that the Services will require the Users to share with GLUU certain information for the purposes of providing the Services, such as user names, password and other login information. This information may include personal information (such as email address, and/or phone number) regarding the Users, and GLUU will use such information for the purposes of providing the Services to Customer and Users. Prior to authorizing an individual to become a User, Customer is fully responsible for obtaining the consent of that individual, in accordance with all applicable laws, to the use of his/her information by GLUU for purposes of providing the Services, which use shall be governed by the terms of the Privacy Policy. Customer represents and warrants that all such consents have been or will be obtained prior to authorizing any individual to become a User.
+
+3.4 Users will be required to review and agree to GLUU’s Privacy Policy, Service Terms and Conditions, and EULA. Notwithstanding the foregoing, Customer will be fully responsible for Users’ compliance with this Agreement, the Privacy Policy, the Service Terms and Conditions, and the EULA. Any breach of this Agreement or such other terms by a User shall be deemed to be a breach by Customer. Customer is solely responsible for determining whether the Services are sufficient for Customer’s purposes. 
+
+3.5 There will be no force or effect given to any different or additional terms contained in any purchase order or similar form issued by either party, even if signed by the parties after the date hereof unless such terms are included in an amendment in accordance with the terms of Section 14.3 of this Agreement. Each party’s acceptance of this Agreement was and is expressly conditional upon the other’s acceptance of the terms contained in the Agreement to the exclusion of all other terms.
+
+4. RESTRICTIONS
+Customer will not, and will not permit any of its Users nor any third party to: reverse engineer, decompile, disassemble or otherwise attempt to discover the source code, object code or underlying structure, ideas or algorithms of the Services, Software, Hardware Tokens or any data related to the Services (except to the extent such prohibition is contrary to applicable law that cannot be excluded by the agreement of the parties); modify, translate, or create derivative works based on the Services or Software; share, rent, lease, loan, resell, sublicense, distribute, use or otherwise transfer the Services or Software for timesharing or service bureau purposes or for any purpose other than its own use; or use the Services or Software other than in accordance with this Agreement and in compliance with all applicable laws and regulations (including but not limited to any European privacy laws and intellectual property laws).
+
+5. PAYMENT OF FEES
+
+5.1 Customer will pay GLUU the Fees plus all applicable sales, use and other purchase related taxes (or provide GLUU with a valid certificate of exemption from the requirement of paying sales, use or other purchase related taxes) in accordance with the payment terms set forth on the Order Form. Except as otherwise indicated in the applicable Order Form, all fees and expenses shall be in U.S. dollars. Unpaid Fees are subject to a finance charge of one percent (1.0%) per month, or the maximum permitted by law, whichever is lower, plus all expenses of collection, including reasonable attorneys’ fees. In the case of any withholding requirements, Customer will pay any required withholding itself and will not reduce the amount paid to GLUU on account thereof. If the method of payment is by credit card, Customer agrees to (a) keep Customer’s credit card information updated and (b) authorize Gluu, Inc. to charge Customer’s credit card the Fees as and when due. GLUU will not charge users any fees for their use of the Services or SUPER GLUU Software without Customer’s authorization. Users’ carriers or service providers may charge fees for data usage, messaging, phone calls or other services that are required for them to use the Services. All payments will be made in accordance with the Payment Schedule.
+
+5.2 Customer’s Order Form will indicate an initial allotment of Telephony Credits, if applicable. Customer may purchase additional Telephony Credits separately via the billing section of Customer’s administrative interface or by contacting a sales representative. U.S. and international rates for telephony can be found at https://www.duosecurity.com/docs/telephony_credits.
+
+5.3 If a Customer uses only Free Services, GLUU will not charge such Customer any Fees for use of such Free Services or download, installation or use of the Software associated with Free Services. Such Customer may discontinue using the Free Services at any time, but must immediately remove any Software from its devices.
+
+5.4 At any time during the Term, and unless otherwise agreed to in writing by the parties, any increase or overage in the maximum number of Users specified in the Order Form will be treated in accordance with this Section 5.4 (a “Subscription Upgrade”). The maximum number of Users shall be increased as follows: 
+For Subscription Upgrades (i) for Customers where the maximum number of Users on the Order Form is fewer than 500 Users, the maximum number of Users will be increased automatically in increments equal to 50 Users, (ii) for Customers where the maximum number of Users on the Order Form is 500 - 1000 Users, the maximum number of Users will be increased automatically in increments equal to 100 Users, and (ii) for Customers where the maximum number of Users on the Order Form is 1001 or greater, the maximum number of Users will be increased automatically in increments equal to 250 Users. 
+GLUU shall invoice Customer for the increase in the maximum number of Users at the subscription rate and payment terms specified in the most recent Order Form, which will be prorated for the remainder of the then applicable subscription Term. For any future subscription Term, the number of Users and applicable Fees will reflect any Subscription Upgrades. 
+
+6. CONFIDENTIALITY
+
+6.1 Each party (the “Receiving Party”) understands that the other party (the “Disclosing Party”) has disclosed or may disclose information relating to the Disclosing Party’s technology, Users or business, including without limitation the pricing and other terms of this Agreement (hereinafter referred to as “Confidential Information” of the Disclosing Party). 
+
+6.2 The Receiving Party agrees: (i) not to disclose the Confidential Information to any third person other than those of its employees, investors and potential acquirers with a need to have access thereto and who have entered into non-disclosure and non-use agreements applicable to the Disclosing Party’s Confidential Information, and (ii) to use such Confidential Information solely as reasonably required in connection with the Services and/or this Agreement. The Receiving Party further agrees to take the same security precautions to protect against unauthorized disclosure or unauthorized use of such Confidential Information of the Disclosing Party that the party takes with its own confidential or proprietary information, but in no event will a party apply less than reasonable precautions to protect such Confidential Information. Each party acknowledges that the use of such precautions is not a guarantee against unauthorized disclosure or use. The Disclosing Party agrees that the foregoing will not apply with respect to any information that the Receiving Party can document (a) is or becomes generally available to the public without any action by, or involvement of, the Receiving Party, or (b) was in its possession or known by it prior to receipt from the Disclosing Party, or (c) was rightfully disclosed to it without restriction by a third party, or (d) was independently developed without use of any Confidential Information of the Disclosing Party. Nothing in this Agreement will prevent the Receiving Party from disclosing the Confidential Information pursuant to any judicial or governmental order, provided that, to the extent permitted by law, the Receiving Party gives the Disclosing Party reasonable prior notice of such disclosure to contest such order. For the avoidance of doubt, Customer acknowledges that GLUU utilizes the services of certain third parties in connection with the provision of the Services (such as data hosting and telephony service providers) and the provision of the Third Party Services and such third parties will have access to Customer’s Confidential Information, subject to compliance with this Section 6. The parties agree that Performance Data and any other de-identified information in any form or format is not Confidential Information and will not be subject to any confidentiality restrictions or obligations. 
+
+6.3 Customer acknowledges that GLUU does not wish to receive any Confidential Information from Customer that is not necessary for GLUU to perform its obligations under this Agreement, and, unless the parties specifically agree otherwise, GLUU may reasonably presume that any unrelated information received from Customer is not confidential or Confidential Information, unless such information is marked as “Confidential”.
+
+7. INTELLECTUAL PROPERTY RIGHTS; OWNERSHIP
+
+Except as expressly set forth herein, GLUU alone (and its licensors, where applicable) will retain all Intellectual Property Rights relating to the Services or the Software or any suggestions, ideas, enhancement requests, feedback, recommendations or other information provided by Customer or any third party relating to the Services and/or the Software, which are hereby assigned to GLUU. Customer will not copy, distribute, reproduce or use any of the foregoing except as expressly permitted under this Agreement. As between the parties, GLUU will own all Performance Data, all other forms of aggregated information, and all de-identified data relating to any User and/or the Services. This Agreement is not a sale and does not convey to Customer any rights of ownership in or related to the Services or Software, or any Intellectual Property Rights. 
+
+8. DATA PROTECTION
+
+8.1 In this Section 8, the terms “personal data”, “data processor”, “data subject”, “process and processing” and “data controller” shall be as defined in the DPA. 
+
+8.2 For the purposes of the Data Protection Laws, as between Customer and GLUU, the parties agree that Customer shall at all times be the data controller and GLUU shall be the data processor with respect to the processing of Customer Personal Data in connection with this Agreement. 
+
+8.3 By entering into this Agreement, Customer agrees that GLUU may collect, retain and use certain Customer Personal Data (which may include, without limitation, names, mobile telephone numbers, IP addresses and email addresses of Users) in connection with the Services. As the data controller of such Customer Personal Data, Customer shall be responsible for ensuring that, and warrants and represents to GLUU that it shall ensure that any processing of Customer Personal Data in connection with the Services shall comply with the Data Protection Laws. This shall include (without limitation) ensuring that Customer: (a) has given adequate notice and made all appropriate disclosures to the data subjects regarding Customer's and/or GLUU's use and disclosure of Customer Personal Data, including (but without limitation) for the provision of the Services; and (b) has and/or obtains all necessary rights, and where applicable, all appropriate and valid consents from the data subjects to share such personal data with GLUU and to permit use of Customer Personal Data by GLUU for the purposes of the provision of the Services and performing its obligations under this Agreement or as may be required by applicable law (“Purpose”), including (but without limitation) notifying the data subject of the transfer of Customer Data outside of the European Economic Area to countries whose laws they have acknowledged may provide a lower standard of data protection than exists in the European Economic Area (“EEA"). 
+
+8.4 As a data processor in relation to all Customer Personal Data, GLUU agrees:
+
+(a) it shall implement appropriate technical and organizational measures to protect against unauthorized or unlawful processing (including disclosure or access) of such Customer Personal Data and against accidental loss or destruction of, or damage to, such data, having regard to the state of technological developments and the cost of implementing those measures and the nature of personal data to be protected; 
+
+(b) it shall only process Customer Personal Data on behalf of Customer to the extent and in such a manner, as is necessary for the Purpose and shall not use Customer Personal Data for any other purpose without the prior written consent of Customer; and
+
+(c) it shall process Customer Personal Data only on, and in accordance with, Customer's instructions contained in this Agreement or any other reasonable instructions received from Customer from time to time. 
+
+8.5 Customer acknowledges that Customer Personal Data will be collected, transferred and stored by GLUU outside the EEA in the United States of America, whose laws may provide a lower standard of data protection than exists in the EEA. For these purposes, GLUU currently confirms that it currently complies with the US-EU Safe Harbor and the U.S.-Swiss Safe Harbor Framework as set forth by the US Department of Commerce, regarding the collection, use and retention of personal data from the European Union member countries. GLUU has certified that it adheres to the Safe Harbor Privacy Principles of notice, choice, onward transfer, security, data integrity, access and enforcement. To learn more about the Safe Harbor program generally, and to view the GLUU certification, please visit http://www.export.gov/safeharbor.
+
+8.6 Customer acknowledges that GLUU is reliant on Customer for direction as to the extent to which GLUU is entitled to use and process Customer Data. Consequently, GLUU will not be liable for any claim brought by a data subject to the extent that such action or omission resulted directly from Customer's instructions. Customer undertakes to comply in all respects with any applicable laws, regulations, standards and guidelines applicable to personal data and shall use all reasonable endeavors to where possible anonymise personal data sent to GLUU.
+
+9. INDEMNIFICATION.
+For Customers enrolled in one of the editions of Services requiring purchase, GLUU shall indemnify and hold Customer harmless from liability to third parties resulting from infringement by the Services of any United States or United Kingdom patent or any copyright or misappropriation of any trade secret, provided GLUU is promptly notified of any and all threats, claims and proceedings related thereto and given reasonable assistance and the opportunity to assume sole control over defense and settlement; GLUU will not be responsible for any settlement it does not approve. The foregoing obligations do not apply with respect to portions or components of the Services (i) not created by GLUU, (ii) resulting in whole or in part from Customer specifications, (iii) that are modified after delivery by GLUU, (iv) combined with other products, processes or materials where the alleged infringement relates to such combination, (v) where Customer continues allegedly infringing activity after being notified thereof or after being informed of modifications that would have avoided the alleged infringement, or (vi) where Customer’s use of Services is not strictly in accordance with this Agreement and all related Documentation. If GLUU receives information about an actual or alleged infringement or misappropriation claim that would be subject to indemnification rights set forth in this Section 9, GLUU shall have the option, at its expense, to (i) modify the Software to be non-infringing; or (ii) obtain for Customer a license to continue using the Software. If GLUU determines it is not commercially reasonable to perform either of the above options, then GLUU may at its option elect to terminate the license for the Services and refund the unearned portion of any pre-paid subscription Fees, pro-rated on a monthly basis. THIS SECTION STATES CUSTOMER’S SOLE AND EXCLUSIVE REMEDY FOR INFRINGEMENT, MISAPPROPRIATION AND/OR CLAIMS ALLEGING INFRINGEMENT OR MISAPPROPRIATION. Customer will indemnify GLUU from all damages, costs, settlements, attorneys’ fees and expenses related to any claim related to (i) infringement or misappropriation not otherwise subject to GLUU's indemnification obligation set forth in this Section 9 and (ii) Customer’s breach of Section 3.3 relating to obtaining User consent, Section 4 “Restrictions,” Section 7 “Intellectual Property Rights; Ownership” or Section 8 “Data Protection”. GLUU shall not provide any indemnification or other protections under this Section 9 to Customers who use only Free Services.
+
+10. TERM; TERMINATION
+
+10.1 Subject to earlier termination as expressly provided for in this Agreement, the initial Term of this Agreement shall be for the Term specified in the Order Form, or in the event of multiple Order Forms, until the Term of all Order Forms has expired. Each Order Form and this Agreement shall automatically renew after the initial Term and any renewal Term for a renewal Term equal to the expiring subscription Term, unless either party provides to the other at least forty-five (45) days prior written notice that it will not renew. The Fees per User for each renewal Term will be equal to the Fees per User for the immediately prior Term plus a price increase. Any pricing increase will not exceed seven percent (7%) per year, unless the pricing was designated in the applicable Order Form as promotional or one-time; provided, however, the Fees for each renewal Term shall not exceed the list price as of the start date of such renewal Term.
+
+10.2 In the event of any material breach of this Agreement by either party (other than Customer’s payment obligations), the non-breaching party may terminate this Agreement prior to the end of the Term by giving thirty (30) days prior written notice to the breaching party; provided, however, that this Agreement will not terminate if the breaching party has cured the breach prior to the expiration of such thirty-day period. If Customer fails to pay any Fees or other amounts in the applicable Order Form, GLUU may terminate this Agreement prior to the end of the Term by giving five (5) business days prior written notice to Customer; provided, however, that this Agreement will not terminate if Customer has paid all Fees and other amounts in the applicable Order Form prior to the expiration of such five business-day period. 
+
+10.3 Either party may terminate this Agreement, without notice, (i) upon the institution or if a petition is filed, notice is given, a resolution is passed or an order is made, in each case by or against the other party under any applicable laws relating to insolvency, administration, liquidation, receivership, bankruptcy or any other winding up proceedings, (ii) upon the other party's making an assignment for the benefit of creditors or making a voluntary arrangement with its creditors, (iii) upon the other party's dissolution or ceasing, or threatening to cease to do business or (iv) if any event occurs, or proceeding is instituted, with respect to the other party that has the equivalent or similar effect to any of the events mentioned in Sections 10.3 (i) to (iii) inclusive. For Customers using Free Services, GLUU may terminate this Agreement at any time with or without notice and GLUU reserves the right to disable such Customers’ access to or use of the Services at any time with or without notice for any reason or no reason.
+
+10.4 The Sections of this Agreement which by their nature should survive termination or expiration of this Agreement, including but not limited to Sections 3.1 and 4 through 14 (inclusive), will survive termination or expiration of this Agreement. No refund of Fees shall be due in any amount on account of termination by GLUU pursuant to this Section 10. In the event of termination by Customer pursuant to this Section 10, Customer shall be entitled as its sole and exclusive remedy, to receive a refund of any pre-paid subscription Fees paid by Customer to GLUU for Services not rendered as of the termination date. When this Agreement expires or terminates, GLUU shall cease providing the Service to Customer.
+
+11. WARRANTIES AND DISCLAIMER OF ADDITIONAL WARRANTIES
+
+11.1 For Customers enrolled in one of the editions of Services requiring purchase, GLUU represents and warrants that it will not knowingly include, in any GLUU software released to Users and provided to Customer hereunder, any computer code or other computer instructions, devices or techniques, including without limitation those known as disabling devices, trojans, or time bombs, that intentionally disrupt, disable, harm, infect, defraud, damage, or otherwise impede in any manner, the operation of a network, computer program or computer system or any component thereof, including its security or User data. If, at any time, GLUU fails to comply with the warranty in this Section 11.1, Customer may promptly notify GLUU in writing of any such noncompliance. GLUU will, within thirty (30) days of receipt of such written notification, either correct the noncompliance or provide Customer with a plan for correcting the noncompliance. If the noncompliance is not corrected or if a reasonably acceptable plan for correcting them is not established during such period, Customer may terminate this Agreement and receive a refund of any pre-paid but unearned subscription Fees, pro-rated on a monthly basis, as its sole and exclusive remedy for such noncompliance. This provision does not apply to Customers who use only Free Services.
+
+11.2 For Customers that have purchased Hardware Tokens as part of the Services, GLUU warrants to Customer only that Hardware Tokens will be free of defects in material and workmanship at the time of sale and for a period of six (6) months thereafter. This limited warranty is limited to replacement of defective Hardware Tokens. This limited Hardware Token warranty is Customer’s exclusive remedy for defective Hardware Tokens. This provision does not apply to Customers who use only Free Services.
+
+11.3 EXCEPT AS EXPLICITLY PROVIDED IN THIS SECTION 11, THE SERVICES AND GLUU CONFIDENTIAL INFORMATION AND ANYTHING PROVIDED IN CONNECTION WITH THIS AGREEMENT ARE PROVIDED “AS-IS,” WITHOUT ANY WARRANTIES OF ANY KIND. GLUU HEREBY DISCLAIMS FOR ITSELF AND ITS SUPPLIERS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING, WITHOUT LIMITATION, ALL IMPLIED WARRANTIES, TERMS OR CONDITIONS OF MERCHANTABILITY, FITNESS FOR A PURPOSE OR A PARTICULAR PURPOSE, SATISFACTORY QUALITY, TITLE, AND NON-INFRINGEMENT.
+
+12. LIMITATION OF LIABILITY
+
+12.1 NOTHING IN THIS AGREEMENT (OR ANY ORDER FORM) SHALL LIMIT OR EXCLUDE EITHER PARTY'S LIABILITY FOR (A) DEATH OR PERSONAL INJURY CAUSED BY ITS NEGLIGENCE, OR THE NEGLIGENCE OF ITS EMPLOYEES, AGENTS OR SUBCONTRACTORS; (B) FRAUD OR FRAUDULENT MISREPRESENTATION; OR (C) ANY OTHER LIABILITY THAT CANNOT BE EXCLUDED OR LIMITED BY LAW.
+
+12.2 SUBJECT TO SECTION 12.1, IN NO EVENT WILL GLUU OR ITS SUPPLIERS BE LIABLE TO CUSTOMER (OR ANY PERSON CLAIMING UNDER OR THROUGH CUSTOMER) FOR ANY INDIRECT, PUNITIVE, INCIDENTAL, SPECIAL, OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR IN ANY WAY CONNECTED WITH THE USE OF THE SERVICES OR ANYTHING PROVIDED IN CONNECTION WITH THIS AGREEMENT, THE DELAY OR INABILITY TO USE THE SERVICES OR ANYTHING PROVIDED IN CONNECTION WITH THIS AGREEMENT OR OTHERWISE ARISING FROM THIS AGREEMENT, INCLUDING WITHOUT LIMITATION, (I) LOSS OF REVENUE OR ANTICIPATED PROFITS (WHETHER DIRECT OR INDIRECT) OR (II) LOST BUSINESS OR (III) LOST SALES, WHETHER BASED IN CONTRACT, TORT (INCLUDING ACTIVE AND PASSIVE NEGLIGENCE AND STRICT LIABILITY) BREACH OF STATUTORY DUTY OR OTHERWISE, EVEN IF GLUU HAS BEEN ADVISED OF THE POSSIBILITY OF DAMAGES. 
+
+12.3 SUBJECT TO SECTION 12.1, THE TOTAL LIABILITY OF GLUU FOR ANY CLAIM, WHETHER BASED IN CONTRACT, TORT (INCLUDING ACTIVE AND PASSIVE NEGLIGENCE AND STRICT LIABILITY) OR OTHERWISE, WILL NOT EXCEED, IN THE AGGREGATE, THE FEES PAID OR TO BE PAID TO GLUU HEREUNDER IN THE TWELVE MONTH PERIOD ENDING ON THE DATE THAT SUCH CLAIM IS FIRST ASSERTED, PROVIDED, HOWEVER THAT THE MAXIMUM LIABILITY OF GLUU FOR ALL CLAIMS SHALL BE THE THEN CURRENT ANNUALIZED VALUE OF THE APPLICABLE ORDER FORM. THE FOREGOING LIMITATIONS WILL APPLY NOTWITHSTANDING ANY FAILURE OF ESSENTIAL PURPOSE OF ANY LIMITED REMEDY.
+
+13. U.S. GOVERNMENT MATTERS
+Notwithstanding anything else, Customer may not provide to any person or export or re-export or allow the export or re-export of the Services or any software or anything related thereto or any direct product thereof, in violation of any restrictions, laws or regulations of the United States Department of Commerce, the United States Department of Treasury Office of Foreign Assets Control, or any other United States or foreign agency or authority. 
+
+14. MISCELLANEOUS
+
+14.1 Severability. If any provision of this Agreement is found to be unenforceable or invalid, that provision will be limited or eliminated to the minimum extent necessary so that this Agreement will otherwise remain in full force and effect and enforceable. 
+
+14.2 Assignment. This Agreement is not assignable, transferable or sublicensable by Customer except with GLUU’s prior written consent, which shall not be unreasonably withheld. GLUU may transfer and assign any of its rights and obligations under this Agreement with written notice to Customer. This Agreement shall be binding upon and shall inure to the benefit of the parties hereto and their respective permitted successors and permitted assigns.
+
+14.3 Entire Agreement; Amendment. Both parties agree that this Agreement is the complete and exclusive statement of the mutual understanding of the parties and supersedes and cancels all previous written and oral agreements, communications and other understandings relating to the subject matter of this Agreement, and that all waivers, amendments and modifications must be in a writing signed by both parties and specifically reference the provision of this Agreement being waived, amended or modified, except as otherwise provided herein. No agency, partnership, joint venture, or employment is created as a result of this Agreement and Customer does not have any authority of any kind to bind GLUU in any respect whatsoever. 
+
+14.4 Notices. All notices under this Agreement will be in writing and will be deemed to have been duly given when received, if personally delivered; when receipt is electronically confirmed, if transmitted by facsimile or e-mail; and upon receipt, if sent by certified or registered mail (return receipt requested), postage prepaid. GLUU may provide notice using the information provided in the most recent Order Form and Customer may provide notice using the contact information provided on Gluu, Inc.
+
+14.5 Force Majeure. Any delay or failure in the performance of any duties or obligations of either party (except the payment of money owed) will not be considered a breach of this Agreement if such delay or failure is due to a labor dispute, fire, earthquake, flood or any other event beyond the reasonable control of a party, provided that such party promptly notifies the other party thereof and uses reasonable efforts to resume performance as soon as possible.
+
+14.6 Governing Law; Arbitration. This Agreement will be governed by the laws of the State of Texas, U.S.A. without regard to its conflict of laws provisions. Any dispute arising from or relating to the subject matter of this Agreement shall be finally settled by arbitration in Travis County, Texas, in accordance with the Streamlined Arbitration Rules and Procedures of Judicial Arbitration and Mediation Services, Inc. (“JAMS”) then in effect, by one commercial arbitrator with substantial experience in resolving intellectual property and commercial contract disputes, who shall be selected from the appropriate list of JAMS arbitrators in accordance with the Streamlined Arbitration Rules and Procedures of JAMS. Judgment upon the award so rendered may be entered in a court having jurisdiction, or application may be made to such court for judicial acceptance of any award and an order of enforcement, as the case may be. Notwithstanding the foregoing, each party shall have the right to institute an action in a court of proper jurisdiction for injunctive or other equitable relief pending a final decision by the arbitrator. 
+
+14.7 Venue; Prevailing Party. The federal and state courts sitting in Travis County, Texas, U.S.A. will have proper and exclusive jurisdiction and venue with respect to any disputes arising from or related to the subject matter of this Agreement. Notwithstanding the foregoing, each party shall have the right to commence and prosecute any action for injunctive relief before any court of competent jurisdiction. In any arbitration, action or proceeding to enforce rights under this Agreement, the prevailing party will be entitled to recover costs and attorneys’ fees.
+
+14.8 Publicity. Customer agrees to participate in press announcements, case studies, trade shows, or other marketing reasonably requested by GLUU. During the Term and for thirty (30) days thereafter, Customer grants Gluu, Inc. the right to use Customer’s name and/or logo to identify Customer as such on GLUU’s website or other marketing or advertising materials.
+
+EXHIBIT A
+
+APPLE DEVICE AND APPLICATION TERMS. 
+In the event you are using the Services in connection with a device provided by Apple, Inc. (“Apple”) or a GLUU application obtained through the Apple App Store (collectively, such uses are henceforth the “Application”), the following shall apply:
+
+1. Both you and GLUU acknowledge that this Agreement is concluded between you and GLUU only, and not with Apple, and that Apple is not responsible for the Application or the Content;
+
+2. The Application is licensed to you on a limited, non-exclusive, non-transferrable, non-sublicensable basis, solely to be used in connection with the Service for your private, personal, non-commercial use, subject to all the terms and conditions of this Agreement as they are applicable to the Service;
+
+3. You will only use the Application in connection with an Apple device that you own or control;
+
+4. You acknowledge and agree that Apple has no obligation whatsoever to furnish any maintenance and support services with respect to the Application;
+
+5. In the event of any failure of the Application to conform to any applicable warranty, including those implied by law, you may notify Apple of such failure; upon notification, Apple’s sole warranty obligation to you will be to refund to you the purchase price, if any, of the Application;
+
+6. You acknowledge and agree that GLUU, and not Apple, is responsible for addressing any claims you or any third party may have in relation to the Application;
+
+7. You acknowledge and agree that, in the event of any third party claim that the Application or your possession and use of the Application infringes that third party's intellectual property rights, GLUU, and not Apple, will be responsible for the investigation, defense, settlement and discharge of any such infringement claim;
+
+8. You represent and warrant that you are not located in a country subject to a U.S. Government embargo, or that has been designated by the U.S. Government as a “terrorist supporting” country, and that you are not listed on any U.S. Government list of prohibited or restricted parties;
+
+9. Both you and GLUU acknowledge and agree that, in your use of the Application, you will comply with any applicable third party terms of agreement which may affect or be affected by such use; and
+
+10. Both you and GLUU acknowledge and agree that Apple and Apple’s subsidiaries are third party beneficiaries of this Agreement, and that upon your acceptance of this Agreement, Apple will have the right (and will be deemed to have accepted the right) to enforce this Agreement against you as the third party beneficiary hereof.
+</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -662,10 +1014,13 @@ Disclaimer: ICIA® provides this Sample Software License Agreement for illustrat
         <image name="gl.png" width="187" height="75"/>
         <image name="gluuIcon.png" width="87" height="87"/>
         <image name="homeIconImages" width="29" height="29"/>
+        <image name="homeIconSelectedImages" width="35" height="35"/>
         <image name="keysIconImages" width="29" height="29"/>
+        <image name="keysIconSelectedImages" width="35" height="35"/>
         <image name="locationIconImages" width="29" height="29"/>
         <image name="logArrowImages" width="29" height="29"/>
         <image name="menuIconImages" width="29" height="29"/>
+        <image name="menuIconSelectedImages" width="35" height="35"/>
         <image name="personIcon.png" width="30" height="30"/>
         <image name="timeIconImages" width="29" height="29"/>
     </resources>

@@ -13,6 +13,7 @@
 @property (strong, nonatomic) IBOutlet UILabel* logTime;
 @property (strong, nonatomic) IBOutlet UILabel* logLabel;
 @property (strong, nonatomic) IBOutlet UIView* cellBackground;
+@property (strong, nonatomic) IBOutlet UIButton* infoButton;
 
 -(void)setData:(NSString*)logs;
 

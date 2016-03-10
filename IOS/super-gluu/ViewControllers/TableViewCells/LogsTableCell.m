@@ -8,22 +8,37 @@
 
 #import "LogsTableCell.h"
 #import "ApproveDenyViewController.h"
+#import "UserLoginInfo.h"
+#import "NSDate+NVTimeAgo.h"
+
+#define RELEASE_SERVER @"Gluu CE Release"
+#define DEV_SERVER @"Gluu CE Dev"
 
 @implementation LogsTableCell
 
--(void)setData:(NSString*)logs{
-    NSArray* timeAndText = [logs componentsSeparatedByString:@"|"];
-    if ([timeAndText count] > 1){
-        NSString* logTime = [timeAndText objectAtIndex:0];
-        NSString* log = [timeAndText objectAtIndex:1];
-        _logTime.text = logTime;
-        _logLabel.text = log;
+-(void)setData:(UserLoginInfo*)userLoginInfo{
+    if (userLoginInfo != nil){
+        _logTime.text = [self getTimeAgo:[userLoginInfo created]];
+        NSString* server = [userLoginInfo issuer];
+        if (server != nil){
+            if ([server rangeOfString:@"release"].location != NSNotFound){
+                _logLabel.text = [NSString stringWithFormat:NSLocalizedString(@"LoggedIn", @"Logged in"), RELEASE_SERVER];
+            } else {
+                _logLabel.text = [NSString stringWithFormat:NSLocalizedString(@"LoggedIn", @"Logged in"), DEV_SERVER];
+            }
+        }
         [_logTime setHidden:NO];
         return;
     }
     _logTime.text = @"";
     [_logTime setHidden:YES];
-    _logLabel.text = logs;
+}
+
+-(NSString*)getTimeAgo:(NSString*)createdTime{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd'T'hh:mm:ss.SSSSSS"];
+    NSDate* date = [formatter dateFromString:createdTime];
+    return [date formattedAsTimeAgo];
 }
 
 @end

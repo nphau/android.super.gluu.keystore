@@ -41,7 +41,6 @@
 }
 
 -(void)doGETUrl:(NSString*)baseURl :(NSDictionary *)parameters callback:(RequestCompletionHandler)handler{
-    NSLog(@"WE'RE THERE");
     [[ApiService sharedInstance] doGET:baseURl parameters:parameters callback:^(NSDictionary *result,NSError *error){
         if (error) {
             handler(nil , error);

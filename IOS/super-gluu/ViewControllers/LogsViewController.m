@@ -10,6 +10,7 @@
 #import "LogManager.h"
 #import "LogsTableCell.h"
 #import "ApproveDenyViewController.h"
+#import "DataStoreManager.h"
 
 @implementation LogsViewController{
     ApproveDenyViewController* approveDenyView;
@@ -29,8 +30,8 @@
 
 -(void)getLogs{
     logsArray = [[NSMutableArray alloc] init];
-    [logsArray addObject:[NSString stringWithFormat:@"CE Release"]];
-    [logsArray addObject:[NSString stringWithFormat:@"CE Release"]];
+    logsArray = [[NSMutableArray alloc] initWithArray:[[DataStoreManager sharedInstance] getUserLoginInfo]];
+    [logsArray count] == 0 ? [logsTableView setHidden:YES] : [logsTableView setHidden:NO];
 //    NSString* logs = [[LogManager sharedInstance] getLogs];
 //    if (logs != nil || ![logs isEqualToString:@""]){
 //        NSArray* logsAr = [logs componentsSeparatedByString:@"\n"];
@@ -100,7 +101,8 @@
     NSString *CellIdentifier= @"LogsTableCellID";
     LogsTableCell *cell = (LogsTableCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     cell.cellBackground.layer.cornerRadius = CORNER_RADIUS;
-    //[cell setData:[logsArray objectAtIndex:indexPath.row]];
+    [cell setData:[logsArray objectAtIndex:indexPath.row]];
+    [cell.infoButton setTag:indexPath.row];
     
     return cell;
 }
@@ -110,6 +112,8 @@
     approveDenyView = [storyBoard instantiateViewControllerWithIdentifier:@"ApproveDenyView"];
     approveDenyView.delegate = self;
     [approveDenyView setIsLogInfo:YES];
+    UserLoginInfo* userInfo = [logsArray objectAtIndex:[sender tag]];
+    [approveDenyView setUserInfo:userInfo];
     CATransition *transition = [CATransition animation];
     transition.duration = 0.5;
     transition.type = kCATransitionPush;

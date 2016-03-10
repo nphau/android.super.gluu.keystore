@@ -14,6 +14,7 @@
 #define DEV_SERVER @"Gluu Server CE Dev"
 
 #define moveUpY 70
+#define LANDSCAPE_Y 290
 
 @interface ApproveDenyViewController ()
 
@@ -28,6 +29,51 @@
     [self initLocation];
     [self initBackButtonUI];
     [self updateInfo];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
+}
+
+- (void)orientationChanged:(NSNotification *)notification{
+    [self adjustViewsForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
+}
+
+- (void) adjustViewsForOrientation:(UIInterfaceOrientation) orientation {
+    
+    switch (orientation)
+    {
+        case UIInterfaceOrientationPortrait:
+        case UIInterfaceOrientationPortraitUpsideDown:
+        {
+            //load the portrait view
+            if (isLandScape){
+                [buttonView setCenter:CGPointMake(buttonView.center.x, buttonView.center.y + LANDSCAPE_Y)];
+                [scrollView setContentSize:CGSizeMake(scrollView.contentSize.width, scrollView.contentSize.width/2)];
+                scrollView.delegate = nil;
+                scrollView.scrollEnabled = NO;
+                isLandScape = NO;
+            }
+        }
+            
+            break;
+        case UIInterfaceOrientationLandscapeLeft:
+        case UIInterfaceOrientationLandscapeRight:
+        {
+            //load the landscape view
+            if (!isLandScape){
+                [buttonView setCenter:CGPointMake(buttonView.center.x, buttonView.center.y - LANDSCAPE_Y)];
+                [scrollView setContentSize:CGSizeMake(scrollView.contentSize.width, 800)];
+                scrollView.delegate = self;
+                scrollView.scrollEnabled = YES;
+                isLandScape = YES;
+            }
+            
+        }
+            break;
+        case UIInterfaceOrientationUnknown:break;
+    }
 }
 
 -(void)initLocation{
@@ -48,14 +94,18 @@
 }
 
 -(void)updateInfo{
-    if ([[UserLoginInfo sharedInstance] userName] == nil){
+    UserLoginInfo* info = _userInfo;
+    if (info == nil){
+        info = [UserLoginInfo sharedInstance];
+    }
+    if ([info userName] == nil){
         [userNameView setHidden:YES];
         [self moveUpViews];
     } else {
         [userNameView setHidden:NO];
-        userNameLabel.text = [[UserLoginInfo sharedInstance] userName];
+        userNameLabel.text = [info userName];
     }
-    NSString* server = [[UserLoginInfo sharedInstance] application];
+    NSString* server = [info application];
     serverUrlLabel.text = server;
     if (server != nil){
         if ([server rangeOfString:@"release"].location != NSNotFound){
@@ -64,15 +114,14 @@
             serverNameLabel.text = DEV_SERVER;
         }
     }
-    createdTimeLabel.text = [self getTime:[[UserLoginInfo sharedInstance] created]];
-    createdDateLabel.text = [self getDate:[[UserLoginInfo sharedInstance] created]];
+    createdTimeLabel.text = [self getTime:[info created]];
+    createdDateLabel.text = [self getDate:[info created]];
     locationLabel.text = [self getIPAddress];
-
+    
     if (_isLogInfo){
         [backButton setHidden:NO];
         [titleLabel setHidden:YES];
-        [approveRequest setHidden:YES];
-        [denyRequest setHidden:YES];
+        [buttonView setHidden:YES];
     }
 }
 

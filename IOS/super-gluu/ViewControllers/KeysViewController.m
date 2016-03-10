@@ -10,6 +10,7 @@
 #import "KeyHandleCell.h"
 #import "TokenEntity.h"
 #import "DataStoreManager.h"
+#import "InformationViewController.h"
 
 @implementation KeysViewController
 
@@ -131,8 +132,15 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    KeyHandleCell *cell = (KeyHandleCell*)[tableView cellForRowAtIndexPath:indexPath];
-    [[CustomIOS7AlertView alertWithTitle:cell.keyHandleTextField.text message:cell.key] show];
+    TokenEntity* tokenEntity = [keyHandleArray objectAtIndex:indexPath.row];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    InformationViewController* info = [storyboard instantiateViewControllerWithIdentifier:@"InformationViewControllerID"];
+    [info setModalPresentationStyle:UIModalPresentationFullScreen];
+    [info setToken:tokenEntity];
+    [self presentViewController:info animated:YES completion:nil];
+//    KeyHandleCell *cell = (KeyHandleCell*)[tableView cellForRowAtIndexPath:indexPath];
+
+//    [[CustomIOS7AlertView alertWithTitle:cell.keyHandleTextField.text message:cell.key] show];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
