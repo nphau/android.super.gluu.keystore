@@ -13,7 +13,7 @@
 #import "DataStoreManager.h"
 
 @implementation LogsViewController{
-    ApproveDenyViewController* approveDenyView;
+//    ApproveDenyViewController* approveDenyView;
 }
 
 -(void)viewDidLoad{
@@ -108,32 +108,47 @@
 }
 
 -(IBAction)showUserInfo:(id)sender{
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    approveDenyView = [storyBoard instantiateViewControllerWithIdentifier:@"ApproveDenyView"];
-    approveDenyView.delegate = self;
-    [approveDenyView setIsLogInfo:YES];
-    UserLoginInfo* userInfo = [logsArray objectAtIndex:[sender tag]];
-    [approveDenyView setUserInfo:userInfo];
-    CATransition *transition = [CATransition animation];
-    transition.duration = 0.5;
-    transition.type = kCATransitionPush;
-    transition.subtype = kCATransitionFromRight;
-    [transition setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-    [contentView.layer addAnimation:transition forKey:nil];
-    [contentView addSubview:approveDenyView.view];
+    [self performSegueWithIdentifier:@"LogInfo" sender:sender];
+//    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//    approveDenyView = [storyBoard instantiateViewControllerWithIdentifier:@"ApproveDenyView"];
+//    approveDenyView.delegate = self;
+//    [approveDenyView setIsLogInfo:YES];
+//    UserLoginInfo* userInfo = [logsArray objectAtIndex:[sender tag]];
+//    [approveDenyView setUserInfo:userInfo];
+//    CATransition *transition = [CATransition animation];
+//    transition.duration = 0.5;
+//    transition.type = kCATransitionPush;
+//    transition.subtype = kCATransitionFromRight;
+//    [transition setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+//    [contentView.layer addAnimation:transition forKey:nil];
+//    [contentView addSubview:approveDenyView.view];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([[segue identifier] isEqualToString:@"LogInfo"]) {
+        //     MyViewController *myVC = [segue destinationViewController];
+        UINavigationController* dest = [segue destinationViewController];
+        ApproveDenyViewController* approveDenyView = (id)[dest topViewController];
+        if (approveDenyView != nil){
+            approveDenyView.delegate = self;
+            [approveDenyView setIsLogInfo:YES];
+            UserLoginInfo* userInfo = [logsArray objectAtIndex:[sender tag]];
+            [approveDenyView setUserInfo:userInfo];
+        }
+    }
 }
 
 #pragma LicenseAgreementDelegates
 
 -(void)approveRequest{
-    [approveDenyView.view removeFromSuperview];
-    approveDenyView = nil;
+//    [approveDenyView.view removeFromSuperview];
+//    approveDenyView = nil;
 }
 
 -(void)denyRequest{
-    [approveDenyView.view removeFromSuperview];
-    [self initAnimationFromRigthToLeft];
-    approveDenyView = nil;
+//    [approveDenyView.view removeFromSuperview];
+//    [self initAnimationFromRigthToLeft];
+//    approveDenyView = nil;
 }
 
 -(void)initAnimationFromRigthToLeft{

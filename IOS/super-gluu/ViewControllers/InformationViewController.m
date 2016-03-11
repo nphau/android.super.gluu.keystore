@@ -16,6 +16,16 @@
     [self setupInformation];
     [self initWidget];
     [self initLocalization];
+    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
+}
+
+-(void)checkDeviceOrientation{
+    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
+    {
+        // code for landscape orientation
+        //        [self adjustViewsForOrientation:UIInterfaceOrientationLandscapeLeft];
+        [[NSNotificationCenter defaultCenter] postNotificationName:UIDeviceOrientationDidChangeNotification object:nil];
+    }
 }
 
 -(void)setupInformation{
@@ -56,7 +66,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
+    [self checkDeviceOrientation];
 }
 
 - (void)orientationChanged:(NSNotification *)notification{
@@ -85,7 +95,7 @@
         {
             //load the landscape view
             if (!isLandScape){
-                [scrollView setContentSize:CGSizeMake(scrollView.contentSize.width, 300)];
+                [scrollView setContentSize:CGSizeMake(scrollView.contentSize.width, 400)];
                 scrollView.delegate = self;
                 scrollView.scrollEnabled = YES;
                 isLandScape = YES;

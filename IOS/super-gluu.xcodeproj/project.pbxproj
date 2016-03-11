@@ -7,14 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		98FB4117D53EA10156561EFC /* Pods_super_gluu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D24DEA30315C14CB94B564F /* Pods_super_gluu.framework */; };
+		8C2D7832AC84C238165A41EC /* Pods_super_gluu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D24DEA30315C14CB94B564F /* Pods_super_gluu.framework */; };
 		BB37DE561C7E08320016D422 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE551C7E08320016D422 /* main.m */; };
 		BB37DE591C7E08320016D422 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE581C7E08320016D422 /* AppDelegate.m */; };
 		BB37DE5C1C7E08320016D422 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE5B1C7E08320016D422 /* MainViewController.m */; };
 		BB37DE5F1C7E08320016D422 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB37DE5D1C7E08320016D422 /* Main.storyboard */; };
 		BB37DE621C7E08320016D422 /* super_gluu.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE601C7E08320016D422 /* super_gluu.xcdatamodeld */; };
 		BB37DE641C7E08320016D422 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB37DE631C7E08320016D422 /* Assets.xcassets */; };
-		BB37DE671C7E08320016D422 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB37DE651C7E08320016D422 /* LaunchScreen.storyboard */; };
 		BB37DE721C7E08320016D422 /* super_gluuTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE711C7E08320016D422 /* super_gluuTests.m */; };
 		BB37DE7D1C7E08320016D422 /* super_gluuUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE7C1C7E08320016D422 /* super_gluuUITests.m */; };
 		BB37DF111C7E0B8E0016D422 /* ApiService.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DEA71C7E0B8E0016D422 /* ApiService.m */; };
@@ -66,6 +65,7 @@
 		BB3BE1641C87022C00817A46 /* LicenseAgreementView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB3BE1631C87022C00817A46 /* LicenseAgreementView.m */; };
 		BB3BE1661C8815C100817A46 /* gl.png in Resources */ = {isa = PBXBuildFile; fileRef = BB3BE1651C8815C100817A46 /* gl.png */; };
 		BB3BE1721C882D0600817A46 /* ApproveDenyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB3BE1711C882D0600817A46 /* ApproveDenyViewController.m */; };
+		BB50DD021C91AD5B00499B49 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB50DD001C91AD5B00499B49 /* Main_iPad.storyboard */; };
 		BBB7C0E71C884E2600833B12 /* approveIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0E61C884E2600833B12 /* approveIcon.png */; };
 		BBB7C0E91C8851B900833B12 /* denyIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0E81C8851B900833B12 /* denyIcon.png */; };
 		BBB7C0EB1C88569400833B12 /* personIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0EA1C88569400833B12 /* personIcon.png */; };
@@ -104,7 +104,6 @@
 		BB37DE5E1C7E08320016D422 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BB37DE611C7E08320016D422 /* super_gluu.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = super_gluu.xcdatamodel; sourceTree = "<group>"; };
 		BB37DE631C7E08320016D422 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		BB37DE661C7E08320016D422 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BB37DE681C7E08320016D422 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB37DE6D1C7E08320016D422 /* super-gluuTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "super-gluuTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB37DE711C7E08320016D422 /* super_gluuTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = super_gluuTests.m; sourceTree = "<group>"; };
@@ -199,6 +198,7 @@
 		BB3BE1701C882D0600817A46 /* ApproveDenyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApproveDenyViewController.h; sourceTree = "<group>"; };
 		BB3BE1711C882D0600817A46 /* ApproveDenyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApproveDenyViewController.m; sourceTree = "<group>"; };
 		BB3BE1741C883B8900817A46 /* LecenseAgreementDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LecenseAgreementDelegate.h; sourceTree = "<group>"; };
+		BB50DD011C91AD5B00499B49 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		BBB7C0E61C884E2600833B12 /* approveIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = approveIcon.png; sourceTree = "<group>"; };
 		BBB7C0E81C8851B900833B12 /* denyIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = denyIcon.png; sourceTree = "<group>"; };
 		BBB7C0EA1C88569400833B12 /* personIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = personIcon.png; sourceTree = "<group>"; };
@@ -218,7 +218,7 @@
 			files = (
 				BBB7C0F81C88933100833B12 /* CoreLocation.framework in Frameworks */,
 				BB37DF421C7E0CBC0016D422 /* CoreData.framework in Frameworks */,
-				98FB4117D53EA10156561EFC /* Pods_super_gluu.framework in Frameworks */,
+				8C2D7832AC84C238165A41EC /* Pods_super_gluu.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,8 +296,8 @@
 				BB37DE5A1C7E08320016D422 /* MainViewController.h */,
 				BB37DE5B1C7E08320016D422 /* MainViewController.m */,
 				BB37DE5D1C7E08320016D422 /* Main.storyboard */,
+				BB50DD001C91AD5B00499B49 /* Main_iPad.storyboard */,
 				BB37DE631C7E08320016D422 /* Assets.xcassets */,
-				BB37DE651C7E08320016D422 /* LaunchScreen.storyboard */,
 				BB37DE681C7E08320016D422 /* Info.plist */,
 				BB37DE601C7E08320016D422 /* super_gluu.xcdatamodeld */,
 				BB37DE541C7E08320016D422 /* Supporting Files */,
@@ -760,6 +760,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB50DD021C91AD5B00499B49 /* Main_iPad.storyboard in Resources */,
 				BBB7C0FC1C89FE3100833B12 /* gluuIcon.png in Resources */,
 				BB37DF2C1C7E0B8E0016D422 /* gluuIcon40x3.png in Resources */,
 				BB37DF341C7E0B8E0016D422 /* settingsIcon.png in Resources */,
@@ -769,7 +770,6 @@
 				BB3BE1661C8815C100817A46 /* gl.png in Resources */,
 				BB37DF351C7E0B8E0016D422 /* gl.png in Resources */,
 				BB37DF2A1C7E0B8E0016D422 /* gluuIcon29x3.png in Resources */,
-				BB37DE671C7E08320016D422 /* LaunchScreen.storyboard in Resources */,
 				BB37DF281C7E0B8E0016D422 /* gluuIcon29.png in Resources */,
 				BB37DF241C7E0B8E0016D422 /* Localizable.strings in Resources */,
 				BB37DF311C7E0B8E0016D422 /* gluuIcon60x3.png in Resources */,
@@ -936,14 +936,6 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		BB37DE651C7E08320016D422 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BB37DE661C7E08320016D422 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
 		BB37DEDB1C7E0B8E0016D422 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -954,6 +946,14 @@
 				BB37DEF51C7E0B8E0016D422 /* uk */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		BB50DD001C91AD5B00499B49 /* Main_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BB50DD011C91AD5B00499B49 /* Base */,
+			);
+			name = Main_iPad.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1044,15 +1044,18 @@
 			baseConfigurationReference = AF96591ABBB795E2D9A6DA5E /* Pods-super-gluu.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Gluu, Incorporated (FLRS8NH8Y9)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/super-gluu/Super-gluu_PrefixHeader.pch";
 				INFOPLIST_FILE = "super-gluu/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MACH_O_TYPE = mh_execute;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ios.gluu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "7625f979-0747-4e16-8175-28dbd6ce7ae0";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1061,15 +1064,18 @@
 			baseConfigurationReference = C3CC168E00F2364CCCFAAF3C /* Pods-super-gluu.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Gluu, Incorporated (FLRS8NH8Y9)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/super-gluu/Super-gluu_PrefixHeader.pch";
 				INFOPLIST_FILE = "super-gluu/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MACH_O_TYPE = mh_execute;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ios.gluu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "7625f979-0747-4e16-8175-28dbd6ce7ae0";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

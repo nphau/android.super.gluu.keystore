@@ -29,8 +29,9 @@ NSString * const NotificationActionTwoIdent = @"ACTION_APPROVE";
     if ([[[UIDevice currentDevice] systemVersion] floatValue] > 7){//for ios 8 and higth
         [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
         [[UIApplication sharedApplication] registerForRemoteNotifications];
+        [self registerForNotification];
     }
-    [self registerForNotification];
+//    [self registerForNotification];
 //    else {//for ios 7
 //        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
 //    }
@@ -153,14 +154,6 @@ NSString * const NotificationActionTwoIdent = @"ACTION_APPROVE";
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_RECEIVED object:jsonDictionary];
             } else {
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_RECEIVED_APPROVE object:jsonDictionary];
-//                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//                    // update UI on the main thread
-//                    dispatch_async(dispatch_get_main_queue(), ^{
-//                        OXPushManager* oxPushManager = [[OXPushManager alloc] init];
-//                        [oxPushManager onOxPushApproveRequest:jsonDictionary];
-//                    });
-//                    
-//                });
             }
             pushNotificationRequest = nil;
         }

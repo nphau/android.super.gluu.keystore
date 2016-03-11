@@ -21,10 +21,10 @@
     [self initLocalization];
     
     //Location services
-    locationManager = [[CLLocationManager alloc] init];
-    locationManager.delegate = self;
-    [locationManager startUpdatingLocation];
-    [locationManager requestWhenInUseAuthorization];
+//    locationManager = [[CLLocationManager alloc] init];
+//    locationManager.delegate = self;
+//    [locationManager startUpdatingLocation];
+//    [locationManager requestWhenInUseAuthorization];
     
     [self performSelector:@selector(checkLicenseAgreement) withObject:nil afterDelay:0.01];
 }

@@ -14,6 +14,9 @@
 #import "LogManager.h"
 #import "CustomIOS7AlertView.h"
 
+#import "TokenEntity.h"
+#import "DataStoreManager.h"
+
 NSString *const kTJCircularSpinner = @"TJCircularSpinner";
 
 @interface MainViewController ()
@@ -29,8 +32,29 @@ NSString *const kTJCircularSpinner = @"TJCircularSpinner";
     [self initWiget];
     [self initNotifications];
     [self initQRScanner];
-    [self adoptViewForDevice];
     [self initLocalization];
+// MOCKUP
+//    [[UserLoginInfo sharedInstance] setApplication:@"app"];
+//    [[UserLoginInfo sharedInstance] setCreated:@"created"];
+//    [[UserLoginInfo sharedInstance] setIssuer:@"issuer"];
+//    [[UserLoginInfo sharedInstance] setUserName:@"username"];
+//    [[UserLoginInfo sharedInstance] setAuthenticationType:@"Authentication"];
+//    [[UserLoginInfo sharedInstance] setAuthenticationMode:@"One"];
+//    [[DataStoreManager sharedInstance] saveUserLoginInfo:[UserLoginInfo sharedInstance]];
+//    
+//    TokenEntity* newTokenEntity = [[TokenEntity alloc] init];
+//    NSString* keyID = @"KeyID";
+//    [newTokenEntity setID:keyID];
+//    [newTokenEntity setApplication:@"application"];
+//    [newTokenEntity setIssuer:@"[enrollmentRequest issuer]"];
+//    [newTokenEntity setKeyHandle:@"[keyHandle base64EncodedString]"];
+//    [newTokenEntity setPublicKey:@"crypto.publicKeyBase64"];
+//    [newTokenEntity setPrivateKey:@"crypto.privateKeyBase64"];
+//    [newTokenEntity setUserName:@"userName"];
+//    [newTokenEntity setPairingTime:@"created"];
+//    [newTokenEntity setAuthenticationMode:@"authenticationMode"];
+//    [newTokenEntity setAuthenticationType:@"authenticationType"];
+//    [[DataStoreManager sharedInstance] saveTokenEntity:newTokenEntity];
 }
 
 -(void)initWiget{
@@ -38,8 +62,6 @@ NSString *const kTJCircularSpinner = @"TJCircularSpinner";
         scanTextLabel.font = [UIFont systemFontOfSize:17];
     }
     statusView.layer.cornerRadius = BUTTON_CORNER_RADIUS;
-    
-//    titleLabel.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
     
     circularSpinner = [[TJSpinner alloc] initWithSpinnerType:kTJCircularSpinner];
     [circularSpinner setFrame:CGRectMake(scanButton.frame.origin.x + 50, scanButton.frame.origin.y - 100, 50, 50)];
@@ -60,13 +82,6 @@ NSString *const kTJCircularSpinner = @"TJCircularSpinner";
     [[self.tabBarController.tabBar.items objectAtIndex:0] setTitle:NSLocalizedString(@"Home", @"Home")];
     [[self.tabBarController.tabBar.items objectAtIndex:1] setTitle:NSLocalizedString(@"Logs", @"Logs")];
     [[self.tabBarController.tabBar.items objectAtIndex:2] setTitle:NSLocalizedString(@"Keys", @"Keys")];
-//    [scanButton setTitle:NSLocalizedString(@"ScanButtonTitle", @"Scan Title") forState:UIControlStateNormal];
-//    titleLabel.text = NSLocalizedString(@"AppNameTitle", @"App Title");
-}
-
--(void)adoptViewForDevice{
-//    CGPoint center = CGPointMake(self.view.center.x, self.view.center.y);
-//    [scanButton setCenter:center];
 }
 
 -(void)initNotifications{
@@ -189,8 +204,9 @@ NSString *const kTJCircularSpinner = @"TJCircularSpinner";
         transition.duration = 0.5;
         transition.type = kCATransitionPush;
         transition.subtype = kCATransitionFromRight;
-        //[transition setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+        [transition setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
         [contentView.layer addAnimation:transition forKey:nil];
+        [self.tabBarController.tabBar setHidden:YES];
         [contentView addSubview:approveDenyView.view];
     }
 }
@@ -204,6 +220,7 @@ NSString *const kTJCircularSpinner = @"TJCircularSpinner";
     NSString* message = NSLocalizedString(@"StartAuthentication", @"Authentication...");
     [self updateStatus:message];
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
+    [self.tabBarController.tabBar setHidden:NO];
     [self onApprove];
 }
 
@@ -214,6 +231,7 @@ NSString *const kTJCircularSpinner = @"TJCircularSpinner";
     NSString* message = @"Request canceled";
     [self updateStatus:message];
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
+    [self.tabBarController.tabBar setHidden:NO];
     [self onDecline];
 }
 
@@ -279,13 +297,24 @@ NSString *const kTJCircularSpinner = @"TJCircularSpinner";
     [circularSpinner setHidden:YES];
     isUserInfo = NO;
     [scanButton setEnabled:NO];
-    [self showApproveDenyView];
+    [self performSegueWithIdentifier:@"InfoView" sender:nil];
 }
 
 #pragma mark - Action Methods
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([[segue identifier] isEqualToString:@"InfoView"]) {
+        UINavigationController* dest = [segue destinationViewController];
+        approveDenyView = (id)[dest topViewController];
+        if (approveDenyView != nil){
+            approveDenyView.delegate = self;
+        }
+    }
+}
+
 - (IBAction)scanAction:(id)sender
 {
+//    [self showApproveDenyView];
     [self initQRScanner];
     if ([QRCodeReader isAvailable]){
         [circularSpinner setHidden:NO];
@@ -353,7 +382,7 @@ NSString *const kTJCircularSpinner = @"TJCircularSpinner";
 -(void)updateStatus:(NSString*)status{
     if (status != nil){
         statusLabel.text = status;
-        [[LogManager sharedInstance] addLog:status];
+//        [[LogManager sharedInstance] addLog:status];
     }
     [UIView animateWithDuration:0.2 animations:^{
         [statusView setAlpha:0.0];
@@ -362,7 +391,23 @@ NSString *const kTJCircularSpinner = @"TJCircularSpinner";
         
         [UIView animateWithDuration:0.5 animations:^{
             [statusView setAlpha:1.0];
-            [statusView setCenter:CGPointMake(statusView.center.x, 65)];
+            if (IS_IPHONE_4 || IS_IPHONE_5){
+                if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
+                {
+                    // code for landscape orientation
+                    [statusView setCenter:CGPointMake(statusView.center.x, 15)];
+                } else {
+                    [statusView setCenter:CGPointMake(statusView.center.x, 45)];
+                }
+            } else {
+                if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
+                {
+                    // code for landscape orientation
+                    [statusView setCenter:CGPointMake(statusView.center.x, 35)];
+                } else {
+                    [statusView setCenter:CGPointMake(statusView.center.x, 65)];
+                }
+            }
             isStatusViewVisible = YES;
         }];
         
@@ -404,7 +449,7 @@ NSString *const kTJCircularSpinner = @"TJCircularSpinner";
     CATransition *transition = [CATransition animation];
     transition.duration = 0.5;
     transition.type = kCATransitionPush;
-    transition.subtype = kCATransitionFromLeft;
+    transition.subtype = kCATransitionPush;
     [transition setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
     [contentView.layer addAnimation:transition forKey:nil];
 }

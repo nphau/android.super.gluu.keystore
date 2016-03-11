@@ -15,6 +15,7 @@
 
 #define moveUpY 70
 #define LANDSCAPE_Y 290
+#define LANDSCAPE_Y_IPHONE_5 245
 
 @interface ApproveDenyViewController ()
 
@@ -29,11 +30,22 @@
     [self initLocation];
     [self initBackButtonUI];
     [self updateInfo];
+    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
+    [self checkDeviceOrientation];
+}
+
+-(void)checkDeviceOrientation{
+    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
+    {
+        // code for landscape orientation
+//        [self adjustViewsForOrientation:UIInterfaceOrientationLandscapeLeft];
+        [[NSNotificationCenter defaultCenter] postNotificationName:UIDeviceOrientationDidChangeNotification object:nil];
+    }
 }
 
 - (void)orientationChanged:(NSNotification *)notification{
@@ -49,7 +61,11 @@
         {
             //load the portrait view
             if (isLandScape){
-                [buttonView setCenter:CGPointMake(buttonView.center.x, buttonView.center.y + LANDSCAPE_Y)];
+//                if (IS_IPHONE_5 || IS_IPHONE_4){
+//                    [buttonView setCenter:CGPointMake(buttonView.center.x, buttonView.center.y + LANDSCAPE_Y_IPHONE_5)];
+//                } else {
+//                    [buttonView setCenter:CGPointMake(buttonView.center.x, buttonView.center.y + LANDSCAPE_Y)];
+//                }
                 [scrollView setContentSize:CGSizeMake(scrollView.contentSize.width, scrollView.contentSize.width/2)];
                 scrollView.delegate = nil;
                 scrollView.scrollEnabled = NO;
@@ -63,8 +79,15 @@
         {
             //load the landscape view
             if (!isLandScape){
-                [buttonView setCenter:CGPointMake(buttonView.center.x, buttonView.center.y - LANDSCAPE_Y)];
-                [scrollView setContentSize:CGSizeMake(scrollView.contentSize.width, 800)];
+//                if (IS_IPHONE_5 || IS_IPHONE_4){
+//                    [buttonView setCenter:CGPointMake(buttonView.center.x, buttonView.center.y - LANDSCAPE_Y_IPHONE_5)];
+//                } else {
+//                    [buttonView setCenter:CGPointMake(buttonView.center.x, buttonView.center.y - LANDSCAPE_Y)];
+//                }
+                if (_isLogInfo){
+                    [scrollView setFrame:CGRectMake(scrollView.frame.origin.x, scrollView.frame.origin.y, scrollView.frame.size.width, scrollView.frame.size.height+100)];
+                }
+                [scrollView setContentSize:CGSizeMake(scrollView.contentSize.width, 300)];
                 scrollView.delegate = self;
                 scrollView.scrollEnabled = YES;
                 isLandScape = YES;
@@ -120,8 +143,14 @@
     
     if (_isLogInfo){
         [backButton setHidden:NO];
-        [titleLabel setHidden:YES];
+//        [titleLabel setHidden:YES];
         [buttonView setHidden:YES];
+        titleLabel.text = NSLocalizedString(@"Information", @"Information");
+//        int y = 35;
+//        [serverView setCenter:CGPointMake(serverView.center.x, serverView.center.y - y)];
+//        [userNameView setCenter:CGPointMake(userNameView.center.x, userNameView.center.y - y)];
+//        [locationView setCenter:CGPointMake(locationView.center.x, locationView.center.y - y)];
+//        [timeView setCenter:CGPointMake(timeView.center.x, timeView.center.y - y)];
     }
 }
 
@@ -139,14 +168,16 @@
 
 -(IBAction)onApprove:(id)sender{
     [delegate approveRequest];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(IBAction)onDeny:(id)sender{
     [delegate denyRequest];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(IBAction)back:(id)sender{
-    [delegate denyRequest];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 // this delegate is called when the app successfully finds your current location
