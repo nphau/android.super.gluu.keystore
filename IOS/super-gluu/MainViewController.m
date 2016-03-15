@@ -12,7 +12,7 @@
 #import "Constants.h"
 #import "OXPushManager.h"
 #import "LogManager.h"
-#import "CustomIOS7AlertView.h"
+#import "CustomIOSAlertView.h"
 
 #import "TokenEntity.h"
 #import "DataStoreManager.h"
@@ -32,7 +32,10 @@ NSString *const kTJCircularSpinner = @"TJCircularSpinner";
     [self initWiget];
     [self initNotifications];
     [self initQRScanner];
+    [self initLocation];
     [self initLocalization];
+    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
+    [self checkDeviceOrientation];
 // MOCKUP
 //    [[UserLoginInfo sharedInstance] setApplication:@"app"];
 //    [[UserLoginInfo sharedInstance] setCreated:@"created"];
@@ -55,6 +58,55 @@ NSString *const kTJCircularSpinner = @"TJCircularSpinner";
 //    [newTokenEntity setAuthenticationMode:@"authenticationMode"];
 //    [newTokenEntity setAuthenticationType:@"authenticationType"];
 //    [[DataStoreManager sharedInstance] saveTokenEntity:newTokenEntity];
+}
+
+-(void)checkDeviceOrientation{
+    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
+    {
+        // code for landscape orientation
+        //        [self adjustViewsForOrientation:UIInterfaceOrientationLandscapeLeft];
+        [[NSNotificationCenter defaultCenter] postNotificationName:UIDeviceOrientationDidChangeNotification object:nil];
+    }
+}
+
+- (void)orientationChanged:(NSNotification *)notification{
+    [self adjustViewsForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
+}
+
+- (void) adjustViewsForOrientation:(UIInterfaceOrientation) orientation {
+    
+    switch (orientation)
+    {
+        case UIInterfaceOrientationPortrait:
+        case UIInterfaceOrientationPortraitUpsideDown:
+        {
+            //load the portrait view
+            if (isLandScape){
+                int y = [[UIScreen mainScreen] bounds].size.height/2.8;
+//                int y3 = [[UIScreen mainScreen] bounds].size.width;
+//                int y = 200;
+                [welcomeView setCenter:CGPointMake(welcomeView.center.x, y)];
+                [statusView setCenter:CGPointMake(statusView.center.x, y/4)];
+                isLandScape = NO;
+            }
+        }
+            
+            break;
+        case UIInterfaceOrientationLandscapeLeft:
+        case UIInterfaceOrientationLandscapeRight:
+        {
+            //load the landscape view
+            if (!isLandScape){
+                int y = [[UIScreen mainScreen] bounds].size.height/2.3;//140;
+                [welcomeView setCenter:CGPointMake(welcomeView.center.x, y)];
+                [statusView setCenter:CGPointMake(statusView.center.x, y/4)];
+                isLandScape = YES;
+            }
+            
+        }
+            break;
+        case UIInterfaceOrientationUnknown:break;
+    }
 }
 
 -(void)initWiget{
@@ -343,8 +395,8 @@ NSString *const kTJCircularSpinner = @"TJCircularSpinner";
 }
 
 -(void)showAlertViewWithTitle:(NSString*)title andMessage:(NSString*)message{
-    CustomIOS7AlertView* infoView = [CustomIOS7AlertView alertWithTitle:title message:message];
-    [infoView show];
+    CustomIOSAlertView *alertView = [CustomIOSAlertView alertWithTitle:title message:message];
+    [alertView show];
 }
 
 //-(void)resetStatusView{
@@ -423,6 +475,69 @@ NSString *const kTJCircularSpinner = @"TJCircularSpinner";
     }];
 }
 
+-(void)initLocation{
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    // Check for iOS 8. Without this guard the code will crash with "unknown selector" on iOS 7.
+    if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        [locationManager requestWhenInUseAuthorization];
+    }
+    locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+    [locationManager startUpdatingLocation];
+}
+
+// this delegate is called when the app successfully finds your current location
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    if (!isLocation){
+        // this creates a CLGeocoder to find a placemark using the found coordinates
+        CLGeocoder *ceo = [[CLGeocoder alloc]init];
+        CLLocation *loc = [[CLLocation alloc]initWithLatitude:newLocation.coordinate.latitude longitude:newLocation.coordinate.longitude]; //insert your coordinates
+        
+        [ceo reverseGeocodeLocation:loc
+                  completionHandler:^(NSArray *placemarks, NSError *error) {
+                      CLPlacemark *placemark = [placemarks objectAtIndex:0];
+                      //                  NSLog(@"placemark %@",placemark);
+                      //String to hold address
+                      //                  NSString *locatedAt = [[placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@", "];
+                      //                  NSLog(@"addressDictionary %@", placemark.addressDictionary);
+                      
+                      //                  NSLog(@"placemark %@",placemark.region);
+                      //                  NSLog(@"placemark %@",placemark.country);  // Give Country Name
+                      //                  NSLog(@"placemark %@",placemark.locality); // Extract the city name
+                      
+                      NSString* address = @"";
+                      
+                      if (placemark.locality == nil || [placemark.addressDictionary valueForKey:@"State"] == nil){
+                          address = NSLocalizedString(@"FaiedGetLocation", @"Failed to get location");
+                      } else {
+                          address = [NSString stringWithFormat:@"%@, %@", placemark.locality, [placemark.addressDictionary valueForKey:@"State"]];
+                          isLocation = YES;
+                      }
+                      
+                      [[UserLoginInfo sharedInstance] setLocationCity: address];
+                      
+                      //                  NSLog(@"location %@",placemark.name);
+                      //                  NSLog(@"location %@",placemark.ocean);
+                      //                  NSLog(@"location %@",placemark.postalCode);
+                      //                  NSLog(@"location %@",placemark.subLocality);
+                      //
+                      //                  NSLog(@"location %@",placemark.location);
+                      //                  //Print the location to console
+                      //                  NSLog(@"I am currently at %@",locatedAt);
+                  }
+         ];
+    }
+}
+
+// this delegate method is called if an error occurs in locating your current location
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    NSLog(@"locationManager:%@ didFailWithError:%@", manager, error);
+    [[UserLoginInfo sharedInstance] setLocationCity: NSLocalizedString(@"FailedGettingCityName", @"Failed getting cityName")];
+}
+
+
 -(void)initUserInfo:(NSDictionary*)parameters{
     NSString* app = [parameters objectForKey:@"app"];
 //    NSString* state = [parameters objectForKey:@"state"];
@@ -438,6 +553,7 @@ NSString *const kTJCircularSpinner = @"TJCircularSpinner";
     [[UserLoginInfo sharedInstance] setAuthenticationType:@"Authentication"];
     NSString* mode = oneStep ? NSLocalizedString(@"OneStepMode", @"One Step") : NSLocalizedString(@"TwoStepMode", @"Two Step");
     [[UserLoginInfo sharedInstance] setAuthenticationMode:mode];
+    [[UserLoginInfo sharedInstance] setLocationIP:[ApproveDenyViewController getIPAddress]];
 }
 
 - (void)didReceiveMemoryWarning {

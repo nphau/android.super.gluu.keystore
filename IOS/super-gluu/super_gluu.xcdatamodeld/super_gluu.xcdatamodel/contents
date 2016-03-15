@@ -6,6 +6,8 @@
         <attribute name="authenticationType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="created" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="issuer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="locationCity" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="locationIP" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="TokenEntity" syncable="YES">
@@ -22,7 +24,7 @@
         <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="LoginInfoEntity" positionX="-63" positionY="36" width="128" height="135"/>
+        <element name="LoginInfoEntity" positionX="-63" positionY="36" width="128" height="165"/>
         <element name="TokenEntity" positionX="-63" positionY="-18" width="128" height="210"/>
     </elements>
 </model>

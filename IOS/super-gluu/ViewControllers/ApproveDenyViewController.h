@@ -9,12 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "MainViewController.h"
 #import "LecenseAgreementDelegate.h"
-#import "CoreLocation/CoreLocation.h"
 #import "UserLoginInfo.h"
 
-@interface ApproveDenyViewController : UIViewController <CLLocationManagerDelegate, UIScrollViewDelegate> {
-    
-    CLLocationManager *locationManager;
+@interface ApproveDenyViewController : UIViewController <UIScrollViewDelegate> {
  
     IBOutlet UILabel* titleLabel;
     IBOutlet UIButton* approveRequest;
@@ -41,11 +38,16 @@
     
     IBOutlet UIView* buttonView;
     
+    IBOutlet UIView* timerView;
+    
     IBOutlet UIScrollView* scrollView;
     
-    BOOL isLocation;
-    
     BOOL isLandScape;
+    
+    NSTimer* timer;
+    int time;
+    IBOutlet UILabel* timerLabel;
+    IBOutlet UILabel* timerLabelTitle;
 }
 
 @property (nonatomic,assign)  id <LicenseAgreementDelegate> delegate;
@@ -56,5 +58,7 @@
 
 -(IBAction)onApprove:(id)sender;
 -(IBAction)onDeny:(id)sender;
+
++ (NSString *)getIPAddress;
 
 @end

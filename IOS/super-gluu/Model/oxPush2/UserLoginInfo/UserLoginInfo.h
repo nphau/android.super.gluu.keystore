@@ -18,5 +18,7 @@
 @property (strong, nonatomic) NSString* issuer;
 @property (strong, nonatomic) NSString* authenticationType;
 @property (strong, nonatomic) NSString* authenticationMode;
+@property (strong, nonatomic) NSString* locationIP;
+@property (strong, nonatomic) NSString* locationCity;
 
 @end

@@ -9,6 +9,8 @@
 #import "ApproveDenyViewController.h"
 #include <ifaddrs.h>
 #include <arpa/inet.h>
+#import <CoreTelephony/CTTelephonyNetworkInfo.h>
+#import <CoreTelephony/CTCarrier.h>
 
 #define RELEASE_SERVER @"Gluu Server CE Release"
 #define DEV_SERVER @"Gluu Server CE Dev"
@@ -16,6 +18,9 @@
 #define moveUpY 70
 #define LANDSCAPE_Y 290
 #define LANDSCAPE_Y_IPHONE_5 245
+#define START_TIME 60
+
+#define ADDRESS_ERROR @"error"
 
 @interface ApproveDenyViewController ()
 
@@ -27,9 +32,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initLocalization];
-    [self initLocation];
     [self initBackButtonUI];
     [self updateInfo];
+    if (!_isLogInfo){
+        [self initAndStartTimer];
+    }
+    timerView.layer.cornerRadius = CORNER_RADIUS;
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
 }
 
@@ -37,6 +45,35 @@
     [super viewWillAppear:animated];
 //    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
     [self checkDeviceOrientation];
+}
+
+-(void)initAndStartTimer{
+    timerLabel.text = [NSString stringWithFormat:@"%i", START_TIME];
+    time = START_TIME;
+    timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTime) userInfo:nil repeats:YES];
+
+
+}
+
+-(void)updateTime{
+    time--;
+    timerLabel.text = [NSString stringWithFormat:@"%i", time];
+    if (time == 20){
+        [timerView setBackgroundColor:[UIColor yellowColor]];
+        [timerLabel setTextColor:[UIColor blackColor]];
+        [timerLabelTitle setTextColor:[UIColor blackColor]];
+    }
+    if (time == 10){
+        [timerView setBackgroundColor:[UIColor redColor]];
+        [timerLabel setTextColor:[UIColor whiteColor]];
+        [timerLabelTitle setTextColor:[UIColor whiteColor]];
+    }
+    if (time == 0){
+        [self onDeny:nil];
+        [timer invalidate];
+        timer = nil;
+    }
+
 }
 
 -(void)checkDeviceOrientation{
@@ -99,17 +136,6 @@
     }
 }
 
--(void)initLocation{
-    locationManager = [[CLLocationManager alloc] init];
-    locationManager.delegate = self;
-    // Check for iOS 8. Without this guard the code will crash with "unknown selector" on iOS 7.
-    if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
-        [locationManager requestWhenInUseAuthorization];
-    }
-    locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-    [locationManager startUpdatingLocation];
-}
-
 -(void)initLocalization{
     [approveRequest setTitle:NSLocalizedString(@"Approve", @"Approve") forState:UIControlStateNormal];
     [denyRequest setTitle:NSLocalizedString(@"Deny", @"Deny") forState:UIControlStateNormal];
@@ -139,11 +165,12 @@
     }
     createdTimeLabel.text = [self getTime:[info created]];
     createdDateLabel.text = [self getDate:[info created]];
-    locationLabel.text = [self getIPAddress];
+    locationLabel.text = [info locationIP];//[ApproveDenyViewController getIPAddress];
+    cityNameLabel.text = [info locationCity];
     
     if (_isLogInfo){
         [backButton setHidden:NO];
-//        [titleLabel setHidden:YES];
+        [timerView setHidden:YES];
         [buttonView setHidden:YES];
         titleLabel.text = NSLocalizedString(@"Information", @"Information");
 //        int y = 35;
@@ -178,57 +205,6 @@
 
 -(IBAction)back:(id)sender{
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-// this delegate is called when the app successfully finds your current location
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
-{
-    if (!isLocation){
-        // this creates a CLGeocoder to find a placemark using the found coordinates
-        CLGeocoder *ceo = [[CLGeocoder alloc]init];
-        CLLocation *loc = [[CLLocation alloc]initWithLatitude:newLocation.coordinate.latitude longitude:newLocation.coordinate.longitude]; //insert your coordinates
-        
-        [ceo reverseGeocodeLocation:loc
-                  completionHandler:^(NSArray *placemarks, NSError *error) {
-                      CLPlacemark *placemark = [placemarks objectAtIndex:0];
-                      //                  NSLog(@"placemark %@",placemark);
-                      //String to hold address
-                      //                  NSString *locatedAt = [[placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@", "];
-                      //                  NSLog(@"addressDictionary %@", placemark.addressDictionary);
-                      
-                      //                  NSLog(@"placemark %@",placemark.region);
-                      //                  NSLog(@"placemark %@",placemark.country);  // Give Country Name
-                      //                  NSLog(@"placemark %@",placemark.locality); // Extract the city name
-                      
-                      NSString* address = @"";
-                      
-                      if (placemark.locality == nil || [placemark.addressDictionary valueForKey:@"State"] == nil){
-                          address = NSLocalizedString(@"FaiedGetLocation", @"Failed to get location");
-                      } else {
-                          address = [NSString stringWithFormat:@"%@, %@", placemark.locality, [placemark.addressDictionary valueForKey:@"State"]];
-                          isLocation = YES;
-                      }
-                      
-                      cityNameLabel.text = address;
-                      
-                      //                  NSLog(@"location %@",placemark.name);
-                      //                  NSLog(@"location %@",placemark.ocean);
-                      //                  NSLog(@"location %@",placemark.postalCode);
-                      //                  NSLog(@"location %@",placemark.subLocality);
-                      //                  
-                      //                  NSLog(@"location %@",placemark.location);
-                      //                  //Print the location to console
-                      //                  NSLog(@"I am currently at %@",locatedAt);
-                  }
-         ];
-    }
-}
-
-// this delegate method is called if an error occurs in locating your current location
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-{
-    NSLog(@"locationManager:%@ didFailWithError:%@", manager, error);
-    cityNameLabel.text = NSLocalizedString(@"FailedGettingCityName", @"Failed getting cityName");
 }
 
 - (void)didReceiveMemoryWarning {
@@ -266,8 +242,8 @@
 }
 
 // get the IP address of current-device
-- (NSString *)getIPAddress {
-    NSString *address = @"error";
++ (NSString *)getIPAddress {
+    NSString *address = ADDRESS_ERROR;
     struct ifaddrs *interfaces = NULL;
     struct ifaddrs *temp_addr = NULL;
     int success = 0;
@@ -288,6 +264,11 @@
         }
     }
     freeifaddrs(interfaces);
+    if ([address isEqualToString:ADDRESS_ERROR]){
+        CTTelephonyNetworkInfo *netinfo = [[CTTelephonyNetworkInfo alloc] init];
+        CTCarrier *carrier = [netinfo subscriberCellularProvider];
+        address = [carrier carrierName];
+    }
     return address;
 }
 

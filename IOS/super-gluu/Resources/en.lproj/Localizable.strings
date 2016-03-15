@@ -6,7 +6,7 @@
   Copyright © 2016 Nazar Yavornytskyy. All rights reserved.
 */
 
-"AppName" = "oxPush2-ios";
+"AppName" = "super-gluu";
 
 //Strings for License Agreement View
 "LicenseAgreementTitle" = "License Agreement";
@@ -36,7 +36,7 @@
 "AlertTitleSuccess" = "Success";
 "AlertTitleFailed" = "Failed";
 "AlertMessageNoQRScanning" = "Your device doesn't support QR Scanning";
-"WrongQRImage" = "You scaned wrong QR Code!";
+"WrongQRImage" = "You scanned the wrong QR Code!";
 "OK" = "OK";
 "Cancel" = "Cancel";
 "Approve" = "Approve";
@@ -51,9 +51,9 @@
 "StartAuthentication" = "Authentication...";
 "StartRegistration" = "Registering...";
 "SuccessAuthentication" = "You have successfully authenticated!";
-"FailedAuthentication" = "Failed, authentication!";
-"SuccessEnrollment" = "You have successfully sign up!";
-"FailedEnrollment" = "Failed, sign up!";
+"FailedAuthentication" = "Authentication failed!";
+"SuccessEnrollment" = "Your enrollment was successful!";
+"FailedEnrollment" = "Enrollment failed!";
 
 "AvailableKeyHandles" = "Available KeyHandles";
 
@@ -63,23 +63,23 @@
 
 "keyHandleFor" = "keyHandle for";
 
-"ChangeKeyHandleName" = "Do you want to change keyHandle display name?";
-"RenameKeyNameInfo" = "To change name of key hold down on name for 3 seconds";
+"ChangeKeyHandleName" = "Do you want to change the keyHandle display name?";
+"RenameKeyNameInfo" = "To change the name of a key hold down on the name for 3 seconds";
 
-"FailedKeyHandle" = "Failed keyHandles, please try again to generate new one";
+"FailedKeyHandle" = "Your keyHandle was not recognized, please generate a new one";
 
-"PushTimeOver" = "Timeover for push notification authentication";
+"PushTimeOver" = "Your push notification has expired";
 
-"ClearLogs" = "Do you want to clear logs?";
+"ClearLogs" = "Do you want to clear the logs?";
 
 "ApproveDeclineTitle" = "To continue press %@, to stop %@";
 
-"FailedGettingCityName" = "Failed to recieve city name";
+"FailedGettingCityName" = "Failed to receive city name";
 
-"FaiedGetLocation" = "Failed to get location";
+"FaiedGetLocation" = "Failed to recognize location";
 
 "Information" = "Information";
-"UserName" = "User name";
+"UserName" = "Username";
 "Created" = "Created";
 "Application" = "Application";
 "Issuer" = "Issuer";

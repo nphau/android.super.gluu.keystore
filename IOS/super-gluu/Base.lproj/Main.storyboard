@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="1PX-C3-Uj4">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <scenes>
@@ -44,7 +43,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="131" sectionHeaderHeight="28" sectionFooterHeight="28" id="rek-sC-UUS">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="477"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="449"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -315,7 +314,7 @@
                                 <color key="backgroundColor" red="0.95627003209999994" green="0.95627003209999994" blue="0.95627003209999994" alpha="0.89302262929999998" colorSpace="calibratedRGB"/>
                             </view>
                             <view contentMode="scaleToFill" id="ost-Ec-s9v">
-                                <rect key="frame" x="0.0" y="68" width="320" height="474"/>
+                                <rect key="frame" x="0.0" y="68" width="320" height="449"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="keys" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="APd-9B-abm">
@@ -420,7 +419,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" id="ogb-Jc-RlP" userLabel="MainContentView">
-                                <rect key="frame" x="0.0" y="68" width="320" height="500"/>
+                                <rect key="frame" x="0.0" y="68" width="320" height="449"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <view alpha="0.0" contentMode="scaleToFill" id="G0I-DM-Z4P">
@@ -430,7 +429,7 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To continue, press + button" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0s9-Pu-KnT">
                                                 <rect key="frame" x="7" y="4" width="255" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -508,6 +507,7 @@
                         <outlet property="statusLabel" destination="0s9-Pu-KnT" id="gkP-5Z-QdY"/>
                         <outlet property="statusView" destination="G0I-DM-Z4P" id="kF8-0R-Ey7"/>
                         <outlet property="welcomeLabel" destination="FDP-Hk-qh3" id="nxG-dp-AZT"/>
+                        <outlet property="welcomeView" destination="WkL-NJ-ypG" id="2OA-7W-pLN"/>
                         <segue destination="Mge-71-NJN" kind="modal" identifier="InfoView" modalTransitionStyle="crossDissolve" id="GZI-KJ-1UL"/>
                     </connections>
                 </viewController>
@@ -683,6 +683,27 @@
                                     <action selector="back:" destination="qPA-Ry-Ghp" eventType="touchUpInside" id="rah-O4-WSs"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" id="C5I-jf-WpB" userLabel="TimerView">
+                                <rect key="frame" x="220" y="25" width="81" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="seconds left" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vcn-Ze-cHr">
+                                        <rect key="frame" x="0.0" y="25" width="81" height="16"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="60" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DVP-P8-RGn">
+                                        <rect key="frame" x="8" y="0.0" width="65" height="33"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -704,6 +725,9 @@
                         <outlet property="serverUrlLabel" destination="qzz-5M-0lP" id="mVo-dn-dvP"/>
                         <outlet property="serverView" destination="h8U-Nq-TLU" id="J7o-1J-4dL"/>
                         <outlet property="timeView" destination="rAy-IJ-a7M" id="FEH-4h-HlN"/>
+                        <outlet property="timerLabel" destination="DVP-P8-RGn" id="23w-oa-6x0"/>
+                        <outlet property="timerLabelTitle" destination="vcn-Ze-cHr" id="6fq-iZ-8PC"/>
+                        <outlet property="timerView" destination="C5I-jf-WpB" id="E78-W7-IdB"/>
                         <outlet property="titleLabel" destination="djE-nb-tL9" id="Cj2-lL-iNF"/>
                         <outlet property="userNameLabel" destination="eiQ-aW-3Gu" id="skX-9k-bR7"/>
                         <outlet property="userNameView" destination="g54-fa-ibW" id="oSh-eb-6Fz"/>
@@ -1042,6 +1066,6 @@ In the event you are using the Services in connection with a device provided by 
         <image name="timeIconImages" width="29" height="29"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="nbb-Ne-tyY"/>
+        <segue reference="GZI-KJ-1UL"/>
     </inferredMetricsTieBreakers>
 </document>

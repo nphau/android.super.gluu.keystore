@@ -36,6 +36,7 @@
 
 -(NSString*)getTimeAgo:(NSString*)createdTime{
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
     [formatter setDateFormat:@"yyyy-MM-dd'T'hh:mm:ss.SSSSSS"];
     NSDate* date = [formatter dateFromString:createdTime];
     return [date formattedAsTimeAgo];

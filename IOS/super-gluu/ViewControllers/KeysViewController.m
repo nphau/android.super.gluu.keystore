@@ -47,7 +47,7 @@
         if (row != nil) {
             //Handle the long press on row
             NSLog(@"Cell title will be changed");
-            CustomIOS7AlertView* alertView = [CustomIOS7AlertView alertWithTitle:NSLocalizedString(@"AlertTitle", @"Into") message:NSLocalizedString(@"ChangeKeyHandleName", @"Change KeyHandle Name")];
+            CustomIOSAlertView* alertView = [CustomIOSAlertView alertWithTitle:NSLocalizedString(@"AlertTitle", @"Into") message:NSLocalizedString(@"ChangeKeyHandleName", @"Change KeyHandle Name")];
             [alertView setButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"NO", @"NO"), NSLocalizedString(@"YES", @"YES"), nil]];
             [alertView setButtonColors:[NSArray arrayWithObjects:[UIColor redColor], [UIColor greenColor], nil]];//"" = "Do you want to change keyHandle display name?"
             alertView.delegate = self;
@@ -57,7 +57,7 @@
 }
 
 -(void)initIfoView{
-    infoView = [CustomIOS7AlertView alertWithTitle:NSLocalizedString(@"AlertTitle", @"Into") message:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]];
+    infoView = [CustomIOSAlertView alertWithTitle:NSLocalizedString(@"AlertTitle", @"Into") message:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]];
 }
 
 -(void)loadKeyHandlesFromDatabase{

@@ -12,8 +12,9 @@
 #import "ApproveDenyViewController.h"
 #import "UserLoginInfo.h"
 #import "LecenseAgreementDelegate.h"
+#import "CoreLocation/CoreLocation.h"
 
-@interface MainViewController : UIViewController <QRCodeReaderDelegate, LicenseAgreementDelegate>{
+@interface MainViewController : UIViewController <QRCodeReaderDelegate, LicenseAgreementDelegate, CLLocationManagerDelegate>{
     
     IBOutlet UIButton* scanButton;
     IBOutlet UIButton* infoButton;
@@ -22,7 +23,7 @@
     
     IBOutlet UILabel* welcomeLabel;
     IBOutlet UILabel* scanTextLabel;
-    
+    IBOutlet UIView* welcomeView;
     IBOutlet UIView* contentView;
     
     TJSpinner *circularSpinner;
@@ -33,6 +34,11 @@
     QRCodeReaderViewController *qrScanerVC;
     
     NSDictionary* scanJsonDictionary;
+    
+    BOOL isLocation;
+    CLLocationManager *locationManager;
+    
+    BOOL isLandScape;
 
 }
 

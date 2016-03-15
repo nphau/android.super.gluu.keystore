@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8C2D7832AC84C238165A41EC /* Pods_super_gluu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D24DEA30315C14CB94B564F /* Pods_super_gluu.framework */; };
+		BB2A11091C980EEB004C5FEF /* CustomIOSAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB2A11081C980EEB004C5FEF /* CustomIOSAlertView.m */; };
 		BB37DE561C7E08320016D422 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE551C7E08320016D422 /* main.m */; };
 		BB37DE591C7E08320016D422 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE581C7E08320016D422 /* AppDelegate.m */; };
 		BB37DE5C1C7E08320016D422 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE5B1C7E08320016D422 /* MainViewController.m */; };
@@ -53,7 +54,6 @@
 		BB37DF351C7E0B8E0016D422 /* gl.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEF41C7E0B8E0016D422 /* gl.png */; };
 		BB37DF361C7E0B8E0016D422 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DEF91C7E0B8E0016D422 /* Base64.m */; };
 		BB37DF371C7E0B8E0016D422 /* NSString+URLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DEFB1C7E0B8E0016D422 /* NSString+URLEncode.m */; };
-		BB37DF381C7E0B8E0016D422 /* CustomIOS7AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DEFE1C7E0B8E0016D422 /* CustomIOS7AlertView.m */; };
 		BB37DF391C7E0B8E0016D422 /* GMEllipticCurveCrypto+hash.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DF011C7E0B8E0016D422 /* GMEllipticCurveCrypto+hash.m */; };
 		BB37DF3A1C7E0B8E0016D422 /* GMEllipticCurveCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DF031C7E0B8E0016D422 /* GMEllipticCurveCrypto.m */; };
 		BB37DF3B1C7E0B8E0016D422 /* TJSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DF061C7E0B8E0016D422 /* TJSpinner.m */; };
@@ -73,6 +73,7 @@
 		BBB7C0FC1C89FE3100833B12 /* gluuIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0FB1C89FE3100833B12 /* gluuIcon.png */; };
 		BBB7C1021C9042AF00833B12 /* NSDate+NVTimeAgo.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB7C1011C9042AF00833B12 /* NSDate+NVTimeAgo.m */; };
 		BBB7C1051C90723300833B12 /* InformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB7C1041C90723300833B12 /* InformationViewController.m */; };
+		BBFCB30A1C98164F00F66417 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBFCB3091C98164F00F66417 /* CoreTelephony.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +96,8 @@
 /* Begin PBXFileReference section */
 		1D24DEA30315C14CB94B564F /* Pods_super_gluu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_super_gluu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF96591ABBB795E2D9A6DA5E /* Pods-super-gluu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-super-gluu.debug.xcconfig"; path = "Pods/Target Support Files/Pods-super-gluu/Pods-super-gluu.debug.xcconfig"; sourceTree = "<group>"; };
+		BB2A11071C980EEB004C5FEF /* CustomIOSAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomIOSAlertView.h; sourceTree = "<group>"; };
+		BB2A11081C980EEB004C5FEF /* CustomIOSAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIOSAlertView.m; sourceTree = "<group>"; };
 		BB37DE511C7E08320016D422 /* super-gluu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "super-gluu.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB37DE551C7E08320016D422 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BB37DE571C7E08320016D422 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -173,8 +176,6 @@
 		BB37DEF91C7E0B8E0016D422 /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
 		BB37DEFA1C7E0B8E0016D422 /* NSString+URLEncode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncode.h"; sourceTree = "<group>"; };
 		BB37DEFB1C7E0B8E0016D422 /* NSString+URLEncode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncode.m"; sourceTree = "<group>"; };
-		BB37DEFD1C7E0B8E0016D422 /* CustomIOS7AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomIOS7AlertView.h; sourceTree = "<group>"; };
-		BB37DEFE1C7E0B8E0016D422 /* CustomIOS7AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIOS7AlertView.m; sourceTree = "<group>"; };
 		BB37DF001C7E0B8E0016D422 /* GMEllipticCurveCrypto+hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GMEllipticCurveCrypto+hash.h"; sourceTree = "<group>"; };
 		BB37DF011C7E0B8E0016D422 /* GMEllipticCurveCrypto+hash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GMEllipticCurveCrypto+hash.m"; sourceTree = "<group>"; };
 		BB37DF021C7E0B8E0016D422 /* GMEllipticCurveCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMEllipticCurveCrypto.h; sourceTree = "<group>"; };
@@ -208,6 +209,7 @@
 		BBB7C1011C9042AF00833B12 /* NSDate+NVTimeAgo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+NVTimeAgo.m"; path = "NSDate-Time-Ago/NSDate+NVTimeAgo.m"; sourceTree = "<group>"; };
 		BBB7C1031C90723300833B12 /* InformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformationViewController.h; sourceTree = "<group>"; };
 		BBB7C1041C90723300833B12 /* InformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformationViewController.m; sourceTree = "<group>"; };
+		BBFCB3091C98164F00F66417 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		C3CC168E00F2364CCCFAAF3C /* Pods-super-gluu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-super-gluu.release.xcconfig"; path = "Pods/Target Support Files/Pods-super-gluu/Pods-super-gluu.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -216,6 +218,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBFCB30A1C98164F00F66417 /* CoreTelephony.framework in Frameworks */,
 				BBB7C0F81C88933100833B12 /* CoreLocation.framework in Frameworks */,
 				BB37DF421C7E0CBC0016D422 /* CoreData.framework in Frameworks */,
 				8C2D7832AC84C238165A41EC /* Pods_super_gluu.framework in Frameworks */,
@@ -242,6 +245,7 @@
 		3F430CE55ADBDA89388FF131 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BBFCB3091C98164F00F66417 /* CoreTelephony.framework */,
 				BBB7C0F71C88933100833B12 /* CoreLocation.framework */,
 				BB37DF411C7E0CBC0016D422 /* CoreData.framework */,
 				1D24DEA30315C14CB94B564F /* Pods_super_gluu.framework */,
@@ -573,8 +577,8 @@
 		BB37DEFC1C7E0B8E0016D422 /* CustomAlertView */ = {
 			isa = PBXGroup;
 			children = (
-				BB37DEFD1C7E0B8E0016D422 /* CustomIOS7AlertView.h */,
-				BB37DEFE1C7E0B8E0016D422 /* CustomIOS7AlertView.m */,
+				BB2A11071C980EEB004C5FEF /* CustomIOSAlertView.h */,
+				BB2A11081C980EEB004C5FEF /* CustomIOSAlertView.m */,
 			);
 			path = CustomAlertView;
 			sourceTree = "<group>";
@@ -858,7 +862,6 @@
 			files = (
 				BB37DF3B1C7E0B8E0016D422 /* TJSpinner.m in Sources */,
 				BBB7C1021C9042AF00833B12 /* NSDate+NVTimeAgo.m in Sources */,
-				BB37DF381C7E0B8E0016D422 /* CustomIOS7AlertView.m in Sources */,
 				BB37DF221C7E0B8E0016D422 /* OXPushManager.m in Sources */,
 				BB37DF391C7E0B8E0016D422 /* GMEllipticCurveCrypto+hash.m in Sources */,
 				BB37DF1B1C7E0B8E0016D422 /* TokenResponse.m in Sources */,
@@ -887,6 +890,7 @@
 				BB37DF111C7E0B8E0016D422 /* ApiService.m in Sources */,
 				BB37DF3D1C7E0B8E0016D422 /* KeysViewController.m in Sources */,
 				BB37DE621C7E08320016D422 /* super_gluu.xcdatamodeld in Sources */,
+				BB2A11091C980EEB004C5FEF /* CustomIOSAlertView.m in Sources */,
 				BB37DE561C7E08320016D422 /* main.m in Sources */,
 				BB37DF1D1C7E0B8E0016D422 /* TokenManager.m in Sources */,
 				BB37DF181C7E0B8E0016D422 /* EnrollmentRequest.m in Sources */,
@@ -1045,16 +1049,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Gluu, Incorporated (FLRS8NH8Y9)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/super-gluu/Super-gluu_PrefixHeader.pch";
 				INFOPLIST_FILE = "super-gluu/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MACH_O_TYPE = mh_execute;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ios.gluu;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.gluu.super-gluu";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7625f979-0747-4e16-8175-28dbd6ce7ae0";
+				PROVISIONING_PROFILE = "a033b653-f0ef-4391-b103-06647e4192c5";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1065,16 +1069,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Gluu, Incorporated (FLRS8NH8Y9)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/super-gluu/Super-gluu_PrefixHeader.pch";
 				INFOPLIST_FILE = "super-gluu/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MACH_O_TYPE = mh_execute;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ios.gluu;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.gluu.super-gluu";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7625f979-0747-4e16-8175-28dbd6ce7ae0";
+				PROVISIONING_PROFILE = "a033b653-f0ef-4391-b103-06647e4192c5";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

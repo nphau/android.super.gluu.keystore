@@ -20,6 +20,8 @@
 #define CREATED_KEY @"created"
 #define AUTHENTICATION_MODE @"authenticationMode"
 #define AUTHENTICATION_TYPE @"authenticationType"
+#define LOCATION_IP @"locationIP"
+#define LOCATION_CITY @"locationCity"
 
 #define ID_KEY @"id"
 #define KEYHANDLE_KEY @"keyHandle"
@@ -182,6 +184,8 @@
     [newMetaData setValue:[userLoginInfo created] forKey:CREATED_KEY];
     [newMetaData setValue:[userLoginInfo authenticationMode] forKey:AUTHENTICATION_MODE];
     [newMetaData setValue:[userLoginInfo authenticationType] forKey:AUTHENTICATION_TYPE];
+    [newMetaData setValue:[userLoginInfo locationIP] forKey:LOCATION_IP];
+    [newMetaData setValue:[userLoginInfo locationCity] forKey:LOCATION_CITY];
     
     error = nil;
     // Save the object to persistent store
@@ -208,6 +212,8 @@
                 [userInfoEntity setUserName:[eccKeyFetched valueForKey:USER_NAME_KEY]];
                 [userInfoEntity setAuthenticationMode:[eccKeyFetched valueForKey:AUTHENTICATION_MODE]];
                 [userInfoEntity setAuthenticationType:[eccKeyFetched valueForKey:AUTHENTICATION_TYPE]];
+                [userInfoEntity setLocationIP:[eccKeyFetched valueForKey:LOCATION_IP]];
+                [userInfoEntity setLocationCity:[eccKeyFetched valueForKey:LOCATION_CITY]];
                 [entities addObject:userInfoEntity];
             }
         }
