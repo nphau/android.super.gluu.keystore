@@ -61,10 +61,10 @@
 "YES" = "YES";
 "NO" = "NO";
 
-"keyHandleFor" = "keyHandle for";
+"keyHandleFor" = "Key for";
 
 "ChangeKeyHandleName" = "Do you want to change the keyHandle display name?";
-"RenameKeyNameInfo" = "To change the name of a key hold down on the name for 3 seconds";
+"RenameKeyNameInfo" = "To change a Key's name, hold down on it for 3 seconds";
 
 "FailedKeyHandle" = "Your keyHandle was not recognized, please generate a new one";
 
@@ -88,5 +88,7 @@
 "CloseButton" = "Close";
 
 "SecondsLeft" = "seconds left";
+
+"UniqueKeyLabel" = "A unique key is generated for each Gluu Server  you log into with Super Gluu. You can manage keys here:";
 
 

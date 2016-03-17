@@ -335,8 +335,8 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="rename" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="g63-4O-uuc">
-                                        <rect key="frame" x="8" y="28" width="304" height="28"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="rename" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="g63-4O-uuc">
+                                        <rect key="frame" x="8" y="414" width="304" height="35"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -350,8 +350,8 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="RP3-gx-BOp">
-                                        <rect key="frame" x="8" y="57" width="304" height="387"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <rect key="frame" x="8" y="73" width="304" height="343"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES"/>
                                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <prototypes>
@@ -363,7 +363,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="keyHandle name" textAlignment="natural" minimumFontSize="17" id="Sel-mf-OFV">
-                                                            <rect key="frame" x="43" y="6" width="253" height="30"/>
+                                                            <rect key="frame" x="43" y="0.0" width="253" height="32"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits"/>
@@ -377,12 +377,20 @@
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                         </view>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gIT-cN-5cw">
+                                                            <rect key="frame" x="40" y="22" width="239" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </tableViewCellContentView>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <connections>
                                                     <outlet property="keyHandleTextField" destination="Sel-mf-OFV" id="zzc-Pk-bGR"/>
+                                                    <outlet property="keyHandleTime" destination="gIT-cN-5cw" id="ZPP-rP-s8j"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
@@ -391,6 +399,13 @@
                                             <outlet property="delegate" destination="4BD-0S-BgN" id="Js7-l1-8f9"/>
                                         </connections>
                                     </tableView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A unique key is generated for each Gluu Server  you log into with Super Gluu. You can manage keys here:" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="N4Y-mm-Y7d">
+                                        <rect key="frame" x="8" y="32" width="304" height="41"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -408,6 +423,7 @@
                         <outlet property="keyHandleLabel" destination="APd-9B-abm" id="4kV-Fu-uBq"/>
                         <outlet property="keyHandleTableView" destination="RP3-gx-BOp" id="igc-Tt-rVl"/>
                         <outlet property="keyRenameInfoLabel" destination="g63-4O-uuc" id="DgQ-b7-Q10"/>
+                        <outlet property="uniqueKeyLabel" destination="N4Y-mm-Y7d" id="pXn-4a-6lG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MK6-Wj-ShE" userLabel="First Responder" sceneMemberID="firstResponder"/>

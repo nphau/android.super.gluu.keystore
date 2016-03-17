@@ -60,7 +60,7 @@
 "YES" = "Так";
 "NO" = "Ні";
 
-"keyHandleFor" = "ключ для";
+"keyHandleFor" = "Kлюч для";
 
 "ChangeKeyHandleName" = "Ви дійсно бажаєте змінити ім'я ключа?";
 "RenameKeyNameInfo" = "Щоб змінити ім'я ключа утримуйте на ньому протягом 3 секунд";
@@ -85,6 +85,8 @@
 "CloseButton" = "Закрити";
 
 "SecondsLeft" = "секунд залишилося";
+
+"UniqueKeyLabel" = "A unique key is generated for each Gluu Server  you log into with Super Gluu. You can manage keys here:";
 
 
 

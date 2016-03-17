@@ -9,7 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "TokenEntity.h"
 
-@interface KeyHandleCell : UITableViewCell
+@interface KeyHandleCell : UITableViewCell {
+
+    IBOutlet UILabel* keyHandleTime;
+}
 
 @property (strong, nonatomic) NSString* key;
 @property (strong, nonatomic) IBOutlet UITextField* keyHandleTextField;

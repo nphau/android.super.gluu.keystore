@@ -15,6 +15,7 @@
     IBOutlet UITableView* keyHandleTableView;
     IBOutlet UILabel* keyHandleLabel;
     IBOutlet UILabel* keyRenameInfoLabel;
+    IBOutlet UILabel* uniqueKeyLabel;
     IBOutlet UIButton* logsButton;
     IBOutlet UIButton* infoButton;
     int rowToDelete;

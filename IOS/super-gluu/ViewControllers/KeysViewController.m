@@ -28,6 +28,7 @@
     [keyHandleTableView.layer setMasksToBounds:YES];
     
     keyRenameInfoLabel.text = NSLocalizedString(@"RenameKeyNameInfo", @"Rename Key's Name");
+    uniqueKeyLabel.text = NSLocalizedString(@"UniqueKeyLabel", @"UniqueKeyLabel");
 }
 
 -(void)viewWillAppear:(BOOL)animated{
