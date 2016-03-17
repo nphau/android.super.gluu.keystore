@@ -47,7 +47,8 @@
                 NSString* registrationEndpoint = [result objectForKey:@"registration_endpoint"];
                 U2fMetaData* u2fMetaData = [[U2fMetaData alloc] initWithVersion:version issuer:issuer authenticationEndpoint:authenticationEndpoint registrationEndpoint:registrationEndpoint];
                 // Next step - get exist keys from database
-                NSString* keyID = [NSString stringWithFormat:@"%@%@", [oxRequest issuer], [oxRequest app]];
+//                NSString* keyID = [NSString stringWithFormat:@"%@%@", [oxRequest issuer], [oxRequest app]];
+                NSString* keyID = [oxRequest app];
                 NSArray* tokenEntities = [[DataStoreManager sharedInstance] getTokenEntitiesByID:keyID];
                 NSString* u2fEndpoint = [[NSString alloc] init];
                 BOOL isEnroll = [tokenEntities count] > 0 ? NO : YES;

@@ -12,9 +12,6 @@
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
 
-#define RELEASE_SERVER @"Gluu Server CE Release"
-#define DEV_SERVER @"Gluu Server CE Dev"
-
 #define moveUpY 70
 #define LANDSCAPE_Y 290
 #define LANDSCAPE_Y_IPHONE_5 245
@@ -156,11 +153,8 @@
     NSString* server = [info application];
     serverUrlLabel.text = server;
     if (server != nil){
-        if ([server rangeOfString:@"release"].location != NSNotFound){
-            serverNameLabel.text = RELEASE_SERVER;
-        } else {
-            serverNameLabel.text = DEV_SERVER;
-        }
+        NSURL* serverURL = [NSURL URLWithString:server];
+        serverNameLabel.text = [NSString stringWithFormat:@"Gluu Sever %@", [serverURL host]];
     }
     createdTimeLabel.text = [self getTime:[info created]];
     createdDateLabel.text = [self getDate:[info created]];

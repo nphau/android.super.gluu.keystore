@@ -54,7 +54,12 @@
     if (eccKeyFetchedArray != nil && [eccKeyFetchedArray count] > 0){
         TokenEntity* eccKeyFetched = [eccKeyFetchedArray objectAtIndex:0];
         if (eccKeyFetched != nil){
-            newMetaData = [eccKeyFetchedArray objectAtIndex:0];
+//            NSString* tokenID = [NSString stringWithFormat:@"%@%@", [eccKeyFetched valueForKey:ISSUER_KEY], [eccKeyFetched valueForKey:APPLICATION_KEY]];
+            NSString* tokenID = [NSString stringWithFormat:@"%@", [eccKeyFetched valueForKey:APPLICATION_KEY]];
+            NSString* tokenEntityID = [NSString stringWithFormat:@"%@", [tokenEntity application]];
+            if ([tokenID isEqualToString:tokenEntityID]){
+                newMetaData = [eccKeyFetchedArray objectAtIndex:0];
+            }
         }
     }
     [newMetaData setValue:[tokenEntity ID] forKey:ID_KEY];
@@ -79,6 +84,39 @@
 }
 
 -(NSArray*)getTokenEntitiesByID:(NSString*)keyID{
+    appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    NSMutableArray* entities = [[NSMutableArray alloc] init];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:KEY_ENTITY];
+    NSError *error = nil;
+    NSArray* eccKeyFetchedArray = [appDelegate.managedObjectContext executeFetchRequest:request error:&error];
+    if (eccKeyFetchedArray != nil && [eccKeyFetchedArray count] > 0){
+        for (NSManagedObject *eccKeyFetched in eccKeyFetchedArray){
+            if (eccKeyFetched != nil && [eccKeyFetched valueForKey:KEYHANDLE_KEY] != nil){
+//                NSString* tokenID = [NSString stringWithFormat:@"%@%@", [eccKeyFetched valueForKey:ISSUER_KEY], [eccKeyFetched valueForKey:APPLICATION_KEY]];
+                NSString* tokenID = [NSString stringWithFormat:@"%@", [eccKeyFetched valueForKey:APPLICATION_KEY]];
+                if ([tokenID isEqualToString:keyID]){
+                    TokenEntity* tokenEntity = [[TokenEntity alloc] init];
+                    [tokenEntity setID:[eccKeyFetched valueForKey:ID_KEY]];
+                    [tokenEntity setApplication:[eccKeyFetched valueForKey:APPLICATION_KEY]];
+                    [tokenEntity setIssuer:[eccKeyFetched valueForKey:ISSUER_KEY]];
+                    [tokenEntity setKeyHandle:[eccKeyFetched valueForKey:KEYHANDLE_KEY]];
+                    [tokenEntity setPrivateKey:[eccKeyFetched valueForKey:PRIVATE_KEY]];
+                    [tokenEntity setPublicKey:[eccKeyFetched valueForKey:PUBLIC_KEY]];
+                    [tokenEntity setUserName:[eccKeyFetched valueForKey:USER_NAME_KEY]];
+                    [tokenEntity setPairingTime:[eccKeyFetched valueForKey:CREATED_KEY]];
+                    [tokenEntity setAuthenticationMode:[eccKeyFetched valueForKey:AUTHENTICATION_MODE]];
+                    [tokenEntity setAuthenticationType:[eccKeyFetched valueForKey:AUTHENTICATION_TYPE]];
+                    NSNumber* count = [eccKeyFetched valueForKey:COUNT_KEY];
+                    [tokenEntity setCount:[count intValue]];
+                    [entities addObject:tokenEntity];
+                }
+            }
+        }
+    }
+    return entities;
+}
+
+-(NSArray*)getTokenEntities{
     appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     NSMutableArray* entities = [[NSMutableArray alloc] init];
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:KEY_ENTITY];
@@ -138,12 +176,18 @@
     NSError *error = nil;
     NSArray* eccKeyFetchedArray = [appDelegate.managedObjectContext executeFetchRequest:request error:&error];
     NSManagedObject *newMetaData = [NSEntityDescription insertNewObjectForEntityForName:KEY_ENTITY inManagedObjectContext:appDelegate.managedObjectContext];
-    int count = [tokenEntity count] == 0 ? 1 : [tokenEntity count]+1;
+    int count = [tokenEntity count]+1;//[tokenEntity count] == 0 ? 1 : 
     if (eccKeyFetchedArray != nil && [eccKeyFetchedArray count] > 0){
-        TokenEntity* eccKeyFetched = [eccKeyFetchedArray objectAtIndex:0];
-        if (eccKeyFetched != nil){
-            newMetaData = [eccKeyFetchedArray objectAtIndex:0];
-            [newMetaData setValue:[NSNumber numberWithInt:count] forKey:COUNT_KEY];
+        for (NSManagedObject* eccKeyObject in eccKeyFetchedArray){
+            TokenEntity* eccKeyFetched = (TokenEntity*)eccKeyObject;
+            if (eccKeyFetched != nil){
+                NSString* tokenID = [NSString stringWithFormat:@"%@", [eccKeyFetched valueForKey:APPLICATION_KEY]];
+                NSString* tokenEntityID = [NSString stringWithFormat:@"%@", [tokenEntity application]];
+                if ([tokenID isEqualToString:tokenEntityID]){
+                    newMetaData = eccKeyObject;
+                    [newMetaData setValue:[NSNumber numberWithInt:count] forKey:COUNT_KEY];
+                }
+            }
         }
     }
     
@@ -165,7 +209,10 @@
     if (eccKeyFetchedArray != nil && [eccKeyFetchedArray count] > 0){
         for (NSManagedObject *eccKeyFetched in eccKeyFetchedArray){
             if (eccKeyFetched != nil){// && [[eccKeyFetched valueForKey:@"id"] isEqualToString:keyID]){
-                [appDelegate.managedObjectContext deleteObject:eccKeyFetched];
+                NSString* tokenID = [NSString stringWithFormat:@"%@%@", [eccKeyFetched valueForKey:ISSUER_KEY], [eccKeyFetched valueForKey:APPLICATION_KEY]];
+                if ([tokenID isEqualToString:keyID]){
+                    [appDelegate.managedObjectContext deleteObject:eccKeyFetched];
+                }
             }
         }
         return YES;

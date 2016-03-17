@@ -62,7 +62,7 @@
 }
 
 -(void)loadKeyHandlesFromDatabase{
-    NSArray* keyHandles = [[DataStoreManager sharedInstance] getTokenEntitiesByID:@""];
+    NSArray* keyHandles = [[DataStoreManager sharedInstance] getTokenEntities];
     keyHandleArray = [[NSMutableArray alloc] initWithArray:keyHandles];
     if ([keyHandleArray count] > 0){
         [keyHandleTableView reloadData];

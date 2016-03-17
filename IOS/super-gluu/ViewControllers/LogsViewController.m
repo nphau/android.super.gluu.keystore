@@ -32,6 +32,9 @@
     logsArray = [[NSMutableArray alloc] init];
     logsArray = [[NSMutableArray alloc] initWithArray:[[DataStoreManager sharedInstance] getUserLoginInfo]];
     [logsArray count] == 0 ? [logsTableView setHidden:YES] : [logsTableView setHidden:NO];
+    if ([logsArray count] > 0){
+        [logsTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:logsArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
 //    NSString* logs = [[LogManager sharedInstance] getLogs];
 //    if (logs != nil || ![logs isEqualToString:@""]){
 //        NSArray* logsAr = [logs componentsSeparatedByString:@"\n"];

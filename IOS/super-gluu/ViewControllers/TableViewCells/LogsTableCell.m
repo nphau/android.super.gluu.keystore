@@ -21,11 +21,8 @@
         _logTime.text = [self getTimeAgo:[userLoginInfo created]];
         NSString* server = [userLoginInfo issuer];
         if (server != nil){
-            if ([server rangeOfString:@"release"].location != NSNotFound){
-                _logLabel.text = [NSString stringWithFormat:NSLocalizedString(@"LoggedIn", @"Logged in"), RELEASE_SERVER];
-            } else {
-                _logLabel.text = [NSString stringWithFormat:NSLocalizedString(@"LoggedIn", @"Logged in"), DEV_SERVER];
-            }
+            NSURL* serverURL = [NSURL URLWithString:server];
+            _logLabel.text = [NSString stringWithFormat:NSLocalizedString(@"LoggedIn", @"Logged in"), [serverURL host]];
         }
         [_logTime setHidden:NO];
         return;

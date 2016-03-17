@@ -48,7 +48,7 @@ int keyHandleLength = 64;
     //    NSString* keyStr = [keyHandle base64EncodedString];
     //Save new keys into database
     TokenEntity* newTokenEntity = [[TokenEntity alloc] init];
-    NSString* keyID = [NSString stringWithFormat:@"%@%@", [enrollmentRequest issuer], [enrollmentRequest application]];
+    NSString* keyID = application;
     [newTokenEntity setID:keyID];
     [newTokenEntity setApplication:application];
     [newTokenEntity setIssuer:[enrollmentRequest issuer]];
@@ -82,7 +82,7 @@ int keyHandleLength = 64;
     NSString* challenge = [request challenge];
     //    NSData* keyHandle = [request keyHandle];
     TokenEntity* tokenEntity = nil;
-    NSArray* tokenEntities = [[DataStoreManager sharedInstance] getTokenEntitiesByID:@""];
+    NSArray* tokenEntities = [[DataStoreManager sharedInstance] getTokenEntitiesByID:application];
     if ([tokenEntities count] > 0){
         tokenEntity = [tokenEntities objectAtIndex:0];
     } else {

@@ -138,7 +138,11 @@
         } else {
             [[LogManager sharedInstance] addLog:erStr];
         }
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_REGISTRATION_FAILED object:nil];
+        if (isEnroll){
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_REGISTRATION_FAILED object:nil];
+        } else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AUTENTIFICATION_FAILED object:nil];
+        }
     }
 
 //    NSString* code = [responce ];
