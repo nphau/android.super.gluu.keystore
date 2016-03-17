@@ -267,6 +267,16 @@
                                             <outlet property="delegate" destination="Oeu-8W-g4d" id="eUP-D1-ton"/>
                                         </connections>
                                     </scrollView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="hj8-3R-Akt">
+                                        <rect key="frame" x="250" y="41" width="62" height="37"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Delete">
+                                            <color key="titleColor" red="0.98431372549999996" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="delete:" destination="Oeu-8W-g4d" eventType="touchUpInside" id="yoo-pc-VGK"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -283,6 +293,7 @@
                         <outlet property="closeButton" destination="Ykg-pV-4Gb" id="6R6-r7-1lM"/>
                         <outlet property="createdLabel" destination="jKc-1C-0cl" id="qg5-ze-mCB"/>
                         <outlet property="createdValueLabel" destination="u0M-1Z-HPe" id="yex-vO-LKz"/>
+                        <outlet property="deleteButton" destination="hj8-3R-Akt" id="riY-3J-YUZ"/>
                         <outlet property="issuerLabel" destination="yDp-b2-0Xm" id="de8-Ly-MT0"/>
                         <outlet property="issuerValueLabel" destination="R3p-R8-6Q5" id="pmO-wj-Wkx"/>
                         <outlet property="scrollView" destination="utU-Fo-FbI" id="XuU-qa-viF"/>

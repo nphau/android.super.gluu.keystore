@@ -8,6 +8,7 @@
 
 #import "InformationViewController.h"
 #import "Constants.h"
+#import "DataStoreManager.h"
 
 @implementation InformationViewController
 
@@ -62,6 +63,37 @@
     closeButton.layer.cornerRadius = CORNER_RADIUS;
     closeButton.layer.borderColor = [UIColor blackColor].CGColor;
     closeButton.layer.borderWidth = 2.0;
+    
+    deleteButton.layer.cornerRadius = CORNER_RADIUS;
+    deleteButton.layer.borderColor = [UIColor redColor].CGColor;
+    deleteButton.layer.borderWidth = 2.0;
+}
+
+-(IBAction)delete:(id)sender{
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Delete", @"Delete") message:@"Do you want to delete this key?" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *yesAction = [UIAlertAction
+                                actionWithTitle:NSLocalizedString(@"YES", @"YES action")
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction *action)
+                                {
+                                    [self deleteKey];
+                                    NSLog(@"YES action");
+                                }];
+    UIAlertAction *noAction = [UIAlertAction
+                               actionWithTitle:NSLocalizedString(@"NO", @"NO action")
+                               style:UIAlertActionStyleCancel
+                               handler:^(UIAlertAction *action)
+                               {
+                                   NSLog(@"NO action");
+                               }];
+    [alert addAction:yesAction];
+    [alert addAction:noAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+-(void)deleteKey{
+    [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:@""];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated{

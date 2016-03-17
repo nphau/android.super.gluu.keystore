@@ -28,6 +28,7 @@
     IBOutlet UILabel* authenticationValueTypeLabel;
     
     IBOutlet UIButton* closeButton;
+    IBOutlet UIButton* deleteButton;
     
     IBOutlet UIScrollView* scrollView;
     
