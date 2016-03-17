@@ -57,7 +57,6 @@
 		BB37DF371C7E0B8E0016D422 /* NSString+URLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DEFB1C7E0B8E0016D422 /* NSString+URLEncode.m */; };
 		BB37DF391C7E0B8E0016D422 /* GMEllipticCurveCrypto+hash.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DF011C7E0B8E0016D422 /* GMEllipticCurveCrypto+hash.m */; };
 		BB37DF3A1C7E0B8E0016D422 /* GMEllipticCurveCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DF031C7E0B8E0016D422 /* GMEllipticCurveCrypto.m */; };
-		BB37DF3B1C7E0B8E0016D422 /* TJSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DF061C7E0B8E0016D422 /* TJSpinner.m */; };
 		BB37DF3C1C7E0B8E0016D422 /* LogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DF091C7E0B8E0016D422 /* LogsViewController.m */; };
 		BB37DF3D1C7E0B8E0016D422 /* KeysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DF0B1C7E0B8E0016D422 /* KeysViewController.m */; };
 		BB37DF3E1C7E0B8E0016D422 /* KeyHandleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DF0E1C7E0B8E0016D422 /* KeyHandleCell.m */; };
@@ -185,8 +184,6 @@
 		BB37DF011C7E0B8E0016D422 /* GMEllipticCurveCrypto+hash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GMEllipticCurveCrypto+hash.m"; sourceTree = "<group>"; };
 		BB37DF021C7E0B8E0016D422 /* GMEllipticCurveCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMEllipticCurveCrypto.h; sourceTree = "<group>"; };
 		BB37DF031C7E0B8E0016D422 /* GMEllipticCurveCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMEllipticCurveCrypto.m; sourceTree = "<group>"; };
-		BB37DF051C7E0B8E0016D422 /* TJSpinner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJSpinner.h; sourceTree = "<group>"; };
-		BB37DF061C7E0B8E0016D422 /* TJSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJSpinner.m; sourceTree = "<group>"; };
 		BB37DF081C7E0B8E0016D422 /* LogsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogsViewController.h; sourceTree = "<group>"; };
 		BB37DF091C7E0B8E0016D422 /* LogsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogsViewController.m; sourceTree = "<group>"; };
 		BB37DF0A1C7E0B8E0016D422 /* KeysViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeysViewController.h; sourceTree = "<group>"; };
@@ -572,7 +569,6 @@
 				BB37DEF71C7E0B8E0016D422 /* Base64 */,
 				BB37DEFC1C7E0B8E0016D422 /* CustomAlertView */,
 				BB37DEFF1C7E0B8E0016D422 /* ECC */,
-				BB37DF041C7E0B8E0016D422 /* TJSpinner */,
 			);
 			path = Vendors;
 			sourceTree = "<group>";
@@ -606,15 +602,6 @@
 				BB37DF031C7E0B8E0016D422 /* GMEllipticCurveCrypto.m */,
 			);
 			path = ECC;
-			sourceTree = "<group>";
-		};
-		BB37DF041C7E0B8E0016D422 /* TJSpinner */ = {
-			isa = PBXGroup;
-			children = (
-				BB37DF051C7E0B8E0016D422 /* TJSpinner.h */,
-				BB37DF061C7E0B8E0016D422 /* TJSpinner.m */,
-			);
-			path = TJSpinner;
 			sourceTree = "<group>";
 		};
 		BB37DF071C7E0B8E0016D422 /* ViewControllers */ = {
@@ -877,7 +864,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BB37DF3B1C7E0B8E0016D422 /* TJSpinner.m in Sources */,
 				BBB7C1021C9042AF00833B12 /* NSDate+NVTimeAgo.m in Sources */,
 				BB37DF221C7E0B8E0016D422 /* OXPushManager.m in Sources */,
 				BB37DF391C7E0B8E0016D422 /* GMEllipticCurveCrypto+hash.m in Sources */,

@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "QRCodeReaderDelegate.h"
-#import "TJSpinner.h"
 #import "ApproveDenyViewController.h"
 #import "UserLoginInfo.h"
 #import "LecenseAgreementDelegate.h"
@@ -25,8 +24,6 @@
     IBOutlet UILabel* scanTextLabel;
     IBOutlet UIView* welcomeView;
     IBOutlet UIView* contentView;
-    
-    TJSpinner *circularSpinner;
 
     BOOL isResultFromScan;
     BOOL isStatusViewVisible;
