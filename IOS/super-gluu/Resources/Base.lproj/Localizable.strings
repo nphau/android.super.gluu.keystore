@@ -19,7 +19,7 @@
 
 "LoggedIn" = "Logged in to %@";
 
-"ScanText" = "Pair this device by scanning the QR code on a Super GLUU enabled service";
+"ScanText" = "You may be presented with a QR code for enrollment or authentication. Click the button to open your QR scanner.";
 "Welcome" = "Welcome";
 
 "PressApprove" = "To continue, press Approve";
@@ -86,6 +86,8 @@
 "AuthenticationMode" = "Authentication mode";
 "AuthenticationType" = "Authentication type";
 "CloseButton" = "Close";
+
+"SecondsLeft" = "seconds left";
 
 
 

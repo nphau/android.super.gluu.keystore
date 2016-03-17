@@ -18,6 +18,11 @@
 
 "LoggedIn" = "Logged in to %@";
 
+"ScanText" = "You may be presented with a QR code for enrollment or authentication. Click the button to open your QR scanner.";
+"Welcome" = "Welcome";
+
+"PressApprove" = "To continue, press Approve";
+
 "OneStep" = "1 step: ";
 "TwoStep" = "2 step: ";
 
@@ -78,6 +83,8 @@
 "AuthenticationMode" = "Authentication mode";
 "AuthenticationType" = "Authentication type";
 "CloseButton" = "Close";
+
+"SecondsLeft" = "seconds left";
 
 
 

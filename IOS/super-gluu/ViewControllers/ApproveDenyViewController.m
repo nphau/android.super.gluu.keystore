@@ -18,7 +18,7 @@
 #define moveUpY 70
 #define LANDSCAPE_Y 290
 #define LANDSCAPE_Y_IPHONE_5 245
-#define START_TIME 60
+#define START_TIME 40
 
 #define ADDRESS_ERROR @"error"
 
@@ -70,8 +70,6 @@
     }
     if (time == 0){
         [self onDeny:nil];
-        [timer invalidate];
-        timer = nil;
     }
 
 }
@@ -140,6 +138,7 @@
     [approveRequest setTitle:NSLocalizedString(@"Approve", @"Approve") forState:UIControlStateNormal];
     [denyRequest setTitle:NSLocalizedString(@"Deny", @"Deny") forState:UIControlStateNormal];
     titleLabel.text = NSLocalizedString(@"PressApprove", @"To continue, press Approve");
+    timerLabelTitle.text = NSLocalizedString(@"SecondsLeft", @"seconds left");
 }
 
 -(void)updateInfo{
@@ -196,11 +195,15 @@
 -(IBAction)onApprove:(id)sender{
     [delegate approveRequest];
     [self dismissViewControllerAnimated:YES completion:nil];
+    [timer invalidate];
+    timer = nil;
 }
 
 -(IBAction)onDeny:(id)sender{
     [delegate denyRequest];
     [self dismissViewControllerAnimated:YES completion:nil];
+    [timer invalidate];
+    timer = nil;
 }
 
 -(IBAction)back:(id)sender{
@@ -217,9 +220,9 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     NSDate* dateTime = [self getNSDate:date];
     [formatter setDateFormat:@"hh:mm:ss"];
-    NSString* time = [formatter stringFromDate:dateTime];
+    NSString* times = [formatter stringFromDate:dateTime];
     
-    return time;
+    return times;
 }
 
 -(NSString*)getDate:(NSString*)date{
@@ -242,34 +245,54 @@
 }
 
 // get the IP address of current-device
-+ (NSString *)getIPAddress {
-    NSString *address = ADDRESS_ERROR;
-    struct ifaddrs *interfaces = NULL;
-    struct ifaddrs *temp_addr = NULL;
-    int success = 0;
-    // retrieve the current interfaces - returns 0 on success
-    success = getifaddrs(&interfaces);
-    if (success == 0) {
-        // Loop through linked list of interfaces
-        temp_addr = interfaces;
-        while(temp_addr != NULL) {
-            if(temp_addr->ifa_addr->sa_family == AF_INET) {
-                // Check if interface is en0 which is the wifi connection on the iPhone
-                if([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"]) {
-                    // Get NSString from C String
-                    address = [NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr)];
-                }
-            }
-            temp_addr = temp_addr->ifa_next;
++ (NSString *)getIPAddress:(NSString*)address {
+    NSURL* url = [NSURL URLWithString:address];
+    Boolean result;
+    CFHostRef hostRef;
+    CFArrayRef addresses = NULL;
+    NSString *hostname = [url host];
+    NSString *ipAddress = @"";
+    
+    hostRef = CFHostCreateWithName(kCFAllocatorDefault, (__bridge CFStringRef)hostname);
+    if (hostRef) {
+        result = CFHostStartInfoResolution(hostRef, kCFHostAddresses, NULL); // pass an error instead of NULL here to find out why it failed
+        if (result == TRUE) {
+            addresses = CFHostGetAddressing(hostRef, &result);
         }
     }
-    freeifaddrs(interfaces);
-    if ([address isEqualToString:ADDRESS_ERROR]){
-        CTTelephonyNetworkInfo *netinfo = [[CTTelephonyNetworkInfo alloc] init];
-        CTCarrier *carrier = [netinfo subscriberCellularProvider];
-        address = [carrier carrierName];
+    
+    if (result == TRUE) {
+        CFIndex index = 0;
+        CFDataRef ref = (CFDataRef) CFArrayGetValueAtIndex(addresses, index);
+        struct sockaddr_in* remoteAddr;
+        char *ip_address;
+        remoteAddr = (struct sockaddr_in*) CFDataGetBytePtr(ref);
+        if (remoteAddr != NULL) {
+            ip_address = inet_ntoa(remoteAddr->sin_addr);
+        }
+        ipAddress = [NSString stringWithCString:ip_address encoding:NSUTF8StringEncoding];
     }
-    return address;
+//    struct ifaddrs *interfaces = NULL;
+//    struct ifaddrs *temp_addr = NULL;
+//    int success = 0;
+//    // retrieve the current interfaces - returns 0 on success
+//    success = getifaddrs(&interfaces);
+//    if (success == 0) {
+//        // Loop through linked list of interfaces
+//        temp_addr = interfaces;
+//        while(temp_addr != NULL) {
+//            if(temp_addr->ifa_addr->sa_family == AF_INET) {
+//                // Check if interface is en0 which is the wifi connection on the iPhone
+//                if([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"]) {
+//                    // Get NSString from C String
+//                    address = [NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr)];
+//                }
+//            }
+//            temp_addr = temp_addr->ifa_next;
+//        }
+//    }
+//    freeifaddrs(interfaces);
+    return ipAddress;
 }
 
 /*

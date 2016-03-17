@@ -87,6 +87,8 @@ NSString *const kTJCircularSpinner = @"TJCircularSpinner";
 //                int y = 200;
                 [welcomeView setCenter:CGPointMake(welcomeView.center.x, y)];
                 [statusView setCenter:CGPointMake(statusView.center.x, y/4)];
+                [scanTextLabel setCenter:CGPointMake(scanTextLabel.center.x, scanButton.center.y + 80)];
+                [welcomeLabel setCenter:CGPointMake(welcomeLabel.center.x, scanButton.center.y - 70)];
                 isLandScape = NO;
             }
         }
@@ -100,6 +102,8 @@ NSString *const kTJCircularSpinner = @"TJCircularSpinner";
                 int y = [[UIScreen mainScreen] bounds].size.height/2.3;//140;
                 [welcomeView setCenter:CGPointMake(welcomeView.center.x, y)];
                 [statusView setCenter:CGPointMake(statusView.center.x, y/4)];
+                [scanTextLabel setCenter:CGPointMake(scanTextLabel.center.x, scanButton.center.y + 50)];
+                [welcomeLabel setCenter:CGPointMake(welcomeLabel.center.x, scanButton.center.y - 50)];
                 isLandScape = YES;
             }
             
@@ -114,6 +118,10 @@ NSString *const kTJCircularSpinner = @"TJCircularSpinner";
         scanTextLabel.font = [UIFont systemFontOfSize:17];
     }
     statusView.layer.cornerRadius = BUTTON_CORNER_RADIUS;
+    
+    scanButton.layer.cornerRadius = CORNER_RADIUS;
+    scanButton.layer.borderColor = CUSTOM_GREEN_COLOR.CGColor;
+    scanButton.layer.borderWidth = 2.0;
     
     circularSpinner = [[TJSpinner alloc] initWithSpinnerType:kTJCircularSpinner];
     [circularSpinner setFrame:CGRectMake(scanButton.frame.origin.x + 50, scanButton.frame.origin.y - 100, 50, 50)];
@@ -553,7 +561,7 @@ NSString *const kTJCircularSpinner = @"TJCircularSpinner";
     [[UserLoginInfo sharedInstance] setAuthenticationType:@"Authentication"];
     NSString* mode = oneStep ? NSLocalizedString(@"OneStepMode", @"One Step") : NSLocalizedString(@"TwoStepMode", @"Two Step");
     [[UserLoginInfo sharedInstance] setAuthenticationMode:mode];
-    [[UserLoginInfo sharedInstance] setLocationIP:[ApproveDenyViewController getIPAddress]];
+    [[UserLoginInfo sharedInstance] setLocationIP:[ApproveDenyViewController getIPAddress:issuer]];
 }
 
 - (void)didReceiveMemoryWarning {

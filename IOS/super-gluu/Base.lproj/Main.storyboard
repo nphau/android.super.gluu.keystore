@@ -16,10 +16,6 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="66"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gl.png" id="SHU-Ck-FhL">
-                                        <rect key="frame" x="103" y="20" width="114" height="43"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mPP-Np-Kae">
                                         <rect key="frame" x="277" y="28" width="35" height="35"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -28,8 +24,12 @@
                                             <action selector="cleanLogs:" destination="9lV-D3-rAo" eventType="touchUpInside" id="bSz-am-laV"/>
                                         </connections>
                                     </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gluu.png" id="SHU-Ck-FhL">
+                                        <rect key="frame" x="109" y="20" width="102" height="45"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.95627003209999994" green="0.95627003209999994" blue="0.95627003209999994" alpha="0.89302262929999998" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <view contentMode="scaleToFill" id="9gX-87-vc5" userLabel="Background View">
                                 <rect key="frame" x="0.0" y="68" width="320" height="449"/>
@@ -292,7 +292,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tus-rQ-Wsl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="854" y="817"/>
+            <point key="canvasLocation" x="798" y="817"/>
         </scene>
         <!--Keys-->
         <scene sceneID="hnK-d7-J9C">
@@ -306,12 +306,12 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="66"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gl.png" id="zoX-Ve-eFF">
-                                        <rect key="frame" x="103" y="20" width="114" height="43"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gluu.png" id="zoX-Ve-eFF">
+                                        <rect key="frame" x="109" y="20" width="102" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.95627003209999994" green="0.95627003209999994" blue="0.95627003209999994" alpha="0.89302262929999998" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <view contentMode="scaleToFill" id="ost-Ec-s9v">
                                 <rect key="frame" x="0.0" y="68" width="320" height="449"/>
@@ -437,7 +437,7 @@
                                         <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
                                     <view contentMode="scaleToFill" id="WkL-NJ-ypG" userLabel="WelcomeView">
-                                        <rect key="frame" x="28" y="115" width="270" height="173"/>
+                                        <rect key="frame" x="28" y="115" width="270" height="212"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FDP-Hk-qh3">
@@ -447,32 +447,23 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <view contentMode="scaleToFill" id="MvU-v9-edm" userLabel="PairingView">
-                                                <rect key="frame" x="0.0" y="50" width="270" height="96"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You may be presented with a QR code for enrollment or authentication. Click the button to open your QR scanner." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mMq-pl-qUw">
+                                                <rect key="frame" x="0.0" y="128" width="270" height="76"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pair this device by scanning the QR code on a Super GLUU enabled service" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mMq-pl-qUw">
-                                                        <rect key="frame" x="81" y="16" width="180" height="64"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ffN-SG-7rx">
-                                                        <rect key="frame" x="8" y="16" width="65" height="65"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <color key="backgroundColor" red="0.22164822916331628" green="0.49733651318285532" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="46"/>
-                                                        <state key="normal" title="+">
-                                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="scanAction:" destination="OWT-hQ-veb" eventType="touchUpInside" id="1eX-9l-bzY"/>
-                                                        </connections>
-                                                    </button>
-                                                </subviews>
-                                                <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
-                                            </view>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ffN-SG-7rx">
+                                                <rect key="frame" x="61" y="66" width="148" height="46"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <state key="normal" title="Scan QR Code">
+                                                    <color key="titleColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="scanAction:" destination="OWT-hQ-veb" eventType="touchUpInside" id="1eX-9l-bzY"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
@@ -483,12 +474,12 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="66"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gl.png" id="5IA-gr-62u">
-                                        <rect key="frame" x="103" y="20" width="114" height="43"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gluu.png" id="5IA-gr-62u">
+                                        <rect key="frame" x="109" y="20" width="102" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.95627003205128214" green="0.95627003205128214" blue="0.95627003205128214" alpha="0.89302262931034482" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -588,7 +579,7 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Austin, TX" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fth-Iq-onf">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="getting location..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fth-Iq-onf">
                                                 <rect key="frame" x="53" y="33" width="219" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -764,7 +755,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <string key="text">Short Version
-You may only use the SUPER GLUU mobile application in connection with GLUU’s services and third-party OATH-compliant OTP tokens, and in full compliance with the terms and conditions of the full End User License Agreement, set forth below. In order to provide and improve our services, we collect certain information about you, your use of SUPER GLUU and your devices. To learn more about your rights and our obligations regarding this information, please read the full End User License Agreement, below, as well as our Privacy Policy, which is available on our website at https://www.gluu.org/privacy-policy/.
+You may only use the SUPER GLUU mobile application in connection with GLUU’s services and in full compliance with the terms and conditions of the full End User License Agreement, set forth below. In order to provide and improve our services, we collect certain information about you, your use of SUPER GLUU and your devices. To learn more about your rights and our obligations regarding this information, please read the full End User License Agreement, below, as well as our Privacy Policy, which is available on our website at https://www.gluu.org/privacy-policy/.
 Long Version
 GLUU, INC. 
 END USER LICENSE AGREEMENT 
@@ -826,13 +817,13 @@ TERMS AND CONDITIONS
 
 2.2 The Services and SLA are subject to modification from time to time at GLUU’s sole discretion, provided the modifications do not materially diminish the functionality of the Services provided by GLUU and the Services continue to perform according to the description of the Services specified in Section 2.3 in all material aspects. Customer shall have the right to terminate the Agreement pursuant to Section 10.2 without any penalty if (i) a material modification to the Services or the SLA is made which materially diminishes the functionality of the Services or materially diminishes the SLA, (ii) GLUU has not obtained Customer’s consent for such modifications and (iii) Gluu, Inc. does not provide a remedy in the cure period stated in Section 10.2.
 
-2.3 GLUU will make the Services available and the Services will perform substantially in accordance with the description of the services found at http://www.gluu.org/pricing. Notwithstanding the foregoing, GLUU reserves the right to suspend Customer’s (or any of its Users’) access to the Services: (i) for scheduled or emergency maintenance, (ii) in the event Customer is in breach of this Agreement, including failure to pay any amounts due to GLUU, and fails to correct that breach within the applicable cure period; (iii) in the event that Customer breaches Section 4 or Section 7 of this Agreement, (iv) as it deems reasonably necessary to respond to any actual or potential security concerns or (v) based on GLUU’s reasonable belief that Customer and/or the Users use of the Services are excessive, interfering with use by other customers and users or are violating applicable laws, rules or regulations.
+2.3 GLUU will make the Services available and the Services will perform substantially in accordance with the description of the services found at http://super.gluu.org. Notwithstanding the foregoing, GLUU reserves the right to suspend Customer’s (or any of its Users’) access to the Services: (i) for scheduled or emergency maintenance, (ii) in the event Customer is in breach of this Agreement, including failure to pay any amounts due to GLUU, and fails to correct that breach within the applicable cure period; (iii) in the event that Customer breaches Section 4 or Section 7 of this Agreement, (iv) as it deems reasonably necessary to respond to any actual or potential security concerns or (v) based on GLUU’s reasonable belief that Customer and/or the Users use of the Services are excessive, interfering with use by other customers and users or are violating applicable laws, rules or regulations.
 
-2.4 For Customers enrolled in one of the editions of Services requiring purchase, subject to full compliance with the terms and conditions of this Agreement, GLUU will use commercially reasonable efforts to provide support to Customer as described in the Service Level Agreement. The SLA shall apply only with respect to Customers who have enrolled in one of the editions of Services requiring purchase. Certain parts of the Services or types of Services provided by GLUU are free to use and do not require payment (“Free Services”). In the event that Customer earns 15 days of service credits, determined in accordance with the terms of the Service Level Agreement, in each of three consecutive months, Customer may terminate this Agreement and, as its sole and exclusive remedy, receive a refund of any pre-paid subscription Fees paid by Customer to GLUU for Services not rendered as of the termination date. The SLA shall not apply with respect to Customers who use only Free Services and, without limitation, such Customers will not receive any support from GLUU.
+2.4 For Customers enrolled in one of the editions of Services requiring purchase, subject to full compliance with the terms and conditions of this Agreement, GLUU will use commercially reasonable efforts to provide support to Customer as described in the Service Level Agreement. The SLA shall apply only with respect to Customers who have enrolled in one of the editions of Services requiring purchase. Certain parts of the Services or types of Services provided by GLUU are free to use and do not require payment (“Free Services”). The SLA shall not apply with respect to Customers who use only Free Services and, without limitation, such Customers will not receive any support from GLUU.
 
 2.5 GLUU collects certain information about Customer and its Users as well as their respective devices, computers and use of the Services. GLUU uses, discloses and protects this information as described in this Agreement and GLUU’s privacy policy, which is incorporated herein by reference and the current version of which is available at https://www.gluu.org/privacy-policy/ (the “Privacy Policy”). 
 
-2.6 Use of the Services by Customer and its Users is also governed by GLUU’s Service Terms and Conditions which is available at https://www.Gluu, Inc..com/legal/terms, which is incorporated herein by reference.
+2.6 Use of the Services by Customer and its Users is also governed by GLUU’s Service Terms and Conditions which is available at https://www.gluu.org/terms-and-conditions, which is incorporated herein by reference.
 
 2.7 Users will be required to review and agree to the terms of an end user license agreement (“EULA”) on their device(s) prior to accessing the Services. With respect to the relationship between GLUU, Customer and the Users, the EULA will generally provide that the terms of any agreements between GLUU and its Customers will govern instead of the EULA with respect to use by Users with access to the Services through such Customers. 
 
@@ -855,7 +846,7 @@ Customer will not, and will not permit any of its Users nor any third party to: 
 
 5.1 Customer will pay GLUU the Fees plus all applicable sales, use and other purchase related taxes (or provide GLUU with a valid certificate of exemption from the requirement of paying sales, use or other purchase related taxes) in accordance with the payment terms set forth on the Order Form. Except as otherwise indicated in the applicable Order Form, all fees and expenses shall be in U.S. dollars. Unpaid Fees are subject to a finance charge of one percent (1.0%) per month, or the maximum permitted by law, whichever is lower, plus all expenses of collection, including reasonable attorneys’ fees. In the case of any withholding requirements, Customer will pay any required withholding itself and will not reduce the amount paid to GLUU on account thereof. If the method of payment is by credit card, Customer agrees to (a) keep Customer’s credit card information updated and (b) authorize Gluu, Inc. to charge Customer’s credit card the Fees as and when due. GLUU will not charge users any fees for their use of the Services or SUPER GLUU Software without Customer’s authorization. Users’ carriers or service providers may charge fees for data usage, messaging, phone calls or other services that are required for them to use the Services. All payments will be made in accordance with the Payment Schedule.
 
-5.2 Customer’s Order Form will indicate an initial allotment of Telephony Credits, if applicable. Customer may purchase additional Telephony Credits separately via the billing section of Customer’s administrative interface or by contacting a sales representative. U.S. and international rates for telephony can be found at https://www.duosecurity.com/docs/telephony_credits.
+5.2 Customer’s Order Form will indicate an initial allotment of Telephony Credits, if applicable. Customer may purchase additional Telephony Credits separately via the billing section of Customer’s administrative interface or by contacting a sales representative. 
 
 5.3 If a Customer uses only Free Services, GLUU will not charge such Customer any Fees for use of such Free Services or download, installation or use of the Software associated with Free Services. Such Customer may discontinue using the Free Services at any time, but must immediately remove any Software from its devices.
 
@@ -891,7 +882,7 @@ Except as expressly set forth herein, GLUU alone (and its licensors, where appli
 
 (c) it shall process Customer Personal Data only on, and in accordance with, Customer's instructions contained in this Agreement or any other reasonable instructions received from Customer from time to time. 
 
-8.5 Customer acknowledges that Customer Personal Data will be collected, transferred and stored by GLUU outside the EEA in the United States of America, whose laws may provide a lower standard of data protection than exists in the EEA. For these purposes, GLUU currently confirms that it currently complies with the US-EU Safe Harbor and the U.S.-Swiss Safe Harbor Framework as set forth by the US Department of Commerce, regarding the collection, use and retention of personal data from the European Union member countries. GLUU has certified that it adheres to the Safe Harbor Privacy Principles of notice, choice, onward transfer, security, data integrity, access and enforcement. To learn more about the Safe Harbor program generally, and to view the GLUU certification, please visit http://www.export.gov/safeharbor.
+8.5 Customer acknowledges that Customer Personal Data will be collected, transferred and stored by GLUU outside the EEA in the United States of America, whose laws may provide a lower standard of data protection than exists in the EEA. 
 
 8.6 Customer acknowledges that GLUU is reliant on Customer for direction as to the extent to which GLUU is entitled to use and process Customer Data. Consequently, GLUU will not be liable for any claim brought by a data subject to the extent that such action or omission resulted directly from Customer's instructions. Customer undertakes to comply in all respects with any applicable laws, regulations, standards and guidelines applicable to personal data and shall use all reasonable endeavors to where possible anonymise personal data sent to GLUU.
 
@@ -1000,12 +991,83 @@ In the event you are using the Services in connection with a device provided by 
                     <connections>
                         <outlet property="acceptButton" destination="QGX-4W-DOt" id="Ss9-eb-ofG"/>
                         <outlet property="titleLabel" destination="UpH-ae-WJf" id="ndb-hA-xZh"/>
-                        <segue destination="EoK-Gf-BRf" kind="modal" identifier="MainTabView" id="8WH-vb-1Db"/>
+                        <segue destination="Gfe-Ja-dd4" kind="modal" identifier="PinCodeID" id="2gE-0G-jLj"/>
+                        <segue destination="EoK-Gf-BRf" kind="modal" identifier="MainTabView" id="FeX-Vz-dRF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kjD-UQ-Sab" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="825" y="82"/>
+            <point key="canvasLocation" x="363" y="101"/>
+        </scene>
+        <!--Pin Code View Controller-->
+        <scene sceneID="BIF-4m-wP5">
+            <objects>
+                <viewController id="Gfe-Ja-dd4" customClass="PinCodeViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="eF3-u8-lHJ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="9u8-dh-r8F" userLabel="NavigationView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="66"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gluu.png" id="3bN-Bh-Yoz">
+                                        <rect key="frame" x="109" y="20" width="102" height="45"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="P7j-Zc-veo">
+                                <rect key="frame" x="0.0" y="68" width="320" height="500"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Do you want to protect your app using PIN code?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="i5t-fi-tKb">
+                                        <rect key="frame" x="17" y="8" width="284" height="97"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="7WO-t3-2Ec">
+                                        <rect key="frame" x="175" y="154" width="109" height="55"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.98431372549999996" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <state key="normal" title="NO">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="skip:" destination="Gfe-Ja-dd4" eventType="touchUpInside" id="UlJ-Hj-rbb"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6vf-q7-wtD">
+                                        <rect key="frame" x="29" y="154" width="109" height="55"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="YES">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="next:" destination="Gfe-Ja-dd4" eventType="touchUpInside" id="smO-E9-RAa"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="nextButton" destination="6vf-q7-wtD" id="ydh-Zd-MaL"/>
+                        <outlet property="skipButton" destination="7WO-t3-2Ec" id="o0Y-UV-Pra"/>
+                        <outlet property="titleLabel" destination="i5t-fi-tKb" id="dbp-wj-tKB"/>
+                        <segue destination="EoK-Gf-BRf" kind="modal" identifier="MainTabView" id="lm7-Om-e35"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WBn-ct-btt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="830" y="-295"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="UCM-2a-iBq">
@@ -1052,7 +1114,7 @@ In the event you are using the Services in connection with a device provided by 
         <image name="approveIcon.png" width="108" height="99"/>
         <image name="clearLogIcon.png" width="60" height="60"/>
         <image name="denyIcon.png" width="300" height="300"/>
-        <image name="gl.png" width="187" height="75"/>
+        <image name="gluu.png" width="192" height="89"/>
         <image name="gluuIcon.png" width="87" height="87"/>
         <image name="homeIconImages" width="29" height="29"/>
         <image name="homeIconSelectedImages" width="35" height="35"/>
@@ -1066,6 +1128,7 @@ In the event you are using the Services in connection with a device provided by 
         <image name="timeIconImages" width="29" height="29"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="GZI-KJ-1UL"/>
+        <segue reference="lm7-Om-e35"/>
+        <segue reference="nbb-Ne-tyY"/>
     </inferredMetricsTieBreakers>
 </document>

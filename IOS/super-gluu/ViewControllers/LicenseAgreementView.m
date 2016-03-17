@@ -11,6 +11,10 @@
 
 #define LICENSE_AGREEMENT @"LicenseAgreement"
 #define MAIN_VIEW @"MainTabView"
+#define PIN_VIEW @"PinCodeID"
+
+#define IS_FIRST_LOAD @"firstLoad"
+#define PIN_PROTECTION_ID @"enabledPinCode"
 
 @implementation LicenseAgreementView
 
@@ -43,13 +47,28 @@
 
 -(IBAction)onLicenseAgreement:(id)sender{
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:LICENSE_AGREEMENT];
-    [self performSegueWithIdentifier:MAIN_VIEW sender:self];
+    [self checkPinProtection];
 }
 
 -(void)checkLicenseAgreement{
     BOOL isLicenseAgreement = [[NSUserDefaults standardUserDefaults] boolForKey:LICENSE_AGREEMENT];
     if (isLicenseAgreement){
-        [self performSegueWithIdentifier:MAIN_VIEW sender:self];
+        [self checkPinProtection];
+    }
+}
+
+-(void)checkPinProtection{
+    BOOL isFirstLoad = [[NSUserDefaults standardUserDefaults] boolForKey:IS_FIRST_LOAD];
+    if (!isFirstLoad){
+        [self performSegueWithIdentifier:PIN_VIEW sender:self];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:IS_FIRST_LOAD];
+    } else {
+        BOOL isPin = [[NSUserDefaults standardUserDefaults] boolForKey:PIN_PROTECTION_ID];
+        if (isPin){
+            [self performSegueWithIdentifier:PIN_VIEW sender:self];
+        } else {
+            [self performSegueWithIdentifier:MAIN_VIEW sender:self];
+        }
     }
 }
 
