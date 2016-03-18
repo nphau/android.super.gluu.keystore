@@ -23,5 +23,6 @@
 
 -(void)saveUserLoginInfo:(UserLoginInfo*)userLoginInfo;
 -(NSArray*)getUserLoginInfo;
+-(BOOL)deleteAllLogs;
 
 @end

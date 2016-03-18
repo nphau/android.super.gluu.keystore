@@ -271,4 +271,24 @@
     return entities;
 }
 
+-(BOOL)deleteAllLogs{
+    appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    //    NSMutableArray* entities = [[NSMutableArray alloc] init];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:USER_INFO_ENTITY];
+    NSError *error = nil;
+    NSArray* eccKeyFetchedArray = [appDelegate.managedObjectContext executeFetchRequest:request error:&error];
+    if (eccKeyFetchedArray != nil && [eccKeyFetchedArray count] > 0){
+        for (NSManagedObject *eccKeyFetched in eccKeyFetchedArray){
+            if (eccKeyFetched != nil){
+                [appDelegate.managedObjectContext deleteObject:eccKeyFetched];
+                if (![appDelegate.managedObjectContext save:&error]) {
+                    NSLog(@"Couldn't save: %@", error);
+                }
+            }
+            return YES;
+        }
+    }
+    return NO;
+}
+
 @end

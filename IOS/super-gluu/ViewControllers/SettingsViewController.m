@@ -104,7 +104,7 @@
         isPinCode = YES;
     }
     CustomIOSAlertView* alertView = [CustomIOSAlertView alertWithTitle:title  message:message];
-    [alertView setButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"NO", @"NO"), NSLocalizedString(@"YES", @"YES"), nil]];
+    [alertView setButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"YES", @"YES"), NSLocalizedString(@"NO", @"NO"), nil]];
     [alertView setButtonColors:[NSArray arrayWithObjects:[UIColor redColor], [UIColor greenColor], nil]];
     alertView.delegate = self;
     [alertView show];
@@ -113,7 +113,7 @@
 #pragma mark CustomIOS7AlertView Delegate
 
 -(void)customIOS7dialogButtonTouchUpInside:(id)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 1){
+    if (buttonIndex == 0){
         if ([[NSUserDefaults standardUserDefaults] stringForKey:PIN_CODE] != nil){
             [self changePinCode];
         } else {

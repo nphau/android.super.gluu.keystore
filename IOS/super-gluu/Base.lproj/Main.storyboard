@@ -19,7 +19,7 @@
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mPP-Np-Kae">
                                         <rect key="frame" x="277" y="28" width="35" height="35"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="clearLogIcon.png"/>
+                                        <state key="normal" image="clearLogsImages"/>
                                         <connections>
                                             <action selector="cleanLogs:" destination="9lV-D3-rAo" eventType="touchUpInside" id="bSz-am-laV"/>
                                         </connections>
@@ -1268,7 +1268,7 @@ In the event you are using the Services in connection with a device provided by 
     </scenes>
     <resources>
         <image name="approveIcon.png" width="108" height="99"/>
-        <image name="clearLogIcon.png" width="60" height="60"/>
+        <image name="clearLogsImages" width="35" height="35"/>
         <image name="denyIcon.png" width="300" height="300"/>
         <image name="gluu.png" width="192" height="89"/>
         <image name="gluuIcon.png" width="87" height="87"/>

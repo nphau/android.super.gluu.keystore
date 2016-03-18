@@ -70,25 +70,20 @@
 }
 
 -(IBAction)delete:(id)sender{
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Delete", @"Delete") message:@"Do you want to delete this key?" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *yesAction = [UIAlertAction
-                                actionWithTitle:NSLocalizedString(@"YES", @"YES action")
-                                style:UIAlertActionStyleDefault
-                                handler:^(UIAlertAction *action)
-                                {
-                                    [self deleteKey];
-                                    NSLog(@"YES action");
-                                }];
-    UIAlertAction *noAction = [UIAlertAction
-                               actionWithTitle:NSLocalizedString(@"NO", @"NO action")
-                               style:UIAlertActionStyleCancel
-                               handler:^(UIAlertAction *action)
-                               {
-                                   NSLog(@"NO action");
-                               }];
-    [alert addAction:yesAction];
-    [alert addAction:noAction];
-    [self presentViewController:alert animated:YES completion:nil];
+    CustomIOSAlertView* alertView = [CustomIOSAlertView alertWithTitle:NSLocalizedString(@"Delete", @"Delete") message:NSLocalizedString(@"DeleteKeyHandle", @"Delete KeyHandle")];
+    [alertView setButtonTitles:[NSArray arrayWithObjects: NSLocalizedString(@"YES", @"YES"), NSLocalizedString(@"NO", @"NO"), nil]];
+    [alertView setButtonColors:[NSArray arrayWithObjects:[UIColor redColor], [UIColor greenColor], nil]];
+    alertView.delegate = self;
+    [alertView show];
+}
+
+#pragma mark CustomIOS7AlertView Delegate
+
+-(void)customIOS7dialogButtonTouchUpInside:(id)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0){
+        [self deleteKey];
+    }
+    [alertView close];
 }
 
 -(void)deleteKey{

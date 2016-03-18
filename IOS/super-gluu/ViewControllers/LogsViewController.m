@@ -32,32 +32,21 @@
     logsArray = [[NSMutableArray alloc] init];
     logsArray = [[NSMutableArray alloc] initWithArray:[[DataStoreManager sharedInstance] getUserLoginInfo]];
     [logsArray count] == 0 ? [logsTableView setHidden:YES] : [logsTableView setHidden:NO];
-    if ([logsArray count] > 0){
+    [logsArray count] == 0 ? [cleanLogs setHidden:YES] : [cleanLogs setHidden:NO];
+    if ([logsArray count] > 2){
         [logsTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:logsArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
-//    NSString* logs = [[LogManager sharedInstance] getLogs];
-//    if (logs != nil || ![logs isEqualToString:@""]){
-//        NSArray* logsAr = [logs componentsSeparatedByString:@"\n"];
-//        if ([logs length] > 0){
-//            logsArray = [[NSMutableArray alloc] initWithArray:logsAr];
-//            [logsTableView reloadData];
-//            [logsTableView setHidden:NO];
-//            [logsTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:logsArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-//        } else {
-//            [logsTableView setHidden:YES];
-//            [cleanLogs setEnabled:NO];
-//        }
-//    }else{
-//        [logsTableView setHidden:YES];
-//        [cleanLogs setEnabled:NO];
-//    }
+    if ([logsArray count] > 0){
+        [cleanLogs setHidden:NO];
+        [cleanLogs setEnabled:YES];
+    }
 }
 
 #pragma mark CustomIOS7AlertView Delegate
 
 -(void)customIOS7dialogButtonTouchUpInside:(id)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 1){
-        [[LogManager sharedInstance] deleteAllLogs];
+    if (buttonIndex == 0){
+        [[DataStoreManager sharedInstance] deleteAllLogs];
         [self getLogs];
     }
     [alertView close];
@@ -65,31 +54,10 @@
 
 -(IBAction)cleanLogs:(id)sender{
     CustomIOSAlertView *alertView = [CustomIOSAlertView alertWithTitle:NSLocalizedString(@"AlertTitle", @"Into") message:NSLocalizedString(@"ClearLogs", @"Clear Logs")];
-    [alertView setButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"NO", @"NO"), NSLocalizedString(@"YES", @"YES"), nil]];
+    [alertView setButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"YES", @"YES"), NSLocalizedString(@"NO", @"NO"), nil]];
     [alertView setButtonColors:[NSArray arrayWithObjects:[UIColor redColor], [UIColor greenColor], nil]];
     alertView.delegate = self;
     [alertView show];
-}
-
--(void)showAlertViewWithTitle:(NSString*)title andMessage:(NSString*)message{
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *yesAction = [UIAlertAction
-                                   actionWithTitle:NSLocalizedString(@"YES", @"YES action")
-                                   style:UIAlertActionStyleCancel
-                                   handler:^(UIAlertAction *action)
-                                   {
-                                       NSLog(@"YES action");
-                                   }];
-    UIAlertAction *noAction = [UIAlertAction
-                                   actionWithTitle:NSLocalizedString(@"NO", @"NO action")
-                                   style:UIAlertActionStyleCancel
-                                   handler:^(UIAlertAction *action)
-                                   {
-                                       NSLog(@"NO action");
-                                   }];
-    [alert addAction:yesAction];
-    [alert addAction:noAction];
-    [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark UITableview Delegate
@@ -112,19 +80,6 @@
 
 -(IBAction)showUserInfo:(id)sender{
     [self performSegueWithIdentifier:@"LogInfo" sender:sender];
-//    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    approveDenyView = [storyBoard instantiateViewControllerWithIdentifier:@"ApproveDenyView"];
-//    approveDenyView.delegate = self;
-//    [approveDenyView setIsLogInfo:YES];
-//    UserLoginInfo* userInfo = [logsArray objectAtIndex:[sender tag]];
-//    [approveDenyView setUserInfo:userInfo];
-//    CATransition *transition = [CATransition animation];
-//    transition.duration = 0.5;
-//    transition.type = kCATransitionPush;
-//    transition.subtype = kCATransitionFromRight;
-//    [transition setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-//    [contentView.layer addAnimation:transition forKey:nil];
-//    [contentView addSubview:approveDenyView.view];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{

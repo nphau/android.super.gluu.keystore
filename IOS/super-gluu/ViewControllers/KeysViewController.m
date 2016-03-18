@@ -49,7 +49,7 @@
             //Handle the long press on row
             NSLog(@"Cell title will be changed");
             CustomIOSAlertView* alertView = [CustomIOSAlertView alertWithTitle:NSLocalizedString(@"AlertTitle", @"Into") message:NSLocalizedString(@"ChangeKeyHandleName", @"Change KeyHandle Name")];
-            [alertView setButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"NO", @"NO"), NSLocalizedString(@"YES", @"YES"), nil]];
+            [alertView setButtonTitles:[NSArray arrayWithObjects: NSLocalizedString(@"YES", @"YES"), NSLocalizedString(@"NO", @"NO"), nil]];
             [alertView setButtonColors:[NSArray arrayWithObjects:[UIColor redColor], [UIColor greenColor], nil]];
             alertView.delegate = self;
             [alertView show];
@@ -103,14 +103,18 @@
 #pragma mark CustomIOS7AlertView Delegate
 
 -(void)customIOS7dialogButtonTouchUpInside:(id)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 1){
-        NSLog(@"User wants to change keyHandleName");
-        KeyHandleCell *cell = (KeyHandleCell*)[keyHandleTableView cellForRowAtIndexPath:selectedRow];
-        UITextField* keyTextField = [cell keyHandleTextField];
-        [keyTextField setEnabled:YES];
-        [keyTextField becomeFirstResponder];
-        [keyTextField setReturnKeyType:UIReturnKeyDone];
-        keyTextField.delegate = self;
+    if (buttonIndex == 0){
+        if (((CustomIOSAlertView*)alertView).tag == 2){
+            [self deleteRow];
+        } else {
+            NSLog(@"User wants to change keyHandleName");
+            KeyHandleCell *cell = (KeyHandleCell*)[keyHandleTableView cellForRowAtIndexPath:selectedRow];
+            UITextField* keyTextField = [cell keyHandleTextField];
+            [keyTextField setEnabled:YES];
+            [keyTextField becomeFirstResponder];
+            [keyTextField setReturnKeyType:UIReturnKeyDone];
+            keyTextField.delegate = self;
+        }
     }
     [alertView close];
 }
@@ -146,25 +150,12 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     rowToDelete = (int)indexPath.row;
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Delete", @"Delete") message:@"Do you want to delete this key?" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *yesAction = [UIAlertAction
-                                   actionWithTitle:NSLocalizedString(@"YES", @"YES action")
-                                   style:UIAlertActionStyleDefault
-                                   handler:^(UIAlertAction *action)
-                                   {
-                                       [self deleteRow];
-                                       NSLog(@"YES action");
-                                   }];
-    UIAlertAction *noAction = [UIAlertAction
-                                actionWithTitle:NSLocalizedString(@"NO", @"NO action")
-                                style:UIAlertActionStyleCancel
-                                handler:^(UIAlertAction *action)
-                                {
-                                    NSLog(@"NO action");
-                                }];
-    [alert addAction:yesAction];
-    [alert addAction:noAction];
-    [self presentViewController:alert animated:YES completion:nil];
+    CustomIOSAlertView* alertView = [CustomIOSAlertView alertWithTitle:NSLocalizedString(@"Delete", @"Delete") message:NSLocalizedString(@"DeleteKeyHandle", @"Delete KeyHandle")];
+    [alertView setButtonTitles:[NSArray arrayWithObjects: NSLocalizedString(@"YES", @"YES"), NSLocalizedString(@"NO", @"NO"), nil]];
+    [alertView setButtonColors:[NSArray arrayWithObjects:[UIColor redColor], [UIColor greenColor], nil]];
+    alertView.delegate = self;
+    alertView.tag = 2;
+    [alertView show];
 }
 
 -(void)deleteRow{
