@@ -92,7 +92,7 @@
 }
 
 -(void)deleteKey{
-    [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:@""];
+    [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:_token.application];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

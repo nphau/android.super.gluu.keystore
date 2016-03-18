@@ -168,7 +168,8 @@
 }
 
 -(void)deleteRow{
-    [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:@""];
+    TokenEntity* tokenEntity = [keyHandleArray objectAtIndex:rowToDelete];
+    [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:[tokenEntity application]];
     [keyHandleArray removeObjectAtIndex:0];
     [keyHandleTableView reloadData];
     [self initLabel:(int)[keyHandleArray count]];

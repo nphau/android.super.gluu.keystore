@@ -209,9 +209,12 @@
     if (eccKeyFetchedArray != nil && [eccKeyFetchedArray count] > 0){
         for (NSManagedObject *eccKeyFetched in eccKeyFetchedArray){
             if (eccKeyFetched != nil){// && [[eccKeyFetched valueForKey:@"id"] isEqualToString:keyID]){
-                NSString* tokenID = [NSString stringWithFormat:@"%@%@", [eccKeyFetched valueForKey:ISSUER_KEY], [eccKeyFetched valueForKey:APPLICATION_KEY]];
+                NSString* tokenID = [NSString stringWithFormat:@"%@", [eccKeyFetched valueForKey:APPLICATION_KEY]];
                 if ([tokenID isEqualToString:keyID]){
                     [appDelegate.managedObjectContext deleteObject:eccKeyFetched];
+                    if (![appDelegate.managedObjectContext save:&error]) {
+                        NSLog(@"Couldn't save: %@", error);
+                    }
                 }
             }
         }
