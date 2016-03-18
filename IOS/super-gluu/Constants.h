@@ -55,4 +55,9 @@
 
 #define CUSTOM_GREEN_COLOR [UIColor colorWithRed:1/255.0 green:161/255.0 blue:97/255.0 alpha:1.0]
 
+#define PIN_PROTECTION_ID @"enabledPinCode"
+#define PIN_SIMPLE_ID @"simplePinCode"
+#define PIN_CODE @"PinCode"
+#define PIN_ENABLED @"PinCodeEnabled"
+
 #endif /* Constants_h */

@@ -50,7 +50,7 @@
             NSLog(@"Cell title will be changed");
             CustomIOSAlertView* alertView = [CustomIOSAlertView alertWithTitle:NSLocalizedString(@"AlertTitle", @"Into") message:NSLocalizedString(@"ChangeKeyHandleName", @"Change KeyHandle Name")];
             [alertView setButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"NO", @"NO"), NSLocalizedString(@"YES", @"YES"), nil]];
-            [alertView setButtonColors:[NSArray arrayWithObjects:[UIColor redColor], [UIColor greenColor], nil]];//"" = "Do you want to change keyHandle display name?"
+            [alertView setButtonColors:[NSArray arrayWithObjects:[UIColor redColor], [UIColor greenColor], nil]];
             alertView.delegate = self;
             [alertView show];
         }

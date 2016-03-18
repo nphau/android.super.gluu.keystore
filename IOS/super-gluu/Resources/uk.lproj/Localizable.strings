@@ -88,6 +88,11 @@
 
 "UniqueKeyLabel" = "A unique key is generated for each Gluu Server  you log into with Super Gluu. You can manage keys here:";
 
+"SetPinCode" = "Set Pin code";
+"ChangePinCode" = "Change Pin code";
+"SetPinCodeTitle" = "Do you want to set Pin code?";
+"ChangePinCodeTitle" = "Do you want to change current Pin code?";
+
 
 
 

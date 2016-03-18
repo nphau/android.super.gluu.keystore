@@ -14,7 +14,6 @@
 #define PIN_VIEW @"PinCodeID"
 
 #define IS_FIRST_LOAD @"firstLoad"
-#define PIN_PROTECTION_ID @"enabledPinCode"
 
 @implementation LicenseAgreementView
 

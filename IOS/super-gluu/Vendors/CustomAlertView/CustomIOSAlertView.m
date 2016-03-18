@@ -297,21 +297,39 @@ CGFloat buttonSpacerHeight = 0;
 
     for (int i=0; i<[buttonTitles count]; i++) {
 
-        UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-
-        [closeButton setFrame:CGRectMake(i * buttonWidth, container.bounds.size.height - buttonHeight, buttonWidth, buttonHeight)];
-
-        [closeButton addTarget:self action:@selector(customIOS7dialogButtonTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
-        [closeButton setTag:i];
-
-        [closeButton setTitle:[buttonTitles objectAtIndex:i] forState:UIControlStateNormal];
-        [closeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];//[UIColor colorWithRed:0.0f green:0.5f blue:1.0f alpha:1.0f] forState:UIControlStateNormal];
-        [closeButton setTitleColor:[UIColor colorWithRed:0.2f green:0.2f blue:0.2f alpha:0.5f] forState:UIControlStateHighlighted];
-        [closeButton setBackgroundColor:kCustomIOS7GreenButtonColor];
-        [closeButton.titleLabel setFont:[UIFont boldSystemFontOfSize:14.0f]];
-        [closeButton.layer setCornerRadius:kCustomIOSAlertViewCornerRadius];
-
-        [container addSubview:closeButton];
+        if (i != 0){
+            UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            
+            [closeButton setFrame:CGRectMake(i * buttonWidth, container.bounds.size.height - buttonHeight, buttonWidth, buttonHeight)];
+            
+            [closeButton addTarget:self action:@selector(customIOS7dialogButtonTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+            [closeButton setTag:i];
+            
+            [closeButton setTitle:[buttonTitles objectAtIndex:i] forState:UIControlStateNormal];
+            [closeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];//[UIColor colorWithRed:0.0f green:0.5f blue:1.0f alpha:1.0f] forState:UIControlStateNormal];
+            [closeButton setTitleColor:[UIColor colorWithRed:0.2f green:0.2f blue:0.2f alpha:0.5f] forState:UIControlStateHighlighted];
+            [closeButton setBackgroundColor:kCustomIOS7GreenButtonColor];
+            [closeButton.titleLabel setFont:[UIFont boldSystemFontOfSize:14.0f]];
+            [closeButton.layer setCornerRadius:kCustomIOSAlertViewCornerRadius];
+            
+            [container addSubview:closeButton];
+        } else {
+            UIButton *otherButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            
+            [otherButton setFrame:CGRectMake(i * buttonWidth, container.bounds.size.height - buttonHeight, buttonWidth, buttonHeight)];
+            
+            [otherButton addTarget:self action:@selector(customIOS7dialogButtonTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+            [otherButton setTag:i];
+            
+            [otherButton setTitle:[buttonTitles objectAtIndex:i] forState:UIControlStateNormal];
+            [otherButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];//[UIColor colorWithRed:0.0f green:0.5f blue:1.0f alpha:1.0f] forState:UIControlStateNormal];
+            [otherButton setTitleColor:[UIColor colorWithRed:0.2f green:0.2f blue:0.2f alpha:0.5f] forState:UIControlStateHighlighted];
+            [otherButton setBackgroundColor:[UIColor redColor]];
+            [otherButton.titleLabel setFont:[UIFont boldSystemFontOfSize:14.0f]];
+            [otherButton.layer setCornerRadius:kCustomIOSAlertViewCornerRadius];
+            
+            [container addSubview:otherButton];
+        }
     }
 }
 

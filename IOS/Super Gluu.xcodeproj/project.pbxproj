@@ -51,7 +51,6 @@
 		BB37DF301C7E0B8E0016D422 /* gluuIcon60x2.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEEE1C7E0B8E0016D422 /* gluuIcon60x2.png */; };
 		BB37DF311C7E0B8E0016D422 /* gluuIcon60x3.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEEF1C7E0B8E0016D422 /* gluuIcon60x3.png */; };
 		BB37DF321C7E0B8E0016D422 /* infoIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEF01C7E0B8E0016D422 /* infoIcon.png */; };
-		BB37DF341C7E0B8E0016D422 /* settingsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEF21C7E0B8E0016D422 /* settingsIcon.png */; };
 		BB37DF351C7E0B8E0016D422 /* gl.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEF41C7E0B8E0016D422 /* gl.png */; };
 		BB37DF361C7E0B8E0016D422 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DEF91C7E0B8E0016D422 /* Base64.m */; };
 		BB37DF371C7E0B8E0016D422 /* NSString+URLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DEFB1C7E0B8E0016D422 /* NSString+URLEncode.m */; };
@@ -75,6 +74,7 @@
 		BBB7C1051C90723300833B12 /* InformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB7C1041C90723300833B12 /* InformationViewController.m */; };
 		BBE787231C99781B00E9E0D7 /* PinCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBE787221C99781B00E9E0D7 /* PinCodeViewController.m */; };
 		BBE787271C99954600E9E0D7 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BBE787261C99954600E9E0D7 /* Settings.bundle */; };
+		BBE7AAC91C9B18C200BE62AE /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBE7AAC81C9B18C200BE62AE /* SettingsViewController.m */; };
 		BBFCB30A1C98164F00F66417 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBFCB3091C98164F00F66417 /* CoreTelephony.framework */; };
 /* End PBXBuildFile section */
 
@@ -173,7 +173,6 @@
 		BB37DEEE1C7E0B8E0016D422 /* gluuIcon60x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gluuIcon60x2.png; sourceTree = "<group>"; };
 		BB37DEEF1C7E0B8E0016D422 /* gluuIcon60x3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gluuIcon60x3.png; sourceTree = "<group>"; };
 		BB37DEF01C7E0B8E0016D422 /* infoIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = infoIcon.png; sourceTree = "<group>"; };
-		BB37DEF21C7E0B8E0016D422 /* settingsIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsIcon.png; sourceTree = "<group>"; };
 		BB37DEF41C7E0B8E0016D422 /* gl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gl.png; sourceTree = "<group>"; };
 		BB37DEF51C7E0B8E0016D422 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BB37DEF81C7E0B8E0016D422 /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
@@ -214,6 +213,8 @@
 		BBE787211C99781B00E9E0D7 /* PinCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinCodeViewController.h; sourceTree = "<group>"; };
 		BBE787221C99781B00E9E0D7 /* PinCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinCodeViewController.m; sourceTree = "<group>"; };
 		BBE787261C99954600E9E0D7 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = ../Settings.bundle; sourceTree = "<group>"; };
+		BBE7AAC71C9B18C200BE62AE /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		BBE7AAC81C9B18C200BE62AE /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		BBFCB3091C98164F00F66417 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		C3CC168E00F2364CCCFAAF3C /* Pods-super-gluu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-super-gluu.release.xcconfig"; path = "Pods/Target Support Files/Pods-super-gluu/Pods-super-gluu.release.xcconfig"; sourceTree = "<group>"; };
 		D211848F63CD4B3565ED0607 /* Pods-Super Gluu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Super Gluu.release.xcconfig"; path = "Pods/Target Support Files/Pods-Super Gluu/Pods-Super Gluu.release.xcconfig"; sourceTree = "<group>"; };
@@ -549,7 +550,6 @@
 				BB37DEF01C7E0B8E0016D422 /* infoIcon.png */,
 				BBB7C0E61C884E2600833B12 /* approveIcon.png */,
 				BBB7C0EA1C88569400833B12 /* personIcon.png */,
-				BB37DEF21C7E0B8E0016D422 /* settingsIcon.png */,
 			);
 			path = Icons;
 			sourceTree = "<group>";
@@ -607,6 +607,8 @@
 		BB37DF071C7E0B8E0016D422 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				BBE7AAC71C9B18C200BE62AE /* SettingsViewController.h */,
+				BBE7AAC81C9B18C200BE62AE /* SettingsViewController.m */,
 				BBE787211C99781B00E9E0D7 /* PinCodeViewController.h */,
 				BBE787221C99781B00E9E0D7 /* PinCodeViewController.m */,
 				BBB7C1031C90723300833B12 /* InformationViewController.h */,
@@ -770,7 +772,6 @@
 				BB50DD021C91AD5B00499B49 /* Main_iPad.storyboard in Resources */,
 				BBB7C0FC1C89FE3100833B12 /* gluuIcon.png in Resources */,
 				BB37DF2C1C7E0B8E0016D422 /* gluuIcon40x3.png in Resources */,
-				BB37DF341C7E0B8E0016D422 /* settingsIcon.png in Resources */,
 				BB37DF2E1C7E0B8E0016D422 /* gluuIcon57x2.png in Resources */,
 				BB37DF251C7E0B8E0016D422 /* Oatmeal.ttf in Resources */,
 				BB37DF2D1C7E0B8E0016D422 /* gluuIcon57.png in Resources */,
@@ -875,6 +876,7 @@
 				BB37DF3F1C7E0B8E0016D422 /* LogsTableCell.m in Sources */,
 				BB37DF371C7E0B8E0016D422 /* NSString+URLEncode.m in Sources */,
 				BB37DF1F1C7E0B8E0016D422 /* U2fMetaData.m in Sources */,
+				BBE7AAC91C9B18C200BE62AE /* SettingsViewController.m in Sources */,
 				BB37DF131C7E0B8E0016D422 /* DataStoreManager.m in Sources */,
 				BB37DF3C1C7E0B8E0016D422 /* LogsViewController.m in Sources */,
 				BB37DF211C7E0B8E0016D422 /* UserLoginInfo.m in Sources */,

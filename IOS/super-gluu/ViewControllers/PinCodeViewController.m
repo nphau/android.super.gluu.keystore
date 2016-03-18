@@ -11,8 +11,6 @@
 
 #define MAIN_VIEW @"MainTabView"
 #define PIN_PROTECTION_ID @"enabledPinCode"
-#define PIN_ENABLED @"PinCodeEnabled"
-#define PIN_CODE @"PinCode"
 
 @implementation PinCodeViewController
 
