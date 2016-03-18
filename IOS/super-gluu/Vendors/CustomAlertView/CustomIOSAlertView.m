@@ -293,14 +293,14 @@ CGFloat buttonSpacerHeight = 0;
 {
     if (buttonTitles==NULL) { return; }
 
-    CGFloat buttonWidth = container.bounds.size.width / [buttonTitles count];
+    CGFloat buttonWidth = container.bounds.size.width / [buttonTitles count] - 5;
 
     for (int i=0; i<[buttonTitles count]; i++) {
 
         if (i != 0){
             UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
             
-            [closeButton setFrame:CGRectMake(i * buttonWidth, container.bounds.size.height - buttonHeight, buttonWidth, buttonHeight)];
+            [closeButton setFrame:CGRectMake(i * buttonWidth + 10, container.bounds.size.height - buttonHeight, buttonWidth, buttonHeight)];
             
             [closeButton addTarget:self action:@selector(customIOS7dialogButtonTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
             [closeButton setTag:i];

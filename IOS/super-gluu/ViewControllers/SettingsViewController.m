@@ -15,7 +15,8 @@
 
 @implementation SettingsViewController
 
-- (void)viewDidLoad {          [super viewDidLoad];
+- (void)viewDidLoad {
+    [super viewDidLoad];
     isPin = [[NSUserDefaults standardUserDefaults] boolForKey:PIN_PROTECTION_ID];
     [pinCodeTypeView setHidden:!isPin];
     [setChangePinCode setHidden:!isPin];
@@ -23,10 +24,10 @@
     isSimple = [[NSUserDefaults standardUserDefaults] boolForKey:PIN_SIMPLE_ID];
     code = [[NSUserDefaults standardUserDefaults] stringForKey:PIN_CODE];
     if (code == nil || [code isEqualToString:@""]){
-        [setChangePinCode setTitle:@"Set pin code" forState:UIControlStateNormal];
+        [setChangePinCode setTitle:NSLocalizedString(@"SetPinCode", @"SetPinCode") forState:UIControlStateNormal];
         [pinCodeTypeView setHidden:NO];
     } else {
-        [setChangePinCode setTitle:@"Change pin code" forState:UIControlStateNormal];
+        [setChangePinCode setTitle:NSLocalizedString(@"ChangePinCode", @"ChangePinCode") forState:UIControlStateNormal];
         [pinCodeTypeView setHidden:YES];
     }
 }
@@ -55,6 +56,11 @@
         [self initSwitchTurnOnOff:jswTurnOnOff];
     }
     [pinCodeTurnOnOffView addSubview:jswTurnOnOff];
+    
+    [[setChangePinCode layer] setMasksToBounds:YES];
+    [[setChangePinCode layer] setCornerRadius:CORNER_RADIUS];
+    [[setChangePinCode layer] setBorderWidth:2.0f];
+    [[setChangePinCode layer] setBorderColor:[UIColor colorWithRed:57/255.0 green:127/255.0 blue:255/255.0 alpha:1.0].CGColor];
 }
 
 - (void) initSwitchProperty:(JTMaterialSwitch*) jtSwitch {
@@ -97,7 +103,7 @@
         message = NSLocalizedString(@"ChangePinCodeTitle", @"ChangePinCodeTitle");
         isPinCode = YES;
     }
-    alertView = [CustomIOSAlertView alertWithTitle:title  message:message];
+    CustomIOSAlertView* alertView = [CustomIOSAlertView alertWithTitle:title  message:message];
     [alertView setButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"NO", @"NO"), NSLocalizedString(@"YES", @"YES"), nil]];
     [alertView setButtonColors:[NSArray arrayWithObjects:[UIColor redColor], [UIColor greenColor], nil]];
     alertView.delegate = self;
@@ -148,7 +154,7 @@
 - (void)PAPasscodeViewControllerDidSetPasscode:(PAPasscodeViewController *)controller {
     [self dismissViewControllerAnimated:YES completion:^() {
         [[NSUserDefaults standardUserDefaults] setObject:controller.passcode forKey:PIN_CODE];
-        [setChangePinCode setTitle:@"Change pin code" forState:UIControlStateNormal];
+        [setChangePinCode setTitle:NSLocalizedString(@"ChangePinCode", @"ChangePinCode") forState:UIControlStateNormal];
         [pinCodeTypeView setHidden:YES];
     }];
 }

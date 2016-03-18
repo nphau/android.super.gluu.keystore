@@ -63,7 +63,7 @@
 
 "keyHandleFor" = "Key for";
 
-"ChangeKeyHandleName" = "Do you want to change the keyHandle display name?";
+"ChangeKeyHandleName" = "Do you want to change this Key's display name?";
 "RenameKeyNameInfo" = "To change a Key's name, hold down on it for 3 seconds";
 
 "FailedKeyHandle" = "Your keyHandle was not recognized, please generate a new one";

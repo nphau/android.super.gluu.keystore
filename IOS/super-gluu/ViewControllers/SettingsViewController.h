@@ -21,8 +21,6 @@
     
     JTMaterialSwitch *jswTurnOnOff;
     
-    CustomIOSAlertView* alertView;
-    
     NSString* code;
     
     BOOL isPin;
