@@ -23,6 +23,7 @@
         [nextButton setHidden:YES];
         [skipButton setHidden:YES];
     }
+    [enterPinButton setHidden:YES];
     [self performSelector:@selector(checkPinCodeEnabled) withObject:nil afterDelay:0.01];
 }
 
@@ -43,7 +44,8 @@
     }
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+-(IBAction)reEnterPinCode:(id)sender{
+    [self enterPasscode];
 }
 
 -(IBAction)next:(id)sender{
@@ -83,6 +85,10 @@
 
 - (void)PAPasscodeViewControllerDidCancel:(PAPasscodeViewController *)controller {
     [self dismissViewControllerAnimated:YES completion:nil];
+    [enterPinButton setHidden:NO];
+    [enterPinButton setTitle:NSLocalizedString(@"EnterPinCode", @"EnterPinCode") forState:UIControlStateNormal];
+    [titleLabel setText:NSLocalizedString(@"ReEnterPinCode", @"ReEnterPinCode")];
+    [titleLabel setHidden:NO];
 }
 
 - (void)PAPasscodeViewControllerDidEnterAlternativePasscode:(PAPasscodeViewController *)controller {

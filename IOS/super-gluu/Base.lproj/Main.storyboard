@@ -1207,6 +1207,14 @@ In the event you are using the Services in connection with a device provided by 
                                             <action selector="next:" destination="Gfe-Ja-dd4" eventType="touchUpInside" id="smO-E9-RAa"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5wL-rr-AsK">
+                                        <rect key="frame" x="29" y="125" width="255" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Enter Pin code"/>
+                                        <connections>
+                                            <action selector="reEnterPinCode:" destination="Gfe-Ja-dd4" eventType="touchUpInside" id="8Yv-ls-cgh"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -1214,6 +1222,7 @@ In the event you are using the Services in connection with a device provided by 
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="enterPinButton" destination="5wL-rr-AsK" id="ATg-hr-8E5"/>
                         <outlet property="nextButton" destination="6vf-q7-wtD" id="ydh-Zd-MaL"/>
                         <outlet property="skipButton" destination="7WO-t3-2Ec" id="o0Y-UV-Pra"/>
                         <outlet property="titleLabel" destination="i5t-fi-tKb" id="dbp-wj-tKB"/>

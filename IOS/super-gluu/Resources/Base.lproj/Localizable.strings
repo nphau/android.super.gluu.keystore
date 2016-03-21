@@ -97,6 +97,9 @@
 "SetPinCodeTitle" = "Do you want to set Pin code?";
 "ChangePinCodeTitle" = "Do you want to change current Pin code?";
 
+"ReEnterPinCode" = "To continue, please enter Pin code";
+"EnterPinCode" = "Enter Pin code";
+
 
 
 

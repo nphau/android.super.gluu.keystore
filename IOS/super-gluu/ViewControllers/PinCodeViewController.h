@@ -16,6 +16,8 @@
     IBOutlet UIButton* nextButton;
     IBOutlet UIButton* skipButton;
     
+    IBOutlet UIButton* enterPinButton;
+    
 }
 
 @end
