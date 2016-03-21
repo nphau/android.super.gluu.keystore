@@ -148,7 +148,7 @@ public class AndroidKeyDataStore implements DataStore {
                 byte[] keyHandle = keyToKeyHandle(keyHandleKey);
                 tokenEntry.setKeyHandle(keyHandle);
             } catch (DecoderException e) {
-                e.printStackTrace();
+                Log.e(TAG, "Decoder exception: ", e);
             }
             tokenEntryString = new Gson().toJson(tokenEntry);
             result.add(tokenEntryString);
