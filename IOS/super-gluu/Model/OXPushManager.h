@@ -13,6 +13,6 @@
     BOOL oneStep;
 }
 
--(void)onOxPushApproveRequest:(NSDictionary*)parameters;
+-(void)onOxPushApproveRequest:(NSDictionary*)parameters isDecline:(BOOL)isDecline;
 
 @end

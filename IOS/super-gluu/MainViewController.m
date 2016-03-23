@@ -48,6 +48,7 @@
     BOOL isPin = [[NSUserDefaults standardUserDefaults] boolForKey:PIN_PROTECTION_ID];
     if (isPin){
         NSDictionary* pushNotificationRequest = [[NSUserDefaults standardUserDefaults] objectForKey:NotificationRequest];
+        if (pushNotificationRequest == nil) return;
         NSData *data;
         NSString* requestString = [pushNotificationRequest objectForKey:@"request"];
         if ([requestString isKindOfClass:[NSDictionary class]]){
@@ -408,14 +409,16 @@
     [self updateStatus:message];
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
     OXPushManager* oxPushManager = [[OXPushManager alloc] init];
-    [oxPushManager onOxPushApproveRequest:scanJsonDictionary];
+    [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:NO];
 }
 
 -(void)onDecline{
     [scanButton setEnabled:YES];
-    NSString* message = @"Authentication was Declined";
+    NSString* message = @"Declined";
     [self updateStatus:message];
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
+    OXPushManager* oxPushManager = [[OXPushManager alloc] init];
+    [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:YES];
 }
 
 -(void)showAlertViewWithTitle:(NSString*)title andMessage:(NSString*)message{

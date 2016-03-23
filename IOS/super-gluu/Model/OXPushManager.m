@@ -21,7 +21,7 @@
 
 @implementation OXPushManager
 
--(void)onOxPushApproveRequest:(NSDictionary*)parameters{
+-(void)onOxPushApproveRequest:(NSDictionary*)parameters isDecline:(BOOL)isDecline{
     NSString* app = [parameters objectForKey:@"app"];
     NSString* state = [parameters objectForKey:@"state"];
     NSString* created = [parameters objectForKey:@"created"];
@@ -74,7 +74,7 @@
 //                                    NSLog(@"Success - %@", result);
                                     isResult = YES;
                                     [self postNotificationAutenticationStarting];
-                                    [self callServiceChallenge:u2fEndpoint isEnroll:isEnroll andParameters:parameters];
+                                    [self callServiceChallenge:u2fEndpoint isEnroll:isEnroll andParameters:parameters isDecline:isDecline];
                                 }
                             }];
                             if (isResult)break;
@@ -84,34 +84,34 @@
                     }
                 } else {
                     [self postNotificationEnrollementStarting];
-                    [self callServiceChallenge:u2fEndpoint isEnroll:isEnroll andParameters:parameters];
+                    [self callServiceChallenge:u2fEndpoint isEnroll:isEnroll andParameters:parameters isDecline:isDecline];
                 }
             }
         }];
     }
 }
 
--(void)callServiceChallenge:(NSString*)baseUrl isEnroll:(BOOL)isEnroll andParameters:(NSDictionary*)parameters{
+-(void)callServiceChallenge:(NSString*)baseUrl isEnroll:(BOOL)isEnroll andParameters:(NSDictionary*)parameters isDecline:(BOOL)isDecline{
     [[ApiServiceManager sharedInstance] doGETUrl:baseUrl :parameters callback:^(NSDictionary *result,NSError *error){
         if (error) {
             [self postNotificationAutenticationFailed];
         } else {
             // Success getting authenticate MetaData
-            [self onChallengeReceived:baseUrl isEnroll:isEnroll metaData:result];
+            [self onChallengeReceived:baseUrl isEnroll:isEnroll metaData:result isDecline:isDecline];
 //            [self postNotificationAutenticationSuccess];
         }
     }];
 }
 
--(void)onChallengeReceived:(NSString*)baseUrl isEnroll:(BOOL)isEnroll metaData:(NSDictionary*)result{
+-(void)onChallengeReceived:(NSString*)baseUrl isEnroll:(BOOL)isEnroll metaData:(NSDictionary*)result isDecline:(BOOL)isDecline{
     TokenResponse* tokenResponce;
     TokenManager* tokenManager = [[TokenManager alloc] init];
     if (isEnroll){
         [self postNotificationEnrollementStarting];
-        tokenResponce = [tokenManager enroll:result baseUrl:baseUrl];
+        tokenResponce = [tokenManager enroll:result baseUrl:baseUrl isDecline:isDecline];
     }
     if (tokenResponce == nil){
-        tokenResponce = [tokenManager sign:result baseUrl:baseUrl];
+        tokenResponce = [tokenManager sign:result baseUrl:baseUrl isDecline:isDecline];
     }
     NSMutableDictionary* tokenParameters = [[NSMutableDictionary alloc] init];
     [tokenParameters setObject:@"username" forKey:@"username"];
