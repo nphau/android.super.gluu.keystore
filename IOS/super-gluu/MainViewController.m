@@ -34,28 +34,63 @@
     [self initLocalization];
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
     [self checkDeviceOrientation];
-// MOCKUP
-//    [[UserLoginInfo sharedInstance] setApplication:@"app"];
-//    [[UserLoginInfo sharedInstance] setCreated:@"created"];
-//    [[UserLoginInfo sharedInstance] setIssuer:@"issuer"];
-//    [[UserLoginInfo sharedInstance] setUserName:@"username"];
-//    [[UserLoginInfo sharedInstance] setAuthenticationType:@"Authentication"];
-//    [[UserLoginInfo sharedInstance] setAuthenticationMode:@"One"];
-//    [[DataStoreManager sharedInstance] saveUserLoginInfo:[UserLoginInfo sharedInstance]];
-//    
-//    TokenEntity* newTokenEntity = [[TokenEntity alloc] init];
-//    NSString* keyID = @"KeyID";
-//    [newTokenEntity setID:keyID];
-//    [newTokenEntity setApplication:@"application"];
-//    [newTokenEntity setIssuer:@"[enrollmentRequest issuer]"];
-//    [newTokenEntity setKeyHandle:@"[keyHandle base64EncodedString]"];
-//    [newTokenEntity setPublicKey:@"crypto.publicKeyBase64"];
-//    [newTokenEntity setPrivateKey:@"crypto.privateKeyBase64"];
-//    [newTokenEntity setUserName:@"userName"];
-//    [newTokenEntity setPairingTime:@"created"];
-//    [newTokenEntity setAuthenticationMode:@"authenticationMode"];
-//    [newTokenEntity setAuthenticationType:@"authenticationType"];
-//    [[DataStoreManager sharedInstance] saveTokenEntity:newTokenEntity];
+
+    //For Push Notifications
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] > 7){//for ios 8 and higth
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+        [self registerForNotification];
+    }
+    [self checkPushNotification];
+}
+
+-(void)checkPushNotification{
+    BOOL isPin = [[NSUserDefaults standardUserDefaults] boolForKey:PIN_PROTECTION_ID];
+    if (isPin){
+        NSDictionary* pushNotificationRequest = [[NSUserDefaults standardUserDefaults] objectForKey:NotificationRequest];
+        if (pushNotificationRequest != nil){
+            scanJsonDictionary = pushNotificationRequest;
+            [self onApprove];
+            [self.tabBarController setSelectedIndex:0];
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:NotificationRequest];
+        }
+    }
+}
+
+- (void)registerForNotification {
+
+    UIMutableUserNotificationAction *action1;
+    action1 = [[UIMutableUserNotificationAction alloc] init];
+    [action1 setActivationMode:UIUserNotificationActivationModeForeground];
+    [action1 setTitle:NSLocalizedString(@"Approve", @"Approve")];
+    [action1 setIdentifier:NotificationActionOneIdent];
+    [action1 setDestructive:NO];
+    [action1 setAuthenticationRequired:NO];
+    
+    UIMutableUserNotificationAction *action2;
+    action2 = [[UIMutableUserNotificationAction alloc] init];
+    [action2 setActivationMode:UIUserNotificationActivationModeBackground];
+    [action2 setTitle:NSLocalizedString(@"Deny", @"Deny")];
+    [action2 setIdentifier:NotificationActionTwoIdent];
+    [action2 setDestructive:YES];
+    [action2 setAuthenticationRequired:NO];
+    
+    UIMutableUserNotificationCategory *actionCategory;
+    actionCategory = [[UIMutableUserNotificationCategory alloc] init];
+    [actionCategory setIdentifier:NotificationCategoryIdent];
+    [actionCategory setActions:@[action1, action2]
+                    forContext:UIUserNotificationActionContextDefault];
+    
+    NSSet *categories = [NSSet setWithObject:actionCategory];
+    UIUserNotificationType types = (UIUserNotificationTypeAlert|
+                                    UIUserNotificationTypeSound|
+                                    UIUserNotificationTypeBadge);
+    
+    UIUserNotificationSettings *settings;
+    settings = [UIUserNotificationSettings settingsForTypes:types
+                                                 categories:categories];
+    
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
 }
 
 -(void)checkDeviceOrientation{

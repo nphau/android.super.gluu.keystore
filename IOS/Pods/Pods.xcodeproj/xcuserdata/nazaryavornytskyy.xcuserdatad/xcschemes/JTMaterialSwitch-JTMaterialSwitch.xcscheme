@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'F34FF61FD19DB95E8FB5E696'
+               BlueprintIdentifier = '75E6B4B7C972AC841907FDE2'
                BlueprintName = 'JTMaterialSwitch-JTMaterialSwitch'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'JTMaterialSwitch.bundle'>

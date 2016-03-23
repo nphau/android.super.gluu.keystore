@@ -11,9 +11,9 @@
 #import "Constants.h"
 #import "OXPushManager.h"
 
-NSString * const NotificationCategoryIdent  = @"ACTIONABLE";
-NSString * const NotificationActionOneIdent = @"ACTION_DENY";
-NSString * const NotificationActionTwoIdent = @"ACTION_APPROVE";
+//NSString * const NotificationCategoryIdent  = @"ACTIONABLE";
+//NSString * const NotificationActionOneIdent = @"ACTION_DENY";
+//NSString * const NotificationActionTwoIdent = @"ACTION_APPROVE";
 
 @interface AppDelegate ()
 
@@ -29,9 +29,9 @@ NSString * const NotificationActionTwoIdent = @"ACTION_APPROVE";
     if ([[[UIDevice currentDevice] systemVersion] floatValue] > 7){//for ios 8 and higth
         [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
         [[UIApplication sharedApplication] registerForRemoteNotifications];
-        [self registerForNotification];
+//        [self registerForNotification];
     }
-//    [self registerForNotification];
+    [self registerForNotification];
 //    else {//for ios 7
 //        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
 //    }
@@ -95,7 +95,7 @@ NSString * const NotificationActionTwoIdent = @"ACTION_APPROVE";
         // app was already in the foreground and we skip push notifications
     } else {
         // app was just brought from background to foreground and we wait when user click or slide on push notification
-        pushNotificationRequest = userInfo;
+        _pushNotificationRequest = userInfo;
     }
     NSLog(@"Received notification: %@", userInfo);
 }
@@ -105,12 +105,13 @@ NSString * const NotificationActionTwoIdent = @"ACTION_APPROVE";
     if ([identifier isEqualToString:NotificationActionOneIdent]) {
         
         NSLog(@"You chose action Approve.");
-        pushNotificationRequest = userInfo;
+        _pushNotificationRequest = userInfo;
+        [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:NotificationRequest];
     }
     else if ([identifier isEqualToString:NotificationActionTwoIdent]) {
         
         NSLog(@"You chose action Deny.");
-        pushNotificationRequest = nil;
+        _pushNotificationRequest = nil;
     }
     if (completionHandler) {
         
@@ -140,9 +141,9 @@ NSString * const NotificationActionTwoIdent = @"ACTION_APPROVE";
 }
 
 -(void)sendQRReuest:(BOOL)isAction{
-    if (pushNotificationRequest != nil) {
+    if (_pushNotificationRequest != nil) {
         NSData *data;
-        NSString* requestString = [pushNotificationRequest objectForKey:@"request"];
+        NSString* requestString = [_pushNotificationRequest objectForKey:@"request"];
         if ([requestString isKindOfClass:[NSDictionary class]]){
             data = [NSJSONSerialization dataWithJSONObject:requestString options:NSJSONWritingPrettyPrinted error:nil];
         } else {
@@ -155,7 +156,7 @@ NSString * const NotificationActionTwoIdent = @"ACTION_APPROVE";
             } else {
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_RECEIVED_APPROVE object:jsonDictionary];
             }
-            pushNotificationRequest = nil;
+            _pushNotificationRequest = nil;
         }
     }
 }

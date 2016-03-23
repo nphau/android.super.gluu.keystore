@@ -38,8 +38,10 @@
 }
 
 -(void)checkPinCodeEnabled{
-    BOOL isPinCode = [[NSUserDefaults standardUserDefaults] boolForKey:PIN_ENABLED];
-    if (isPinCode){
+    if ([[NSUserDefaults standardUserDefaults] stringForKey:PIN_CODE]){
+        [titleLabel setHidden:YES];
+        [nextButton setHidden:YES];
+        [skipButton setHidden:YES];
         [self enterPasscode];
     }
 }
@@ -85,10 +87,12 @@
 
 - (void)PAPasscodeViewControllerDidCancel:(PAPasscodeViewController *)controller {
     [self dismissViewControllerAnimated:YES completion:nil];
-    [enterPinButton setHidden:NO];
-    [enterPinButton setTitle:NSLocalizedString(@"EnterPinCode", @"EnterPinCode") forState:UIControlStateNormal];
-    [titleLabel setText:NSLocalizedString(@"ReEnterPinCode", @"ReEnterPinCode")];
-    [titleLabel setHidden:NO];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:PIN_CODE]){
+        [enterPinButton setHidden:NO];
+        [enterPinButton setTitle:NSLocalizedString(@"EnterPinCode", @"EnterPinCode") forState:UIControlStateNormal];
+        [titleLabel setText:NSLocalizedString(@"ReEnterPinCode", @"ReEnterPinCode")];
+        [titleLabel setHidden:NO];
+    }
 }
 
 - (void)PAPasscodeViewControllerDidEnterAlternativePasscode:(PAPasscodeViewController *)controller {

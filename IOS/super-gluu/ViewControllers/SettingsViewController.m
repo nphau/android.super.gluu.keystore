@@ -25,7 +25,6 @@
     code = [[NSUserDefaults standardUserDefaults] stringForKey:PIN_CODE];
     if (code == nil || [code isEqualToString:@""]){
         [setChangePinCode setTitle:NSLocalizedString(@"SetPinCode", @"SetPinCode") forState:UIControlStateNormal];
-        [pinCodeTypeView setHidden:NO];
     } else {
         [setChangePinCode setTitle:NSLocalizedString(@"ChangePinCode", @"ChangePinCode") forState:UIControlStateNormal];
         [pinCodeTypeView setHidden:YES];
@@ -81,7 +80,14 @@
     [self initSwitchTurnOnOff:jswTurnOnOff];
     JTMaterialSwitch *sw = sender;
     [setChangePinCode setHidden:!sw.isOn];
-    [pinCodeTypeView setHidden:[[NSUserDefaults standardUserDefaults] stringForKey:PIN_CODE]!=nil];
+    [pinCodeTypeView setHidden:!sw.isOn];
+    code = [[NSUserDefaults standardUserDefaults] stringForKey:PIN_CODE];
+    if (code == nil || [code isEqualToString:@""]){
+        [setChangePinCode setTitle:NSLocalizedString(@"SetPinCode", @"SetPinCode") forState:UIControlStateNormal];
+    } else {
+        [setChangePinCode setTitle:NSLocalizedString(@"ChangePinCode", @"ChangePinCode") forState:UIControlStateNormal];
+        [pinCodeTypeView setHidden:YES];
+    }
     [[NSUserDefaults standardUserDefaults] setBool:sw.isOn forKey:PIN_PROTECTION_ID];
 }
 

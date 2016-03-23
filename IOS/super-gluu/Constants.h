@@ -9,6 +9,12 @@
 #ifndef Constants_h
 #define Constants_h
 
+#define NotificationCategoryIdent @"ACTIONABLE"
+#define NotificationActionOneIdent @"ACTION_DENY"
+#define NotificationActionTwoIdent @"ACTION_APPROVE"
+
+#define NotificationRequest @"PUSH_NOTIFICATION_REQUEST"
+
 #define IS_IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 #define IS_IPHONE   ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
 #define IS_IPHONE_4 (IS_IPHONE && [[UIScreen mainScreen] bounds].size.height == 480.0 )
