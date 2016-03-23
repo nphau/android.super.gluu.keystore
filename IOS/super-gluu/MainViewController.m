@@ -48,8 +48,17 @@
     BOOL isPin = [[NSUserDefaults standardUserDefaults] boolForKey:PIN_PROTECTION_ID];
     if (isPin){
         NSDictionary* pushNotificationRequest = [[NSUserDefaults standardUserDefaults] objectForKey:NotificationRequest];
-        if (pushNotificationRequest != nil){
-            scanJsonDictionary = pushNotificationRequest;
+        NSData *data;
+        NSString* requestString = [pushNotificationRequest objectForKey:@"request"];
+        if ([requestString isKindOfClass:[NSDictionary class]]){
+            data = [NSJSONSerialization dataWithJSONObject:requestString options:NSJSONWritingPrettyPrinted error:nil];
+        } else {
+            data = [requestString dataUsingEncoding:NSUTF8StringEncoding];
+        }
+        NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        if (jsonDictionary != nil){
+            scanJsonDictionary = jsonDictionary
+            ;
             [self onApprove];
             [self.tabBarController setSelectedIndex:0];
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:NotificationRequest];
