@@ -53,7 +53,7 @@
     
     UIMutableUserNotificationAction *action2;
     action2 = [[UIMutableUserNotificationAction alloc] init];
-    [action2 setActivationMode:UIUserNotificationActivationModeBackground];
+    [action2 setActivationMode:UIUserNotificationActivationModeForeground];
     [action2 setTitle:NSLocalizedString(@"Deny", @"Deny")];
     [action2 setIdentifier:NotificationActionTwoIdent];
     [action2 setDestructive:YES];
@@ -105,13 +105,16 @@
     if ([identifier isEqualToString:NotificationActionOneIdent]) {
         
         NSLog(@"You chose action Approve.");
+        isDecline = NO;
         _pushNotificationRequest = userInfo;
         [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:NotificationRequest];
     }
     else if ([identifier isEqualToString:NotificationActionTwoIdent]) {
         
         NSLog(@"You chose action Deny.");
-        _pushNotificationRequest = nil;
+        isDecline = YES;
+        _pushNotificationRequest = userInfo;
+        [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:NotificationRequest];
     }
     if (completionHandler) {
         
@@ -152,9 +155,13 @@
         NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
         if (jsonDictionary != nil){// && [self isTimeOver:jsonDictionary]){
             if (!isAction){
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_RECEIVED object:jsonDictionary];
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_RECEIVED object:jsonDictionary];
             } else {
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_RECEIVED_APPROVE object:jsonDictionary];
+                if (isDecline){
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_RECEIVED_DENY object:jsonDictionary];
+                } else {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_RECEIVED_APPROVE object:jsonDictionary];
+                }
             }
             _pushNotificationRequest = nil;
         }

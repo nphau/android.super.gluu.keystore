@@ -62,8 +62,8 @@
     }];
 }
 
--(void)callPOSTMultiPartAPIService:(NSString*)url andParameters:(NSDictionary*)parameters{
-    [[ApiService sharedInstance] callPOSTMultiPartAPIService:url andParameters:parameters];
+-(void)callPOSTMultiPartAPIService:(NSString*)url andParameters:(NSDictionary*)parameters isDecline:(BOOL)isDecline{
+    [[ApiService sharedInstance] callPOSTMultiPartAPIService:url andParameters:parameters isDecline:isDecline];
 }
 
 @end

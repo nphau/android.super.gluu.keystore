@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UserLoginInfo.h"
 
 @interface LogsTableCell : UITableViewCell
 
@@ -14,7 +15,8 @@
 @property (strong, nonatomic) IBOutlet UILabel* logLabel;
 @property (strong, nonatomic) IBOutlet UIView* cellBackground;
 @property (strong, nonatomic) IBOutlet UIButton* infoButton;
+@property (strong, nonatomic) IBOutlet UIImageView* logo;
 
--(void)setData:(NSString*)logs;
+-(void)setData:(UserLoginInfo*)userLoginInfo;
 
 @end

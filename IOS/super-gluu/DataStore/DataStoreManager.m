@@ -22,6 +22,8 @@
 #define AUTHENTICATION_TYPE @"authenticationType"
 #define LOCATION_IP @"locationIP"
 #define LOCATION_CITY @"locationCity"
+#define LOG_STATE @"logState"
+#define ERROR_MESSAGE @"errorMessage"
 
 #define ID_KEY @"id"
 #define KEYHANDLE_KEY @"keyHandle"
@@ -236,6 +238,8 @@
     [newMetaData setValue:[userLoginInfo authenticationType] forKey:AUTHENTICATION_TYPE];
     [newMetaData setValue:[userLoginInfo locationIP] forKey:LOCATION_IP];
     [newMetaData setValue:[userLoginInfo locationCity] forKey:LOCATION_CITY];
+    [newMetaData setValue:[NSString stringWithFormat:@"%i", [userLoginInfo logState]] forKey:LOG_STATE];
+    [newMetaData setValue:[userLoginInfo errorMessage] forKey:ERROR_MESSAGE];
     
     error = nil;
     // Save the object to persistent store
@@ -264,6 +268,25 @@
                 [userInfoEntity setAuthenticationType:[eccKeyFetched valueForKey:AUTHENTICATION_TYPE]];
                 [userInfoEntity setLocationIP:[eccKeyFetched valueForKey:LOCATION_IP]];
                 [userInfoEntity setLocationCity:[eccKeyFetched valueForKey:LOCATION_CITY]];
+                [userInfoEntity setErrorMessage:[eccKeyFetched valueForKey:ERROR_MESSAGE]];
+                NSInteger state = [[eccKeyFetched valueForKey:LOG_STATE] integerValue];
+                switch (state) {
+                    case 0:
+                        [userInfoEntity setLogState:LOGIN_SUCCESS];
+                        break;
+                    case 1:
+                        [userInfoEntity setLogState:LOGIN_FAILED];
+                        break;
+                    case 2:
+                        [userInfoEntity setLogState:ENROLL_SUCCESS];
+                        break;
+                    case 3:
+                        [userInfoEntity setLogState:ENROLL_FAILED];
+                        break;
+                        
+                    default:
+                        break;
+                }
                 [entities addObject:userInfoEntity];
             }
         }

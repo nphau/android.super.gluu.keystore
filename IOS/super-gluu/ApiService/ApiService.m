@@ -79,7 +79,7 @@
 
 //---------------------- END OF HTTP REQUEST MANAGER ---------------------------------
 
--(void)callPOSTMultiPartAPIService:(NSString*)url andParameters:(NSDictionary*)parameters{
+-(void)callPOSTMultiPartAPIService:(NSString*)url andParameters:(NSDictionary*)parameters isDecline:(BOOL)isDecline{
     BOOL isEnroll = [url rangeOfString:@"registration"].location != NSNotFound ? YES : NO;
     // the server url to which the image (or the media) is uploaded. Use your server url here
     NSURL *baseUrl = [NSURL URLWithString:url];
@@ -108,40 +108,69 @@
         NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:urlData options:kNilOptions error:&error];
         if([[jsonData objectForKey:@"status"] isEqualToString:@"success"])
         {
-            [[DataStoreManager sharedInstance] saveUserLoginInfo:[UserLoginInfo sharedInstance]];
-            if (isEnroll){
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_REGISTRATION_SUCCESS object:urlData];
+            if (isDecline){
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DECLINE_SUCCESS object:urlData];
             } else {
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AUTENTIFICATION_SUCCESS object:urlData];
+                if (isEnroll){
+                    [[UserLoginInfo sharedInstance] setLogState:ENROLL_SUCCESS];
+                    [[DataStoreManager sharedInstance] saveUserLoginInfo:[UserLoginInfo sharedInstance]];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_REGISTRATION_SUCCESS object:urlData];
+                } else {
+                    [[UserLoginInfo sharedInstance] setLogState:LOGIN_SUCCESS];
+                    [[DataStoreManager sharedInstance] saveUserLoginInfo:[UserLoginInfo sharedInstance]];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AUTENTIFICATION_SUCCESS object:urlData];
+                }
             }
         }else{
-            if (isEnroll){
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_REGISTRATION_FAILED object:nil];
+            if (isDecline){
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DECLINE_FAILED object:nil];
             } else {
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AUTENTIFICATION_FAILED object:nil];
+                if (isEnroll){
+                    [[UserLoginInfo sharedInstance] setLogState:ENROLL_FAILED];
+                    [[DataStoreManager sharedInstance] saveUserLoginInfo:[UserLoginInfo sharedInstance]];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_REGISTRATION_FAILED object:nil];
+                } else {
+                    [[UserLoginInfo sharedInstance] setLogState:LOGIN_FAILED];
+                    [[DataStoreManager sharedInstance] saveUserLoginInfo:[UserLoginInfo sharedInstance]];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AUTENTIFICATION_FAILED object:nil];
+                }
             }
         }
     } else{
         NSString* erStr = [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];
-            NSLog(@"ERROR MESSAGE - %@", erStr);
+        NSLog(@"ERROR MESSAGE - %@", erStr);
         NSError* error;
         NSDictionary* jsonError = [NSJSONSerialization JSONObjectWithData:urlData
                                                              options:kNilOptions
                                                                error:&error];
+        NSString* errroMessage = @"";
         if (jsonError != nil){
             NSString* reason = [jsonError valueForKey:@"error_description"];
             if (reason != nil){
-                [[LogManager sharedInstance] addLog:reason];
+                errroMessage = reason;
             } else {
-                [[LogManager sharedInstance] addLog:erStr];
+                errroMessage = erStr;
             }
         } else {
-            [[LogManager sharedInstance] addLog:erStr];
+            errroMessage = erStr;
         }
-        if (isEnroll){
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_REGISTRATION_FAILED object:nil];
+
+        if (isDecline){
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DECLINE_FAILED object:nil];
         } else {
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AUTENTIFICATION_FAILED object:nil];
+            if (isEnroll){
+                [[UserLoginInfo sharedInstance] setLogState:ENROLL_FAILED];
+                [[UserLoginInfo sharedInstance] setErrorMessage:errroMessage];
+                [[DataStoreManager sharedInstance] saveUserLoginInfo:[UserLoginInfo sharedInstance]];
+                [[UserLoginInfo sharedInstance] setErrorMessage:@""];
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_REGISTRATION_FAILED object:nil];
+            } else {
+                [[UserLoginInfo sharedInstance] setLogState:LOGIN_FAILED];
+                [[UserLoginInfo sharedInstance] setErrorMessage:errroMessage];
+                [[DataStoreManager sharedInstance] saveUserLoginInfo:[UserLoginInfo sharedInstance]];
+                [[UserLoginInfo sharedInstance] setErrorMessage:@""];
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AUTENTIFICATION_FAILED object:nil];
+            }
         }
     }
 

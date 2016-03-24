@@ -79,7 +79,7 @@
     
     UIMutableUserNotificationAction *action2;
     action2 = [[UIMutableUserNotificationAction alloc] init];
-    [action2 setActivationMode:UIUserNotificationActivationModeBackground];
+    [action2 setActivationMode:UIUserNotificationActivationModeForeground];
     [action2 setTitle:NSLocalizedString(@"Deny", @"Deny")];
     [action2 setIdentifier:NotificationActionTwoIdent];
     [action2 setDestructive:YES];
@@ -185,7 +185,12 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationRecieved:) name:NOTIFICATION_ERROR object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationRecieved:) name:NOTIFICATION_PUSH_RECEIVED object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationRecieved:) name:NOTIFICATION_PUSH_RECEIVED_APPROVE object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationRecieved:) name:NOTIFICATION_PUSH_RECEIVED_APPROVE object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationRecieved:) name:NOTIFICATION_PUSH_RECEIVED_DENY object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationRecieved:) name:NOTIFICATION_DECLINE_FAILED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationRecieved:) name:NOTIFICATION_DECLINE_SUCCESS object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationRecieved:) name:NOTIFICATION_PUSH_TIMEOVER object:nil];
 
 }
@@ -265,6 +270,21 @@
             [self.tabBarController setSelectedIndex:0];
             return;
         }
+    if ([[notification name] isEqualToString:NOTIFICATION_PUSH_RECEIVED_DENY]){
+        NSDictionary* pushRequest = (NSDictionary*)notification.object;
+        scanJsonDictionary = pushRequest;
+        [self onDecline];
+        [self.tabBarController setSelectedIndex:0];
+        return;
+    }
+    if ([[notification name] isEqualToString:NOTIFICATION_DECLINE_SUCCESS]){
+        [scanButton setEnabled:YES];
+        message = NSLocalizedString(@"DenySuccess", @"Deny Success");
+    }
+    if ([[notification name] isEqualToString:NOTIFICATION_DECLINE_FAILED]){
+        [scanButton setEnabled:YES];
+        message = NSLocalizedString(@"DenyFailed", @"Deny Failed");
+    }
     if ([[notification name] isEqualToString:NOTIFICATION_FAILED_KEYHANDLE]){
         [scanButton setEnabled:YES];
         message = NSLocalizedString(@"FailedKeyHandle", @"Failed KeyHandles");
@@ -414,7 +434,7 @@
 
 -(void)onDecline{
     [scanButton setEnabled:YES];
-    NSString* message = @"Declined";
+    NSString* message = @"Decline starting";
     [self updateStatus:message];
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
     OXPushManager* oxPushManager = [[OXPushManager alloc] init];

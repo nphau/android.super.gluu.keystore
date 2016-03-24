@@ -73,7 +73,9 @@
                                     // Success
 //                                    NSLog(@"Success - %@", result);
                                     isResult = YES;
-                                    [self postNotificationAutenticationStarting];
+                                    if (!isDecline){
+                                        [self postNotificationAutenticationStarting];
+                                    }
                                     [self callServiceChallenge:u2fEndpoint isEnroll:isEnroll andParameters:parameters isDecline:isDecline];
                                 }
                             }];
@@ -83,7 +85,9 @@
                         }
                     }
                 } else {
-                    [self postNotificationEnrollementStarting];
+                    if (!isDecline){
+                        [self postNotificationEnrollementStarting];
+                    }
                     [self callServiceChallenge:u2fEndpoint isEnroll:isEnroll andParameters:parameters isDecline:isDecline];
                 }
             }
@@ -98,7 +102,6 @@
         } else {
             // Success getting authenticate MetaData
             [self onChallengeReceived:baseUrl isEnroll:isEnroll metaData:result isDecline:isDecline];
-//            [self postNotificationAutenticationSuccess];
         }
     }];
 }
@@ -107,7 +110,9 @@
     TokenResponse* tokenResponce;
     TokenManager* tokenManager = [[TokenManager alloc] init];
     if (isEnroll){
-        [self postNotificationEnrollementStarting];
+        if (!isDecline){
+            [self postNotificationEnrollementStarting];
+        }
         tokenResponce = [tokenManager enroll:result baseUrl:baseUrl isDecline:isDecline];
     }
     if (tokenResponce == nil){
@@ -116,11 +121,11 @@
     NSMutableDictionary* tokenParameters = [[NSMutableDictionary alloc] init];
     [tokenParameters setObject:@"username" forKey:@"username"];
     [tokenParameters setObject:[tokenResponce response] forKey:@"tokenResponse"];
-    [self callServiceAuthenticateToken:baseUrl andParameters:tokenParameters];
+    [self callServiceAuthenticateToken:baseUrl andParameters:tokenParameters isDecline:isDecline];
 }
 
--(void)callServiceAuthenticateToken:(NSString*)baseUrl andParameters:(NSDictionary*)parameters{
-    [[ApiServiceManager sharedInstance] callPOSTMultiPartAPIService:baseUrl andParameters:parameters];
+-(void)callServiceAuthenticateToken:(NSString*)baseUrl andParameters:(NSDictionary*)parameters isDecline:(BOOL)isDecline{
+    [[ApiServiceManager sharedInstance] callPOSTMultiPartAPIService:baseUrl andParameters:parameters isDecline:isDecline];
 }
 
 -(void)postNotificationAutenticationStarting{

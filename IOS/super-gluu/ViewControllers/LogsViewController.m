@@ -11,6 +11,7 @@
 #import "LogsTableCell.h"
 #import "ApproveDenyViewController.h"
 #import "DataStoreManager.h"
+#import "UserLoginInfo.h"
 
 @implementation LogsViewController{
 //    ApproveDenyViewController* approveDenyView;
@@ -33,8 +34,8 @@
     logsArray = [[NSMutableArray alloc] initWithArray:[[DataStoreManager sharedInstance] getUserLoginInfo]];
     [logsArray count] == 0 ? [logsTableView setHidden:YES] : [logsTableView setHidden:NO];
     [logsArray count] == 0 ? [cleanLogs setHidden:YES] : [cleanLogs setHidden:NO];
-    if ([logsArray count] > 2){
-        [logsTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:logsArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    if ([logsArray count] > 3){
+        [logsTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:logsArray.count-2 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
     if ([logsArray count] > 0){
         [cleanLogs setHidden:NO];
@@ -45,7 +46,7 @@
 #pragma mark CustomIOS7AlertView Delegate
 
 -(void)customIOS7dialogButtonTouchUpInside:(id)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 0){
+    if ([alertView tag] == 1 && buttonIndex == 0){
         [[DataStoreManager sharedInstance] deleteAllLogs];
         [self getLogs];
     }
@@ -57,6 +58,7 @@
     [alertView setButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"YES", @"YES"), NSLocalizedString(@"NO", @"NO"), nil]];
     [alertView setButtonColors:[NSArray arrayWithObjects:[UIColor redColor], [UIColor greenColor], nil]];
     alertView.delegate = self;
+    alertView.tag = 1;
     [alertView show];
 }
 
@@ -67,19 +69,48 @@
     return logsArray.count;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UserLoginInfo* userInfo = (UserLoginInfo*)[logsArray objectAtIndex:indexPath.row];
+    CGFloat height = 131.0;
+    if ([userInfo logState] == LOGIN_FAILED || [userInfo logState] == ENROLL_FAILED){
+        height = 75.0;
+    }
+    return height;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    NSString *CellIdentifier= @"LogsTableCellID";
+    UserLoginInfo* userInfo = (UserLoginInfo*)[logsArray objectAtIndex:indexPath.row];
+    NSString *CellIdentifier= @"LogsTableCellID";//LogsFailedTableCellID
+    if ([userInfo logState] == LOGIN_FAILED || [userInfo logState] == ENROLL_FAILED){
+        CellIdentifier= @"LogsFailedTableCellID";
+    }
     LogsTableCell *cell = (LogsTableCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     cell.cellBackground.layer.cornerRadius = CORNER_RADIUS;
-    [cell setData:[logsArray objectAtIndex:indexPath.row]];
+    [cell setData:userInfo];
     [cell.infoButton setTag:indexPath.row];
     
     return cell;
 }
 
 -(IBAction)showUserInfo:(id)sender{
-    [self performSegueWithIdentifier:@"LogInfo" sender:sender];
+    if ([[sender accessibilityLabel] isEqualToString:@"1"]){
+        //Show message about failed enroll/authentication
+        UserLoginInfo* userInfo = [logsArray objectAtIndex:[sender tag]];
+        NSString* message = [userInfo errorMessage];
+        NSDictionary* jsonError = [NSJSONSerialization JSONObjectWithData:[message dataUsingEncoding:NSUTF8StringEncoding]
+                                                                  options:kNilOptions
+                                                                    error:nil];
+        if (jsonError != nil){
+            message = [jsonError valueForKey:@"errorDescription"];
+        }
+        CustomIOSAlertView *alertView = [CustomIOSAlertView alertWithTitle:@"Error message" message:message];
+//        [alertView setButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"YES", @"YES"), NSLocalizedString(@"NO", @"NO"), nil]];
+//        [alertView setButtonColors:[NSArray arrayWithObjects:[UIColor redColor], [UIColor greenColor], nil]];
+        alertView.delegate = self;
+        [alertView show];
+    } else {
+        [self performSegueWithIdentifier:@"LogInfo" sender:sender];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{

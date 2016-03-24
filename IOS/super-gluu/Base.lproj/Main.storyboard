@@ -18,7 +18,7 @@
                                 <subviews>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mPP-Np-Kae">
                                         <rect key="frame" x="277" y="28" width="35" height="35"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="clearLogsImages"/>
                                         <connections>
                                             <action selector="cleanLogs:" destination="9lV-D3-rAo" eventType="touchUpInside" id="bSz-am-laV"/>
@@ -100,6 +100,61 @@
                                                     <outlet property="infoButton" destination="kFY-F0-vAU" id="KP6-Wa-0Xf"/>
                                                     <outlet property="logLabel" destination="0WW-ao-SFN" id="w1x-yx-Nbz"/>
                                                     <outlet property="logTime" destination="Lji-VJ-XKA" id="Sks-uh-MYO"/>
+                                                    <outlet property="logo" destination="2VM-h2-jpK" id="zxd-aw-0pY"/>
+                                                </connections>
+                                            </tableViewCell>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LogsFailedTableCellID" rowHeight="75" id="bQO-HN-Zml" customClass="LogsTableCell">
+                                                <rect key="frame" x="0.0" y="159" width="320" height="75"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bQO-HN-Zml" id="2s3-7S-Dvh">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="74"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" id="3Y5-jp-uqa" userLabel="cellBackgroundView">
+                                                            <rect key="frame" x="22" y="5" width="274" height="63"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11 seconds ago" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wCP-vg-fKp">
+                                                                    <rect key="frame" x="53" y="36" width="211" height="27"/>
+                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logged in to CE Release" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fNE-3S-iaE">
+                                                                    <rect key="frame" x="53" y="5" width="213" height="32"/>
+                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                                    <color key="textColor" red="0.98431372549999996" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gluuIcon.png" id="hdQ-SM-r5d">
+                                                                    <rect key="frame" x="13" y="16" width="32" height="32"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                </imageView>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="EsF-rr-N5T">
+                                                                    <rect key="frame" x="236" y="17" width="30" height="30"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                                                    <accessibility key="accessibilityConfiguration" label="1"/>
+                                                                    <state key="normal" image="infoIcon.png"/>
+                                                                    <connections>
+                                                                        <action selector="showUserInfo:" destination="9lV-D3-rAo" eventType="touchUpInside" id="MDr-30-YHy"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </view>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                </tableViewCellContentView>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <connections>
+                                                    <outlet property="cellBackground" destination="3Y5-jp-uqa" id="ERw-uD-SZm"/>
+                                                    <outlet property="infoButton" destination="EsF-rr-N5T" id="0dO-SF-eja"/>
+                                                    <outlet property="logLabel" destination="fNE-3S-iaE" id="6H4-Qv-vpH"/>
+                                                    <outlet property="logTime" destination="wCP-vg-fKp" id="HT1-l2-7q7"/>
+                                                    <outlet property="logo" destination="hdQ-SM-r5d" id="FNN-wr-rma"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
@@ -1283,6 +1338,7 @@ In the event you are using the Services in connection with a device provided by 
         <image name="gluuIcon.png" width="87" height="87"/>
         <image name="homeIconImages" width="29" height="29"/>
         <image name="homeIconSelectedImages" width="35" height="35"/>
+        <image name="infoIcon.png" width="60" height="60"/>
         <image name="keysIconImages" width="29" height="29"/>
         <image name="keysIconSelectedImages" width="35" height="35"/>
         <image name="locationIconImages" width="29" height="29"/>

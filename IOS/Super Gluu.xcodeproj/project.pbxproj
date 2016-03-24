@@ -64,6 +64,7 @@
 		BB3BE1721C882D0600817A46 /* ApproveDenyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB3BE1711C882D0600817A46 /* ApproveDenyViewController.m */; };
 		BB50DD021C91AD5B00499B49 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB50DD001C91AD5B00499B49 /* Main_iPad.storyboard */; };
 		BB78BFB71C99C6C600558042 /* gluu.png in Resources */ = {isa = PBXBuildFile; fileRef = BB78BFB61C99C6C600558042 /* gluu.png */; };
+		BB8703061CA3E5D400EEF9A6 /* gluuIconRed.png in Resources */ = {isa = PBXBuildFile; fileRef = BB8703051CA3E5D400EEF9A6 /* gluuIconRed.png */; };
 		BBB7C0E71C884E2600833B12 /* approveIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0E61C884E2600833B12 /* approveIcon.png */; };
 		BBB7C0E91C8851B900833B12 /* denyIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0E81C8851B900833B12 /* denyIcon.png */; };
 		BBB7C0EB1C88569400833B12 /* personIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0EA1C88569400833B12 /* personIcon.png */; };
@@ -199,6 +200,7 @@
 		BB3BE1741C883B8900817A46 /* LecenseAgreementDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LecenseAgreementDelegate.h; sourceTree = "<group>"; };
 		BB50DD011C91AD5B00499B49 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		BB78BFB61C99C6C600558042 /* gluu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gluu.png; sourceTree = "<group>"; };
+		BB8703051CA3E5D400EEF9A6 /* gluuIconRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gluuIconRed.png; sourceTree = "<group>"; };
 		BBB7C0E61C884E2600833B12 /* approveIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = approveIcon.png; sourceTree = "<group>"; };
 		BBB7C0E81C8851B900833B12 /* denyIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = denyIcon.png; sourceTree = "<group>"; };
 		BBB7C0EA1C88569400833B12 /* personIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = personIcon.png; sourceTree = "<group>"; };
@@ -533,6 +535,7 @@
 			children = (
 				BB78BFB61C99C6C600558042 /* gluu.png */,
 				BBB7C0FB1C89FE3100833B12 /* gluuIcon.png */,
+				BB8703051CA3E5D400EEF9A6 /* gluuIconRed.png */,
 				BB37DEE41C7E0B8E0016D422 /* clearLogIcon.png */,
 				BB37DEE61C7E0B8E0016D422 /* gluuIcon29.png */,
 				BB37DEE71C7E0B8E0016D422 /* gluuIcon29x2.png */,
@@ -785,6 +788,7 @@
 				BB37DF321C7E0B8E0016D422 /* infoIcon.png in Resources */,
 				BB37DE5F1C7E08320016D422 /* Main.storyboard in Resources */,
 				BB37DF261C7E0B8E0016D422 /* clearLogIcon.png in Resources */,
+				BB8703061CA3E5D400EEF9A6 /* gluuIconRed.png in Resources */,
 				BBB7C0EB1C88569400833B12 /* personIcon.png in Resources */,
 				BBE787271C99954600E9E0D7 /* Settings.bundle in Resources */,
 				BB37DF291C7E0B8E0016D422 /* gluuIcon29x2.png in Resources */,

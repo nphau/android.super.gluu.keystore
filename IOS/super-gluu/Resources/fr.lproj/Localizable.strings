@@ -17,6 +17,9 @@
 "Keys" = "Keys";
 
 "LoggedIn" = "Logged in to %@";
+"LoggedInFailed" = "Failed to logged in to %@";
+"EnrollIn" = "Enroll to %@";
+"EnrollInFailed" = "Failed enroll to %@";
 
 "ScanText" = "You may be presented with a QR code for enrollment or authentication. Click the button to open your QR scanner.";
 "Welcome" = "Welcome";
@@ -53,6 +56,9 @@
 "FailedAuthentication" = "Échec, l'authentification!";
 "SuccessEnrollment" = "Félicitations, vous avez le succès inscrire!";
 "FailedEnrollment" = "Échec, inscrivez-vous!";
+
+"DenyFailed" = "Decline Failed";
+"DenySuccess" = "Decline Success";
 
 "AvailableKeyHandles" = "Poignées clés disponibles";
 
