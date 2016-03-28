@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="1PX-C3-Uj4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="1PX-C3-Uj4">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
         <!--Logs-->
@@ -709,7 +710,6 @@
                         <outlet property="statusView" destination="G0I-DM-Z4P" id="kF8-0R-Ey7"/>
                         <outlet property="welcomeLabel" destination="FDP-Hk-qh3" id="nxG-dp-AZT"/>
                         <outlet property="welcomeView" destination="WkL-NJ-ypG" id="2OA-7W-pLN"/>
-                        <segue destination="Mge-71-NJN" kind="modal" identifier="InfoView" modalTransitionStyle="crossDissolve" id="GZI-KJ-1UL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6bS-RT-Ozd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1201,18 +1201,16 @@ In the event you are using the Services in connection with a device provided by 
                     <connections>
                         <outlet property="acceptButton" destination="QGX-4W-DOt" id="Ss9-eb-ofG"/>
                         <outlet property="titleLabel" destination="UpH-ae-WJf" id="ndb-hA-xZh"/>
-                        <segue destination="Gfe-Ja-dd4" kind="modal" identifier="PinCodeID" id="2gE-0G-jLj"/>
-                        <segue destination="EoK-Gf-BRf" kind="modal" identifier="MainTabView" id="FeX-Vz-dRF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kjD-UQ-Sab" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="363" y="101"/>
+            <point key="canvasLocation" x="369" y="82"/>
         </scene>
         <!--Pin Code View Controller-->
         <scene sceneID="BIF-4m-wP5">
             <objects>
-                <viewController id="Gfe-Ja-dd4" customClass="PinCodeViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PinCodeViewID" id="Gfe-Ja-dd4" customClass="PinCodeViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eF3-u8-lHJ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1281,17 +1279,16 @@ In the event you are using the Services in connection with a device provided by 
                         <outlet property="nextButton" destination="6vf-q7-wtD" id="ydh-Zd-MaL"/>
                         <outlet property="skipButton" destination="7WO-t3-2Ec" id="o0Y-UV-Pra"/>
                         <outlet property="titleLabel" destination="i5t-fi-tKb" id="dbp-wj-tKB"/>
-                        <segue destination="EoK-Gf-BRf" kind="modal" identifier="MainTabView" id="lm7-Om-e35"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WBn-ct-btt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="830" y="-295"/>
+            <point key="canvasLocation" x="807" y="82"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="UCM-2a-iBq">
             <objects>
-                <tabBarController id="EoK-Gf-BRf" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="MainTabNavigationID" id="EoK-Gf-BRf" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="QTx-Se-In1">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1350,8 +1347,4 @@ In the event you are using the Services in connection with a device provided by 
         <image name="settingsSelectedImages" width="35" height="35"/>
         <image name="timeIconImages" width="29" height="29"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="GZI-KJ-1UL"/>
-        <segue reference="lm7-Om-e35"/>
-    </inferredMetricsTieBreakers>
 </document>

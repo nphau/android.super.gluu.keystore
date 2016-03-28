@@ -104,27 +104,37 @@
             message = [jsonError valueForKey:@"errorDescription"];
         }
         CustomIOSAlertView *alertView = [CustomIOSAlertView alertWithTitle:@"Error message" message:message];
-//        [alertView setButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"YES", @"YES"), NSLocalizedString(@"NO", @"NO"), nil]];
-//        [alertView setButtonColors:[NSArray arrayWithObjects:[UIColor redColor], [UIColor greenColor], nil]];
         alertView.delegate = self;
         [alertView show];
     } else {
-        [self performSegueWithIdentifier:@"LogInfo" sender:sender];
+        [self loadApproveDenyView:sender];
+//        [self performSegueWithIdentifier:@"LogInfo" sender:sender];
     }
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if ([[segue identifier] isEqualToString:@"LogInfo"]) {
-        //     MyViewController *myVC = [segue destinationViewController];
-        UINavigationController* dest = [segue destinationViewController];
-        ApproveDenyViewController* approveDenyView = (id)[dest topViewController];
-        if (approveDenyView != nil){
-            approveDenyView.delegate = self;
-            [approveDenyView setIsLogInfo:YES];
-            UserLoginInfo* userInfo = [logsArray objectAtIndex:[sender tag]];
-            [approveDenyView setUserInfo:userInfo];
-        }
-    }
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+//    if ([[segue identifier] isEqualToString:@"LogInfo"]) {
+//        //     MyViewController *myVC = [segue destinationViewController];
+//        UINavigationController* dest = [segue destinationViewController];
+//        ApproveDenyViewController* approveDenyView = (id)[dest topViewController];
+//        if (approveDenyView != nil){
+//            approveDenyView.delegate = self;
+//            [approveDenyView setIsLogInfo:YES];
+//            UserLoginInfo* userInfo = [logsArray objectAtIndex:[sender tag]];
+//            [approveDenyView setUserInfo:userInfo];
+//        }
+//    }
+//}
+
+-(void)loadApproveDenyView:(id)sender{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    ApproveDenyViewController* approveDenyView = [storyboard instantiateViewControllerWithIdentifier:@"ApproveDenyView"];
+    //    [tabBar setModalPresentationStyle:UIModalPresentationFullScreen];
+    approveDenyView.delegate = self;
+    [approveDenyView setIsLogInfo:YES];
+    UserLoginInfo* userInfo = [logsArray objectAtIndex:[sender tag]];
+    [approveDenyView setUserInfo:userInfo];
+    [self presentViewController:approveDenyView animated:YES completion:nil];
 }
 
 #pragma LicenseAgreementDelegates

@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "super-gluu/MainViewController.m"
-            timestampString = "480432246.500184"
+            timestampString = "480786612.433262"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
             landmarkName = "-checkPushNotification"
             landmarkType = "5">
          </BreakpointContent>

@@ -8,6 +8,7 @@
 
 #import "LicenseAgreementView.h"
 #import "Constants.h"
+#import "PinCodeViewController.h"
 
 #define LICENSE_AGREEMENT @"LicenseAgreement"
 #define MAIN_VIEW @"MainTabView"
@@ -59,16 +60,33 @@
 -(void)checkPinProtection{
     BOOL isFirstLoad = [[NSUserDefaults standardUserDefaults] boolForKey:IS_FIRST_LOAD];
     if (!isFirstLoad){
-        [self performSegueWithIdentifier:PIN_VIEW sender:self];
+        [self loadPinView];
+        //[self performSegueWithIdentifier:PIN_VIEW sender:self];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:IS_FIRST_LOAD];
     } else {
         BOOL isPin = [[NSUserDefaults standardUserDefaults] boolForKey:PIN_PROTECTION_ID];
         if (isPin){
-            [self performSegueWithIdentifier:PIN_VIEW sender:self];
+            [self loadPinView];
+//            [self performSegueWithIdentifier:PIN_VIEW sender:self];
         } else {
-            [self performSegueWithIdentifier:MAIN_VIEW sender:self];
+            [self loadMainView];
+//            [self performSegueWithIdentifier:MAIN_VIEW sender:self];
         }
     }
+}
+
+-(void)loadPinView{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    PinCodeViewController* pinView = [storyboard instantiateViewControllerWithIdentifier:@"PinCodeViewID"];
+//    [pinView setModalPresentationStyle:UIModalPresentationFullScreen];
+    [self presentViewController:pinView animated:YES completion:nil];
+}
+
+-(void)loadMainView{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UITabBarController* tabBar = [storyboard instantiateViewControllerWithIdentifier:@"MainTabNavigationID"];
+//    [tabBar setModalPresentationStyle:UIModalPresentationFullScreen];
+    [self presentViewController:tabBar animated:YES completion:nil];
 }
 
 @end

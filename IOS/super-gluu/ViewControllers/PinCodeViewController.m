@@ -56,7 +56,8 @@
 }
 
 -(IBAction)skip:(id)sender{
-    [self performSegueWithIdentifier:MAIN_VIEW sender:self];
+    [self loadMainView];
+    //[self performSegueWithIdentifier:MAIN_VIEW sender:self];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:PIN_PROTECTION_ID];
 }
 
@@ -103,7 +104,8 @@
 
 - (void)PAPasscodeViewControllerDidEnterPasscode:(PAPasscodeViewController *)controller {
     [self dismissViewControllerAnimated:YES completion:^() {
-        [self performSegueWithIdentifier:MAIN_VIEW sender:self];
+        [self loadMainView];
+//        [self performSegueWithIdentifier:MAIN_VIEW sender:self];
 //        [[[UIAlertView alloc] initWithTitle:nil message:@"Passcode entered correctly" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }];
 }
@@ -115,7 +117,8 @@
         [titleLabel setHidden:YES];
         [nextButton setHidden:YES];
         [skipButton setHidden:YES];
-        [self performSegueWithIdentifier:MAIN_VIEW sender:self];
+        [self loadMainView];
+//        [self performSegueWithIdentifier:MAIN_VIEW sender:self];
 //        _passcodeLabel.text = controller.passcode;
     }];
 }
@@ -124,6 +127,13 @@
     [self dismissViewControllerAnimated:YES completion:^() {
 //        _passcodeLabel.text = controller.passcode;
     }];
+}
+
+-(void)loadMainView{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UITabBarController* tabBar = [storyboard instantiateViewControllerWithIdentifier:@"MainTabNavigationID"];
+    //    [tabBar setModalPresentationStyle:UIModalPresentationFullScreen];
+    [self presentViewController:tabBar animated:YES completion:nil];
 }
 
 @end

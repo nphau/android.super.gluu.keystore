@@ -21,9 +21,7 @@
 
 @end
 
-@implementation MainViewController{
-    ApproveDenyViewController* approveDenyView;
-}
+@implementation MainViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -299,27 +297,25 @@
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
 }
 
--(void)showApproveDenyView{
-    approveDenyView = [self.storyboard instantiateViewControllerWithIdentifier:@"ApproveDenyView"];
-    if (approveDenyView != nil){
-        approveDenyView.delegate = self;
-        CATransition *transition = [CATransition animation];
-        transition.duration = 0.5;
-        transition.type = kCATransitionPush;
-        transition.subtype = kCATransitionFromRight;
-        [transition setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-        [contentView.layer addAnimation:transition forKey:nil];
-        [self.tabBarController.tabBar setHidden:YES];
-        [contentView addSubview:approveDenyView.view];
-    }
-}
+//-(void)showApproveDenyView{
+//    approveDenyView = [self.storyboard instantiateViewControllerWithIdentifier:@"ApproveDenyView"];
+//    if (approveDenyView != nil){
+//        approveDenyView.delegate = self;
+//        CATransition *transition = [CATransition animation];
+//        transition.duration = 0.5;
+//        transition.type = kCATransitionPush;
+//        transition.subtype = kCATransitionFromRight;
+//        [transition setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+//        [contentView.layer addAnimation:transition forKey:nil];
+//        [self.tabBarController.tabBar setHidden:YES];
+//        [contentView addSubview:approveDenyView.view];
+//    }
+//}
 
 #pragma LicenseAgreementDelegates
 
 -(void)approveRequest{
     [self initAnimationFromRigthToLeft];
-    [approveDenyView.view removeFromSuperview];
-    approveDenyView = nil;
     NSString* message = NSLocalizedString(@"StartAuthentication", @"Authentication...");
     [self updateStatus:message];
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
@@ -329,8 +325,6 @@
 
 -(void)denyRequest{
     [self initAnimationFromRigthToLeft];
-    [approveDenyView.view removeFromSuperview];
-    approveDenyView = nil;
     NSString* message = @"Request canceled";
     [self updateStatus:message];
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
@@ -398,20 +392,29 @@
 -(void)provideScanRequest{
     isUserInfo = NO;
     [scanButton setEnabled:NO];
-    [self performSegueWithIdentifier:@"InfoView" sender:nil];
+    [self loadApproveDenyView];
+//    [self performSegueWithIdentifier:@"InfoView" sender:nil];
 }
 
-#pragma mark - Action Methods
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if ([[segue identifier] isEqualToString:@"InfoView"]) {
-        UINavigationController* dest = [segue destinationViewController];
-        approveDenyView = (id)[dest topViewController];
-        if (approveDenyView != nil){
-            approveDenyView.delegate = self;
-        }
-    }
+-(void)loadApproveDenyView{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    ApproveDenyViewController* approveDenyView = [storyboard instantiateViewControllerWithIdentifier:@"ApproveDenyView"];
+    //    [tabBar setModalPresentationStyle:UIModalPresentationFullScreen];
+    approveDenyView.delegate = self;
+    [self presentViewController:approveDenyView animated:YES completion:nil];
 }
+
+//#pragma mark - Action Methods
+//
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+//    if ([[segue identifier] isEqualToString:@"InfoView"]) {
+//        UINavigationController* dest = [segue destinationViewController];
+//        approveDenyView = (id)[dest topViewController];
+//        if (approveDenyView != nil){
+//            approveDenyView.delegate = self;
+//        }
+//    }
+//}
 
 - (IBAction)scanAction:(id)sender
 {
