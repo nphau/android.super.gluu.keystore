@@ -12,11 +12,16 @@
 @interface PinCodeViewController : UIViewController <PAPasscodeViewControllerDelegate>{
 
     IBOutlet UILabel* titleLabel;
-    IBOutlet UIView* passCodeView;
+    IBOutlet UIView* timerView;
+    IBOutlet UILabel* minutesLabel;
+    IBOutlet UILabel* secondsLabel;
     IBOutlet UIButton* nextButton;
     IBOutlet UIButton* skipButton;
-    
     IBOutlet UIButton* enterPinButton;
+    
+    int countFailedPin;
+    int minutes, seconds;
+    NSTimer* timer;
     
 }
 

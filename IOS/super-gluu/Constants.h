@@ -70,4 +70,6 @@
 #define PIN_CODE @"PinCode"
 #define PIN_ENABLED @"PinCodeEnabled"
 
+#define LOCKED_DATE @"locked_app_date"
+
 #endif /* Constants_h */

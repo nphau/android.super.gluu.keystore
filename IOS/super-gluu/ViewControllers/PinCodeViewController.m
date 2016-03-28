@@ -12,6 +12,8 @@
 #define MAIN_VIEW @"MainTabView"
 #define PIN_PROTECTION_ID @"enabledPinCode"
 
+#define FAILED_PIN_COUNT 5
+
 @implementation PinCodeViewController
 
 -(void)viewDidLoad{
@@ -24,7 +26,8 @@
         [skipButton setHidden:YES];
     }
     [enterPinButton setHidden:YES];
-    [self performSelector:@selector(checkPinCodeEnabled) withObject:nil afterDelay:0.01];
+    countFailedPin = 0;
+    [self checkIsAppLocked];
 }
 
 -(void)initWiget{
@@ -43,6 +46,38 @@
         [nextButton setHidden:YES];
         [skipButton setHidden:YES];
         [self enterPasscode];
+    }
+}
+
+-(void)checkIsAppLocked{
+    NSDate* date = [[NSUserDefaults standardUserDefaults] objectForKey:LOCKED_DATE];
+    NSDate* currentDate = [NSDate date];
+//    NSTimeInterval diff = [currentDate timeIntervalSinceDate:date];
+    NSTimeInterval distanceBetweenDates = [currentDate timeIntervalSinceDate:date];
+    int sec = (int)distanceBetweenDates;
+    int min = sec / 60;
+    sec = sec % 60;
+    if (min < 10 && sec > 0){
+        //(min > 0 && min < 10) &&
+        sec = 600 - sec;
+        minutes = 9 - min;
+        minutes = minutes < 0 ? 0 : minutes;
+        seconds = sec % 60;
+        [nextButton setHidden:YES];
+        [skipButton setHidden:YES];
+        [timerView setHidden:NO];
+        timerView.layer.cornerRadius = CORNER_RADIUS;
+        [titleLabel setTextColor:[UIColor redColor]];
+        [titleLabel setText:NSLocalizedString(@"FailedPinCode", @"FailedPinCode")];
+        [titleLabel setHidden:NO];
+        [enterPinButton setHidden:YES];
+        NSString* minStr = minutes < 10 ? [NSString stringWithFormat:@"%i%i", 0, minutes] : [NSString stringWithFormat:@"%i", minutes];
+        minutesLabel.text = minStr;
+        NSString* secStr = seconds < 10 ? [NSString stringWithFormat:@":%i%i", 0, seconds] : [NSString stringWithFormat:@":%i", seconds];
+        secondsLabel.text = secStr;
+        timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(tick) userInfo:nil repeats:YES];
+    } else {
+        [self performSelector:@selector(checkPinCodeEnabled) withObject:nil afterDelay:0.01];
     }
 }
 
@@ -88,7 +123,7 @@
 
 - (void)PAPasscodeViewControllerDidCancel:(PAPasscodeViewController *)controller {
     [self dismissViewControllerAnimated:YES completion:nil];
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:PIN_CODE]){
+    if ([[NSUserDefaults standardUserDefaults] stringForKey:PIN_CODE]){
         [enterPinButton setHidden:NO];
         [enterPinButton setTitle:NSLocalizedString(@"EnterPinCode", @"EnterPinCode") forState:UIControlStateNormal];
         [titleLabel setText:NSLocalizedString(@"ReEnterPinCode", @"ReEnterPinCode")];
@@ -129,11 +164,66 @@
     }];
 }
 
+- (void)PAPasscodeViewController:(PAPasscodeViewController *)controller didFailToEnterPasscode:(NSInteger)attempts{
+    countFailedPin++;
+    NSLog(@"Failed enter passcode, count - %i", countFailedPin);
+    if (countFailedPin == FAILED_PIN_COUNT){
+    //lock app and wait approx 10 mins
+        [timerView setHidden:NO];
+        [self startTimer];
+        [controller dismissViewControllerAnimated:YES completion:nil];
+    }
+    
+}
+
+// -----------------------------------------------------------------------------------------
+
 -(void)loadMainView{
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UITabBarController* tabBar = [storyboard instantiateViewControllerWithIdentifier:@"MainTabNavigationID"];
     //    [tabBar setModalPresentationStyle:UIModalPresentationFullScreen];
     [self presentViewController:tabBar animated:YES completion:nil];
+}
+
+-(void)startTimer{
+    timerView.layer.cornerRadius = CORNER_RADIUS;
+    [titleLabel setTextColor:[UIColor redColor]];
+    [titleLabel setText:NSLocalizedString(@"FailedPinCode", @"FailedPinCode")];
+    [titleLabel setHidden:NO];
+    [enterPinButton setHidden:YES];
+    minutes = 10;
+    seconds = 0;
+    minutesLabel.text = [NSString stringWithFormat:@"%i", minutes];
+    secondsLabel.text = [NSString stringWithFormat:@":%i%i", seconds, seconds];
+    timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(tick) userInfo:nil repeats:YES];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:LOCKED_DATE];
+    
+}
+
+-(void)tick{
+    if (seconds == 0){
+        minutes--;
+        seconds = 60;
+        seconds--;
+    } else {
+        seconds--;
+    }
+    NSString* min = minutes < 10 ? [NSString stringWithFormat:@"%i%i", 0, minutes] : [NSString stringWithFormat:@"%i", minutes];
+    minutesLabel.text = min ;
+    NSString* sec = seconds < 10 ? [NSString stringWithFormat:@":%i%i", 0, seconds] : [NSString stringWithFormat:@":%i", seconds];
+    secondsLabel.text = sec;
+    
+    if (seconds == 0 && minutes == 0){
+        [timer invalidate];
+        timer = nil;
+        [timerView setHidden:YES];
+        [enterPinButton setHidden:NO];
+        [enterPinButton setTitle:NSLocalizedString(@"EnterPinCode", @"EnterPinCode") forState:UIControlStateNormal];
+        [titleLabel setText:NSLocalizedString(@"ReEnterPinCode", @"ReEnterPinCode")];
+        [titleLabel setHidden:NO];
+        [titleLabel setTextColor:[UIColor blackColor]];
+    }
+    
 }
 
 @end
