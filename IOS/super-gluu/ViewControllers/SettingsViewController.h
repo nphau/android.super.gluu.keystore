@@ -11,13 +11,17 @@
 #import "PAPasscodeViewController.h"
 #import "CustomIOSAlertView.h"
 
-@interface SettingsViewController : UIViewController <PAPasscodeViewControllerDelegate, CustomIOSAlertViewDelegate>{
+@interface SettingsViewController : UIViewController <PAPasscodeViewControllerDelegate, CustomIOSAlertViewDelegate, UIScrollViewDelegate>{
 
+    IBOutlet UIScrollView* scrollView;
     IBOutlet UISwitch* pinCodeType;
     IBOutlet UISwitch* pinCodeTurnOnOff;
     IBOutlet UIView* pinCodeTurnOnOffView;
     IBOutlet UIView* pinCodeTypeView;
     IBOutlet UIButton* setChangePinCode;
+    IBOutlet UIView* attemptsView;
+    IBOutlet UILabel* attemptsLabel;
+    IBOutlet UIStepper* attemptsStepper;
     
     JTMaterialSwitch *jswTurnOnOff;
     
@@ -25,6 +29,7 @@
     
     BOOL isPin;
     BOOL isSimple;
+    BOOL isLandScape;
     
 }
 

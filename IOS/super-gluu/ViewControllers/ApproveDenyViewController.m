@@ -213,7 +213,9 @@
     if (date == nil) return nil;
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     NSDate* dateTime = [self getNSDate:date];
-    [formatter setDateFormat:@"hh:mm:ss"];
+    [formatter setTimeStyle:NSDateFormatterMediumStyle];
+//    [formatter setDateFormat:@"hh:mm:ss"];
+    [formatter setTimeZone:[NSTimeZone localTimeZone]];
     NSString* times = [formatter stringFromDate:dateTime];
     
     return times;
@@ -223,16 +225,19 @@
     if (date == nil) return nil;
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     NSDate* dateT = [self getNSDate:date];
-    [formatter setDateFormat:@"MMMM dd, yyyy"];
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+//    [formatter setDateFormat:@"MMMM dd, yyyy"];
     NSString* dateTime = [formatter stringFromDate:dateT];
     
     return dateTime;
 }
 
 -(NSDate*)getNSDate:(NSString*)dateTime{
+    dateTime = [dateTime stringByReplacingOccurrencesOfString:@"T" withString:@" "];
+    dateTime = [dateTime stringByReplacingOccurrencesOfString:@"'" withString:@""];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
-    [formatter setDateFormat:@"yyyy-MM-dd'T'hh:mm:ss.SSSSSS"];
+//    [formatter setTimeZone:[NSTimeZone localTimeZone]];//timeZoneWithAbbreviation:@"GMT"]];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss.SSSSSS"];//.SSSSSS//:mm:ss
     NSDate* date = [formatter dateFromString:dateTime];
     
     return date;

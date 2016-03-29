@@ -71,5 +71,6 @@
 #define PIN_ENABLED @"PinCodeEnabled"
 
 #define LOCKED_DATE @"locked_app_date"
+#define LOCKED_ATTEMPTS_COUNT @"locked_attempts_count"
 
 #endif /* Constants_h */

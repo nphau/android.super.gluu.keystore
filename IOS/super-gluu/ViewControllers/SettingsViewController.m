@@ -20,7 +20,6 @@
     isPin = [[NSUserDefaults standardUserDefaults] boolForKey:PIN_PROTECTION_ID];
     [pinCodeTypeView setHidden:!isPin];
     [setChangePinCode setHidden:!isPin];
-    [self initWidget];
     isSimple = [[NSUserDefaults standardUserDefaults] boolForKey:PIN_SIMPLE_ID];
     code = [[NSUserDefaults standardUserDefaults] stringForKey:PIN_CODE];
     if (code == nil || [code isEqualToString:@""]){
@@ -29,6 +28,13 @@
         [setChangePinCode setTitle:NSLocalizedString(@"ChangePinCode", @"ChangePinCode") forState:UIControlStateNormal];
         [pinCodeTypeView setHidden:YES];
     }
+    [self initWidget];
+    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self checkDeviceOrientation];
 }
 
 -(void)initWidget{
@@ -60,6 +66,25 @@
     [[setChangePinCode layer] setCornerRadius:CORNER_RADIUS];
     [[setChangePinCode layer] setBorderWidth:2.0f];
     [[setChangePinCode layer] setBorderColor:[UIColor colorWithRed:57/255.0 green:127/255.0 blue:255/255.0 alpha:1.0].CGColor];
+    
+    int count = (int)[[NSUserDefaults standardUserDefaults] integerForKey:LOCKED_ATTEMPTS_COUNT];
+    if (count > 0){
+        attemptsLabel.text = [NSString stringWithFormat:@"%i", count];
+    }
+    if (pinCodeTypeView.isHidden){
+        [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y)];
+    } else {
+        [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y + attemptsView.frame.size.height)];
+    }
+}
+
+-(void)checkDeviceOrientation{
+    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
+    {
+        // code for landscape orientation
+        //        [self adjustViewsForOrientation:UIInterfaceOrientationLandscapeLeft];
+        [[NSNotificationCenter defaultCenter] postNotificationName:UIDeviceOrientationDidChangeNotification object:nil];
+    }
 }
 
 - (void) initSwitchProperty:(JTMaterialSwitch*) jtSwitch {
@@ -88,6 +113,11 @@
         [setChangePinCode setTitle:NSLocalizedString(@"ChangePinCode", @"ChangePinCode") forState:UIControlStateNormal];
         [pinCodeTypeView setHidden:YES];
     }
+    if (pinCodeTypeView.isHidden){
+        [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y)];
+    } else {
+        [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y + attemptsView.frame.size.height)];
+    }
     [[NSUserDefaults standardUserDefaults] setBool:sw.isOn forKey:PIN_PROTECTION_ID];
 }
 
@@ -107,6 +137,7 @@
     } else {
         title = NSLocalizedString(@"ChangePinCode", @"ChangePinCode");
         message = NSLocalizedString(@"ChangePinCodeTitle", @"ChangePinCodeTitle");
+        [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y - 20)];
         isPinCode = YES;
     }
     CustomIOSAlertView* alertView = [CustomIOSAlertView alertWithTitle:title  message:message];
@@ -114,6 +145,13 @@
     [alertView setButtonColors:[NSArray arrayWithObjects:[UIColor redColor], [UIColor greenColor], nil]];
     alertView.delegate = self;
     [alertView show];
+}
+
+- (IBAction)attemptsValueChanged:(UIStepper *)sender {
+    double value = [sender value];
+    
+    [attemptsLabel setText:[NSString stringWithFormat:@"%d", (int)value]];
+    [[NSUserDefaults standardUserDefaults] setInteger:(int)value forKey:LOCKED_ATTEMPTS_COUNT];
 }
 
 #pragma mark CustomIOS7AlertView Delegate
@@ -162,12 +200,55 @@
         [[NSUserDefaults standardUserDefaults] setObject:controller.passcode forKey:PIN_CODE];
         [setChangePinCode setTitle:NSLocalizedString(@"ChangePinCode", @"ChangePinCode") forState:UIControlStateNormal];
         [pinCodeTypeView setHidden:YES];
+        if (pinCodeTypeView.isHidden){
+            [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y)];
+        } else {
+            [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y + attemptsView.frame.size.height)];
+        }
     }];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)orientationChanged:(NSNotification *)notification{
+    [self adjustViewsForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
+}
+
+- (void) adjustViewsForOrientation:(UIInterfaceOrientation) orientation {
+    
+    switch (orientation)
+    {
+        case UIInterfaceOrientationPortrait:
+        case UIInterfaceOrientationPortraitUpsideDown:
+        {
+            //load the portrait view
+            if (isLandScape){
+                [scrollView setContentSize:CGSizeMake(scrollView.contentSize.width, scrollView.contentSize.width/2)];
+                scrollView.delegate = nil;
+                scrollView.scrollEnabled = NO;
+                isLandScape = NO;
+            }
+        }
+            
+            break;
+        case UIInterfaceOrientationLandscapeLeft:
+        case UIInterfaceOrientationLandscapeRight:
+        {
+            //load the landscape view
+            if (!isLandScape){
+                [scrollView setContentSize:CGSizeMake(scrollView.contentSize.width, 400)];
+                scrollView.delegate = self;
+                scrollView.scrollEnabled = YES;
+                isLandScape = YES;
+            }
+            
+        }
+            break;
+        case UIInterfaceOrientationUnknown:break;
+    }
 }
 
 /*

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PAPasscodeViewController.h"
+#import "CustomIOSAlertView.h"
 
 @interface PinCodeViewController : UIViewController <PAPasscodeViewControllerDelegate>{
 

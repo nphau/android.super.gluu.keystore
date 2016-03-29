@@ -105,7 +105,8 @@
 
 "ReEnterPinCode" = "To continue, please enter Pin code";
 "EnterPinCode" = "Enter Pin code";
-"FailedPinCode" = "Application locked, you entered wrong Pin 5 times, please wait.";
+"FailedPinCode" = "Application is locked, you entered wrong Pin %i times, please wait.";
+"LastAttempts" = "Last 2 attempts before app be locked on 10 minutes";
 
 
 

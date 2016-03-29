@@ -38,6 +38,11 @@
     
     [[skipButton layer] setMasksToBounds:YES];
     [[skipButton layer] setCornerRadius:CORNER_RADIUS];
+    
+    [[enterPinButton layer] setMasksToBounds:YES];
+    [[enterPinButton layer] setCornerRadius:CORNER_RADIUS];
+    [[enterPinButton layer] setBorderWidth:2.0f];
+    [[enterPinButton layer] setBorderColor:[UIColor colorWithRed:57/255.0 green:127/255.0 blue:255/255.0 alpha:1.0].CGColor];
 }
 
 -(void)checkPinCodeEnabled{
@@ -50,6 +55,10 @@
 }
 
 -(void)checkIsAppLocked{
+    int count = (int)[[NSUserDefaults standardUserDefaults] integerForKey:LOCKED_ATTEMPTS_COUNT];
+    if (count > 0){
+        [titleLabel setText:[NSString stringWithFormat:NSLocalizedString(@"FailedPinCode", @"FailedPinCode"), count]];
+    }
     NSDate* date = [[NSUserDefaults standardUserDefaults] objectForKey:LOCKED_DATE];
     NSDate* currentDate = [NSDate date];
 //    NSTimeInterval diff = [currentDate timeIntervalSinceDate:date];
@@ -68,7 +77,6 @@
         [timerView setHidden:NO];
         timerView.layer.cornerRadius = CORNER_RADIUS;
         [titleLabel setTextColor:[UIColor redColor]];
-        [titleLabel setText:NSLocalizedString(@"FailedPinCode", @"FailedPinCode")];
         [titleLabel setHidden:NO];
         [enterPinButton setHidden:YES];
         NSString* minStr = minutes < 10 ? [NSString stringWithFormat:@"%i%i", 0, minutes] : [NSString stringWithFormat:@"%i", minutes];
@@ -167,7 +175,14 @@
 - (void)PAPasscodeViewController:(PAPasscodeViewController *)controller didFailToEnterPasscode:(NSInteger)attempts{
     countFailedPin++;
     NSLog(@"Failed enter passcode, count - %i", countFailedPin);
-    if (countFailedPin == FAILED_PIN_COUNT){
+    int attemptsCount = (int)[[NSUserDefaults standardUserDefaults] integerForKey:LOCKED_ATTEMPTS_COUNT];
+    if (attemptsCount <= 0){
+        attemptsCount = FAILED_PIN_COUNT;
+    }
+    if (countFailedPin == attemptsCount-2){
+        [self showAlertView];
+    }
+    if (countFailedPin == attemptsCount){
     //lock app and wait approx 10 mins
         [timerView setHidden:NO];
         [self startTimer];
@@ -224,6 +239,10 @@
         [titleLabel setTextColor:[UIColor blackColor]];
     }
     
+}
+
+-(void)showAlertView{
+    [[CustomIOSAlertView alertWithTitle:NSLocalizedString(@"Info", @"Info") message:NSLocalizedString(@"LastAttempts", @"LastAttempts")] show];
 }
 
 @end
