@@ -137,7 +137,6 @@
     } else {
         title = NSLocalizedString(@"ChangePinCode", @"ChangePinCode");
         message = NSLocalizedString(@"ChangePinCodeTitle", @"ChangePinCodeTitle");
-        [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y - 20)];
         isPinCode = YES;
     }
     CustomIOSAlertView* alertView = [CustomIOSAlertView alertWithTitle:title  message:message];
