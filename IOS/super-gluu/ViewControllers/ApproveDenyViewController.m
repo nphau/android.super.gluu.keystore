@@ -213,9 +213,9 @@
     if (date == nil) return nil;
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     NSDate* dateTime = [self getNSDate:date];
-    [formatter setTimeStyle:NSDateFormatterMediumStyle];
-//    [formatter setDateFormat:@"hh:mm:ss"];
-    [formatter setTimeZone:[NSTimeZone localTimeZone]];
+//    [formatter setTimeStyle:NSDateFormatterMediumStyle];
+    [formatter setDateFormat:@"hh:mm:ss  aa"];
+//    [formatter setTimeZone:[NSTimeZone localTimeZone]];
     NSString* times = [formatter stringFromDate:dateTime];
     
     return times;
