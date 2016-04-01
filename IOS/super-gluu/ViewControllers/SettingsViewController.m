@@ -110,15 +110,37 @@
     code = [[NSUserDefaults standardUserDefaults] stringForKey:PIN_CODE];
     if (code == nil || [code isEqualToString:@""]){
         [setChangePinCode setTitle:NSLocalizedString(@"SetPinCode", @"SetPinCode") forState:UIControlStateNormal];
+        [UIView animateWithDuration:0.3
+                              delay:0.0
+                            options:UIViewAnimationOptionTransitionCrossDissolve
+                         animations:^{
+                             [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y + attemptsView.frame.size.height)];
+                         } completion:^(BOOL finished){
+                             //
+                         }];
     } else {
         [setChangePinCode setTitle:NSLocalizedString(@"ChangePinCode", @"ChangePinCode") forState:UIControlStateNormal];
         [pinCodeTypeView setHidden:YES];
+        [UIView animateWithDuration:0.3
+                              delay:0.0
+                            options:UIViewAnimationOptionTransitionCrossDissolve
+                         animations:^{
+                             [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y + attemptsView.frame.size.height/4)];
+                         } completion:^(BOOL finished){
+                             //
+                         }];
     }
-    if (pinCodeTypeView.isHidden){
-        [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y + attemptsView.frame.size.height/3)];
-    } else {
-        [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y + attemptsView.frame.size.height)];
+    if (setChangePinCode.isHidden){
+        [UIView animateWithDuration:0.3
+                              delay:0.0
+                            options:UIViewAnimationOptionTransitionCrossDissolve
+                         animations:^{
+                         [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y - 20)];
+                         } completion:^(BOOL finished){
+                        //
+                         }];
     }
+    
     [[NSUserDefaults standardUserDefaults] setBool:sw.isOn forKey:PIN_PROTECTION_ID];
 }
 

@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "super-gluu/MainViewController.m"
-            timestampString = "480786612.433262"
+            timestampString = "481187402.670569"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
             landmarkName = "-checkPushNotification"
             landmarkType = "5">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "super-gluu/MainViewController.m"
-            timestampString = "480947400.598926"
+            timestampString = "481187402.670569"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "369"
-            endingLineNumber = "369"
+            startingLineNumber = "374"
+            endingLineNumber = "374"
             landmarkName = "-initQRScanner"
             landmarkType = "5">
          </BreakpointContent>

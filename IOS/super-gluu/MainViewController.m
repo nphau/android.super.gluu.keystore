@@ -42,6 +42,11 @@
     [self checkPushNotification];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self checkDeviceOrientation];
+}
+
 -(void)checkPushNotification{
     BOOL isPin = [[NSUserDefaults standardUserDefaults] boolForKey:PIN_PROTECTION_ID];
     if (isPin){
