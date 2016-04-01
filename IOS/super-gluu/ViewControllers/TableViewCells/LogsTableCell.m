@@ -31,11 +31,9 @@
 }
 
 -(NSString*)getTimeAgo:(NSString*)createdTime{
-    createdTime = [createdTime stringByReplacingOccurrencesOfString:@"T" withString:@" "];
-    createdTime = [createdTime stringByReplacingOccurrencesOfString:@"'" withString:@""];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
 //    [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss.SSSSSS"];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZZZ"];
     NSDate* date = [formatter dateFromString:createdTime];
     return [date formattedAsTimeAgo];
 }

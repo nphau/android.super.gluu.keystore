@@ -589,7 +589,7 @@
 -(void)initUserInfo:(NSDictionary*)parameters{
     NSString* app = [parameters objectForKey:@"app"];
 //    NSString* state = [parameters objectForKey:@"state"];
-    NSString* created = [parameters objectForKey:@"created"];
+    NSString* created = [NSString stringWithFormat:@"%@", [NSDate date]];//[parameters objectForKey:@"created"];
     NSString* issuer = [parameters objectForKey:@"issuer"];
     NSString* username = [parameters objectForKey:@"username"];
     BOOL oneStep = username == nil ? YES : NO;

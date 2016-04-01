@@ -233,11 +233,9 @@
 }
 
 -(NSDate*)getNSDate:(NSString*)dateTime{
-    dateTime = [dateTime stringByReplacingOccurrencesOfString:@"T" withString:@" "];
-    dateTime = [dateTime stringByReplacingOccurrencesOfString:@"'" withString:@""];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
 //    [formatter setTimeZone:[NSTimeZone localTimeZone]];//timeZoneWithAbbreviation:@"GMT"]];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss.SSSSSS"];//.SSSSSS//:mm:ss
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZZZ"];//.SSSSSS//:mm:ss
     NSDate* date = [formatter dateFromString:dateTime];
     
     return date;
