@@ -22,6 +22,7 @@
     IBOutlet UIView* attemptsView;
     IBOutlet UILabel* attemptsLabel;
     IBOutlet UIStepper* attemptsStepper;
+    IBOutlet UILabel* attemptsTextLabel;
     
     JTMaterialSwitch *jswTurnOnOff;
     
