@@ -222,11 +222,14 @@
         [[NSUserDefaults standardUserDefaults] setObject:controller.passcode forKey:PIN_CODE];
         [setChangePinCode setTitle:NSLocalizedString(@"ChangePinCode", @"ChangePinCode") forState:UIControlStateNormal];
         [pinCodeTypeView setHidden:YES];
-        if (pinCodeTypeView.isHidden){
-            [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y)];
-        } else {
-            [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y + attemptsView.frame.size.height)];
-        }
+        [UIView animateWithDuration:0.3
+                              delay:0.0
+                            options:UIViewAnimationOptionTransitionCrossDissolve
+                         animations:^{
+                             [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y + attemptsView.frame.size.height/4)];
+                         } completion:^(BOOL finished){
+                             //
+                         }];
     }];
 }
 

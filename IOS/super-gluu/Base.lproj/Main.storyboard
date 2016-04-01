@@ -130,7 +130,7 @@
                                                                     <color key="textColor" red="0.98431372549999996" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gluuIcon.png" id="hdQ-SM-r5d">
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gluuIconRed.png" id="hdQ-SM-r5d">
                                                                     <rect key="frame" x="13" y="16" width="32" height="32"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 </imageView>
@@ -1413,6 +1413,7 @@ In the event you are using the Services in connection with a device provided by 
         <image name="denyIcon.png" width="300" height="300"/>
         <image name="gluu.png" width="192" height="89"/>
         <image name="gluuIcon.png" width="87" height="87"/>
+        <image name="gluuIconRed.png" width="87" height="87"/>
         <image name="homeIconImages" width="29" height="29"/>
         <image name="homeIconSelectedImages" width="35" height="35"/>
         <image name="infoIcon.png" width="60" height="60"/>

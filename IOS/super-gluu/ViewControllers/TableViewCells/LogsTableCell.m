@@ -16,18 +16,12 @@
 @implementation LogsTableCell
 
 -(void)setData:(UserLoginInfo*)userLoginInfo{
-    if (userLoginInfo != nil){
-        _logTime.text = [self getTimeAgo:[userLoginInfo created]];
-        NSString* server = [userLoginInfo issuer];
-        if (server != nil){
-            NSURL* serverURL = [NSURL URLWithString:server];
-            [self adoptLogByState:serverURL andState:userLoginInfo.logState];
-        }
-        [_logTime setHidden:NO];
-        return;
+    NSString* server = [userLoginInfo issuer];
+    if (server != nil){
+        NSURL* serverURL = [NSURL URLWithString:server];
+        [self adoptLogByState:serverURL andState:userLoginInfo.logState];
     }
-    _logTime.text = @"";
-    [_logTime setHidden:YES];
+    _logTime.text = [self getTimeAgo:[userLoginInfo created]];
 }
 
 -(NSString*)getTimeAgo:(NSString*)createdTime{

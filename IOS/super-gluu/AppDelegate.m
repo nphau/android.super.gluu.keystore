@@ -10,6 +10,7 @@
 #import "TokenDevice.h"
 #import "Constants.h"
 #import "OXPushManager.h"
+#import "CustomIOSAlertView.h"
 
 //NSString * const NotificationCategoryIdent  = @"ACTIONABLE";
 //NSString * const NotificationActionOneIdent = @"ACTION_DENY";
@@ -29,12 +30,14 @@
     if ([[[UIDevice currentDevice] systemVersion] floatValue] > 7){//for ios 8 and higth
         [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
         [[UIApplication sharedApplication] registerForRemoteNotifications];
-//        [self registerForNotification];
     }
     [self registerForNotification];
-//    else {//for ios 7
-//        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-//    }
+    NSDictionary *remoteNotif = [launchOptions objectForKey: UIApplicationLaunchOptionsRemoteNotificationKey];
+    
+    //Accept push notification when app is not open
+    if (remoteNotif) {
+        [[NSUserDefaults standardUserDefaults] setObject:remoteNotif forKey:NotificationRequest];
+    }
     
     return YES;
 }
@@ -96,6 +99,7 @@
     } else {
         // app was just brought from background to foreground and we wait when user click or slide on push notification
         _pushNotificationRequest = userInfo;
+        [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:NotificationRequest];
     }
     NSLog(@"Received notification: %@", userInfo);
 }
@@ -140,6 +144,9 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     NSLog(@"APP STARTING.....");
     [self sendQRReuest:NO];
+    if (_pushNotificationRequest != nil){
+        [[NSUserDefaults standardUserDefaults] setObject:_pushNotificationRequest forKey:NotificationRequest];
+    }
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 

@@ -26,7 +26,7 @@
 -(NSString*)getTime:(NSString*)createdTime{
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
 //    [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
-    [formatter setDateFormat:@"yyyy-MM-dd'T'hh:mm:ss.SSSSSS"];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZZZ"];
     NSDate* date = [formatter dateFromString:createdTime];
     [formatter setDateFormat:@" MMM dd, yyyy hh:mm:ss"];
     return [formatter stringFromDate:date];
