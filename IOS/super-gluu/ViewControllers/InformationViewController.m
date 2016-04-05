@@ -42,7 +42,7 @@
 
 -(NSString*)convertPairingTime:(NSString*)time{
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd'T'hh:mm:ss.SSSSSS"];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZZZ"];
     NSDate* date = [formatter dateFromString:time];
     [formatter setDateFormat:@" MMM dd, yyyy hh:mm:ss"];
     return [formatter stringFromDate:date];
