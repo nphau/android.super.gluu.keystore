@@ -21,6 +21,11 @@
 "LoggedInFailed" = "Failed to logged in to %@";
 "EnrollIn" = "Enroll to %@";
 "EnrollInFailed" = "Failed enroll to %@";
+"LoginDeclined" = "Declined login to %@";
+"EnrollDeclined" = "Declined enrol to %@";
+
+"Enrol" = "Enrol";
+"Authentication" = "Authentication";
 
 "ScanText" = "You may be presented with a QR code for enrollment or authentication. Click the button to open your QR scanner.";
 "Welcome" = "Welcome";

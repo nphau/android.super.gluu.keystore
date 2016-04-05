@@ -238,7 +238,23 @@
     [newMetaData setValue:[userLoginInfo authenticationType] forKey:AUTHENTICATION_TYPE];
     [newMetaData setValue:[userLoginInfo locationIP] forKey:LOCATION_IP];
     [newMetaData setValue:[userLoginInfo locationCity] forKey:LOCATION_CITY];
-    [newMetaData setValue:[NSString stringWithFormat:@"%i", [userLoginInfo logState]] forKey:LOG_STATE];
+    switch ([userLoginInfo logState]) {
+        case LOGIN_SUCCESS:
+            [newMetaData setValue:[NSNumber numberWithInt:0] forKey:LOG_STATE];
+            break;
+        case LOGIN_FAILED:
+            [newMetaData setValue:[NSNumber numberWithInt:1] forKey:LOG_STATE];
+            break;
+        case ENROLL_SUCCESS:
+            [newMetaData setValue:[NSNumber numberWithInt:2] forKey:LOG_STATE];
+            break;
+        case ENROLL_FAILED:
+            [newMetaData setValue:[NSNumber numberWithInt:3] forKey:LOG_STATE];
+            break;
+            
+        default:
+            break;
+    }
     [newMetaData setValue:[userLoginInfo errorMessage] forKey:ERROR_MESSAGE];
     
     error = nil;

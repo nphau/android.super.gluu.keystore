@@ -109,6 +109,13 @@
         if([[jsonData objectForKey:@"status"] isEqualToString:@"success"])
         {
             if (isDecline){
+                if (isEnroll){
+                    [[UserLoginInfo sharedInstance] setLogState:ENROLL_DECLINED];
+                    [[DataStoreManager sharedInstance] saveUserLoginInfo:[UserLoginInfo sharedInstance]];
+                } else {
+                    [[UserLoginInfo sharedInstance] setLogState:LOGIN_DECLINED];
+                    [[DataStoreManager sharedInstance] saveUserLoginInfo:[UserLoginInfo sharedInstance]];
+                }
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DECLINE_SUCCESS object:urlData];
             } else {
                 if (isEnroll){
@@ -122,9 +129,15 @@
                 }
             }
         }else{
-            if (isDecline){
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DECLINE_FAILED object:nil];
-            } else {
+//                if (isEnroll){
+//                    [[UserLoginInfo sharedInstance] setLogState:ENROLL_FAILED];
+//                    [[DataStoreManager sharedInstance] saveUserLoginInfo:[UserLoginInfo sharedInstance]];
+//                } else {
+//                    [[UserLoginInfo sharedInstance] setLogState:LOGIN_FAILED];
+//                    [[DataStoreManager sharedInstance] saveUserLoginInfo:[UserLoginInfo sharedInstance]];
+//                }
+//                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DECLINE_FAILED object:nil];
+//            } else {
                 if (isEnroll){
                     [[UserLoginInfo sharedInstance] setLogState:ENROLL_FAILED];
                     [[DataStoreManager sharedInstance] saveUserLoginInfo:[UserLoginInfo sharedInstance]];
@@ -134,7 +147,6 @@
                     [[DataStoreManager sharedInstance] saveUserLoginInfo:[UserLoginInfo sharedInstance]];
                     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AUTENTIFICATION_FAILED object:nil];
                 }
-            }
         }
     } else{
         NSString* erStr = [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];

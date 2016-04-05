@@ -242,7 +242,6 @@
         }
     } else
     if ([[notification name] isEqualToString:NOTIFICATION_AUTENTIFICATION_STARTING]){
-        message = NSLocalizedString(@"StartAuthentication", @"Authentication...");
         if (oneStep){
             message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"OneStep", @"OneStep Authentication"), NSLocalizedString(@"StartAuthentication", @"Authentication...")];
         } else {
@@ -259,7 +258,6 @@
     } else
     if ([[notification name] isEqualToString:NOTIFICATION_PUSH_RECEIVED]){
         [scanButton setEnabled:NO];
-        message = NSLocalizedString(@"StartAuthentication", @"Authentication...");
         if (oneStep){
             message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"OneStep", @"OneStep Authentication"), NSLocalizedString(@"StartAuthentication", @"Authentication...")];
         } else {
@@ -605,7 +603,17 @@
     [[UserLoginInfo sharedInstance] setCreated:created];
     [[UserLoginInfo sharedInstance] setIssuer:issuer];
     [[UserLoginInfo sharedInstance] setUserName:username];
-    [[UserLoginInfo sharedInstance] setAuthenticationType:@"Authentication"];
+    NSArray* tokenEntities = [[DataStoreManager sharedInstance] getTokenEntitiesByID:issuer];
+    BOOL isEnroll = [tokenEntities count] > 0 ? NO : YES;
+    if (isEnroll){//authentication
+        NSString* type = NSLocalizedString(@"Enrol", @"Enrol");
+        [[UserLoginInfo sharedInstance] setAuthenticationType:type];
+    } else {//registration
+        NSString* type = NSLocalizedString(@"Authentication", @"Authentication");
+        [[UserLoginInfo sharedInstance] setAuthenticationType:type];
+        
+    }
+//    [[UserLoginInfo sharedInstance] setAuthenticationType:@"Authentication"];
     NSString* mode = oneStep ? NSLocalizedString(@"OneStepMode", @"One Step") : NSLocalizedString(@"TwoStepMode", @"Two Step");
     [[UserLoginInfo sharedInstance] setAuthenticationMode:mode];
     [[UserLoginInfo sharedInstance] setLocationIP:[ApproveDenyViewController getIPAddress:issuer]];

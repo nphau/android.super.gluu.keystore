@@ -60,6 +60,7 @@
 		BB37DF3E1C7E0B8E0016D422 /* KeyHandleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DF0E1C7E0B8E0016D422 /* KeyHandleCell.m */; };
 		BB37DF3F1C7E0B8E0016D422 /* LogsTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DF101C7E0B8E0016D422 /* LogsTableCell.m */; };
 		BB37DF421C7E0CBC0016D422 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB37DF411C7E0CBC0016D422 /* CoreData.framework */; };
+		BB3A22691CB39B1700EBD799 /* type_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BB3A22681CB39B1700EBD799 /* type_icon.png */; };
 		BB3BE1641C87022C00817A46 /* LicenseAgreementView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB3BE1631C87022C00817A46 /* LicenseAgreementView.m */; };
 		BB3BE1721C882D0600817A46 /* ApproveDenyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB3BE1711C882D0600817A46 /* ApproveDenyViewController.m */; };
 		BB50DD021C91AD5B00499B49 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB50DD001C91AD5B00499B49 /* Main_iPad.storyboard */; };
@@ -192,6 +193,7 @@
 		BB37DF101C7E0B8E0016D422 /* LogsTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogsTableCell.m; sourceTree = "<group>"; };
 		BB37DF401C7E0BD20016D422 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		BB37DF411C7E0CBC0016D422 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		BB3A22681CB39B1700EBD799 /* type_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = type_icon.png; sourceTree = "<group>"; };
 		BB3BE1621C87022C00817A46 /* LicenseAgreementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LicenseAgreementView.h; sourceTree = "<group>"; };
 		BB3BE1631C87022C00817A46 /* LicenseAgreementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LicenseAgreementView.m; sourceTree = "<group>"; };
 		BB3BE1671C88165800817A46 /* Super-gluu_PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Super-gluu_PrefixHeader.pch"; sourceTree = "<group>"; };
@@ -533,6 +535,7 @@
 		BB37DEE31C7E0B8E0016D422 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				BB3A22681CB39B1700EBD799 /* type_icon.png */,
 				BB78BFB61C99C6C600558042 /* gluu.png */,
 				BBB7C0FB1C89FE3100833B12 /* gluuIcon.png */,
 				BB8703051CA3E5D400EEF9A6 /* gluuIconRed.png */,
@@ -792,6 +795,7 @@
 				BB37DE5F1C7E08320016D422 /* Main.storyboard in Resources */,
 				BB37DF261C7E0B8E0016D422 /* clearLogIcon.png in Resources */,
 				BB8703061CA3E5D400EEF9A6 /* gluuIconRed.png in Resources */,
+				BB3A22691CB39B1700EBD799 /* type_icon.png in Resources */,
 				BBB7C0EB1C88569400833B12 /* personIcon.png in Resources */,
 				BBE787271C99954600E9E0D7 /* Settings.bundle in Resources */,
 				BB37DF291C7E0B8E0016D422 /* gluuIcon29x2.png in Resources */,

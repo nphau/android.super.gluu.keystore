@@ -53,6 +53,14 @@
             [_logo setImage:[UIImage imageNamed:@"gluuIconRed.png"]];
             break;
             
+        case ENROLL_DECLINED:
+            _logLabel.text = [NSString stringWithFormat:NSLocalizedString(@"LoginDeclined", @"Login declined"), [serverURL host]];
+            break;
+            
+        case LOGIN_DECLINED:
+            _logLabel.text = [NSString stringWithFormat:NSLocalizedString(@"EnrollDeclined", @"Enroll declined"), [serverURL host]];
+            break;
+            
         default:
             break;
     }

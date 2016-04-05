@@ -160,6 +160,7 @@
     createdDateLabel.text = [self getDate:[info created]];
     locationLabel.text = [info locationIP];//[ApproveDenyViewController getIPAddress];
     cityNameLabel.text = [info locationCity];
+    typeLabel.text = [info authenticationType];
     
     if (_isLogInfo){
         [backButton setHidden:NO];

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15C50" minimumToolsVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Automatic">
     <entity name="LoginInfoEntity" syncable="YES">
         <attribute name="application" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="authenticationMode" optional="YES" attributeType="String" syncable="YES"/>
@@ -9,7 +9,7 @@
         <attribute name="issuer" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="locationCity" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="locationIP" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="logState" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="logState" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="TokenEntity" syncable="YES">

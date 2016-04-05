@@ -13,8 +13,10 @@
 typedef NS_ENUM(int, LogState) {
     LOGIN_SUCCESS = 0,
     LOGIN_FAILED,
+    LOGIN_DECLINED,
     ENROLL_SUCCESS,
-    ENROLL_FAILED
+    ENROLL_FAILED,
+    ENROLL_DECLINED
 };
 
 + (instancetype) sharedInstance;

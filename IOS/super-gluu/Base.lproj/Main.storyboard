@@ -124,7 +124,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logged in to CE Release" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fNE-3S-iaE">
-                                                                    <rect key="frame" x="53" y="5" width="213" height="32"/>
+                                                                    <rect key="frame" x="53" y="0.0" width="182" height="37"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                     <color key="textColor" red="0.98431372549999996" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -884,6 +884,24 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
+                                    <view contentMode="scaleToFill" id="284-An-1vo" userLabel="typeView">
+                                        <rect key="frame" x="20" y="254" width="280" height="63"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enrol/Authentication" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3fI-vH-NUp">
+                                                <rect key="frame" x="45" y="17" width="219" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="type_icon.png" id="0cc-Jm-hrG">
+                                                <rect key="frame" x="3" y="13" width="30" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -986,6 +1004,8 @@
                         <outlet property="timerLabelTitle" destination="vcn-Ze-cHr" id="6fq-iZ-8PC"/>
                         <outlet property="timerView" destination="C5I-jf-WpB" id="E78-W7-IdB"/>
                         <outlet property="titleLabel" destination="djE-nb-tL9" id="Cj2-lL-iNF"/>
+                        <outlet property="typeLabel" destination="3fI-vH-NUp" id="eCw-BG-hVc"/>
+                        <outlet property="typeView" destination="284-An-1vo" id="W1Y-QW-eRW"/>
                         <outlet property="userNameLabel" destination="eiQ-aW-3Gu" id="skX-9k-bR7"/>
                         <outlet property="userNameView" destination="g54-fa-ibW" id="oSh-eb-6Fz"/>
                     </connections>
@@ -1427,5 +1447,6 @@ In the event you are using the Services in connection with a device provided by 
         <image name="settingsImages" width="29" height="29"/>
         <image name="settingsSelectedImages" width="35" height="35"/>
         <image name="timeIconImages" width="29" height="29"/>
+        <image name="type_icon.png" width="87" height="87"/>
     </resources>
 </document>
