@@ -54,11 +54,11 @@
             break;
             
         case ENROLL_DECLINED:
-            _logLabel.text = [NSString stringWithFormat:NSLocalizedString(@"LoginDeclined", @"Login declined"), [serverURL host]];
+            _logLabel.text = [NSString stringWithFormat:NSLocalizedString(@"EnrollDeclined", @"Login declined"), [serverURL host]];
             break;
             
         case LOGIN_DECLINED:
-            _logLabel.text = [NSString stringWithFormat:NSLocalizedString(@"EnrollDeclined", @"Enroll declined"), [serverURL host]];
+            _logLabel.text = [NSString stringWithFormat:NSLocalizedString(@"LoginDeclined", @"Enroll declined"), [serverURL host]];
             break;
             
         default:

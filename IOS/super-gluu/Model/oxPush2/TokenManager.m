@@ -68,7 +68,7 @@ Byte CHECK_ONLY = 0x07;
     }
     
     //Need create EnrollmentResponse
-    EnrollmentResponse* enrollmentResponse = [u2FKey registerRequest:[[EnrollmentRequest alloc] initWithVersion:version challenge:challenge application:appParam issuer:baseUrl]];
+    EnrollmentResponse* enrollmentResponse = [u2FKey registerRequest:[[EnrollmentRequest alloc] initWithVersion:version challenge:challenge application:appParam issuer:baseUrl] isDecline:isDecline];
     NSData* result = [codec encodeRegisterResponse:enrollmentResponse];
     NSString* resultForService = [result base64EncodedString];
     
@@ -78,7 +78,6 @@ Byte CHECK_ONLY = 0x07;
     } else {
         [clientData setObject:REQUEST_TYPE_REGISTER forKey:JSON_PROPERTY_REQUEST_TYPE];
     }
-    [clientData setObject:REQUEST_TYPE_REGISTER forKey:JSON_PROPERTY_REQUEST_TYPE];
     [clientData setObject:challenge forKey:JSON_PROPERTY_SERVER_CHALLENGE];
     [clientData setObject:baseUrl forKey:JSON_PROPERTY_SERVER_ORIGIN];
 

@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '0AABADEE1B76A90570B6673A'
+               BlueprintIdentifier = '993E0E250893929D199387F7'
                BlueprintName = 'Pods-Super Gluu'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'Pods_Super_Gluu.framework'>

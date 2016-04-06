@@ -30,8 +30,8 @@
     if ([[[UIDevice currentDevice] systemVersion] floatValue] > 7){//for ios 8 and higth
         [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
         [[UIApplication sharedApplication] registerForRemoteNotifications];
+        [self registerForNotification];
     }
-    [self registerForNotification];
     NSDictionary *remoteNotif = [launchOptions objectForKey: UIApplicationLaunchOptionsRemoteNotificationKey];
     
     //Accept push notification when app is not open
@@ -101,6 +101,8 @@
         _pushNotificationRequest = userInfo;
         [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:NotificationRequest];
     }
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:NotificationRequestActionsApprove];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:NotificationRequestActionsDeny];
     NSLog(@"Received notification: %@", userInfo);
 }
 
@@ -112,6 +114,7 @@
         isDecline = NO;
         _pushNotificationRequest = userInfo;
         [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:NotificationRequest];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:NotificationRequestActionsApprove];
     }
     else if ([identifier isEqualToString:NotificationActionTwoIdent]) {
         
@@ -119,6 +122,7 @@
         isDecline = YES;
         _pushNotificationRequest = userInfo;
         [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:NotificationRequest];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:NotificationRequestActionsDeny];
     }
     if (completionHandler) {
         

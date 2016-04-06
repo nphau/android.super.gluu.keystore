@@ -245,11 +245,17 @@
         case LOGIN_FAILED:
             [newMetaData setValue:[NSNumber numberWithInt:1] forKey:LOG_STATE];
             break;
-        case ENROLL_SUCCESS:
+        case LOGIN_DECLINED:
             [newMetaData setValue:[NSNumber numberWithInt:2] forKey:LOG_STATE];
             break;
-        case ENROLL_FAILED:
+        case ENROLL_SUCCESS:
             [newMetaData setValue:[NSNumber numberWithInt:3] forKey:LOG_STATE];
+            break;
+        case ENROLL_FAILED:
+            [newMetaData setValue:[NSNumber numberWithInt:4] forKey:LOG_STATE];
+            break;
+        case ENROLL_DECLINED:
+            [newMetaData setValue:[NSNumber numberWithInt:5] forKey:LOG_STATE];
             break;
             
         default:
@@ -294,10 +300,16 @@
                         [userInfoEntity setLogState:LOGIN_FAILED];
                         break;
                     case 2:
-                        [userInfoEntity setLogState:ENROLL_SUCCESS];
+                        [userInfoEntity setLogState:LOGIN_DECLINED];
                         break;
                     case 3:
+                        [userInfoEntity setLogState:ENROLL_SUCCESS];
+                        break;
+                    case 4:
                         [userInfoEntity setLogState:ENROLL_FAILED];
+                        break;
+                    case 5:
+                        [userInfoEntity setLogState:ENROLL_DECLINED];
                         break;
                         
                     default:

@@ -65,8 +65,16 @@
         //            [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
         scanJsonDictionary = jsonDictionary
         ;
-        [self sendQRCodeRequest:scanJsonDictionary];
-        //[self onApprove];
+        [self initUserInfo:jsonDictionary];
+        BOOL isApprove = [[NSUserDefaults standardUserDefaults] boolForKey:NotificationRequestActionsApprove];
+        BOOL isDeny = [[NSUserDefaults standardUserDefaults] boolForKey:NotificationRequestActionsDeny];
+        if (isApprove){
+            [self onApprove];
+        } else if (isDeny){
+            [self onDecline];
+        } else {
+            [self sendQRCodeRequest:scanJsonDictionary];
+        }
         [self.tabBarController setSelectedIndex:0];
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:NotificationRequest];
     }
@@ -271,6 +279,7 @@
         if ([[notification name] isEqualToString:NOTIFICATION_PUSH_RECEIVED_APPROVE]){
             NSDictionary* pushRequest = (NSDictionary*)notification.object;
             scanJsonDictionary = pushRequest;
+            [self initUserInfo:pushRequest];
             [self onApprove];
             [self.tabBarController setSelectedIndex:0];
             return;
@@ -278,6 +287,7 @@
     if ([[notification name] isEqualToString:NOTIFICATION_PUSH_RECEIVED_DENY]){
         NSDictionary* pushRequest = (NSDictionary*)notification.object;
         scanJsonDictionary = pushRequest;
+        [self initUserInfo:pushRequest];
         [self onDecline];
         [self.tabBarController setSelectedIndex:0];
         return;

@@ -61,13 +61,12 @@
     }
     NSDate* date = [[NSUserDefaults standardUserDefaults] objectForKey:LOCKED_DATE];
     NSDate* currentDate = [NSDate date];
-//    NSTimeInterval diff = [currentDate timeIntervalSinceDate:date];
     NSTimeInterval distanceBetweenDates = [currentDate timeIntervalSinceDate:date];
     int sec = (int)distanceBetweenDates;
     int min = sec / 60;
     sec = sec % 60;
     if (min < 10 && sec > 0){
-        //(min > 0 && min < 10) &&
+        [titleLabel setText:[NSString stringWithFormat:NSLocalizedString(@"FailedPinCode", @"FailedPinCode"), count]];
         sec = 600 - sec;
         minutes = 9 - min;
         minutes = minutes < 0 ? 0 : minutes;
@@ -187,6 +186,8 @@
         [timerView setHidden:NO];
         [self startTimer];
         [controller dismissViewControllerAnimated:YES completion:nil];
+        //remove push request in case app locked
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:NotificationRequest];
     }
     
 }
@@ -203,7 +204,7 @@
 -(void)startTimer{
     timerView.layer.cornerRadius = CORNER_RADIUS;
     [titleLabel setTextColor:[UIColor redColor]];
-    [titleLabel setText:NSLocalizedString(@"FailedPinCode", @"FailedPinCode")];
+    [titleLabel setText:[NSString stringWithFormat:NSLocalizedString(@"FailedPinCode", @"FailedPinCode"), countFailedPin]];
     [titleLabel setHidden:NO];
     [enterPinButton setHidden:YES];
     minutes = 10;

@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'F53145BA669160AAD22F858B'
+               BlueprintIdentifier = 'D124E011151348C77A0BFC43'
                BlueprintName = 'PAPasscode'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'PAPasscode.framework'>

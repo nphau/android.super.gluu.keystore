@@ -14,6 +14,8 @@
 #define NotificationActionTwoIdent @"ACTION_APPROVE"
 
 #define NotificationRequest @"PUSH_NOTIFICATION_REQUEST"
+#define NotificationRequestActionsApprove @"PUSH_NOTIFICATION_REQUEST_ACTION_APPROVE"
+#define NotificationRequestActionsDeny @"PUSH_NOTIFICATION_REQUEST_ACTION_DENY"
 
 #define IS_IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 #define IS_IPHONE   ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
