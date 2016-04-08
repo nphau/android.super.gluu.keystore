@@ -12,6 +12,8 @@
 #import "OXPushManager.h"
 #import "CustomIOSAlertView.h"
 
+#import <UbertestersSDK/Ubertesters.h>
+
 //NSString * const NotificationCategoryIdent  = @"ACTIONABLE";
 //NSString * const NotificationActionOneIdent = @"ACTION_DENY";
 //NSString * const NotificationActionTwoIdent = @"ACTION_APPROVE";
@@ -38,6 +40,9 @@
     if (remoteNotif) {
         [[NSUserDefaults standardUserDefaults] setObject:remoteNotif forKey:NotificationRequest];
     }
+    
+    //Ubertersters SDK initialization
+    [[Ubertesters shared] initialize];
     
     return YES;
 }

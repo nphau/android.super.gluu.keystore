@@ -40,6 +40,24 @@
         [self registerForNotification];
     }
     [self checkPushNotification];
+    
+    NSArray* keyHandles = [[DataStoreManager sharedInstance] getTokenEntities];
+    if ([keyHandles count] == 0){
+        //Save new keys into database
+        TokenEntity* newTokenEntity = [[TokenEntity alloc] init];
+        NSString* keyID = @"application";
+        [newTokenEntity setID:keyID];
+        [newTokenEntity setApplication:@"application"];
+        [newTokenEntity setIssuer:@"issuer"];
+        [newTokenEntity setKeyHandle:@"keyHandle"];
+        [newTokenEntity setPublicKey:@"publicKeyBase64"];
+        [newTokenEntity setPrivateKey:@"privateKeyBase64"];
+        [newTokenEntity setUserName:@"userName"];
+        [newTokenEntity setPairingTime:@"created"];
+        [newTokenEntity setAuthenticationMode:@"authenticationMode"];
+        [newTokenEntity setAuthenticationType:@" authenticationType"];
+        [[DataStoreManager sharedInstance] saveTokenEntity:newTokenEntity];
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated{
