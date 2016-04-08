@@ -29,12 +29,24 @@
     
     keyRenameInfoLabel.text = NSLocalizedString(@"RenameKeyNameInfo", @"Rename Key's Name");
     uniqueKeyLabel.text = NSLocalizedString(@"UniqueKeyLabel", @"UniqueKeyLabel");
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self loadKeyHandlesFromDatabase];
     [keyHandleTableView reloadData];
+    [self checkDeviceOrientation];
+}
+
+-(void)checkDeviceOrientation{
+//    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
+//    {
+        // code for landscape orientation
+        //        [self adjustViewsForOrientation:UIInterfaceOrientationLandscapeLeft];
+        [[NSNotificationCenter defaultCenter] postNotificationName:UIDeviceOrientationDidChangeNotification object:nil];
+//    }
 }
 
 -(void)onLongPress:(UILongPressGestureRecognizer*)pGesture
@@ -165,5 +177,40 @@
     [keyHandleTableView reloadData];
     [self initLabel:(int)[keyHandleArray count]];
 }
+
+- (void)orientationChanged:(NSNotification *)notification{
+    [self adjustViewsForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
+}
+
+- (void) adjustViewsForOrientation:(UIInterfaceOrientation) orientation {
+
+    switch (orientation)
+    {
+        case UIInterfaceOrientationPortrait:
+        case UIInterfaceOrientationPortraitUpsideDown:
+        {
+            //load the portrait view
+            if (isLandScape){
+                [keyRenameInfoLabel setCenter:CGPointMake(keyRenameInfoLabel.center.x, [UIScreen mainScreen].bounds.size.height - 135)];
+                isLandScape = NO;
+            }
+        }
+            
+            break;
+        case UIInterfaceOrientationLandscapeLeft:
+        case UIInterfaceOrientationLandscapeRight:
+        {
+            //load the landscape view
+            if (!isLandScape){
+                [keyRenameInfoLabel setCenter:CGPointMake(keyRenameInfoLabel.center.x, [UIScreen mainScreen].bounds.size.height - 125)];
+                isLandScape = YES;
+            }
+            
+        }
+            break;
+        case UIInterfaceOrientationUnknown:break;
+    }
+}
+
 
 @end

@@ -22,6 +22,8 @@
     NSIndexPath* selectedRow;
     
     CustomIOSAlertView *infoView;
+    
+    BOOL isLandScape;
 }
 
 @end
