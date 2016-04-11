@@ -8,6 +8,7 @@
 
 #import "SettingsViewController.h"
 #import "Constants.h"
+#import "PinCodeViewController.h"
 
 @interface SettingsViewController ()
 
@@ -30,6 +31,7 @@
     }
     [self initWidget];
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
+    countFailedPin=0;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -211,9 +213,22 @@
     [self presentViewController:[[UINavigationController alloc] initWithRootViewController:passcodeViewController] animated:YES completion:nil];
 }
 
+#pragma mark - PAPasscodeViewControllerDelegate
+
+- (void)PAPasscodeViewControllerDidCancel:(PAPasscodeViewController *)controller {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)PAPasscodeViewControllerDidChangePasscode:(PAPasscodeViewController *)controller {
     [self dismissViewControllerAnimated:YES completion:^() {
-        [[NSUserDefaults standardUserDefaults] setObject:controller.passcode forKey:PIN_CODE];
+        NSString* newPassword = controller.passcode;
+        NSString* oldPassword = [[NSUserDefaults standardUserDefaults] objectForKey:PIN_CODE];
+        if ([newPassword isEqualToString:oldPassword]){
+            [[CustomIOSAlertView alertWithTitle:NSLocalizedString(@"Info", @"Info") message:@"You cannot set a new Pin code the same like old"] show];
+        } else {
+            [[CustomIOSAlertView alertWithTitle:NSLocalizedString(@"Info", @"Info") message:@"You have successfully set a new Pin code"] show];
+            [[NSUserDefaults standardUserDefaults] setObject:controller.passcode forKey:PIN_CODE];
+        }
     }];
 }
 
@@ -231,6 +246,27 @@
                              //
                          }];
     }];
+}
+
+- (void)PAPasscodeViewController:(PAPasscodeViewController *)controller didFailToEnterPasscode:(NSInteger)attempts{
+    countFailedPin++;
+    NSLog(@"Failed enter passcode, count - %i", countFailedPin);
+    int attemptsCount = (int)[[NSUserDefaults standardUserDefaults] integerForKey:LOCKED_ATTEMPTS_COUNT];
+    if (countFailedPin == attemptsCount-2){
+        [self showAlertView];
+    }
+    if (countFailedPin == attemptsCount){
+        [self dismissViewControllerAnimated:YES completion:nil];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:IS_APP_LOCKED];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:LOCKED_DATE];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        PinCodeViewController* pinView = [storyboard instantiateViewControllerWithIdentifier:@"PinCodeViewID"];
+        [self presentViewController:pinView animated:YES completion:nil];
+    }
+}
+
+-(void)showAlertView{
+    [[CustomIOSAlertView alertWithTitle:NSLocalizedString(@"Info", @"Info") message:NSLocalizedString(@"LastAttempts", @"LastAttempts")] show];
 }
 
 - (void)didReceiveMemoryWarning {

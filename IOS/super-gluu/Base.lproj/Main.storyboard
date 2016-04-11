@@ -1338,7 +1338,7 @@ In the event you are using the Services in connection with a device provided by 
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5wL-rr-AsK">
                                         <rect key="frame" x="29" y="125" width="255" height="44"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Enter Pin code"/>
                                         <connections>
                                             <action selector="reEnterPinCode:" destination="Gfe-Ja-dd4" eventType="touchUpInside" id="8Yv-ls-cgh"/>

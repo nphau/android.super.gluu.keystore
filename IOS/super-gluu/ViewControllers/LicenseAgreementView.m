@@ -78,7 +78,6 @@
 -(void)loadPinView{
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     PinCodeViewController* pinView = [storyboard instantiateViewControllerWithIdentifier:@"PinCodeViewID"];
-//    [pinView setModalPresentationStyle:UIModalPresentationFullScreen];
     [self presentViewController:pinView animated:YES completion:nil];
 }
 

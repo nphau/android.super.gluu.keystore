@@ -32,6 +32,8 @@
     BOOL isSimple;
     BOOL isLandScape;
     
+    int countFailedPin;
+    
 }
 
 @end

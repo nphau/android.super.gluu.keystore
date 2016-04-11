@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "super-gluu/ViewControllers/SettingsViewController.m"
-            timestampString = "480868970.815793"
+            timestampString = "482058018.113086"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "super-gluu/ApiService/ApiService.m"
-            timestampString = "481645722.2764"
+            timestampString = "482069598.239515"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
+            startingLineNumber = "111"
+            endingLineNumber = "111"
             landmarkName = "-callPOSTMultiPartAPIService:andParameters:isDecline:"
             landmarkType = "5">
          </BreakpointContent>
@@ -105,13 +105,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "super-gluu/ViewControllers/PinCodeViewController.m"
-            timestampString = "482052035.144593"
+            filePath = "super-gluu/ApiService/ApiServiceManager/ApiServiceManager.m"
+            timestampString = "482060078.64841"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "58"
-            endingLineNumber = "58"
-            landmarkName = "-checkIsAppLocked"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "-doRequest:callback:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

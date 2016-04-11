@@ -23,11 +23,11 @@
 - (void)doRequest:(OxPush2Request *)oxRequest callback:(RequestCompletionHandler)handler{
     NSString* method = [oxRequest method];
     NSString* discoveryUrl = [oxRequest issuer];
-    if ([discoveryUrl rangeOfString:@":8443"].location != NSNotFound) {
-        discoveryUrl = [discoveryUrl stringByAppendingString:@"/oxauth/seam/resource/restv1/oxauth/fido-u2f-configuration"];
-    } else {
-        discoveryUrl = [discoveryUrl stringByAppendingString:@"/.well-known/fido-u2f-configuration"];
-    }
+//    if ([discoveryUrl rangeOfString:@":8443"].location != NSNotFound) {
+//        discoveryUrl = [discoveryUrl stringByAppendingString:@"/oxauth/seam/resource/restv1/oxauth/fido-u2f-configuration"];
+//    } else {
+    discoveryUrl = [discoveryUrl stringByAppendingString:@"/.well-known/fido-u2f-configuration"];
+//    }
     NSMutableDictionary* parameters = [[NSMutableDictionary alloc] init];
     [parameters setObject:[oxRequest app] forKey:@"app"];
     [parameters setObject:[oxRequest state] forKey:@"state"];

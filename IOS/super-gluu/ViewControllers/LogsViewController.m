@@ -82,7 +82,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UserLoginInfo* userInfo = (UserLoginInfo*)[logsArray objectAtIndex:indexPath.row];
     NSString *CellIdentifier= @"LogsTableCellID";//LogsFailedTableCellID
-    if ([userInfo logState] == LOGIN_FAILED || [userInfo logState] == ENROLL_FAILED || [userInfo logState] == ENROLL_DECLINED || [userInfo logState] == LOGIN_DECLINED){
+    if ([userInfo logState] == LOGIN_FAILED || [userInfo logState] == ENROLL_FAILED || [userInfo logState] == ENROLL_DECLINED || [userInfo logState] == LOGIN_DECLINED || [userInfo logState] == UNKNOWN_ERROR){
         CellIdentifier= @"LogsFailedTableCellID";
     }
     LogsTableCell *cell = (LogsTableCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -98,11 +98,25 @@
         //Show message about failed enroll/authentication
         UserLoginInfo* userInfo = [logsArray objectAtIndex:[sender tag]];
         NSString* message = [userInfo errorMessage];
-        NSDictionary* jsonError = [NSJSONSerialization JSONObjectWithData:[message dataUsingEncoding:NSUTF8StringEncoding]
-                                                                  options:kNilOptions
-                                                                    error:nil];
-        if (jsonError != nil){
-            message = [jsonError valueForKey:@"errorDescription"];
+        if (message != nil){
+            NSDictionary* jsonError = [NSJSONSerialization JSONObjectWithData:[message dataUsingEncoding:NSUTF8StringEncoding]
+                                                                      options:kNilOptions
+                                                                        error:nil];
+            if (jsonError != nil){
+                message = [jsonError valueForKey:@"errorDescription"];
+            }
+        } else {
+            switch ([userInfo logState]) {
+                case LOGIN_DECLINED:
+                    message = @"Login declined!";
+                    break;
+                    
+                case ENROLL_DECLINED:
+                    message = @"ENROL declined!";
+                    
+                default:
+                    break;
+            }
         }
         CustomIOSAlertView *alertView = [CustomIOSAlertView alertWithTitle:@"Error message" message:message];
         alertView.delegate = self;
