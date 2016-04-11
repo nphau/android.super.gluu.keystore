@@ -960,7 +960,7 @@
                             </button>
                             <view contentMode="scaleToFill" id="C5I-jf-WpB" userLabel="TimerView">
                                 <rect key="frame" x="220" y="25" width="81" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="seconds left" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vcn-Ze-cHr">
                                         <rect key="frame" x="0.0" y="25" width="81" height="16"/>
@@ -986,12 +986,14 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="approveImage" destination="xXF-w0-eE6" id="RPW-Bb-OUx"/>
                         <outlet property="approveRequest" destination="NZS-hn-11L" id="YzR-Of-iqh"/>
                         <outlet property="backButton" destination="3Ib-ba-3Ec" id="PLH-fF-Khz"/>
                         <outlet property="buttonView" destination="Jmo-5i-sWD" id="1lf-FU-eox"/>
                         <outlet property="cityNameLabel" destination="fth-Iq-onf" id="F2Q-p2-3cx"/>
                         <outlet property="createdDateLabel" destination="z9N-LG-bjv" id="CPZ-jj-5mc"/>
                         <outlet property="createdTimeLabel" destination="PJH-Fq-Iwi" id="vE0-XX-sfT"/>
+                        <outlet property="denyImage" destination="TCK-0a-MsC" id="eTg-Bj-ZU5"/>
                         <outlet property="denyRequest" destination="5y3-pI-8Jg" id="fVY-WB-EK1"/>
                         <outlet property="locationLabel" destination="EEY-Ss-Dan" id="8JJ-tX-QKr"/>
                         <outlet property="locationView" destination="4jC-k4-8EK" id="Oon-pk-i4M"/>

@@ -91,6 +91,8 @@
 }
 
 - (void)orientationChanged:(NSNotification *)notification{
+    [approveImage setCenter:approveRequest.center];
+    [denyImage setCenter:denyRequest.center];
     [self adjustViewsForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
 }
 

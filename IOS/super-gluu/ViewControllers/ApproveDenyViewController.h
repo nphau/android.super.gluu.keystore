@@ -51,6 +51,9 @@
     int time;
     IBOutlet UILabel* timerLabel;
     IBOutlet UILabel* timerLabelTitle;
+    
+    IBOutlet UIImageView* approveImage;
+    IBOutlet UIImageView* denyImage;
 }
 
 @property (nonatomic,assign)  id <LicenseAgreementDelegate> delegate;
