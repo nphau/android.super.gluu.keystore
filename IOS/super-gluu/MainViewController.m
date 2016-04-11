@@ -13,9 +13,9 @@
 #import "OXPushManager.h"
 #import "LogManager.h"
 #import "CustomIOSAlertView.h"
-
 #import "TokenEntity.h"
 #import "DataStoreManager.h"
+#import "PushView.h"
 
 @interface MainViewController ()
 
@@ -30,6 +30,7 @@
     [self initQRScanner];
     [self initLocation];
     [self initLocalization];
+//    [self initPushView];
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
     [self checkDeviceOrientation];
 
@@ -41,23 +42,23 @@
     }
     [self checkPushNotification];
     
-    NSArray* keyHandles = [[DataStoreManager sharedInstance] getTokenEntities];
-    if ([keyHandles count] == 0){
-        //Save new keys into database
-        TokenEntity* newTokenEntity = [[TokenEntity alloc] init];
-        NSString* keyID = @"application";
-        [newTokenEntity setID:keyID];
-        [newTokenEntity setApplication:@"application"];
-        [newTokenEntity setIssuer:@"issuer"];
-        [newTokenEntity setKeyHandle:@"keyHandle"];
-        [newTokenEntity setPublicKey:@"publicKeyBase64"];
-        [newTokenEntity setPrivateKey:@"privateKeyBase64"];
-        [newTokenEntity setUserName:@"userName"];
-        [newTokenEntity setPairingTime:@"created"];
-        [newTokenEntity setAuthenticationMode:@"authenticationMode"];
-        [newTokenEntity setAuthenticationType:@" authenticationType"];
-        [[DataStoreManager sharedInstance] saveTokenEntity:newTokenEntity];
-    }
+//    NSArray* keyHandles = [[DataStoreManager sharedInstance] getTokenEntities];
+//    if ([keyHandles count] == 0){
+//        //Save new keys into database
+//        TokenEntity* newTokenEntity = [[TokenEntity alloc] init];
+//        NSString* keyID = @"application";
+//        [newTokenEntity setID:keyID];
+//        [newTokenEntity setApplication:@"application"];
+//        [newTokenEntity setIssuer:@"issuer"];
+//        [newTokenEntity setKeyHandle:@"keyHandle"];
+//        [newTokenEntity setPublicKey:@"publicKeyBase64"];
+//        [newTokenEntity setPrivateKey:@"privateKeyBase64"];
+//        [newTokenEntity setUserName:@"userName"];
+//        [newTokenEntity setPairingTime:@"created"];
+//        [newTokenEntity setAuthenticationMode:@"authenticationMode"];
+//        [newTokenEntity setAuthenticationType:@" authenticationType"];
+//        [[DataStoreManager sharedInstance] saveTokenEntity:newTokenEntity];
+//    }
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -205,6 +206,20 @@
     [[self.tabBarController.tabBar.items objectAtIndex:2] setTitle:NSLocalizedString(@"Keys", @"Keys")];
 }
 
+- (void) initPushView{
+    PushView* pushView = [[PushView alloc] init];
+    pushView.view.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
+    [UIView animateWithDuration:0.5
+                          delay:0.1
+                        options: UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+                         [pushView.view setFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 120)];
+                     }
+                     completion:^(BOOL finished){
+                     }];
+    [self.view addSubview:pushView.view];
+}
+
 -(void)initNotifications{
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationRecieved:) name:NOTIFICATION_REGISTRATION_SUCCESS object:nil];
@@ -278,6 +293,8 @@
     } else
     if ([[notification name] isEqualToString:NOTIFICATION_ERROR]){
         message = [notification object];
+        [[UserLoginInfo sharedInstance] setLogState:UNKNOWN_ERROR];
+        [[DataStoreManager sharedInstance] saveUserLoginInfo:[UserLoginInfo sharedInstance]];
         [scanButton setEnabled:YES];
     } else 
     if ([[notification name] isEqualToString:NOTIFICATION_UNSUPPORTED_VERSION]){

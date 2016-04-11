@@ -61,6 +61,10 @@
             _logLabel.text = [NSString stringWithFormat:NSLocalizedString(@"LoginDeclined", @"Enroll declined"), [serverURL host]];
             break;
             
+        case UNKNOWN_ERROR:
+            _logLabel.text = [NSString stringWithFormat:NSLocalizedString(@"UnKnownError", @"UnKnownError"), [serverURL host]];
+            break;
+            
         default:
             break;
     }

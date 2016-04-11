@@ -114,6 +114,8 @@
 "LastAttempts" = "Last 2 attempts before app be locked on 10 minutes";
 "AttemptsText" = "App will be locked for 10 minutes after this many failed attempts";
 
+"UnKnownError" = "Unknown error";
+
 
 
 

@@ -74,6 +74,7 @@
 		BB9B65A71CB7C5D100784AEF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65A61CB7C5D100784AEF /* AudioToolbox.framework */; };
 		BB9B65A91CB7C5DA00784AEF /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65A81CB7C5DA00784AEF /* OpenGLES.framework */; };
 		BB9B65AB1CB7C5E400784AEF /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65AA1CB7C5E400784AEF /* CoreMotion.framework */; };
+		BB9B65AE1CB812D900784AEF /* PushView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9B65AD1CB812D900784AEF /* PushView.m */; };
 		BBB7C0E71C884E2600833B12 /* approveIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0E61C884E2600833B12 /* approveIcon.png */; };
 		BBB7C0E91C8851B900833B12 /* denyIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0E81C8851B900833B12 /* denyIcon.png */; };
 		BBB7C0EB1C88569400833B12 /* personIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0EA1C88569400833B12 /* personIcon.png */; };
@@ -219,6 +220,8 @@
 		BB9B65A61CB7C5D100784AEF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		BB9B65A81CB7C5DA00784AEF /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BB9B65AA1CB7C5E400784AEF /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		BB9B65AC1CB812D900784AEF /* PushView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushView.h; sourceTree = "<group>"; };
+		BB9B65AD1CB812D900784AEF /* PushView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushView.m; sourceTree = "<group>"; };
 		BBB7C0E61C884E2600833B12 /* approveIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = approveIcon.png; sourceTree = "<group>"; };
 		BBB7C0E81C8851B900833B12 /* denyIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = denyIcon.png; sourceTree = "<group>"; };
 		BBB7C0EA1C88569400833B12 /* personIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = personIcon.png; sourceTree = "<group>"; };
@@ -642,6 +645,8 @@
 		BB37DF071C7E0B8E0016D422 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				BB9B65AC1CB812D900784AEF /* PushView.h */,
+				BB9B65AD1CB812D900784AEF /* PushView.m */,
 				BBE7AAC71C9B18C200BE62AE /* SettingsViewController.h */,
 				BBE7AAC81C9B18C200BE62AE /* SettingsViewController.m */,
 				BBE787211C99781B00E9E0D7 /* PinCodeViewController.h */,
@@ -913,6 +918,7 @@
 				BBE787231C99781B00E9E0D7 /* PinCodeViewController.m in Sources */,
 				BB37DF3A1C7E0B8E0016D422 /* GMEllipticCurveCrypto.m in Sources */,
 				BB37DF3F1C7E0B8E0016D422 /* LogsTableCell.m in Sources */,
+				BB9B65AE1CB812D900784AEF /* PushView.m in Sources */,
 				BB37DF371C7E0B8E0016D422 /* NSString+URLEncode.m in Sources */,
 				BB37DF1F1C7E0B8E0016D422 /* U2fMetaData.m in Sources */,
 				BBE7AAC91C9B18C200BE62AE /* SettingsViewController.m in Sources */,

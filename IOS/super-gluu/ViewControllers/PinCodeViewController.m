@@ -56,8 +56,9 @@
 
 -(void)checkIsAppLocked{
     int count = (int)[[NSUserDefaults standardUserDefaults] integerForKey:LOCKED_ATTEMPTS_COUNT];
+    countFailedPin = count;
     if (count > 0){
-        [titleLabel setText:[NSString stringWithFormat:NSLocalizedString(@"FailedPinCode", @"FailedPinCode"), count]];
+        [titleLabel setText:[NSString stringWithFormat:NSLocalizedString(@"FailedPinCode", @"FailedPinCode"), countFailedPin]];
     }
     NSDate* date = [[NSUserDefaults standardUserDefaults] objectForKey:LOCKED_DATE];
     NSDate* currentDate = [NSDate date];
@@ -66,7 +67,7 @@
     int min = sec / 60;
     sec = sec % 60;
     if (min < 10 && sec > 0){
-        [titleLabel setText:[NSString stringWithFormat:NSLocalizedString(@"FailedPinCode", @"FailedPinCode"), count]];
+        [titleLabel setText:[NSString stringWithFormat:NSLocalizedString(@"FailedPinCode", @"FailedPinCode"), countFailedPin]];
         sec = 600 - sec;
         minutes = 9 - min;
         minutes = minutes < 0 ? 0 : minutes;

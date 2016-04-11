@@ -44,6 +44,12 @@
     //Ubertersters SDK initialization
     [[Ubertesters shared] initialize];
     
+    //Setup Basic
+    int count = (int)[[NSUserDefaults standardUserDefaults] integerForKey:LOCKED_ATTEMPTS_COUNT];
+    if (count == 0){
+        [[NSUserDefaults standardUserDefaults] setInteger:5 forKey:LOCKED_ATTEMPTS_COUNT];
+    }
+    
     return YES;
 }
 

@@ -34,8 +34,9 @@
     logsArray = [[NSMutableArray alloc] initWithArray:[[DataStoreManager sharedInstance] getUserLoginInfo]];
     [logsArray count] == 0 ? [logsTableView setHidden:YES] : [logsTableView setHidden:NO];
     [logsArray count] == 0 ? [cleanLogs setHidden:YES] : [cleanLogs setHidden:NO];
-    if ([logsArray count] > 3){
-        [logsTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:logsArray.count-2 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    if ([logsArray count] > 1){
+        [logsTableView reloadData];
+        [logsTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:logsArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
     if ([logsArray count] > 0){
         [cleanLogs setHidden:NO];
@@ -81,7 +82,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UserLoginInfo* userInfo = (UserLoginInfo*)[logsArray objectAtIndex:indexPath.row];
     NSString *CellIdentifier= @"LogsTableCellID";//LogsFailedTableCellID
-    if ([userInfo logState] == LOGIN_FAILED || [userInfo logState] == ENROLL_FAILED){
+    if ([userInfo logState] == LOGIN_FAILED || [userInfo logState] == ENROLL_FAILED || [userInfo logState] == ENROLL_DECLINED || [userInfo logState] == LOGIN_DECLINED){
         CellIdentifier= @"LogsFailedTableCellID";
     }
     LogsTableCell *cell = (LogsTableCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];

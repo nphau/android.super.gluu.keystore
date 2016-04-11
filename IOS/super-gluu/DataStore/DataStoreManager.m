@@ -257,6 +257,9 @@
         case ENROLL_DECLINED:
             [newMetaData setValue:[NSNumber numberWithInt:5] forKey:LOG_STATE];
             break;
+        case UNKNOWN_ERROR:
+            [newMetaData setValue:[NSNumber numberWithInt:6] forKey:LOG_STATE];
+            break;
             
         default:
             break;
@@ -311,6 +314,9 @@
                     case 5:
                         [userInfoEntity setLogState:ENROLL_DECLINED];
                         break;
+                    case 6:
+                        [userInfoEntity setLogState:UNKNOWN_ERROR];
+                        break;
                         
                     default:
                         break;
@@ -336,8 +342,8 @@
                     NSLog(@"Couldn't save: %@", error);
                 }
             }
-            return YES;
         }
+        return YES;
     }
     return NO;
 }
