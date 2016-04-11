@@ -30,6 +30,7 @@
 #define PRIVATE_KEY @"privateKey"
 #define PUBLIC_KEY @"publicKey"
 #define COUNT_KEY @"count"
+#define KEY_NAME @"displayName"
 
 
 @implementation DataStoreManager{
@@ -75,6 +76,10 @@
     [newMetaData setValue:[tokenEntity authenticationMode] forKey:AUTHENTICATION_MODE];
     [newMetaData setValue:[tokenEntity authenticationType] forKey:AUTHENTICATION_TYPE];
     [newMetaData setValue:[NSNumber numberWithInt:[tokenEntity count]] forKey:COUNT_KEY];
+    NSString* application = [tokenEntity application];
+    NSURL* urlApplication = [NSURL URLWithString:application];
+    NSString* displayName = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"keyHandleFor", @"keyHandleFor"), [urlApplication host]];
+    [newMetaData setValue:displayName forKey:KEY_NAME];
     
     error = nil;
     // Save the object to persistent store
@@ -110,12 +115,36 @@
                     [tokenEntity setAuthenticationType:[eccKeyFetched valueForKey:AUTHENTICATION_TYPE]];
                     NSNumber* count = [eccKeyFetched valueForKey:COUNT_KEY];
                     [tokenEntity setCount:[count intValue]];
+                    [tokenEntity setKeyName:[eccKeyFetched valueForKey:KEY_NAME]];
                     [entities addObject:tokenEntity];
                 }
             }
         }
     }
     return entities;
+}
+
+-(void)setTokenEntitiesNameByID:(NSString*)keyID newName:(NSString*)newName{
+    appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:KEY_ENTITY];
+    NSError *error = nil;
+    NSArray* eccKeyFetchedArray = [appDelegate.managedObjectContext executeFetchRequest:request error:&error];
+    if (eccKeyFetchedArray != nil && [eccKeyFetchedArray count] > 0){
+        for (NSManagedObject *eccKeyFetched in eccKeyFetchedArray){
+            if (eccKeyFetched != nil && [eccKeyFetched valueForKey:KEYHANDLE_KEY] != nil){
+                NSString* tokenID = [NSString stringWithFormat:@"%@", [eccKeyFetched valueForKey:APPLICATION_KEY]];
+                if ([tokenID isEqualToString:keyID]){
+                    [eccKeyFetched setValue:newName forKey:KEY_NAME];
+                }
+            }
+        }
+    }
+    error = nil;
+    // Save the object to persistent store
+    if (![appDelegate.managedObjectContext save:&error]) {
+        NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+    }
+    NSLog(@"Saved new TokenEntity name in database success");
 }
 
 -(NSArray*)getTokenEntities{
@@ -140,6 +169,7 @@
                 [tokenEntity setAuthenticationType:[eccKeyFetched valueForKey:AUTHENTICATION_TYPE]];
                 NSNumber* count = [eccKeyFetched valueForKey:COUNT_KEY];
                 [tokenEntity setCount:[count intValue]];
+                [tokenEntity setKeyName:[eccKeyFetched valueForKey:KEY_NAME]];
                 [entities addObject:tokenEntity];
             }
         }

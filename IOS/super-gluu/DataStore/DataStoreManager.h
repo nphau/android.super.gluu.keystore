@@ -25,4 +25,6 @@
 -(NSArray*)getUserLoginInfo;
 -(BOOL)deleteAllLogs;
 
+-(void)setTokenEntitiesNameByID:(NSString*)keyID newName:(NSString*)newName;
+
 @end

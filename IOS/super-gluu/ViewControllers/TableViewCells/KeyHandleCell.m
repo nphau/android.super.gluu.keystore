@@ -13,14 +13,9 @@
 
 -(void)setData:(TokenEntity*)tokenEntity{
     _key = [[tokenEntity keyHandle] base64EncodedString];
-    NSString* application = [tokenEntity application];
-    NSURL* urlApplication = [NSURL URLWithString:application];
-    NSString* displayName = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"keyHandleFor", @"keyHandleFor"), [urlApplication host]];
-    NSString* keyHandleName = [[NSUserDefaults standardUserDefaults] stringForKey:@"keyHandleDisplayName"];
-    displayName = keyHandleName != nil ? keyHandleName : displayName;
-    [self.keyHandleTextField setText:displayName];
-    
+    [self.keyHandleTextField setText:[tokenEntity keyName]];
     keyHandleTime.text = [self getTime:[tokenEntity pairingTime]];
+    self.accessibilityLabel = [tokenEntity application];
 }
 
 -(NSString*)getTime:(NSString*)createdTime{

@@ -107,7 +107,7 @@
     KeyHandleCell *cell = (KeyHandleCell*)[keyHandleTableView cellForRowAtIndexPath:selectedRow];
     UITextField* keyTextField = [cell keyHandleTextField];
     [keyTextField setEnabled:NO];
-    [[NSUserDefaults standardUserDefaults] setObject:keyTextField.text forKey:@"keyHandleDisplayName"];
+    [[DataStoreManager sharedInstance]setTokenEntitiesNameByID:cell.accessibilityLabel newName:keyTextField.text];
     
     return YES;
 }
@@ -173,9 +173,7 @@
 -(void)deleteRow{
     TokenEntity* tokenEntity = [keyHandleArray objectAtIndex:rowToDelete];
     [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:[tokenEntity application]];
-    [keyHandleArray removeObjectAtIndex:0];
-    [keyHandleTableView reloadData];
-    [self initLabel:(int)[keyHandleArray count]];
+    [self loadKeyHandlesFromDatabase];
 }
 
 - (void)orientationChanged:(NSNotification *)notification{

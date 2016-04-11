@@ -21,6 +21,7 @@
 @property (strong, nonatomic) NSString* authenticationMode;
 @property (strong, nonatomic) NSString* authenticationType;
 @property (assign, nonatomic) int count;
+@property (strong, nonatomic) NSString* keyName;
 
 -(id)initWithID:(NSString*)ID privateKey:(NSData*)privateKey publicKey:(NSData*)publicKey;
 
