@@ -85,7 +85,6 @@
     if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
     {
         // code for landscape orientation
-        //        [self adjustViewsForOrientation:UIInterfaceOrientationLandscapeLeft];
         [[NSNotificationCenter defaultCenter] postNotificationName:UIDeviceOrientationDidChangeNotification object:nil];
     }
 }
@@ -275,6 +274,9 @@
 }
 
 - (void)orientationChanged:(NSNotification *)notification{
+    [pinCodeTurnOnOffView setCenter:CGPointMake([UIScreen mainScreen].bounds.size.width/2, pinCodeTurnOnOffView.center.y)];
+    [pinCodeTypeView setCenter:CGPointMake([UIScreen mainScreen].bounds.size.width/2-20, pinCodeTypeView.center.y)];
+    [attemptsView setCenter:CGPointMake([UIScreen mainScreen].bounds.size.width/2-20, attemptsView.center.y)];
     [self adjustViewsForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
 }
 

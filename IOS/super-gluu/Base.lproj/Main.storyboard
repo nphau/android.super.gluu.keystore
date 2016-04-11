@@ -405,7 +405,7 @@
                                                             </label>
                                                             <view contentMode="scaleToFill" id="7CL-mB-H9c" userLabel="PinCodeTurnOnView">
                                                                 <rect key="frame" x="0.0" y="31" width="293" height="58"/>
-                                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Turn-off" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sz7-rI-WZF">
                                                                         <rect key="frame" x="0.0" y="8" width="115" height="42"/>
@@ -430,7 +430,7 @@
                                                             </view>
                                                             <view contentMode="scaleToFill" id="buR-oe-EBA" userLabel="PinCodeTypeView">
                                                                 <rect key="frame" x="0.0" y="132" width="293" height="54"/>
-                                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Simple pin code 4-digit" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zJO-av-Wrv">
                                                                         <rect key="frame" x="0.0" y="8" width="115" height="42"/>
@@ -455,7 +455,7 @@
                                                             </view>
                                                             <view contentMode="scaleToFill" id="x8S-QX-qm5" userLabel="PinCodeResetView">
                                                                 <rect key="frame" x="0.0" y="75" width="293" height="54"/>
-                                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Cq9-yF-JLc">
                                                                         <rect key="frame" x="75" y="16" width="142" height="30"/>
@@ -472,7 +472,7 @@
                                                             </view>
                                                             <view contentMode="scaleToFill" id="N81-D2-Te4" userLabel="AttemptsView">
                                                                 <rect key="frame" x="0.0" y="194" width="293" height="110"/>
-                                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <subviews>
                                                                     <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minimumValue="5" maximumValue="10" id="ypF-NP-SaC">
                                                                         <rect key="frame" x="199" y="22" width="94" height="29"/>
@@ -497,7 +497,7 @@
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App will be locked for X minutes after this many failed attempts" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="c2u-0K-Y5H">
                                                                         <rect key="frame" x="8" y="55" width="285" height="55"/>
-                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
