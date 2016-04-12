@@ -72,9 +72,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     UserLoginInfo* userInfo = (UserLoginInfo*)[logsArray objectAtIndex:indexPath.row];
-    CGFloat height = 131.0;
-    if ([userInfo logState] == LOGIN_FAILED || [userInfo logState] == ENROLL_FAILED){
-        height = 75.0;
+    CGFloat height = 130.0;
+    if ([userInfo logState] == LOGIN_FAILED || [userInfo logState] == ENROLL_FAILED || [userInfo logState] == ENROLL_DECLINED || [userInfo logState] == LOGIN_DECLINED){
+        height = 80.0;
     }
     return height;
 }
@@ -118,7 +118,7 @@
                     break;
             }
         }
-        CustomIOSAlertView *alertView = [CustomIOSAlertView alertWithTitle:@"Error message" message:message];
+        CustomIOSAlertView *alertView = [CustomIOSAlertView alertWithTitle:@"Information" message:message];
         alertView.delegate = self;
         [alertView show];
     } else {
