@@ -46,6 +46,8 @@
     }
     timerView.layer.cornerRadius = CORNER_RADIUS;
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
+    [approveImage setCenter:approveRequest.center];
+    [denyImage setCenter:denyRequest.center];
 }
 
 -(void)viewWillAppear:(BOOL)animated{

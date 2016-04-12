@@ -55,8 +55,6 @@
 }
 
 -(void)checkIsAppLocked{
-    int count = (int)[[NSUserDefaults standardUserDefaults] integerForKey:LOCKED_ATTEMPTS_COUNT];
-    countFailedPin = count;
     BOOL isAppLocked = [[NSUserDefaults standardUserDefaults] boolForKey:IS_APP_LOCKED];
     if (isAppLocked){
         [titleLabel setText:[NSString stringWithFormat:NSLocalizedString(@"FailedPinCode", @"FailedPinCode"), countFailedPin]];
@@ -183,7 +181,7 @@
     if (countFailedPin == attemptsCount-2){
         [self showAlertView];
     }
-    if (countFailedPin == attemptsCount){
+    if (countFailedPin >= attemptsCount){
     //lock app and wait approx 10 mins
         [timerView setHidden:NO];
         [self startTimer];
