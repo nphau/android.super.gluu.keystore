@@ -10,7 +10,6 @@ target “Super Gluu” do
 pod 'AFNetworking', '~> 2.5’
 pod 'QRCodeReaderViewController', '~> 4.0.1'
 pod 'NSHash', '~> 1.1.0'
-pod 'PAPasscode'
 pod 'JTMaterialSwitch'
 
 end

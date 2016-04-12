@@ -69,13 +69,15 @@ static NSTimeInterval AnimationDuration = 0.3;
     contentView.backgroundColor = [UIColor clearColor];
     [view addSubview:contentView];
 
-    _inputPanel = [[UIView alloc] init];
+    _inputPanel = [[UIControl alloc] init];
     _inputPanel.translatesAutoresizingMaskIntoConstraints = NO;
+    [_inputPanel addTarget:self action:@selector(showKeyboard) forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:_inputPanel];
 
     passcodeTextField = [[UITextField alloc] init];
     passcodeTextField.translatesAutoresizingMaskIntoConstraints = NO;
     passcodeTextField.secureTextEntry = YES;
+    passcodeTextField.delegate = self;
     [passcodeTextField addTarget:self action:@selector(passcodeChanged:) forControlEvents:UIControlEventEditingChanged];
 
     [_inputPanel addSubview:passcodeTextField];
@@ -185,6 +187,12 @@ static NSTimeInterval AnimationDuration = 0.3;
 
     _installedConstraints = constraints;
     [self.view addConstraints:_installedConstraints];
+}
+
+-(void)showKeyboard{
+    if([passcodeTextField canBecomeFirstResponder]){
+        [passcodeTextField becomeFirstResponder];
+    }
 }
 
 - (void)viewDidLoad {

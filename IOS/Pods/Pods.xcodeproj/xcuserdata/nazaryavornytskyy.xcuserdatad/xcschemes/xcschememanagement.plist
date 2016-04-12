@@ -24,11 +24,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>PAPasscode.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-Super Gluu.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -52,12 +47,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4FFF68013BF80F2457546F73CFD56F72</key>
+		<key>A7C4D1F0E4EC3755AF6B73B57956457C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B2C20FB454B7B95C6BFB728AAA4AB7CD</key>
+		<key>BEF992390096ED8C1B113AFE7B7FAA7E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -68,11 +63,6 @@
 			<true/>
 		</dict>
 		<key>E2E98B9CD754B4954C3FBD110D724837</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>EEE19950F87302A9C389C4ADC7E6A5DC</key>
 		<dict>
 			<key>primary</key>
 			<true/>

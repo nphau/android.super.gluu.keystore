@@ -29,9 +29,9 @@ typedef enum {
 
 @end
 
-@interface PAPasscodeViewController : UIViewController {
+@interface PAPasscodeViewController : UIViewController <UITextFieldDelegate> {
     NSArray *_installedConstraints;
-    UIView *_inputPanel;
+    UIControl *_inputPanel;
     NSLayoutConstraint *_keyboardHeightConstraint;
     UIView *contentView;
     NSInteger phase;

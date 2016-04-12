@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		40A456C44583C74D52A2B8E9 /* Pods_Super_Gluu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80433D1336F0C031D365C057 /* Pods_Super_Gluu.framework */; };
 		8C2D7832AC84C238165A41EC /* Pods_super_gluu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D24DEA30315C14CB94B564F /* Pods_super_gluu.framework */; };
+		BB18D05C1CBCFFAE00A73733 /* PAPasscodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB18D05B1CBCFFAE00A73733 /* PAPasscodeViewController.m */; };
 		BB2A11091C980EEB004C5FEF /* CustomIOSAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB2A11081C980EEB004C5FEF /* CustomIOSAlertView.m */; };
 		BB37DE561C7E08320016D422 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE551C7E08320016D422 /* main.m */; };
 		BB37DE591C7E08320016D422 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE581C7E08320016D422 /* AppDelegate.m */; };
@@ -75,6 +76,7 @@
 		BB9B65A91CB7C5DA00784AEF /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65A81CB7C5DA00784AEF /* OpenGLES.framework */; };
 		BB9B65AB1CB7C5E400784AEF /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65AA1CB7C5E400784AEF /* CoreMotion.framework */; };
 		BB9B65AE1CB812D900784AEF /* PushView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9B65AD1CB812D900784AEF /* PushView.m */; };
+		BB9B65B11CBCDA9600784AEF /* super-gluu-ssl.crt in Resources */ = {isa = PBXBuildFile; fileRef = BB9B65B01CBCDA9600784AEF /* super-gluu-ssl.crt */; };
 		BBB7C0E71C884E2600833B12 /* approveIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0E61C884E2600833B12 /* approveIcon.png */; };
 		BBB7C0E91C8851B900833B12 /* denyIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0E81C8851B900833B12 /* denyIcon.png */; };
 		BBB7C0EB1C88569400833B12 /* personIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0EA1C88569400833B12 /* personIcon.png */; };
@@ -110,6 +112,8 @@
 		7D51C8DAB917D5F3D2C8BA49 /* Pods-Super Gluu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Super Gluu.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Super Gluu/Pods-Super Gluu.debug.xcconfig"; sourceTree = "<group>"; };
 		80433D1336F0C031D365C057 /* Pods_Super_Gluu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Super_Gluu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF96591ABBB795E2D9A6DA5E /* Pods-super-gluu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-super-gluu.debug.xcconfig"; path = "Pods/Target Support Files/Pods-super-gluu/Pods-super-gluu.debug.xcconfig"; sourceTree = "<group>"; };
+		BB18D05A1CBCFFAE00A73733 /* PAPasscodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PAPasscodeViewController.h; path = PAPasscode/PAPasscodeViewController.h; sourceTree = "<group>"; };
+		BB18D05B1CBCFFAE00A73733 /* PAPasscodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAPasscodeViewController.m; path = PAPasscode/PAPasscodeViewController.m; sourceTree = "<group>"; };
 		BB2A11071C980EEB004C5FEF /* CustomIOSAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomIOSAlertView.h; sourceTree = "<group>"; };
 		BB2A11081C980EEB004C5FEF /* CustomIOSAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIOSAlertView.m; sourceTree = "<group>"; };
 		BB37DE511C7E08320016D422 /* Super Gluu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Super Gluu.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -222,6 +226,7 @@
 		BB9B65AA1CB7C5E400784AEF /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		BB9B65AC1CB812D900784AEF /* PushView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushView.h; sourceTree = "<group>"; };
 		BB9B65AD1CB812D900784AEF /* PushView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushView.m; sourceTree = "<group>"; };
+		BB9B65B01CBCDA9600784AEF /* super-gluu-ssl.crt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "super-gluu-ssl.crt"; path = "Configuration/super-gluu-ssl.crt"; sourceTree = "<group>"; };
 		BBB7C0E61C884E2600833B12 /* approveIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = approveIcon.png; sourceTree = "<group>"; };
 		BBB7C0E81C8851B900833B12 /* denyIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = denyIcon.png; sourceTree = "<group>"; };
 		BBB7C0EA1C88569400833B12 /* personIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = personIcon.png; sourceTree = "<group>"; };
@@ -310,6 +315,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		BB18D0591CBCFF9600A73733 /* PAPasscode */ = {
+			isa = PBXGroup;
+			children = (
+				BB18D05A1CBCFFAE00A73733 /* PAPasscodeViewController.h */,
+				BB18D05B1CBCFFAE00A73733 /* PAPasscodeViewController.m */,
+			);
+			name = PAPasscode;
+			sourceTree = "<group>";
+		};
 		BB37DE481C7E08320016D422 = {
 			isa = PBXGroup;
 			children = (
@@ -335,6 +349,7 @@
 		BB37DE531C7E08320016D422 /* super-gluu */ = {
 			isa = PBXGroup;
 			children = (
+				BB9B65AF1CBCDA8400784AEF /* Configuration */,
 				BB37DF401C7E0BD20016D422 /* Constants.h */,
 				BB37DEA51C7E0B8E0016D422 /* ApiService */,
 				BB37DEAB1C7E0B8E0016D422 /* DataStore */,
@@ -603,6 +618,7 @@
 		BB37DEF61C7E0B8E0016D422 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				BB18D0591CBCFF9600A73733 /* PAPasscode */,
 				BBB7C0FF1C9042A000833B12 /* NSDate-Time-Ago */,
 				BB37DEF71C7E0B8E0016D422 /* Base64 */,
 				BB37DEFC1C7E0B8E0016D422 /* CustomAlertView */,
@@ -683,6 +699,14 @@
 				BB3BE1741C883B8900817A46 /* LecenseAgreementDelegate.h */,
 			);
 			name = Delegates;
+			sourceTree = "<group>";
+		};
+		BB9B65AF1CBCDA8400784AEF /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				BB9B65B01CBCDA9600784AEF /* super-gluu-ssl.crt */,
+			);
+			name = Configuration;
 			sourceTree = "<group>";
 		};
 		BBB7C0FF1C9042A000833B12 /* NSDate-Time-Ago */ = {
@@ -827,6 +851,7 @@
 				BBB7C0E71C884E2600833B12 /* approveIcon.png in Resources */,
 				BBB7C0E91C8851B900833B12 /* denyIcon.png in Resources */,
 				BB37DE641C7E08320016D422 /* Assets.xcassets in Resources */,
+				BB9B65B11CBCDA9600784AEF /* super-gluu-ssl.crt in Resources */,
 				BB37DF301C7E0B8E0016D422 /* gluuIcon60x2.png in Resources */,
 				BB37DF321C7E0B8E0016D422 /* infoIcon.png in Resources */,
 				BB37DE5F1C7E08320016D422 /* Main.storyboard in Resources */,
@@ -948,6 +973,7 @@
 				BB37DF231C7E0B8E0016D422 /* OxPush2Request.m in Sources */,
 				BB3BE1721C882D0600817A46 /* ApproveDenyViewController.m in Sources */,
 				BB37DF3E1C7E0B8E0016D422 /* KeyHandleCell.m in Sources */,
+				BB18D05C1CBCFFAE00A73733 /* PAPasscodeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

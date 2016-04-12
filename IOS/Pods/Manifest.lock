@@ -22,21 +22,18 @@ PODS:
     - AFNetworking/NSURLSession
   - JTMaterialSwitch (1.1)
   - NSHash (1.1.0)
-  - PAPasscode (1.0)
   - QRCodeReaderViewController (4.0.1)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.5)
   - JTMaterialSwitch
   - NSHash (~> 1.1.0)
-  - PAPasscode
   - QRCodeReaderViewController (~> 4.0.1)
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   JTMaterialSwitch: cad8093c3773ff9f6c60005c98d269eb869b5e04
   NSHash: 61d598c6d48957c5557f1eef0aeafd6ef5ec5fb7
-  PAPasscode: b408fb87c530cad58a554e26482e87dbb14b7bc2
   QRCodeReaderViewController: 6538745c8f4ffa9407a26bd7f9489ea01739e7b0
 
 COCOAPODS: 0.39.0
