@@ -9,6 +9,7 @@
 #import "SettingsViewController.h"
 #import "Constants.h"
 #import "PinCodeViewController.h"
+#import "NSDate+NetworkClock.h"
 
 @interface SettingsViewController ()
 
@@ -255,13 +256,17 @@
         [self showAlertView];
     }
     if (countFailedPin == attemptsCount){
-        [self dismissViewControllerAnimated:YES completion:nil];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:IS_APP_LOCKED];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:LOCKED_DATE];
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        PinCodeViewController* pinView = [storyboard instantiateViewControllerWithIdentifier:@"PinCodeViewID"];
-        [self presentViewController:pinView animated:YES completion:nil];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSDate networkDate] forKey:LOCKED_DATE];//[NSDate date]
+        [self performSelector:@selector(showPinView) withObject:nil afterDelay:1];
     }
+}
+
+-(void)showPinView{
+    [self dismissViewControllerAnimated:YES completion:nil];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    PinCodeViewController* pinView = [storyboard instantiateViewControllerWithIdentifier:@"PinCodeViewID"];
+    [self presentViewController:pinView animated:YES completion:nil];
 }
 
 -(void)showAlertView{

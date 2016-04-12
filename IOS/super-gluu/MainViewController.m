@@ -171,12 +171,19 @@
         {
             //load the landscape view
             if (!isLandScape){
-                int y = [[UIScreen mainScreen] bounds].size.height/2.3;//140;
+                int y = [[UIScreen mainScreen] bounds].size.height/2.8;//140;
                 [welcomeView setCenter:CGPointMake(welcomeView.center.x, y)];
                 [statusView setCenter:CGPointMake(statusView.center.x, y/4)];
                 [scanTextLabel setCenter:CGPointMake(scanTextLabel.center.x, scanButton.center.y + 50)];
                 [welcomeLabel setCenter:CGPointMake(welcomeLabel.center.x, scanButton.center.y - 50)];
                 isLandScape = YES;
+            } else {
+                int y = [[UIScreen mainScreen] bounds].size.height/2.2;//140;
+                [statusView setCenter:CGPointMake(statusView.center.x, y/4)];
+                [welcomeView setCenter:CGPointMake(welcomeView.center.x, y)];
+                [scanButton setCenter:CGPointMake(scanButton.center.x, welcomeView.center.y - 25)];
+                [scanTextLabel setCenter:CGPointMake(scanTextLabel.center.x, scanButton.center.y + 45)];
+                [welcomeLabel setCenter:CGPointMake(welcomeLabel.center.x, scanButton.center.y - 50)];
             }
             
         }

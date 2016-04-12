@@ -11,12 +11,8 @@
 #import "Constants.h"
 #import "OXPushManager.h"
 #import "CustomIOSAlertView.h"
-
+#import "NHNetworkTime.h"
 #import <UbertestersSDK/Ubertesters.h>
-
-//NSString * const NotificationCategoryIdent  = @"ACTIONABLE";
-//NSString * const NotificationActionOneIdent = @"ACTION_DENY";
-//NSString * const NotificationActionTwoIdent = @"ACTION_APPROVE";
 
 @interface AppDelegate ()
 
@@ -49,6 +45,8 @@
     if (count == 0){
         [[NSUserDefaults standardUserDefaults] setInteger:5 forKey:LOCKED_ATTEMPTS_COUNT];
     }
+    
+    [[NHNetworkClock sharedNetworkClock] synchronize];
     
     return YES;
 }
@@ -150,6 +148,7 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    [[NHNetworkClock sharedNetworkClock] synchronize];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -162,6 +161,7 @@
     if (_pushNotificationRequest != nil){
         [[NSUserDefaults standardUserDefaults] setObject:_pushNotificationRequest forKey:NotificationRequest];
     }
+    [[NHNetworkClock sharedNetworkClock] synchronize];
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
@@ -215,6 +215,7 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
+    [[NHNetworkClock sharedNetworkClock] synchronize];
 }
 
 #pragma mark - Core Data stack

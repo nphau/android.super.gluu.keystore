@@ -1,6 +1,6 @@
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
-OTHER_CFLAGS = $(inherited) -iquote "$CONFIGURATION_BUILD_DIR/AFNetworking.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/JTMaterialSwitch.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/NSHash.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/QRCodeReaderViewController.framework/Headers"
-OTHER_LDFLAGS = $(inherited) -framework "AFNetworking" -framework "JTMaterialSwitch" -framework "NSHash" -framework "QRCodeReaderViewController"
+OTHER_CFLAGS = $(inherited) -iquote "$CONFIGURATION_BUILD_DIR/AFNetworking.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/CocoaAsyncSocket.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/JTMaterialSwitch.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/NHNetworkTime.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/NSHash.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/QRCodeReaderViewController.framework/Headers"
+OTHER_LDFLAGS = $(inherited) -framework "AFNetworking" -framework "CocoaAsyncSocket" -framework "JTMaterialSwitch" -framework "NHNetworkTime" -framework "NSHash" -framework "QRCodeReaderViewController"
 PODS_FRAMEWORK_BUILD_PATH = $(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Pods-Super Gluu
 PODS_ROOT = ${SRCROOT}/Pods

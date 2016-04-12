@@ -85,13 +85,17 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Super Gluu/AFNetworking.framework"
+  install_framework "Pods-Super Gluu/CocoaAsyncSocket.framework"
   install_framework "Pods-Super Gluu/JTMaterialSwitch.framework"
+  install_framework "Pods-Super Gluu/NHNetworkTime.framework"
   install_framework "Pods-Super Gluu/NSHash.framework"
   install_framework "Pods-Super Gluu/QRCodeReaderViewController.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Super Gluu/AFNetworking.framework"
+  install_framework "Pods-Super Gluu/CocoaAsyncSocket.framework"
   install_framework "Pods-Super Gluu/JTMaterialSwitch.framework"
+  install_framework "Pods-Super Gluu/NHNetworkTime.framework"
   install_framework "Pods-Super Gluu/NSHash.framework"
   install_framework "Pods-Super Gluu/QRCodeReaderViewController.framework"
 fi

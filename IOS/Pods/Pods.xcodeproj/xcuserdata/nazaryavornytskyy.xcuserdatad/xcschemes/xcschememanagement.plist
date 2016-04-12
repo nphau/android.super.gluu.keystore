@@ -9,12 +9,22 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>CocoaAsyncSocket.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>JTMaterialSwitch-JTMaterialSwitch.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
 		<key>JTMaterialSwitch.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>NHNetworkTime.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -37,6 +47,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>10A4F94103CEBCA841F4E28BA559D0AB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>35B617F8B0851DCDF666A4909092E791</key>
 		<dict>
 			<key>primary</key>
@@ -47,12 +62,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A7C4D1F0E4EC3755AF6B73B57956457C</key>
+		<key>B1D17BA74BEACBD28F897F231B5907A4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BEF992390096ED8C1B113AFE7B7FAA7E</key>
+		<key>B301AEC9AE49AFF16D8596F732777B16</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -63,6 +78,11 @@
 			<true/>
 		</dict>
 		<key>E2E98B9CD754B4954C3FBD110D724837</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F79089F4FF30C0031D264214DF325090</key>
 		<dict>
 			<key>primary</key>
 			<true/>

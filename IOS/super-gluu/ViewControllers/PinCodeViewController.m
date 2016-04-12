@@ -8,6 +8,7 @@
 
 #import "PinCodeViewController.h"
 #import "Constants.h"
+#import "NSDate+NetworkClock.h"
 
 #define MAIN_VIEW @"MainTabView"
 #define PIN_PROTECTION_ID @"enabledPinCode"
@@ -57,19 +58,23 @@
 -(void)checkIsAppLocked{
     BOOL isAppLocked = [[NSUserDefaults standardUserDefaults] boolForKey:IS_APP_LOCKED];
     if (isAppLocked){
-        [titleLabel setText:[NSString stringWithFormat:NSLocalizedString(@"FailedPinCode", @"FailedPinCode"), countFailedPin]];
+        int attemptsCount = (int)[[NSUserDefaults standardUserDefaults] integerForKey:LOCKED_ATTEMPTS_COUNT];
+        [titleLabel setText:[NSString stringWithFormat:NSLocalizedString(@"FailedPinCode", @"FailedPinCode"), attemptsCount]];
+    } else {
+        [self performSelector:@selector(checkPinCodeEnabled) withObject:nil afterDelay:0.01];
+        return;
     }
     NSDate* date = [[NSUserDefaults standardUserDefaults] objectForKey:LOCKED_DATE];
-    NSDate* currentDate = [NSDate date];
-    NSTimeInterval distanceBetweenDates = [currentDate timeIntervalSinceDate:date];
+    NSTimeInterval distanceBetweenDates = [date timeIntervalSinceNetworkDate];
     int sec = (int)distanceBetweenDates;
     int min = sec / 60;
     sec = sec % 60;
-    if (min < 10 && sec > 0){
+    if (min < 10 || sec > 0){
 //        [titleLabel setText:[NSString stringWithFormat:NSLocalizedString(@"FailedPinCode", @"FailedPinCode"), countFailedPin]];
         sec = 600 - sec;
         minutes = 9 - min;
         minutes = minutes < 0 ? 0 : minutes;
+        minutes = minutes > 10 ? 0 : minutes;
         seconds = sec % 60;
         [nextButton setHidden:YES];
         [skipButton setHidden:YES];
@@ -213,7 +218,7 @@
     minutesLabel.text = [NSString stringWithFormat:@"%i", minutes];
     secondsLabel.text = [NSString stringWithFormat:@":%i%i", seconds, seconds];
     timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(tick) userInfo:nil repeats:YES];
-    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:LOCKED_DATE];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSDate networkDate] forKey:LOCKED_DATE];//[NSDate date]
     
 }
 

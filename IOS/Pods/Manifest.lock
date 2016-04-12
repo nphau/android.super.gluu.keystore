@@ -20,19 +20,25 @@ PODS:
   - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - CocoaAsyncSocket (7.4.1)
   - JTMaterialSwitch (1.1)
+  - NHNetworkTime (1.5):
+    - CocoaAsyncSocket (<= 7.4.1)
   - NSHash (1.1.0)
   - QRCodeReaderViewController (4.0.1)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.5)
   - JTMaterialSwitch
+  - NHNetworkTime
   - NSHash (~> 1.1.0)
   - QRCodeReaderViewController (~> 4.0.1)
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
+  CocoaAsyncSocket: 7cbf214b27f8e7f7574db6a3fd96352ffaed433d
   JTMaterialSwitch: cad8093c3773ff9f6c60005c98d269eb869b5e04
+  NHNetworkTime: 945d229cb2c3f43013a17bc717328a5045125f8b
   NSHash: 61d598c6d48957c5557f1eef0aeafd6ef5ec5fb7
   QRCodeReaderViewController: 6538745c8f4ffa9407a26bd7f9489ea01739e7b0
 
