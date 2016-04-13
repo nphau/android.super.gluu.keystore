@@ -43,13 +43,13 @@
     [self checkPushNotification];
     
 //    NSArray* keyHandles = [[DataStoreManager sharedInstance] getTokenEntities];
-//    if ([keyHandles count] == 0){
+//    if ([keyHandles count] == 1){
 //        //Save new keys into database
 //        TokenEntity* newTokenEntity = [[TokenEntity alloc] init];
 //        NSString* keyID = @"application";
 //        [newTokenEntity setID:keyID];
-//        [newTokenEntity setApplication:@"application"];
-//        [newTokenEntity setIssuer:@"issuer"];
+//        [newTokenEntity setApplication:@"https://demo.gluu.org"];
+//        [newTokenEntity setIssuer:@"https://demo.gluu.org"];
 //        [newTokenEntity setKeyHandle:@"keyHandle"];
 //        [newTokenEntity setPublicKey:@"publicKeyBase64"];
 //        [newTokenEntity setPrivateKey:@"privateKeyBase64"];
@@ -356,21 +356,6 @@
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
 }
 
-//-(void)showApproveDenyView{
-//    approveDenyView = [self.storyboard instantiateViewControllerWithIdentifier:@"ApproveDenyView"];
-//    if (approveDenyView != nil){
-//        approveDenyView.delegate = self;
-//        CATransition *transition = [CATransition animation];
-//        transition.duration = 0.5;
-//        transition.type = kCATransitionPush;
-//        transition.subtype = kCATransitionFromRight;
-//        [transition setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-//        [contentView.layer addAnimation:transition forKey:nil];
-//        [self.tabBarController.tabBar setHidden:YES];
-//        [contentView addSubview:approveDenyView.view];
-//    }
-//}
-
 #pragma LicenseAgreementDelegates
 
 -(void)approveRequest{
@@ -392,22 +377,6 @@
 }
 
 //# ------------ END -----------------------------
-
-//-(void)showUserInfo{
-//    userNameLabel.text = [[UserLoginInfo sharedInstance] userName];
-//    userApplicationLabel.text = [[UserLoginInfo sharedInstance] application];
-//    userCreatedLabel.text = [[UserLoginInfo sharedInstance] created];
-//    userIssuerLabel.text = [[UserLoginInfo sharedInstance] issuer];
-//    userAuthencicationModeLabel.text = [[UserLoginInfo sharedInstance] authenticationMode];
-//    userAuthencicationTypeLabel.text = [[UserLoginInfo sharedInstance] authenticationType];
-//    [statusView setFrame:CGRectMake(statusView.frame.origin.x, statusView.frame.origin.y + 80, statusView.frame.size.width, statusView.frame.size.height + 120)];
-//    [self showUserInfo:YES];
-//}
-//
-//-(void)showUserInfo:(BOOL)isShow{
-//    isShow = !isShow;
-//    [userInfoView setHidden:isShow];
-//}
 
 -(void)initQRScanner{
     // Create the reader object

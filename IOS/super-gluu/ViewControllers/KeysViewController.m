@@ -26,7 +26,7 @@
     keyHandleTableView.layer.borderColor = [UIColor blackColor].CGColor;
     keyHandleTableView.layer.borderWidth = 2.0;
     [keyHandleTableView.layer setMasksToBounds:YES];
-    
+    keyCells = [[NSMutableDictionary alloc] init];
     keyRenameInfoLabel.text = NSLocalizedString(@"RenameKeyNameInfo", @"Rename Key's Name");
     uniqueKeyLabel.text = NSLocalizedString(@"UniqueKeyLabel", @"UniqueKeyLabel");
     
@@ -108,9 +108,29 @@
     
     KeyHandleCell *cell = (KeyHandleCell*)[keyHandleTableView cellForRowAtIndexPath:selectedRow];
     UITextField* keyTextField = [cell keyHandleTextField];
-    [keyTextField setEnabled:NO];
-    [[DataStoreManager sharedInstance]setTokenEntitiesNameByID:cell.accessibilityLabel newName:keyTextField.text];
+    if ([self checkUniqueName:keyTextField.text andID:cell.accessibilityLabel]){
+        [keyTextField setEnabled:NO];
+        [[DataStoreManager sharedInstance] setTokenEntitiesNameByID:cell.accessibilityLabel newName:keyTextField.text];
+    } else {
+        SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+        [alert addButton:@"Close" actionBlock:^(void) {
+            NSLog(@"Close clicked");
+            [textField becomeFirstResponder];
+        }];
+        [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:@"Name is exist, please enter another one" closeButtonTitle:nil duration:0.0f];
+    }
     
+    return YES;
+}
+
+-(BOOL)checkUniqueName:(NSString*)name andID:(NSString*)keyID{
+    for (NSString* cellKey in [keyCells allKeys]){
+        if (![cellKey isEqualToString:keyID]){
+            if ([[keyCells valueForKey:cellKey] isEqualToString:name]){
+                return NO;
+            }
+        }
+    }
     return YES;
 }
 
@@ -128,8 +148,11 @@
     TokenEntity* tokenEntity = [keyHandleArray objectAtIndex:indexPath.row];
     [cell setData:tokenEntity];
     
+    [keyCells setObject:[tokenEntity keyName] forKey:[tokenEntity application]];
+    
     return cell;
 }
+
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     TokenEntity* tokenEntity = [keyHandleArray objectAtIndex:indexPath.row];

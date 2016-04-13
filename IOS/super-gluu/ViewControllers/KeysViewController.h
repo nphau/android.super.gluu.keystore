@@ -21,6 +21,8 @@
     NSIndexPath* selectedRow;
     
     BOOL isLandScape;
+    
+    NSMutableDictionary* keyCells;
 }
 
 @end
