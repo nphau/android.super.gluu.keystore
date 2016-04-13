@@ -73,6 +73,7 @@
 #define PIN_SIMPLE_ID @"simplePinCode"
 #define PIN_CODE @"PinCode"
 #define PIN_ENABLED @"PinCodeEnabled"
+#define PIN_TYPE_IS_4_DIGIT @"is_4_digit"
 
 #define LOCKED_DATE @"locked_app_date"
 #define LOCKED_ATTEMPTS_COUNT @"locked_attempts_count"

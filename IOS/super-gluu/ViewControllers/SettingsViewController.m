@@ -21,7 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     isPin = [[NSUserDefaults standardUserDefaults] boolForKey:PIN_PROTECTION_ID];
-    [pinCodeTypeView setHidden:!isPin];
+//    [pinCodeTypeView setHidden:!isPin];
     [setChangePinCode setHidden:!isPin];
     isSimple = [[NSUserDefaults standardUserDefaults] boolForKey:PIN_SIMPLE_ID];
     code = [[NSUserDefaults standardUserDefaults] stringForKey:PIN_CODE];
@@ -29,7 +29,7 @@
         [setChangePinCode setTitle:NSLocalizedString(@"SetPinCode", @"SetPinCode") forState:UIControlStateNormal];
     } else {
         [setChangePinCode setTitle:NSLocalizedString(@"ChangePinCode", @"ChangePinCode") forState:UIControlStateNormal];
-        [pinCodeTypeView setHidden:YES];
+//        [pinCodeTypeView setHidden:YES];
     }
     [self initWidget];
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
@@ -76,11 +76,11 @@
         attemptsLabel.text = [NSString stringWithFormat:@"%i", count];
     }
     attemptsTextLabel.text = [NSString stringWithFormat:NSLocalizedString(@"AttemptsText", @"App will be locked for X minutes after this many failed attempts")];
-    if (pinCodeTypeView.isHidden){
-        [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y + attemptsView.frame.size.height/3)];
-    } else {
-        [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y + attemptsView.frame.size.height)];
-    }
+//    if (pinCodeTypeView.isHidden){
+//        [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y + attemptsView.frame.size.height/3)];
+//    } else {
+//        [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y + attemptsView.frame.size.height)];
+//    }
 }
 
 -(void)checkDeviceOrientation{
@@ -109,40 +109,40 @@
     [self initSwitchTurnOnOff:jswTurnOnOff];
     JTMaterialSwitch *sw = sender;
     [setChangePinCode setHidden:!sw.isOn];
-    [pinCodeTypeView setHidden:!sw.isOn];
+//    [pinCodeTypeView setHidden:!sw.isOn];
     code = [[NSUserDefaults standardUserDefaults] stringForKey:PIN_CODE];
     if (code == nil || [code isEqualToString:@""]){
         [setChangePinCode setTitle:NSLocalizedString(@"SetPinCode", @"SetPinCode") forState:UIControlStateNormal];
-        [UIView animateWithDuration:0.3
-                              delay:0.0
-                            options:UIViewAnimationOptionTransitionCrossDissolve
-                         animations:^{
-                             [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y + attemptsView.frame.size.height)];
-                         } completion:^(BOOL finished){
-                             //
-                         }];
+//        [UIView animateWithDuration:0.3
+//                              delay:0.0
+//                            options:UIViewAnimationOptionTransitionCrossDissolve
+//                         animations:^{
+//                             [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y + attemptsView.frame.size.height)];
+//                         } completion:^(BOOL finished){
+//                             //
+//                         }];
     } else {
         [setChangePinCode setTitle:NSLocalizedString(@"ChangePinCode", @"ChangePinCode") forState:UIControlStateNormal];
-        [pinCodeTypeView setHidden:YES];
-        [UIView animateWithDuration:0.3
-                              delay:0.0
-                            options:UIViewAnimationOptionTransitionCrossDissolve
-                         animations:^{
-                             [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y + attemptsView.frame.size.height/4)];
-                         } completion:^(BOOL finished){
-                             //
-                         }];
+//        [pinCodeTypeView setHidden:YES];
+//        [UIView animateWithDuration:0.3
+//                              delay:0.0
+//                            options:UIViewAnimationOptionTransitionCrossDissolve
+//                         animations:^{
+//                             [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y + attemptsView.frame.size.height/4)];
+//                         } completion:^(BOOL finished){
+//                             //
+//                         }];
     }
-    if (setChangePinCode.isHidden){
-        [UIView animateWithDuration:0.3
-                              delay:0.0
-                            options:UIViewAnimationOptionTransitionCrossDissolve
-                         animations:^{
-                         [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y - 20)];
-                         } completion:^(BOOL finished){
-                        //
-                         }];
-    }
+//    if (setChangePinCode.isHidden){
+//        [UIView animateWithDuration:0.3
+//                              delay:0.0
+//                            options:UIViewAnimationOptionTransitionCrossDissolve
+//                         animations:^{
+//                         [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y - 20)];
+//                         } completion:^(BOOL finished){
+//                        //
+//                         }];
+//    }
     
     [[NSUserDefaults standardUserDefaults] setBool:sw.isOn forKey:PIN_PROTECTION_ID];
 }
@@ -233,15 +233,15 @@
     [self dismissViewControllerAnimated:YES completion:^() {
         [[NSUserDefaults standardUserDefaults] setObject:controller.passcode forKey:PIN_CODE];
         [setChangePinCode setTitle:NSLocalizedString(@"ChangePinCode", @"ChangePinCode") forState:UIControlStateNormal];
-        [pinCodeTypeView setHidden:YES];
-        [UIView animateWithDuration:0.3
-                              delay:0.0
-                            options:UIViewAnimationOptionTransitionCrossDissolve
-                         animations:^{
-                             [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y + attemptsView.frame.size.height/4)];
-                         } completion:^(BOOL finished){
-                             //
-                         }];
+//        [pinCodeTypeView setHidden:YES];
+//        [UIView animateWithDuration:0.3
+//                              delay:0.0
+//                            options:UIViewAnimationOptionTransitionCrossDissolve
+//                         animations:^{
+//                             [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y + attemptsView.frame.size.height/4)];
+//                         } completion:^(BOOL finished){
+//                             //
+//                         }];
     }];
 }
 
@@ -278,7 +278,8 @@
 
 - (void)orientationChanged:(NSNotification *)notification{
     [pinCodeTurnOnOffView setCenter:CGPointMake([UIScreen mainScreen].bounds.size.width/2, pinCodeTurnOnOffView.center.y)];
-    [pinCodeTypeView setCenter:CGPointMake([UIScreen mainScreen].bounds.size.width/2-20, pinCodeTypeView.center.y)];
+    [pinCodeButtonView setCenter:CGPointMake([UIScreen mainScreen].bounds.size.width/2-20, pinCodeButtonView.center.y)];
+//    [pinCodeTypeView setCenter:CGPointMake([UIScreen mainScreen].bounds.size.width/2-20, pinCodeTypeView.center.y)];
     [attemptsView setCenter:CGPointMake([UIScreen mainScreen].bounds.size.width/2-20, attemptsView.center.y)];
     [self adjustViewsForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
 }
@@ -305,7 +306,7 @@
         {
             //load the landscape view
             if (!isLandScape){
-                [scrollView setContentSize:CGSizeMake(scrollView.contentSize.width, 400)];
+                [scrollView setContentSize:CGSizeMake(scrollView.contentSize.width, 350)];
                 scrollView.delegate = self;
                 scrollView.scrollEnabled = YES;
                 isLandScape = YES;

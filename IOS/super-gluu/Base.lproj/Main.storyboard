@@ -428,7 +428,7 @@
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             </view>
-                                                            <view contentMode="scaleToFill" id="buR-oe-EBA" userLabel="PinCodeTypeView">
+                                                            <view hidden="YES" contentMode="scaleToFill" id="buR-oe-EBA" userLabel="PinCodeTypeView">
                                                                 <rect key="frame" x="0.0" y="132" width="293" height="54"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <subviews>
@@ -471,7 +471,7 @@
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             </view>
                                                             <view contentMode="scaleToFill" id="N81-D2-Te4" userLabel="AttemptsView">
-                                                                <rect key="frame" x="0.0" y="194" width="293" height="110"/>
+                                                                <rect key="frame" x="0.0" y="122" width="293" height="110"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <subviews>
                                                                     <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minimumValue="5" maximumValue="10" id="ypF-NP-SaC">
@@ -533,10 +533,10 @@
                         <outlet property="attemptsStepper" destination="ypF-NP-SaC" id="K0P-VK-KaH"/>
                         <outlet property="attemptsTextLabel" destination="c2u-0K-Y5H" id="BXe-yq-PLn"/>
                         <outlet property="attemptsView" destination="N81-D2-Te4" id="ZSu-5O-iTQ"/>
+                        <outlet property="pinCodeButtonView" destination="x8S-QX-qm5" id="OWC-wh-jp8"/>
                         <outlet property="pinCodeTurnOnOff" destination="pOW-Ri-4nm" id="aQp-Z5-hhU"/>
                         <outlet property="pinCodeTurnOnOffView" destination="7CL-mB-H9c" id="61j-ec-gMl"/>
                         <outlet property="pinCodeType" destination="5GO-p0-6WQ" id="HDt-J6-H9W"/>
-                        <outlet property="pinCodeTypeView" destination="buR-oe-EBA" id="SHB-vf-Yvv"/>
                         <outlet property="scrollView" destination="nM3-af-uXd" id="c3W-Uj-m0c"/>
                         <outlet property="setChangePinCode" destination="Cq9-yF-JLc" id="Xyo-lQ-p30"/>
                     </connections>

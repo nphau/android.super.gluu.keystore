@@ -17,6 +17,7 @@
     IBOutlet UISwitch* pinCodeTurnOnOff;
     IBOutlet UIView* pinCodeTurnOnOffView;
     IBOutlet UIView* pinCodeTypeView;
+    IBOutlet UIView* pinCodeButtonView;
     IBOutlet UIButton* setChangePinCode;
     IBOutlet UIView* attemptsView;
     IBOutlet UILabel* attemptsLabel;
