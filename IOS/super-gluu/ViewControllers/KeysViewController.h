@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CustomIOSAlertView.h"
 
-@interface KeysViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, CustomIOSAlertViewDelegate, UITextFieldDelegate>{
+@interface KeysViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>{
 
     NSMutableArray* keyHandleArray;
     IBOutlet UITableView* keyHandleTableView;
@@ -20,8 +19,6 @@
     IBOutlet UIButton* infoButton;
     int rowToDelete;
     NSIndexPath* selectedRow;
-    
-    CustomIOSAlertView *infoView;
     
     BOOL isLandScape;
 }

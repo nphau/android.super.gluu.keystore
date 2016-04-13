@@ -12,7 +12,7 @@
 #import "Constants.h"
 #import "OXPushManager.h"
 #import "LogManager.h"
-#import "CustomIOSAlertView.h"
+#import "SCLAlertView.h"
 #import "TokenEntity.h"
 #import "DataStoreManager.h"
 #import "PushView.h"
@@ -504,15 +504,9 @@
 }
 
 -(void)showAlertViewWithTitle:(NSString*)title andMessage:(NSString*)message{
-    CustomIOSAlertView *alertView = [CustomIOSAlertView alertWithTitle:title message:message];
-    [alertView show];
+    SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:title subTitle:message closeButtonTitle:@"Close" duration:0.0f];
 }
-
-//-(void)resetStatusView{
-//    [statusView setFrame:CGRectMake(statusView.frame.origin.x, 0, statusView.frame.size.width, 40)];
-//    isUserInfo = NO;
-//    [self showUserInfo:NO];
-//}
 
 #pragma mark - QRCodeReader Delegate Methods
 

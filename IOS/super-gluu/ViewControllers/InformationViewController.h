@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "TokenEntity.h"
-#import "CustomIOSAlertView.h"
 
-@interface InformationViewController : UIViewController <UIScrollViewDelegate, CustomIOSAlertViewDelegate>{
+@interface InformationViewController : UIViewController <UIScrollViewDelegate>{
 
     IBOutlet UILabel* informationLabel;
     

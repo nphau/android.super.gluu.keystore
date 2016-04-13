@@ -9,6 +9,7 @@
 #import "InformationViewController.h"
 #import "Constants.h"
 #import "DataStoreManager.h"
+#import "SCLAlertView.h"
 
 @implementation InformationViewController
 
@@ -70,20 +71,15 @@
 }
 
 -(IBAction)delete:(id)sender{
-    CustomIOSAlertView* alertView = [CustomIOSAlertView alertWithTitle:NSLocalizedString(@"Delete", @"Delete") message:NSLocalizedString(@"DeleteKeyHandle", @"Delete KeyHandle")];
-    [alertView setButtonTitles:[NSArray arrayWithObjects: NSLocalizedString(@"YES", @"YES"), NSLocalizedString(@"NO", @"NO"), nil]];
-    [alertView setButtonColors:[NSArray arrayWithObjects:[UIColor redColor], [UIColor greenColor], nil]];
-    alertView.delegate = self;
-    [alertView show];
-}
-
-#pragma mark CustomIOS7AlertView Delegate
-
--(void)customIOS7dialogButtonTouchUpInside:(id)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 0){
+    SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert addButton:NSLocalizedString(@"YES", @"YES") actionBlock:^(void) {
+        NSLog(@"YES clicked");
         [self deleteKey];
-    }
-    [alertView close];
+    }];
+    [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
+        NSLog(@"NO clicked");
+    }];
+    [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Delete", @"Delete") subTitle:NSLocalizedString(@"DeleteKeyHandle", @"Delete KeyHandle") closeButtonTitle:nil duration:0.0f];
 }
 
 -(void)deleteKey{

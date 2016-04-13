@@ -90,6 +90,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Super Gluu/NHNetworkTime.framework"
   install_framework "Pods-Super Gluu/NSHash.framework"
   install_framework "Pods-Super Gluu/QRCodeReaderViewController.framework"
+  install_framework "Pods-Super Gluu/SCLAlertView_Objective_C.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Super Gluu/AFNetworking.framework"
@@ -98,4 +99,5 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Super Gluu/NHNetworkTime.framework"
   install_framework "Pods-Super Gluu/NSHash.framework"
   install_framework "Pods-Super Gluu/QRCodeReaderViewController.framework"
+  install_framework "Pods-Super Gluu/SCLAlertView_Objective_C.framework"
 fi

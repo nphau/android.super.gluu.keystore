@@ -190,9 +190,13 @@ static NSTimeInterval AnimationDuration = 0.3;
 }
 
 -(void)showKeyboard{
-    if([passcodeTextField canBecomeFirstResponder]){
-        [passcodeTextField becomeFirstResponder];
-    }
+    [self showScreenForPhase:0 animated:NO];
+    [passcodeTextField becomeFirstResponder];
+    [self.view layoutIfNeeded];
+}
+
+- (void)hideKeyboard{
+    [passcodeTextField resignFirstResponder];
 }
 
 - (void)viewDidLoad {

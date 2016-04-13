@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "PAPasscodeViewController.h"
-#import "CustomIOSAlertView.h"
 
 @interface PinCodeViewController : UIViewController <PAPasscodeViewControllerDelegate>{
 
@@ -23,6 +22,8 @@
     int countFailedPin;
     int minutes, seconds;
     NSTimer* timer;
+    
+    PAPasscodeViewController *passcodeViewController;
     
 }
 

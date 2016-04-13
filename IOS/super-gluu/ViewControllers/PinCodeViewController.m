@@ -9,6 +9,7 @@
 #import "PinCodeViewController.h"
 #import "Constants.h"
 #import "NSDate+NetworkClock.h"
+#import "SCLAlertView.h"
 
 #define MAIN_VIEW @"MainTabView"
 #define PIN_PROTECTION_ID @"enabledPinCode"
@@ -109,7 +110,7 @@
 }
 
 - (void)setPasscode {
-    PAPasscodeViewController *passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionSet];
+    passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionSet];
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         passcodeViewController.backgroundView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds style:UITableViewStyleGrouped];
     }
@@ -119,7 +120,7 @@
 }
 
 - (void)enterPasscode {
-    PAPasscodeViewController *passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionEnter];
+    passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionEnter];
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         passcodeViewController.backgroundView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds style:UITableViewStyleGrouped];
     }
@@ -250,7 +251,15 @@
 }
 
 -(void)showAlertView{
-    [[CustomIOSAlertView alertWithTitle:NSLocalizedString(@"Info", @"Info") message:NSLocalizedString(@"LastAttempts", @"LastAttempts")] show];
+    SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert addButton:@"Close" actionBlock:^(void) {
+        NSLog(@"Closed alert");
+        [passcodeViewController showKeyboard];
+    }];
+    [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:NSLocalizedString(@"LastAttempts", @"LastAttempts") closeButtonTitle:nil duration:0.0f];
+    [passcodeViewController hideKeyboard];
+
+//    [[CustomIOSAlertView alertWithTitle:NSLocalizedString(@"Info", @"Info") message:NSLocalizedString(@"LastAttempts", @"LastAttempts")] show];
 }
 
 @end

@@ -58,4 +58,7 @@ typedef enum {
 
 - (id)initForAction:(PasscodeAction)action;
 
+- (void)showKeyboard;
+- (void)hideKeyboard;
+
 @end

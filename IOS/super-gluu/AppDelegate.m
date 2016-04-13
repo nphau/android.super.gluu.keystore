@@ -10,7 +10,6 @@
 #import "TokenDevice.h"
 #import "Constants.h"
 #import "OXPushManager.h"
-#import "CustomIOSAlertView.h"
 #import "NHNetworkTime.h"
 #import <UbertestersSDK/Ubertesters.h>
 

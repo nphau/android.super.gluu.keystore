@@ -12,6 +12,7 @@
 #import "ApproveDenyViewController.h"
 #import "DataStoreManager.h"
 #import "UserLoginInfo.h"
+#import "SCLAlertView.h"
 
 @implementation LogsViewController{
 //    ApproveDenyViewController* approveDenyView;
@@ -44,23 +45,17 @@
     }
 }
 
-#pragma mark CustomIOS7AlertView Delegate
-
--(void)customIOS7dialogButtonTouchUpInside:(id)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if ([alertView tag] == 1 && buttonIndex == 0){
+-(IBAction)cleanLogs:(id)sender{
+    SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert addButton:NSLocalizedString(@"YES", @"YES") actionBlock:^(void) {
+        NSLog(@"YES clicked");
         [[DataStoreManager sharedInstance] deleteAllLogs];
         [self getLogs];
-    }
-    [alertView close];
-}
-
--(IBAction)cleanLogs:(id)sender{
-    CustomIOSAlertView *alertView = [CustomIOSAlertView alertWithTitle:NSLocalizedString(@"AlertTitle", @"Into") message:NSLocalizedString(@"ClearLogs", @"Clear Logs")];
-    [alertView setButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"YES", @"YES"), NSLocalizedString(@"NO", @"NO"), nil]];
-    [alertView setButtonColors:[NSArray arrayWithObjects:[UIColor redColor], [UIColor greenColor], nil]];
-    alertView.delegate = self;
-    alertView.tag = 1;
-    [alertView show];
+    }];
+    [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
+        NSLog(@"NO clicked");
+    }];
+    [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"AlertTitle", @"Into") subTitle:NSLocalizedString(@"ClearLogs", @"Clear Logs") closeButtonTitle:nil duration:0.0f];
 }
 
 #pragma mark UITableview Delegate
@@ -118,28 +113,12 @@
                     break;
             }
         }
-        CustomIOSAlertView *alertView = [CustomIOSAlertView alertWithTitle:@"Information" message:message];
-        alertView.delegate = self;
-        [alertView show];
+        SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+        [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:message closeButtonTitle:@"Close" duration:0.0f];
     } else {
         [self loadApproveDenyView:sender];
-//        [self performSegueWithIdentifier:@"LogInfo" sender:sender];
     }
 }
-
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-//    if ([[segue identifier] isEqualToString:@"LogInfo"]) {
-//        //     MyViewController *myVC = [segue destinationViewController];
-//        UINavigationController* dest = [segue destinationViewController];
-//        ApproveDenyViewController* approveDenyView = (id)[dest topViewController];
-//        if (approveDenyView != nil){
-//            approveDenyView.delegate = self;
-//            [approveDenyView setIsLogInfo:YES];
-//            UserLoginInfo* userInfo = [logsArray objectAtIndex:[sender tag]];
-//            [approveDenyView setUserInfo:userInfo];
-//        }
-//    }
-//}
 
 -(void)loadApproveDenyView:(id)sender{
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -155,14 +134,9 @@
 #pragma LicenseAgreementDelegates
 
 -(void)approveRequest{
-//    [approveDenyView.view removeFromSuperview];
-//    approveDenyView = nil;
 }
 
 -(void)denyRequest{
-//    [approveDenyView.view removeFromSuperview];
-//    [self initAnimationFromRigthToLeft];
-//    approveDenyView = nil;
 }
 
 -(void)initAnimationFromRigthToLeft{

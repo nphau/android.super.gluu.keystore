@@ -9,9 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "JTMaterialSwitch.h"
 #import "PAPasscodeViewController.h"
-#import "CustomIOSAlertView.h"
 
-@interface SettingsViewController : UIViewController <PAPasscodeViewControllerDelegate, CustomIOSAlertViewDelegate, UIScrollViewDelegate>{
+@interface SettingsViewController : UIViewController <PAPasscodeViewControllerDelegate, UIScrollViewDelegate>{
 
     IBOutlet UIScrollView* scrollView;
     IBOutlet UISwitch* pinCodeType;

@@ -11,13 +11,13 @@
 #import "TokenEntity.h"
 #import "DataStoreManager.h"
 #import "InformationViewController.h"
+#import "SCLAlertView.h"
 
 @implementation KeysViewController
 
 -(void)viewDidLoad{
     [super viewDidLoad];
     [self loadKeyHandlesFromDatabase];
-    [self initIfoView];
     
     UILongPressGestureRecognizer* longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(onLongPress:)];
     [longPressRecognizer setMinimumPressDuration:3.0];
@@ -60,17 +60,23 @@
         if (row != nil) {
             //Handle the long press on row
             NSLog(@"Cell title will be changed");
-            CustomIOSAlertView* alertView = [CustomIOSAlertView alertWithTitle:NSLocalizedString(@"AlertTitle", @"Into") message:NSLocalizedString(@"ChangeKeyHandleName", @"Change KeyHandle Name")];
-            [alertView setButtonTitles:[NSArray arrayWithObjects: NSLocalizedString(@"YES", @"YES"), NSLocalizedString(@"NO", @"NO"), nil]];
-            [alertView setButtonColors:[NSArray arrayWithObjects:[UIColor redColor], [UIColor greenColor], nil]];
-            alertView.delegate = self;
-            [alertView show];
+            SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+            [alert addButton:NSLocalizedString(@"YES", @"YES") actionBlock:^(void) {
+                NSLog(@"YES clicked");
+                NSLog(@"User wants to change keyHandleName");
+                KeyHandleCell *cell = (KeyHandleCell*)[keyHandleTableView cellForRowAtIndexPath:selectedRow];
+                UITextField* keyTextField = [cell keyHandleTextField];
+                [keyTextField setEnabled:YES];
+                [keyTextField becomeFirstResponder];
+                [keyTextField setReturnKeyType:UIReturnKeyDone];
+                keyTextField.delegate = self;
+            }];
+            [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
+                NSLog(@"NO clicked");
+            }];
+            [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"AlertTitle", @"Into") subTitle:NSLocalizedString(@"ChangeKeyHandleName", @"Change KeyHandle Name") closeButtonTitle:nil duration:0.0f];
         }
     }
-}
-
--(void)initIfoView{
-    infoView = [CustomIOSAlertView alertWithTitle:NSLocalizedString(@"AlertTitle", @"Into") message:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]];
 }
 
 -(void)loadKeyHandlesFromDatabase{
@@ -95,10 +101,6 @@
     }
 }
 
--(IBAction)onInfoClick:(id)sender{
-    [infoView show];
-}
-
 #pragma mark UITextField Delegate
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
@@ -110,25 +112,6 @@
     [[DataStoreManager sharedInstance]setTokenEntitiesNameByID:cell.accessibilityLabel newName:keyTextField.text];
     
     return YES;
-}
-
-#pragma mark CustomIOS7AlertView Delegate
-
--(void)customIOS7dialogButtonTouchUpInside:(id)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 0){
-        if (((CustomIOSAlertView*)alertView).tag == 2){
-            [self deleteRow];
-        } else {
-            NSLog(@"User wants to change keyHandleName");
-            KeyHandleCell *cell = (KeyHandleCell*)[keyHandleTableView cellForRowAtIndexPath:selectedRow];
-            UITextField* keyTextField = [cell keyHandleTextField];
-            [keyTextField setEnabled:YES];
-            [keyTextField becomeFirstResponder];
-            [keyTextField setReturnKeyType:UIReturnKeyDone];
-            keyTextField.delegate = self;
-        }
-    }
-    [alertView close];
 }
 
 #pragma mark UITableview Delegate
@@ -156,18 +139,19 @@
     [info setToken:tokenEntity];
     [self presentViewController:info animated:YES completion:nil];
 //    KeyHandleCell *cell = (KeyHandleCell*)[tableView cellForRowAtIndexPath:indexPath];
-
-//    [[CustomIOS7AlertView alertWithTitle:cell.keyHandleTextField.text message:cell.key] show];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     rowToDelete = (int)indexPath.row;
-    CustomIOSAlertView* alertView = [CustomIOSAlertView alertWithTitle:NSLocalizedString(@"Delete", @"Delete") message:NSLocalizedString(@"DeleteKeyHandle", @"Delete KeyHandle")];
-    [alertView setButtonTitles:[NSArray arrayWithObjects: NSLocalizedString(@"YES", @"YES"), NSLocalizedString(@"NO", @"NO"), nil]];
-    [alertView setButtonColors:[NSArray arrayWithObjects:[UIColor redColor], [UIColor greenColor], nil]];
-    alertView.delegate = self;
-    alertView.tag = 2;
-    [alertView show];
+    SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert addButton:NSLocalizedString(@"YES", @"YES") actionBlock:^(void) {
+        NSLog(@"YES clicked");
+        [self deleteRow];
+    }];
+    [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
+        NSLog(@"NO clicked");
+    }];
+    [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Delete", @"Delete") subTitle:NSLocalizedString(@"DeleteKeyHandle", @"Delete KeyHandle") closeButtonTitle:nil duration:0.0f];
 }
 
 -(void)deleteRow{

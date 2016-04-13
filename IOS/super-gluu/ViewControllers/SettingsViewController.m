@@ -10,6 +10,7 @@
 #import "Constants.h"
 #import "PinCodeViewController.h"
 #import "NSDate+NetworkClock.h"
+#import "SCLAlertView.h"
 
 @interface SettingsViewController ()
 
@@ -164,11 +165,19 @@
         message = NSLocalizedString(@"ChangePinCodeTitle", @"ChangePinCodeTitle");
         isPinCode = YES;
     }
-    CustomIOSAlertView* alertView = [CustomIOSAlertView alertWithTitle:title  message:message];
-    [alertView setButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"YES", @"YES"), NSLocalizedString(@"NO", @"NO"), nil]];
-    [alertView setButtonColors:[NSArray arrayWithObjects:[UIColor redColor], [UIColor greenColor], nil]];
-    alertView.delegate = self;
-    [alertView show];
+    SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert addButton:NSLocalizedString(@"YES", @"YES") actionBlock:^(void) {
+        NSLog(@"YES clicked");
+        if ([[NSUserDefaults standardUserDefaults] stringForKey:PIN_CODE] != nil){
+            [self changePinCode];
+        } else {
+            [self setPinCode];
+        }
+    }];
+    [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
+        NSLog(@"NO clicked");
+    }];
+    [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:title subTitle:message closeButtonTitle:nil duration:0.0f];
 }
 
 - (IBAction)attemptsValueChanged:(UIStepper *)sender {
@@ -177,20 +186,6 @@
     [attemptsLabel setText:[NSString stringWithFormat:@"%d", (int)value]];
     [[NSUserDefaults standardUserDefaults] setInteger:(int)value forKey:LOCKED_ATTEMPTS_COUNT];
 }
-
-#pragma mark CustomIOS7AlertView Delegate
-
--(void)customIOS7dialogButtonTouchUpInside:(id)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 0){
-        if ([[NSUserDefaults standardUserDefaults] stringForKey:PIN_CODE] != nil){
-            [self changePinCode];
-        } else {
-            [self setPinCode];
-        }
-    }
-    [alertView close];
-}
-
 
 -(void)changePinCode{
     PAPasscodeViewController *passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionChange];
@@ -224,9 +219,11 @@
         NSString* newPassword = controller.passcode;
         NSString* oldPassword = [[NSUserDefaults standardUserDefaults] objectForKey:PIN_CODE];
         if ([newPassword isEqualToString:oldPassword]){
-            [[CustomIOSAlertView alertWithTitle:NSLocalizedString(@"Info", @"Info") message:@"You cannot set a new Pin code the same like old"] show];
+            SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+            [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:@"You cannot set a new Pin code the same like old" closeButtonTitle:@"Close" duration:0.0f];
         } else {
-            [[CustomIOSAlertView alertWithTitle:NSLocalizedString(@"Info", @"Info") message:@"You have successfully set a new Pin code"] show];
+            SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+            [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:@"You have successfully set a new Pin code" closeButtonTitle:@"Close" duration:0.0f];
             [[NSUserDefaults standardUserDefaults] setObject:controller.passcode forKey:PIN_CODE];
         }
     }];
@@ -270,7 +267,8 @@
 }
 
 -(void)showAlertView{
-    [[CustomIOSAlertView alertWithTitle:NSLocalizedString(@"Info", @"Info") message:NSLocalizedString(@"LastAttempts", @"LastAttempts")] show];
+    SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:NSLocalizedString(@"LastAttempts", @"LastAttempts") closeButtonTitle:@"Close" duration:0.0f];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '2877AF604097B7A0C1B62EB1'
+               BlueprintIdentifier = '4F8107A930D0742F6A0C322D'
                BlueprintName = 'NHNetworkTime'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'NHNetworkTime.framework'>
