@@ -11,6 +11,7 @@
 		8C2D7832AC84C238165A41EC /* Pods_super_gluu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D24DEA30315C14CB94B564F /* Pods_super_gluu.framework */; };
 		BB18D05C1CBCFFAE00A73733 /* PAPasscodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB18D05B1CBCFFAE00A73733 /* PAPasscodeViewController.m */; };
 		BB2458FE1CBD59D600035B5B /* gluuIconAlert.png in Resources */ = {isa = PBXBuildFile; fileRef = BB2458FD1CBD59D600035B5B /* gluuIconAlert.png */; };
+		BB2459021CBE7B6700035B5B /* NSMutableAttributedString+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = BB2459011CBE7B6700035B5B /* NSMutableAttributedString+Color.m */; };
 		BB37DE561C7E08320016D422 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE551C7E08320016D422 /* main.m */; };
 		BB37DE591C7E08320016D422 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE581C7E08320016D422 /* AppDelegate.m */; };
 		BB37DE5C1C7E08320016D422 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE5B1C7E08320016D422 /* MainViewController.m */; };
@@ -115,6 +116,8 @@
 		BB18D05A1CBCFFAE00A73733 /* PAPasscodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PAPasscodeViewController.h; path = PAPasscode/PAPasscodeViewController.h; sourceTree = "<group>"; };
 		BB18D05B1CBCFFAE00A73733 /* PAPasscodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAPasscodeViewController.m; path = PAPasscode/PAPasscodeViewController.m; sourceTree = "<group>"; };
 		BB2458FD1CBD59D600035B5B /* gluuIconAlert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gluuIconAlert.png; sourceTree = "<group>"; };
+		BB2459001CBE7B6700035B5B /* NSMutableAttributedString+Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableAttributedString+Color.h"; path = "NSMutableAttributedString+Color/NSMutableAttributedString+Color.h"; sourceTree = "<group>"; };
+		BB2459011CBE7B6700035B5B /* NSMutableAttributedString+Color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableAttributedString+Color.m"; path = "NSMutableAttributedString+Color/NSMutableAttributedString+Color.m"; sourceTree = "<group>"; };
 		BB37DE511C7E08320016D422 /* Super Gluu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Super Gluu.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB37DE551C7E08320016D422 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BB37DE571C7E08320016D422 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -321,6 +324,15 @@
 				BB18D05B1CBCFFAE00A73733 /* PAPasscodeViewController.m */,
 			);
 			name = PAPasscode;
+			sourceTree = "<group>";
+		};
+		BB2458FF1CBE7B4F00035B5B /* NSMutableAttributedString+Color */ = {
+			isa = PBXGroup;
+			children = (
+				BB2459001CBE7B6700035B5B /* NSMutableAttributedString+Color.h */,
+				BB2459011CBE7B6700035B5B /* NSMutableAttributedString+Color.m */,
+			);
+			name = "NSMutableAttributedString+Color";
 			sourceTree = "<group>";
 		};
 		BB37DE481C7E08320016D422 = {
@@ -618,6 +630,7 @@
 		BB37DEF61C7E0B8E0016D422 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				BB2458FF1CBE7B4F00035B5B /* NSMutableAttributedString+Color */,
 				BB18D0591CBCFF9600A73733 /* PAPasscode */,
 				BBB7C0FF1C9042A000833B12 /* NSDate-Time-Ago */,
 				BB37DEF71C7E0B8E0016D422 /* Base64 */,
@@ -941,6 +954,7 @@
 				BB37DF131C7E0B8E0016D422 /* DataStoreManager.m in Sources */,
 				BB37DF3C1C7E0B8E0016D422 /* LogsViewController.m in Sources */,
 				BB37DF211C7E0B8E0016D422 /* UserLoginInfo.m in Sources */,
+				BB2459021CBE7B6700035B5B /* NSMutableAttributedString+Color.m in Sources */,
 				BB37DF151C7E0B8E0016D422 /* RawMessageCodec.m in Sources */,
 				BB3BE1641C87022C00817A46 /* LicenseAgreementView.m in Sources */,
 				BB37DF1E1C7E0B8E0016D422 /* U2FKeyImpl.m in Sources */,

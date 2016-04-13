@@ -254,7 +254,9 @@
     }
     if (countFailedPin == attemptsCount){
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:IS_APP_LOCKED];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSDate networkDate] forKey:LOCKED_DATE];//[NSDate date]
+        NSURL *url = [NSURL URLWithString:@"http://www.timeapi.org/utc/now"];
+        NSString *str = [[NSString alloc] initWithContentsOfURL:url usedEncoding:nil error:nil];
+        [[NSUserDefaults standardUserDefaults] setObject:str forKey:LOCKED_DATE];//[NSDate date]//[NSDate networkDate]
         [self performSelector:@selector(showPinView) withObject:nil afterDelay:1];
     }
 }

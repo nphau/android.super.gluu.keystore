@@ -9,6 +9,7 @@
 #import "LicenseAgreementView.h"
 #import "Constants.h"
 #import "PinCodeViewController.h"
+#import "NSMutableAttributedString+Color.h"
 
 #define LICENSE_AGREEMENT @"LicenseAgreement"
 #define MAIN_VIEW @"MainTabView"
@@ -38,11 +39,20 @@
     [[_acceptButton layer] setCornerRadius:CORNER_RADIUS];
     [[_acceptButton layer] setBorderWidth:2.0f];
     [[_acceptButton layer] setBorderColor:[UIColor colorWithRed:1/255.0 green:161/255.0 blue:97/255.0 alpha:1.0].CGColor];
+    [self colorHashtag];
 }
 
 -(void)initLocalization{
     [_titleLabel setText:NSLocalizedString(@"LicenseAgreementTitle", @"License Agreement")];
     [_acceptButton setTitle:NSLocalizedString(@"AcceptButtonTitle", @"Accept") forState:UIControlStateNormal];
+}
+
+-(void)colorHashtag
+{
+    NSString *licenceText = _licenseTextField.text;
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:licenceText];
+    [string setColorForText:@"https://www.gluu.org/privacy-policy/" withColor:[UIColor blueColor]];
+    _licenseTextField.attributedText = string;
 }
 
 -(IBAction)onLicenseAgreement:(id)sender{

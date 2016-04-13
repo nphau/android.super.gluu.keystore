@@ -9,6 +9,7 @@
 #import "PinCodeViewController.h"
 #import "Constants.h"
 #import "NSDate+NetworkClock.h"
+#import "NHNetworkClock.h"
 #import "SCLAlertView.h"
 
 #define MAIN_VIEW @"MainTabView"
@@ -29,8 +30,13 @@
     }
     [enterPinButton setHidden:YES];
     countFailedPin = 0;
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkTimeSyncCompleteNotification:) name:kNHNetworkTimeSyncCompleteNotification object:nil];
     [self checkIsAppLocked];
 }
+
+//-(void) networkTimeSyncCompleteNotification:(NSNotification*)notification{
+//    [self checkIsAppLocked];
+//}
 
 -(void)initWiget{
     [[nextButton layer] setMasksToBounds:YES];
@@ -65,13 +71,21 @@
         [self performSelector:@selector(checkPinCodeEnabled) withObject:nil afterDelay:0.01];
         return;
     }
-    NSDate* date = [[NSUserDefaults standardUserDefaults] objectForKey:LOCKED_DATE];
-    NSTimeInterval distanceBetweenDates = [date timeIntervalSinceNetworkDate];
+//    SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+//    [alert showWaiting:@"Syncing..." subTitle:nil closeButtonTitle:nil duration:5.0f];
+    NSString* dateStr = [[NSUserDefaults standardUserDefaults] stringForKey:LOCKED_DATE];
+    NSURL *url = [NSURL URLWithString:@"http://www.timeapi.org/utc/now"];
+    NSString *str = [[NSString alloc] initWithContentsOfURL:url usedEncoding:nil error:nil];
+//    [alert hideView];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yyyy-mm-dd'T'hh:mm:ss+00:00";
+    NSDate *dateNow = [dateFormatter dateFromString:str];
+    NSDate *date = [dateFormatter dateFromString:dateStr];
+    NSTimeInterval distanceBetweenDates = [dateNow timeIntervalSinceDate:date];
     int sec = (int)distanceBetweenDates;
     int min = sec / 60;
     sec = sec % 60;
     if (min < 10 || sec > 0){
-//        [titleLabel setText:[NSString stringWithFormat:NSLocalizedString(@"FailedPinCode", @"FailedPinCode"), countFailedPin]];
         sec = 600 - sec;
         minutes = 9 - min;
         minutes = minutes < 0 ? 0 : minutes;
@@ -146,15 +160,12 @@
 
 - (void)PAPasscodeViewControllerDidEnterAlternativePasscode:(PAPasscodeViewController *)controller {
     [self dismissViewControllerAnimated:YES completion:^() {
-//        [[[UIAlertView alloc] initWithTitle:nil message:@"Alternative Passcode entered correctly" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }];
 }
 
 - (void)PAPasscodeViewControllerDidEnterPasscode:(PAPasscodeViewController *)controller {
     [self dismissViewControllerAnimated:YES completion:^() {
         [self loadMainView];
-//        [self performSegueWithIdentifier:MAIN_VIEW sender:self];
-//        [[[UIAlertView alloc] initWithTitle:nil message:@"Passcode entered correctly" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }];
 }
 
@@ -219,7 +230,9 @@
     minutesLabel.text = [NSString stringWithFormat:@"%i", minutes];
     secondsLabel.text = [NSString stringWithFormat:@":%i%i", seconds, seconds];
     timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(tick) userInfo:nil repeats:YES];
-    [[NSUserDefaults standardUserDefaults] setObject:[NSDate networkDate] forKey:LOCKED_DATE];//[NSDate date]
+    NSURL *url = [NSURL URLWithString:@"http://www.timeapi.org/utc/now"];
+    NSString *str = [[NSString alloc] initWithContentsOfURL:url usedEncoding:nil error:nil];
+    [[NSUserDefaults standardUserDefaults] setObject:str forKey:LOCKED_DATE];//[NSDate date]//[NSDate networkDate]
     
 }
 

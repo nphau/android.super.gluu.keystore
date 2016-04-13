@@ -41,12 +41,12 @@
 }
 
 -(void)checkDeviceOrientation{
-//    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
-//    {
+    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
+    {
         // code for landscape orientation
-        //        [self adjustViewsForOrientation:UIInterfaceOrientationLandscapeLeft];
-        [[NSNotificationCenter defaultCenter] postNotificationName:UIDeviceOrientationDidChangeNotification object:nil];
-//    }
+                [self adjustViewsForOrientation:UIInterfaceOrientationLandscapeLeft];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:UIDeviceOrientationDidChangeNotification object:nil];
+    }
 }
 
 -(void)onLongPress:(UILongPressGestureRecognizer*)pGesture
@@ -209,6 +209,8 @@
             if (!isLandScape){
                 [keyRenameInfoLabel setCenter:CGPointMake(keyRenameInfoLabel.center.x, [UIScreen mainScreen].bounds.size.height - 125)];
                 isLandScape = YES;
+            } else {
+                [keyRenameInfoLabel setCenter:CGPointMake(keyRenameInfoLabel.center.x, [UIScreen mainScreen].bounds.size.height - 125)];
             }
             
         }

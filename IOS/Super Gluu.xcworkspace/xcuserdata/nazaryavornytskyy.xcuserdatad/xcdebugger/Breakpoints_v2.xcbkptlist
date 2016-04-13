@@ -89,22 +89,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "super-gluu/ViewControllers/KeysViewController.m"
-            timestampString = "482238390.461206"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
-            landmarkName = "-adjustViewsForOrientation:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "super-gluu/ApiService/ApiServiceManager/ApiServiceManager.m"
             timestampString = "482060078.64841"
             startingColumnNumber = "9223372036854775807"
@@ -138,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "super-gluu/ViewControllers/PinCodeViewController.m"
-            timestampString = "482167545.146125"
+            timestampString = "482251312.003992"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "73"
-            endingLineNumber = "73"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
             landmarkName = "-checkIsAppLocked"
             landmarkType = "5">
          </BreakpointContent>
@@ -160,6 +144,22 @@
             startingLineNumber = "458"
             endingLineNumber = "458"
             landmarkName = "-changeOrientationForIOS8:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "super-gluu/ViewControllers/PinCodeViewController.m"
+            timestampString = "482251312.003992"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
+            landmarkName = "-checkIsAppLocked"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
