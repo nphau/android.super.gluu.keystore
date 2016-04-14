@@ -15,7 +15,7 @@
 }
 
 @property (strong, nonatomic) NSString* key;
-@property (strong, nonatomic) IBOutlet UITextField* keyHandleTextField;
+@property (strong, nonatomic) IBOutlet UILabel* keyHandleNameLabel;
 
 -(void)setData:(TokenEntity*)tokenEntity;
 

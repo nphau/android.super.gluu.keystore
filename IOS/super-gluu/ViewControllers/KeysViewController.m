@@ -68,13 +68,7 @@
             SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
             [alert addButton:NSLocalizedString(@"YES", @"YES") actionBlock:^(void) {
                 NSLog(@"YES clicked");
-                NSLog(@"User wants to change keyHandleName");
-                KeyHandleCell *cell = (KeyHandleCell*)[keyHandleTableView cellForRowAtIndexPath:selectedRow];
-                UITextField* keyTextField = [cell keyHandleTextField];
-                [keyTextField setEnabled:YES];
-                [keyTextField becomeFirstResponder];
-                [keyTextField setReturnKeyType:UIReturnKeyDone];
-                keyTextField.delegate = self;
+                [self showEditNameAlert];
             }];
             [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
                 NSLog(@"NO clicked");
@@ -82,6 +76,31 @@
             [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"AlertTitle", @"Into") subTitle:NSLocalizedString(@"ChangeKeyHandleName", @"Change KeyHandle Name") closeButtonTitle:nil duration:0.0f];
         }
     }
+}
+
+-(void)showEditNameAlert{
+    KeyHandleCell *cell = (KeyHandleCell*)[keyHandleTableView cellForRowAtIndexPath:selectedRow];
+    UILabel* keyTextLabel = [cell keyHandleNameLabel];
+    
+    SCLAlertView *alert = [[SCLAlertView alloc] init];
+    UITextField *textField = [alert addTextField:@"Enter key's name" andText:keyTextLabel.text];
+    
+    [alert addButton:@"Save" actionBlock:^(void) {
+        NSLog(@"Text value: %@", textField.text);
+        if ([self checkUniqueName:keyTextLabel.text andID:cell.accessibilityLabel]){
+            [[DataStoreManager sharedInstance] setTokenEntitiesNameByID:cell.accessibilityLabel newName:textField.text];
+            [self loadKeyHandlesFromDatabase];
+        } else {
+            SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+            [alert addButton:@"Close" actionBlock:^(void) {
+                NSLog(@"Close clicked");
+                [textField becomeFirstResponder];
+            }];
+            [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:@"Name is exist, please enter another one" closeButtonTitle:nil duration:0.0f];
+        }
+    }];
+    
+    [alert showEdit:self title:@"New key's name" subTitle:@"Enter new key's name" closeButtonTitle:@"Close" duration:0.0f];
 }
 
 -(void)loadKeyHandlesFromDatabase{
@@ -104,33 +123,6 @@
         [keyHandleLabel setText:[NSString stringWithFormat:@"%@:", NSLocalizedString(@"AvailableKeyHandles", @"Available KeyHandles")]];
         [keyRenameInfoLabel setHidden:YES];
     }
-}
-
-#pragma mark UITextField Delegate
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    textField.tintColor = UIColor.blueColor;
-}
-
--(BOOL)textFieldShouldReturn:(UITextField *)textField{
-    [textField resignFirstResponder];
-    
-    KeyHandleCell *cell = (KeyHandleCell*)[keyHandleTableView cellForRowAtIndexPath:selectedRow];
-    UITextField* keyTextField = [cell keyHandleTextField];
-    if ([self checkUniqueName:keyTextField.text andID:cell.accessibilityLabel]){
-        [keyTextField setEnabled:NO];
-        [[DataStoreManager sharedInstance] setTokenEntitiesNameByID:cell.accessibilityLabel newName:keyTextField.text];
-    } else {
-        SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-        [alert addButton:@"Close" actionBlock:^(void) {
-            NSLog(@"Close clicked");
-            [textField becomeFirstResponder];
-        }];
-        [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:@"Name is exist, please enter another one" closeButtonTitle:nil duration:0.0f];
-    }
-    
-    return YES;
 }
 
 -(BOOL)checkUniqueName:(NSString*)name andID:(NSString*)keyID{

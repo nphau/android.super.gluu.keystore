@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface KeysViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>{
+@interface KeysViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>{
 
     NSMutableArray* keyHandleArray;
     IBOutlet UITableView* keyHandleTableView;

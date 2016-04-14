@@ -614,6 +614,42 @@ SCLTimerDisplay *buttonTimer;
     return txt;
 }
 
+- (SCLTextView *)addTextField:(NSString *)title andText:(NSString *)text
+{
+    [self addObservers];
+    
+    // Add text field
+    SCLTextView *txt = [[SCLTextView alloc] init];
+    txt.font = [UIFont fontWithName:_bodyTextFontFamily size:_bodyFontSize];
+    txt.delegate = self;
+    
+    // Update view height
+    self.windowHeight += txt.bounds.size.height + 10.0f;
+    
+    if (title != nil)
+    {
+        txt.placeholder = title;
+    }
+    
+    if (text != nil)
+    {
+        txt.text = text;
+    }
+    
+    [_contentView addSubview:txt];
+    [_inputs addObject:txt];
+    
+    // If there are other fields in the inputs array, get the previous field and set the
+    // return key type on that to next.
+    if (_inputs.count > 1)
+    {
+        NSUInteger indexOfCurrentField = [_inputs indexOfObject:txt];
+        SCLTextView *priorField = _inputs[indexOfCurrentField - 1];
+        priorField.returnKeyType = UIReturnKeyNext;
+    }
+    return txt;
+}
+
 - (void)addCustomTextField:(UITextField *)textField
 {
     // Update view height

@@ -13,9 +13,8 @@
 
 -(void)setData:(TokenEntity*)tokenEntity{
     _key = [[tokenEntity keyHandle] base64EncodedString];
-    [self.keyHandleTextField setText:[tokenEntity keyName]];
+    _keyHandleNameLabel.text = [tokenEntity keyName];
     keyHandleTime.text = [self getTime:[tokenEntity pairingTime]];
-    [[_keyHandleTextField valueForKey:@"textInputTraits"] setValue:[UIColor clearColor] forKey:@"insertionPointColor"];
     self.accessibilityLabel = [tokenEntity application];
 }
 
