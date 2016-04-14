@@ -87,16 +87,12 @@
     
     [alert addButton:@"Save" actionBlock:^(void) {
         NSLog(@"Text value: %@", textField.text);
-        if ([self checkUniqueName:keyTextLabel.text andID:cell.accessibilityLabel]){
+        if ([self checkUniqueName:textField.text andID:cell.accessibilityLabel]){
             [[DataStoreManager sharedInstance] setTokenEntitiesNameByID:cell.accessibilityLabel newName:textField.text];
             [self loadKeyHandlesFromDatabase];
         } else {
             SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-            [alert addButton:@"Close" actionBlock:^(void) {
-                NSLog(@"Close clicked");
-                [textField becomeFirstResponder];
-            }];
-            [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:@"Name is exist, please enter another one" closeButtonTitle:nil duration:0.0f];
+            [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:@"Name is exist or empty, please enter another one" closeButtonTitle:@"Close" duration:0.0f];
         }
     }];
     
@@ -126,6 +122,8 @@
 }
 
 -(BOOL)checkUniqueName:(NSString*)name andID:(NSString*)keyID{
+    if (name == nil) return NO;
+    if (name.length == 0) return NO;
     for (NSString* cellKey in [keyCells allKeys]){
         if (![cellKey isEqualToString:keyID]){
             if ([[keyCells valueForKey:cellKey] isEqualToString:name]){

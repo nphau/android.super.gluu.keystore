@@ -193,7 +193,7 @@
 }
 
 -(void)changePinCode{
-    PAPasscodeViewController *passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionChange];
+    passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionChange];
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         passcodeViewController.backgroundView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds style:UITableViewStyleGrouped];
     }
@@ -204,7 +204,7 @@
 }
 
 -(void) setPinCode{
-    PAPasscodeViewController *passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionSet];
+    passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionSet];
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         passcodeViewController.backgroundView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds style:UITableViewStyleGrouped];
     }
@@ -275,7 +275,12 @@
 
 -(void)showAlertView{
     SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-    [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:NSLocalizedString(@"LastAttempts", @"LastAttempts") closeButtonTitle:@"Close" duration:0.0f];
+    [alert addButton:@"Close" actionBlock:^(void) {
+        NSLog(@"Closed alert");
+        [passcodeViewController showKeyboard];
+    }];
+    [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:NSLocalizedString(@"LastAttempts", @"LastAttempts") closeButtonTitle:nil duration:0.0f];
+    [passcodeViewController hideKeyboard];
 }
 
 - (void)didReceiveMemoryWarning {

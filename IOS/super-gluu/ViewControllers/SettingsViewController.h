@@ -34,6 +34,8 @@
     
     int countFailedPin;
     
+    PAPasscodeViewController *passcodeViewController;
+    
 }
 
 @end
