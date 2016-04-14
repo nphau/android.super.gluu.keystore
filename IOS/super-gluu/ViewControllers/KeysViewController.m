@@ -31,6 +31,11 @@
     uniqueKeyLabel.text = NSLocalizedString(@"UniqueKeyLabel", @"UniqueKeyLabel");
     
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initPushView) name:NOTIFICATION_PUSH_ONLINE object:nil];
+}
+
+-(void)initPushView{
+    [self.tabBarController setSelectedIndex:0];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -102,6 +107,11 @@
 }
 
 #pragma mark UITextField Delegate
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    textField.tintColor = UIColor.blueColor;
+}
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];

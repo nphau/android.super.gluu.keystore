@@ -34,6 +34,11 @@
     [self initWidget];
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
     countFailedPin=0;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initPushView) name:NOTIFICATION_PUSH_ONLINE object:nil];
+}
+
+-(void)initPushView{
+    [self.tabBarController setSelectedIndex:0];
 }
 
 -(void)viewWillAppear:(BOOL)animated{

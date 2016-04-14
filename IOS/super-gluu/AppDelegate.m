@@ -103,7 +103,20 @@
 
 - (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     if ( application.applicationState == UIApplicationStateActive ){
-        // app was already in the foreground and we skip push notifications
+        // app was already in the foreground and we show custom push notifications view
+        if (userInfo != nil) {
+            NSData *data;
+            NSString* requestString = [userInfo objectForKey:@"request"];
+            if ([requestString isKindOfClass:[NSDictionary class]]){
+                data = [NSJSONSerialization dataWithJSONObject:requestString options:NSJSONWritingPrettyPrinted error:nil];
+            } else {
+                data = [requestString dataUsingEncoding:NSUTF8StringEncoding];
+            }
+            NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            if (jsonDictionary != nil){
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_ONLINE object:jsonDictionary];
+            }
+        }
     } else {
         // app was just brought from background to foreground and we wait when user click or slide on push notification
         _pushNotificationRequest = userInfo;

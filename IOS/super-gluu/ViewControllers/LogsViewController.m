@@ -22,12 +22,17 @@
 
     [super viewDidLoad];
     [self getLogs];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initPushView) name:NOTIFICATION_PUSH_ONLINE object:nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self getLogs];
     [logsTableView reloadData];
+}
+
+-(void)initPushView{
+    [self.tabBarController setSelectedIndex:0];
 }
 
 -(void)getLogs{

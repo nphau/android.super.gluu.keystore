@@ -10,5 +10,6 @@
 
 -(void)approveRequest;
 -(void)denyRequest;
+-(void)openRequest;
 
 @end

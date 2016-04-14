@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LecenseAgreementDelegate.h"
 
-@interface PushView : UIViewController
+@interface PushView : UIControl
+
+@property (nonatomic,assign)  id <LicenseAgreementDelegate> delegate;
+@property (strong, nonatomic) UILabel* pushLabel;
+
+-(id)init;
+- (id)initWithFrame:(CGRect)frame;
 
 @end

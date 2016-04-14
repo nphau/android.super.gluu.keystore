@@ -30,7 +30,6 @@
     [self initQRScanner];
     [self initLocation];
     [self initLocalization];
-//    [self initPushView];
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
     [self checkDeviceOrientation];
 
@@ -213,18 +212,23 @@
     [[self.tabBarController.tabBar.items objectAtIndex:2] setTitle:NSLocalizedString(@"Keys", @"Keys")];
 }
 
-- (void) initPushView{
-    PushView* pushView = [[PushView alloc] init];
-    pushView.view.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
-    [UIView animateWithDuration:0.5
-                          delay:0.1
-                        options: UIViewAnimationOptionCurveEaseIn
-                     animations:^{
-                         [pushView.view setFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 120)];
-                     }
-                     completion:^(BOOL finished){
-                     }];
-    [self.view addSubview:pushView.view];
+- (void) initPushView:(NSNotification*)notification{
+    //Make sound and vibrate like push
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    AudioServicesPlaySystemSound(1003);//push sound
+    scanJsonDictionary = [notification object];
+    PushView* pushView = [self.view viewWithTag:3];
+    if (pushView == nil){
+        pushView = [[PushView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 120)];
+        pushView.tag = 3;
+        pushView.delegate = self;
+        pushView.pushLabel.text = [NSString stringWithFormat:@"Login request to: %@", [scanJsonDictionary valueForKey:@"issuer"]];
+        [pushView setUserInteractionEnabled:YES];
+        [pushView addTarget:self action:@selector(loadApproveDenyView) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:pushView];
+        [self initUserInfo:scanJsonDictionary];
+        [self performSelector:@selector(hidePushView) withObject:nil afterDelay:10];
+    }
 }
 
 -(void)initNotifications{
@@ -240,6 +244,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationRecieved:) name:NOTIFICATION_PUSH_RECEIVED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationRecieved:) name:NOTIFICATION_PUSH_RECEIVED_APPROVE object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationRecieved:) name:NOTIFICATION_PUSH_RECEIVED_DENY object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initPushView:) name:NOTIFICATION_PUSH_ONLINE object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationRecieved:) name:NOTIFICATION_DECLINE_FAILED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationRecieved:) name:NOTIFICATION_DECLINE_SUCCESS object:nil];
@@ -376,6 +381,11 @@
     [self onDecline];
 }
 
+-(void)openRequest{
+    [self hidePushView];
+    [self loadApproveDenyView];
+}
+
 //# ------------ END -----------------------------
 
 -(void)initQRScanner{
@@ -446,6 +456,7 @@
 
 - (IBAction)scanAction:(id)sender
 {
+    [self hidePushView];
     [self initQRScanner];
     if ([QRCodeReader isAvailable]){
         [self updateStatus:NSLocalizedString(@"QRCodeScanning", @"QR Code Scanning")];
@@ -461,6 +472,10 @@
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
     OXPushManager* oxPushManager = [[OXPushManager alloc] init];
     [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:NO];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                             selector:@selector(hidePushView)
+                                               object:nil];
+    [self hidePushView];
 }
 
 -(void)onDecline{
@@ -470,6 +485,18 @@
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
     OXPushManager* oxPushManager = [[OXPushManager alloc] init];
     [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:YES];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                             selector:@selector(hidePushView)
+                                               object:nil];
+    [self hidePushView];
+}
+
+-(void)hidePushView{
+    PushView* pushView = [self.view viewWithTag:3];
+    if (pushView != nil){
+        [pushView removeFromSuperview];
+    }
+    scanJsonDictionary = nil;
 }
 
 -(void)showAlertViewWithTitle:(NSString*)title andMessage:(NSString*)message{
