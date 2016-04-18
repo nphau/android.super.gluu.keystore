@@ -35,6 +35,10 @@
 }
 
 -(void)initWiget{
+    [_titleLabel setHidden:YES];
+    [_licenseTextField setHidden:YES];
+    [_acceptButtonView setHidden:YES];
+    
     [[_acceptButton layer] setMasksToBounds:YES];
     [[_acceptButton layer] setCornerRadius:CORNER_RADIUS];
     [[_acceptButton layer] setBorderWidth:2.0f];
@@ -50,6 +54,7 @@
 -(void)colorHashtag
 {
     NSString *licenceText = _licenseTextField.text;
+    if (licenceText == nil) return;
     NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:licenceText];
     [string setColorForText:@"https://www.gluu.org/privacy-policy/" withColor:[UIColor blueColor]];
     _licenseTextField.attributedText = string;
@@ -64,6 +69,10 @@
     BOOL isLicenseAgreement = [[NSUserDefaults standardUserDefaults] boolForKey:LICENSE_AGREEMENT];
     if (isLicenseAgreement){
         [self checkPinProtection];
+    } else {
+        [_titleLabel setHidden:NO];
+        [_licenseTextField setHidden:NO];
+        [_acceptButtonView setHidden:NO];
     }
 }
 

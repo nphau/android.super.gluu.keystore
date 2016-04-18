@@ -48,6 +48,16 @@
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
     [approveImage setCenter:approveRequest.center];
     [denyImage setCenter:denyRequest.center];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openURL:)];
+    serverUrlLabel.userInteractionEnabled = YES;
+    [serverUrlLabel addGestureRecognizer:tap];
+}
+
+- (void)openURL:(UITapGestureRecognizer *)tap
+{
+    UILabel *label = (UILabel *)tap.view;
+    NSURL *targetURL = [NSURL URLWithString:label.text];
+    [[UIApplication sharedApplication] openURL:targetURL];
 }
 
 -(void)viewWillAppear:(BOOL)animated{

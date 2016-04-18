@@ -43,7 +43,7 @@
 "AlertTitle" = "Info";
 "AlertTitleSuccess" = "Success";
 "AlertTitleFailed" = "Failed";
-"AlertMessageNoQRScanning" = "Your device doesn't support QR Scanning";
+"AlertMessageNoQRScanning" = "Camera isn't available or please turn off camera restriction";
 "WrongQRImage" = "You scanned the wrong QR Code!";
 "OK" = "OK";
 "Cancel" = "Cancel";

@@ -15,6 +15,7 @@
 
 @property (strong, nonatomic) IBOutlet UILabel* titleLabel;
 @property (strong, nonatomic) IBOutlet UITextView* licenseTextField;
+@property (strong, nonatomic) IBOutlet UIView* acceptButtonView;
 @property (strong, nonatomic) IBOutlet UIButton* acceptButton;
 
 @end

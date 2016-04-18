@@ -229,7 +229,20 @@
     seconds = 0;
     minutesLabel.text = [NSString stringWithFormat:@"%i", minutes];
     secondsLabel.text = [NSString stringWithFormat:@":%i%i", seconds, seconds];
-    timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(tick) userInfo:nil repeats:YES];
+    //run timer with background support
+    UIBackgroundTaskIdentifier bgTask =0;
+    UIApplication  *app = [UIApplication sharedApplication];
+    bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
+        [app endBackgroundTask:bgTask];
+    }];
+    
+    timer = [NSTimer
+             scheduledTimerWithTimeInterval:1.0
+             target:self
+             selector:@selector(tick)
+             userInfo:nil
+             repeats:YES];
+//    timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(tick) userInfo:nil repeats:YES];
     NSURL *url = [NSURL URLWithString:@"http://www.timeapi.org/utc/now"];
     NSString *str = [[NSString alloc] initWithContentsOfURL:url usedEncoding:nil error:nil];
     [[NSUserDefaults standardUserDefaults] setObject:str forKey:LOCKED_DATE];//[NSDate date]//[NSDate networkDate]

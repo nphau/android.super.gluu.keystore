@@ -1279,6 +1279,7 @@ In the event you are using the Services in connection with a device provided by 
                     <size key="freeformSize" width="320" height="568"/>
                     <connections>
                         <outlet property="acceptButton" destination="QGX-4W-DOt" id="Ss9-eb-ofG"/>
+                        <outlet property="acceptButtonView" destination="Gxd-l6-QDT" id="Rq0-zV-Pot"/>
                         <outlet property="licenseTextField" destination="UEW-oJ-SWQ" id="1g8-jc-PdA"/>
                         <outlet property="titleLabel" destination="UpH-ae-WJf" id="ndb-hA-xZh"/>
                     </connections>
