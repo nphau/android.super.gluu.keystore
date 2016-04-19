@@ -28,7 +28,6 @@
     [self initWiget];
     [self initNotifications];
     [self initQRScanner];
-    [self initLocation];
     [self initLocalization];
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
     [self checkDeviceOrientation];
@@ -296,9 +295,10 @@
             message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"TwoStep", @"TwoStep Authentication"), NSLocalizedString(@"StartAuthentication", @"Authentication...")];
         }
     } else
-    if ([[notification name] isEqualToString:NOTIFICATION_ERROR]){
+    if ([[notification name] isEqualToString:NOTIFICATION_ERROR] || [[notification name] isEqualToString:@"ERRROR"]){
         message = [notification object];
         [[UserLoginInfo sharedInstance] setLogState:UNKNOWN_ERROR];
+        [[UserLoginInfo sharedInstance] setErrorMessage:message];
         [[DataStoreManager sharedInstance] saveUserLoginInfo:[UserLoginInfo sharedInstance]];
         [scanButton setEnabled:YES];
     } else 
@@ -565,69 +565,6 @@
     }];
 }
 
--(void)initLocation{
-    locationManager = [[CLLocationManager alloc] init];
-    locationManager.delegate = self;
-    // Check for iOS 8. Without this guard the code will crash with "unknown selector" on iOS 7.
-    if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
-        [locationManager requestWhenInUseAuthorization];
-    }
-    locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-    [locationManager startUpdatingLocation];
-}
-
-// this delegate is called when the app successfully finds your current location
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
-{
-    if (!isLocation){
-        // this creates a CLGeocoder to find a placemark using the found coordinates
-        CLGeocoder *ceo = [[CLGeocoder alloc]init];
-        CLLocation *loc = [[CLLocation alloc]initWithLatitude:newLocation.coordinate.latitude longitude:newLocation.coordinate.longitude]; //insert your coordinates
-        
-        [ceo reverseGeocodeLocation:loc
-                  completionHandler:^(NSArray *placemarks, NSError *error) {
-                      CLPlacemark *placemark = [placemarks objectAtIndex:0];
-                      //                  NSLog(@"placemark %@",placemark);
-                      //String to hold address
-                      //                  NSString *locatedAt = [[placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@", "];
-                      //                  NSLog(@"addressDictionary %@", placemark.addressDictionary);
-                      
-                      //                  NSLog(@"placemark %@",placemark.region);
-                      //                  NSLog(@"placemark %@",placemark.country);  // Give Country Name
-                      //                  NSLog(@"placemark %@",placemark.locality); // Extract the city name
-                      
-                      NSString* address = @"";
-                      
-                      if (placemark.locality == nil || [placemark.addressDictionary valueForKey:@"State"] == nil){
-                          address = NSLocalizedString(@"FaiedGetLocation", @"Failed to get location");
-                      } else {
-                          address = [NSString stringWithFormat:@"%@, %@", placemark.locality, [placemark.addressDictionary valueForKey:@"State"]];
-                          isLocation = YES;
-                      }
-                      
-                      [[UserLoginInfo sharedInstance] setLocationCity: address];
-                      
-                      //                  NSLog(@"location %@",placemark.name);
-                      //                  NSLog(@"location %@",placemark.ocean);
-                      //                  NSLog(@"location %@",placemark.postalCode);
-                      //                  NSLog(@"location %@",placemark.subLocality);
-                      //
-                      //                  NSLog(@"location %@",placemark.location);
-                      //                  //Print the location to console
-                      //                  NSLog(@"I am currently at %@",locatedAt);
-                  }
-         ];
-    }
-}
-
-// this delegate method is called if an error occurs in locating your current location
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-{
-    NSLog(@"locationManager:%@ didFailWithError:%@", manager, error);
-    [[UserLoginInfo sharedInstance] setLocationCity: NSLocalizedString(@"FailedGettingCityName", @"Failed getting cityName")];
-}
-
-
 -(void)initUserInfo:(NSDictionary*)parameters{
     NSString* app = [parameters objectForKey:@"app"];
 //    NSString* state = [parameters objectForKey:@"state"];
@@ -653,7 +590,8 @@
 //    [[UserLoginInfo sharedInstance] setAuthenticationType:@"Authentication"];
     NSString* mode = oneStep ? NSLocalizedString(@"OneStepMode", @"One Step") : NSLocalizedString(@"TwoStepMode", @"Two Step");
     [[UserLoginInfo sharedInstance] setAuthenticationMode:mode];
-    [[UserLoginInfo sharedInstance] setLocationIP:[ApproveDenyViewController getIPAddress:issuer]];
+    [[UserLoginInfo sharedInstance] setLocationCity:[parameters objectForKey:@"req_loc"]];
+    [[UserLoginInfo sharedInstance] setLocationIP:[parameters objectForKey:@"req_ip"]];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -687,6 +687,21 @@ SCLTimerDisplay *buttonTimer;
     return NO;
 }
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    
+    
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.5];
+    
+    [self viewWillLayoutSubviews];
+    
+    [UIView commitAnimations];
+    
+    return YES;
+    
+    
+}
+
 - (void)keyboardWillShow:(NSNotification *)notification
 {
     if(_keyboardIsVisible) return;
@@ -994,6 +1009,7 @@ SCLTimerDisplay *buttonTimer;
     for (SCLTextView *textField in _inputs)
     {
         textField.layer.borderColor = viewColor.CGColor;
+        [self.view bringSubviewToFront:textField];
     }
     
     for (SCLButton *btn in _buttons)

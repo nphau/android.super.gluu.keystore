@@ -11,7 +11,6 @@
 #import "Constants.h"
 #import "OXPushManager.h"
 #import "NHNetworkTime.h"
-#import <UbertestersSDK/Ubertesters.h>
 
 @interface AppDelegate ()
 
@@ -35,9 +34,6 @@
     if (remoteNotif) {
         [[NSUserDefaults standardUserDefaults] setObject:remoteNotif forKey:NotificationRequest];
     }
-    
-    //Ubertersters SDK initialization
-    [[Ubertesters shared] initialize];
     
     //Setup Basic
     int count = (int)[[NSUserDefaults standardUserDefaults] integerForKey:LOCKED_ATTEMPTS_COUNT];

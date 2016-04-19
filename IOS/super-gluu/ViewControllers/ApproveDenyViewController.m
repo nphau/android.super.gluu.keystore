@@ -62,7 +62,6 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-//    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
     [self checkDeviceOrientation];
 }
 
@@ -97,7 +96,6 @@
     if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
     {
         // code for landscape orientation
-//        [self adjustViewsForOrientation:UIInterfaceOrientationLandscapeLeft];
         [[NSNotificationCenter defaultCenter] postNotificationName:UIDeviceOrientationDidChangeNotification object:nil];
     }
 }
@@ -117,11 +115,6 @@
         {
             //load the portrait view
             if (isLandScape){
-//                if (IS_IPHONE_5 || IS_IPHONE_4){
-//                    [buttonView setCenter:CGPointMake(buttonView.center.x, buttonView.center.y + LANDSCAPE_Y_IPHONE_5)];
-//                } else {
-//                    [buttonView setCenter:CGPointMake(buttonView.center.x, buttonView.center.y + LANDSCAPE_Y)];
-//                }
                 [scrollView setContentSize:CGSizeMake(scrollView.contentSize.width, scrollView.contentSize.width/2)];
                 scrollView.delegate = nil;
                 scrollView.scrollEnabled = NO;
@@ -135,11 +128,6 @@
         {
             //load the landscape view
             if (!isLandScape){
-//                if (IS_IPHONE_5 || IS_IPHONE_4){
-//                    [buttonView setCenter:CGPointMake(buttonView.center.x, buttonView.center.y - LANDSCAPE_Y_IPHONE_5)];
-//                } else {
-//                    [buttonView setCenter:CGPointMake(buttonView.center.x, buttonView.center.y - LANDSCAPE_Y)];
-//                }
                 if (_isLogInfo){
                     [scrollView setFrame:CGRectMake(scrollView.frame.origin.x, scrollView.frame.origin.y, scrollView.frame.size.width, scrollView.frame.size.height+100)];
                 }
@@ -182,10 +170,12 @@
     }
     createdTimeLabel.text = [self getTime:[info created]];
     createdDateLabel.text = [self getDate:[info created]];
-    NSURL* serverURL = [NSURL URLWithString:[info application]];
-    NSString*  ip = [self addressForHostname:[serverURL host]];
-    locationLabel.text = ip;//[info locationIP];//[ApproveDenyViewController getIPAddress];
-    cityNameLabel.text = [info locationCity];
+    if ([info locationIP] != nil){
+        locationLabel.text = [info locationIP];
+    }
+    if ([info locationCity] != nil){
+        cityNameLabel.text = [info locationCity];
+    }
     typeLabel.text = [info authenticationType];
     
     if (_isLogInfo){
@@ -193,145 +183,7 @@
         [timerView setHidden:YES];
         [buttonView setHidden:YES];
         titleLabel.text = NSLocalizedString(@"Information", @"Information");
-//        int y = 35;
-//        [serverView setCenter:CGPointMake(serverView.center.x, serverView.center.y - y)];
-//        [userNameView setCenter:CGPointMake(userNameView.center.x, userNameView.center.y - y)];
-//        [locationView setCenter:CGPointMake(locationView.center.x, locationView.center.y - y)];
-//        [timeView setCenter:CGPointMake(timeView.center.x, timeView.center.y - y)];
     }
-}
-
-- (NSString *)addressForHostname:(NSString *)hostname {
-//    NSString *ipAddress = hostname;
-//    
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-//    manager.responseSerializer = [AFJSONResponseSerializer
-//                                  serializerWithReadingOptions:NSJSONReadingAllowFragments];
-//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
-//    
-//    NSMutableDictionary* parameters = [[NSMutableDictionary alloc] init];
-//    
-//    [manager GET:@"http://ip-api.com/json/107.170.100.96" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        NSLog(@"JSON: %@", responseObject);
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"Error: %@", error);
-//    }];
-    
-    // prepare JSON request
-    
-    NSArray *addresses = [self addressesForHostname:hostname];
-//    NSArray *addresses2 = [self addressesForHostname2:hostname];
-    if ([addresses count] > 0)
-        return [addresses objectAtIndex:0];
-    else
-        return nil;
-//        return ipAddress;
-}
-
-- (NSArray *)addressesForHostname:(NSString *)hostname {
-    // Get the addresses for the given hostname.
-    CFHostRef hostRef = CFHostCreateWithName(kCFAllocatorDefault, (__bridge CFStringRef)hostname);
-    BOOL isSuccess = CFHostStartInfoResolution(hostRef, kCFHostAddresses, nil);
-    if (!isSuccess) return nil;
-    CFArrayRef addressesRef = CFHostGetAddressing(hostRef, nil);
-    if (addressesRef == nil) return nil;
-    
-    // Convert these addresses into strings.
-    char ipAddress[INET6_ADDRSTRLEN];
-    NSMutableArray *addresses = [NSMutableArray array];
-    CFIndex numAddresses = CFArrayGetCount(addressesRef);
-    for (CFIndex currentIndex = 0; currentIndex < numAddresses; currentIndex++) {
-        struct sockaddr *address = (struct sockaddr *)CFDataGetBytePtr(CFArrayGetValueAtIndex(addressesRef, currentIndex));
-        if (address == nil) return nil;
-        getnameinfo(address, address->sa_len, ipAddress, INET6_ADDRSTRLEN, nil, 0, NI_NUMERICHOST);
-//        if (ipAddress == nil) return nil;
-        [addresses addObject:[NSString stringWithCString:ipAddress encoding:NSASCIIStringEncoding]];
-    }
-    
-    return addresses;
-}
-
-- (NSArray *)addressesForHostname2:(NSString *)hostname {
-    const char* hostnameC = [hostname UTF8String];
-    
-    struct addrinfo hints, *res;
-    struct sockaddr_in *s4;
-    struct sockaddr_in6 *s6;
-    int retval;
-    char buf[64];
-    NSMutableArray *result; //the array which will be return
-    NSMutableArray *result4; //the array of IPv4, to order them at the end
-    NSString *previousIP = nil;
-    
-    memset (&hints, 0, sizeof (struct addrinfo));
-    hints.ai_family = PF_UNSPEC;//AF_INET6;
-    hints.ai_flags = AI_CANONNAME;
-    //AI_ADDRCONFIG, AI_ALL, AI_CANONNAME,	AI_NUMERICHOST
-    //AI_NUMERICSERV, AI_PASSIVE, OR AI_V4MAPPED
-    
-    retval = getaddrinfo(hostnameC, NULL, &hints, &res);
-    if (retval == 0)
-    {
-        
-        if (res->ai_canonname)
-        {
-            result = [NSMutableArray arrayWithObject:[NSString stringWithUTF8String:res->ai_canonname]];
-        }
-        else
-        {
-            //it means the DNS didn't know this host
-            return nil;
-        }
-        result4= [NSMutableArray array];
-        while (res) {
-            switch (res->ai_family){
-                case AF_INET6:
-                    s6 = (struct sockaddr_in6 *)res->ai_addr;
-                    if(inet_ntop(res->ai_family, (void *)&(s6->sin6_addr), buf, sizeof(buf))
-                       == NULL)
-                    {
-                        NSLog(@"inet_ntop failed for v6!\n");
-                    }
-                    else
-                    {
-                        //surprisingly every address is in double, let's add this test
-                        if (![previousIP isEqualToString:[NSString stringWithUTF8String:buf]]) {
-                            [result addObject:[NSString stringWithUTF8String:buf]];
-                        }
-                    }
-                    break;
-                    
-                case AF_INET:
-                    s4 = (struct sockaddr_in *)res->ai_addr;
-                    if(inet_ntop(res->ai_family, (void *)&(s4->sin_addr), buf, sizeof(buf))
-                       == NULL)
-                    {
-                        NSLog(@"inet_ntop failed for v4!\n");
-                    }
-                    else
-                    {
-                        //surprisingly every address is in double, let's add this test
-                        if (![previousIP isEqualToString:[NSString stringWithUTF8String:buf]]) {
-                            [result4 addObject:[NSString stringWithUTF8String:buf]];
-                        }
-                    }
-                    break;
-                default:
-                    NSLog(@"Neither IPv4 nor IPv6!");
-                    
-            }
-            //surprisingly every address is in double, let's add this test
-            previousIP = [NSString stringWithUTF8String:buf];
-            
-            res = res->ai_next;
-        }
-    }else{
-        NSLog(@"no IP found");
-        return nil;
-    }
-    
-    return [result arrayByAddingObjectsFromArray:result4];
 }
 
 -(void)moveUpViews{
@@ -399,57 +251,6 @@
     NSDate* date = [formatter dateFromString:dateTime];
     
     return date;
-}
-
-// get the IP address of current-device
-+ (NSString *)getIPAddress:(NSString*)address {
-    NSURL* url = [NSURL URLWithString:address];
-    Boolean result;
-    CFHostRef hostRef;
-    CFArrayRef addresses = NULL;
-    NSString *hostname = [url host];
-    NSString *ipAddress = @"";
-    
-    hostRef = CFHostCreateWithName(kCFAllocatorDefault, (__bridge CFStringRef)hostname);
-    if (hostRef) {
-        result = CFHostStartInfoResolution(hostRef, kCFHostAddresses, NULL); // pass an error instead of NULL here to find out why it failed
-        if (result == TRUE) {
-            addresses = CFHostGetAddressing(hostRef, &result);
-        }
-    }
-    
-    if (result == TRUE) {
-        CFIndex index = 0;
-        CFDataRef ref = (CFDataRef) CFArrayGetValueAtIndex(addresses, index);
-        struct sockaddr_in* remoteAddr;
-        char *ip_address;
-        remoteAddr = (struct sockaddr_in*) CFDataGetBytePtr(ref);
-        if (remoteAddr != NULL) {
-            ip_address = inet_ntoa(remoteAddr->sin_addr);
-        }
-        ipAddress = [NSString stringWithCString:ip_address encoding:NSUTF8StringEncoding];
-    }
-//    struct ifaddrs *interfaces = NULL;
-//    struct ifaddrs *temp_addr = NULL;
-//    int success = 0;
-//    // retrieve the current interfaces - returns 0 on success
-//    success = getifaddrs(&interfaces);
-//    if (success == 0) {
-//        // Loop through linked list of interfaces
-//        temp_addr = interfaces;
-//        while(temp_addr != NULL) {
-//            if(temp_addr->ifa_addr->sa_family == AF_INET) {
-//                // Check if interface is en0 which is the wifi connection on the iPhone
-//                if([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"]) {
-//                    // Get NSString from C String
-//                    address = [NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr)];
-//                }
-//            }
-//            temp_addr = temp_addr->ifa_next;
-//        }
-//    }
-//    freeifaddrs(interfaces);
-    return ipAddress;
 }
 
 /*

@@ -65,6 +65,4 @@
 -(IBAction)onApprove:(id)sender;
 -(IBAction)onDeny:(id)sender;
 
-+ (NSString *)getIPAddress:(NSString*)address;
-
 @end

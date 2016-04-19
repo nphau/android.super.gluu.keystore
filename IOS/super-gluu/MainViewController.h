@@ -11,9 +11,8 @@
 #import "ApproveDenyViewController.h"
 #import "UserLoginInfo.h"
 #import "LecenseAgreementDelegate.h"
-#import "CoreLocation/CoreLocation.h"
 
-@interface MainViewController : UIViewController <QRCodeReaderDelegate, LicenseAgreementDelegate, CLLocationManagerDelegate>{
+@interface MainViewController : UIViewController <QRCodeReaderDelegate, LicenseAgreementDelegate>{
     
     IBOutlet UIButton* scanButton;
     IBOutlet UIButton* infoButton;
@@ -33,7 +32,6 @@
     NSDictionary* scanJsonDictionary;
     
     BOOL isLocation;
-    CLLocationManager *locationManager;
     
     BOOL isLandScape;
 

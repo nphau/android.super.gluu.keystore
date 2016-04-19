@@ -68,27 +68,18 @@
 		BB50DD021C91AD5B00499B49 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB50DD001C91AD5B00499B49 /* Main_iPad.storyboard */; };
 		BB78BFB71C99C6C600558042 /* gluu.png in Resources */ = {isa = PBXBuildFile; fileRef = BB78BFB61C99C6C600558042 /* gluu.png */; };
 		BB8703061CA3E5D400EEF9A6 /* gluuIconRed.png in Resources */ = {isa = PBXBuildFile; fileRef = BB8703051CA3E5D400EEF9A6 /* gluuIconRed.png */; };
-		BB9B659D1CB7C57800784AEF /* UbertestersSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B659C1CB7C57800784AEF /* UbertestersSDK.framework */; };
-		BB9B659F1CB7C59800784AEF /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B659E1CB7C59800784AEF /* AdSupport.framework */; };
 		BB9B65A11CB7C5A300784AEF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65A01CB7C5A300784AEF /* QuartzCore.framework */; };
-		BB9B65A31CB7C5AE00784AEF /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65A21CB7C5AE00784AEF /* CoreImage.framework */; };
-		BB9B65A51CB7C5B900784AEF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65A41CB7C5B900784AEF /* SystemConfiguration.framework */; };
-		BB9B65A71CB7C5D100784AEF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65A61CB7C5D100784AEF /* AudioToolbox.framework */; };
-		BB9B65A91CB7C5DA00784AEF /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65A81CB7C5DA00784AEF /* OpenGLES.framework */; };
-		BB9B65AB1CB7C5E400784AEF /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65AA1CB7C5E400784AEF /* CoreMotion.framework */; };
 		BB9B65AE1CB812D900784AEF /* PushView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9B65AD1CB812D900784AEF /* PushView.m */; };
 		BB9B65B11CBCDA9600784AEF /* super-gluu-ssl.crt in Resources */ = {isa = PBXBuildFile; fileRef = BB9B65B01CBCDA9600784AEF /* super-gluu-ssl.crt */; };
 		BBB7C0E71C884E2600833B12 /* approveIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0E61C884E2600833B12 /* approveIcon.png */; };
 		BBB7C0E91C8851B900833B12 /* denyIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0E81C8851B900833B12 /* denyIcon.png */; };
 		BBB7C0EB1C88569400833B12 /* personIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0EA1C88569400833B12 /* personIcon.png */; };
-		BBB7C0F81C88933100833B12 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBB7C0F71C88933100833B12 /* CoreLocation.framework */; };
 		BBB7C0FC1C89FE3100833B12 /* gluuIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0FB1C89FE3100833B12 /* gluuIcon.png */; };
 		BBB7C1021C9042AF00833B12 /* NSDate+NVTimeAgo.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB7C1011C9042AF00833B12 /* NSDate+NVTimeAgo.m */; };
 		BBB7C1051C90723300833B12 /* InformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB7C1041C90723300833B12 /* InformationViewController.m */; };
 		BBE787231C99781B00E9E0D7 /* PinCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBE787221C99781B00E9E0D7 /* PinCodeViewController.m */; };
 		BBE787271C99954600E9E0D7 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BBE787261C99954600E9E0D7 /* Settings.bundle */; };
 		BBE7AAC91C9B18C200BE62AE /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBE7AAC81C9B18C200BE62AE /* SettingsViewController.m */; };
-		BBFCB30A1C98164F00F66417 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBFCB3091C98164F00F66417 /* CoreTelephony.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -253,16 +244,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BB9B65AB1CB7C5E400784AEF /* CoreMotion.framework in Frameworks */,
-				BB9B65A91CB7C5DA00784AEF /* OpenGLES.framework in Frameworks */,
-				BB9B65A71CB7C5D100784AEF /* AudioToolbox.framework in Frameworks */,
-				BBFCB30A1C98164F00F66417 /* CoreTelephony.framework in Frameworks */,
-				BB9B65A51CB7C5B900784AEF /* SystemConfiguration.framework in Frameworks */,
-				BB9B65A31CB7C5AE00784AEF /* CoreImage.framework in Frameworks */,
 				BB9B65A11CB7C5A300784AEF /* QuartzCore.framework in Frameworks */,
-				BB9B659F1CB7C59800784AEF /* AdSupport.framework in Frameworks */,
-				BBB7C0F81C88933100833B12 /* CoreLocation.framework in Frameworks */,
-				BB9B659D1CB7C57800784AEF /* UbertestersSDK.framework in Frameworks */,
 				BB37DF421C7E0CBC0016D422 /* CoreData.framework in Frameworks */,
 				8C2D7832AC84C238165A41EC /* Pods_super_gluu.framework in Frameworks */,
 				40A456C44583C74D52A2B8E9 /* Pods_Super_Gluu.framework in Frameworks */,
