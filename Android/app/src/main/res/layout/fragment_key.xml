@@ -6,12 +6,12 @@
     android:weightSum="1">
 
     <ImageView
-        android:layout_width="30dp"
+        android:layout_width="25dp"
         android:layout_height="30dp"
-        android:id="@+id/imageView"
-        android:src="@mipmap/key_icon"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp" />
+        android:id="@+id/key_imageView"
+        android:src="@drawable/keys_action"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp" />
 
     <LinearLayout
         android:orientation="vertical"

@@ -6,10 +6,10 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -57,7 +57,9 @@ public class KeyHandleInfoFragment extends Fragment implements View.OnClickListe
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_keyhandle_info, container, false);
         updateKeyHandleDetails(rootView);
-        rootView.findViewById(R.id.button_delete).setOnClickListener(this);
+        rootView.findViewById(R.id.delete_button).setOnClickListener(this);
+        rootView.findViewById(R.id.close_button).setOnClickListener(this);
+        TableLayout tableLayout = (TableLayout) rootView.findViewById(R.id.info_tableLayout);
         return rootView;
     }
 
@@ -68,7 +70,7 @@ public class KeyHandleInfoFragment extends Fragment implements View.OnClickListe
             mDeleteListener = (OnDeleteKeyHandleListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
+                    + " must implement OnDeleteKeyHandleListener");
         }
     }
 
@@ -83,8 +85,10 @@ public class KeyHandleInfoFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.button_delete){
+        if(v.getId() == R.id.delete_button){
             showAlertView();
+        } else {
+            getFragmentManager().popBackStack();
         }
     }
 
@@ -97,7 +101,7 @@ public class KeyHandleInfoFragment extends Fragment implements View.OnClickListe
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 mDeleteListener.onDeleteKeyHandle(tokenEntry.getKeyHandle());
-                FragmentManager fm = getFragmentManager();
+                android.support.v4.app.FragmentManager fm = getFragmentManager();
                 fm.popBackStack();
             }
         });
@@ -112,10 +116,10 @@ public class KeyHandleInfoFragment extends Fragment implements View.OnClickListe
 
     void setupPairingDateByFormat(TextView textView){
 
-        if (textView != null && tokenEntry.getPairingDate() != null) {
+        if (textView != null && tokenEntry.getCreatedDate() != null) {
             Date date = null;
             try {
-                date = isoDateTimeFormat.parse(tokenEntry.getPairingDate());
+                date = isoDateTimeFormat.parse(tokenEntry.getCreatedDate());
             } catch (ParseException e) {
                 e.printStackTrace();
             }

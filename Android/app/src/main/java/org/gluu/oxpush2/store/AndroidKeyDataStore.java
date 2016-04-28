@@ -15,12 +15,12 @@ import com.google.gson.Gson;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.StringUtils;
 import org.gluu.oxpush2.app.BuildConfig;
+import org.gluu.oxpush2.app.model.LogInfo;
 import org.gluu.oxpush2.u2f.v2.model.TokenEntry;
 import org.gluu.oxpush2.u2f.v2.store.DataStore;
 import org.gluu.oxpush2.util.Utils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +33,8 @@ public class AndroidKeyDataStore implements DataStore {
 
     private static final String U2F_KEY_PAIR_FILE = "u2f_key_pairs";
     private static final String U2F_KEY_COUNT_FILE = "u2f_key_counts";
+    private static final String LOGS_STORE = "logs_store";
+    private static final String LOGS_KEY = "logs_key";
 
     private static final String TAG = "key-data-store";
     private final Context context;
@@ -57,17 +59,28 @@ public class AndroidKeyDataStore implements DataStore {
 
     @Override
     public void storeTokenEntry(byte[] keyHandle, TokenEntry tokenEntry) {
-        String keyHandleKey = keyHandleToKey(keyHandle);
+        Boolean isSave = true;
+        List<String> tokens = getTokenEntries();
+        for (String tokenStr : tokens){
+            TokenEntry token = new Gson().fromJson(tokenStr, TokenEntry.class);
+            if (token.getIssuer().equalsIgnoreCase(tokenEntry.getIssuer())){
+                isSave = false;
+            }
+        }
+        if (isSave) {
+            String keyHandleKey = keyHandleToKey(keyHandle);
 
-        final String tokenEntryString = new Gson().toJson(tokenEntry);
-        if (BuildConfig.DEBUG) Log.d(TAG, "Storing new keyHandle: " + keyHandleKey + " with tokenEntry: " + tokenEntryString);
+            final String tokenEntryString = new Gson().toJson(tokenEntry);
+            if (BuildConfig.DEBUG)
+                Log.d(TAG, "Storing new keyHandle: " + keyHandleKey + " with tokenEntry: " + tokenEntryString);
 
-        final SharedPreferences keySettings = context.getSharedPreferences(U2F_KEY_PAIR_FILE, Context.MODE_PRIVATE);
+            final SharedPreferences keySettings = context.getSharedPreferences(U2F_KEY_PAIR_FILE, Context.MODE_PRIVATE);
 
-        keySettings.edit().putString(keyHandleKey, tokenEntryString).commit();
+            keySettings.edit().putString(keyHandleKey, tokenEntryString).commit();
 
-        final SharedPreferences keyCounts = context.getSharedPreferences(U2F_KEY_COUNT_FILE, Context.MODE_PRIVATE);
-        keyCounts.edit().putInt(keyHandleKey, 0).commit();
+            final SharedPreferences keyCounts = context.getSharedPreferences(U2F_KEY_COUNT_FILE, Context.MODE_PRIVATE);
+            keyCounts.edit().putInt(keyHandleKey, 0).commit();
+        }
     }
 
     @Override
@@ -161,6 +174,51 @@ public class AndroidKeyDataStore implements DataStore {
         String keyHandleKey = keyHandleToKey(keyHandle);
         final SharedPreferences keySettings = context.getSharedPreferences(U2F_KEY_PAIR_FILE, Context.MODE_PRIVATE);
         keySettings.edit().remove(keyHandleKey).commit();
+    }
+
+
+    //Methods for logs
+
+    @Override
+    public void saveLog(LogInfo logInfo) {
+        final String logInfoString = new Gson().toJson(logInfo);
+        final SharedPreferences logSettings = context.getSharedPreferences(LOGS_STORE, Context.MODE_PRIVATE);
+        logSettings.edit().putString(logInfo.getIssuer(), logInfoString).commit();
+    }
+
+    @Override
+    public List<LogInfo> getLogs() {
+        final SharedPreferences logSettings = context.getSharedPreferences(LOGS_STORE, Context.MODE_PRIVATE);
+        Map<String, String> logsMap = (Map<String, String>) logSettings.getAll();
+        List<LogInfo> logs = new ArrayList<>();
+        for (Map.Entry<String, String> log : logsMap.entrySet()) {
+            logs.add(new Gson().fromJson(log.getValue(), LogInfo.class));
+        }
+        return logs;
+    }
+
+    @Override
+    public void deleteLogs() {
+        final SharedPreferences logSettings = context.getSharedPreferences(LOGS_STORE, Context.MODE_PRIVATE);
+        logSettings.edit().clear().commit();
+    }
+
+    @Override
+    public void changeKeyHandleName(String keyHandleID, String newName) {
+
+        final SharedPreferences keySettings = context.getSharedPreferences(U2F_KEY_PAIR_FILE, Context.MODE_PRIVATE);
+        Map<String, String> keyTokens = (Map<String, String>) keySettings.getAll();
+        for (Map.Entry<String, String> keyToken : keyTokens.entrySet()) {
+            String tokenEntryString = keyToken.getValue();
+
+            TokenEntry tokenEntry = new Gson().fromJson(tokenEntryString, TokenEntry.class);
+
+            if (keyHandleID != null && StringUtils.equals(keyHandleID, tokenEntry.getIssuer())){
+                tokenEntry.setKeyName(newName);
+                storeTokenEntry(tokenEntry.getKeyHandle(), tokenEntry);
+                return;
+            }
+        }
     }
 
     private String keyHandleToKey(byte[] keyHandle) {

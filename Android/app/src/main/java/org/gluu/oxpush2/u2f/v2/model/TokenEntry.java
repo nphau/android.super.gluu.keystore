@@ -6,21 +6,21 @@
 
 package org.gluu.oxpush2.u2f.v2.model;
 
+import org.gluu.oxpush2.u2f.v2.entry.Entry;
+
 /**
  * oxAuth Fido U2F token entry
  *
  * Created by Yuriy Movchan on 01/13/2016.
  */
-public class TokenEntry{
+public class TokenEntry extends Entry{
 
     private String keyPair;
     private String application;
-    private String issuer;
-    private String userName;
-    private String pairingDate;
     private String authenticationType;
     private String authenticationMode;
     private byte[] keyHandle;
+    private String keyName;
 
     public TokenEntry() {
     }
@@ -28,7 +28,7 @@ public class TokenEntry{
     public TokenEntry(String keyPair, String application, String issuer) {
         this.keyPair = keyPair;
         this.application = application;
-        this.issuer = issuer;
+        setIssuer(issuer);
     }
 
     public String getKeyPair() {
@@ -45,30 +45,6 @@ public class TokenEntry{
 
     public void setApplication(String application) {
         this.application = application;
-    }
-
-    public String getIssuer() {
-        return issuer;
-    }
-
-    public void setIssuer(String issuer) {
-        this.issuer = issuer;
-    }
-
-    public String getPairingDate() {
-        return pairingDate;
-    }
-
-    public void setPairingDate(String pairingDate) {
-        this.pairingDate = pairingDate;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public String getAuthenticationType() {
@@ -93,5 +69,13 @@ public class TokenEntry{
 
     public void setKeyHandle(byte[] keyHandle) {
         this.keyHandle = keyHandle;
+    }
+
+    public String getKeyName() {
+        return keyName;
+    }
+
+    public void setKeyName(String keyName) {
+        this.keyName = keyName;
     }
 }

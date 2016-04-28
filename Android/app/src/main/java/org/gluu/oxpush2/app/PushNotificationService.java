@@ -37,8 +37,8 @@ public class PushNotificationService extends GcmListenerService {
             return;
         }
 
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra(MainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
+        Intent intent = new Intent(this, GluuMainActivity.class);
+        intent.putExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         sendNotification(intent, "oxPush2 authentication request", null);
@@ -61,5 +61,5 @@ public class PushNotificationService extends GcmListenerService {
         builder.setDefaults(Notification.DEFAULT_ALL);
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(MainActivity.MESSAGE_NOTIFICATION_ID, builder.build());
+        notificationManager.notify(GluuMainActivity.MESSAGE_NOTIFICATION_ID, builder.build());
     }}

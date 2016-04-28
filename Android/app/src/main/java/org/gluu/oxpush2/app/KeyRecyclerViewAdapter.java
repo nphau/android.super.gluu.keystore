@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import org.gluu.oxpush2.app.Fragments.KeysFragment.KeyFragmentListFragment;
 import org.gluu.oxpush2.app.model.KeyContent.KeyItem;
 import org.gluu.oxpush2.u2f.v2.model.TokenEntry;
 
@@ -62,10 +63,10 @@ public class KeyRecyclerViewAdapter extends ArrayAdapter {
             }
             TextView createdDate = (TextView) view.findViewById(R.id.created_date);
 
-            if (createdDate != null && token.getPairingDate() != null) {
+            if (createdDate != null && token.getCreatedDate() != null) {
                 Date date = null;
                 try {
-                    date = isoDateTimeFormat.parse(token.getPairingDate());
+                    date = isoDateTimeFormat.parse(token.getCreatedDate());
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

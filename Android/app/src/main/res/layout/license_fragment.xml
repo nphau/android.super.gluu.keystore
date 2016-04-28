@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:text="New Text"
+        android:id="@+id/license_textView"
+        android:layout_weight="0.98"
+        android:scrollbars = "vertical"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="65dp">
+
+        <Button
+            android:layout_width="126dp"
+            android:layout_height="32dp"
+            android:text="@string/accept"
+            android:id="@+id/accept_button"
+            android:background="@drawable/rounded_button"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/greenColor" />
+    </LinearLayout>
+
+</LinearLayout>

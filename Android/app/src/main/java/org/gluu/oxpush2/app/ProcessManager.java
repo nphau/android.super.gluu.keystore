@@ -8,8 +8,10 @@ package org.gluu.oxpush2.app;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +46,7 @@ import java.util.Map;
  *
  * Created by Yuriy Movchan on 01/07/2016.
  */
-public class ProcessFragment extends Fragment implements View.OnClickListener {
+public class ProcessManager {//extends Fragment implements View.OnClickListener {
 
     SimpleDateFormat isoDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
 
@@ -58,83 +60,93 @@ public class ProcessFragment extends Fragment implements View.OnClickListener {
 
     private OxPush2RequestListener oxPush2RequestListener;
 
-    public ProcessFragment() {}
+    private Activity activity;
+
+    private DataStore dataStore;
+
+    public ProcessManager() {}
+
+//    public ProcessManager(Activity activity, OxPush2Request oxPush2Request, OxPush2RequestListener oxPush2RequestListener) {
+//        this.activity = activity;
+//        this.oxPush2Request = oxPush2Request;
+//        this.oxPush2RequestListener = oxPush2RequestListener;
+//    }
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment ProcessFragment.
+     * @return A new instance of fragment ProcessManager.
      */
-    public static ProcessFragment newInstance(String oxPush2RequestJson) {
-        ProcessFragment fragment = new ProcessFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, oxPush2RequestJson);
-        fragment.setArguments(args);
+//    public static ProcessManager newInstance(String oxPush2RequestJson) {
+//        ProcessManager fragment = new ProcessManager();
+//        Bundle args = new Bundle();
+//        args.putString(ARG_PARAM1, oxPush2RequestJson);
+//        fragment.setArguments(args);
+//
+//        return fragment;
+//    }
+//
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        if (getArguments() != null) {
+//            String oxPush2RequestJson = getArguments().getString(ARG_PARAM1);
+//
+//            oxPush2Request = new Gson().fromJson(oxPush2RequestJson, OxPush2Request.class);
+//        }
+//    }
 
-        return fragment;
-    }
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//        View view = inflater.inflate(R.layout.fragment_approve_deny, container, false);
+//
+//        view.findViewById(R.id.button_approve).setOnClickListener(this);
+//        view.findViewById(R.id.button_deny).setOnClickListener(this);
+//
+//        updateRequestDetails(view);
+//
+//        return view;
+//    }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            String oxPush2RequestJson = getArguments().getString(ARG_PARAM1);
-
-            oxPush2Request = new Gson().fromJson(oxPush2RequestJson, OxPush2Request.class);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_process, container, false);
-
-        view.findViewById(R.id.button_approve).setOnClickListener(this);
-        view.findViewById(R.id.button_decline).setOnClickListener(this);
-
-        updateRequestDetails(view);
-
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OxPush2RequestListener) {
-            oxPush2RequestListener = (OxPush2RequestListener) context;
-        } else {
-            throw new RuntimeException(context.toString()  + " must implement OxPush2RequestListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        oxPush2RequestListener = null;
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (oxPush2RequestListener == null) {
-            return;
-        }
-
-        switch(v.getId()){
-            case R.id.button_approve:
-                onOxPushApproveRequest();
-                break;
-            case R.id.button_decline:
-                onOxPushDeclineRequest();
-                break;
-        }
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//    }
+//
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        if (context instanceof OxPush2RequestListener) {
+//            oxPush2RequestListener = (OxPush2RequestListener) context;
+//        } else {
+//            throw new RuntimeException(context.toString()  + " must implement OxPush2RequestListener");
+//        }
+//    }
+//
+//    @Override
+//    public void onDetach() {
+//        super.onDetach();
+//        oxPush2RequestListener = null;
+//    }
+//
+//    @Override
+//    public void onClick(View v) {
+//        if (oxPush2RequestListener == null) {
+//            return;
+//        }
+//
+//        switch(v.getId()){
+//            case R.id.button_approve:
+//                onOxPushApproveRequest();
+//                break;
+//            case R.id.button_deny:
+//                onOxPushDeclineRequest();
+//                break;
+//        }
+//    }
     private void runOnUiThread(Runnable runnable) {
-        Activity activity = getActivity();
+//        Activity activity = getActivity();
         if (activity != null) {
             activity.runOnUiThread(runnable);
         } else {
@@ -162,32 +174,37 @@ public class ProcessFragment extends Fragment implements View.OnClickListener {
         final int authenticationType = oneStep ? R.string.one_step : R.string.two_step;
 
         ((TextView) view.findViewById(R.id.text_application_value)).setText(oxPush2Request.getApp());
-        ((TextView) view.findViewById(R.id.text_issuer_value)).setText(oxPush2Request.getIssuer());
+//        ((TextView) view.findViewById(R.id.text_issuer_value)).setText(oxPush2Request.getIssuer());
         ((TextView) view.findViewById(R.id.text_created_value)).setText(createdString);
-        ((TextView) view.findViewById(R.id.text_authentication_type_value)).setText(authenticationType);
-        ((TextView) view.findViewById(R.id.text_authentication_method_value)).setText(oxPush2Request.getMethod());
-        ((TextView) view.findViewById(R.id.text_user_name_label_value)).setText(oxPush2Request.getUserName());
+//        ((TextView) view.findViewById(R.id.text_authentication_type_value)).setText(authenticationType);
+//        ((TextView) view.findViewById(R.id.text_authentication_method_value)).setText(oxPush2Request.getMethod());
+//        ((TextView) view.findViewById(R.id.text_user_name_label_value)).setText(oxPush2Request.getUserName());
     }
 
     private void setFinalStatus(int statusId) {
-        ((TextView) getView().findViewById(R.id.status_text)).setText(statusId);
-        getView().findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
+        String message = activity.getApplicationContext().getString(statusId);
+        Intent intent = new Intent("ox_request-precess-event");
+        // You can also include some extra data.
+        intent.putExtra("message", message);
+        LocalBroadcastManager.getInstance(activity).sendBroadcast(intent);
+//        ((TextView) getView().findViewById(R.id.status_text)).setText(statusId);
+//        getView().findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
     }
 
     private void setErrorStatus(Exception ex) {
-        ((TextView) getView().findViewById(R.id.status_text)).setText(ex.getMessage());
-        getView().findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
+//        ((TextView) getView().findViewById(R.id.status_text)).setText(ex.getMessage());
+//        getView().findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
     }
 
-    private void onOxPushApproveRequest() {
+    public void onOxPushApproveRequest() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                getView().findViewById(R.id.action_button_group).setVisibility(View.INVISIBLE);
-                getView().findViewById(R.id.status_text).setVisibility(View.VISIBLE);
-                getView().findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
-
-                ((TextView) getView().findViewById(R.id.status_text)).setText(R.string.process_u2f_start);
+//                getView().findViewById(R.id.action_button_group).setVisibility(View.INVISIBLE);
+//                getView().findViewById(R.id.status_text).setVisibility(View.VISIBLE);
+//                getView().findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+                setFinalStatus(R.string.process_u2f_start);
+//                ((TextView) getView().findViewById(R.id.status_text)).setText(R.string.process_u2f_start);
             }
         });
 
@@ -206,7 +223,7 @@ public class ProcessFragment extends Fragment implements View.OnClickListener {
                 try {
                     final U2fMetaData u2fMetaData = getU2fMetaData();
 
-                    DataStore dataStore = oxPush2RequestListener.onGetDataStore();
+//                    dataStore = oxPush2RequestListener.onGetDataStore();
                     final List<byte[]> keyHandles = dataStore.getKeyHandlesByIssuerAndAppId(oxPush2Request.getIssuer(), oxPush2Request.getApp());
 
                     final boolean isEnroll = (oneStep && (keyHandles.size() == 0)) || StringUtils.equals(oxPush2Request.getMethod(), "enroll");
@@ -277,8 +294,8 @@ public class ProcessFragment extends Fragment implements View.OnClickListener {
         }).start();
     }
 
-    private void onOxPushDeclineRequest() {
-
+    public void onOxPushDeclineRequest() {
+        setFinalStatus(R.string.process_u2f_deny);
     }
 
     private U2fMetaData getU2fMetaData() throws IOException {
@@ -304,7 +321,7 @@ public class ProcessFragment extends Fragment implements View.OnClickListener {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ((TextView) getView().findViewById(R.id.status_text)).setText(R.string.process_u2f_request);
+//                ((TextView) getView().findViewById(R.id.status_text)).setText(R.string.process_u2f_request);
             }
         });
 
@@ -367,10 +384,25 @@ public class ProcessFragment extends Fragment implements View.OnClickListener {
         if (StringUtils.equals("success", u2fOperationResult.getStatus())) {
             setFinalStatus(R.string.auth_result_success);
 
-            ((TextView) getView().findViewById(R.id.status_text)).setText(getString(R.string.auth_result_success) + ". Server: " + u2fMetaData.getIssuer());
+//            ((TextView) getView().findViewById(R.id.status_text)).setText(getString(R.string.auth_result_success) + ". Server: " + u2fMetaData.getIssuer());
         } else {
             setFinalStatus(R.string.auth_result_failed);
         }
     }
 
+    public void setOxPush2Request(OxPush2Request oxPush2Request) {
+        this.oxPush2Request = oxPush2Request;
+    }
+
+    public void setOxPush2RequestListener(OxPush2RequestListener oxPush2RequestListener) {
+        this.oxPush2RequestListener = oxPush2RequestListener;
+    }
+
+    public void setDataStore(DataStore dataStore) {
+        this.dataStore = dataStore;
+    }
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
+    }
 }

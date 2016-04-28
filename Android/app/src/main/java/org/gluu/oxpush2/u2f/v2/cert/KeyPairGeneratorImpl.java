@@ -78,7 +78,7 @@ public class KeyPairGeneratorImpl implements org.gluu.oxpush2.u2f.v2.cert.KeyPai
     @Override
     public byte[] sign(byte[] signedData, PrivateKey privateKey) throws U2FException {
         try {
-            Signature signature = Signature.getInstance("SHA256withECDSA");
+            Signature signature = Signature.getInstance("SHA256withECDSA", bouncyCastleProvider);
             signature.initSign(privateKey);
             signature.update(signedData);
             return signature.sign();

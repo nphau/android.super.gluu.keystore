@@ -6,6 +6,7 @@
 
 package org.gluu.oxpush2.u2f.v2.store;
 
+import org.gluu.oxpush2.app.model.LogInfo;
 import org.gluu.oxpush2.u2f.v2.model.TokenEntry;
 
 import java.util.List;
@@ -31,5 +32,12 @@ public interface DataStore {
     List<String> getTokenEntries();
 
     void deleteTokenEntry(byte[] keyHandle);
+
+    //Methods for logs (save, get, delete, ....)
+
+    void saveLog(LogInfo logText);
+    List<LogInfo>getLogs();
+    void deleteLogs();
+    void changeKeyHandleName(String keyHandleID, String newName);
 
 }
