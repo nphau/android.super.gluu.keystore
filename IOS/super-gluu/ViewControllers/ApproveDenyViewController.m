@@ -13,12 +13,7 @@
 #import <CoreTelephony/CTCarrier.h>
 
 #import <CFNetwork/CFNetwork.h>
-#import <netinet/in.h>
-#import <netdb.h>
-#import <ifaddrs.h>
-#import <arpa/inet.h>
-#import <net/ethernet.h>
-#import <net/if_dl.h>
+#import "NSString+URLEncode.h"
 
 #import "AFHTTPRequestOperationManager.h"
 
@@ -174,7 +169,9 @@
         locationLabel.text = [info locationIP];
     }
     if ([info locationCity] != nil){
-        cityNameLabel.text = [info locationCity];
+        NSString* location = [info locationCity];
+        NSString* locationDecode = [location URLDecode];
+        cityNameLabel.text = locationDecode;
     }
     typeLabel.text = [info authenticationType];
     
