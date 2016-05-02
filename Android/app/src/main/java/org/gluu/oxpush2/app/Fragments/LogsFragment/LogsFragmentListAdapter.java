@@ -23,6 +23,7 @@ import org.gluu.oxpush2.app.CustomGluuAlertView.CustomGluuAlert;
 import org.gluu.oxpush2.app.LogState;
 import org.gluu.oxpush2.app.R;
 import org.gluu.oxpush2.app.model.LogInfo;
+import org.gluu.oxpush2.model.OxPush2Request;
 import org.gluu.oxpush2.u2f.v2.model.TokenEntry;
 
 import java.util.ArrayList;
@@ -96,7 +97,8 @@ public class LogsFragmentListAdapter extends BaseAdapter {
                     int position = (int) v.getTag();
                     ApproveDenyFragment approveDenyFragment = new ApproveDenyFragment();
                     approveDenyFragment.setIsUserInfo(true);
-                    approveDenyFragment.setLogInfo(list.get(position));
+                    OxPush2Request request = oxPush2Adapter(list.get(position));
+                    approveDenyFragment.setPush2Request(request);
                     if (mListener != null) {
                         mListener.onKeyHandleInfo(approveDenyFragment);
                     }
@@ -118,6 +120,17 @@ public class LogsFragmentListAdapter extends BaseAdapter {
         contentView.setText(title);
 
         return view;
+    }
+
+    private OxPush2Request oxPush2Adapter(LogInfo logInfo) {
+        OxPush2Request request = new OxPush2Request();
+        request.setUserName(logInfo.getUserName());
+        request.setIssuer(logInfo.getIssuer());
+        request.setLocationCity(logInfo.getLocationAddress());
+        request.setLocationIP(logInfo.getLocationIP());
+        request.setCreated(logInfo.getCreatedDate());
+        request.setMethod(logInfo.getMethod());
+        return request;
     }
 
     public void updateResults(List<LogInfo> results) {

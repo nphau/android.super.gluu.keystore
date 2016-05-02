@@ -23,6 +23,7 @@ import org.gluu.oxpush2.util.Utils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Provides methods to store key pair in application preferences
@@ -183,7 +184,7 @@ public class AndroidKeyDataStore implements DataStore {
     public void saveLog(LogInfo logInfo) {
         final String logInfoString = new Gson().toJson(logInfo);
         final SharedPreferences logSettings = context.getSharedPreferences(LOGS_STORE, Context.MODE_PRIVATE);
-        logSettings.edit().putString(logInfo.getIssuer(), logInfoString).commit();
+        logSettings.edit().putString(UUID.randomUUID().toString(), logInfoString).commit();
     }
 
     @Override

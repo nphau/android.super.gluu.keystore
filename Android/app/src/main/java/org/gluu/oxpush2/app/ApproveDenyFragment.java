@@ -94,10 +94,12 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
             TextView locationIP = (TextView) rootView.findViewById(R.id.location_ip);
             locationIP.setText(push2Request.getLocationIP());
             TextView locationAddress = (TextView) rootView.findViewById(R.id.location_address);
-            try {
-                locationAddress.setText(java.net.URLDecoder.decode(push2Request.getLocationCity(), "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                Log.d(this.getClass().getName(), e.getLocalizedMessage());
+            if (push2Request.getLocationCity() != null) {
+                try {
+                    locationAddress.setText(java.net.URLDecoder.decode(push2Request.getLocationCity(), "UTF-8"));
+                } catch (UnsupportedEncodingException e) {
+                    Log.d(this.getClass().getName(), e.getLocalizedMessage());
+                }
             }
             TextView type = (TextView) rootView.findViewById(R.id.text_type);
             type.setText(push2Request.getMethod());

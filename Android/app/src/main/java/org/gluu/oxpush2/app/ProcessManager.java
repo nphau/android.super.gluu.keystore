@@ -391,7 +391,7 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
             log.setLocationIP(oxPush2Request.getLocationIP());
             log.setLocationAddress(oxPush2Request.getLocationCity());
             log.setCreatedDate(oxPush2Request.getCreated());
-
+            log.setMethod(oxPush2Request.getMethod());
             log.setLogState(LogState.LOGIN_SUCCESS);
             dataStore.saveLog(log);
 //            ((TextView) getView().findViewById(R.id.status_text)).setText(getString(R.string.auth_result_success) + ". Server: " + u2fMetaData.getIssuer());
@@ -407,7 +407,7 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
             log.setLocationIP(oxPush2Request.getLocationIP());
             log.setLocationAddress(oxPush2Request.getLocationCity());
             log.setCreatedDate(oxPush2Request.getCreated());
-
+            log.setMethod(oxPush2Request.getMethod());
             log.setLogState(LogState.LOGIN_FAILED);
             dataStore.saveLog(log);
         }

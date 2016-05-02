@@ -54,6 +54,8 @@ public class OxPush2Request {
         return issuer;
     }
 
+    public void setIssuer(String issuer){this.issuer = issuer;}
+
     public String getApp() {
         return app;
     }
@@ -66,6 +68,8 @@ public class OxPush2Request {
         return method;
     }
 
+    public void setMethod(String method){ this.method = method;}
+
     public void setUserName(String userName) {
         this.userName = userName;
     }
@@ -73,6 +77,8 @@ public class OxPush2Request {
     public String getCreated() {
         return created;
     }
+
+    public void setCreated(String created){this.created = created;}
 
     public String getLocationIP() {
         return locationIP;

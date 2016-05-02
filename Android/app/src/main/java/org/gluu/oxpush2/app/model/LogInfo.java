@@ -12,6 +12,7 @@ public class LogInfo extends Entry {
     private String locationAddress;
     private String message;
     private LogState logState;
+    private String method;
 
     public LogInfo() {
     }
@@ -54,5 +55,13 @@ public class LogInfo extends Entry {
 
     public void setLogState(LogState logState) {
         this.logState = logState;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
     }
 }
