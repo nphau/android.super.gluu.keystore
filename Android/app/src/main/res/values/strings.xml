@@ -36,6 +36,9 @@
 
     <string name="auth_result_success">Successful authentication</string>
     <string name="auth_result_failed">Authentication failure</string>
+    <string name="deny_result_success">Successful denied</string>
+    <string name="deny_result_failed">Deny failed</string>
+
     <string name="challenge_doesnt_match">Challenges doesn\'t match</string>
 
     <string name="one_step">One Step</string>

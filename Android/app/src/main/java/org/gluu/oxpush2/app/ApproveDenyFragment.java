@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +15,20 @@ import android.widget.TextView;
 
 import org.gluu.oxpush2.app.model.LogInfo;
 import org.gluu.oxpush2.model.OxPush2Request;
+import org.gluu.oxpush2.util.Utils;
 
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class ApproveDenyFragment extends Fragment implements View.OnClickListener{
+
+    SimpleDateFormat isoDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
 
     private Boolean isUserInfo = false;
     private LogInfo logInfo;
@@ -69,25 +77,71 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
     }
 
     private void updateLogInfo(View rootView){
-        if (logInfo != null){
+        if (push2Request != null){
             TextView application = (TextView) rootView.findViewById(R.id.text_application_label);
             URL url = null;
             try {
-                url = new URL(logInfo.getIssuer());
+                url = new URL(push2Request.getIssuer());
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
             String baseUrl = "Gluu Server " + url.getHost();
             application.setText(baseUrl);
             TextView applicationUrl = (TextView) rootView.findViewById(R.id.text_application_value);
-            applicationUrl.setText(logInfo.getIssuer());
+            applicationUrl.setText(push2Request.getIssuer());
             TextView userName = (TextView) rootView.findViewById(R.id.text_user_name_label);
-            userName.setText(logInfo.getUserName());
+            userName.setText(push2Request.getUserName());
             TextView locationIP = (TextView) rootView.findViewById(R.id.location_ip);
-            locationIP.setText(logInfo.getLocationIP());
+            locationIP.setText(push2Request.getLocationIP());
             TextView locationAddress = (TextView) rootView.findViewById(R.id.location_address);
-            locationAddress.setText(logInfo.getLocationAddress());
+            try {
+                locationAddress.setText(java.net.URLDecoder.decode(push2Request.getLocationCity(), "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                Log.d(this.getClass().getName(), e.getLocalizedMessage());
+            }
+            TextView type = (TextView) rootView.findViewById(R.id.text_type);
+            type.setText(push2Request.getMethod());
+            TextView time = (TextView) rootView.findViewById(R.id.text_application_created_label);
+            time.setText(getTimeFromString(push2Request.getCreated()));
+            TextView date = (TextView) rootView.findViewById(R.id.text_created_value);
+            date.setText(getDateFromString(push2Request.getCreated()));
         }
+    }
+
+    private String getDateFromString(String dateString){
+        SimpleDateFormat userDateTimeFormat = new SimpleDateFormat("MMM d, yyyy");
+        Date createdDate = null;
+        if (Utils.isNotEmpty(dateString)) {
+            try {
+                createdDate = isoDateTimeFormat.parse(dateString);
+            } catch (ParseException ex) {
+                Log.e(this.getClass().getName(), "Failed to parse ISO date/time: " + dateString, ex);
+            }
+        }
+
+        String createdString = "";
+        if (createdDate != null) {
+            createdString = userDateTimeFormat.format(createdDate);
+        }
+        return createdString;
+    }
+
+    private String getTimeFromString(String dateString){
+        SimpleDateFormat userDateTimeFormat = new SimpleDateFormat("HH:mm:ss");
+        Date createdDate = null;
+        if (Utils.isNotEmpty(dateString)) {
+            try {
+                createdDate = isoDateTimeFormat.parse(dateString);
+            } catch (ParseException ex) {
+                Log.e(this.getClass().getName(), "Failed to parse ISO date/time: " + dateString, ex);
+            }
+        }
+
+        String createdString = "";
+        if (createdDate != null) {
+            createdString = userDateTimeFormat.format(createdDate);
+        }
+        return createdString;
     }
 
     public Boolean getIsUserInfo() {
@@ -121,7 +175,7 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
             stopClocking();
             closeView();
         } else {
-            stopClocking();
+//            stopClocking();
             closeView();
         }
     }

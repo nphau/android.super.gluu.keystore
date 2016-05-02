@@ -28,6 +28,12 @@ public class OxPush2Request {
 
     private String created;
 
+    @SerializedName("req_ip")
+    private String locationIP;
+
+    @SerializedName("req_loc")
+    private String locationCity;
+
     public OxPush2Request() {
     }
 
@@ -66,5 +72,21 @@ public class OxPush2Request {
 
     public String getCreated() {
         return created;
+    }
+
+    public String getLocationIP() {
+        return locationIP;
+    }
+
+    public void setLocationIP(String locationIP) {
+        this.locationIP = locationIP;
+    }
+
+    public String getLocationCity() {
+        return locationCity;
+    }
+
+    public void setLocationCity(String locationCity) {
+        this.locationCity = locationCity;
     }
 }

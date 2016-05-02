@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -123,5 +124,13 @@ public class LogsFragmentListAdapter extends BaseAdapter {
         list = results;
         //Triggers the list update
         notifyDataSetChanged();
+        setIsButtonVisible(list.size() != 0);
+    }
+
+    public void setIsButtonVisible(Boolean isVsible){
+        SharedPreferences preferences = activity.getApplicationContext().getSharedPreferences("CleanLogsSettings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("isCleanButtonVisible", isVsible);
+        editor.commit();
     }
 }

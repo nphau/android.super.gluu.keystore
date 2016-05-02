@@ -9,6 +9,7 @@ package org.gluu.oxpush2.app;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -22,6 +23,7 @@ import com.google.gson.Gson;
 
 import org.apache.commons.codec.binary.StringUtils;
 import org.gluu.oxpush2.app.listener.OxPush2RequestListener;
+import org.gluu.oxpush2.app.model.LogInfo;
 import org.gluu.oxpush2.model.OxPush2Request;
 import org.gluu.oxpush2.model.U2fMetaData;
 import org.gluu.oxpush2.model.U2fOperationResult;
@@ -138,7 +140,7 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
 //
 //        switch(v.getId()){
 //            case R.id.button_approve:
-//                onOxPushApproveRequest();
+//                onOxPushRequest();
 //                break;
 //            case R.id.button_deny:
 //                onOxPushDeclineRequest();
@@ -196,15 +198,15 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
 //        getView().findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
     }
 
-    public void onOxPushApproveRequest() {
+    public void onOxPushRequest(final Boolean isDeny) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-//                getView().findViewById(R.id.action_button_group).setVisibility(View.INVISIBLE);
-//                getView().findViewById(R.id.status_text).setVisibility(View.VISIBLE);
-//                getView().findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
-                setFinalStatus(R.string.process_u2f_start);
-//                ((TextView) getView().findViewById(R.id.status_text)).setText(R.string.process_u2f_start);
+                if (isDeny){
+                    setFinalStatus(R.string.process_u2f_deny);
+                } else {
+                    setFinalStatus(R.string.process_u2f_start);
+                }
             }
         });
 
@@ -271,7 +273,7 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
                             @Override
                             public void run() {
                                 try {
-                                    onChallengeReceived(isEnroll, u2fMetaData, u2fEndpoint, challengeJsonResponse);
+                                    onChallengeReceived(isEnroll, u2fMetaData, u2fEndpoint, challengeJsonResponse, isDeny);
                                 } catch (Exception ex) {
                                     Log.e(TAG, "Failed to process challengeJsonResponse: " + challengeJsonResponse, ex);
                                     setFinalStatus(R.string.failed_process_challenge);
@@ -294,10 +296,6 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
         }).start();
     }
 
-    public void onOxPushDeclineRequest() {
-        setFinalStatus(R.string.process_u2f_deny);
-    }
-
     private U2fMetaData getU2fMetaData() throws IOException {
         // Request U2f meta data
         String discoveryUrl = oxPush2Request.getIssuer();
@@ -317,7 +315,7 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
         return u2fMetaData;
     }
 
-    private void onChallengeReceived(boolean isEnroll, final U2fMetaData u2fMetaData, final String u2fEndpoint, final String challengeJson) throws IOException, JSONException, U2FException {
+    private void onChallengeReceived(boolean isEnroll, final U2fMetaData u2fMetaData, final String u2fEndpoint, final String challengeJson, final Boolean isDeny) throws IOException, JSONException, U2FException {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -327,9 +325,9 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
 
         final TokenResponse tokenResponse;
         if (isEnroll) {
-            tokenResponse = oxPush2RequestListener.onEnroll(challengeJson, oxPush2Request);
+            tokenResponse = oxPush2RequestListener.onEnroll(challengeJson, oxPush2Request, isDeny);
         } else {
-            tokenResponse = oxPush2RequestListener.onSign(challengeJson, u2fMetaData.getIssuer());
+            tokenResponse = oxPush2RequestListener.onSign(challengeJson, u2fMetaData.getIssuer(), isDeny);
         }
 
         if (tokenResponse == null) {
@@ -355,7 +353,7 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
                                 final U2fOperationResult u2fOperationResult = new Gson().fromJson(resultJsonResponse, U2fOperationResult.class);
                                 if (BuildConfig.DEBUG) Log.i(TAG, "Get U2f operation result: " + u2fOperationResult);
 
-                                handleResult(u2fMetaData, tokenResponse, u2fOperationResult);
+                                handleResult(isDeny, tokenResponse, u2fOperationResult);
                             } catch (Exception ex) {
                                 Log.e(TAG, "Failed to process resultJsonResponse: " + resultJsonResponse, ex);
                                 setFinalStatus(R.string.failed_process_status);
@@ -376,18 +374,52 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
         }).start();
     }
 
-    private void handleResult(U2fMetaData u2fMetaData, TokenResponse tokenResponse, U2fOperationResult u2fOperationResult) {
+    private void handleResult(Boolean isDeny, TokenResponse tokenResponse, U2fOperationResult u2fOperationResult) {
         if (!StringUtils.equals(tokenResponse.getChallenge(), u2fOperationResult.getChallenge())) {
             setFinalStatus(R.string.challenge_doesnt_match);
         }
 
         if (StringUtils.equals("success", u2fOperationResult.getStatus())) {
-            setFinalStatus(R.string.auth_result_success);
+            if (isDeny){
+                setFinalStatus(R.string.deny_result_success);
+            } else {
+                setFinalStatus(R.string.auth_result_success);
+            }
+            LogInfo log = new LogInfo();
+            log.setIssuer(oxPush2Request.getIssuer());
+            log.setUserName(oxPush2Request.getUserName());
+            log.setLocationIP(oxPush2Request.getLocationIP());
+            log.setLocationAddress(oxPush2Request.getLocationCity());
+            log.setCreatedDate(oxPush2Request.getCreated());
 
+            log.setLogState(LogState.LOGIN_SUCCESS);
+            dataStore.saveLog(log);
 //            ((TextView) getView().findViewById(R.id.status_text)).setText(getString(R.string.auth_result_success) + ". Server: " + u2fMetaData.getIssuer());
         } else {
-            setFinalStatus(R.string.auth_result_failed);
+            if (isDeny){
+                setFinalStatus(R.string.deny_result_failed);
+            } else {
+                setFinalStatus(R.string.auth_result_failed);
+            }
+            LogInfo log = new LogInfo();
+            log.setIssuer(oxPush2Request.getIssuer());
+            log.setUserName(oxPush2Request.getUserName());
+            log.setLocationIP(oxPush2Request.getLocationIP());
+            log.setLocationAddress(oxPush2Request.getLocationCity());
+            log.setCreatedDate(oxPush2Request.getCreated());
+
+            log.setLogState(LogState.LOGIN_FAILED);
+            dataStore.saveLog(log);
         }
+        setIsButtonVisible(true);
+
+    }
+
+    public void setIsButtonVisible(Boolean isVsible){
+        SharedPreferences preferences = activity.getApplicationContext().getSharedPreferences("CleanLogsSettings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("isCleanButtonVisible", isVsible);
+        editor.commit();
     }
 
     public void setOxPush2Request(OxPush2Request oxPush2Request) {

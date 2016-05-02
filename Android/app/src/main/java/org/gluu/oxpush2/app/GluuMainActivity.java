@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
@@ -44,7 +43,6 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.Date;
 
 /**
  * Main activity
@@ -84,6 +82,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             @Override
             public void onPageSelected(int position) {
                 isShowClearMenu = position == 1 ? true : false;
+                reloadLogs();
                 invalidateOptionsMenu();
             }
 
@@ -107,6 +106,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         context = getApplicationContext();
         this.dataStore = new AndroidKeyDataStore(context);
         this.u2f = new SoftwareDevice(this, dataStore);
+        setIsButtonVisible(dataStore.getLogs().size() != 0);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.title_image);
@@ -183,16 +183,21 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         dataStore.deleteLogs();
         dataStore.saveLog(log1);
         dataStore.saveLog(log2);
-        setIsButtonVisible(true);
+//        setIsButtonVisible(true);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (isShowClearMenu && getIsButtonVisible()) {
+        if (isShowClearMenu && dataStore.getLogs().size() > 0 && getIsButtonVisible()) {
             MenuInflater inflater = getMenuInflater();
             inflater.inflate(R.menu.clear_logs_menu, menu);
         }
         return true;
+    }
+
+    private void reloadLogs(){
+        Intent intent = new Intent("reload-logs");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
     @Override
@@ -201,11 +206,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             @Override
             public void onPositiveButton() {
                 dataStore.deleteLogs();
-                Intent intent = new Intent("reload-logs");
-                // You can also include some extra data.
-//                intent.putExtra("message", "This is my message!");
-                LocalBroadcastManager.getInstance(GluuMainActivity.this).sendBroadcast(intent);
-                setIsButtonVisible(false);
+                reloadLogs();
                 invalidateOptionsMenu();
             }
         };
@@ -239,13 +240,13 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             }
 
             @Override
-            public TokenResponse onSign(String jsonRequest, String origin) throws JSONException, IOException, U2FException {
-                return u2f.sign(jsonRequest, origin);
+            public TokenResponse onSign(String jsonRequest, String origin, Boolean isDeny) throws JSONException, IOException, U2FException {
+                return u2f.sign(jsonRequest, origin, isDeny);
             }
 
             @Override
-            public TokenResponse onEnroll(String jsonRequest, OxPush2Request oxPush2Request) throws JSONException, IOException, U2FException {
-                return u2f.enroll(jsonRequest, oxPush2Request);
+            public TokenResponse onEnroll(String jsonRequest, OxPush2Request oxPush2Request, Boolean isDeny) throws JSONException, IOException, U2FException {
+                return u2f.enroll(jsonRequest, oxPush2Request, isDeny);
             }
 
             @Override
@@ -256,12 +257,12 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         approveDenyFragment.setListener(new RequestProcessListener() {
             @Override
             public void onApprove() {
-                processManager.onOxPushApproveRequest();
+                processManager.onOxPushRequest(false);
             }
 
             @Override
             public void onDeny() {
-                processManager.onOxPushDeclineRequest();
+                processManager.onOxPushRequest(true);
             }
         });
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -278,13 +279,13 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     }
 
     @Override
-    public TokenResponse onSign(String jsonRequest, String origin) throws JSONException, IOException, U2FException {
-        return u2f.sign(jsonRequest, origin);
+    public TokenResponse onSign(String jsonRequest, String origin, Boolean isDeny) throws JSONException, IOException, U2FException {
+        return u2f.sign(jsonRequest, origin, isDeny);
     }
 
     @Override
-    public TokenResponse onEnroll(String jsonRequest, OxPush2Request oxPush2Request) throws JSONException, IOException, U2FException {
-        return u2f.enroll(jsonRequest, oxPush2Request);
+    public TokenResponse onEnroll(String jsonRequest, OxPush2Request oxPush2Request, Boolean isDeny) throws JSONException, IOException, U2FException {
+        return u2f.enroll(jsonRequest, oxPush2Request, isDeny);
     }
 
     @Override
