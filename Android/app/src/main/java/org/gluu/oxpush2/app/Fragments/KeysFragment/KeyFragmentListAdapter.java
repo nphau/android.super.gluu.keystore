@@ -96,18 +96,7 @@ public class KeyFragmentListAdapter extends BaseAdapter {
                 if (createdDate != null) {
                     createdString = userDateTimeFormat.format(createDate);
                 }
-//                Date date = null;
-//                try {
-//                    date = token.getPairingDate();//isoDateTimeFormat.parse(token.getPairingDate());
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
-//                }
-//                if (date != null) {
-//                    String pairingDate = userDateTimeFormat.format(date);
-//                int timeInMiliseconds = Integer.parseInt(token.getPairingDate());
-//                String timeAgo = (String) DateUtils.getRelativeTimeSpanString(System.currentTimeMillis(), System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS);
-                    createdDate.setText(createdString);
-//                }
+                createdDate.setText(createdString);
             } else {
                 createdDate.setText(R.string.no_date);
             }

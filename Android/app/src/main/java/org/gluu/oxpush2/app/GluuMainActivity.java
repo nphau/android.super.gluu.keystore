@@ -332,7 +332,12 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
     @Override
     public void onPushRegistrationFailure(Exception ex) {
-        Toast.makeText(getApplicationContext(), R.string.failed_subscribe_push_notification, Toast.LENGTH_LONG).show();
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), R.string.failed_subscribe_push_notification, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override

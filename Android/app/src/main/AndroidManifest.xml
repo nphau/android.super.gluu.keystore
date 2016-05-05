@@ -17,6 +17,7 @@
 
     <application
         android:name="android.support.multidex.MultiDexApplication"
+        android:icon="@drawable/app_icon"
         android:theme="@style/AppTheme">
         <activity
             android:name=".Activities.MainActivity"

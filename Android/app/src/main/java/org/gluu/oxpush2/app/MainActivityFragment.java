@@ -142,28 +142,19 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
 
     private void submit() {
         if (oxPush2RequestListener != null) {
-            String request = "{\"app\":\"https://ce-release.gluu.org/identity/authentication/authcode\",\n" +
-                    "\"username\":\"yure\",\n" +
-                    "\"method\":\"enroll\",\n" +
-                    "\"state\":\"894f00e2-0ab1-4b5a-ae0b-54690a95b018\",\n" +
-                    "\"created\":\"2016-04-27T11:23:18.267000\",\n" +
-                    "\"req_ip\":\"77.123.160.242\", \n" +
-                    "\"req_loc\":\"Ukraine%2C%20L%27vivs%27ka%20Oblast%27%2C%20Lviv\", \n" +
-                    "\"issuer\":\"https://ce-release.gluu.org\"}\n";
-            oxPush2RequestListener.onQrRequest(request);
-//            AndroidKeyDataStore dataStore = new AndroidKeyDataStore(getContext());
-//            List<LogInfo> logs = dataStore.getLogs();
-//            ApproveDenyFragment approveDenyFragment = new ApproveDenyFragment();
-//            approveDenyFragment.setIsUserInfo(false);
-//            approveDenyFragment.setLogInfo(logs.get(0));
-//            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//            transaction.replace(R.id.main_root_frame, approveDenyFragment);
-//            transaction.addToBackStack(null);
-//            transaction.commit();
-//            IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);
-//            integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-//            integrator.setPrompt(getString(R.string.scan_oxpush2_prompt));
-//            integrator.initiateScan();
+//            String request = "{\"app\":\"https://ce-release.gluu.org/identity/authentication/authcode\",\n" +
+//                    "\"username\":\"yure\",\n" +
+//                    "\"method\":\"enroll\",\n" +
+//                    "\"state\":\"894f00e2-0ab1-4b5a-ae0b-54690a95b018\",\n" +
+//                    "\"created\":\"2016-04-27T11:23:18.267000\",\n" +
+//                    "\"req_ip\":\"77.123.160.242\", \n" +
+//                    "\"req_loc\":\"Ukraine%2C%20L%27vivs%27ka%20Oblast%27%2C%20Lviv\", \n" +
+//                    "\"issuer\":\"https://ce-release.gluu.org\"}\n";
+//            oxPush2RequestListener.onQrRequest(request);
+            IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);
+            integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+            integrator.setPrompt(getString(R.string.scan_oxpush2_prompt));
+            integrator.initiateScan();
         }
     }
 

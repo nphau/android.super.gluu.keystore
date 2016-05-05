@@ -44,6 +44,7 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         final View rootView = inflater.inflate(R.layout.fragment_approve_deny, container, false);
+        handler = initHandler(rootView);
         Button approveButton = (Button) rootView.findViewById(R.id.button_approve);
         Button denyButton = (Button) rootView.findViewById(R.id.button_deny);
         if (isUserInfo){
@@ -55,24 +56,13 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
             denyButton.setVisibility(View.GONE);
         } else {
             rootView.findViewById(R.id.approve_deny_close_button).setVisibility(View.GONE);
-            startClockTick();
+            startClockTick(rootView);
         }
         updateLogInfo(rootView);
         rootView.findViewById(R.id.approve_deny_close_button).setOnClickListener(this);
         approveButton.setOnClickListener(this);
         denyButton.setOnClickListener(this);
 
-        handler = new Handler(){
-            public void handleMessage(android.os.Message msg){
-                if (sec == 0){
-                    stopClocking();
-                    closeView();
-                }
-                TextView seconds = (TextView) rootView.findViewById(R.id.timer_textView);
-                String secStr = sec < 10 ? "0" + sec : String.valueOf(sec);
-                seconds.setText(secStr);
-            }
-        };
         return rootView;
     }
 
@@ -182,13 +172,16 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
         }
     }
 
-    private void startClockTick(){
+    private void startClockTick(final View rootView){
         clock = new Timer();
         clock.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 sec--;
                 //send message to update UI
+                if (handler == null){
+                    handler = initHandler(rootView);
+                }
                 handler.sendEmptyMessage(0);
             }
         }, 0, 1000);//put here time 1000 milliseconds=1 second
@@ -212,6 +205,26 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("isCleanButtonVisible", isVsible);
         editor.commit();
+    }
+
+    private Handler initHandler(final View rootView){
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                handler = new Handler(){
+                    public void handleMessage(android.os.Message msg){
+                        if (sec == 0){
+                            stopClocking();
+                            closeView();
+                        }
+                        TextView seconds = (TextView) rootView.findViewById(R.id.timer_textView);
+                        String secStr = sec < 10 ? "0" + sec : String.valueOf(sec);
+                        seconds.setText(secStr);
+                    }
+                };
+            }
+        });
+        return handler;
     }
 
     public OxPush2Request getPush2Request() {

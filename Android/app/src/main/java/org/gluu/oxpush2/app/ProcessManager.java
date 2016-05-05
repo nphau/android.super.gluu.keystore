@@ -166,21 +166,6 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
                 Log.e(TAG, "Failed to parse ISO date/time: " + oxPushCreated, ex);
             }
         }
-
-        String createdString = "";
-        if (createdDate != null) {
-            createdString = userDateTimeFormat.format(createdDate);
-        }
-
-        final boolean oneStep = Utils.isEmpty(oxPush2Request.getUserName());
-        final int authenticationType = oneStep ? R.string.one_step : R.string.two_step;
-
-        ((TextView) view.findViewById(R.id.text_application_value)).setText(oxPush2Request.getApp());
-//        ((TextView) view.findViewById(R.id.text_issuer_value)).setText(oxPush2Request.getIssuer());
-        ((TextView) view.findViewById(R.id.text_created_value)).setText(createdString);
-//        ((TextView) view.findViewById(R.id.text_authentication_type_value)).setText(authenticationType);
-//        ((TextView) view.findViewById(R.id.text_authentication_method_value)).setText(oxPush2Request.getMethod());
-//        ((TextView) view.findViewById(R.id.text_user_name_label_value)).setText(oxPush2Request.getUserName());
     }
 
     private void setFinalStatus(int statusId) {
@@ -189,8 +174,6 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
         // You can also include some extra data.
         intent.putExtra("message", message);
         LocalBroadcastManager.getInstance(activity).sendBroadcast(intent);
-//        ((TextView) getView().findViewById(R.id.status_text)).setText(statusId);
-//        getView().findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
     }
 
     private void setErrorStatus(Exception ex) {
@@ -203,9 +186,9 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
             @Override
             public void run() {
                 if (isDeny){
-                    setFinalStatus(R.string.process_u2f_deny);
+                    setFinalStatus(R.string.process_deny_start);
                 } else {
-                    setFinalStatus(R.string.process_u2f_start);
+                    setFinalStatus(R.string.process_authentication_start);
                 }
             }
         });
@@ -380,11 +363,6 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
         }
 
         if (StringUtils.equals("success", u2fOperationResult.getStatus())) {
-            if (isDeny){
-                setFinalStatus(R.string.deny_result_success);
-            } else {
-                setFinalStatus(R.string.auth_result_success);
-            }
             LogInfo log = new LogInfo();
             log.setIssuer(oxPush2Request.getIssuer());
             log.setUserName(oxPush2Request.getUserName());
@@ -392,15 +370,16 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
             log.setLocationAddress(oxPush2Request.getLocationCity());
             log.setCreatedDate(oxPush2Request.getCreated());
             log.setMethod(oxPush2Request.getMethod());
-            log.setLogState(LogState.LOGIN_SUCCESS);
+            if (isDeny){
+                setFinalStatus(R.string.deny_result_success);
+                log.setLogState(LogState.LOGIN_DECLINED);
+            } else {
+                setFinalStatus(R.string.auth_result_success);
+                log.setLogState(LogState.LOGIN_SUCCESS);
+            }
             dataStore.saveLog(log);
 //            ((TextView) getView().findViewById(R.id.status_text)).setText(getString(R.string.auth_result_success) + ". Server: " + u2fMetaData.getIssuer());
         } else {
-            if (isDeny){
-                setFinalStatus(R.string.deny_result_failed);
-            } else {
-                setFinalStatus(R.string.auth_result_failed);
-            }
             LogInfo log = new LogInfo();
             log.setIssuer(oxPush2Request.getIssuer());
             log.setUserName(oxPush2Request.getUserName());
@@ -408,7 +387,14 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
             log.setLocationAddress(oxPush2Request.getLocationCity());
             log.setCreatedDate(oxPush2Request.getCreated());
             log.setMethod(oxPush2Request.getMethod());
-            log.setLogState(LogState.LOGIN_FAILED);
+            if (isDeny){
+                setFinalStatus(R.string.deny_result_failed);
+                log.setLogState(LogState.LOGIN_DECLINED);
+            } else {
+                setFinalStatus(R.string.auth_result_failed);
+                log.setLogState(LogState.LOGIN_FAILED);
+            }
+
             dataStore.saveLog(log);
         }
         setIsButtonVisible(true);

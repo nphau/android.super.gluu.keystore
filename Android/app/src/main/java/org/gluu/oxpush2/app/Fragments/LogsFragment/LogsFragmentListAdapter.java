@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,13 +27,18 @@ import org.gluu.oxpush2.app.model.LogInfo;
 import org.gluu.oxpush2.model.OxPush2Request;
 import org.gluu.oxpush2.u2f.v2.model.TokenEntry;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by nazaryavornytskyy on 4/5/16.
  */
 public class LogsFragmentListAdapter extends BaseAdapter {
+
+    final SimpleDateFormat isoDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
 
     private List<LogInfo> list;
     private LayoutInflater mInflater;
@@ -106,12 +112,27 @@ public class LogsFragmentListAdapter extends BaseAdapter {
             });
         }
         String title = log.getIssuer();
+        Date date = null;
+        try {
+            date = isoDateTimeFormat.parse(log.getCreatedDate());//isoDateTimeFormat.parse(token.getPairingDate());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (date != null) {
+            String timeAgo = (String) DateUtils.getRelativeTimeSpanString(date.getTime(), System.currentTimeMillis(),
+                    DateUtils.MINUTE_IN_MILLIS);
+            TextView createdTime = (TextView) view.findViewById(R.id.created_date);
+            createdTime.setText(timeAgo);
+        }
         switch (log.getLogState()){
             case LOGIN_SUCCESS:
                 title = "Logged in " + log.getIssuer();
                 break;
             case ENROL_SUCCESS:
                 title = "Enrol to " + log.getIssuer();
+                break;
+            case ENROL_DECLINED:
+                title = "Declined enrol to " + log.getIssuer();
                 break;
 
             default:

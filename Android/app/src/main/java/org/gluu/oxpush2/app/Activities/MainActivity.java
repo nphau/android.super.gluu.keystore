@@ -233,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
     public static long getCurrentNetworkTime() throws UnknownHostException {
         SntpClient client = new SntpClient();
         int timeout = 50000;
-        if (client.requestTime("time-a.nist.gov", timeout)) {
+        if (client.requestTime(TIME_SERVER, timeout)) {
             long time = client.getNtpTime();
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(time);

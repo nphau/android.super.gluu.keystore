@@ -76,7 +76,6 @@ public class LogsFragment extends Fragment {
         DisplayMetrics metrics = new DisplayMetrics();
         WindowManager wm = (WindowManager) rootView.getContext().getSystemService(Context.WINDOW_SERVICE);
         wm.getDefaultDisplay().getMetrics(metrics);
-        noLogs.setX(metrics.widthPixels / 2 - (noLogs.length()*4));
         noLogs.setY(metrics.heightPixels/3);
         listView.setEmptyView(noLogs);
 

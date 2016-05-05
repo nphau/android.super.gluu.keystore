@@ -30,14 +30,16 @@
     <string name="invalid_qr_code">QR code contains invalid oxPush2 request</string>
     <string name="no_valid_key_handles">The aren\'t valid devices associated with specified application. Can you try again and remove expired key(s) associated this application</string>
 
-    <string name="process_u2f_start">Attemting to get Fido U2F request, please wait…</string>
-    <string name="process_u2f_deny">Start deny Fido U2F request, please wait…</string>
+    <string name="process_authentication_start">Authentication...</string>
+    <string name="process_enrol_start">Registering...</string>
+    <string name="process_deny_start">Deny starting...</string>
     <string name="process_u2f_request">Processing Fido U2F request, please wait…</string>
 
-    <string name="auth_result_success">Successful authentication</string>
-    <string name="auth_result_failed">Authentication failure</string>
-    <string name="deny_result_success">Successful denied</string>
-    <string name="deny_result_failed">Deny failed</string>
+    <string name="auth_result_success">You have successfully authenticated!</string>
+    <string name="enrol_result_success">Your enrollment was successful!</string>
+    <string name="auth_result_failed">Authentication failed!</string>
+    <string name="deny_result_success">Decline Success</string>
+    <string name="deny_result_failed">Decline Failed</string>
 
     <string name="challenge_doesnt_match">Challenges doesn\'t match</string>
 
