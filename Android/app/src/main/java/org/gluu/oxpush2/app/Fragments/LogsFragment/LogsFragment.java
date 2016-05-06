@@ -24,6 +24,8 @@ import org.gluu.oxpush2.app.R;
 import org.gluu.oxpush2.app.model.LogInfo;
 import org.gluu.oxpush2.store.AndroidKeyDataStore;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -69,7 +71,9 @@ public class LogsFragment extends Fragment {
             }
         };
         dataStore = new AndroidKeyDataStore(rootView.getContext());
-        logs = dataStore.getLogs();
+        List<LogInfo> logsfromDB = new ArrayList<LogInfo>(dataStore.getLogs());
+        Collections.reverse(logsfromDB);
+        logs = logsfromDB;
         listAdapter = new LogsFragmentListAdapter(getActivity(), logs, mListener);
         listView.setAdapter(listAdapter);
         TextView noLogs = (TextView) rootView.findViewById(R.id.noLogs_textView);

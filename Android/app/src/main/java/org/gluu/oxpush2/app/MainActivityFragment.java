@@ -104,7 +104,7 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         switch (requestCode) {
             case IntentIntegrator.REQUEST_CODE:
                 if (resultCode == Activity.RESULT_OK) {
-                    showToastWithText(context.getString(R.string.process_qr_code));
+//                    showToastWithText(context.getString(R.string.process_qr_code));
                     // Parsing bar code reader result
                     IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
                     if (BuildConfig.DEBUG) Log.d(TAG, "Parsing QR code result: " + result.toString());

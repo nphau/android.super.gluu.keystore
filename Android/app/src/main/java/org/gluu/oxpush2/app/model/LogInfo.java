@@ -1,12 +1,21 @@
 package org.gluu.oxpush2.app.model;
 
+import android.util.Log;
+
 import org.gluu.oxpush2.app.LogState;
 import org.gluu.oxpush2.u2f.v2.entry.Entry;
+import org.gluu.oxpush2.util.Utils;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by nazaryavornytskyy on 4/19/16.
  */
-public class LogInfo extends Entry {
+public class LogInfo extends Entry{//} implements Comparable<LogInfo> {
+
+//    SimpleDateFormat isoDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
 
     private String locationIP;
     private String locationAddress;
@@ -64,4 +73,19 @@ public class LogInfo extends Entry {
     public void setMethod(String method) {
         this.method = method;
     }
+
+//    @Override
+//    public int compareTo(LogInfo another) {
+//        Date date1 = null;
+//        Date date2 = null;
+//        if (Utils.isNotEmpty(getCreatedDate())) {
+//            try {
+//                date1 = isoDateTimeFormat.parse(getCreatedDate());
+//                date2 = isoDateTimeFormat.parse(another.getCreatedDate());
+//            } catch (ParseException ex) {
+//                Log.e(this.getClass().getName(), "Failed to parse ISO date/time: " + getCreatedDate(), ex);
+//            }
+//        }
+//        return date1.compareTo(date2);
+//    }
 }

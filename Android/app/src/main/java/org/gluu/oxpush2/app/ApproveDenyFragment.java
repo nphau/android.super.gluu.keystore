@@ -13,8 +13,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.apache.commons.codec.binary.StringUtils;
 import org.gluu.oxpush2.app.model.LogInfo;
 import org.gluu.oxpush2.model.OxPush2Request;
+import org.gluu.oxpush2.store.AndroidKeyDataStore;
 import org.gluu.oxpush2.util.Utils;
 
 import java.io.UnsupportedEncodingException;
@@ -23,6 +25,7 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -92,7 +95,14 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
                 }
             }
             TextView type = (TextView) rootView.findViewById(R.id.text_type);
-            type.setText(push2Request.getMethod());
+            AndroidKeyDataStore dataStore = new AndroidKeyDataStore(getContext());
+            final List<byte[]> keyHandles = dataStore.getKeyHandlesByIssuerAndAppId(push2Request.getIssuer(), push2Request.getApp());
+            final boolean isEnroll = (keyHandles.size() == 0) || StringUtils.equals(push2Request.getMethod(), "enroll");
+            if (isEnroll){
+                type.setText("enroll");
+            } else {
+                type.setText(push2Request.getMethod());
+            }
             TextView time = (TextView) rootView.findViewById(R.id.text_application_created_label);
             time.setText(getTimeFromString(push2Request.getCreated()));
             TextView date = (TextView) rootView.findViewById(R.id.text_created_value);

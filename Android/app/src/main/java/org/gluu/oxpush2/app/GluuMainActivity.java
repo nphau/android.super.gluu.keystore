@@ -111,84 +111,18 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.title_image);
 
-//        createMockObjects();
-
-//        // Locate the viewpager in gluu_activity_main_main.xml
-//        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-//
-//        // Set the ViewPagerAdapter into ViewPager
-//        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
-////        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-////        setSupportActionBar(toolbar);
-////
-////        MainActivityFragment mainActivityFragment = new MainActivityFragment();
-////        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, mainActivityFragment).commit();
-////
-////        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-////        fab.setOnClickListener(new View.OnClickListener() {
-////            @Override
-////            public void onClick(View view) {
-////                Snackbar.make(view, getString(R.string.oxpush2_into_text), Snackbar.LENGTH_LONG)
-////                        .setAction("Action", null).show();
-////            }
-////        });
-
         // Check if we get push notification
-        Intent intent = getIntent();
-        if (intent.hasExtra(QR_CODE_PUSH_NOTIFICATION_MESSAGE)) {
-            String requestJson = intent.getStringExtra(QR_CODE_PUSH_NOTIFICATION_MESSAGE);
-            onQrRequest(requestJson);
-        }
+//        Intent intent = getIntent();
+//        if (intent.hasExtra(QR_CODE_PUSH_NOTIFICATION_MESSAGE)) {
+//            String requestJson = intent.getStringExtra(QR_CODE_PUSH_NOTIFICATION_MESSAGE);
+//            onQrRequest(requestJson);
+//        }
 
-    }
-
-    private void createMockObjects(){
-        TokenEntry tokenEntry = new TokenEntry("keyPairGenerator", "application", "issuer");
-        Time now = new Time();
-        now.setToNow();
-        tokenEntry.setCreatedDate(now.toString());
-        tokenEntry.setUserName("nazar2016");
-        tokenEntry.setAuthenticationMode("authentication");
-        String serverName = tokenEntry.getIssuer();
-        String prefixKeyHandle = getApplicationContext().getString(R.string.keyHandleCell);
-        String keyHandleTitle = prefixKeyHandle + " " + serverName;
-        tokenEntry.setKeyName(keyHandleTitle);
-        String keyHandleStr = "keyHandle";
-        try {
-            tokenEntry.setKeyHandle(keyHandleStr.getBytes("UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        final boolean oneStep = false;
-        String authenticationType = GluuMainActivity.getResourceString(oneStep ? R.string.one_step : R.string.two_step);
-        tokenEntry.setAuthenticationType(authenticationType);
-        try {
-            dataStore.storeTokenEntry(keyHandleStr.getBytes("UTF-8"), tokenEntry);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        LogInfo log1 = new LogInfo();
-        log1.setIssuer("https://ce-release.gluu.org");
-        log1.setUserName("nazar2016");
-        log1.setLocationIP("10.76.112.97");
-        log1.setLocationAddress("Texas, AX");
-        log1.setLogState(LogState.LOGIN_SUCCESS);
-        LogInfo log2 = new LogInfo();
-        log2.setIssuer("https://demo.gluu.org");
-        log2.setUserName("nazar2016");
-        log2.setLocationIP("10.76.112.97");
-        log2.setLocationAddress("Texas, AX");
-        log2.setLogState(LogState.LOGIN_FAILED);
-        log2.setMessage("All devices are compromised");
-        dataStore.deleteLogs();
-        dataStore.saveLog(log1);
-        dataStore.saveLog(log2);
-//        setIsButtonVisible(true);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (isShowClearMenu && dataStore.getLogs().size() > 0 && getIsButtonVisible()) {
+        if (isShowClearMenu && getIsButtonVisible()) {//&& dataStore.getLogs().size() > 0
             MenuInflater inflater = getMenuInflater();
             inflater.inflate(R.menu.clear_logs_menu, menu);
         }

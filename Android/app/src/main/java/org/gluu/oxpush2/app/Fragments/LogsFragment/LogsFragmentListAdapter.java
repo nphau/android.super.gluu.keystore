@@ -30,6 +30,9 @@ import org.gluu.oxpush2.u2f.v2.model.TokenEntry;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -51,7 +54,6 @@ public class LogsFragmentListAdapter extends BaseAdapter {
         mInflater = LayoutInflater.from(activity);
         mListener = listener;
     }
-
 
     @Override
     public int getCount() {
@@ -133,6 +135,9 @@ public class LogsFragmentListAdapter extends BaseAdapter {
                 break;
             case ENROL_DECLINED:
                 title = "Declined enrol to " + log.getIssuer();
+                break;
+            case LOGIN_DECLINED:
+                title = "Declined login to " + log.getIssuer();
                 break;
 
             default:
