@@ -45,35 +45,59 @@ public class PushNotificationService extends GcmListenerService {
 //        intent.putExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
 //        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        sendNotification("Authentication login request");
+        sendNotification("Authentication login request", message);
 
 //        startActivity(intent);
     }
 
-    private void sendNotification(String title) {
-        Intent intent = new Intent(this, GluuMainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+    private void sendNotification(String title, String message) {
+//        Intent intent = new Intent(this, GluuMainActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
+//                PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         //deny intent
-        Intent yesReceive = new Intent();
-        yesReceive.setAction(DENY_ACTION);
-        PendingIntent pendingIntentDeny = PendingIntent.getBroadcast(this, 12345, yesReceive, PendingIntent.FLAG_UPDATE_CURRENT);
+//        Intent intentReceive = new Intent(this, NotificationReceiver.class);
+//        intent.setAction(DENY_ACTION);
+//        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 12345, intentReceive, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        PendingIntent denyIntent = createPendingIntent(0, message);
+        PendingIntent approveIntent = createPendingIntent(1, message);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.app_icon)
+                .setSmallIcon(R.drawable.app_icon_push)
                 .setContentTitle("Super Gluu")
                 .setContentText(title)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent)
-                .addAction(R.drawable.deny_icon, "Deny", pendingIntentDeny)
-                .addAction(R.drawable.approve_icon, "Approve", null);
+//                .setContentIntent(pendingIntent)
+                .addAction(R.drawable.deny_icon_push, "Deny", denyIntent)
+                .addAction(R.drawable.approve_icon_push, "Approve", approveIntent);
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(GluuMainActivity.MESSAGE_NOTIFICATION_ID, notificationBuilder.build());
-    }}
+    }
+
+    private PendingIntent createPendingIntent(int type, String message){
+        Intent intent = new Intent(this, GluuMainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
+        if (type == 0){
+            intent.setAction(DENY_ACTION);
+        } else {
+            intent.setAction(APPROVE_ACTION);
+        }
+        Bundle noBundle = new Bundle();
+        noBundle.putInt("requestType", type);//This is the value I want to pass
+        intent.putExtras(noBundle);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+        return pendingIntent;
+    }
+
+}
+

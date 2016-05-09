@@ -24,12 +24,14 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import org.gluu.oxpush2.app.GluuToast.GluuToast;
 import org.gluu.oxpush2.app.listener.OxPush2RequestListener;
 import org.gluu.oxpush2.app.model.LogInfo;
+import org.gluu.oxpush2.model.OxPush2Request;
 import org.gluu.oxpush2.store.AndroidKeyDataStore;
 
 import java.util.List;
@@ -108,8 +110,8 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
                     // Parsing bar code reader result
                     IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
                     if (BuildConfig.DEBUG) Log.d(TAG, "Parsing QR code result: " + result.toString());
-
-                    ((OxPush2RequestListener) getActivity()).onQrRequest(result.getContents());
+                    OxPush2Request oxPush2Request = new Gson().fromJson(result.getContents(), OxPush2Request.class);
+                    ((OxPush2RequestListener) getActivity()).onQrRequest(oxPush2Request);
 
                 }
                 if (resultCode == Activity.RESULT_CANCELED) {

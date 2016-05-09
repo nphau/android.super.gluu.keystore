@@ -112,11 +112,21 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         getSupportActionBar().setIcon(R.mipmap.title_image);
 
         // Check if we get push notification
-//        Intent intent = getIntent();
-//        if (intent.hasExtra(QR_CODE_PUSH_NOTIFICATION_MESSAGE)) {
-//            String requestJson = intent.getStringExtra(QR_CODE_PUSH_NOTIFICATION_MESSAGE);
-//            onQrRequest(requestJson);
-//        }
+        Intent intent = getIntent();
+        if (intent.hasExtra(QR_CODE_PUSH_NOTIFICATION_MESSAGE)) {
+            String requestJson = intent.getStringExtra(QR_CODE_PUSH_NOTIFICATION_MESSAGE);
+            OxPush2Request oxPush2Request = new Gson().fromJson(requestJson, OxPush2Request.class);
+            ProcessManager processManager = createProcessManager(oxPush2Request);
+            Bundle answerBundle = intent.getExtras();
+            int userAnswer = answerBundle.getInt("requestType");
+            if (userAnswer == 0 ){//deny action
+                processManager.onOxPushRequest(true);
+            } else if (userAnswer == 1 ){//approve action
+                processManager.onOxPushRequest(false);
+            } else {
+                onQrRequest(oxPush2Request);
+            }
+        }
 
     }
 
@@ -154,40 +164,15 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     }
 
     @Override
-    public void onQrRequest(String requestJson) {
-        if (!validateOxPush2Request(requestJson)) {
+    public void onQrRequest(OxPush2Request oxPush2Request) {
+        if (!validateOxPush2Request(oxPush2Request)) {
             return;
         }
 
         ApproveDenyFragment approveDenyFragment = new ApproveDenyFragment();
         approveDenyFragment.setIsUserInfo(false);
-        OxPush2Request oxPush2Request = new Gson().fromJson(requestJson, OxPush2Request.class);
         approveDenyFragment.setPush2Request(oxPush2Request);
-        final ProcessManager processManager = new ProcessManager();
-        processManager.setOxPush2Request(oxPush2Request);
-        processManager.setDataStore(dataStore);
-        processManager.setActivity(this);
-        processManager.setOxPush2RequestListener(new OxPush2RequestListener() {
-            @Override
-            public void onQrRequest(String requestJson) {
-                //skip code there
-            }
-
-            @Override
-            public TokenResponse onSign(String jsonRequest, String origin, Boolean isDeny) throws JSONException, IOException, U2FException {
-                return u2f.sign(jsonRequest, origin, isDeny);
-            }
-
-            @Override
-            public TokenResponse onEnroll(String jsonRequest, OxPush2Request oxPush2Request, Boolean isDeny) throws JSONException, IOException, U2FException {
-                return u2f.enroll(jsonRequest, oxPush2Request, isDeny);
-            }
-
-            @Override
-            public DataStore onGetDataStore() {
-                return dataStore;
-            }
-        });
+        final ProcessManager processManager = createProcessManager(oxPush2Request);
         approveDenyFragment.setListener(new RequestProcessListener() {
             @Override
             public void onApprove() {
@@ -212,6 +197,36 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 //        fragmentTransaction.commit();
     }
 
+    private ProcessManager createProcessManager(OxPush2Request oxPush2Request){
+        ProcessManager processManager = new ProcessManager();
+        processManager.setOxPush2Request(oxPush2Request);
+        processManager.setDataStore(dataStore);
+        processManager.setActivity(this);
+        processManager.setOxPush2RequestListener(new OxPush2RequestListener() {
+            @Override
+            public void onQrRequest(OxPush2Request oxPush2Request) {
+                //skip code there
+            }
+
+            @Override
+            public TokenResponse onSign(String jsonRequest, String origin, Boolean isDeny) throws JSONException, IOException, U2FException {
+                return u2f.sign(jsonRequest, origin, isDeny);
+            }
+
+            @Override
+            public TokenResponse onEnroll(String jsonRequest, OxPush2Request oxPush2Request, Boolean isDeny) throws JSONException, IOException, U2FException {
+                return u2f.enroll(jsonRequest, oxPush2Request, isDeny);
+            }
+
+            @Override
+            public DataStore onGetDataStore() {
+                return dataStore;
+            }
+        });
+
+        return processManager;
+    }
+
     @Override
     public TokenResponse onSign(String jsonRequest, String origin, Boolean isDeny) throws JSONException, IOException, U2FException {
         return u2f.sign(jsonRequest, origin, isDeny);
@@ -227,12 +242,9 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         return dataStore;
     }
 
-    private boolean validateOxPush2Request(String requestJson) {
+    private boolean validateOxPush2Request(OxPush2Request oxPush2Request) {
         boolean result = true;
         try {
-            // Try to parse JSON
-            OxPush2Request oxPush2Request = new Gson().fromJson(requestJson, OxPush2Request.class);
-
             boolean isOneStep = Utils.isEmpty(oxPush2Request.getUserName());
             boolean isTwoStep = Utils.areAllNotEmpty(oxPush2Request.getUserName(), oxPush2Request.getIssuer(), oxPush2Request.getApp(),
                     oxPush2Request.getState(), oxPush2Request.getMethod());
