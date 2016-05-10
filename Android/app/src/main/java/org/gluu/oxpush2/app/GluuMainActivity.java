@@ -7,46 +7,37 @@
 package org.gluu.oxpush2.app;
 
 import android.app.NotificationManager;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 import com.google.gson.Gson;
 import com.mostcho.pincodeview.PinCodeView;
-
 import org.gluu.oxpush2.app.Activities.GluuApplication;
 import org.gluu.oxpush2.app.CustomGluuAlertView.CustomGluuAlert;
 import org.gluu.oxpush2.app.listener.OxPush2RequestListener;
 import org.gluu.oxpush2.app.listener.PushNotificationRegistrationListener;
-import org.gluu.oxpush2.app.model.LogInfo;
 import org.gluu.oxpush2.model.OxPush2Request;
 import org.gluu.oxpush2.net.CommunicationService;
 import org.gluu.oxpush2.push.PushNotificationManager;
 import org.gluu.oxpush2.store.AndroidKeyDataStore;
 import org.gluu.oxpush2.u2f.v2.SoftwareDevice;
 import org.gluu.oxpush2.u2f.v2.exception.U2FException;
-import org.gluu.oxpush2.u2f.v2.model.TokenEntry;
 import org.gluu.oxpush2.u2f.v2.model.TokenResponse;
 import org.gluu.oxpush2.u2f.v2.store.DataStore;
 import org.gluu.oxpush2.device.DeviceUuidManager;
 import org.gluu.oxpush2.util.Utils;
 import org.json.JSONException;
-
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 /**
  * Main activity
@@ -66,15 +57,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     private static Context context;
 
     private Boolean isShowClearMenu = false;
-
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // Get extra data included in the Intent
-            String message = intent.getStringExtra(QR_CODE_PUSH_NOTIFICATION_MESSAGE);
-            Toast.makeText(getBaseContext(), "You got push notification in foreground", Toast.LENGTH_SHORT).show();
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,8 +126,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             NotificationManager nMgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             nMgr.cancel(MESSAGE_NOTIFICATION_ID);
         }
-        LocalBroadcastManager.getInstance(getApplication()).registerReceiver(mMessageReceiver,
-                new IntentFilter(QR_CODE_PUSH_NOTIFICATION));
     }
 
     @Override
@@ -182,30 +162,36 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     }
 
     @Override
-    public void onQrRequest(OxPush2Request oxPush2Request) {
+    public void onQrRequest(OxPush2Request oxPush2Request, Boolean userDecision) {
         if (!validateOxPush2Request(oxPush2Request)) {
             return;
         }
-
-        ApproveDenyFragment approveDenyFragment = new ApproveDenyFragment();
-        approveDenyFragment.setIsUserInfo(false);
-        approveDenyFragment.setPush2Request(oxPush2Request);
         final ProcessManager processManager = createProcessManager(oxPush2Request);
-        approveDenyFragment.setListener(new RequestProcessListener() {
-            @Override
-            public void onApprove() {
+        if (userDecision != null){
+            if (userDecision){
                 processManager.onOxPushRequest(false);
-            }
-
-            @Override
-            public void onDeny() {
+            } else {
                 processManager.onOxPushRequest(true);
             }
-        });
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.main_root_frame, approveDenyFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        } else {
+            ApproveDenyFragment approveDenyFragment = new ApproveDenyFragment();
+            approveDenyFragment.setIsUserInfo(false);
+            approveDenyFragment.setPush2Request(oxPush2Request);
+            approveDenyFragment.setListener(new RequestProcessListener() {
+                @Override
+                public void onApprove() {
+                    processManager.onOxPushRequest(false);
+                }
+
+                @Override
+                public void onDeny() {
+                    processManager.onOxPushRequest(true);
+                }
+            });
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.main_root_frame, approveDenyFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
 //        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 //        Fragment fragment = ProcessManager.newInstance(requestJson);
 //
@@ -213,6 +199,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 //        fragmentTransaction.replace(R.id.fragment_container, fragment);
 //        fragmentTransaction.addToBackStack(null);
 //        fragmentTransaction.commit();
+        }
     }
 
     private ProcessManager createProcessManager(OxPush2Request oxPush2Request){
@@ -222,7 +209,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         processManager.setActivity(this);
         processManager.setOxPush2RequestListener(new OxPush2RequestListener() {
             @Override
-            public void onQrRequest(OxPush2Request oxPush2Request) {
+            public void onQrRequest(OxPush2Request oxPush2Request, Boolean userDecision) {
                 //skip code there
             }
 

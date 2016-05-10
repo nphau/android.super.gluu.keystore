@@ -58,17 +58,7 @@ public class PushNotificationService extends GcmListenerService {
     }
 
     private void sendNotification(String title, String message) {
-//        Intent intent = new Intent(this, GluuMainActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
-//                PendingIntent.FLAG_ONE_SHOT);
-
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        //deny intent
-//        Intent intentReceive = new Intent(this, NotificationReceiver.class);
-//        intent.setAction(DENY_ACTION);
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 12345, intentReceive, PendingIntent.FLAG_UPDATE_CURRENT);
-
         PendingIntent denyIntent = createPendingIntent(0, message);
         PendingIntent approveIntent = createPendingIntent(1, message);
 
@@ -78,7 +68,6 @@ public class PushNotificationService extends GcmListenerService {
                 .setContentText(title)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
-//                .setContentIntent(pendingIntent)
                 .addAction(R.drawable.deny_icon_push, "Deny", denyIntent)
                 .addAction(R.drawable.approve_icon_push, "Approve", approveIntent);
 
