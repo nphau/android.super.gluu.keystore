@@ -6,8 +6,11 @@
 
 package org.gluu.oxpush2.app;
 
+import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -24,6 +27,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.mostcho.pincodeview.PinCodeView;
 
+import org.gluu.oxpush2.app.Activities.GluuApplication;
 import org.gluu.oxpush2.app.CustomGluuAlertView.CustomGluuAlert;
 import org.gluu.oxpush2.app.listener.OxPush2RequestListener;
 import org.gluu.oxpush2.app.listener.PushNotificationRegistrationListener;
@@ -54,6 +58,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     private static final String TAG = "main-activity";
 
     public static final String QR_CODE_PUSH_NOTIFICATION_MESSAGE = GluuMainActivity.class.getPackage().getName() + ".QR_CODE_PUSH_NOTIFICATION_MESSAGE";
+    public static final String QR_CODE_PUSH_NOTIFICATION = "QR_CODE_PUSH_NOTIFICATION";
     public static final int MESSAGE_NOTIFICATION_ID = 444555;
 
     private SoftwareDevice u2f;
@@ -61,6 +66,15 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     private static Context context;
 
     private Boolean isShowClearMenu = false;
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            String message = intent.getStringExtra(QR_CODE_PUSH_NOTIFICATION_MESSAGE);
+            Toast.makeText(getBaseContext(), "You got push notification in foreground", Toast.LENGTH_SHORT).show();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,10 +138,14 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             } else if (userAnswer == 1 ){//approve action
                 processManager.onOxPushRequest(false);
             } else {
-                onQrRequest(oxPush2Request);
+//                onQrRequest(oxPush2Request);
             }
+            //Remove all notification(s) after user click on one push button
+            NotificationManager nMgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            nMgr.cancel(MESSAGE_NOTIFICATION_ID);
         }
-
+        LocalBroadcastManager.getInstance(getApplication()).registerReceiver(mMessageReceiver,
+                new IntentFilter(QR_CODE_PUSH_NOTIFICATION));
     }
 
     @Override
@@ -345,4 +363,15 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         void onDeny();
     }
 
+    @Override
+    protected void onPause() {
+        GluuApplication.applicationPaused();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        GluuApplication.applicationResumed();
+        super.onResume();
+    }
 }

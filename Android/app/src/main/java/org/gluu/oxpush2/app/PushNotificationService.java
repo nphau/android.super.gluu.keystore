@@ -15,10 +15,12 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
 
+import org.gluu.oxpush2.app.Activities.GluuApplication;
 import org.gluu.oxpush2.util.Utils;
 
 /**
@@ -41,13 +43,18 @@ public class PushNotificationService extends GcmListenerService {
             return;
         }
 
-//        Intent intent = new Intent(this, GluuMainActivity.class);
-//        intent.putExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        sendNotification("Authentication login request", message);
-
-//        startActivity(intent);
+        if (GluuApplication.isIsAppInForeground()){
+//            Intent intent = new Intent(this, GluuMainActivity.class);
+//            intent.putExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            sendNotification(intent, "Authentication login request");
+//            startActivity(intent);
+            Intent intent = new Intent(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION);
+            intent.putExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+        } else {
+            sendNotification("Authentication login request", message);
+        }
     }
 
     private void sendNotification(String title, String message) {

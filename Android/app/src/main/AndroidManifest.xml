@@ -33,6 +33,10 @@
             android:name=".GluuMainActivity"
             android:label="">
         </activity>
+        <activity
+            android:name=".Activities.GluuApplication"
+            android:label="">
+        </activity>
 
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
