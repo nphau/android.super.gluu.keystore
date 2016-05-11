@@ -1,38 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/custom_toast_layout_id"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/custom_push_toast_layout_id"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/rounded_green_shape"
     android:orientation="horizontal"
+    android:background="@color/greenColor"
     android:padding="5dp" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_marginTop="20dp">
-
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/push_toast_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:layout_height="120dp"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:clipChildren="false">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageView"
+                android:id="@+id/push_imageView"
                 android:src="@drawable/app_icon_push_image"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp" />
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp">
+                />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -40,10 +28,11 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/app_name"
                     android:id="@+id/textView9"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="10dp"
                     android:textColor="#FFFFFF"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/push_imageView"
+                    android:layout_toEndOf="@+id/push_imageView" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -52,38 +41,33 @@
                     android:text="Authentication request"
                     android:id="@+id/textView10"
                     android:textColor="#FFFFFF"
-                    android:textSize="16dp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginBottom="10dp">
+                    android:textSize="16dp"
+                    android:layout_below="@+id/textView9"
+                    android:layout_toRightOf="@+id/push_imageView"
+                    android:layout_toEndOf="@+id/push_imageView" />
 
             <Button
                 android:layout_width="170dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:text="@string/button_decline"
                 android:textColor="#FFFFFF"
-                android:layout_marginRight="5dp"
                 android:id="@+id/push_toast_deny_button"
                 android:background="@drawable/rounded_white_shape"
-                />
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="10dp" />
             <Button
                 android:layout_width="170dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:text="@string/button_approve"
                 android:textColor="#FFFFFF"
-                android:layout_marginLeft="5dp"
                 android:id="@+id/push_toast_approve_button"
                 android:background="@drawable/rounded_white_shape"
-                />
+                android:layout_alignParentBottom="true"
+                android:layout_toEndOf="@+id/textView10"
+                android:layout_marginBottom="10dp" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
-    </LinearLayout>
-
-</LinearLayout>
+</FrameLayout>
