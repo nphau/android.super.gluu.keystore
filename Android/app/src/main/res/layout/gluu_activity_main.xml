@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+<org.gluu.oxpush2.app.Fragments.GluuPagerView.GluuPagerView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/pager"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
@@ -12,4 +12,4 @@
         android:textColor="@color/greenColor"
         android:background="@color/grayColorLight"/>
 
-</android.support.v4.view.ViewPager>
+</org.gluu.oxpush2.app.Fragments.GluuPagerView.GluuPagerView>

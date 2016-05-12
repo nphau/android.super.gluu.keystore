@@ -19,11 +19,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Toast;
 import com.google.gson.Gson;
 import com.mostcho.pincodeview.PinCodeView;
 import org.gluu.oxpush2.app.Activities.GluuApplication;
 import org.gluu.oxpush2.app.CustomGluuAlertView.CustomGluuAlert;
+import org.gluu.oxpush2.app.Fragments.GluuPagerView.GluuPagerView;
 import org.gluu.oxpush2.app.listener.OxPush2RequestListener;
 import org.gluu.oxpush2.app.listener.PushNotificationRegistrationListener;
 import org.gluu.oxpush2.model.OxPush2Request;
@@ -65,7 +68,9 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         setContentView(R.layout.gluu_activity_main);
 
         // Locate the viewpager in gluu_activity_main.xmln.xml
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        GluuPagerView viewPager = (GluuPagerView) findViewById(R.id.pager);
+        viewPager.setSwipeLocked(true);
+
         // Set the ViewPagerAdapter into ViewPager
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), this));
 
@@ -105,7 +110,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         setIsButtonVisible(dataStore.getLogs().size() != 0);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.mipmap.title_image);
+        getSupportActionBar().setIcon(R.drawable.ic_title_icon);
 
         // Check if we get push notification
         Intent intent = getIntent();
