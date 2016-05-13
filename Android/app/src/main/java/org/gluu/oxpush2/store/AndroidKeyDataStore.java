@@ -216,7 +216,10 @@ public class AndroidKeyDataStore implements DataStore {
 
             if (keyHandleID != null && StringUtils.equals(keyHandleID, tokenEntry.getIssuer())){
                 tokenEntry.setKeyName(newName);
-                storeTokenEntry(tokenEntry.getKeyHandle(), tokenEntry);
+                SharedPreferences tokenSettings = context.getSharedPreferences(U2F_KEY_PAIR_FILE, Context.MODE_PRIVATE);
+                String tokenEntryStr = new Gson().toJson(tokenEntry);
+                String keyHandleKey = keyHandleToKey(tokenEntry.getKeyHandle());
+                tokenSettings.edit().putString(keyHandleKey, tokenEntryStr).commit();
                 return;
             }
         }
