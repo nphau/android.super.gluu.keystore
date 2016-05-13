@@ -69,7 +69,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
         // Locate the viewpager in gluu_activity_main.xmln.xml
         GluuPagerView viewPager = (GluuPagerView) findViewById(R.id.pager);
-        viewPager.setSwipeLocked(true);
+        viewPager.setSwipeLocked(false);
 
         // Set the ViewPagerAdapter into ViewPager
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), this));
