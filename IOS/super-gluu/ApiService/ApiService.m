@@ -123,9 +123,11 @@
             if (isDecline){
                 if (isEnroll){
                     [[UserLoginInfo sharedInstance] setLogState:ENROLL_DECLINED];
+                    [[UserLoginInfo sharedInstance] setErrorMessage:@"Enrol was declined"];
                     [[DataStoreManager sharedInstance] saveUserLoginInfo:[UserLoginInfo sharedInstance]];
                 } else {
                     [[UserLoginInfo sharedInstance] setLogState:LOGIN_DECLINED];
+                    [[UserLoginInfo sharedInstance] setErrorMessage:@"Login was declined"];
                     [[DataStoreManager sharedInstance] saveUserLoginInfo:[UserLoginInfo sharedInstance]];
                 }
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DECLINE_SUCCESS object:urlData];

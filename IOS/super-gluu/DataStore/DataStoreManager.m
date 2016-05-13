@@ -99,7 +99,6 @@
     if (eccKeyFetchedArray != nil && [eccKeyFetchedArray count] > 0){
         for (NSManagedObject *eccKeyFetched in eccKeyFetchedArray){
             if (eccKeyFetched != nil && [eccKeyFetched valueForKey:KEYHANDLE_KEY] != nil){
-//                NSString* tokenID = [NSString stringWithFormat:@"%@%@", [eccKeyFetched valueForKey:ISSUER_KEY], [eccKeyFetched valueForKey:APPLICATION_KEY]];
                 NSString* tokenID = [NSString stringWithFormat:@"%@", [eccKeyFetched valueForKey:APPLICATION_KEY]];
                 if ([tokenID isEqualToString:keyID]){
                     TokenEntity* tokenEntity = [[TokenEntity alloc] init];

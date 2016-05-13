@@ -523,23 +523,22 @@
     NSString* created = [NSString stringWithFormat:@"%@", [NSDate date]];//[parameters objectForKey:@"created"];
     NSString* issuer = [parameters objectForKey:@"issuer"];
     NSString* username = [parameters objectForKey:@"username"];
+    NSString* method = [parameters objectForKey:@"method"];
     BOOL oneStep = username == nil ? YES : NO;
     
     [[UserLoginInfo sharedInstance] setApplication:app];
     [[UserLoginInfo sharedInstance] setCreated:created];
     [[UserLoginInfo sharedInstance] setIssuer:issuer];
     [[UserLoginInfo sharedInstance] setUserName:username];
-    NSArray* tokenEntities = [[DataStoreManager sharedInstance] getTokenEntitiesByID:issuer];
+    NSArray* tokenEntities = [[DataStoreManager sharedInstance] getTokenEntitiesByID:app];
     BOOL isEnroll = [tokenEntities count] > 0 ? NO : YES;
-    if (isEnroll){//authentication
+    if (isEnroll){
         NSString* type = NSLocalizedString(@"Enrol", @"Enrol");
         [[UserLoginInfo sharedInstance] setAuthenticationType:type];
-    } else {//registration
-        NSString* type = NSLocalizedString(@"Authentication", @"Authentication");
-        [[UserLoginInfo sharedInstance] setAuthenticationType:type];
+    } else {
+        [[UserLoginInfo sharedInstance] setAuthenticationType:method];
         
     }
-//    [[UserLoginInfo sharedInstance] setAuthenticationType:@"Authentication"];
     NSString* mode = oneStep ? NSLocalizedString(@"OneStepMode", @"One Step") : NSLocalizedString(@"TwoStepMode", @"Two Step");
     [[UserLoginInfo sharedInstance] setAuthenticationMode:mode];
     [[UserLoginInfo sharedInstance] setLocationCity:[parameters objectForKey:@"req_loc"]];
