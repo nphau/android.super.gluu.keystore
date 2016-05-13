@@ -15,7 +15,6 @@
 #import "SCLAlertView.h"
 #import "TokenEntity.h"
 #import "DataStoreManager.h"
-#import "PushView.h"
 
 @interface MainViewController ()
 
@@ -191,18 +190,7 @@
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
     AudioServicesPlaySystemSound(1003);//push sound
     scanJsonDictionary = [notification object];
-    PushView* pushView = [self.view viewWithTag:3];
-    if (pushView == nil){
-        pushView = [[PushView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 120)];
-        pushView.tag = 3;
-        pushView.delegate = self;
-        pushView.pushLabel.text = [NSString stringWithFormat:@"Login request to: %@", [scanJsonDictionary valueForKey:@"issuer"]];
-        [pushView setUserInteractionEnabled:YES];
-        [pushView addTarget:self action:@selector(loadApproveDenyView) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:pushView];
-        [self initUserInfo:scanJsonDictionary];
-        [self performSelector:@selector(hidePushView) withObject:nil afterDelay:10];
-    }
+    [self sendQRCodeRequest:scanJsonDictionary];
 }
 
 -(void)initNotifications{
@@ -357,7 +345,6 @@
 }
 
 -(void)openRequest{
-    [self hidePushView];
     [self loadApproveDenyView];
 }
 
@@ -431,7 +418,6 @@
 
 - (IBAction)scanAction:(id)sender
 {
-    [self hidePushView];
     [self initQRScanner];
     if ([QRCodeReader isAvailable]){
         [self updateStatus:NSLocalizedString(@"QRCodeScanning", @"QR Code Scanning")];
@@ -447,10 +433,6 @@
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
     OXPushManager* oxPushManager = [[OXPushManager alloc] init];
     [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:NO];
-    [NSObject cancelPreviousPerformRequestsWithTarget:self
-                                             selector:@selector(hidePushView)
-                                               object:nil];
-    [self hidePushView];
 }
 
 -(void)onDecline{
@@ -460,18 +442,6 @@
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
     OXPushManager* oxPushManager = [[OXPushManager alloc] init];
     [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:YES];
-    [NSObject cancelPreviousPerformRequestsWithTarget:self
-                                             selector:@selector(hidePushView)
-                                               object:nil];
-    [self hidePushView];
-}
-
--(void)hidePushView{
-    PushView* pushView = [self.view viewWithTag:3];
-    if (pushView != nil){
-        [pushView removeFromSuperview];
-    }
-    scanJsonDictionary = nil;
 }
 
 -(void)showAlertViewWithTitle:(NSString*)title andMessage:(NSString*)message{
