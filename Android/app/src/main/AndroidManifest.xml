@@ -15,6 +15,13 @@
     <!-- Permission to vibrate -->
     <uses-permission android:name="android.permission.VIBRATE" />
 
+    <!-- Permission to get working with camera -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <application
         android:name="android.support.multidex.MultiDexApplication"
         android:icon="@drawable/app_icon"

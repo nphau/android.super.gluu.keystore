@@ -13,7 +13,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -22,21 +21,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import org.gluu.oxpush2.app.GluuToast.GluuPushToast;
-import org.gluu.oxpush2.app.GluuToast.GluuPushToastFactory;
 import org.gluu.oxpush2.app.GluuToast.GluuToast;
 import org.gluu.oxpush2.app.listener.OxPush2RequestListener;
-import org.gluu.oxpush2.app.model.LogInfo;
 import org.gluu.oxpush2.model.OxPush2Request;
-import org.gluu.oxpush2.store.AndroidKeyDataStore;
-
-import java.util.List;
 
 /**
  * Main activity fragment
@@ -52,8 +44,6 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
     private LayoutInflater inflater;
 
     private Context context;
-
-    private GluuPushToast pushToast;
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -125,7 +115,7 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
                     IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
                     if (BuildConfig.DEBUG) Log.d(TAG, "Parsing QR code result: " + result.toString());
                     OxPush2Request oxPush2Request = new Gson().fromJson(result.getContents(), OxPush2Request.class);
-                    ((OxPush2RequestListener) getActivity()).onQrRequest(oxPush2Request, null);
+                    ((OxPush2RequestListener) getActivity()).onQrRequest(oxPush2Request);
 
                 }
                 if (resultCode == Activity.RESULT_CANCELED) {
@@ -154,21 +144,7 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
 //        View view = inflater.inflate(R.layout.gluu_push_toast, null);
         String message = intent.getStringExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE);
         final OxPush2Request oxPush2Request = new Gson().fromJson(message, OxPush2Request.class);
-        View.OnClickListener clickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.push_toast_deny_button){//deny action
-                    pushToast.cancel();
-                    oxPush2RequestListener.onQrRequest(oxPush2Request, false);
-                }
-                if (v.getId() == R.id.push_toast_approve_button){//approve action
-                    pushToast.cancel();
-                    oxPush2RequestListener.onQrRequest(oxPush2Request, true);
-                }
-            }
-        };
-        pushToast = GluuPushToastFactory.makeText(getActivity(), GluuPushToast.LENGTH_LONG, clickListener);
-        pushToast.show();
+        oxPush2RequestListener.onQrRequest(oxPush2Request);
     }
 
     private void showToastWithText(String text){
@@ -179,15 +155,6 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
 
     private void submit() {
         if (oxPush2RequestListener != null) {
-//            String request = "{\"app\":\"https://ce-release.gluu.org/identity/authentication/authcode\",\n" +
-//                    "\"username\":\"yure\",\n" +
-//                    "\"method\":\"enroll\",\n" +
-//                    "\"state\":\"894f00e2-0ab1-4b5a-ae0b-54690a95b018\",\n" +
-//                    "\"created\":\"2016-04-27T11:23:18.267000\",\n" +
-//                    "\"req_ip\":\"77.123.160.242\", \n" +
-//                    "\"req_loc\":\"Ukraine%2C%20L%27vivs%27ka%20Oblast%27%2C%20Lviv\", \n" +
-//                    "\"issuer\":\"https://ce-release.gluu.org\"}\n";
-//            oxPush2RequestListener.onQrRequest(request);
 //            String message = "{\"req_ip\":\"178.136.126.205\",\"app\":\"https://ce-release.gluu.org/identity/authentication/authcode\",\"username\":\"nazar2017\",\"method\":\"authenticate\",\"req_loc\":\"Ukraine%2C%20L%27vivs%27ka%20Oblast%27%2C%20Lviv\",\"state\":\"cd98df91-3b71-4911-9a15-84253c326c7c\",\"created\":\"2016-05-10T09:19:46.260000\",\"issuer\":\"https://ce-release.gluu.org\"}";
 //            Intent intent = new Intent();
 //            intent.putExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);

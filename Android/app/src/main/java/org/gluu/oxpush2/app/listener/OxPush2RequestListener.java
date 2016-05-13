@@ -22,7 +22,7 @@ import java.io.IOException;
  */
 public interface OxPush2RequestListener {
 
-    void onQrRequest(OxPush2Request oxPush2Request, Boolean userDecision);
+    void onQrRequest(OxPush2Request oxPush2Request);
 
     TokenResponse onSign(String jsonRequest, String origin, Boolean isDeny) throws JSONException, IOException, U2FException;
 

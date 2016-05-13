@@ -167,36 +167,29 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     }
 
     @Override
-    public void onQrRequest(OxPush2Request oxPush2Request, Boolean userDecision) {
+    public void onQrRequest(OxPush2Request oxPush2Request) {
         if (!validateOxPush2Request(oxPush2Request)) {
             return;
         }
         final ProcessManager processManager = createProcessManager(oxPush2Request);
-        if (userDecision != null){
-            if (userDecision){
-                processManager.onOxPushRequest(false);
-            } else {
-                processManager.onOxPushRequest(true);
-            }
-        } else {
-            ApproveDenyFragment approveDenyFragment = new ApproveDenyFragment();
-            approveDenyFragment.setIsUserInfo(false);
-            approveDenyFragment.setPush2Request(oxPush2Request);
-            approveDenyFragment.setListener(new RequestProcessListener() {
-                @Override
-                public void onApprove() {
+        ApproveDenyFragment approveDenyFragment = new ApproveDenyFragment();
+        approveDenyFragment.setIsUserInfo(false);
+        approveDenyFragment.setPush2Request(oxPush2Request);
+        approveDenyFragment.setListener(new RequestProcessListener() {
+            @Override
+            public void onApprove() {
                     processManager.onOxPushRequest(false);
                 }
 
-                @Override
-                public void onDeny() {
+            @Override
+            public void onDeny() {
                     processManager.onOxPushRequest(true);
                 }
-            });
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.main_root_frame, approveDenyFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
+        });
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_root_frame, approveDenyFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
 //        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 //        Fragment fragment = ProcessManager.newInstance(requestJson);
 //
@@ -204,7 +197,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 //        fragmentTransaction.replace(R.id.fragment_container, fragment);
 //        fragmentTransaction.addToBackStack(null);
 //        fragmentTransaction.commit();
-        }
     }
 
     private ProcessManager createProcessManager(OxPush2Request oxPush2Request){
@@ -214,7 +206,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         processManager.setActivity(this);
         processManager.setOxPush2RequestListener(new OxPush2RequestListener() {
             @Override
-            public void onQrRequest(OxPush2Request oxPush2Request, Boolean userDecision) {
+            public void onQrRequest(OxPush2Request oxPush2Request) {
                 //skip code there
             }
 
