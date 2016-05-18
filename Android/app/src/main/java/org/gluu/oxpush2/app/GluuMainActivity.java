@@ -134,6 +134,11 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     }
 
     @Override
+    public void onSaveInstanceState( Bundle outState ) {
+        //skip it at all
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (isShowClearMenu && getIsButtonVisible()) {//&& dataStore.getLogs().size() > 0
             MenuInflater inflater = getMenuInflater();
@@ -189,7 +194,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_root_frame, approveDenyFragment);
         transaction.addToBackStack(null);
-        transaction.commit();
+        transaction.commitAllowingStateLoss();
 //        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 //        Fragment fragment = ProcessManager.newInstance(requestJson);
 //

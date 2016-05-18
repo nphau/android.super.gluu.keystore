@@ -6,12 +6,17 @@
 
 package org.gluu.oxpush2.app;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -57,10 +62,24 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
     };
 
     private BroadcastReceiver mPushMessageReceiver = new BroadcastReceiver() {
+        @SuppressLint("NewApi")
         @Override
         public void onReceive(Context context, Intent intent) {
-            // Get extra data included in the Intent
-            showPushToast(intent);
+            if (!getActivity().isDestroyed()) {
+                // Get extra data included in the Intent
+                String message = intent.getStringExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE);
+                final OxPush2Request oxPush2Request = new Gson().fromJson(message, OxPush2Request.class);
+                onQrRequest(oxPush2Request);
+                //play sound and vibrate
+                try {
+                    Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                    Ringtone r = RingtoneManager.getRingtone(context, notification);
+                    r.play();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                ((Vibrator)getActivity().getSystemService(Context.VIBRATOR_SERVICE)).vibrate(800);
+            }
         }
     };
 
@@ -86,6 +105,13 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mPushMessageReceiver);
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mMessageReceiver);
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OxPush2RequestListener) {
@@ -98,7 +124,7 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
     @Override
     public void onDetach() {
         super.onDetach();
-        oxPush2RequestListener = null;
+//        oxPush2RequestListener = null;
     }
 
     @Override
@@ -115,7 +141,7 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
                     IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
                     if (BuildConfig.DEBUG) Log.d(TAG, "Parsing QR code result: " + result.toString());
                     OxPush2Request oxPush2Request = new Gson().fromJson(result.getContents(), OxPush2Request.class);
-                    ((OxPush2RequestListener) getActivity()).onQrRequest(oxPush2Request);
+                    onQrRequest(oxPush2Request);
 
                 }
                 if (resultCode == Activity.RESULT_CANCELED) {
@@ -140,10 +166,7 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         return false;
     }
 
-    private void showPushToast(Intent intent){
-//        View view = inflater.inflate(R.layout.gluu_push_toast, null);
-        String message = intent.getStringExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE);
-        final OxPush2Request oxPush2Request = new Gson().fromJson(message, OxPush2Request.class);
+    private void onQrRequest(OxPush2Request oxPush2Request){
         oxPush2RequestListener.onQrRequest(oxPush2Request);
     }
 
@@ -164,6 +187,8 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
             integrator.setPrompt(getString(R.string.scan_oxpush2_prompt));
             integrator.initiateScan();
         }
+//        0949934417
+//                17.05 11-45 Toyata bc4925 ec
     }
 
 }

@@ -68,6 +68,12 @@ public class PushNotificationService extends GcmListenerService {
                 .setContentText(title)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setWhen(System.currentTimeMillis())
+                .setAutoCancel(true)
+                .setTicker(message)
+                .setVibrate(new long[] { 100, 250, 100, 250, 100, 250 })
+                .setPriority(Notification.PRIORITY_HIGH)
                 .addAction(R.drawable.deny_icon_push, "Deny", denyIntent)
                 .addAction(R.drawable.approve_icon_push, "Approve", approveIntent);
 
