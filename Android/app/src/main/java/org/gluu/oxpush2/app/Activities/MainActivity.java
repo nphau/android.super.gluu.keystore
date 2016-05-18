@@ -1,5 +1,6 @@
 package org.gluu.oxpush2.app.Activities;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.mostcho.pincodeview.PinCodeView;
 import org.gluu.oxpush2.app.CustomGluuAlertView.CustomGluuAlert;
 import org.gluu.oxpush2.app.Fragments.LicenseFragment.LicenseFragment;
@@ -16,7 +18,9 @@ import org.gluu.oxpush2.app.Fragments.PinCodeFragment.PinCodeFragment;
 import org.gluu.oxpush2.app.Fragments.PinCodeFragment.PinCodeSettingFragment;
 import org.gluu.oxpush2.app.GluuMainActivity;
 import org.gluu.oxpush2.app.KeyHandleInfoFragment;
+import org.gluu.oxpush2.app.ProcessManager;
 import org.gluu.oxpush2.app.R;
+import org.gluu.oxpush2.model.OxPush2Request;
 import org.gluu.oxpush2.net.NTP.SntpClient;
 
 import java.net.InetAddress;
@@ -37,6 +41,26 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        // Check if we get push notification
+        Intent intent = getIntent();
+        if (intent.hasExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE)) {
+            String requestJson = intent.getStringExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE);
+            Bundle answerBundle = intent.getExtras();
+            int userAnswer = answerBundle.getInt("requestType");
+            if (userAnswer == 0 ){//deny action
+                saveUserDecision("deny", requestJson);
+            } else if (userAnswer == 1 ){//approve action
+                saveUserDecision("approve", requestJson);
+            }
+            if (isAppLocked()){
+                loadLockedFragment(true);
+            } else {
+                checkPinCodeEnabled();
+            }
+            NotificationManager nMgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            nMgr.cancel(GluuMainActivity.MESSAGE_NOTIFICATION_ID);
+        }
 
         if (isAppLocked()){
             loadLockedFragment(true);
@@ -154,6 +178,14 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
         SharedPreferences preferences = getApplicationContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("PinCode", newPinCode);
+        editor.commit();
+    }
+
+    public void saveUserDecision(String userChoose, String oxRequest){
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences("oxPushSettings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("userChoose", userChoose);
+        editor.putString("oxRequest", oxRequest);
         editor.commit();
     }
 

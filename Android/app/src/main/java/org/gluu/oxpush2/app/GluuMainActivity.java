@@ -6,7 +6,6 @@
 
 package org.gluu.oxpush2.app;
 
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,8 +18,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Toast;
 import com.google.gson.Gson;
 import com.mostcho.pincodeview.PinCodeView;
@@ -113,24 +110,25 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         getSupportActionBar().setIcon(R.drawable.ic_title_icon);
 
         // Check if we get push notification
-        Intent intent = getIntent();
-        if (intent.hasExtra(QR_CODE_PUSH_NOTIFICATION_MESSAGE)) {
-            String requestJson = intent.getStringExtra(QR_CODE_PUSH_NOTIFICATION_MESSAGE);
-            OxPush2Request oxPush2Request = new Gson().fromJson(requestJson, OxPush2Request.class);
-            ProcessManager processManager = createProcessManager(oxPush2Request);
-            Bundle answerBundle = intent.getExtras();
-            int userAnswer = answerBundle.getInt("requestType");
-            if (userAnswer == 0 ){//deny action
-                processManager.onOxPushRequest(true);
-            } else if (userAnswer == 1 ){//approve action
-                processManager.onOxPushRequest(false);
-            } else {
-//                onQrRequest(oxPush2Request);
-            }
-            //Remove all notification(s) after user click on one push button
-            NotificationManager nMgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            nMgr.cancel(MESSAGE_NOTIFICATION_ID);
-        }
+        checkIsPush();
+//        Intent intent = getIntent();
+//        if (intent.hasExtra(QR_CODE_PUSH_NOTIFICATION_MESSAGE)) {
+//            String requestJson = intent.getStringExtra(QR_CODE_PUSH_NOTIFICATION_MESSAGE);
+//            OxPush2Request oxPush2Request = new Gson().fromJson(requestJson, OxPush2Request.class);
+//            ProcessManager processManager = createProcessManager(oxPush2Request);
+//            Bundle answerBundle = intent.getExtras();
+//            int userAnswer = answerBundle.getInt("requestType");
+//            if (userAnswer == 0 ){//deny action
+//                processManager.onOxPushRequest(true);
+//            } else if (userAnswer == 1 ){//approve action
+//                processManager.onOxPushRequest(false);
+//            } else {
+////                onQrRequest(oxPush2Request);
+//            }
+//            //Remove all notification(s) after user click on one push button
+//            NotificationManager nMgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//            nMgr.cancel(MESSAGE_NOTIFICATION_ID);
+//        }
     }
 
     @Override
@@ -362,5 +360,40 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     protected void onResume() {
         GluuApplication.applicationResumed();
         super.onResume();
+    }
+
+    public void checkIsPush(){
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences("oxPushSettings", Context.MODE_PRIVATE);
+        if (preferences.getString("userChoose", "null").equalsIgnoreCase("deny")){
+            String requestString = preferences.getString("oxRequest", "null");
+            doOxRequest(requestString, true);
+            return;
+        }
+        if (preferences.getString("userChoose", "null").equalsIgnoreCase("approve")){
+            String requestString = preferences.getString("oxRequest", "null");
+            doOxRequest(requestString, false);
+            return;
+        }
+    }
+
+    private void doOxRequest(String oxRequest, Boolean isDeny){
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences("oxPushSettings", Context.MODE_PRIVATE);
+        OxPush2Request oxPush2Request = new Gson().fromJson(oxRequest, OxPush2Request.class);
+        final ProcessManager processManager = createProcessManager(oxPush2Request);
+        processManager.onOxPushRequest(isDeny);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("userChoose", "null");
+        editor.putString("oxRequest", "null");
+        editor.commit();
+        String message = "";
+        if (isDeny){
+            message = this.getApplicationContext().getString(R.string.process_deny_start);
+        } else {
+            message = this.getApplicationContext().getString(R.string.process_authentication_start);
+        }
+        Intent intent = new Intent("ox_request-precess-event");
+        // You can also include some extra data.
+        intent.putExtra("message", message);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 }

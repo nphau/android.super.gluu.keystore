@@ -21,6 +21,7 @@ import android.util.Log;
 import com.google.android.gms.gcm.GcmListenerService;
 
 import org.gluu.oxpush2.app.Activities.GluuApplication;
+import org.gluu.oxpush2.app.Activities.MainActivity;
 import org.gluu.oxpush2.util.Utils;
 
 /**
@@ -84,7 +85,7 @@ public class PushNotificationService extends GcmListenerService {
     }
 
     private PendingIntent createPendingIntent(int type, String message){
-        Intent intent = new Intent(this, GluuMainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);//GluuMainActivity
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
         if (type == 0){
