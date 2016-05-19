@@ -6,11 +6,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import org.apache.commons.codec.binary.StringUtils;
@@ -38,6 +43,8 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
     private OxPush2Request push2Request;
     private GluuMainActivity.RequestProcessListener listener;
 
+    private RelativeLayout relativeLayout;
+
     private Timer clock;
     private Handler handler;
 
@@ -55,12 +62,27 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
             TextView titleTextView = (TextView) rootView.findViewById(R.id.title_textView);
             timerView.setVisibility(View.GONE);
             titleTextView.setText(R.string.info);
-            approveButton.setVisibility(View.GONE);
-            denyButton.setVisibility(View.GONE);
+//            approveButton.setVisibility(View.GONE);
+//            denyButton.setVisibility(View.GONE);
         } else {
             rootView.findViewById(R.id.approve_deny_close_button).setVisibility(View.GONE);
             startClockTick(rootView);
         }
+
+        relativeLayout = (RelativeLayout)rootView.findViewById(R.id.mainRelativeLayout);
+        final RelativeLayout topRelativeLayout = (RelativeLayout)rootView.findViewById(R.id.topRelativeLayout);
+        final LinearLayout buttonsLayout = (LinearLayout)rootView.findViewById(R.id.action_button_group);
+        final DisplayMetrics metrics = new DisplayMetrics();
+        WindowManager wm = (WindowManager) rootView.getContext().getSystemService(Context.WINDOW_SERVICE);
+        wm.getDefaultDisplay().getMetrics(metrics);
+        topRelativeLayout.post(new Runnable() {
+                                   public void run() {
+                                       int h = topRelativeLayout.getHeight();
+                                       int h2 = buttonsLayout.getHeight();
+                                       relativeLayout.setMinimumHeight(metrics.heightPixels - h*2 - h2 - 50);
+                                   }
+                               }
+        );
         updateLogInfo(rootView);
         rootView.findViewById(R.id.approve_deny_close_button).setOnClickListener(this);
         approveButton.setOnClickListener(this);
