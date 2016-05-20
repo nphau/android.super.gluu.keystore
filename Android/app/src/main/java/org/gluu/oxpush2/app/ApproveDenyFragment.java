@@ -62,8 +62,8 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
             TextView titleTextView = (TextView) rootView.findViewById(R.id.title_textView);
             timerView.setVisibility(View.GONE);
             titleTextView.setText(R.string.info);
-//            approveButton.setVisibility(View.GONE);
-//            denyButton.setVisibility(View.GONE);
+            approveButton.setVisibility(View.GONE);
+            denyButton.setVisibility(View.GONE);
         } else {
             rootView.findViewById(R.id.approve_deny_close_button).setVisibility(View.GONE);
             startClockTick(rootView);
