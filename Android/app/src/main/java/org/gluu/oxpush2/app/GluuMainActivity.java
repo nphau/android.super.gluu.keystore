@@ -9,8 +9,13 @@ package org.gluu.oxpush2.app;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -18,10 +23,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 import com.google.gson.Gson;
 import com.mostcho.pincodeview.PinCodeView;
 import org.gluu.oxpush2.app.Activities.GluuApplication;
+import org.gluu.oxpush2.app.Activities.MainActivity;
 import org.gluu.oxpush2.app.CustomGluuAlertView.CustomGluuAlert;
 import org.gluu.oxpush2.app.Fragments.GluuPagerView.GluuPagerView;
 import org.gluu.oxpush2.app.listener.OxPush2RequestListener;
@@ -39,6 +46,8 @@ import org.gluu.oxpush2.util.Utils;
 import org.json.JSONException;
 import java.io.IOException;
 
+import static android.Manifest.permission.CAMERA;
+
 /**
  * Main activity
  *
@@ -47,6 +56,11 @@ import java.io.IOException;
 public class GluuMainActivity extends AppCompatActivity implements OxPush2RequestListener, PushNotificationRegistrationListener, KeyHandleInfoFragment.OnDeleteKeyHandleListener, PinCodeView.IPinCodeViewListener {
 
     private static final String TAG = "main-activity";
+
+    /**
+     * Id to identify a camera permission request.
+     */
+    private static final int REQUEST_CAMERA = 0;
 
     public static final String QR_CODE_PUSH_NOTIFICATION_MESSAGE = GluuMainActivity.class.getPackage().getName() + ".QR_CODE_PUSH_NOTIFICATION_MESSAGE";
     public static final String QR_CODE_PUSH_NOTIFICATION = "QR_CODE_PUSH_NOTIFICATION";
@@ -111,24 +125,8 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
         // Check if we get push notification
         checkIsPush();
-//        Intent intent = getIntent();
-//        if (intent.hasExtra(QR_CODE_PUSH_NOTIFICATION_MESSAGE)) {
-//            String requestJson = intent.getStringExtra(QR_CODE_PUSH_NOTIFICATION_MESSAGE);
-//            OxPush2Request oxPush2Request = new Gson().fromJson(requestJson, OxPush2Request.class);
-//            ProcessManager processManager = createProcessManager(oxPush2Request);
-//            Bundle answerBundle = intent.getExtras();
-//            int userAnswer = answerBundle.getInt("requestType");
-//            if (userAnswer == 0 ){//deny action
-//                processManager.onOxPushRequest(true);
-//            } else if (userAnswer == 1 ){//approve action
-//                processManager.onOxPushRequest(false);
-//            } else {
-////                onQrRequest(oxPush2Request);
-//            }
-//            //Remove all notification(s) after user click on one push button
-//            NotificationManager nMgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//            nMgr.cancel(MESSAGE_NOTIFICATION_ID);
-//        }
+
+        checkUserCameraPermission();
     }
 
     @Override
@@ -396,4 +394,48 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         intent.putExtra("message", message);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
+
+    private void checkUserCameraPermission(){
+        Log.i(TAG, "Show camera button pressed. Checking permission.");
+        // BEGIN_INCLUDE(camera_permission)
+        // Check if the Camera permission is already available.
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Camera permission has not been granted.
+
+            requestCameraPermission();
+
+        } else {
+
+            // Camera permissions is already available, show the camera preview.
+            Log.i(TAG,
+                    "CAMERA permission has already been granted. Displaying camera preview.");
+//            showCameraPreview();
+        }
+        // END_INCLUDE(camera_permission)
+    }
+
+    private void requestCameraPermission() {
+        Log.i(TAG, "CAMERA permission has NOT been granted. Requesting permission.");
+
+        // BEGIN_INCLUDE(camera_permission_request)
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                android.Manifest.permission.CAMERA)) {
+            // Provide an additional rationale to the user if the permission was not granted
+            // and the user would benefit from additional context for the use of the permission.
+            // For example if the user has previously denied the permission.
+            Log.i(TAG,
+                    "Displaying camera permission rationale to provide additional context.");
+            ActivityCompat.requestPermissions(GluuMainActivity.this,
+                    new String[]{android.Manifest.permission.CAMERA},
+                    REQUEST_CAMERA);
+        } else {
+
+            // Camera permission has not been granted yet. Request it directly.
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA},
+                    REQUEST_CAMERA);
+        }
+        // END_INCLUDE(camera_permission_request)
+    }
+
 }

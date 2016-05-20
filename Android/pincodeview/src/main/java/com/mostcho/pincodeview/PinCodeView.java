@@ -231,7 +231,6 @@ public class PinCodeView extends LinearLayout {
 
         createWarningMessage();
         addView(mTvInfoMessage);
-        showKeyboard();
     }
 
     private void createPinCodeViewFields() {
@@ -481,11 +480,6 @@ public class PinCodeView extends LinearLayout {
                 }
             }
         });
-    }
-
-    private void showKeyboard(){
-        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
     private EditText createPinBox(EditText et) {

@@ -12,6 +12,8 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -86,6 +88,12 @@ public class PinCodeFragment extends Fragment implements View.OnClickListener {
         } else {
             view.findViewById(R.id.close_button).setVisibility(View.GONE);
         }
+        showKeyboard();
+    }
+
+    private void showKeyboard(){
+        InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
     }
 
     public String getPinCode(){
