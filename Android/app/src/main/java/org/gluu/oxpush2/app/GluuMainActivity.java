@@ -10,12 +10,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -23,14 +20,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 import com.google.gson.Gson;
-import com.mostcho.pincodeview.PinCodeView;
 import org.gluu.oxpush2.app.Activities.GluuApplication;
 import org.gluu.oxpush2.app.Activities.MainActivity;
 import org.gluu.oxpush2.app.CustomGluuAlertView.CustomGluuAlert;
 import org.gluu.oxpush2.app.Fragments.GluuPagerView.GluuPagerView;
+import org.gluu.oxpush2.app.Fragments.PinCodeFragment.PinCodeFragment;
 import org.gluu.oxpush2.app.listener.OxPush2RequestListener;
 import org.gluu.oxpush2.app.listener.PushNotificationRegistrationListener;
 import org.gluu.oxpush2.model.OxPush2Request;
@@ -46,14 +42,12 @@ import org.gluu.oxpush2.util.Utils;
 import org.json.JSONException;
 import java.io.IOException;
 
-import static android.Manifest.permission.CAMERA;
-
 /**
  * Main activity
  *
  * Created by Yuriy Movchan on 12/28/2015.
  */
-public class GluuMainActivity extends AppCompatActivity implements OxPush2RequestListener, PushNotificationRegistrationListener, KeyHandleInfoFragment.OnDeleteKeyHandleListener, PinCodeView.IPinCodeViewListener {
+public class GluuMainActivity extends AppCompatActivity implements OxPush2RequestListener, PushNotificationRegistrationListener, KeyHandleInfoFragment.OnDeleteKeyHandleListener, PinCodeFragment.PinCodeViewListener {
 
     private static final String TAG = "main-activity";
 
@@ -300,23 +294,25 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
     @Override
     public void onNewPinCode(String pinCode) {
-        savePinCode(pinCode);
-        Intent intent = new Intent("reset_pin_code-event");
-        // You can also include some extra data.
-        intent.putExtra("message", "new_pin");
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+
     }
 
     @Override
     public void onCorrectPinCode(boolean isPinCodeCorrect) {
-        //to change pin code, first need check if user knows current one
-        if (isPinCodeCorrect){//resent pin code
-            savePinCode("0000");
-            Intent intent = new Intent("reset_pin_code-event");
-            // You can also include some extra data.
-            intent.putExtra("message", "reset");
-            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+        if (isPinCodeCorrect){
+            showAlertView("The new PinCodeView code is set!");
+        } else {
+            //to change pin code, first need check if user knows current one
+            Intent intent = new Intent(GluuMainActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         }
+    }
+
+    private void showAlertView(String message){
+        CustomGluuAlert gluuAlert = new CustomGluuAlert(this);
+        gluuAlert.setMessage(message);
+        gluuAlert.show();
     }
 
     public void savePinCode(String newPinCode){

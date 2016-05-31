@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.gluu.oxpush2.app.Activities.GluuApplication;
 import org.gluu.oxpush2.app.Activities.MainActivity;
+import org.gluu.oxpush2.app.GluuMainActivity;
 import org.gluu.oxpush2.app.R;
 import org.gluu.oxpush2.net.NTP.SntpClient;
 
@@ -44,6 +46,7 @@ public class LockFragment extends Fragment {
             public void handleMessage(android.os.Message msg){
                 if (min == 0 && sec == 0){
                     stopClocking();
+                    resetCurrentPinAttempts();
                     if (listener != null){
                         listener.onTimerOver();
                     }
@@ -57,7 +60,7 @@ public class LockFragment extends Fragment {
             }
         };
         if (isRecover) {
-            min = 9;
+            min = 10;
             calculateTimeLeft();
         }
         startClockTick();
@@ -88,8 +91,10 @@ public class LockFragment extends Fragment {
     }
 
     private void stopClocking(){
-        clock.cancel();
-        clock = null;
+        if (clock != null) {
+            clock.cancel();
+            clock = null;
+        }
     }
 
     public MainActivity.OnLockAppTimerOver getListener() {
@@ -117,9 +122,9 @@ public class LockFragment extends Fragment {
         min = (int) (min - elapsedMinutes);
         sec = (min > 11 || min < 0) ? 0 : (int) elapsedSeconds;
         min = min < 0 ? 0 : min;
-        if (min == 0 && sec == 0){
-            setAppLocked(false);
-        }
+//        if (min == 0 && sec == 0){
+//            setAppLocked(false);
+//        }
     }
 
     private String getAppLockedTime(){
@@ -149,6 +154,19 @@ public class LockFragment extends Fragment {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("isAppLocked", isLocked);
         editor.commit();
+    }
+
+    public void resetCurrentPinAttempts(){
+        SharedPreferences preferences = getContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("currentPinCodeAttempts", String.valueOf(getPinCodeAttempts()));
+        editor.commit();
+    }
+
+    public int getPinCodeAttempts(){
+        SharedPreferences preferences = getContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
+        String pinCode = preferences.getString("pinCodeAttempts", "5");
+        return Integer.parseInt(pinCode);
     }
 
     public Boolean getIsRecover() {

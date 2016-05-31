@@ -26,7 +26,7 @@ public class PinCodeSettingFragment extends Fragment implements View.OnClickList
         view.findViewById(R.id.yes_button).setOnClickListener(this);
         view.findViewById(R.id.no_button).setOnClickListener(this);
 
-        if (getPincodeEnabled()){
+        if (!isPin()){
             mainActivityListener.onShowPinFragment();
         }
 
@@ -74,5 +74,11 @@ public class PinCodeSettingFragment extends Fragment implements View.OnClickList
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("isPinEnabled", isEnabled);
         editor.commit();
+    }
+
+    public Boolean isPin(){
+        SharedPreferences preferences = getContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
+        String pinCode = preferences.getString("PinCode", "null");
+        return pinCode.equalsIgnoreCase("null");
     }
 }

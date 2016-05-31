@@ -7,10 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-
-import com.google.gson.Gson;
-import com.mostcho.pincodeview.PinCodeView;
 import org.gluu.oxpush2.app.CustomGluuAlertView.CustomGluuAlert;
 import org.gluu.oxpush2.app.Fragments.LicenseFragment.LicenseFragment;
 import org.gluu.oxpush2.app.Fragments.LockFragment.LockFragment;
@@ -18,20 +14,16 @@ import org.gluu.oxpush2.app.Fragments.PinCodeFragment.PinCodeFragment;
 import org.gluu.oxpush2.app.Fragments.PinCodeFragment.PinCodeSettingFragment;
 import org.gluu.oxpush2.app.GluuMainActivity;
 import org.gluu.oxpush2.app.KeyHandleInfoFragment;
-import org.gluu.oxpush2.app.ProcessManager;
 import org.gluu.oxpush2.app.R;
-import org.gluu.oxpush2.model.OxPush2Request;
 import org.gluu.oxpush2.net.NTP.SntpClient;
 
-import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.sql.Date;
 import java.util.Calendar;
 
 /**
  * Created by nazaryavornytskyy on 3/22/16.
  */
-public class MainActivity extends AppCompatActivity implements LicenseFragment.OnMainActivityListener, PinCodeView.IPinCodeViewListener {
+public class MainActivity extends AppCompatActivity implements LicenseFragment.OnMainActivityListener, PinCodeFragment.PinCodeViewListener {
 
 
     public static final String TIME_SERVER = "time-a.nist.gov";
@@ -206,9 +198,7 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
             /**
              * entered pin code is INCORRECT. DO something here.
              * */
-            CustomGluuAlert gluuAlert = new CustomGluuAlert(this);
-            gluuAlert.setMessage("You entered wrong Pin code many times, application is locked");
-            gluuAlert.show();
+            showAlertView("You entered wrong Pin code many times, application is locked");
             try {
                 setAppLockedTime(String.valueOf(getCurrentNetworkTime()));
             } catch (UnknownHostException e) {
@@ -222,6 +212,7 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
     }
 
     private void loadLockedFragment(Boolean isRecover){
+        showAlertView("You entered wrong Pin code many times, application is locked");
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         LockFragment lockFragment = new LockFragment();
         OnLockAppTimerOver timeOverListener = new OnLockAppTimerOver() {
@@ -256,6 +247,24 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("appLockedTime", lockedTime);
         editor.commit();
+    }
+
+    private void showAlertView(String message){
+        CustomGluuAlert gluuAlert = new CustomGluuAlert(this);
+        gluuAlert.setMessage(message);
+        gluuAlert.show();
+    }
+
+    @Override
+    protected void onPause() {
+        GluuApplication.applicationPaused();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        GluuApplication.applicationResumed();
+        super.onResume();
     }
 
     public interface OnLockAppTimerOver{

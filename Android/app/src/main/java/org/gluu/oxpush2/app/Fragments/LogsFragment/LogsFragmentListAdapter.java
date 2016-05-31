@@ -1,15 +1,10 @@
 package org.gluu.oxpush2.app.Fragments.LogsFragment;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +12,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.gluu.oxpush2.app.ApproveDenyFragment;
 import org.gluu.oxpush2.app.CustomGluuAlertView.CustomGluuAlert;
@@ -25,14 +19,9 @@ import org.gluu.oxpush2.app.LogState;
 import org.gluu.oxpush2.app.R;
 import org.gluu.oxpush2.app.model.LogInfo;
 import org.gluu.oxpush2.model.OxPush2Request;
-import org.gluu.oxpush2.u2f.v2.model.TokenEntry;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
