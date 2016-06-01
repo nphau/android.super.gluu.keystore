@@ -8,22 +8,30 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
 
+import org.gluu.oxpush2.app.Fragments.KeysFragment.KeyFragmentListFragment;
+import org.gluu.oxpush2.app.Fragments.LogsFragment.LogsFragment;
 import org.gluu.oxpush2.app.Fragments.PageRootFragment;
+import org.gluu.oxpush2.app.Fragments.SettingsFragment.SettingsFragment;
 
 /**
  * Created by nazaryavornytskyy on 3/21/16.
  */
-public class ViewPagerAdapter extends FragmentPagerAdapter {
+public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     // Tab Titles
     private String tabTitles[] = new String[] { "Home", "Logs", "Keys" , "Settings"};
     final int PAGE_COUNT = tabTitles.length;
     Context context;
+
+    public ViewPagerAdapter(FragmentManager fm) {
+        super(fm);
+    }
 
     public ViewPagerAdapter(FragmentManager fm, Context context) {
         super(fm);

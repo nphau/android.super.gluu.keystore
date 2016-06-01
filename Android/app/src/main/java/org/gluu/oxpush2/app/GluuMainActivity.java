@@ -10,12 +10,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -71,32 +75,70 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         super.onCreate(savedInstanceState);
         // Get the view from gluu_activity_main_main.xml
         setContentView(R.layout.gluu_activity_main);
+        context = getApplicationContext();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText("Home").setIcon(R.drawable.home_action));
+        tabLayout.addTab(tabLayout.newTab().setText("Logs").setIcon(R.drawable.logs_action));
+        tabLayout.addTab(tabLayout.newTab().setText("Keys").setIcon(R.drawable.keys_action));
+        tabLayout.addTab(tabLayout.newTab().setText("Settings").setIcon(R.drawable.settings_action));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         // Locate the viewpager in gluu_activity_main.xmln.xml
-        GluuPagerView viewPager = (GluuPagerView) findViewById(R.id.pager);
-        viewPager.setSwipeLocked(true);
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);//GluuPagerView
+//        viewPager.setSwipeLocked(true);
 
         // Set the ViewPagerAdapter into ViewPager
-        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), this));
-
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));//, tabLayout.getTabCount()
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        final int tabIconColor = ContextCompat.getColor(context, R.color.greenColor);
+        final int tabIconColorBlack = ContextCompat.getColor(context, R.color.blackColor);
+        tabLayout.getTabAt(0).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+        tabLayout.getTabAt(1).getIcon().setColorFilter(tabIconColorBlack, PorterDuff.Mode.SRC_IN);
+        tabLayout.getTabAt(2).getIcon().setColorFilter(tabIconColorBlack, PorterDuff.Mode.SRC_IN);
+        tabLayout.getTabAt(3).getIcon().setColorFilter(tabIconColorBlack, PorterDuff.Mode.SRC_IN);
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
+            public void onTabSelected(TabLayout.Tab tab) {
+                int position = tab.getPosition();
                 isShowClearMenu = position == 1 ? true : false;
                 reloadLogs();
                 invalidateOptionsMenu();
+                viewPager.setCurrentItem(position);
+                tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
+            public void onTabUnselected(TabLayout.Tab tab) {
+                tab.getIcon().setColorFilter(tabIconColorBlack, PorterDuff.Mode.SRC_IN);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
 
             }
         });
+//        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//                isShowClearMenu = position == 1 ? true : false;
+//                reloadLogs();
+//                invalidateOptionsMenu();
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//
+//            }
+//        });
 
         // Init network layer
         CommunicationService.init();
@@ -109,7 +151,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         PushNotificationManager pushNotificationManager = new PushNotificationManager(BuildConfig.PROJECT_NUMBER);
         pushNotificationManager.registerIfNeeded(this, this);
 
-        context = getApplicationContext();
         this.dataStore = new AndroidKeyDataStore(context);
         this.u2f = new SoftwareDevice(this, dataStore);
         setIsButtonVisible(dataStore.getLogs().size() != 0);
@@ -354,6 +395,16 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     protected void onResume() {
         GluuApplication.applicationResumed();
         super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("isMainActivityDestroyed", true);
+        editor.commit();
+        Log.d(String.valueOf(GluuApplication.class), "APP DESTROYED");
     }
 
     public void checkIsPush(){

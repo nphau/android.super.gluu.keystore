@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
 import org.gluu.oxpush2.app.CustomGluuAlertView.CustomGluuAlert;
 import org.gluu.oxpush2.app.Fragments.LicenseFragment.LicenseFragment;
 import org.gluu.oxpush2.app.Fragments.LockFragment.LockFragment;
@@ -104,22 +106,33 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
     }
 
     public void checkPinCodeEnabled(){
-        if (getFirstLoad()){
-            saveFirstLoad();
-            loadPinCodeFragment();
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
+        Boolean isDestroyed = preferences.getBoolean("isMainActivityDestroyed", false);
+        if (isDestroyed){
+            loadGluuMainActivity();
         } else {
-            if (getPincodeEnabled()) {
+            if (getFirstLoad()) {
+                saveFirstLoad();
                 loadPinCodeFragment();
             } else {
-                loadGluuMainActivity();
+                if (getPincodeEnabled()) {
+                    loadPinCodeFragment();
+                } else {
+                    loadGluuMainActivity();
+                }
             }
         }
     }
 
     public void loadGluuMainActivity(){
-        Intent intent = new Intent(MainActivity.this, GluuMainActivity.class);
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("isMainActivityDestroyed", false);
+        editor.commit();
+        Intent intent = new Intent(this, GluuMainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
         startActivity(intent);
-        finish();
+        this.finish();
     }
 
     public void loadPinCodeFragment(){
@@ -255,17 +268,22 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
         gluuAlert.show();
     }
 
-    @Override
-    protected void onPause() {
-        GluuApplication.applicationPaused();
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        GluuApplication.applicationResumed();
-        super.onResume();
-    }
+//    @Override
+//    protected void onPause() {
+//        GluuApplication.applicationPaused();
+//        super.onPause();
+//    }
+//
+//    @Override
+//    protected void onResume() {
+//        GluuApplication.applicationResumed();
+//        super.onResume();
+//    }
+//
+//    @Override
+//    protected void onDestroy() {1
+//        super.onDestroy();
+//    }
 
     public interface OnLockAppTimerOver{
         void onTimerOver();
