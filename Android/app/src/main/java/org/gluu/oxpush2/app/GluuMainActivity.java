@@ -9,6 +9,7 @@ package org.gluu.oxpush2.app;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -26,6 +27,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 import com.google.gson.Gson;
+import com.ubertesters.common.models.ActivationMode;
+import com.ubertesters.common.models.LockingMode;
+import com.ubertesters.sdk.Ubertesters;
+
 import org.gluu.oxpush2.app.Activities.GluuApplication;
 import org.gluu.oxpush2.app.Activities.MainActivity;
 import org.gluu.oxpush2.app.CustomGluuAlertView.CustomGluuAlert;
@@ -162,6 +167,11 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         checkIsPush();
 
         checkUserCameraPermission();
+
+        //temporary turn off rotation
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+
+//        Ubertesters.initialize(getApplication(), LockingMode.DisableUbertesters, ActivationMode.Widget);
     }
 
     @Override

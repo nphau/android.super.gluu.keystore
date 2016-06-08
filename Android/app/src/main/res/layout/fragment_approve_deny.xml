@@ -71,12 +71,22 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/title_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/to_continue"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_below="@+id/topRelativeLayout"
+        android:layout_marginTop="20dp" />
+
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/ScrollView01"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/topRelativeLayout"
-        android:layout_marginTop="20dp">
+        android:layout_below="@+id/title_textView">
 
         <RelativeLayout
             android:id="@+id/mainRelativeLayout"
@@ -85,22 +95,12 @@
             android:layout_gravity="center_horizontal"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/title_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/to_continue"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
             <TableLayout
                 android:id="@+id/tableLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="false"
                 android:layout_alignParentTop="false"
-                android:layout_below="@+id/title_textView"
                 android:layout_marginTop="20dp">
 
                 <TableRow
@@ -262,45 +262,46 @@
 
             </TableLayout>
 
-            <LinearLayout
-                android:id="@+id/action_button_group"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:orientation="horizontal"
-                android:layout_below="@+id/tableLayout">
-
-                <Button
-                    android:id="@+id/button_deny"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.24"
-                    android:background="#ff0000"
-                    android:drawableLeft="@drawable/deny_icon"
-                    android:gravity="center_vertical"
-                    android:paddingBottom="15dp"
-                    android:paddingLeft="20dp"
-                    android:paddingTop="15dp"
-                    android:text="@string/button_decline"
-                    android:textColor="#FFFFFF" />
-
-                <Button
-                    android:id="@+id/button_approve"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.15"
-                    android:background="@color/greenColor"
-                    android:drawableLeft="@drawable/approve_icon"
-                    android:gravity="center_vertical"
-                    android:paddingBottom="15dp"
-                    android:paddingLeft="20dp"
-                    android:paddingTop="15dp"
-                    android:text="@string/button_approve"
-                    android:textColor="#FFFFFF" />
-            </LinearLayout>
-
         </RelativeLayout>
 
     </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/action_button_group"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="false">
+
+        <Button
+            android:id="@+id/button_approve"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1.15"
+            android:background="@color/greenColor"
+            android:drawableLeft="@drawable/approve_icon"
+            android:gravity="center_vertical"
+            android:paddingBottom="15dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="15dp"
+            android:text="@string/button_approve"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/button_deny"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1.24"
+            android:background="#ff0000"
+            android:drawableLeft="@drawable/deny_icon"
+            android:gravity="center_vertical"
+            android:paddingBottom="15dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="15dp"
+            android:text="@string/button_decline"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
 
 </RelativeLayout>

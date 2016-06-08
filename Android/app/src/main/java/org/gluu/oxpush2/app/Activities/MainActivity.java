@@ -4,10 +4,10 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import org.gluu.oxpush2.app.CustomGluuAlertView.CustomGluuAlert;
 import org.gluu.oxpush2.app.Fragments.LicenseFragment.LicenseFragment;
@@ -21,6 +21,8 @@ import org.gluu.oxpush2.net.NTP.SntpClient;
 
 import java.net.UnknownHostException;
 import java.util.Calendar;
+
+import com.ubertesters.sdk.Ubertesters;
 
 /**
  * Created by nazaryavornytskyy on 3/22/16.
@@ -71,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
                 fragmentTransaction.commit();
             }
         }
+
+        Ubertesters.initialize(getApplication());
     }
 
     @Override

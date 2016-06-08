@@ -19,6 +19,12 @@
     <!-- On Android M and above, use of these permissions is only requested at run time. -->
     <uses-permission android:name="android.permission.CAMERA"/>
 
+    <!-- Ubertesters library user-permissions -->
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <!-- Ubertesters library user-permissions -->
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
@@ -62,6 +68,9 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
+
+        <meta-data android:name="ubertesters_organization_token" android:value="7dea3158-f5d6-11e5-8b80-22000a9127ac"/>
+
     </application>
 
 </manifest>

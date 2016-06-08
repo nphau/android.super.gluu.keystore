@@ -30,6 +30,9 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.ubertesters.common.models.ActivationMode;
+import com.ubertesters.common.models.LockingMode;
+import com.ubertesters.sdk.Ubertesters;
 
 import org.gluu.oxpush2.app.GluuToast.GluuToast;
 import org.gluu.oxpush2.app.listener.OxPush2RequestListener;
@@ -179,16 +182,14 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
     private void submit() {
         if (oxPush2RequestListener != null) {
 //            String message = "{\"req_ip\":\"178.136.126.205\",\"app\":\"https://ce-release.gluu.org/identity/authentication/authcode\",\"username\":\"nazar2017\",\"method\":\"authenticate\",\"req_loc\":\"Ukraine%2C%20L%27vivs%27ka%20Oblast%27%2C%20Lviv\",\"state\":\"cd98df91-3b71-4911-9a15-84253c326c7c\",\"created\":\"2016-05-10T09:19:46.260000\",\"issuer\":\"https://ce-release.gluu.org\"}";
-//            Intent intent = new Intent();
-//            intent.putExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
+//            OxPush2Request oxPush2Request = new Gson().fromJson(message, OxPush2Request.class);
+//            onQrRequest(oxPush2Request);
 //            showPushToast(intent);
             IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);
             integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
             integrator.setPrompt(getString(R.string.scan_oxpush2_prompt));
             integrator.initiateScan();
         }
-//        0949934417
-//                17.05 11-45 Toyata bc4925 ec
     }
 
 }

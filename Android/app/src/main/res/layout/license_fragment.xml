@@ -4,13 +4,33 @@
     android:layout_height="match_parent"
     android:weightSum="1">
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="@color/greenColor">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="License"
+            android:id="@+id/textView9"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:textColor="#ffffff"
+            android:textSize="24dp" />
+    </LinearLayout>
+
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="match_parent"
         android:text="New Text"
         android:id="@+id/license_textView"
         android:layout_weight="0.98"
-        android:scrollbars = "vertical"/>
+        android:scrollbars = "vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
 
     <LinearLayout
         android:orientation="vertical"
