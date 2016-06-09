@@ -8,6 +8,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
 
 import org.gluu.oxpush2.app.CustomGluuAlertView.CustomGluuAlert;
 import org.gluu.oxpush2.app.Fragments.LicenseFragment.LicenseFragment;
@@ -22,7 +23,11 @@ import org.gluu.oxpush2.net.NTP.SntpClient;
 import java.net.UnknownHostException;
 import java.util.Calendar;
 
+import com.github.simonpercic.rxtime.RxTime;
 import com.ubertesters.sdk.Ubertesters;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * Created by nazaryavornytskyy on 3/22/16.
@@ -215,12 +220,7 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
             /**
              * entered pin code is INCORRECT. DO something here.
              * */
-            showAlertView("You entered wrong Pin code many times, application is locked");
-            try {
-                setAppLockedTime(String.valueOf(getCurrentNetworkTime()));
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            }
+            setCurrentNetworkTime();
             loadLockedFragment(false);
 
             setTitle("Application is locked");
@@ -228,15 +228,30 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
         }
     }
 
+    private void setCurrentNetworkTime() {
+        // a singleton
+        RxTime rxTime = new RxTime();
+        rxTime.currentTime()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Long>() {
+                    @Override
+                    public void call(Long time) {
+                        // use time
+                        setAppLockedTime(String.valueOf(time));
+                    }
+                });
+    }
+
     private void loadLockedFragment(Boolean isRecover){
-        showAlertView("You entered wrong Pin code many times, application is locked");
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         LockFragment lockFragment = new LockFragment();
         OnLockAppTimerOver timeOverListener = new OnLockAppTimerOver() {
             @Override
             public void onTimerOver() {
-                setAppLocked(false);
-                loadPinCodeFragment();
+                if (GluuApplication.isIsAppInForeground()) {
+                    setAppLocked(false);
+                    loadPinCodeFragment();
+                }
             }
         };
         lockFragment.setIsRecover(isRecover);
@@ -272,17 +287,17 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
         gluuAlert.show();
     }
 
-//    @Override
-//    protected void onPause() {
-//        GluuApplication.applicationPaused();
-//        super.onPause();
-//    }
-//
-//    @Override
-//    protected void onResume() {
-//        GluuApplication.applicationResumed();
-//        super.onResume();
-//    }
+    @Override
+    protected void onPause() {
+        GluuApplication.applicationPaused();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        GluuApplication.applicationResumed();
+        super.onResume();
+    }
 //
 //    @Override
 //    protected void onDestroy() {1
@@ -291,18 +306,6 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
 
     public interface OnLockAppTimerOver{
         void onTimerOver();
-    }
-
-    public static long getCurrentNetworkTime() throws UnknownHostException {
-        SntpClient client = new SntpClient();
-        int timeout = 50000;
-        if (client.requestTime(TIME_SERVER, timeout)) {
-            long time = client.getNtpTime();
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(time);
-            return calendar.getTimeInMillis();// this should be your date
-        }
-        return System.currentTimeMillis();
     }
 
 }

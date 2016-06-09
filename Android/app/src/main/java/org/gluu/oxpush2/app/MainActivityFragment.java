@@ -143,9 +143,14 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
                     // Parsing bar code reader result
                     IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
                     if (BuildConfig.DEBUG) Log.d(TAG, "Parsing QR code result: " + result.toString());
-                    OxPush2Request oxPush2Request = new Gson().fromJson(result.getContents(), OxPush2Request.class);
+                    OxPush2Request oxPush2Request = null;
+                    try {
+                        oxPush2Request = new Gson().fromJson(result.getContents(), OxPush2Request.class);
+                    }
+                    catch (Exception ex){
+                        //skip exception there
+                    }
                     onQrRequest(oxPush2Request);
-
                 }
                 if (resultCode == Activity.RESULT_CANCELED) {
                     showToastWithText(context.getString(R.string.canceled_process_qr_code));
@@ -170,7 +175,11 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
     }
 
     private void onQrRequest(OxPush2Request oxPush2Request){
-        oxPush2RequestListener.onQrRequest(oxPush2Request);
+        if (oxPush2Request == null){
+            showToastWithText("You scanned wrong QR code");
+        } else {
+            oxPush2RequestListener.onQrRequest(oxPush2Request);
+        }
     }
 
     private void showToastWithText(String text){
@@ -181,8 +190,14 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
 
     private void submit() {
         if (oxPush2RequestListener != null) {
-//            String message = "{\"req_ip\":\"178.136.126.205\",\"app\":\"https://ce-release.gluu.org/identity/authentication/authcode\",\"username\":\"nazar2017\",\"method\":\"authenticate\",\"req_loc\":\"Ukraine%2C%20L%27vivs%27ka%20Oblast%27%2C%20Lviv\",\"state\":\"cd98df91-3b71-4911-9a15-84253c326c7c\",\"created\":\"2016-05-10T09:19:46.260000\",\"issuer\":\"https://ce-release.gluu.org\"}";
-//            OxPush2Request oxPush2Request = new Gson().fromJson(message, OxPush2Request.class);
+//            String message = "http://en.m.wikipedia.org";//"{\"req_ip\":\"178.136.126.205\",\"app\":\"https://ce-release.gluu.org/identity/authentication/authcode\",\"username\":\"nazar2017\",\"method\":\"authenticate\",\"req_loc\":\"Ukraine%2C%20L%27vivs%27ka%20Oblast%27%2C%20Lviv\",\"state\":\"cd98df91-3b71-4911-9a15-84253c326c7c\",\"created\":\"2016-05-10T09:19:46.260000\",\"issuer\":\"https://ce-release.gluu.org\"}";
+//            OxPush2Request oxPush2Request = null;
+//            try {
+//                oxPush2Request = new Gson().fromJson(message, OxPush2Request.class);
+//            }
+//            catch (Exception ex){
+//                //skip exception there
+//            }
 //            onQrRequest(oxPush2Request);
 //            showPushToast(intent);
             IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);

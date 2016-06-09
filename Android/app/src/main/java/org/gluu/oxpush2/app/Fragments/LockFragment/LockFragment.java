@@ -10,26 +10,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.gluu.oxpush2.app.Activities.GluuApplication;
+import com.github.simonpercic.rxtime.RxTime;
 import org.gluu.oxpush2.app.Activities.MainActivity;
-import org.gluu.oxpush2.app.GluuMainActivity;
+import org.gluu.oxpush2.app.CustomGluuAlertView.CustomGluuAlert;
 import org.gluu.oxpush2.app.R;
-import org.gluu.oxpush2.net.NTP.SntpClient;
-
-import java.net.UnknownHostException;
-import java.util.Calendar;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * Created by nazaryavornytskyy on 4/20/16.
  */
 public class LockFragment extends Fragment {
 
+    final SimpleDateFormat isoDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+
     private Timer clock;
     private Handler handler;
     private MainActivity.OnLockAppTimerOver listener;
     private Boolean isRecover;
+
+    private Context context;
+
+    private TextView txtTime;
 
     int min = 10;
     int sec = 0;
@@ -39,7 +47,7 @@ public class LockFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         super.onCreateView(inflater, container, savedInstanceState);
-
+        context = getContext();
         final View rootView = inflater.inflate(R.layout.fragment_lock_app, container, false);
 
         handler = new Handler(){
@@ -59,35 +67,38 @@ public class LockFragment extends Fragment {
                 seconds.setText(secStr);
             }
         };
-        if (isRecover) {
+//        if (isRecover) {
             min = 10;
             calculateTimeLeft();
-        }
-        startClockTick();
+//        } else {
+//            startClockTick();
+//        }
 
         return rootView;
     }
 
-    private void startClockTick(){
-        if (!isAppLocked() && min == 0 && sec == 0){
-            if (listener != null){
+    private void startClockTick() {
+        if (!isAppLocked() && min == 0 && sec == 0) {
+            if (listener != null) {
                 listener.onTimerOver();
             }
-        }
-        clock = new Timer();
-        clock.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                if (sec == 0) {
-                    min = min - 1;
-                    min = min < 0 ? 0 : min;
-                    sec = 60;
+        } else {
+            showAlertView("You entered wrong Pin code many times, application is locked");
+            clock = new Timer();
+            clock.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    if (sec == 0) {
+                        min = min - 1;
+                        min = min < 0 ? 0 : min;
+                        sec = 60;
+                    }
+                    sec--;
+                    //send message to update UI
+                    handler.sendEmptyMessage(0);
                 }
-                sec--;
-                //send message to update UI
-                handler.sendEmptyMessage(0);
-            }
-        }, 0, 1000);//put here time 1000 milliseconds=1 second
+            }, 0, 1000);//put here time 1000 milliseconds=1 second
+        }
     }
 
     private void stopClocking(){
@@ -106,14 +117,40 @@ public class LockFragment extends Fragment {
     }
 
     private void calculateTimeLeft(){
-        long currentTime = System.currentTimeMillis();
-        try {
-            currentTime = getCurrentNetworkTime();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
+        getCurrentNetworkTime();
+//        if (min == 0 && sec == 0){
+//            setAppLocked(false);
+//        }
+    }
+
+    private String getAppLockedTime(){
+        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
+        return preferences.getString("appLockedTime", "");
+    }
+
+    private void getCurrentNetworkTime() {
+        // a singleton
+        RxTime rxTime = new RxTime();
+        txtTime = new TextView(context);
+        rxTime.currentTime()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Long>() {
+                    @Override
+                    public void call(Long time) {
+                        // use time
+                        currentNetworkTime(time);
+                        startClockTick();
+                    }
+                });
+    }
+
+    private void currentNetworkTime(Long time){
+//        Date lockedDate;
+//        Date currentDate;
+//        lockedDate = new Date(Long.parseLong(getAppLockedTime()));// isoDateTimeFormat.parse(getAppLockedTime());
+//        currentDate = new Date(time);//isoDateTimeFormat.parse(String.valueOf(time));
         long lockedTime = Long.parseLong(getAppLockedTime());
-        long diff = currentTime - lockedTime;
+        long diff = time - lockedTime;
         long secondsInMilli = 1000;
         long minutesInMilli = secondsInMilli * 60;
         long elapsedMinutes = diff / minutesInMilli;
@@ -122,49 +159,33 @@ public class LockFragment extends Fragment {
         min = (int) (min - elapsedMinutes);
         sec = (min > 11 || min < 0) ? 0 : (int) elapsedSeconds;
         min = min < 0 ? 0 : min;
-//        if (min == 0 && sec == 0){
-//            setAppLocked(false);
-//        }
-    }
-
-    private String getAppLockedTime(){
-        SharedPreferences preferences = getContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        return preferences.getString("appLockedTime", "");
-    }
-
-    public static long getCurrentNetworkTime() throws UnknownHostException {
-        SntpClient client = new SntpClient();
-        int timeout = 50000;
-        if (client.requestTime("time-a.nist.gov", timeout)) {
-            long time = client.getNtpTime();
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(time);
-            return calendar.getTimeInMillis();// this should be your date
+        min = min > 10 ? 0 : min;
+        if (min == 0 && sec == 0){
+            setAppLocked(false);
         }
-        return System.currentTimeMillis();
     }
 
     private Boolean isAppLocked(){
-        SharedPreferences preferences = getContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
         return preferences.getBoolean("isAppLocked", false);
     }
 
     private void setAppLocked(Boolean isLocked){
-        SharedPreferences preferences = getContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("isAppLocked", isLocked);
         editor.commit();
     }
 
     public void resetCurrentPinAttempts(){
-        SharedPreferences preferences = getContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("currentPinCodeAttempts", String.valueOf(getPinCodeAttempts()));
         editor.commit();
     }
 
     public int getPinCodeAttempts(){
-        SharedPreferences preferences = getContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
         String pinCode = preferences.getString("pinCodeAttempts", "5");
         return Integer.parseInt(pinCode);
     }
@@ -175,5 +196,11 @@ public class LockFragment extends Fragment {
 
     public void setIsRecover(Boolean isRecover) {
         this.isRecover = isRecover;
+    }
+
+    private void showAlertView(String message){
+        CustomGluuAlert gluuAlert = new CustomGluuAlert(getActivity());
+        gluuAlert.setMessage(message);
+        gluuAlert.show();
     }
 }

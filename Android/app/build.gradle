@@ -121,5 +121,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-gcm:8.4.0'
     compile 'com.github.iammehedi:passcodeview:1.03'
     compile 'com.hrules:horizontalnumberpicker:1.1.1'
+    compile 'io.reactivex:rxandroid:1.2.0'
+    compile 'com.github.simonpercic:rxtime:1.0.0'
     compile files('libs/ubertesters.sdk.android.jar')
 }

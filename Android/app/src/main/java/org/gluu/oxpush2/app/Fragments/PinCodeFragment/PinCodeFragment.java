@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.github.simonpercic.rxtime.RxTime;
 import com.mhk.android.passcodeview.PasscodeView;
 
 import org.gluu.oxpush2.app.Activities.MainActivity;
@@ -16,6 +18,9 @@ import org.gluu.oxpush2.app.CustomGluuAlertView.CustomGluuAlert;
 import org.gluu.oxpush2.app.R;
 
 import java.net.UnknownHostException;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * Created by nazaryavornytskyy on 3/24/16.
@@ -156,16 +161,26 @@ public class PinCodeFragment extends Fragment implements View.OnClickListener {
             resetCurrentPinAttempts();
             if (isSettings) {
                 setAppLocked(true);
-                try {
-                    setAppLockedTime(String.valueOf(MainActivity.getCurrentNetworkTime()));
-                } catch (UnknownHostException e) {
-                    e.printStackTrace();
-                }
+                setCurrentNetworkTime();
             }
 //            else {
                 pinCodeViewListener.onCorrectPinCode(false);
 //            }
         }
+    }
+
+    private void setCurrentNetworkTime() {
+        // a singleton
+        RxTime rxTime = new RxTime();
+        rxTime.currentTime()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Long>() {
+                    @Override
+                    public void call(Long time) {
+                        // use time
+                        setAppLockedTime(String.valueOf(time));
+                    }
+                });
     }
 
     private void showAlertView(String message){
