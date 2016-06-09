@@ -38,6 +38,7 @@ import org.gluu.oxpush2.app.Fragments.GluuPagerView.GluuPagerView;
 import org.gluu.oxpush2.app.Fragments.PinCodeFragment.PinCodeFragment;
 import org.gluu.oxpush2.app.listener.OxPush2RequestListener;
 import org.gluu.oxpush2.app.listener.PushNotificationRegistrationListener;
+import org.gluu.oxpush2.app.model.LogInfo;
 import org.gluu.oxpush2.model.OxPush2Request;
 import org.gluu.oxpush2.net.CommunicationService;
 import org.gluu.oxpush2.push.PushNotificationManager;
@@ -126,24 +127,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
             }
         });
-//        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//                isShowClearMenu = position == 1 ? true : false;
-//                reloadLogs();
-//                invalidateOptionsMenu();
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
 
         // Init network layer
         CommunicationService.init();
@@ -162,6 +145,16 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.drawable.ic_title_icon);
+
+//        LogInfo log = new LogInfo();
+//        log.setIssuer("oxPush2Request.getIssuer()");
+//        log.setUserName("oxPush2Request.getUserName()");
+//        log.setLocationIP("oxPush2Request.getLocationIP()");
+//        log.setLocationAddress("oxPush2Request.getLocationCity()");
+//        log.setCreatedDate("oxPush2Request.getCreated()");
+//        log.setMethod("oxPush2Request.getMethod()");
+//        log.setLogState(LogState.LOGIN_DECLINED);
+//        dataStore.saveLog(log);
 
         // Check if we get push notification
         checkIsPush();
@@ -191,6 +184,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     private void reloadLogs(){
         Intent intent = new Intent("reload-logs");
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+        setIsButtonVisible(dataStore.getLogs().size() != 0);
     }
 
     @Override

@@ -36,11 +36,14 @@ public class PinCodeFragment extends Fragment implements View.OnClickListener {
     private TextView pinCodeTitle;
     private TextView attemptsLabel;
 
+    private Context context;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_pin_code, container, false);
+        context = getContext();
         view.findViewById(R.id.close_button).setVisibility(View.GONE);
         Button closeButton = (Button) view.findViewById(R.id.close_button);
         closeButton.setOnClickListener(this);
@@ -201,47 +204,47 @@ public class PinCodeFragment extends Fragment implements View.OnClickListener {
     }
 
     public String getPinCode(){
-        SharedPreferences preferences = getContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
         String pinCode = preferences.getString("PinCode", "null");
         return pinCode;
     }
 
     public void savePinCode(String password){
-        SharedPreferences preferences = getContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("PinCode", password);
         editor.commit();
     }
 
     private void setAppLockedTime(String lockedTime){
-        SharedPreferences preferences = getContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("appLockedTime", lockedTime);
         editor.commit();
     }
 
     public Boolean getIsReset(){
-        SharedPreferences preferences = getContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
         Boolean isFirstLoad = preferences.getBoolean("isReset", false);
         return isFirstLoad;
     }
 
     public void saveIsReset(){
-        SharedPreferences preferences = getContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("isReset", false);
         editor.commit();
     }
 
     public int getPinCodeAttempts(){
-        SharedPreferences preferences = getContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
         String pinCode = preferences.getString("pinCodeAttempts", "5");
         return Integer.parseInt(pinCode);
     }
 
     public void resetCurrentPinAttempts(){
         saveIsReset();
-        SharedPreferences preferences = getContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("currentPinCodeAttempts", String.valueOf(getPinCodeAttempts()));
         editor.commit();
@@ -256,14 +259,14 @@ public class PinCodeFragment extends Fragment implements View.OnClickListener {
     public void increaseAttempts(){
         int attempts = getCurrentPinCodeAttempts();
         attempts--;
-        SharedPreferences preferences = getContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("currentPinCodeAttempts", String.valueOf(attempts));
         editor.commit();
     }
 
     private void setAppLocked(Boolean isLocked){
-        SharedPreferences preferences = getContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("isAppLocked", isLocked);
         editor.commit();

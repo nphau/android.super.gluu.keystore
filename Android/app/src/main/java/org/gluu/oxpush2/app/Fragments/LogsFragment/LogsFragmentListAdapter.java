@@ -73,7 +73,7 @@ public class LogsFragmentListAdapter extends BaseAdapter {
         Button arrowButton = (Button) view.findViewById(R.id.arrow_button);
         arrowButton.setTag(position);
         if (log.getLogState() == LogState.ENROL_FAILED || log.getLogState() == LogState.LOGIN_FAILED
-                || log.getLogState() == LogState.UNKNOWN_ERROR){
+                || log.getLogState() == LogState.UNKNOWN_ERROR || log.getLogState() == LogState.LOGIN_DECLINED){
             ImageView logo = (ImageView) view.findViewById(R.id.logLogo);
             contentView.setTextColor(ContextCompat.getColor(view.getContext(), R.color.redColor));
             logo.setImageResource(R.drawable.gluu_icon_red);
@@ -83,7 +83,8 @@ public class LogsFragmentListAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     CustomGluuAlert gluuAlert = new CustomGluuAlert(activity);
-                    gluuAlert.setMessage(log.getMessage());
+                    String message = log.getMessage() != null ? log.getMessage() : "Unknown error";
+                    gluuAlert.setMessage(message);
                     gluuAlert.show();
                 }
             });
