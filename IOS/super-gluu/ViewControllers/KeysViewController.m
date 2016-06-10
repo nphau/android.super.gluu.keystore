@@ -80,10 +80,10 @@
 
 -(void)showEditNameAlert{
     KeyHandleCell *cell = (KeyHandleCell*)[keyHandleTableView cellForRowAtIndexPath:selectedRow];
-    UILabel* keyTextLabel = [cell keyHandleNameLabel];
+//    UILabel* keyTextLabel = [cell keyHandleNameLabel];
     
     SCLAlertView *alert = [[SCLAlertView alloc] init];
-    UITextField *textField = [alert addTextField:@"Enter key's name" andText:keyTextLabel.text];
+    UITextField *textField = [alert addTextField:@"Enter key's name"];
     
     [alert addButton:@"Save" actionBlock:^(void) {
         NSLog(@"Text value: %@", textField.text);

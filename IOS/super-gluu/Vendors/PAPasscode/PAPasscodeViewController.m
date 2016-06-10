@@ -341,11 +341,14 @@ static NSTimeInterval AnimationDuration = 0.3;
 - (void)showFailedAttempts {
     messageLabel.hidden = YES;
     _failedAttemptsView.hidden = NO;
-    if (_failedAttempts == 1) {
-        failedAttemptsLabel.text = NSLocalizedString(@"1 Failed Passcode Attempt", nil);
+    int attemptsCount = (int)[[NSUserDefaults standardUserDefaults] integerForKey:LOCKED_ATTEMPTS_COUNT];
+    if (_failedAttempts < 3) {
+        [_failedAttemptsView setBackgroundColor:CUSTOM_GREEN_COLOR];
+//        failedAttemptsLabel.text = NSLocalizedString(@"1 attempt(s) left", nil);//Failed Passcode
     } else {
-        failedAttemptsLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%d Failed Passcode Attempts", nil), _failedAttempts];
+        [_failedAttemptsView setBackgroundColor:[UIColor redColor]];
     }
+    failedAttemptsLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%d attempt(s) left", nil), attemptsCount - _failedAttempts];
 }
 
 - (void)passcodeChanged:(id)sender {

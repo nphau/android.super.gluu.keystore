@@ -348,7 +348,6 @@ SCLTimerDisplay *buttonTimer;
     }
     else
     {
-
         CGFloat x = (sz.width - _windowWidth) / 2;
         CGFloat y = (sz.height - _windowHeight - (kCircleHeight / 8)) / 2;
         
@@ -614,42 +613,6 @@ SCLTimerDisplay *buttonTimer;
     return txt;
 }
 
-- (SCLTextView *)addTextField:(NSString *)title andText:(NSString *)text
-{
-    [self addObservers];
-    
-    // Add text field
-    SCLTextView *txt = [[SCLTextView alloc] init];
-    txt.font = [UIFont fontWithName:_bodyTextFontFamily size:_bodyFontSize];
-    txt.delegate = self;
-    
-    // Update view height
-    self.windowHeight += txt.bounds.size.height + 10.0f;
-    
-    if (title != nil)
-    {
-        txt.placeholder = title;
-    }
-    
-    if (text != nil)
-    {
-        txt.text = text;
-    }
-    
-    [_contentView addSubview:txt];
-    [_inputs addObject:txt];
-    
-    // If there are other fields in the inputs array, get the previous field and set the
-    // return key type on that to next.
-    if (_inputs.count > 1)
-    {
-        NSUInteger indexOfCurrentField = [_inputs indexOfObject:txt];
-        SCLTextView *priorField = _inputs[indexOfCurrentField - 1];
-        priorField.returnKeyType = UIReturnKeyNext;
-    }
-    return txt;
-}
-
 - (void)addCustomTextField:(UITextField *)textField
 {
     // Update view height
@@ -685,21 +648,6 @@ SCLTimerDisplay *buttonTimer;
         [nextField becomeFirstResponder];
     }
     return NO;
-}
-
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    
-    
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.5];
-    
-    [self viewWillLayoutSubviews];
-    
-    [UIView commitAnimations];
-    
-    return YES;
-    
-    
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification
@@ -1009,7 +957,6 @@ SCLTimerDisplay *buttonTimer;
     for (SCLTextView *textField in _inputs)
     {
         textField.layer.borderColor = viewColor.CGColor;
-        [self.view bringSubviewToFront:textField];
     }
     
     for (SCLButton *btn in _buttons)
@@ -1020,11 +967,7 @@ SCLTimerDisplay *buttonTimer;
         }
         
         if (!btn.defaultBackgroundColor) {
-            if ([_buttons indexOfObject:btn] == 0){
-                btn.defaultBackgroundColor = viewColor;
-            } else {
-                btn.defaultBackgroundColor = [UIColor redColor];
-            }
+            btn.defaultBackgroundColor = viewColor;
         }
         
         if (btn.completeButtonFormatBlock != nil)

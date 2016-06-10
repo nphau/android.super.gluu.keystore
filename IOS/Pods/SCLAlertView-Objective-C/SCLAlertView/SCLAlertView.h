@@ -268,13 +268,6 @@ typedef NS_ENUM(NSInteger, SCLAlertViewBackground)
  */
 - (SCLTextView *)addTextField:(NSString *)title;
 
-/** Add Text Field with text
- *
- * @param title The text displayed on the textfield.
- * @param text The text displayed as text on the textfield.
- */
-- (SCLTextView *)addTextField:(NSString *)title andText:(NSString *)text;
-
 /** Add a custom Text Field
  *
  * @param textField The custom textfield provided by the programmer.

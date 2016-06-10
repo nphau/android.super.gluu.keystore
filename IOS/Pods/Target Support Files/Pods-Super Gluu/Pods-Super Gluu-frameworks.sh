@@ -16,7 +16,7 @@ install_framework()
     local source="$1"
   fi
 
-  local destination="${CONFIGURATION_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}"
+  local destination="${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}"
 
   if [ -L "${source}" ]; then
       echo "Symlinked..."
@@ -59,8 +59,8 @@ code_sign_if_enabled() {
   if [ -n "${EXPANDED_CODE_SIGN_IDENTITY}" -a "${CODE_SIGNING_REQUIRED}" != "NO" -a "${CODE_SIGNING_ALLOWED}" != "NO" ]; then
     # Use the current code_sign_identitiy
     echo "Code Signing $1 with Identity ${EXPANDED_CODE_SIGN_IDENTITY_NAME}"
-    echo "/usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} --preserve-metadata=identifier,entitlements \"$1\""
-    /usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} --preserve-metadata=identifier,entitlements "$1"
+    echo "/usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} ${OTHER_CODE_SIGN_FLAGS} --preserve-metadata=identifier,entitlements \"$1\""
+    /usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} ${OTHER_CODE_SIGN_FLAGS} --preserve-metadata=identifier,entitlements "$1"
   fi
 }
 
@@ -84,20 +84,20 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "Pods-Super Gluu/AFNetworking.framework"
-  install_framework "Pods-Super Gluu/CocoaAsyncSocket.framework"
-  install_framework "Pods-Super Gluu/JTMaterialSwitch.framework"
-  install_framework "Pods-Super Gluu/NHNetworkTime.framework"
-  install_framework "Pods-Super Gluu/NSHash.framework"
-  install_framework "Pods-Super Gluu/QRCodeReaderViewController.framework"
-  install_framework "Pods-Super Gluu/SCLAlertView_Objective_C.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/AFNetworking/AFNetworking.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/CocoaAsyncSocket/CocoaAsyncSocket.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/JTMaterialSwitch/JTMaterialSwitch.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/NHNetworkTime/NHNetworkTime.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/NSHash/NSHash.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/QRCodeReaderViewController/QRCodeReaderViewController.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SCLAlertView-Objective-C/SCLAlertView_Objective_C.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "Pods-Super Gluu/AFNetworking.framework"
-  install_framework "Pods-Super Gluu/CocoaAsyncSocket.framework"
-  install_framework "Pods-Super Gluu/JTMaterialSwitch.framework"
-  install_framework "Pods-Super Gluu/NHNetworkTime.framework"
-  install_framework "Pods-Super Gluu/NSHash.framework"
-  install_framework "Pods-Super Gluu/QRCodeReaderViewController.framework"
-  install_framework "Pods-Super Gluu/SCLAlertView_Objective_C.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/AFNetworking/AFNetworking.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/CocoaAsyncSocket/CocoaAsyncSocket.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/JTMaterialSwitch/JTMaterialSwitch.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/NHNetworkTime/NHNetworkTime.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/NSHash/NSHash.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/QRCodeReaderViewController/QRCodeReaderViewController.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SCLAlertView-Objective-C/SCLAlertView_Objective_C.framework"
 fi

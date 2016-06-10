@@ -128,7 +128,6 @@
 -(void)loadApproveDenyView:(id)sender{
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     ApproveDenyViewController* approveDenyView = [storyboard instantiateViewControllerWithIdentifier:@"ApproveDenyView"];
-    //    [tabBar setModalPresentationStyle:UIModalPresentationFullScreen];
     approveDenyView.delegate = self;
     [approveDenyView setIsLogInfo:YES];
     UserLoginInfo* userInfo = [logsArray objectAtIndex:[sender tag]];
