@@ -136,10 +136,15 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
         SimpleDateFormat userDateTimeFormat = new SimpleDateFormat("MMM d, yyyy");
         Date createdDate = null;
         if (Utils.isNotEmpty(dateString)) {
-            try {
-                createdDate = isoDateTimeFormat.parse(dateString);
-            } catch (ParseException ex) {
-                Log.e(this.getClass().getName(), "Failed to parse ISO date/time: " + dateString, ex);
+            if (isUserInfo){
+                Date resultdate = new Date(Long.valueOf(dateString));
+                return userDateTimeFormat.format(resultdate);
+            } else {
+                try {
+                    createdDate = isoDateTimeFormat.parse(dateString);
+                } catch (ParseException ex) {
+                    Log.e(this.getClass().getName(), "Failed to parse ISO date/time: " + dateString, ex);
+                }
             }
         }
 
@@ -154,10 +159,15 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
         SimpleDateFormat userDateTimeFormat = new SimpleDateFormat("HH:mm:ss");
         Date createdDate = null;
         if (Utils.isNotEmpty(dateString)) {
-            try {
-                createdDate = isoDateTimeFormat.parse(dateString);
-            } catch (ParseException ex) {
-                Log.e(this.getClass().getName(), "Failed to parse ISO date/time: " + dateString, ex);
+            if (isUserInfo){
+                Date resultdate = new Date(Long.valueOf(dateString));
+                return userDateTimeFormat.format(resultdate);
+            } else {
+                try {
+                    createdDate = isoDateTimeFormat.parse(dateString);
+                } catch (ParseException ex) {
+                    Log.e(this.getClass().getName(), "Failed to parse ISO date/time: " + dateString, ex);
+                }
             }
         }
 

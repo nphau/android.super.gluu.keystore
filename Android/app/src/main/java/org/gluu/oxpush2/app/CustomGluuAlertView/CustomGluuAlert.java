@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -61,6 +62,7 @@ public class CustomGluuAlert extends Dialog implements android.view.View.OnClick
         final EditText textField = (EditText) findViewById(R.id.alert_textField);
         if (isTextView){
             textField.setVisibility(View.VISIBLE);
+            textField.setFilters(new InputFilter[]{new InputFilter.LengthFilter(50)});
             textField.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {

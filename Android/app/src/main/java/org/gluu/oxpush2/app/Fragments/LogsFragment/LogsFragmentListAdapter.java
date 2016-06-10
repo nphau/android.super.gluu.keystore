@@ -30,8 +30,6 @@ import java.util.List;
  */
 public class LogsFragmentListAdapter extends BaseAdapter {
 
-    final SimpleDateFormat isoDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
-
     private List<LogInfo> list;
     private LayoutInflater mInflater;
     private LogsFragment.LogInfoListener mListener;
@@ -104,18 +102,18 @@ public class LogsFragmentListAdapter extends BaseAdapter {
             });
         }
         String title = log.getIssuer();
-        Date date = null;
-        try {
-            date = isoDateTimeFormat.parse(log.getCreatedDate());//isoDateTimeFormat.parse(token.getPairingDate());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        if (date != null) {
-            String timeAgo = (String) DateUtils.getRelativeTimeSpanString(date.getTime(), System.currentTimeMillis(),
+//        Date date = null;
+//        try {
+//            date = isoDateTimeFormat.parse(log.getCreatedDate());//isoDateTimeFormat.parse(token.getPairingDate());
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        if (date != null) {
+            String timeAgo = (String) DateUtils.getRelativeTimeSpanString(Long.valueOf(log.getCreatedDate()), System.currentTimeMillis(),
                     DateUtils.MINUTE_IN_MILLIS);
             TextView createdTime = (TextView) view.findViewById(R.id.created_date);
             createdTime.setText(timeAgo);
-        }
+//        }
         switch (log.getLogState()){
             case LOGIN_SUCCESS:
                 title = "Logged in " + log.getIssuer();

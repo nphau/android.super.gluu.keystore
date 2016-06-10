@@ -368,7 +368,7 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
             log.setUserName(oxPush2Request.getUserName());
             log.setLocationIP(oxPush2Request.getLocationIP());
             log.setLocationAddress(oxPush2Request.getLocationCity());
-            log.setCreatedDate(oxPush2Request.getCreated());
+            log.setCreatedDate(String.valueOf(System.currentTimeMillis()));//oxPush2Request.getCreated());
             log.setMethod(oxPush2Request.getMethod());
             if (isDeny){
                 setFinalStatus(R.string.deny_result_success);
@@ -385,7 +385,7 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
             log.setUserName(oxPush2Request.getUserName());
             log.setLocationIP(oxPush2Request.getLocationIP());
             log.setLocationAddress(oxPush2Request.getLocationCity());
-            log.setCreatedDate(oxPush2Request.getCreated());
+            log.setCreatedDate(String.valueOf(System.currentTimeMillis()));//oxPush2Request.getCreated());
             log.setMethod(oxPush2Request.getMethod());
             if (isDeny){
                 setFinalStatus(R.string.deny_result_failed);

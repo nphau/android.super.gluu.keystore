@@ -24,6 +24,8 @@ import org.gluu.oxpush2.store.AndroidKeyDataStore;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -69,11 +71,25 @@ public class LogsFragment extends Fragment {
             }
         };
         dataStore = new AndroidKeyDataStore(rootView.getContext());
-        List<LogInfo> logsfromDB = new ArrayList<LogInfo>(dataStore.getLogs());
-        Collections.reverse(logsfromDB);
-        logs = logsfromDB;
+        List<LogInfo> logsFromDB = new ArrayList<LogInfo>(dataStore.getLogs());
+        Collections.sort(logsFromDB, new Comparator<LogInfo>(){
+            public int compare(LogInfo log1, LogInfo log2) {
+                Date date1 = new Date(Long.valueOf(log1.getCreatedDate()));
+                Date date2 = new Date(Long.valueOf(log2.getCreatedDate()));
+                return date1.compareTo(date2);
+            }
+        });
+//        Collections.reverse(logsFromDB);
+        logs = logsFromDB;
         listAdapter = new LogsFragmentListAdapter(getActivity(), logs, mListener);
         listView.setAdapter(listAdapter);
+        listView.post(new Runnable() {
+            @Override
+            public void run() {
+                // Select the last row so it will scroll into view...
+                listView.setSelection(logs.size() - 1);
+            }
+        });
         TextView noLogs = (TextView) rootView.findViewById(R.id.noLogs_textView);
         DisplayMetrics metrics = new DisplayMetrics();
         WindowManager wm = (WindowManager) rootView.getContext().getSystemService(Context.WINDOW_SERVICE);

@@ -74,18 +74,4 @@ public class LogInfo extends Entry{//} implements Comparable<LogInfo> {
         this.method = method;
     }
 
-//    @Override
-//    public int compareTo(LogInfo another) {
-//        Date date1 = null;
-//        Date date2 = null;
-//        if (Utils.isNotEmpty(getCreatedDate())) {
-//            try {
-//                date1 = isoDateTimeFormat.parse(getCreatedDate());
-//                date2 = isoDateTimeFormat.parse(another.getCreatedDate());
-//            } catch (ParseException ex) {
-//                Log.e(this.getClass().getName(), "Failed to parse ISO date/time: " + getCreatedDate(), ex);
-//            }
-//        }
-//        return date1.compareTo(date2);
-//    }
 }
