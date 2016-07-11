@@ -80,13 +80,14 @@
         android:text="@string/to_continue"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_below="@+id/topRelativeLayout"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="10dp" />
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/ScrollView01"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@+id/title_textView">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title_textView"
+        android:layout_above="@+id/action_button_group">
 
         <RelativeLayout
             android:id="@+id/mainRelativeLayout"
@@ -101,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="false"
                 android:layout_alignParentTop="false"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="10dp">
 
                 <TableRow
                     android:layout_width="match_parent"

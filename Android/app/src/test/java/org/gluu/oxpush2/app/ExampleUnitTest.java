@@ -1,4 +1,4 @@
-package org.gluu.oxpush2.app;
+package org.gluu.super_gluu.app;
 
 import org.junit.Test;
 

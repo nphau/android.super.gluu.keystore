@@ -7,6 +7,7 @@
     <string name="label_user_name">User Name</string>
     <string name="label_authentication_method">Authentication Mode</string>
     <string name="label_authentication_type">Authentication Type</string>
+    <string name="keyHandle">Key handle</string>
     <string name="label_created">Created</string>
     <string name="label_issuer">Issuer</string>
     <string name="label_application">Application</string>

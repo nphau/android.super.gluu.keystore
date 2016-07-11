@@ -208,6 +208,29 @@
                 android:textColor="@color/colorPrimaryDark" />
         </TableRow>
 
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/table_cell_text"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/keyHandle"
+                android:id="@+id/keyHandle_label"
+                android:enabled="true"
+                android:textColor="@color/colorPrimaryDark" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/keyHandle_id"
+                android:layout_column="2"
+                android:textColor="@color/colorPrimaryDark" />
+        </TableRow>
+
     </TableLayout>
 
     </ScrollView>
