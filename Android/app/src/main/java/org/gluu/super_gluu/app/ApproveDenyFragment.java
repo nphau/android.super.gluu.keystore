@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.apache.commons.codec.binary.StringUtils;
+import org.gluu.super_gluu.app.Activities.GluuApplication;
 import org.gluu.super_gluu.app.model.LogInfo;
 import org.gluu.super_gluu.model.OxPush2Request;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
@@ -200,18 +202,13 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
             if (listener != null){
                 listener.onApprove();
             }
-            stopClocking();
-            closeView();
         } else if (v.getId() == R.id.button_deny){
             if (listener != null){
                 listener.onDeny();
             }
-            stopClocking();
-            closeView();
-        } else {
-//            stopClocking();
-            closeView();
         }
+        stopClocking();
+        closeView();
     }
 
     private void startClockTick(final View rootView){
@@ -230,7 +227,9 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
     }
 
     private void stopClocking(){
-        clock.cancel();
+        if (clock != null) {
+            clock.cancel();
+        }
         clock = null;
     }
 
@@ -239,7 +238,12 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
             setIsButtonVisible(true);
             getActivity().invalidateOptionsMenu();
         }
-        getFragmentManager().popBackStack();
+        try {
+            getFragmentManager().popBackStack();
+        }
+        catch (RuntimeException ex){
+            //ignore there
+        }
     }
 
     public void setIsButtonVisible(Boolean isVsible){

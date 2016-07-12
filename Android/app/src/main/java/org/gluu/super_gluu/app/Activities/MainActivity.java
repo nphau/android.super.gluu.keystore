@@ -41,9 +41,9 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
             String requestJson = intent.getStringExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE);
             Bundle answerBundle = intent.getExtras();
             int userAnswer = answerBundle.getInt("requestType");
-            if (userAnswer == 0 ){//deny action
+            if (userAnswer == 10 ){//deny action
                 saveUserDecision("deny", requestJson);
-            } else if (userAnswer == 1 ){//approve action
+            } else if (userAnswer == 20 ){//approve action
                 saveUserDecision("approve", requestJson);
             }
             if (isAppLocked()){
@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
         editor.putString("userChoose", userChoose);
         editor.putString("oxRequest", oxRequest);
         editor.commit();
-        setPushData("");
+        setPushData(null);
     }
 
     public void setPushData(String message){

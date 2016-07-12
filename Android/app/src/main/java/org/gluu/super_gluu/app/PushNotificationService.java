@@ -64,20 +64,26 @@ public class PushNotificationService extends GcmListenerService {
 
     private void sendNotification(String title, String message) {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        PendingIntent denyIntent = createPendingIntent(0, message);
-        PendingIntent approveIntent = createPendingIntent(1, message);
+        PendingIntent denyIntent = createPendingIntent(10, message);
+        PendingIntent approveIntent = createPendingIntent(20, message);
+
+        Intent mainIntent = new Intent(this, MainActivity.class);
+        mainIntent.putExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
+        mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,mainIntent,0);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.app_icon_push)
                 .setContentTitle("Super Gluu")
                 .setContentText(title)
-                .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setDefaults(Notification.DEFAULT_ALL)
-                .setWhen(System.currentTimeMillis())
-                .setAutoCancel(true)
+//                .setWhen(System.currentTimeMillis())
                 .setTicker(message)
-                .setVibrate(new long[] { 100, 250, 100, 250, 100, 250 })
+                .setAutoCancel(true)
+                .setVibrate(new long[]{ 100, 250, 100, 250, 100, 250})
                 .setPriority(Notification.PRIORITY_HIGH)
                 .addAction(R.drawable.deny_icon_push, "Deny", denyIntent)
                 .addAction(R.drawable.approve_icon_push, "Approve", approveIntent);

@@ -244,7 +244,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         if (!validateOxPush2Request(oxPush2Request)) {
             return;
         }
-        setPushData("null");
+        setPushData(null);
         NotificationManager nMgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         nMgr.cancel(GluuMainActivity.MESSAGE_NOTIFICATION_ID);
         final ProcessManager processManager = createProcessManager(oxPush2Request);
@@ -265,7 +265,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_root_frame, approveDenyFragment);
         transaction.addToBackStack(null);
-        transaction.commit();
+        transaction.commitAllowingStateLoss();
     }
 
     @Override
@@ -460,9 +460,9 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             return;
         }
         SharedPreferences pushPreferences = getApplicationContext().getSharedPreferences("PushNotification", Context.MODE_PRIVATE);
-        String message = pushPreferences.getString("PushData", "null");
-        if (!message.equalsIgnoreCase("null")){
-            setPushData("null");
+        String message = pushPreferences.getString("PushData", null);
+        if (message != null){
+            setPushData(null);
             final OxPush2Request oxPush2Request = new Gson().fromJson(message, OxPush2Request.class);
             final Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
@@ -482,6 +482,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("userChoose", "null");
         editor.putString("oxRequest", "null");
+        setPushData(null);
         editor.commit();
         String message = "";
         if (isDeny){
