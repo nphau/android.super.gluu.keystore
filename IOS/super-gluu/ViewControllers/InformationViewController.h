@@ -19,6 +19,7 @@
     IBOutlet UILabel* applicationLabel;
     IBOutlet UILabel* authenticationModeLabel;
     IBOutlet UILabel* authenticationTypeLabel;
+    IBOutlet UILabel* keyHandleLabel;
     
     IBOutlet UILabel* userNameValueLabel;
     IBOutlet UILabel* createdValueLabel;
@@ -26,6 +27,7 @@
     IBOutlet UILabel* applicationValueLabel;
     IBOutlet UILabel* authenticationValueModeLabel;
     IBOutlet UILabel* authenticationValueTypeLabel;
+    IBOutlet UILabel* keyHandleValueLabel;
     
     IBOutlet UIButton* closeButton;
     IBOutlet UIButton* deleteButton;

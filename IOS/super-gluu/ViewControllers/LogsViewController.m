@@ -14,9 +14,7 @@
 #import "UserLoginInfo.h"
 #import "SCLAlertView.h"
 
-@implementation LogsViewController{
-//    ApproveDenyViewController* approveDenyView;
-}
+@implementation LogsViewController
 
 -(void)viewDidLoad{
 
@@ -128,19 +126,11 @@
 -(void)loadApproveDenyView:(id)sender{
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     ApproveDenyViewController* approveDenyView = [storyboard instantiateViewControllerWithIdentifier:@"ApproveDenyView"];
-    approveDenyView.delegate = self;
+//    approveDenyView.delegate = self;
     [approveDenyView setIsLogInfo:YES];
     UserLoginInfo* userInfo = [logsArray objectAtIndex:[sender tag]];
     [approveDenyView setUserInfo:userInfo];
     [self presentViewController:approveDenyView animated:YES completion:nil];
-}
-
-#pragma LicenseAgreementDelegates
-
--(void)approveRequest{
-}
-
--(void)denyRequest{
 }
 
 -(void)initAnimationFromRigthToLeft{

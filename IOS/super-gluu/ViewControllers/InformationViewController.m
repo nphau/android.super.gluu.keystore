@@ -38,6 +38,8 @@
         createdValueLabel.text = [self convertPairingTime:_token.pairingTime];
         authenticationValueModeLabel.text = _token.authenticationMode;
         authenticationValueTypeLabel.text = _token.authenticationType;
+        NSString* keyHandleString = [NSString stringWithFormat:@"%@...%@", [_token.keyHandle substringToIndex:6], [_token.keyHandle substringFromIndex:_token.keyHandle.length - 6]];
+        keyHandleValueLabel.text = keyHandleString;
     }
 }
 
@@ -58,6 +60,7 @@
     authenticationModeLabel.text = NSLocalizedString(@"AuthenticationMode", @"AuthenticationMode");
     authenticationTypeLabel.text = NSLocalizedString(@"AuthenticationType", @"AuthenticationType");
     closeButton.titleLabel.text = NSLocalizedString(@"CloseButton", @"CloseButton");
+    keyHandleLabel.text = NSLocalizedString(@"keyHandle", @"Key handle");
 }
 
 -(void)initWidget{

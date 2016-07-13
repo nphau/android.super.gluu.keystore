@@ -97,7 +97,17 @@
     NSLog(@"Failed to get token, error: %@", error);
 }
 
-- (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    
+    if(application.applicationState == UIApplicationStateBackground) {
+        
+        NSLog(@"Inactive - the user has tapped in the notification when app was closed or in background");
+        //do some tasks
+        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:PUSH_CAME_DATE];
+//        [self manageRemoteNotification:userInfo];
+        completionHandler(UIBackgroundFetchResultNewData);
+    }
     if ( application.applicationState == UIApplicationStateActive ){
         // app was already in the foreground and we show custom push notifications view
         if (userInfo != nil) {
@@ -121,7 +131,52 @@
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:NotificationRequestActionsApprove];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:NotificationRequestActionsDeny];
     NSLog(@"Received notification: %@", userInfo);
+//    else if (application.applicationState == UIApplicationStateBackground) {
+//        
+//        NSLog(@"application Background - notification has arrived when app was in background");
+//        NSString* contentAvailable = [NSString stringWithFormat:@"%@", [[userInfo valueForKey:@"aps"] valueForKey:@"content-available"]];
+//        
+//        if([contentAvailable isEqualToString:@"1"]) {
+//            // do tasks
+//            [self manageRemoteNotification:userInfo];
+//            NSLog(@"content-available is equal to 1");
+//            completionHandler(UIBackgroundFetchResultNewData);
+//        }
+//    }
+//    else {
+//        NSLog(@"application Active - notication has arrived while app was opened");
+//        //Show an in-app banner
+//        //do tasks
+//        [self manageRemoteNotification:userInfo];
+//        completionHandler(UIBackgroundFetchResultNewData);
+//    }
 }
+
+//- (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+//    if ( application.applicationState == UIApplicationStateActive ){
+//        // app was already in the foreground and we show custom push notifications view
+//        if (userInfo != nil) {
+//            NSData *data;
+//            NSString* requestString = [userInfo objectForKey:@"request"];
+//            if ([requestString isKindOfClass:[NSDictionary class]]){
+//                data = [NSJSONSerialization dataWithJSONObject:requestString options:NSJSONWritingPrettyPrinted error:nil];
+//            } else {
+//                data = [requestString dataUsingEncoding:NSUTF8StringEncoding];
+//            }
+//            NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+//            if (jsonDictionary != nil){
+//                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_ONLINE object:jsonDictionary];
+//            }
+//        }
+//    } else {
+//        // app was just brought from background to foreground and we wait when user click or slide on push notification
+//        _pushNotificationRequest = userInfo;
+//        [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:NotificationRequest];
+//    }
+//    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:NotificationRequestActionsApprove];
+//    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:NotificationRequestActionsDeny];
+//    NSLog(@"Received notification: %@", userInfo);
+//}
 
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler {
     
@@ -183,40 +238,45 @@
             data = [requestString dataUsingEncoding:NSUTF8StringEncoding];
         }
         NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-        if (jsonDictionary != nil){// && [self isTimeOver:jsonDictionary]){
-            if (!isAction){
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_RECEIVED object:jsonDictionary];
-            } else {
-                if (isDecline){
-                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_RECEIVED_DENY object:jsonDictionary];
+        if (![self isTimeOver]){
+            if (jsonDictionary){
+                if (!isAction){
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_RECEIVED object:jsonDictionary];
                 } else {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_RECEIVED_APPROVE object:jsonDictionary];
+                    isDecline ?
+                        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_RECEIVED_DENY object:jsonDictionary]
+                    :
+                        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_RECEIVED_APPROVE object:jsonDictionary]
+                    ;
                 }
             }
-            _pushNotificationRequest = nil;
+        } else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_TIMEOVER object:jsonDictionary];
         }
+        _pushNotificationRequest = nil;
     }
 }
 
--(BOOL)isTimeOver:(NSDictionary*)jsonDictionary{
-    NSString* createdTimeStr = [jsonDictionary objectForKey:@"created"];
-    if (createdTimeStr == nil) return YES;
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
-    [formatter setDateFormat:@"yyyy-MM-dd'T'hh:mm:ss.SSSSSS"];
-
-    //conversion of NSString to NSDate
-    NSDate *dateFromString = [formatter dateFromString:createdTimeStr];
-    if (dateFromString == nil) return YES;
+-(BOOL)isTimeOver{
+    NSDate* createdTime = [[NSUserDefaults standardUserDefaults] objectForKey:PUSH_CAME_DATE];
+    if (createdTime == nil) return NO;
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+////    [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
+//    [formatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+//
+//    //conversion of NSString to NSDate
+//    NSDate *dateFromString = [formatter dateFromString:createdTimeStr];
+//    if (dateFromString == nil) return NO;
     NSDate* currentDate = [NSDate date];
-    NSTimeInterval distanceBetweenDates = [currentDate timeIntervalSinceDate:dateFromString];
+    NSTimeInterval distanceBetweenDates = [currentDate timeIntervalSinceDate:createdTime];
     int seconds = (int)distanceBetweenDates;
-    if (seconds > WAITING_TIME){
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_TIMEOVER object:jsonDictionary];
-        return NO;
-    } else {
-        return YES;
-    }
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:PUSH_CAME_DATE];
+    return seconds > WAITING_TIME;//){
+//        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_TIMEOVER object:jsonDictionary];
+//        return ;
+//    } else {
+//        return YES;
+//    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

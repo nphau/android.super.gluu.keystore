@@ -6,7 +6,7 @@
 //  Copyright © 2016 Gluu. All rights reserved.
 //
 
-@protocol LicenseAgreementDelegate
+@protocol ApproveDenyDelegate
 
 -(void)approveRequest;
 -(void)denyRequest;

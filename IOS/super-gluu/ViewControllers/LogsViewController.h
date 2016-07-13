@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "LecenseAgreementDelegate.h"
 
-@interface LogsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, LicenseAgreementDelegate>{
+@interface LogsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>{
 
     NSMutableArray* logsArray;
     IBOutlet UITableView* logsTableView;

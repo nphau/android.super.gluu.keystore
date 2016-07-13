@@ -12,7 +12,7 @@
 #import "UserLoginInfo.h"
 #import "LecenseAgreementDelegate.h"
 
-@interface MainViewController : UIViewController <QRCodeReaderDelegate, LicenseAgreementDelegate>{
+@interface MainViewController : UIViewController <QRCodeReaderDelegate, ApproveDenyDelegate>{
     
     IBOutlet UIButton* scanButton;
     IBOutlet UIButton* infoButton;

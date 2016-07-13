@@ -49,6 +49,7 @@
     NSDictionary* pushNotificationRequest = [[NSUserDefaults standardUserDefaults] objectForKey:NotificationRequest];
     if (pushNotificationRequest == nil) return;
     NSData *data;
+    if (data == nil) return;
     NSString* requestString = [pushNotificationRequest objectForKey:@"request"];
     if ([requestString isKindOfClass:[NSDictionary class]]){
         data = [NSJSONSerialization dataWithJSONObject:requestString options:NSJSONWritingPrettyPrinted error:nil];

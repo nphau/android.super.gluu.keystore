@@ -56,7 +56,7 @@
     IBOutlet UIImageView* denyImage;
 }
 
-@property (nonatomic,assign)  id <LicenseAgreementDelegate> delegate;
+@property (nonatomic,assign)  id <ApproveDenyDelegate> delegate;
 @property (assign, nonatomic) BOOL isLogInfo;
 @property (strong, nonatomic) UserLoginInfo* userInfo;
 

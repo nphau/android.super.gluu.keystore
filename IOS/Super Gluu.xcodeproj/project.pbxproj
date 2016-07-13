@@ -64,7 +64,6 @@
 		BB3A22691CB39B1700EBD799 /* type_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BB3A22681CB39B1700EBD799 /* type_icon.png */; };
 		BB3BE1641C87022C00817A46 /* LicenseAgreementView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB3BE1631C87022C00817A46 /* LicenseAgreementView.m */; };
 		BB3BE1721C882D0600817A46 /* ApproveDenyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB3BE1711C882D0600817A46 /* ApproveDenyViewController.m */; };
-		BB50DD021C91AD5B00499B49 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB50DD001C91AD5B00499B49 /* Main_iPad.storyboard */; };
 		BB78BFB71C99C6C600558042 /* gluu.png in Resources */ = {isa = PBXBuildFile; fileRef = BB78BFB61C99C6C600558042 /* gluu.png */; };
 		BB8703061CA3E5D400EEF9A6 /* gluuIconRed.png in Resources */ = {isa = PBXBuildFile; fileRef = BB8703051CA3E5D400EEF9A6 /* gluuIconRed.png */; };
 		BB9B65A11CB7C5A300784AEF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65A01CB7C5A300784AEF /* QuartzCore.framework */; };
@@ -203,7 +202,6 @@
 		BB3BE1701C882D0600817A46 /* ApproveDenyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApproveDenyViewController.h; sourceTree = "<group>"; };
 		BB3BE1711C882D0600817A46 /* ApproveDenyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApproveDenyViewController.m; sourceTree = "<group>"; };
 		BB3BE1741C883B8900817A46 /* LecenseAgreementDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LecenseAgreementDelegate.h; sourceTree = "<group>"; };
-		BB50DD011C91AD5B00499B49 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		BB78BFB61C99C6C600558042 /* gluu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gluu.png; sourceTree = "<group>"; };
 		BB8703051CA3E5D400EEF9A6 /* gluuIconRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gluuIconRed.png; sourceTree = "<group>"; };
 		BB9B659C1CB7C57800784AEF /* UbertestersSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UbertestersSDK.framework; sourceTree = "<group>"; };
@@ -345,7 +343,6 @@
 				BB37DE5A1C7E08320016D422 /* MainViewController.h */,
 				BB37DE5B1C7E08320016D422 /* MainViewController.m */,
 				BB37DE5D1C7E08320016D422 /* Main.storyboard */,
-				BB50DD001C91AD5B00499B49 /* Main_iPad.storyboard */,
 				BB37DE631C7E08320016D422 /* Assets.xcassets */,
 				BB37DE681C7E08320016D422 /* Info.plist */,
 				BB37DE601C7E08320016D422 /* super_gluu.xcdatamodeld */,
@@ -808,7 +805,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BB50DD021C91AD5B00499B49 /* Main_iPad.storyboard in Resources */,
 				BBB7C0FC1C89FE3100833B12 /* gluuIcon.png in Resources */,
 				BB37DF2C1C7E0B8E0016D422 /* gluuIcon40x3.png in Resources */,
 				BB37DF2E1C7E0B8E0016D422 /* gluuIcon57x2.png in Resources */,
@@ -1001,14 +997,6 @@
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
-		BB50DD001C91AD5B00499B49 /* Main_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BB50DD011C91AD5B00499B49 /* Base */,
-			);
-			name = Main_iPad.storyboard;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -1098,8 +1086,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Schwartz (R2XTBZGAQN)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Schwartz (R2XTBZGAQN)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Gluu, Incorporated (FLRS8NH8Y9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Gluu, Incorporated (FLRS8NH8Y9)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1111,9 +1099,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MACH_O_TYPE = mh_execute;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.gluu.super-gluu";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ios.gluu;
 				PRODUCT_NAME = "Super Gluu";
-				PROVISIONING_PROFILE = "a033b653-f0ef-4391-b103-06647e4192c5";
+				PROVISIONING_PROFILE = "d139b066-0052-4aee-927b-1049fe084afe";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1124,8 +1112,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Schwartz (R2XTBZGAQN)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Schwartz (R2XTBZGAQN)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Gluu, Incorporated (FLRS8NH8Y9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Gluu, Incorporated (FLRS8NH8Y9)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1137,9 +1125,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MACH_O_TYPE = mh_execute;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.gluu.super-gluu";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ios.gluu;
 				PRODUCT_NAME = "Super Gluu";
-				PROVISIONING_PROFILE = "a033b653-f0ef-4391-b103-06647e4192c5";
+				PROVISIONING_PROFILE = "d139b066-0052-4aee-927b-1049fe084afe";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

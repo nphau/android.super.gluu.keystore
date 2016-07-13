@@ -60,7 +60,7 @@
 
 #define LOGS_KEY @"LOGS"
 
-#define WAITING_TIME 60
+#define WAITING_TIME 40
 
 #define HIDE_POSITION_APPROVE_BUTTON -200
 #define HIDE_POSITION_DECLINE_BUTTON 800
@@ -79,5 +79,7 @@
 #define LOCKED_DATE @"locked_app_date"
 #define LOCKED_ATTEMPTS_COUNT @"locked_attempts_count"
 #define IS_APP_LOCKED @"app_locked"
+
+#define PUSH_CAME_DATE @"push_recieved_time"
 
 #endif /* Constants_h */

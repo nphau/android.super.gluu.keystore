@@ -72,7 +72,7 @@
 "NO" = "Ні";
 
 "keyHandleFor" = "Kлюч для";
-
+"keyHandle" = "Key handle";
 "ChangeKeyHandleName" = "Ви дійсно бажаєте змінити ім'я ключа?";
 "RenameKeyNameInfo" = "Щоб змінити ім'я ключа утримуйте на ньому протягом 3 секунд";
 "DeleteKeyHandle" = "Ви дійсно бажаєте видалити цей ключ?";

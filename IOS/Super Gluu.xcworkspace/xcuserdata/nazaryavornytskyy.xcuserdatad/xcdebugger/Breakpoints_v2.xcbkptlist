@@ -64,7 +64,7 @@
             startingLineNumber = "36"
             endingLineNumber = "36"
             landmarkName = "-doRequest:callback:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -138,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "super-gluu/MainViewController.m"
-            timestampString = "484839432.888757"
+            timestampString = "489487386.737441"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "533"
-            endingLineNumber = "533"
+            startingLineNumber = "534"
+            endingLineNumber = "534"
             landmarkName = "-initUserInfo:"
             landmarkType = "5">
          </BreakpointContent>
@@ -150,16 +150,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "super-gluu/MainViewController.m"
-            timestampString = "487157337.239865"
+            filePath = "super-gluu/AppDelegate.m"
+            timestampString = "489499504.615895"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "373"
-            endingLineNumber = "373"
-            landmarkName = "-initQRScanner"
+            startingLineNumber = "274"
+            endingLineNumber = "274"
+            landmarkName = "-isTimeOver"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
