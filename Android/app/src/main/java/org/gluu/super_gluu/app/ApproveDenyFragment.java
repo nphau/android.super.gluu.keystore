@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.apache.commons.codec.binary.StringUtils;
-import org.gluu.super_gluu.app.Activities.GluuApplication;
 import org.gluu.super_gluu.app.model.LogInfo;
 import org.gluu.super_gluu.model.OxPush2Request;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
@@ -91,6 +89,15 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
         denyButton.setOnClickListener(this);
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (sec == 0){
+            listener.onDeny();
+            closeView();
+        }
     }
 
     private void updateLogInfo(View rootView){

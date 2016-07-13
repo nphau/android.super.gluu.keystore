@@ -21,6 +21,8 @@ import com.hrules.horizontalnumberpicker.HorizontalNumberPickerListener;
 import org.gluu.super_gluu.app.CustomGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.app.Fragments.PinCodeFragment.PinCodeFragment;
 import org.gluu.super_gluu.app.GluuMainActivity;
+import org.gluu.super_gluu.app.settings.Settings;
+
 import SuperGluu.app.R;
 
 /**
@@ -32,18 +34,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
     private Context context;
     private PinCodeFragment pinCodeFragment;
 
-    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-//            String message = intent.getStringExtra("message");
-            loadLockedFragment(true);
-        }
-    };
-
     @Override
     public void onDestroy() {
-        // Unregister since the activity is about to be closed.
-        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mReceiver);
         super.onDestroy();
     }
 
@@ -56,11 +48,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
         setResetPinButton.setOnClickListener(this);
 
         final Switch turOn = (Switch) view.findViewById(R.id.switch_pin_code);
-        turOn.setChecked(getPincodeEnabled());
+        turOn.setChecked(Settings.getPinCodeEnabled(context));
         turOn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setPincodeEnabled(turOn.isChecked());
+                Settings.setPinCodeEnabled(context, turOn.isChecked());
                 if (turOn.isChecked()) {
                     setResetPinButton.setVisibility(View.VISIBLE);
                 } else {
@@ -69,7 +61,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
                 checkPinCode();
             }
         });
-        if (getPincodeEnabled()) {
+        if (Settings.getPinCodeEnabled(context)) {
             setResetPinButton.setVisibility(View.VISIBLE);
         } else {
             setResetPinButton.setVisibility(View.GONE);
@@ -77,22 +69,15 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
         HorizontalNumberPicker numberPicker = (HorizontalNumberPicker) view.findViewById(R.id.horizontal_number_picker);
         numberPicker.setMaxValue(10);
         numberPicker.setMinValue(5);
-        numberPicker.setValue(getPinCodeAttempts());
+        numberPicker.setValue(Settings.getPinCodeAttempts(context));
         numberPicker.setListener(this);
         checkPinCode();
-
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mReceiver,
-                new IntentFilter("pin_code-event"));
 
         return view;
     }
 
-    public static SettingsFragment createInstance(){
-        return new SettingsFragment();
-    }
-
     public void checkPinCode(){
-        String pinCode = getPinCode();
+        String pinCode = Settings.getPinCode(context);
         if (!pinCode.equalsIgnoreCase("null")){
             setResetPinButton.setText(R.string.reset_pin_code);
         } else {
@@ -100,44 +85,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
         }
     }
 
-    public Boolean getPincodeEnabled(){
-        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        Boolean isPinEnabled = preferences.getBoolean("isPinEnabled", false);
-        return isPinEnabled;
-    }
-
-    public void setPincodeEnabled(Boolean isEnabled){
-        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isPinEnabled", isEnabled);
-        editor.commit();
-    }
-
-    public String getPinCode(){
-        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        String pinCode = preferences.getString("PinCode", "null");
-        return pinCode;
-    }
-
-    public void setPinCodeAttempts(String attempts){
-        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("pinCodeAttempts", attempts);
-        editor.commit();
-    }
-
-    public int getPinCodeAttempts(){
-        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        String pinCode = preferences.getString("pinCodeAttempts", "5");
-        return Integer.parseInt(pinCode);
-    }
-
     @Override
     public void onClick(View v) {
         GluuMainActivity.GluuAlertCallback listener = new GluuMainActivity.GluuAlertCallback(){
             @Override
             public void onPositiveButton() {
-                saveIsReset();
+                Settings.saveIsReset(context);
                 loadPinCodeView(true);
             }
         };
@@ -152,9 +105,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
     private void loadPinCodeView(Boolean isBackStack){
         pinCodeFragment = new PinCodeFragment();
         pinCodeFragment.setIsSettings(true);
-//        if (!getPinCode().equalsIgnoreCase("null")){
         pinCodeFragment.setIsSetNewPinCode(true);
-//        }
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.root_frame, pinCodeFragment);
         if (isBackStack) {
@@ -163,40 +114,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
         transaction.commit();
     }
 
-    private void loadLockedFragment(Boolean isRecover){
-//        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-//        LockFragment lockFragment = new LockFragment();
-//        MainActivity.OnLockAppTimerOver timeOverListener = new MainActivity.OnLockAppTimerOver() {
-//            @Override
-//            public void onTimerOver() {
-//                setAppLocked(false);
-//                loadPinCodeView(true);
-//            }
-//        };
-//        lockFragment.setIsRecover(isRecover);
-////        lockFragment.setListener(timeOverListener);
-//        fragmentTransaction.replace(R.id.root_frame, lockFragment);
-////            fragmentTransaction.addToBackStack(null);
-//        fragmentTransaction.commit();
-    }
-
-//    private void setAppLocked(Boolean isLocked){
-//        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-//        SharedPreferences.Editor editor = preferences.edit();
-//        editor.putBoolean("isAppLocked", isLocked);
-//        editor.commit();
-//    }
-
-    public void saveIsReset(){
-        SharedPreferences preferences = getContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isReset", true);
-        editor.commit();
-    }
-
     @Override
     public void onHorizontalNumberPickerChanged(HorizontalNumberPicker horizontalNumberPicker, int value) {
-        setPinCodeAttempts(String.valueOf(value));
+        Settings.setPinCodeAttempts(context, String.valueOf(value));
     }
 
 }

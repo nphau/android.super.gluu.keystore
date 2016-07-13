@@ -42,6 +42,7 @@ import org.gluu.super_gluu.app.CustomGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.app.Fragments.PinCodeFragment.PinCodeFragment;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
 import org.gluu.super_gluu.app.listener.PushNotificationRegistrationListener;
+import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.model.OxPush2Request;
 import org.gluu.super_gluu.net.CommunicationService;
 import org.gluu.super_gluu.push.PushNotificationManager;
@@ -244,7 +245,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         if (!validateOxPush2Request(oxPush2Request)) {
             return;
         }
-        setPushData(null);
+        Settings.setPushDataEmpty(getApplicationContext());
         NotificationManager nMgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         nMgr.cancel(GluuMainActivity.MESSAGE_NOTIFICATION_ID);
         final ProcessManager processManager = createProcessManager(oxPush2Request);
@@ -396,13 +397,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         gluuAlert.show();
     }
 
-    public void savePinCode(String newPinCode){
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("PinCode", newPinCode);
-        editor.commit();
-    }
-
     public Boolean getIsButtonVisible(){
         SharedPreferences preferences = getApplicationContext().getSharedPreferences("CleanLogsSettings", Context.MODE_PRIVATE);
         Boolean isVisible = preferences.getBoolean("isCleanButtonVisible", true);
@@ -462,7 +456,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         SharedPreferences pushPreferences = getApplicationContext().getSharedPreferences("PushNotification", Context.MODE_PRIVATE);
         String message = pushPreferences.getString("PushData", null);
         if (message != null){
-            setPushData(null);
+            Settings.setPushDataEmpty(getApplicationContext());
             final OxPush2Request oxPush2Request = new Gson().fromJson(message, OxPush2Request.class);
             final Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
@@ -482,7 +476,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("userChoose", "null");
         editor.putString("oxRequest", "null");
-        setPushData(null);
+        Settings.setPushDataEmpty(getApplicationContext());
         editor.commit();
         String message = "";
         if (isDeny){
@@ -537,13 +531,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                     REQUEST_CAMERA);
         }
         // END_INCLUDE(camera_permission_request)
-    }
-
-    public void setPushData(String message){
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("PushNotification", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("PushData", message);
-        editor.commit();
     }
 
 }
