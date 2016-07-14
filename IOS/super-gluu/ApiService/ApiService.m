@@ -64,6 +64,10 @@
         handler(responseObject ,nil);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
+        [[UserLoginInfo sharedInstance] setLogState:ENROLL_FAILED];
+        [[UserLoginInfo sharedInstance] setErrorMessage:[error.userInfo valueForKey:@"NSLocalizedDescription"]];
+        [[DataStoreManager sharedInstance] saveUserLoginInfo:[UserLoginInfo sharedInstance]];
+        [[UserLoginInfo sharedInstance] setErrorMessage:@""];
         handler(nil , error);
     }];
     

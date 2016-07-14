@@ -114,7 +114,8 @@
     [self initSwitchTurnOnOff:jswTurnOnOff];
     JTMaterialSwitch *sw = sender;
     [setChangePinCode setHidden:!sw.isOn];
-//    [pinCodeTypeView setHidden:!sw.isOn];
+    [attemptsView setHidden:!sw.isOn];
+    [pinCodeTypeView setHidden:!sw.isOn];
     code = [[NSUserDefaults standardUserDefaults] stringForKey:PIN_CODE];
     if (code == nil || [code isEqualToString:@""]){
         [setChangePinCode setTitle:NSLocalizedString(@"SetPinCode", @"SetPinCode") forState:UIControlStateNormal];
