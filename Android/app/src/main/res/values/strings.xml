@@ -80,7 +80,8 @@
     <string name="set_new_pin_code">Set new Pin code</string>
     <string name="enter_pin_code">Enter Pin code</string>
     <string name="reset_pin_code">Change Pin code</string>
-    <string name="tur_on_pin_code">Turn on/off</string>
+    <string name="tur_on_pin_code">Turn on</string>
+    <string name="tur_off_pin_code">Turn off</string>
     <string name="close">Close</string>
     <string name="pin_code_enable_question">Do you want to protect your app using PIN code?</string>
 

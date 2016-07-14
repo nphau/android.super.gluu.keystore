@@ -13,7 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.hrules.horizontalnumberpicker.HorizontalNumberPicker;
 import com.hrules.horizontalnumberpicker.HorizontalNumberPickerListener;
@@ -33,6 +35,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
     Button setResetPinButton;
     private Context context;
     private PinCodeFragment pinCodeFragment;
+    private LinearLayout attemptsLayout;
+    private TextView attemptsLabelt;
 
     @Override
     public void onDestroy() {
@@ -46,19 +50,16 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
         context = getContext();
         setResetPinButton = (Button) view.findViewById(R.id.set_reset_pin_button);
         setResetPinButton.setOnClickListener(this);
+        attemptsLayout = (LinearLayout) view.findViewById(R.id.numbers_attempts_view);
+        attemptsLabelt = (TextView) view.findViewById(R.id.numbers_attempts_label);
 
         final Switch turOn = (Switch) view.findViewById(R.id.switch_pin_code);
         turOn.setChecked(Settings.getPinCodeEnabled(context));
+        setPinCode(turOn.isChecked());
         turOn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Settings.setPinCodeEnabled(context, turOn.isChecked());
-                if (turOn.isChecked()) {
-                    setResetPinButton.setVisibility(View.VISIBLE);
-                } else {
-                    setResetPinButton.setVisibility(View.GONE);
-                }
-                checkPinCode();
+                setPinCode(turOn.isChecked());
             }
         });
         if (Settings.getPinCodeEnabled(context)) {
@@ -74,6 +75,20 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
         checkPinCode();
 
         return view;
+    }
+
+    private void setPinCode(Boolean isTurnOn){
+        Settings.setPinCodeEnabled(context, isTurnOn);
+        if (isTurnOn) {
+            setResetPinButton.setVisibility(View.VISIBLE);
+            attemptsLayout.setVisibility(View.VISIBLE);
+            attemptsLabelt.setVisibility(View.VISIBLE);
+        } else {
+            setResetPinButton.setVisibility(View.GONE);
+            attemptsLayout.setVisibility(View.GONE);
+            attemptsLabelt.setVisibility(View.GONE);
+        }
+        checkPinCode();
     }
 
     public void checkPinCode(){
