@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.github.simonpercic.rxtime.RxTime;
 import org.gluu.super_gluu.app.Activities.MainActivity;
 import org.gluu.super_gluu.app.CustomGluuAlertView.CustomGluuAlert;
+import org.gluu.super_gluu.app.settings.Settings;
+
 import SuperGluu.app.R;
 
 import java.text.SimpleDateFormat;
@@ -77,7 +79,7 @@ public class LockFragment extends Fragment {
     }
 
     private void startClockTick() {
-        if (!isAppLocked() && min == 0 && sec == 0) {
+        if (!Settings.isAppLocked(context) && min == 0 && sec == 0) {
             if (listener != null) {
                 listener.onTimerOver();
             }
@@ -160,20 +162,8 @@ public class LockFragment extends Fragment {
         min = min < 0 ? 0 : min;
         min = min > 10 ? 0 : min;
         if (min == 0 && sec == 0){
-            setAppLocked(false);
+            Settings.setAppLocked(context, false);
         }
-    }
-
-    private Boolean isAppLocked(){
-        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        return preferences.getBoolean("isAppLocked", false);
-    }
-
-    private void setAppLocked(Boolean isLocked){
-        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isAppLocked", isLocked);
-        editor.commit();
     }
 
     public void resetCurrentPinAttempts(){

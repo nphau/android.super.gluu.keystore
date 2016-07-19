@@ -15,6 +15,8 @@ import org.gluu.super_gluu.app.Fragments.PinCodeFragment.PinCodeFragment;
 import org.gluu.super_gluu.app.Fragments.PinCodeFragment.PinCodeSettingFragment;
 import org.gluu.super_gluu.app.GluuMainActivity;
 import org.gluu.super_gluu.app.KeyHandleInfoFragment;
+import org.gluu.super_gluu.app.settings.Settings;
+
 import com.github.simonpercic.rxtime.RxTime;
 
 import SuperGluu.app.R;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
 
         // Check if we get push notification
         Intent intent = getIntent();
+        Boolean isAppLocked = Settings.isAppLocked(getApplicationContext());
         if (intent.hasExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE)) {
             String requestJson = intent.getStringExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE);
             Bundle answerBundle = intent.getExtras();
@@ -46,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
             } else if (userAnswer == 20 ){//approve action
                 saveUserDecision("approve", requestJson);
             }
-            if (isAppLocked()){
+            if (isAppLocked){
                 loadLockedFragment(true);
             } else {
                 checkPinCodeEnabled();
@@ -55,10 +58,10 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
             nMgr.cancel(GluuMainActivity.MESSAGE_NOTIFICATION_ID);
         }
 
-        if (isAppLocked()){
+        if (isAppLocked){
             loadLockedFragment(true);
         } else {
-            if (getAccept()) {
+            if (Settings.getAccept(getApplicationContext())) {
                 checkPinCodeEnabled();
             } else {
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -74,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
 
     @Override
     public void onLicenseAgreement() {
-        saveAccept();
+        Settings.saveAccept(getApplicationContext());
         checkPinCodeEnabled();
     }
 
@@ -110,11 +113,11 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
         if (isDestroyed){
             loadGluuMainActivity();
         } else {
-            if (getFirstLoad()) {
-                saveFirstLoad();
+            if (Settings.getFirstLoad(getApplicationContext())) {
+                Settings.saveFirstLoad(getApplicationContext());
                 loadPinCodeFragment();
             } else {
-                if (getPincodeEnabled()) {
+                if (Settings.getPinCodeEnabled(getApplicationContext())) {
                     loadPinCodeFragment();
                 } else {
                     loadGluuMainActivity();
@@ -146,64 +149,18 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
         setTitle("Pin Code");
     }
 
-    public void saveAccept(){
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("IsAcceptLicense", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isAccept", true);
-        editor.commit();
-    }
-
-    public Boolean getAccept(){
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("IsAcceptLicense", Context.MODE_PRIVATE);
-        Boolean isAccept = preferences.getBoolean("isAccept", false);
-        return isAccept;
-    }
-
-    public Boolean getPincodeEnabled(){
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        Boolean isPinEnabled = preferences.getBoolean("isPinEnabled", false);
-        return isPinEnabled;
-    }
-
-    public Boolean getFirstLoad(){
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        Boolean isFirstLoad = preferences.getBoolean("isFirstLoad", false);
-        return !isFirstLoad;
-    }
-
-    public void saveFirstLoad(){
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isFirstLoad", true);
-        editor.commit();
-    }
-
-    public void savePinCode(String newPinCode){
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("PinCode", newPinCode);
-        editor.commit();
-    }
-
     public void saveUserDecision(String userChoose, String oxRequest){
         SharedPreferences preferences = getApplicationContext().getSharedPreferences("oxPushSettings", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("userChoose", userChoose);
         editor.putString("oxRequest", oxRequest);
         editor.commit();
-        setPushData(null);
-    }
-
-    public void setPushData(String message){
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("PushNotification", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("PushData", message);
-        editor.commit();
+        Settings.setPushData(getApplicationContext(), null);
     }
 
     @Override
     public void onNewPinCode(String pinCode) {
-        savePinCode(pinCode);
+        Settings.savePinCode(getApplicationContext(), pinCode);
         loadGluuMainActivity();
     }
 
@@ -222,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
             loadLockedFragment(false);
 
             setTitle("Application is locked");
-            setAppLocked(true);
+            Settings.setAppLocked(getApplicationContext(), true);
         }
     }
 
@@ -247,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
             @Override
             public void onTimerOver() {
                 if (GluuApplication.isIsAppInForeground()) {
-                    setAppLocked(false);
+                    Settings.setAppLocked(getApplicationContext(), false);
                     loadPinCodeFragment();
                 }
             }
@@ -258,18 +215,6 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
         fragmentTransaction.replace(R.id.fragment_container, lockFragment);
 //            fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-    }
-
-    private void setAppLocked(Boolean isLocked){
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isAppLocked", isLocked);
-        editor.commit();
-    }
-
-    private Boolean isAppLocked(){
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        return preferences.getBoolean("isAppLocked", false);
     }
 
     private void setAppLockedTime(String lockedTime){

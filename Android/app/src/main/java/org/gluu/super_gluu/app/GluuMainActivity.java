@@ -382,7 +382,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     @Override
     public void onCorrectPinCode(boolean isPinCodeCorrect) {
         if (isPinCodeCorrect){
-            showAlertView("The new PinCodeView code is set!");
+            showAlertView("New Pin Added!");
         } else {
             //to change pin code, first need check if user knows current one
             Intent intent = new Intent(GluuMainActivity.this, MainActivity.class);

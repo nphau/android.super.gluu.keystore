@@ -1,5 +1,6 @@
 package org.gluu.super_gluu.app.Fragments.PinCodeFragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -14,6 +16,7 @@ import com.github.simonpercic.rxtime.RxTime;
 import com.mhk.android.passcodeview.PasscodeView;
 
 import org.gluu.super_gluu.app.CustomGluuAlertView.CustomGluuAlert;
+import org.gluu.super_gluu.app.settings.Settings;
 
 import SuperGluu.app.R;
 import rx.android.schedulers.AndroidSchedulers;
@@ -62,27 +65,28 @@ public class PinCodeFragment extends Fragment implements View.OnClickListener {
                 pcView.requestToShowKeyboard();
             }
         }, 400);
-        int attempts = isWrongPin ? getCurrentPinCodeAttempts() : getPinCodeAttempts();
-        attemptsLabel.setText("You have " + getCurrentPinCodeAttempts() + " attempts left");
-        if (getCurrentPinCodeAttempts() <= 2) {
+        int attempts = Settings.getCurrentPinCodeAttempts(getContext());
+        attemptsLabel.setText("You have " + attempts + " attempts left");
+        if (attempts <= 2) {
             attemptsLabel.setTextColor(getResources().getColor(R.color.redColor));
         }
+        final String pinCode = Settings.getPinCode(getContext());
         pcView.setPasscodeEntryListener(new PasscodeView.PasscodeEntryListener() {
             @Override
             public void onPasscodeEntered(String passcode) {
-                if (getPinCode().equalsIgnoreCase("null")) {
+                if (pinCode.equalsIgnoreCase("null")) {
                     setNewPin(passcode);
                 } else if (newPin) {
-                    if (passcode.equalsIgnoreCase(getPinCode())) {
-                        showAlertView("Failed! New Pin code the same like old.");
+                    if (passcode.equalsIgnoreCase(pinCode)) {
+                        showAlertView("New pin code is the same as old, choose new one.");
                         getActivity().onBackPressed();
                     } else {
                         showAlertView("New Pin changed success!");
-                        savePinCode(passcode);
+                        Settings.savePinCode(getContext(), passcode);
                         getActivity().onBackPressed();
                     }
                     newPin = false;
-                } else if (passcode.equalsIgnoreCase(getPinCode())) {
+                } else if (passcode.equalsIgnoreCase(Settings.getPinCode(getContext()))) {
                     if (isSetNewPinCode) {
                         attemptsLabel.setVisibility(View.GONE);
                         pinCodeTitle.setText(R.string.set_new_pin_code);
@@ -104,16 +108,7 @@ public class PinCodeFragment extends Fragment implements View.OnClickListener {
                 }
             }
         });
-//        pinCodeView = (PinCodeView) view.findViewById(R.id.pin_view);
-//        pinCodeView.resetPinCodeBoxes();
-
-//        pinCodeView.setCompletionListener(getContext());
-//        pinCodeView.setWrongEnteredPinCodesCount(getPinCodeAttempts());
-        String pinCode = getPinCode();
         if (pinCode.equalsIgnoreCase("null")){
-//            pinCodeView.setPinViewInfoMessageVisable(true);
-//            pinCodeView.setDefaultPinCode(pinCode);
-//            pinCodeView.setPinCodeMode(PinCodeView.PinCodeMode.VERIFY_PINCODE);
             attemptsLabel.setVisibility(View.GONE);
             pinCodeTitle.setText(R.string.set_new_pin_code);
         } else {
@@ -140,32 +135,34 @@ public class PinCodeFragment extends Fragment implements View.OnClickListener {
 
     private void setNewPin(String passcode){
         isWrongPin = false;
-        savePinCode(passcode);
-        if (!isSettings) {
+        Settings.savePinCode(getContext(), passcode);
+//        if (!isSettings) {
             pinCodeViewListener.onCorrectPinCode(true);
-        }
+//        }
         resetCurrentPinAttempts();
+        //Hide keyboard
+        ((InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE))
+                .toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
         getActivity().onBackPressed();
     }
 
     private void wrongPinCode(PasscodeView pcView){
         isWrongPin = true;
         increaseAttempts();
-        String attemptsText = "You have " + getCurrentPinCodeAttempts() + " attempts left";
-        if (getCurrentPinCodeAttempts() <= 2) {
+        int attempts = Settings.getCurrentPinCodeAttempts(getContext());
+        String attemptsText = "You have " + attempts + " attempts left";
+        if (attempts <= 2) {
             attemptsLabel.setTextColor(getResources().getColor(R.color.redColor));
         }
         attemptsLabel.setText(attemptsText);
         pcView.clearText();
-        if (getCurrentPinCodeAttempts() <= 0) {
+        if (attempts <= 0) {
             resetCurrentPinAttempts();
             if (isSettings) {
-                setAppLocked(true);
+                Settings.setAppLocked(getContext(), true);
                 setCurrentNetworkTime();
             }
-//            else {
-                pinCodeViewListener.onCorrectPinCode(false);
-//            }
+            pinCodeViewListener.onCorrectPinCode(false);
         }
     }
 
@@ -178,7 +175,7 @@ public class PinCodeFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void call(Long time) {
                         // use time
-                        setAppLockedTime(String.valueOf(time));
+                        Settings.setAppLockedTime(getContext(), String.valueOf(time));
                     }
                 });
     }
@@ -200,78 +197,23 @@ public class PinCodeFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    public String getPinCode(){
-        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        String pinCode = preferences.getString("PinCode", "null");
-        return pinCode;
-    }
-
-    public void savePinCode(String password){
-        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("PinCode", password);
-        editor.commit();
-    }
-
-    private void setAppLockedTime(String lockedTime){
-        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("appLockedTime", lockedTime);
-        editor.commit();
-    }
-
-    public Boolean getIsReset(){
-        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        Boolean isFirstLoad = preferences.getBoolean("isReset", false);
-        return isFirstLoad;
-    }
-
-    public void saveIsReset(){
-        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isReset", false);
-        editor.commit();
-    }
-
-    public int getPinCodeAttempts(){
-        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        String pinCode = preferences.getString("pinCodeAttempts", "5");
-        return Integer.parseInt(pinCode);
-    }
-
     public void resetCurrentPinAttempts(){
-        saveIsReset();
+        Settings.saveIsReset(getContext());
         SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("currentPinCodeAttempts", String.valueOf(getPinCodeAttempts()));
+        editor.putString("currentPinCodeAttempts", String.valueOf(Settings.getPinCodeAttempts(getContext())));
         editor.commit();
-    }
-
-    public int getCurrentPinCodeAttempts(){
-        SharedPreferences preferences = getContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        String pinCode = preferences.getString("currentPinCodeAttempts", String.valueOf(getPinCodeAttempts()));
-        return Integer.parseInt(pinCode);
     }
 
     public void increaseAttempts(){
-        int attempts = getCurrentPinCodeAttempts();
+        int attempts = Settings.getCurrentPinCodeAttempts(getContext());
         attempts--;
-        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("currentPinCodeAttempts", String.valueOf(attempts));
-        editor.commit();
-    }
-
-    private void setAppLocked(Boolean isLocked){
-        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isAppLocked", isLocked);
-        editor.commit();
+        Settings.setCurrentPinCodeAttempts(getContext(), attempts);
     }
 
     @Override
     public void onClick(View v) {
-        saveIsReset();
+        Settings.saveIsReset(getContext());
         getActivity().onBackPressed();
     }
 
