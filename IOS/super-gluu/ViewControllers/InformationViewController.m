@@ -32,7 +32,8 @@
 
 -(void)setupInformation{
     if (_token != nil){
-        applicationValueLabel.text = _token.application;
+        NSURL* url = [NSURL URLWithString:_token.application];
+        applicationValueLabel.text = url.host;
         issuerValueLabel.text = _token.issuer;
         userNameValueLabel.text = _token.userName;
         createdValueLabel.text = [self convertPairingTime:_token.pairingTime];
