@@ -122,7 +122,7 @@
         {
             //load the landscape view
             if (!isLandScape){
-                [scrollView setContentSize:CGSizeMake(scrollView.contentSize.width, 400)];
+                [scrollView setContentSize:CGSizeMake(scrollView.contentSize.width, 250)];
                 scrollView.delegate = self;
                 scrollView.scrollEnabled = YES;
                 isLandScape = YES;
