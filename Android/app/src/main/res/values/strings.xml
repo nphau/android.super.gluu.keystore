@@ -103,4 +103,8 @@
     <string name="rename_key_name">Do you want to change key name?</string>
     <string name="enter_new_key_name">Enter new key name</string>
 
+    <string name="ssl_connection_settings">SSL Connection Settings</string>
+    <string name="trust_all_certificate">Trust All Certificates</string>
+    <string name="warning_trust_all_certificate">WARNING: Use only for testing! It\'s critically important to validate the SSL certificate for communication between SuperGluu and the Gluu Server.</string>
+
 </resources>

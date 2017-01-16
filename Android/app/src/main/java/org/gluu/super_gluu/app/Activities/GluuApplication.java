@@ -8,6 +8,7 @@ import android.util.Log;
  */
 public class GluuApplication extends Application {
     private static boolean isAppInForeground;
+    public static boolean isTrustAllCertificates =false;
 
     public static boolean isIsAppInForeground() {
         return isAppInForeground;
@@ -22,5 +23,4 @@ public class GluuApplication extends Application {
         isAppInForeground = false;
         Log.d(String.valueOf(GluuApplication.class), "APP PAUSED");
     }
-
 }

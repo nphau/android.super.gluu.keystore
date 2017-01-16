@@ -12,6 +12,8 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 import SuperGluu.app.BuildConfig;
+
+import org.gluu.super_gluu.app.Activities.GluuApplication;
 import org.gluu.super_gluu.util.CertUtils;
 import org.gluu.super_gluu.util.Utils;
 
@@ -24,7 +26,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.security.KeyManagementException;
 import java.security.KeyStore;
+import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.util.Iterator;
 import java.util.Map;
@@ -33,6 +37,7 @@ import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
@@ -244,22 +249,59 @@ public class CommunicationService {
     }
 
     public static void init() {
-        if (BuildConfig.DEBUG) {
-            // Init trust all manager
-            if (BuildConfig.TRUST_ALL_CERT) {
-                initTrustAllTrustManager();
-                return;
-            }
 
-            // Init trust manager to trust only specific server and skip hostname verifiaction
-            if (Utils.isNotEmpty(BuildConfig.OX_SERVER_CERT)) {
-                initTrustCertTrustManager(BuildConfig.OX_SERVER_CERT, true);
-            }
-        } else {
-            // Init trust manager to trust only specific server
-            if (Utils.isNotEmpty(BuildConfig.OX_SERVER_CERT)) {
-                initTrustCertTrustManager(BuildConfig.OX_SERVER_CERT, false);
-            }
+        if (GluuApplication.isTrustAllCertificates) {
+            initTrustAllTrustManager();
+            return;
+        }
+
+        // Init trust manager to trust only specific server and skip hostname verification
+        if (Utils.isNotEmpty(BuildConfig.OX_SERVER_CERT)) {
+            initTrustCertTrustManager(BuildConfig.OX_SERVER_CERT, true);
+        }
+
+//        if (BuildConfig.DEBUG) {
+//            // Init trust all manager
+//            if (BuildConfig.TRUST_ALL_CERT) {
+//                initTrustAllTrustManager();
+//                return;
+//            }
+//
+//            // Init trust manager to trust only specific server and skip hostname verifiaction
+//            if (Utils.isNotEmpty(BuildConfig.OX_SERVER_CERT)) {
+//                initTrustCertTrustManager(BuildConfig.OX_SERVER_CERT, true);
+//            }
+//        } else {
+//            // Init trust manager to trust only specific server
+//            if (Utils.isNotEmpty(BuildConfig.OX_SERVER_CERT)) {
+//                initTrustCertTrustManager(BuildConfig.OX_SERVER_CERT, false);
+//            }
+//        }
+    }
+
+    public static void validateCert(){
+        TrustManagerFactory tmf;
+        try {
+
+//            KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+//            keyStore.load(new File(Environment.getExternalStorageDirectory())., "Pwd");
+//            trustStore.close();
+
+//            URL url = new URL(strURL);
+            tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+//            tmf.init(keyStore);
+            SSLContext ctx = SSLContext.getInstance("SSL");
+            ctx.init(null, tmf.getTrustManagers(), null);
+            SSLSocketFactory sslFactory = ctx.getSocketFactory();
+//            HttpsURLConnection conn = (HttpsURLConnection)url.openConnection();
+//            conn.setSSLSocketFactory(sslFactory);
+            HttpsURLConnection.setDefaultSSLSocketFactory(sslFactory);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            Log.v("TAG","No Such Algorithm exception in validate cert "+e.getMessage());
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+            Log.v("TAG","KeyManagementException in validate cert "+e.getMessage());
         }
     }
 }

@@ -1,9 +1,12 @@
 package org.gluu.super_gluu.app.Fragments.SettingsFragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +18,7 @@ import android.widget.TextView;
 import com.hrules.horizontalnumberpicker.HorizontalNumberPicker;
 import com.hrules.horizontalnumberpicker.HorizontalNumberPickerListener;
 
+import org.gluu.super_gluu.app.Activities.GluuApplication;
 import org.gluu.super_gluu.app.CustomGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.app.Fragments.PinCodeFragment.PinCodeFragment;
 import org.gluu.super_gluu.app.GluuMainActivity;
@@ -68,6 +72,20 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
         numberPicker.setValue(Settings.getPinCodeAttempts(context));
         numberPicker.setListener(this);
         checkPinCode();
+
+        final Switch switchSSL = (Switch) view.findViewById(R.id.switch_ssl);
+        switchSSL.setChecked(Settings.getSSLEnabled(context));
+        switchSSL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(switchSSL.isChecked()){
+                    showWarning(R.string.warning_trust_all_certificate);
+                }
+                GluuApplication.isTrustAllCertificates =switchSSL.isChecked();
+                Settings.setSSLEnabled(context, switchSSL.isChecked());
+                Log.v("TAG","SSL Settings enable: "+switchSSL.isChecked());
+            }
+        });
 
         return view;
     }
@@ -126,7 +144,16 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onHorizontalNumberPickerChanged(HorizontalNumberPicker horizontalNumberPicker, int value) {
+
         Settings.setPinCodeAttempts(context, String.valueOf(value));
+    }
+
+    private void showWarning(int statusId) {
+        String message = context.getString(statusId);
+        Intent intent = new Intent("ox_request-precess-event");
+        // You can also include some extra data.
+        intent.putExtra("message", message);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
 }

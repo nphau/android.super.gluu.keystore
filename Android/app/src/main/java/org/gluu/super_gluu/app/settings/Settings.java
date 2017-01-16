@@ -127,4 +127,17 @@ public class Settings {
         setPushData(context, null);
     }
 
+    //SSL Connection Settings
+    public static void setSSLEnabled(Context context, Boolean isEnabled) {
+        SharedPreferences preferences = context.getSharedPreferences("SSLConnectionSettings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("SSLConnectionSettings", isEnabled);
+        editor.apply();
+    }
+
+    public static Boolean getSSLEnabled(Context context){
+        SharedPreferences preferences = context.getSharedPreferences("SSLConnectionSettings", Context.MODE_PRIVATE);
+        Boolean isSSLEnabled = preferences.getBoolean("SSLConnectionSettings", false);
+        return isSSLEnabled;
+    }
 }
