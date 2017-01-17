@@ -23,6 +23,7 @@ import org.gluu.super_gluu.app.CustomGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.app.Fragments.PinCodeFragment.PinCodeFragment;
 import org.gluu.super_gluu.app.GluuMainActivity;
 import org.gluu.super_gluu.app.settings.Settings;
+import org.gluu.super_gluu.net.CommunicationService;
 
 import SuperGluu.app.R;
 
@@ -84,6 +85,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
                 GluuApplication.isTrustAllCertificates =switchSSL.isChecked();
                 Settings.setSSLEnabled(context, switchSSL.isChecked());
                 Log.v("TAG","SSL Settings enable: "+switchSSL.isChecked());
+                // Init network layer
+                CommunicationService.init();
             }
         });
 

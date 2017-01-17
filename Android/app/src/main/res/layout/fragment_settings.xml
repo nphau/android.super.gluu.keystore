@@ -9,7 +9,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:text="@string/pin_code_settings"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -31,7 +31,7 @@
             android:text="@string/tur_off_pin_code"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#050000"
-            android:textSize="14dp" />
+            android:textSize="14sp" />
 
         <Switch
             android:id="@+id/switch_pin_code"
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/textView10"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="20dp" />
+            android:layout_marginStart="20dp" />
 
         <TextView
             android:id="@+id/textView10"
@@ -51,7 +51,7 @@
             android:text="@string/tur_on_pin_code"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#050000"
-            android:textSize="14dp" />
+            android:textSize="14sp" />
 
     </RelativeLayout>
 
@@ -68,7 +68,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
@@ -99,13 +99,13 @@
         android:text="@string/text_attempts"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/blackColor"
-        android:textSize="14dp" />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/textViewSSLConnection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:text="@string/trust_all_certificate"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -127,7 +127,7 @@
             android:text="@string/tur_off_pin_code"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#050000"
-            android:textSize="14dp" />
+            android:textSize="14sp" />
 
         <Switch
             android:id="@+id/switch_ssl"
@@ -135,7 +135,7 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/textViewSSLOn"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="20dp" />
+            android:layout_marginStart="20dp" />
 
         <TextView
             android:id="@+id/textViewSSLOn"
@@ -147,7 +147,7 @@
             android:text="@string/tur_on_pin_code"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#050000"
-            android:textSize="14dp" />
+            android:textSize="14sp" />
 
     </RelativeLayout>
 

@@ -66,8 +66,10 @@ public class CommunicationService {
 
             connection = (HttpURLConnection) url.openConnection();
             connection.setUseCaches(false);
+            connection.setRequestMethod("GET");
 
             //Get Response
+            Log.v(TAG,"Response code is:"+connection.getResponseCode());
             InputStream is = connection.getInputStream();
 
             return readStream(is);
@@ -250,6 +252,8 @@ public class CommunicationService {
 
     public static void init() {
 
+        Log.v(TAG,"init() called and isTrustAllCertificates value is:"+GluuApplication.isTrustAllCertificates);
+
         if (GluuApplication.isTrustAllCertificates) {
             initTrustAllTrustManager();
             return;
@@ -257,10 +261,13 @@ public class CommunicationService {
 
         // Init trust manager to trust only specific server and skip hostname verification
         if (Utils.isNotEmpty(BuildConfig.OX_SERVER_CERT)) {
-            initTrustCertTrustManager(BuildConfig.OX_SERVER_CERT, true);
+            initTrustCertTrustManager(BuildConfig.OX_SERVER_CERT, false);
         }
 
 //        if (BuildConfig.DEBUG) {
+//
+//            Log.v(TAG,"Debug");
+//
 //            // Init trust all manager
 //            if (BuildConfig.TRUST_ALL_CERT) {
 //                initTrustAllTrustManager();
@@ -272,6 +279,7 @@ public class CommunicationService {
 //                initTrustCertTrustManager(BuildConfig.OX_SERVER_CERT, true);
 //            }
 //        } else {
+//            Log.v(TAG,"Release");
 //            // Init trust manager to trust only specific server
 //            if (Utils.isNotEmpty(BuildConfig.OX_SERVER_CERT)) {
 //                initTrustCertTrustManager(BuildConfig.OX_SERVER_CERT, false);
