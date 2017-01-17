@@ -21,6 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     isPin = [[NSUserDefaults standardUserDefaults] boolForKey:PIN_PROTECTION_ID];
+    isSSL = [[NSUserDefaults standardUserDefaults] boolForKey:SSL_ENABLED];
 //    [pinCodeTypeView setHidden:!isPin];
     [setChangePinCode setHidden:!isPin];
     isSimple = [[NSUserDefaults standardUserDefaults] boolForKey:PIN_SIMPLE_ID];
@@ -32,9 +33,11 @@
 //        [pinCodeTypeView setHidden:YES];
     }
     [self initWidget];
-    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
     countFailedPin=0;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initPushView) name:NOTIFICATION_PUSH_ONLINE object:nil];
+    
+    sslViewCenter = trustOnOffView.center;
 }
 
 -(void)initPushView{
@@ -54,7 +57,7 @@
     [jswStatus addTarget:self action:@selector(onPinCodeTypeSelected:) forControlEvents:UIControlEventValueChanged];
     pinCodeType.hidden = YES;
     [self initSwitchProperty:jswStatus];
-    [pinCodeTypeView addSubview:jswStatus];
+//    [pinCodeTypeView addSubview:jswStatus];
     
     jswTurnOnOff = [[JTMaterialSwitch alloc] init];
     jswTurnOnOff.center = [pinCodeTurnOnOff center];
@@ -71,6 +74,23 @@
     }
     [pinCodeTurnOnOffView addSubview:jswTurnOnOff];
     
+    //Set Switch for SSL Connections
+    JTMaterialSwitch *sslSwitchStatus = [[JTMaterialSwitch alloc] init];
+    sslSwitchStatus.center = [trustOnOff center];
+    [sslSwitchStatus setOn:isSSL animated:YES];
+    [sslSwitchStatus addTarget:self action:@selector(onSSLSelected:) forControlEvents:UIControlEventValueChanged];
+    trustOnOff.hidden = YES;
+    trustTextLabel.hidden = !isSSL;
+    if (!isSSL){
+        sslSwitchStatus.thumbOnTintColor = [UIColor grayColor];
+        sslSwitchStatus.thumbOffTintColor = [UIColor grayColor];
+        sslSwitchStatus.trackOnTintColor = [UIColor grayColor];
+        sslSwitchStatus.trackOffTintColor = [UIColor grayColor];
+    } else {
+        [self initSwitchTurnOnOff:sslSwitchStatus];
+    }
+    [trustOnOffView addSubview:sslSwitchStatus];
+    
     [[setChangePinCode layer] setMasksToBounds:YES];
     [[setChangePinCode layer] setCornerRadius:CORNER_RADIUS];
     [[setChangePinCode layer] setBorderWidth:2.0f];
@@ -81,11 +101,6 @@
         attemptsLabel.text = [NSString stringWithFormat:@"%i", count];
     }
     attemptsTextLabel.text = [NSString stringWithFormat:NSLocalizedString(@"AttemptsText", @"App will be locked for X minutes after this many failed attempts")];
-//    if (pinCodeTypeView.isHidden){
-//        [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y + attemptsView.frame.size.height/3)];
-//    } else {
-//        [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y + attemptsView.frame.size.height)];
-//    }
 }
 
 -(void)checkDeviceOrientation{
@@ -113,42 +128,16 @@
 -(void)onPinCodeTurnOnOf:(id)sender{
     [self initSwitchTurnOnOff:jswTurnOnOff];
     JTMaterialSwitch *sw = sender;
+    trustOnOffView.center = sw.isOn ? sslViewCenter : CGPointMake(trustOnOffView.center.x, pinCodeButtonView.center.y+80);
     [setChangePinCode setHidden:!sw.isOn];
     [attemptsView setHidden:!sw.isOn];
     [pinCodeTypeView setHidden:!sw.isOn];
     code = [[NSUserDefaults standardUserDefaults] stringForKey:PIN_CODE];
     if (code == nil || [code isEqualToString:@""]){
         [setChangePinCode setTitle:NSLocalizedString(@"SetPinCode", @"SetPinCode") forState:UIControlStateNormal];
-//        [UIView animateWithDuration:0.3
-//                              delay:0.0
-//                            options:UIViewAnimationOptionTransitionCrossDissolve
-//                         animations:^{
-//                             [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y + attemptsView.frame.size.height)];
-//                         } completion:^(BOOL finished){
-//                             //
-//                         }];
     } else {
         [setChangePinCode setTitle:NSLocalizedString(@"ChangePinCode", @"ChangePinCode") forState:UIControlStateNormal];
-//        [pinCodeTypeView setHidden:YES];
-//        [UIView animateWithDuration:0.3
-//                              delay:0.0
-//                            options:UIViewAnimationOptionTransitionCrossDissolve
-//                         animations:^{
-//                             [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y + attemptsView.frame.size.height/4)];
-//                         } completion:^(BOOL finished){
-//                             //
-//                         }];
     }
-//    if (setChangePinCode.isHidden){
-//        [UIView animateWithDuration:0.3
-//                              delay:0.0
-//                            options:UIViewAnimationOptionTransitionCrossDissolve
-//                         animations:^{
-//                         [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y - 20)];
-//                         } completion:^(BOOL finished){
-//                        //
-//                         }];
-//    }
     
     [[NSUserDefaults standardUserDefaults] setBool:sw.isOn forKey:PIN_PROTECTION_ID];
 }
@@ -156,6 +145,13 @@
 -(void)onPinCodeTypeSelected:(id)sender{
     JTMaterialSwitch *sw = sender;
     [[NSUserDefaults standardUserDefaults] setBool:sw.isOn forKey:PIN_SIMPLE_ID];
+}
+
+-(void)onSSLSelected:(id)sender{
+    JTMaterialSwitch *sw = sender;
+    [self initSwitchTurnOnOff:sw];
+    trustTextLabel.hidden = !sw.isOn;
+    [[NSUserDefaults standardUserDefaults] setBool:sw.isOn forKey:SSL_ENABLED];
 }
 
 - (IBAction)changePasscode:(id)sender {
@@ -239,15 +235,6 @@
     [self dismissViewControllerAnimated:YES completion:^() {
         [[NSUserDefaults standardUserDefaults] setObject:controller.passcode forKey:PIN_CODE];
         [setChangePinCode setTitle:NSLocalizedString(@"ChangePinCode", @"ChangePinCode") forState:UIControlStateNormal];
-//        [pinCodeTypeView setHidden:YES];
-//        [UIView animateWithDuration:0.3
-//                              delay:0.0
-//                            options:UIViewAnimationOptionTransitionCrossDissolve
-//                         animations:^{
-//                             [attemptsView setCenter:CGPointMake(pinCodeTypeView.center.x, pinCodeTypeView.center.y + attemptsView.frame.size.height/4)];
-//                         } completion:^(BOOL finished){
-//                             //
-//                         }];
     }];
 }
 
@@ -319,7 +306,7 @@
         {
             //load the landscape view
             if (!isLandScape){
-                [scrollView setContentSize:CGSizeMake(scrollView.contentSize.width, 350)];
+                [scrollView setContentSize:CGSizeMake(scrollView.contentSize.width, 400)];
                 scrollView.delegate = self;
                 scrollView.scrollEnabled = YES;
                 isLandScape = YES;

@@ -12,6 +12,8 @@
 #import "OXPushManager.h"
 #import "NHNetworkTime.h"
 
+#import <UbertestersSDK/Ubertesters.h>
+
 @interface AppDelegate ()
 
 @end
@@ -42,6 +44,9 @@
     }
     
     [[NHNetworkClock sharedNetworkClock] synchronize];
+    
+    //Ubertersters SDK initialization
+//    [[Ubertesters shared] initialize];
     
     return YES;
 }
