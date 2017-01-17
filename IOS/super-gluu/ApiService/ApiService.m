@@ -42,17 +42,21 @@
                                   serializerWithReadingOptions:NSJSONReadingAllowFragments];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];//x-www-form-urlencoded"];
     
-    /**** SSL Pinning ****/
-    NSString *cerPath = [[NSBundle mainBundle] pathForResource:@"super-gluu-ssl" ofType:@"crt"];
-    NSData *certData = [NSData dataWithContentsOfFile:cerPath];
-    AFSecurityPolicy *securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
-    [securityPolicy setAllowInvalidCertificates:NO];
-    [securityPolicy setPinnedCertificates:@[certData]];
-    /**** SSL Pinning ****/
+    BOOL isTrustAll = [[NSUserDefaults standardUserDefaults] boolForKey:SSL_ENABLED];
+    if (!isTrustAll){
+        /**** SSL Pinning ****/
+        
+        AFSecurityPolicy *policy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
+        manager.securityPolicy = policy;
+        NSString *cerPath = [[NSBundle mainBundle] pathForResource:@"www.gluu.org" ofType:@"cer"];
+        NSData *certData = [NSData dataWithContentsOfFile:cerPath];
+        [manager.securityPolicy setPinnedCertificates:@[certData]];
+        manager.securityPolicy.allowInvalidCertificates = YES;
+        [manager.securityPolicy setValidatesDomainName:NO];
+        
+        /**** End SSL Pinning ****/
+    }
     
-//    [manager setSecurityPolicy:securityPolicy];
-    manager.securityPolicy.allowInvalidCertificates = YES;
-    [manager.securityPolicy setValidatesDomainName:NO];
     return manager;
 }
 

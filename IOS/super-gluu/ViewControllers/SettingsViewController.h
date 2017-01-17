@@ -15,7 +15,10 @@
     IBOutlet UIScrollView* scrollView;
     IBOutlet UISwitch* pinCodeType;
     IBOutlet UISwitch* pinCodeTurnOnOff;
+    IBOutlet UISwitch* trustOnOff;
+    IBOutlet UILabel* trustTextLabel;
     IBOutlet UIView* pinCodeTurnOnOffView;
+    IBOutlet UIView* trustOnOffView;
     IBOutlet UIView* pinCodeTypeView;
     IBOutlet UIView* pinCodeButtonView;
     IBOutlet UIButton* setChangePinCode;
@@ -25,12 +28,16 @@
     IBOutlet UILabel* attemptsTextLabel;
     
     JTMaterialSwitch *jswTurnOnOff;
+    JTMaterialSwitch *trustAllOnOff;
     
     NSString* code;
     
     BOOL isPin;
+    BOOL isSSL;
     BOOL isSimple;
     BOOL isLandScape;
+    
+    CGPoint sslViewCenter;
     
     int countFailedPin;
     
