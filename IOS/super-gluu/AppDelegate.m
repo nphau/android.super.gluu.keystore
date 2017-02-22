@@ -12,7 +12,7 @@
 #import "OXPushManager.h"
 #import "NHNetworkTime.h"
 
-#import <UbertestersSDK/Ubertesters.h>
+//#import <UbertestersSDK/Ubertesters.h>
 
 @interface AppDelegate ()
 

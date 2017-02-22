@@ -49,10 +49,20 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>ox-push2-ios-pod.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>2BCB8CA9463AA051FAC5697F73E69715</key>
+		<key>1A10FE90A1BDB00994EE17E3D3FFCA7C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1A349D1A34A311F4CB98A6F20D2F3C50</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -67,11 +77,6 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9D0B6C89B247D03BADCC15A5EDAE211B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>B1D17BA74BEACBD28F897F231B5907A4</key>
 		<dict>
 			<key>primary</key>
@@ -82,17 +87,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>D5808A5797EB3C626B5EAA66F84C2F41</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>E2E98B9CD754B4954C3FBD110D724837</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F79089F4FF30C0031D264214DF325090</key>
+		<key>EC91DE855337EAAAC5BA34FF2F5D0F82</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F81F9307D7A73CCE5EF06C4AD0547875</key>
+		<key>F79089F4FF30C0031D264214DF325090</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -12,15 +12,16 @@
 @implementation KeyHandleCell
 
 -(void)setData:(TokenEntity*)tokenEntity{
-    _key = [[tokenEntity keyHandle] base64EncodedString];
-    _keyHandleNameLabel.text = [tokenEntity keyName];
-    keyHandleTime.text = [self getTime:[tokenEntity pairingTime]];
-    self.accessibilityLabel = [tokenEntity application];
+    _key = [tokenEntity->keyHandle base64EncodedString];
+    NSURL* urlIssuer = [NSURL URLWithString:tokenEntity->issuer];
+    NSString* keyName = tokenEntity->keyName == nil ? [NSString stringWithFormat:@"key for %@", urlIssuer.host] : tokenEntity->keyName;
+    _keyHandleNameLabel.text = keyName;
+    keyHandleTime.text = [self getTime:tokenEntity->pairingTime];
+    self.accessibilityLabel = tokenEntity->application;
 }
 
 -(NSString*)getTime:(NSString*)createdTime{
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-//    [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZZZ"];
     NSDate* date = [formatter dateFromString:createdTime];
     [formatter setDateFormat:@" MMM dd, yyyy hh:mm:ss"];

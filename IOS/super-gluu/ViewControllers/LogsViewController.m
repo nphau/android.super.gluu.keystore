@@ -71,7 +71,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     UserLoginInfo* userInfo = (UserLoginInfo*)[logsArray objectAtIndex:indexPath.row];
     CGFloat height = 130.0;
-    if ([userInfo logState] == LOGIN_FAILED || [userInfo logState] == ENROLL_FAILED || [userInfo logState] == ENROLL_DECLINED || [userInfo logState] == LOGIN_DECLINED){
+    if (userInfo->logState == LOGIN_FAILED || userInfo->logState == ENROLL_FAILED || userInfo->logState == ENROLL_DECLINED || userInfo->logState == LOGIN_DECLINED){
         height = 80.0;
     }
     return height;
@@ -80,7 +80,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UserLoginInfo* userInfo = (UserLoginInfo*)[logsArray objectAtIndex:indexPath.row];
     NSString *CellIdentifier= @"LogsTableCellID";//LogsFailedTableCellID
-    if ([userInfo logState] == LOGIN_FAILED || [userInfo logState] == ENROLL_FAILED || [userInfo logState] == ENROLL_DECLINED || [userInfo logState] == LOGIN_DECLINED || [userInfo logState] == UNKNOWN_ERROR){
+    if (userInfo->logState == LOGIN_FAILED || userInfo->logState == ENROLL_FAILED || userInfo->logState == ENROLL_DECLINED || userInfo->logState == LOGIN_DECLINED || userInfo->logState == UNKNOWN_ERROR){
         CellIdentifier= @"LogsFailedTableCellID";
     }
     LogsTableCell *cell = (LogsTableCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -95,7 +95,7 @@
     if ([[sender accessibilityLabel] isEqualToString:@"1"]){
         //Show message about failed enroll/authentication
         UserLoginInfo* userInfo = [logsArray objectAtIndex:[sender tag]];
-        NSString* message = [userInfo errorMessage];
+        NSString* message = userInfo->errorMessage;
         if (message != nil){
             NSDictionary* jsonError = [NSJSONSerialization JSONObjectWithData:[message dataUsingEncoding:NSUTF8StringEncoding]
                                                                       options:kNilOptions
@@ -104,7 +104,7 @@
                 message = [jsonError valueForKey:@"errorDescription"];
             }
         } else {
-            switch ([userInfo logState]) {
+            switch (userInfo->logState) {
                 case LOGIN_DECLINED:
                     message = @"Login declined!";
                     break;

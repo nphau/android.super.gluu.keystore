@@ -15,29 +15,9 @@
 		BB37DE591C7E08320016D422 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE581C7E08320016D422 /* AppDelegate.m */; };
 		BB37DE5C1C7E08320016D422 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE5B1C7E08320016D422 /* MainViewController.m */; };
 		BB37DE5F1C7E08320016D422 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB37DE5D1C7E08320016D422 /* Main.storyboard */; };
-		BB37DE621C7E08320016D422 /* super_gluu.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE601C7E08320016D422 /* super_gluu.xcdatamodeld */; };
 		BB37DE641C7E08320016D422 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB37DE631C7E08320016D422 /* Assets.xcassets */; };
 		BB37DE721C7E08320016D422 /* super_gluuTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE711C7E08320016D422 /* super_gluuTests.m */; };
 		BB37DE7D1C7E08320016D422 /* super_gluuUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE7C1C7E08320016D422 /* super_gluuUITests.m */; };
-		BB37DF111C7E0B8E0016D422 /* ApiService.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DEA71C7E0B8E0016D422 /* ApiService.m */; };
-		BB37DF121C7E0B8E0016D422 /* ApiServiceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DEAA1C7E0B8E0016D422 /* ApiServiceManager.m */; };
-		BB37DF131C7E0B8E0016D422 /* DataStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DEAD1C7E0B8E0016D422 /* DataStoreManager.m */; };
-		BB37DF141C7E0B8E0016D422 /* LogManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DEB01C7E0B8E0016D422 /* LogManager.m */; };
-		BB37DF151C7E0B8E0016D422 /* RawMessageCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DEB51C7E0B8E0016D422 /* RawMessageCodec.m */; };
-		BB37DF161C7E0B8E0016D422 /* TokenEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DEB81C7E0B8E0016D422 /* TokenEntity.m */; };
-		BB37DF171C7E0B8E0016D422 /* AuthenticateRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DEBB1C7E0B8E0016D422 /* AuthenticateRequest.m */; };
-		BB37DF181C7E0B8E0016D422 /* EnrollmentRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DEBD1C7E0B8E0016D422 /* EnrollmentRequest.m */; };
-		BB37DF191C7E0B8E0016D422 /* AuthenticateResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DEC01C7E0B8E0016D422 /* AuthenticateResponse.m */; };
-		BB37DF1A1C7E0B8E0016D422 /* EnrollmentResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DEC21C7E0B8E0016D422 /* EnrollmentResponse.m */; };
-		BB37DF1B1C7E0B8E0016D422 /* TokenResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DEC41C7E0B8E0016D422 /* TokenResponse.m */; };
-		BB37DF1C1C7E0B8E0016D422 /* TokenDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DEC71C7E0B8E0016D422 /* TokenDevice.m */; };
-		BB37DF1D1C7E0B8E0016D422 /* TokenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DEC91C7E0B8E0016D422 /* TokenManager.m */; };
-		BB37DF1E1C7E0B8E0016D422 /* U2FKeyImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DECC1C7E0B8E0016D422 /* U2FKeyImpl.m */; };
-		BB37DF1F1C7E0B8E0016D422 /* U2fMetaData.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DECE1C7E0B8E0016D422 /* U2fMetaData.m */; };
-		BB37DF201C7E0B8E0016D422 /* UserPresenceVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DED11C7E0B8E0016D422 /* UserPresenceVerifier.m */; };
-		BB37DF211C7E0B8E0016D422 /* UserLoginInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DED41C7E0B8E0016D422 /* UserLoginInfo.m */; };
-		BB37DF221C7E0B8E0016D422 /* OXPushManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DED61C7E0B8E0016D422 /* OXPushManager.m */; };
-		BB37DF231C7E0B8E0016D422 /* OxPush2Request.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DED91C7E0B8E0016D422 /* OxPush2Request.m */; };
 		BB37DF241C7E0B8E0016D422 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEDB1C7E0B8E0016D422 /* Localizable.strings */; };
 		BB37DF251C7E0B8E0016D422 /* Oatmeal.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEE01C7E0B8E0016D422 /* Oatmeal.ttf */; };
 		BB37DF261C7E0B8E0016D422 /* clearLogIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEE41C7E0B8E0016D422 /* clearLogIcon.png */; };
@@ -67,16 +47,30 @@
 		BB78BFB71C99C6C600558042 /* gluu.png in Resources */ = {isa = PBXBuildFile; fileRef = BB78BFB61C99C6C600558042 /* gluu.png */; };
 		BB8703061CA3E5D400EEF9A6 /* gluuIconRed.png in Resources */ = {isa = PBXBuildFile; fileRef = BB8703051CA3E5D400EEF9A6 /* gluuIconRed.png */; };
 		BB9B65A11CB7C5A300784AEF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65A01CB7C5A300784AEF /* QuartzCore.framework */; };
-		BB9B65B11CBCDA9600784AEF /* super-gluu-ssl.crt in Resources */ = {isa = PBXBuildFile; fileRef = BB9B65B01CBCDA9600784AEF /* super-gluu-ssl.crt */; };
 		BBB7C0E71C884E2600833B12 /* approveIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0E61C884E2600833B12 /* approveIcon.png */; };
 		BBB7C0E91C8851B900833B12 /* denyIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0E81C8851B900833B12 /* denyIcon.png */; };
 		BBB7C0EB1C88569400833B12 /* personIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0EA1C88569400833B12 /* personIcon.png */; };
 		BBB7C0FC1C89FE3100833B12 /* gluuIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0FB1C89FE3100833B12 /* gluuIcon.png */; };
 		BBB7C1021C9042AF00833B12 /* NSDate+NVTimeAgo.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB7C1011C9042AF00833B12 /* NSDate+NVTimeAgo.m */; };
 		BBB7C1051C90723300833B12 /* InformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB7C1041C90723300833B12 /* InformationViewController.m */; };
+		BBDE9B801DA78835003B6673 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B659E1CB7C59800784AEF /* AdSupport.framework */; };
+		BBDE9B811DA78847003B6673 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65A21CB7C5AE00784AEF /* CoreImage.framework */; };
+		BBDE9B821DA78851003B6673 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65A41CB7C5B900784AEF /* SystemConfiguration.framework */; };
+		BBDE9B831DA7885B003B6673 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBFCB3091C98164F00F66417 /* CoreTelephony.framework */; };
+		BBDE9B841DA78861003B6673 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBB7C0F71C88933100833B12 /* CoreLocation.framework */; };
+		BBDE9B851DA7886F003B6673 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65A61CB7C5D100784AEF /* AudioToolbox.framework */; };
+		BBDE9B861DA78878003B6673 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65A81CB7C5DA00784AEF /* OpenGLES.framework */; };
+		BBDE9B871DA78880003B6673 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65AA1CB7C5E400784AEF /* CoreMotion.framework */; };
+		BBDE9B891DA7888A003B6673 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBDE9B881DA7888A003B6673 /* MediaPlayer.framework */; };
+		BBDE9B8B1DA78895003B6673 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBDE9B8A1DA78895003B6673 /* CoreMedia.framework */; };
+		BBDE9B8D1DA788A3003B6673 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBDE9B8C1DA788A3003B6673 /* AVFoundation.framework */; };
+		BBDE9B8F1DA788B0003B6673 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BBDE9B8E1DA788B0003B6673 /* libsqlite3.tbd */; };
+		BBDE9B911DA788B8003B6673 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BBDE9B901DA788B8003B6673 /* libz.tbd */; };
+		BBDE9B931DA788C1003B6673 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBDE9B921DA788C1003B6673 /* CoreVideo.framework */; };
 		BBE787231C99781B00E9E0D7 /* PinCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBE787221C99781B00E9E0D7 /* PinCodeViewController.m */; };
 		BBE787271C99954600E9E0D7 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BBE787261C99954600E9E0D7 /* Settings.bundle */; };
 		BBE7AAC91C9B18C200BE62AE /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBE7AAC81C9B18C200BE62AE /* SettingsViewController.m */; };
+		BBEC92001E293179000D522F /* www.gluu.org.cer in Resources */ = {isa = PBXBuildFile; fileRef = BBEC91FF1E293179000D522F /* www.gluu.org.cer */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,7 +106,6 @@
 		BB37DE5A1C7E08320016D422 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		BB37DE5B1C7E08320016D422 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		BB37DE5E1C7E08320016D422 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		BB37DE611C7E08320016D422 /* super_gluu.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = super_gluu.xcdatamodel; sourceTree = "<group>"; };
 		BB37DE631C7E08320016D422 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BB37DE681C7E08320016D422 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB37DE6D1C7E08320016D422 /* Super Gluu.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Super Gluu.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,44 +114,6 @@
 		BB37DE781C7E08320016D422 /* Super Gluu.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Super Gluu.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB37DE7C1C7E08320016D422 /* super_gluuUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = super_gluuUITests.m; sourceTree = "<group>"; };
 		BB37DE7E1C7E08320016D422 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BB37DEA61C7E0B8E0016D422 /* ApiService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiService.h; sourceTree = "<group>"; };
-		BB37DEA71C7E0B8E0016D422 /* ApiService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApiService.m; sourceTree = "<group>"; };
-		BB37DEA91C7E0B8E0016D422 /* ApiServiceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiServiceManager.h; sourceTree = "<group>"; };
-		BB37DEAA1C7E0B8E0016D422 /* ApiServiceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApiServiceManager.m; sourceTree = "<group>"; };
-		BB37DEAC1C7E0B8E0016D422 /* DataStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataStoreManager.h; sourceTree = "<group>"; };
-		BB37DEAD1C7E0B8E0016D422 /* DataStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataStoreManager.m; sourceTree = "<group>"; };
-		BB37DEAF1C7E0B8E0016D422 /* LogManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogManager.h; sourceTree = "<group>"; };
-		BB37DEB01C7E0B8E0016D422 /* LogManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogManager.m; sourceTree = "<group>"; };
-		BB37DEB41C7E0B8E0016D422 /* RawMessageCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RawMessageCodec.h; sourceTree = "<group>"; };
-		BB37DEB51C7E0B8E0016D422 /* RawMessageCodec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RawMessageCodec.m; sourceTree = "<group>"; };
-		BB37DEB71C7E0B8E0016D422 /* TokenEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenEntity.h; sourceTree = "<group>"; };
-		BB37DEB81C7E0B8E0016D422 /* TokenEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenEntity.m; sourceTree = "<group>"; };
-		BB37DEBA1C7E0B8E0016D422 /* AuthenticateRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticateRequest.h; sourceTree = "<group>"; };
-		BB37DEBB1C7E0B8E0016D422 /* AuthenticateRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticateRequest.m; sourceTree = "<group>"; };
-		BB37DEBC1C7E0B8E0016D422 /* EnrollmentRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnrollmentRequest.h; sourceTree = "<group>"; };
-		BB37DEBD1C7E0B8E0016D422 /* EnrollmentRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnrollmentRequest.m; sourceTree = "<group>"; };
-		BB37DEBF1C7E0B8E0016D422 /* AuthenticateResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticateResponse.h; sourceTree = "<group>"; };
-		BB37DEC01C7E0B8E0016D422 /* AuthenticateResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticateResponse.m; sourceTree = "<group>"; };
-		BB37DEC11C7E0B8E0016D422 /* EnrollmentResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnrollmentResponse.h; sourceTree = "<group>"; };
-		BB37DEC21C7E0B8E0016D422 /* EnrollmentResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnrollmentResponse.m; sourceTree = "<group>"; };
-		BB37DEC31C7E0B8E0016D422 /* TokenResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenResponse.h; sourceTree = "<group>"; };
-		BB37DEC41C7E0B8E0016D422 /* TokenResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenResponse.m; sourceTree = "<group>"; };
-		BB37DEC61C7E0B8E0016D422 /* TokenDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenDevice.h; sourceTree = "<group>"; };
-		BB37DEC71C7E0B8E0016D422 /* TokenDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenDevice.m; sourceTree = "<group>"; };
-		BB37DEC81C7E0B8E0016D422 /* TokenManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenManager.h; sourceTree = "<group>"; };
-		BB37DEC91C7E0B8E0016D422 /* TokenManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenManager.m; sourceTree = "<group>"; };
-		BB37DECB1C7E0B8E0016D422 /* U2FKeyImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2FKeyImpl.h; sourceTree = "<group>"; };
-		BB37DECC1C7E0B8E0016D422 /* U2FKeyImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = U2FKeyImpl.m; sourceTree = "<group>"; };
-		BB37DECD1C7E0B8E0016D422 /* U2fMetaData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2fMetaData.h; sourceTree = "<group>"; };
-		BB37DECE1C7E0B8E0016D422 /* U2fMetaData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = U2fMetaData.m; sourceTree = "<group>"; };
-		BB37DED01C7E0B8E0016D422 /* UserPresenceVerifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPresenceVerifier.h; sourceTree = "<group>"; };
-		BB37DED11C7E0B8E0016D422 /* UserPresenceVerifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPresenceVerifier.m; sourceTree = "<group>"; };
-		BB37DED31C7E0B8E0016D422 /* UserLoginInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserLoginInfo.h; sourceTree = "<group>"; };
-		BB37DED41C7E0B8E0016D422 /* UserLoginInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserLoginInfo.m; sourceTree = "<group>"; };
-		BB37DED51C7E0B8E0016D422 /* OXPushManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OXPushManager.h; sourceTree = "<group>"; };
-		BB37DED61C7E0B8E0016D422 /* OXPushManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXPushManager.m; sourceTree = "<group>"; };
-		BB37DED81C7E0B8E0016D422 /* OxPush2Request.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OxPush2Request.h; sourceTree = "<group>"; };
-		BB37DED91C7E0B8E0016D422 /* OxPush2Request.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OxPush2Request.m; sourceTree = "<group>"; };
 		BB37DEDC1C7E0B8E0016D422 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BB37DEDD1C7E0B8E0016D422 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BB37DEDE1C7E0B8E0016D422 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -201,7 +156,6 @@
 		BB3BE1671C88165800817A46 /* Super-gluu_PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Super-gluu_PrefixHeader.pch"; sourceTree = "<group>"; };
 		BB3BE1701C882D0600817A46 /* ApproveDenyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApproveDenyViewController.h; sourceTree = "<group>"; };
 		BB3BE1711C882D0600817A46 /* ApproveDenyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApproveDenyViewController.m; sourceTree = "<group>"; };
-		BB3BE1741C883B8900817A46 /* LecenseAgreementDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LecenseAgreementDelegate.h; sourceTree = "<group>"; };
 		BB78BFB61C99C6C600558042 /* gluu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gluu.png; sourceTree = "<group>"; };
 		BB8703051CA3E5D400EEF9A6 /* gluuIconRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gluuIconRed.png; sourceTree = "<group>"; };
 		BB9B659C1CB7C57800784AEF /* UbertestersSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UbertestersSDK.framework; sourceTree = "<group>"; };
@@ -212,7 +166,6 @@
 		BB9B65A61CB7C5D100784AEF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		BB9B65A81CB7C5DA00784AEF /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BB9B65AA1CB7C5E400784AEF /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		BB9B65B01CBCDA9600784AEF /* super-gluu-ssl.crt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "super-gluu-ssl.crt"; path = "Configuration/super-gluu-ssl.crt"; sourceTree = "<group>"; };
 		BBB7C0E61C884E2600833B12 /* approveIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = approveIcon.png; sourceTree = "<group>"; };
 		BBB7C0E81C8851B900833B12 /* denyIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = denyIcon.png; sourceTree = "<group>"; };
 		BBB7C0EA1C88569400833B12 /* personIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = personIcon.png; sourceTree = "<group>"; };
@@ -222,12 +175,21 @@
 		BBB7C1011C9042AF00833B12 /* NSDate+NVTimeAgo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+NVTimeAgo.m"; path = "NSDate-Time-Ago/NSDate+NVTimeAgo.m"; sourceTree = "<group>"; };
 		BBB7C1031C90723300833B12 /* InformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformationViewController.h; sourceTree = "<group>"; };
 		BBB7C1041C90723300833B12 /* InformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformationViewController.m; sourceTree = "<group>"; };
+		BBDE9B881DA7888A003B6673 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		BBDE9B8A1DA78895003B6673 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		BBDE9B8C1DA788A3003B6673 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		BBDE9B8E1DA788B0003B6673 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		BBDE9B901DA788B8003B6673 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		BBDE9B921DA788C1003B6673 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		BBE787211C99781B00E9E0D7 /* PinCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinCodeViewController.h; sourceTree = "<group>"; };
 		BBE787221C99781B00E9E0D7 /* PinCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinCodeViewController.m; sourceTree = "<group>"; };
 		BBE787261C99954600E9E0D7 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = ../Settings.bundle; sourceTree = "<group>"; };
 		BBE7AAC71C9B18C200BE62AE /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		BBE7AAC81C9B18C200BE62AE /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		BBEC91F21E28CE25000D522F /* Super Gluu.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Super Gluu.entitlements"; sourceTree = "<group>"; };
+		BBEC91FF1E293179000D522F /* www.gluu.org.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = www.gluu.org.cer; sourceTree = "<group>"; };
 		BBFCB3091C98164F00F66417 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		BBFCC6D81E5D98CB0015A256 /* LecenseAgreementDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LecenseAgreementDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,6 +197,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBDE9B931DA788C1003B6673 /* CoreVideo.framework in Frameworks */,
+				BBDE9B911DA788B8003B6673 /* libz.tbd in Frameworks */,
+				BBDE9B8F1DA788B0003B6673 /* libsqlite3.tbd in Frameworks */,
+				BBDE9B8D1DA788A3003B6673 /* AVFoundation.framework in Frameworks */,
+				BBDE9B8B1DA78895003B6673 /* CoreMedia.framework in Frameworks */,
+				BBDE9B891DA7888A003B6673 /* MediaPlayer.framework in Frameworks */,
+				BBDE9B871DA78880003B6673 /* CoreMotion.framework in Frameworks */,
+				BBDE9B861DA78878003B6673 /* OpenGLES.framework in Frameworks */,
+				BBDE9B851DA7886F003B6673 /* AudioToolbox.framework in Frameworks */,
+				BBDE9B841DA78861003B6673 /* CoreLocation.framework in Frameworks */,
+				BBDE9B831DA7885B003B6673 /* CoreTelephony.framework in Frameworks */,
+				BBDE9B821DA78851003B6673 /* SystemConfiguration.framework in Frameworks */,
+				BBDE9B811DA78847003B6673 /* CoreImage.framework in Frameworks */,
+				BBDE9B801DA78835003B6673 /* AdSupport.framework in Frameworks */,
 				BB9B65A11CB7C5A300784AEF /* QuartzCore.framework in Frameworks */,
 				BB37DF421C7E0CBC0016D422 /* CoreData.framework in Frameworks */,
 				6A858E7909FD7D0E999EE1BC /* Pods_Super_Gluu.framework in Frameworks */,
@@ -261,6 +237,12 @@
 		3F430CE55ADBDA89388FF131 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BBDE9B921DA788C1003B6673 /* CoreVideo.framework */,
+				BBDE9B901DA788B8003B6673 /* libz.tbd */,
+				BBDE9B8E1DA788B0003B6673 /* libsqlite3.tbd */,
+				BBDE9B8C1DA788A3003B6673 /* AVFoundation.framework */,
+				BBDE9B8A1DA78895003B6673 /* CoreMedia.framework */,
+				BBDE9B881DA7888A003B6673 /* MediaPlayer.framework */,
 				BB9B65AA1CB7C5E400784AEF /* CoreMotion.framework */,
 				BB9B65A81CB7C5DA00784AEF /* OpenGLES.framework */,
 				BB9B65A61CB7C5D100784AEF /* AudioToolbox.framework */,
@@ -307,6 +289,7 @@
 		BB37DE481C7E08320016D422 = {
 			isa = PBXGroup;
 			children = (
+				BBEC91F21E28CE25000D522F /* Super Gluu.entitlements */,
 				BB37DE531C7E08320016D422 /* super-gluu */,
 				BB37DE701C7E08320016D422 /* super-gluuTests */,
 				BB37DE7B1C7E08320016D422 /* super-gluuUITests */,
@@ -329,12 +312,9 @@
 		BB37DE531C7E08320016D422 /* super-gluu */ = {
 			isa = PBXGroup;
 			children = (
+				BBFCC6D71E5D98CB0015A256 /* Protocols */,
 				BB9B65AF1CBCDA8400784AEF /* Configuration */,
 				BB37DF401C7E0BD20016D422 /* Constants.h */,
-				BB37DEA51C7E0B8E0016D422 /* ApiService */,
-				BB37DEAB1C7E0B8E0016D422 /* DataStore */,
-				BB37DEAE1C7E0B8E0016D422 /* LOG */,
-				BB37DEB11C7E0B8E0016D422 /* Model */,
 				BB37DEDA1C7E0B8E0016D422 /* Resources */,
 				BB37DEF61C7E0B8E0016D422 /* Vendors */,
 				BB37DF071C7E0B8E0016D422 /* ViewControllers */,
@@ -345,7 +325,6 @@
 				BB37DE5D1C7E08320016D422 /* Main.storyboard */,
 				BB37DE631C7E08320016D422 /* Assets.xcassets */,
 				BB37DE681C7E08320016D422 /* Info.plist */,
-				BB37DE601C7E08320016D422 /* super_gluu.xcdatamodeld */,
 				BB37DE541C7E08320016D422 /* Supporting Files */,
 			);
 			path = "super-gluu";
@@ -376,161 +355,6 @@
 				BB37DE7E1C7E08320016D422 /* Info.plist */,
 			);
 			path = "super-gluuUITests";
-			sourceTree = "<group>";
-		};
-		BB37DEA51C7E0B8E0016D422 /* ApiService */ = {
-			isa = PBXGroup;
-			children = (
-				BB37DEA61C7E0B8E0016D422 /* ApiService.h */,
-				BB37DEA71C7E0B8E0016D422 /* ApiService.m */,
-				BB37DEA81C7E0B8E0016D422 /* ApiServiceManager */,
-			);
-			path = ApiService;
-			sourceTree = "<group>";
-		};
-		BB37DEA81C7E0B8E0016D422 /* ApiServiceManager */ = {
-			isa = PBXGroup;
-			children = (
-				BB37DEA91C7E0B8E0016D422 /* ApiServiceManager.h */,
-				BB37DEAA1C7E0B8E0016D422 /* ApiServiceManager.m */,
-			);
-			path = ApiServiceManager;
-			sourceTree = "<group>";
-		};
-		BB37DEAB1C7E0B8E0016D422 /* DataStore */ = {
-			isa = PBXGroup;
-			children = (
-				BB37DEAC1C7E0B8E0016D422 /* DataStoreManager.h */,
-				BB37DEAD1C7E0B8E0016D422 /* DataStoreManager.m */,
-			);
-			path = DataStore;
-			sourceTree = "<group>";
-		};
-		BB37DEAE1C7E0B8E0016D422 /* LOG */ = {
-			isa = PBXGroup;
-			children = (
-				BB37DEAF1C7E0B8E0016D422 /* LogManager.h */,
-				BB37DEB01C7E0B8E0016D422 /* LogManager.m */,
-			);
-			path = LOG;
-			sourceTree = "<group>";
-		};
-		BB37DEB11C7E0B8E0016D422 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				BB3BE1731C883B6600817A46 /* Delegates */,
-				BB37DEB21C7E0B8E0016D422 /* oxPush2 */,
-				BB37DED51C7E0B8E0016D422 /* OXPushManager.h */,
-				BB37DED61C7E0B8E0016D422 /* OXPushManager.m */,
-				BB37DED71C7E0B8E0016D422 /* Request */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		BB37DEB21C7E0B8E0016D422 /* oxPush2 */ = {
-			isa = PBXGroup;
-			children = (
-				BB37DEB31C7E0B8E0016D422 /* Codec */,
-				BB37DEB61C7E0B8E0016D422 /* ECCKey */,
-				BB37DEB91C7E0B8E0016D422 /* RequestClasses */,
-				BB37DEBE1C7E0B8E0016D422 /* ResponseClasses */,
-				BB37DEC51C7E0B8E0016D422 /* TokenDevice */,
-				BB37DEC81C7E0B8E0016D422 /* TokenManager.h */,
-				BB37DEC91C7E0B8E0016D422 /* TokenManager.m */,
-				BB37DECA1C7E0B8E0016D422 /* U2F */,
-				BB37DECD1C7E0B8E0016D422 /* U2fMetaData.h */,
-				BB37DECE1C7E0B8E0016D422 /* U2fMetaData.m */,
-				BB37DECF1C7E0B8E0016D422 /* User */,
-				BB37DED21C7E0B8E0016D422 /* UserLoginInfo */,
-			);
-			path = oxPush2;
-			sourceTree = "<group>";
-		};
-		BB37DEB31C7E0B8E0016D422 /* Codec */ = {
-			isa = PBXGroup;
-			children = (
-				BB37DEB41C7E0B8E0016D422 /* RawMessageCodec.h */,
-				BB37DEB51C7E0B8E0016D422 /* RawMessageCodec.m */,
-			);
-			path = Codec;
-			sourceTree = "<group>";
-		};
-		BB37DEB61C7E0B8E0016D422 /* ECCKey */ = {
-			isa = PBXGroup;
-			children = (
-				BB37DEB71C7E0B8E0016D422 /* TokenEntity.h */,
-				BB37DEB81C7E0B8E0016D422 /* TokenEntity.m */,
-			);
-			path = ECCKey;
-			sourceTree = "<group>";
-		};
-		BB37DEB91C7E0B8E0016D422 /* RequestClasses */ = {
-			isa = PBXGroup;
-			children = (
-				BB37DEBA1C7E0B8E0016D422 /* AuthenticateRequest.h */,
-				BB37DEBB1C7E0B8E0016D422 /* AuthenticateRequest.m */,
-				BB37DEBC1C7E0B8E0016D422 /* EnrollmentRequest.h */,
-				BB37DEBD1C7E0B8E0016D422 /* EnrollmentRequest.m */,
-			);
-			path = RequestClasses;
-			sourceTree = "<group>";
-		};
-		BB37DEBE1C7E0B8E0016D422 /* ResponseClasses */ = {
-			isa = PBXGroup;
-			children = (
-				BB37DEBF1C7E0B8E0016D422 /* AuthenticateResponse.h */,
-				BB37DEC01C7E0B8E0016D422 /* AuthenticateResponse.m */,
-				BB37DEC11C7E0B8E0016D422 /* EnrollmentResponse.h */,
-				BB37DEC21C7E0B8E0016D422 /* EnrollmentResponse.m */,
-				BB37DEC31C7E0B8E0016D422 /* TokenResponse.h */,
-				BB37DEC41C7E0B8E0016D422 /* TokenResponse.m */,
-			);
-			path = ResponseClasses;
-			sourceTree = "<group>";
-		};
-		BB37DEC51C7E0B8E0016D422 /* TokenDevice */ = {
-			isa = PBXGroup;
-			children = (
-				BB37DEC61C7E0B8E0016D422 /* TokenDevice.h */,
-				BB37DEC71C7E0B8E0016D422 /* TokenDevice.m */,
-			);
-			path = TokenDevice;
-			sourceTree = "<group>";
-		};
-		BB37DECA1C7E0B8E0016D422 /* U2F */ = {
-			isa = PBXGroup;
-			children = (
-				BB37DECB1C7E0B8E0016D422 /* U2FKeyImpl.h */,
-				BB37DECC1C7E0B8E0016D422 /* U2FKeyImpl.m */,
-			);
-			path = U2F;
-			sourceTree = "<group>";
-		};
-		BB37DECF1C7E0B8E0016D422 /* User */ = {
-			isa = PBXGroup;
-			children = (
-				BB37DED01C7E0B8E0016D422 /* UserPresenceVerifier.h */,
-				BB37DED11C7E0B8E0016D422 /* UserPresenceVerifier.m */,
-			);
-			path = User;
-			sourceTree = "<group>";
-		};
-		BB37DED21C7E0B8E0016D422 /* UserLoginInfo */ = {
-			isa = PBXGroup;
-			children = (
-				BB37DED31C7E0B8E0016D422 /* UserLoginInfo.h */,
-				BB37DED41C7E0B8E0016D422 /* UserLoginInfo.m */,
-			);
-			path = UserLoginInfo;
-			sourceTree = "<group>";
-		};
-		BB37DED71C7E0B8E0016D422 /* Request */ = {
-			isa = PBXGroup;
-			children = (
-				BB37DED81C7E0B8E0016D422 /* OxPush2Request.h */,
-				BB37DED91C7E0B8E0016D422 /* OxPush2Request.m */,
-			);
-			path = Request;
 			sourceTree = "<group>";
 		};
 		BB37DEDA1C7E0B8E0016D422 /* Resources */ = {
@@ -662,18 +486,10 @@
 			path = TableViewCells;
 			sourceTree = "<group>";
 		};
-		BB3BE1731C883B6600817A46 /* Delegates */ = {
-			isa = PBXGroup;
-			children = (
-				BB3BE1741C883B8900817A46 /* LecenseAgreementDelegate.h */,
-			);
-			name = Delegates;
-			sourceTree = "<group>";
-		};
 		BB9B65AF1CBCDA8400784AEF /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				BB9B65B01CBCDA9600784AEF /* super-gluu-ssl.crt */,
+				BBEC91FF1E293179000D522F /* www.gluu.org.cer */,
 			);
 			name = Configuration;
 			sourceTree = "<group>";
@@ -685,6 +501,14 @@
 				BBB7C1011C9042AF00833B12 /* NSDate+NVTimeAgo.m */,
 			);
 			name = "NSDate-Time-Ago";
+			sourceTree = "<group>";
+		};
+		BBFCC6D71E5D98CB0015A256 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				BBFCC6D81E5D98CB0015A256 /* LecenseAgreementDelegate.h */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -757,14 +581,17 @@
 				TargetAttributes = {
 					BB37DE501C7E08320016D422 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = XV6595989B;
-						ProvisioningStyle = Manual;
+						DevelopmentTeam = FLRS8NH8Y9;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
 							com.apple.Maps.iOS = {
 								enabled = 0;
+							};
+							com.apple.Push = {
+								enabled = 1;
 							};
 						};
 					};
@@ -808,6 +635,7 @@
 			files = (
 				BBB7C0FC1C89FE3100833B12 /* gluuIcon.png in Resources */,
 				BB37DF2C1C7E0B8E0016D422 /* gluuIcon40x3.png in Resources */,
+				BBEC92001E293179000D522F /* www.gluu.org.cer in Resources */,
 				BB37DF2E1C7E0B8E0016D422 /* gluuIcon57x2.png in Resources */,
 				BB37DF251C7E0B8E0016D422 /* Oatmeal.ttf in Resources */,
 				BB2458FE1CBD59D600035B5B /* gluuIconAlert.png in Resources */,
@@ -821,7 +649,6 @@
 				BBB7C0E71C884E2600833B12 /* approveIcon.png in Resources */,
 				BBB7C0E91C8851B900833B12 /* denyIcon.png in Resources */,
 				BB37DE641C7E08320016D422 /* Assets.xcassets in Resources */,
-				BB9B65B11CBCDA9600784AEF /* super-gluu-ssl.crt in Resources */,
 				BB37DF301C7E0B8E0016D422 /* gluuIcon60x2.png in Resources */,
 				BB37DF321C7E0B8E0016D422 /* infoIcon.png in Resources */,
 				BB37DE5F1C7E08320016D422 /* Main.storyboard in Resources */,
@@ -905,41 +732,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBB7C1021C9042AF00833B12 /* NSDate+NVTimeAgo.m in Sources */,
-				BB37DF221C7E0B8E0016D422 /* OXPushManager.m in Sources */,
 				BB37DF391C7E0B8E0016D422 /* GMEllipticCurveCrypto+hash.m in Sources */,
-				BB37DF1B1C7E0B8E0016D422 /* TokenResponse.m in Sources */,
-				BB37DF121C7E0B8E0016D422 /* ApiServiceManager.m in Sources */,
 				BB37DE5C1C7E08320016D422 /* MainViewController.m in Sources */,
 				BBE787231C99781B00E9E0D7 /* PinCodeViewController.m in Sources */,
 				BB37DF3A1C7E0B8E0016D422 /* GMEllipticCurveCrypto.m in Sources */,
 				BB37DF3F1C7E0B8E0016D422 /* LogsTableCell.m in Sources */,
 				BB37DF371C7E0B8E0016D422 /* NSString+URLEncode.m in Sources */,
-				BB37DF1F1C7E0B8E0016D422 /* U2fMetaData.m in Sources */,
 				BBE7AAC91C9B18C200BE62AE /* SettingsViewController.m in Sources */,
-				BB37DF131C7E0B8E0016D422 /* DataStoreManager.m in Sources */,
 				BB37DF3C1C7E0B8E0016D422 /* LogsViewController.m in Sources */,
-				BB37DF211C7E0B8E0016D422 /* UserLoginInfo.m in Sources */,
 				BB2459021CBE7B6700035B5B /* NSMutableAttributedString+Color.m in Sources */,
-				BB37DF151C7E0B8E0016D422 /* RawMessageCodec.m in Sources */,
 				BB3BE1641C87022C00817A46 /* LicenseAgreementView.m in Sources */,
-				BB37DF1E1C7E0B8E0016D422 /* U2FKeyImpl.m in Sources */,
-				BB37DF1A1C7E0B8E0016D422 /* EnrollmentResponse.m in Sources */,
-				BB37DF161C7E0B8E0016D422 /* TokenEntity.m in Sources */,
 				BB37DE591C7E08320016D422 /* AppDelegate.m in Sources */,
 				BBB7C1051C90723300833B12 /* InformationViewController.m in Sources */,
-				BB37DF171C7E0B8E0016D422 /* AuthenticateRequest.m in Sources */,
-				BB37DF1C1C7E0B8E0016D422 /* TokenDevice.m in Sources */,
-				BB37DF191C7E0B8E0016D422 /* AuthenticateResponse.m in Sources */,
-				BB37DF201C7E0B8E0016D422 /* UserPresenceVerifier.m in Sources */,
 				BB37DF361C7E0B8E0016D422 /* Base64.m in Sources */,
-				BB37DF141C7E0B8E0016D422 /* LogManager.m in Sources */,
-				BB37DF111C7E0B8E0016D422 /* ApiService.m in Sources */,
 				BB37DF3D1C7E0B8E0016D422 /* KeysViewController.m in Sources */,
-				BB37DE621C7E08320016D422 /* super_gluu.xcdatamodeld in Sources */,
 				BB37DE561C7E08320016D422 /* main.m in Sources */,
-				BB37DF1D1C7E0B8E0016D422 /* TokenManager.m in Sources */,
-				BB37DF181C7E0B8E0016D422 /* EnrollmentRequest.m in Sources */,
-				BB37DF231C7E0B8E0016D422 /* OxPush2Request.m in Sources */,
 				BB3BE1721C882D0600817A46 /* ApproveDenyViewController.m in Sources */,
 				BB37DF3E1C7E0B8E0016D422 /* KeyHandleCell.m in Sources */,
 				BB18D05C1CBCFFAE00A73733 /* PAPasscodeViewController.m in Sources */,
@@ -1089,9 +896,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Gluu, Incorporated (FLRS8NH8Y9)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Gluu, Incorporated (FLRS8NH8Y9)";
-				ENABLE_BITCODE = YES;
+				CODE_SIGN_ENTITLEMENTS = "Super Gluu.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1104,8 +913,8 @@
 				MACH_O_TYPE = mh_execute;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ios.gluu;
 				PRODUCT_NAME = "Super Gluu";
-				PROVISIONING_PROFILE = "d139b066-0052-4aee-927b-1049fe084afe";
-				PROVISIONING_PROFILE_SPECIFIER = "2H6XMULB5Z/XC Ad Hoc: *";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1116,9 +925,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Gluu, Incorporated (FLRS8NH8Y9)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Gluu, Incorporated (FLRS8NH8Y9)";
-				ENABLE_BITCODE = YES;
+				CODE_SIGN_ENTITLEMENTS = "Super Gluu.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1131,8 +942,8 @@
 				MACH_O_TYPE = mh_execute;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ios.gluu;
 				PRODUCT_NAME = "Super Gluu";
-				PROVISIONING_PROFILE = "d139b066-0052-4aee-927b-1049fe084afe";
-				PROVISIONING_PROFILE_SPECIFIER = "2H6XMULB5Z/XC Ad Hoc: *";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1225,19 +1036,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		BB37DE601C7E08320016D422 /* super_gluu.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				BB37DE611C7E08320016D422 /* super_gluu.xcdatamodel */,
-			);
-			currentVersion = BB37DE611C7E08320016D422 /* super_gluu.xcdatamodel */;
-			path = super_gluu.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = BB37DE491C7E08320016D422 /* Project object */;
 }

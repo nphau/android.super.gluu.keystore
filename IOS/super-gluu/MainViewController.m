@@ -10,7 +10,9 @@
 #import "QRCodeReader.h"
 #import "QRCodeReaderViewController.h"
 #import "Constants.h"
-#import "OXPushManager.h"
+//#import "OXPushManager.h"
+#import <ox_push2_ios_pod/OXPushManager.h>
+#import <ox_push2_ios_pod/UserLoginInfo.h>
 #import "LogManager.h"
 #import "SCLAlertView.h"
 #import "TokenEntity.h"
@@ -268,8 +270,8 @@
     } else
     if ([[notification name] isEqualToString:NOTIFICATION_ERROR] || [[notification name] isEqualToString:@"ERRROR"]){
         message = [notification object];
-        [[UserLoginInfo sharedInstance] setLogState:UNKNOWN_ERROR];
-        [[UserLoginInfo sharedInstance] setErrorMessage:message];
+//        [UserLoginInfo sharedInstance]->logState = UNKNOWN_ERROR;
+        [UserLoginInfo sharedInstance]->errorMessage = message;
         [[DataStoreManager sharedInstance] saveUserLoginInfo:[UserLoginInfo sharedInstance]];
         [scanButton setEnabled:YES];
     } else 
@@ -400,22 +402,9 @@
 -(void)loadApproveDenyView{
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     ApproveDenyViewController* approveDenyView = [storyboard instantiateViewControllerWithIdentifier:@"ApproveDenyView"];
-    //    [tabBar setModalPresentationStyle:UIModalPresentationFullScreen];
     approveDenyView.delegate = self;
     [self presentViewController:approveDenyView animated:YES completion:nil];
 }
-
-//#pragma mark - Action Methods
-//
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-//    if ([[segue identifier] isEqualToString:@"InfoView"]) {
-//        UINavigationController* dest = [segue destinationViewController];
-//        approveDenyView = (id)[dest topViewController];
-//        if (approveDenyView != nil){
-//            approveDenyView.delegate = self;
-//        }
-//    }
-//}
 
 - (IBAction)scanAction:(id)sender
 {
@@ -433,7 +422,13 @@
     [self updateStatus:message];
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
     OXPushManager* oxPushManager = [[OXPushManager alloc] init];
-    [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:NO];
+    [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:NO callback:^(NSDictionary *result,NSError *error){
+        if (error) {
+            [self showAlertViewWithTitle:[NSString stringWithFormat:@"%@ failed", [self getRequestType]] andMessage:error.description];
+        } else {
+            [self showAlertViewWithTitle:[NSString stringWithFormat:@"%@ success", [self getRequestType]] andMessage:error.description];
+        }
+    }];
 }
 
 -(void)onDecline{
@@ -442,7 +437,20 @@
     [self updateStatus:message];
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
     OXPushManager* oxPushManager = [[OXPushManager alloc] init];
-    [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:YES];
+    [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:YES callback:^(NSDictionary *result,NSError *error){
+        if (error) {
+            [self showAlertViewWithTitle:[NSString stringWithFormat:@"%@ failed", [self getRequestType]] andMessage:error.description];
+        } else {
+            [self showAlertViewWithTitle:[NSString stringWithFormat:@"%@ success", [self getRequestType]] andMessage:error.description];
+        }
+    }];
+}
+
+-(NSString*)getRequestType{
+    NSArray* tokenEntities = [[DataStoreManager sharedInstance] getTokenEntities];
+    BOOL isEnroll = [tokenEntities count] > 0 ? NO : YES;
+    
+    return isEnroll ? @"Enrollement" : @"Authentication";
 }
 
 -(void)showAlertViewWithTitle:(NSString*)title andMessage:(NSString*)message{
@@ -527,23 +535,23 @@
     NSString* method = [parameters objectForKey:@"method"];
     BOOL oneStep = username == nil ? YES : NO;
     
-    [[UserLoginInfo sharedInstance] setApplication:app];
-    [[UserLoginInfo sharedInstance] setCreated:created];
-    [[UserLoginInfo sharedInstance] setIssuer:issuer];
-    [[UserLoginInfo sharedInstance] setUserName:username];
+    [UserLoginInfo sharedInstance]->application = app;
+    [UserLoginInfo sharedInstance]->created = created;
+    [UserLoginInfo sharedInstance]->issuer = issuer;
+    [UserLoginInfo sharedInstance]->userName = username;
     NSArray* tokenEntities = [[DataStoreManager sharedInstance] getTokenEntitiesByID:app];
     BOOL isEnroll = [tokenEntities count] > 0 ? NO : YES;
     if (isEnroll){
         NSString* type = NSLocalizedString(@"Enrol", @"Enrol");
-        [[UserLoginInfo sharedInstance] setAuthenticationType:type];
+        [UserLoginInfo sharedInstance]->authenticationType = type;
     } else {
-        [[UserLoginInfo sharedInstance] setAuthenticationType:method];
+        [UserLoginInfo sharedInstance]->authenticationType = method;
         
     }
     NSString* mode = oneStep ? NSLocalizedString(@"OneStepMode", @"One Step") : NSLocalizedString(@"TwoStepMode", @"Two Step");
-    [[UserLoginInfo sharedInstance] setAuthenticationMode:mode];
-    [[UserLoginInfo sharedInstance] setLocationCity:[parameters objectForKey:@"req_loc"]];
-    [[UserLoginInfo sharedInstance] setLocationIP:[parameters objectForKey:@"req_ip"]];
+    [UserLoginInfo sharedInstance]->authenticationMode = mode;
+    [UserLoginInfo sharedInstance]->locationCity = [parameters objectForKey:@"req_loc"];
+    [UserLoginInfo sharedInstance]->locationIP = [parameters objectForKey:@"req_ip"];
 }
 
 - (void)didReceiveMemoryWarning {

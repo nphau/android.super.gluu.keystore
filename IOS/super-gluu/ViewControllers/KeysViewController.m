@@ -147,8 +147,8 @@
     KeyHandleCell *cell = (KeyHandleCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     TokenEntity* tokenEntity = [keyHandleArray objectAtIndex:indexPath.row];
     [cell setData:tokenEntity];
-    
-    [keyCells setObject:[tokenEntity keyName] forKey:[tokenEntity application]];
+    NSString* keyName = tokenEntity->keyName == nil ? [NSString stringWithFormat:@"key for %@", tokenEntity->application] : tokenEntity->keyName;
+    [keyCells setObject:keyName forKey:tokenEntity->application];
     
     return cell;
 }
@@ -179,7 +179,7 @@
 
 -(void)deleteRow{
     TokenEntity* tokenEntity = [keyHandleArray objectAtIndex:rowToDelete];
-    [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:[tokenEntity application]];
+    [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:tokenEntity->application];
     [self loadKeyHandlesFromDatabase];
 }
 

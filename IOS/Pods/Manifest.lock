@@ -25,6 +25,10 @@ PODS:
   - NHNetworkTime (1.5):
     - CocoaAsyncSocket (<= 7.4.1)
   - NSHash (1.1.0)
+  - ox-push2-ios-pod (0.1.4):
+    - AFNetworking
+    - NHNetworkTime
+    - NSHash
   - QRCodeReaderViewController (4.0.1)
   - SCLAlertView-Objective-C (1.0.2)
 
@@ -33,6 +37,7 @@ DEPENDENCIES:
   - JTMaterialSwitch
   - NHNetworkTime
   - NSHash (~> 1.1.0)
+  - ox-push2-ios-pod
   - QRCodeReaderViewController (~> 4.0.1)
   - SCLAlertView-Objective-C
 
@@ -42,9 +47,10 @@ SPEC CHECKSUMS:
   JTMaterialSwitch: cad8093c3773ff9f6c60005c98d269eb869b5e04
   NHNetworkTime: 945d229cb2c3f43013a17bc717328a5045125f8b
   NSHash: 61d598c6d48957c5557f1eef0aeafd6ef5ec5fb7
+  ox-push2-ios-pod: 37765fb2da6ab816158593a306d966608592f582
   QRCodeReaderViewController: 6538745c8f4ffa9407a26bd7f9489ea01739e7b0
   SCLAlertView-Objective-C: 25f7ea3a3526dde177d8b8056a0b88fe4187651e
 
-PODFILE CHECKSUM: e950722c847bd96582234c8c95e907761b513515
+PODFILE CHECKSUM: a883cc88c3637be2500d2fc5e1eef957c74172b4
 
 COCOAPODS: 1.0.0

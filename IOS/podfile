@@ -14,4 +14,7 @@ pod 'JTMaterialSwitch'
 pod 'NHNetworkTime'
 pod 'SCLAlertView-Objective-C'
 
+# use ox-push2 lib instead of local copy
+pod 'ox-push2-ios-pod'
+
 end

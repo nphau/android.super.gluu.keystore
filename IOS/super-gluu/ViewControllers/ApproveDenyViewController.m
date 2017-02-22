@@ -150,30 +150,30 @@
     if (info == nil){
         info = [UserLoginInfo sharedInstance];
     }
-    if ([info userName] == nil){
+    if (info->userName == nil){
         [userNameView setHidden:YES];
         [self moveUpViews];
     } else {
         [userNameView setHidden:NO];
-        userNameLabel.text = [info userName];
+        userNameLabel.text = info->userName;
     }
-    NSString* server = [info issuer];
+    NSString* server = info->issuer;
     serverUrlLabel.text = server;
     if (server != nil){
         NSURL* serverURL = [NSURL URLWithString:server];
         serverNameLabel.text = [NSString stringWithFormat:@"Gluu Sever %@", [serverURL host]];
     }
-    createdTimeLabel.text = [self getTime:[info created]];
-    createdDateLabel.text = [self getDate:[info created]];
-    if ([info locationIP] != nil){
-        locationLabel.text = [info locationIP];
+    createdTimeLabel.text = [self getTime:info->created];
+    createdDateLabel.text = [self getDate:info->created];
+    if (info->locationIP != nil){
+        locationLabel.text = info->locationIP;
     }
-    if ([info locationCity] != nil){
-        NSString* location = [info locationCity];
+    if (info->locationCity != nil){
+        NSString* location = info->locationCity;
         NSString* locationDecode = [location URLDecode];
         cityNameLabel.text = locationDecode;
     }
-    typeLabel.text = [info authenticationType];
+    typeLabel.text = info->authenticationType;
     
     if (_isLogInfo){
         [backButton setHidden:NO];

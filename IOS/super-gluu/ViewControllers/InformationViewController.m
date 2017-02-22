@@ -32,14 +32,14 @@
 
 -(void)setupInformation{
     if (_token != nil){
-        NSURL* url = [NSURL URLWithString:_token.application];
+        NSURL* url = [NSURL URLWithString:_token->application];
         applicationValueLabel.text = url.host;
-        issuerValueLabel.text = _token.issuer;
-        userNameValueLabel.text = _token.userName;
-        createdValueLabel.text = [self convertPairingTime:_token.pairingTime];
-        authenticationValueModeLabel.text = _token.authenticationMode;
-        authenticationValueTypeLabel.text = _token.authenticationType;
-        NSString* keyHandleString = [NSString stringWithFormat:@"%@...%@", [_token.keyHandle substringToIndex:6], [_token.keyHandle substringFromIndex:_token.keyHandle.length - 6]];
+        issuerValueLabel.text = _token->issuer;
+        userNameValueLabel.text = _token->userName;
+        createdValueLabel.text = [self convertPairingTime:_token->pairingTime];
+        authenticationValueModeLabel.text = _token->authenticationMode;
+        authenticationValueTypeLabel.text = _token->authenticationType;
+        NSString* keyHandleString = [NSString stringWithFormat:@"%@...%@", [_token->keyHandle substringToIndex:6], [_token->keyHandle substringFromIndex:_token->keyHandle.length - 6]];
         keyHandleValueLabel.text = keyHandleString;
     }
 }
@@ -87,7 +87,7 @@
 }
 
 -(void)deleteKey{
-    [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:_token.application];
+    [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:_token->application];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
