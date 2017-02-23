@@ -13,14 +13,14 @@
 @interface SettingsViewController : UIViewController <PAPasscodeViewControllerDelegate, UIScrollViewDelegate>{
 
     IBOutlet UIScrollView* scrollView;
-    IBOutlet UISwitch* pinCodeType;
     IBOutlet UISwitch* pinCodeTurnOnOff;
     IBOutlet UISwitch* trustOnOff;
+    IBOutlet UISwitch* touchIDSwitch;
     IBOutlet UILabel* trustTextLabel;
     IBOutlet UIView* pinCodeTurnOnOffView;
     IBOutlet UIView* trustOnOffView;
-    IBOutlet UIView* pinCodeTypeView;
     IBOutlet UIView* pinCodeButtonView;
+    IBOutlet UIView* touchIDView;
     IBOutlet UIButton* setChangePinCode;
     IBOutlet UIView* attemptsView;
     IBOutlet UILabel* attemptsLabel;
@@ -29,12 +29,13 @@
     
     JTMaterialSwitch *jswTurnOnOff;
     JTMaterialSwitch *trustAllOnOff;
+    JTMaterialSwitch *touchIDOnOff;
     
     NSString* code;
     
     BOOL isPin;
     BOOL isSSL;
-    BOOL isSimple;
+    BOOL isTouchID;
     BOOL isLandScape;
     
     CGPoint sslViewCenter;

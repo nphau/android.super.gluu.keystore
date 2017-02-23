@@ -10,6 +10,8 @@
 #import "Constants.h"
 #import "PinCodeViewController.h"
 #import "NSMutableAttributedString+Color.h"
+#import <LocalAuthentication/LocalAuthentication.h>
+#import "SCLAlertView.h"
 
 #define LICENSE_AGREEMENT @"LicenseAgreement"
 #define MAIN_VIEW @"MainTabView"
@@ -24,14 +26,12 @@
     [super viewDidLoad];
     [self initWiget];
     [self initLocalization];
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
     
-    //Location services
-//    locationManager = [[CLLocationManager alloc] init];
-//    locationManager.delegate = self;
-//    [locationManager startUpdatingLocation];
-//    [locationManager requestWhenInUseAuthorization];
-    
-    [self performSelector:@selector(checkLicenseAgreement) withObject:nil afterDelay:0.01];
+    [self performSelector:@selector(checkLicenseAgreement) withObject:nil afterDelay:0.1];
 }
 
 -(void)initWiget{
@@ -77,19 +77,49 @@
 }
 
 -(void)checkPinProtection{
-    BOOL isFirstLoad = [[NSUserDefaults standardUserDefaults] boolForKey:IS_FIRST_LOAD];
-    if (!isFirstLoad){
-        [self loadPinView];
-        //[self performSegueWithIdentifier:PIN_VIEW sender:self];
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:IS_FIRST_LOAD];
-    } else {
-        BOOL isPin = [[NSUserDefaults standardUserDefaults] boolForKey:PIN_PROTECTION_ID];
-        if (isPin){
-            [self loadPinView];
-//            [self performSegueWithIdentifier:PIN_VIEW sender:self];
+    BOOL isTouchID = [[NSUserDefaults standardUserDefaults] boolForKey:TOUCH_ID_ENABLED];
+    if (isTouchID){
+        LAContext *myContext = [[LAContext alloc] init];
+        NSError *authError = nil;
+        NSString *myLocalizedReasonString = @"Please authenticate with your fingerprint to continue.";
+        
+        if ([myContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&authError]) {
+            [myContext evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
+                      localizedReason:myLocalizedReasonString
+                                reply:^(BOOL success, NSError *error) {
+                                    if (success) {
+                                        // User authenticated successfully, take appropriate action
+                                        NSLog(@"User authenticated successfully, take appropriate action");
+                                        [self loadMainView];
+                                    } else {
+                                        // User did not authenticate successfully, look at error and take appropriate action
+                                    }
+                                }];
         } else {
-            [self loadMainView];
-//            [self performSegueWithIdentifier:MAIN_VIEW sender:self];
+            // Could not evaluate policy; look at authError and present an appropriate message to user
+            SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+            //[[UIApplication sharedApplication] openURL:[NSURL
+            [alert addButton:@"Ok" actionBlock:^(void) {
+               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+            }];
+            NSString* message  = [NSString stringWithFormat:@"%@ Please add fingerprint in TouchID&Passcode settings", [authError.userInfo valueForKey:@"NSLocalizedDescription"]];
+            [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:message closeButtonTitle:nil duration:0.0f];
+        }
+    } else {
+        BOOL isFirstLoad = [[NSUserDefaults standardUserDefaults] boolForKey:IS_FIRST_LOAD];
+        if (!isFirstLoad){
+            [self loadPinView];
+            //[self performSegueWithIdentifier:PIN_VIEW sender:self];
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:IS_FIRST_LOAD];
+        } else {
+            BOOL isPin = [[NSUserDefaults standardUserDefaults] boolForKey:PIN_PROTECTION_ID];
+            if (isPin){
+                [self loadPinView];
+                //            [self performSegueWithIdentifier:PIN_VIEW sender:self];
+            } else {
+                [self loadMainView];
+                //            [self performSegueWithIdentifier:MAIN_VIEW sender:self];
+            }
         }
     }
 }

@@ -11,8 +11,11 @@
 #import "PinCodeViewController.h"
 #import "NSDate+NetworkClock.h"
 #import "SCLAlertView.h"
+#import <LocalAuthentication/LocalAuthentication.h>
 
-@interface SettingsViewController ()
+@interface SettingsViewController (){
+    JTMaterialSwitch *jswStatus;
+}
 
 @end
 
@@ -22,15 +25,13 @@
     [super viewDidLoad];
     isPin = [[NSUserDefaults standardUserDefaults] boolForKey:PIN_PROTECTION_ID];
     isSSL = [[NSUserDefaults standardUserDefaults] boolForKey:SSL_ENABLED];
-//    [pinCodeTypeView setHidden:!isPin];
+    isTouchID = [[NSUserDefaults standardUserDefaults] boolForKey:TOUCH_ID_ENABLED];
     [setChangePinCode setHidden:!isPin];
-    isSimple = [[NSUserDefaults standardUserDefaults] boolForKey:PIN_SIMPLE_ID];
     code = [[NSUserDefaults standardUserDefaults] stringForKey:PIN_CODE];
     if (code == nil || [code isEqualToString:@""]){
         [setChangePinCode setTitle:NSLocalizedString(@"SetPinCode", @"SetPinCode") forState:UIControlStateNormal];
     } else {
         [setChangePinCode setTitle:NSLocalizedString(@"ChangePinCode", @"ChangePinCode") forState:UIControlStateNormal];
-//        [pinCodeTypeView setHidden:YES];
     }
     [self initWidget];
 //    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
@@ -51,13 +52,20 @@
 
 -(void)initWidget{
     //Init custom uiswitch
-    JTMaterialSwitch *jswStatus = [[JTMaterialSwitch alloc] init];
-    jswStatus.center = [pinCodeType center];
-    [jswStatus setOn:isSimple animated:YES];
-    [jswStatus addTarget:self action:@selector(onPinCodeTypeSelected:) forControlEvents:UIControlEventValueChanged];
-    pinCodeType.hidden = YES;
-    [self initSwitchProperty:jswStatus];
-//    [pinCodeTypeView addSubview:jswStatus];
+    jswStatus = [[JTMaterialSwitch alloc] init];
+    jswStatus.center = [touchIDSwitch center];
+    [jswStatus setOn:isTouchID animated:YES];
+    [jswStatus addTarget:self action:@selector(onTouchIDSelected:) forControlEvents:UIControlEventValueChanged];
+    touchIDSwitch.hidden = YES;
+    if (!isTouchID){
+        jswStatus.thumbOnTintColor = [UIColor grayColor];
+        jswStatus.thumbOffTintColor = [UIColor grayColor];
+        jswStatus.trackOnTintColor = [UIColor grayColor];
+        jswStatus.trackOffTintColor = [UIColor grayColor];
+    } else {
+        [self initSwitchTurnOnOff:jswStatus];
+    }
+    [touchIDView addSubview:jswStatus];
     
     jswTurnOnOff = [[JTMaterialSwitch alloc] init];
     jswTurnOnOff.center = [pinCodeTurnOnOff center];
@@ -111,13 +119,6 @@
     }
 }
 
-- (void) initSwitchProperty:(JTMaterialSwitch*) jtSwitch {
-    jtSwitch.thumbOnTintColor = CUSTOM_GREEN_COLOR;
-    jtSwitch.thumbOffTintColor = CUSTOM_GREEN_COLOR;
-    jtSwitch.trackOnTintColor = [UIColor greenColor];
-    jtSwitch.trackOffTintColor = [UIColor greenColor];
-}
-
 - (void) initSwitchTurnOnOff:(JTMaterialSwitch*) jtSwitch {
     jtSwitch.thumbOnTintColor = CUSTOM_GREEN_COLOR;
     jtSwitch.thumbOffTintColor = [UIColor grayColor];
@@ -128,10 +129,10 @@
 -(void)onPinCodeTurnOnOf:(id)sender{
     [self initSwitchTurnOnOff:jswTurnOnOff];
     JTMaterialSwitch *sw = sender;
-    trustOnOffView.center = sw.isOn ? sslViewCenter : CGPointMake(trustOnOffView.center.x, pinCodeButtonView.center.y+80);
+    touchIDView.center = sw.isOn ? CGPointMake(attemptsView.center.x, attemptsView.center.y+ attemptsView.frame.size.height/2 + 50) : CGPointMake(trustOnOffView.center.x, pinCodeButtonView.center.y+10);
+    trustOnOffView.center = sw.isOn ? CGPointMake(touchIDView.center.x, touchIDView.center.y+ attemptsView.frame.size.height/2 + 20) : CGPointMake(trustOnOffView.center.x, pinCodeButtonView.center.y+70);
     [setChangePinCode setHidden:!sw.isOn];
     [attemptsView setHidden:!sw.isOn];
-    [pinCodeTypeView setHidden:!sw.isOn];
     code = [[NSUserDefaults standardUserDefaults] stringForKey:PIN_CODE];
     if (code == nil || [code isEqualToString:@""]){
         [setChangePinCode setTitle:NSLocalizedString(@"SetPinCode", @"SetPinCode") forState:UIControlStateNormal];
@@ -152,6 +153,38 @@
     [self initSwitchTurnOnOff:sw];
     trustTextLabel.hidden = !sw.isOn;
     [[NSUserDefaults standardUserDefaults] setBool:sw.isOn forKey:SSL_ENABLED];
+}
+
+-(void)onTouchIDSelected:(id)sender{
+    JTMaterialSwitch *sw = sender;
+    [self initSwitchTurnOnOff:sw];
+    if (sw.isOn){
+        LAContext *myContext = [[LAContext alloc] init];
+        NSError *authError = nil;
+        NSString *myLocalizedReasonString = @"Please authenticate with your fingerprint to continue.";
+        
+        if ([myContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&authError]) {
+            [myContext evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
+                      localizedReason:myLocalizedReasonString
+                                reply:^(BOOL success, NSError *error) {
+                                    if (success) {
+                                        // User authenticated successfully, take appropriate action
+                                        NSLog(@"User authenticated successfully, take appropriate action");
+                                        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:TOUCH_ID_ENABLED];
+                                    } else {
+                                        // User did not authenticate successfully, look at error and take appropriate action
+                                    }
+                                }];
+        } else {
+            // Could not evaluate policy; look at authError and present an appropriate message to user
+            SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+            [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:[authError.userInfo valueForKey:@"NSLocalizedDescription"] closeButtonTitle:@"OK" duration:0.0f];
+            [jswStatus setIsOn: NO];
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:TOUCH_ID_ENABLED];
+        }
+    } else {
+        [[NSUserDefaults standardUserDefaults] setBool:sw.isOn forKey:TOUCH_ID_ENABLED];
+    }
 }
 
 - (IBAction)changePasscode:(id)sender {
@@ -196,7 +229,6 @@
     }
     passcodeViewController.delegate = self;
     passcodeViewController.passcode = code;
-    passcodeViewController.simple = !isSimple;
     [self presentViewController:[[UINavigationController alloc] initWithRootViewController:passcodeViewController] animated:YES completion:nil];
 }
 
@@ -279,7 +311,6 @@
 - (void)orientationChanged:(NSNotification *)notification{
     [pinCodeTurnOnOffView setCenter:CGPointMake([UIScreen mainScreen].bounds.size.width/2, pinCodeTurnOnOffView.center.y)];
     [pinCodeButtonView setCenter:CGPointMake([UIScreen mainScreen].bounds.size.width/2-20, pinCodeButtonView.center.y)];
-//    [pinCodeTypeView setCenter:CGPointMake([UIScreen mainScreen].bounds.size.width/2-20, pinCodeTypeView.center.y)];
     [attemptsView setCenter:CGPointMake([UIScreen mainScreen].bounds.size.width/2-20, attemptsView.center.y)];
     [self adjustViewsForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
 }

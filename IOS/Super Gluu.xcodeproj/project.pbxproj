@@ -44,6 +44,7 @@
 		BB3A22691CB39B1700EBD799 /* type_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BB3A22681CB39B1700EBD799 /* type_icon.png */; };
 		BB3BE1641C87022C00817A46 /* LicenseAgreementView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB3BE1631C87022C00817A46 /* LicenseAgreementView.m */; };
 		BB3BE1721C882D0600817A46 /* ApproveDenyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB3BE1711C882D0600817A46 /* ApproveDenyViewController.m */; };
+		BB50AE1C1E5F0978003AEC78 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB50AE1B1E5F0978003AEC78 /* LocalAuthentication.framework */; };
 		BB78BFB71C99C6C600558042 /* gluu.png in Resources */ = {isa = PBXBuildFile; fileRef = BB78BFB61C99C6C600558042 /* gluu.png */; };
 		BB8703061CA3E5D400EEF9A6 /* gluuIconRed.png in Resources */ = {isa = PBXBuildFile; fileRef = BB8703051CA3E5D400EEF9A6 /* gluuIconRed.png */; };
 		BB9B65A11CB7C5A300784AEF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65A01CB7C5A300784AEF /* QuartzCore.framework */; };
@@ -156,6 +157,7 @@
 		BB3BE1671C88165800817A46 /* Super-gluu_PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Super-gluu_PrefixHeader.pch"; sourceTree = "<group>"; };
 		BB3BE1701C882D0600817A46 /* ApproveDenyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApproveDenyViewController.h; sourceTree = "<group>"; };
 		BB3BE1711C882D0600817A46 /* ApproveDenyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApproveDenyViewController.m; sourceTree = "<group>"; };
+		BB50AE1B1E5F0978003AEC78 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		BB78BFB61C99C6C600558042 /* gluu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gluu.png; sourceTree = "<group>"; };
 		BB8703051CA3E5D400EEF9A6 /* gluuIconRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gluuIconRed.png; sourceTree = "<group>"; };
 		BB9B659C1CB7C57800784AEF /* UbertestersSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UbertestersSDK.framework; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB50AE1C1E5F0978003AEC78 /* LocalAuthentication.framework in Frameworks */,
 				BBDE9B931DA788C1003B6673 /* CoreVideo.framework in Frameworks */,
 				BBDE9B911DA788B8003B6673 /* libz.tbd in Frameworks */,
 				BBDE9B8F1DA788B0003B6673 /* libsqlite3.tbd in Frameworks */,
@@ -237,6 +240,7 @@
 		3F430CE55ADBDA89388FF131 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BB50AE1B1E5F0978003AEC78 /* LocalAuthentication.framework */,
 				BBDE9B921DA788C1003B6673 /* CoreVideo.framework */,
 				BBDE9B901DA788B8003B6673 /* libz.tbd */,
 				BBDE9B8E1DA788B0003B6673 /* libsqlite3.tbd */,
