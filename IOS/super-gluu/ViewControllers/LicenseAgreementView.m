@@ -93,6 +93,8 @@
                                         [self loadMainView];
                                     } else {
                                         // User did not authenticate successfully, look at error and take appropriate action
+                                        SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+                                        [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:@"Wrong fingerprint, if biometric locked go to TouchID&Passcode settings and reactive it" closeButtonTitle:@"OK" duration:0.0f];
                                     }
                                 }];
         } else {

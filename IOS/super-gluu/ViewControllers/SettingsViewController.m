@@ -173,13 +173,14 @@
                                         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:TOUCH_ID_ENABLED];
                                     } else {
                                         // User did not authenticate successfully, look at error and take appropriate action
+                                        [jswStatus setOn:NO animated:YES];
+                                        [self showWrongTouchID];
                                     }
                                 }];
         } else {
             // Could not evaluate policy; look at authError and present an appropriate message to user
-            SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-            [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:[authError.userInfo valueForKey:@"NSLocalizedDescription"] closeButtonTitle:@"OK" duration:0.0f];
-            [jswStatus setIsOn: NO];
+            [self touchIDErrorMessage:authError];
+            [jswStatus setOn:NO animated:YES];
             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:TOUCH_ID_ENABLED];
         }
     } else {
@@ -301,6 +302,19 @@
     }];
     [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:NSLocalizedString(@"LastAttempts", @"LastAttempts") closeButtonTitle:nil duration:0.0f];
     [passcodeViewController hideKeyboard];
+}
+
+-(void)showWrongTouchID{
+    SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:@"Wrong fingerprint, if biometric locked go to TouchID&Passcode settings and reactive it" closeButtonTitle:@"OK" duration:0.0f];
+}
+
+-(void)touchIDErrorMessage:(NSError*)authError{
+    SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert addButton:@"Ok" actionBlock:^(void) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+    }];
+    [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:[authError.userInfo valueForKey:@"NSLocalizedDescription"] closeButtonTitle:nil duration:0.0f];
 }
 
 - (void)didReceiveMemoryWarning {
