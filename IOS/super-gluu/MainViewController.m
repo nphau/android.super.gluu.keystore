@@ -11,8 +11,8 @@
 #import "QRCodeReaderViewController.h"
 #import "Constants.h"
 //#import "OXPushManager.h"
-#import <ox_push2_ios_pod/OXPushManager.h>
-#import <ox_push2_ios_pod/UserLoginInfo.h>
+#import "OXPushManager.h"
+#import "UserLoginInfo.h"
 #import "LogManager.h"
 #import "SCLAlertView.h"
 #import "TokenEntity.h"
@@ -423,6 +423,7 @@
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
     OXPushManager* oxPushManager = [[OXPushManager alloc] init];
     [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:NO callback:^(NSDictionary *result,NSError *error){
+        [scanButton setEnabled:YES];
         if (error) {
             [self showAlertViewWithTitle:[NSString stringWithFormat:@"%@ failed", [self getRequestType]] andMessage:error.description];
         } else {
@@ -438,6 +439,7 @@
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
     OXPushManager* oxPushManager = [[OXPushManager alloc] init];
     [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:YES callback:^(NSDictionary *result,NSError *error){
+        [scanButton setEnabled:YES];
         if (error) {
             [self showAlertViewWithTitle:[NSString stringWithFormat:@"%@ failed", [self getRequestType]] andMessage:error.description];
         } else {

@@ -38,10 +38,6 @@
     logsArray = [[NSMutableArray alloc] initWithArray:[[DataStoreManager sharedInstance] getUserLoginInfo]];
     [logsArray count] == 0 ? [logsTableView setHidden:YES] : [logsTableView setHidden:NO];
     [logsArray count] == 0 ? [cleanLogs setHidden:YES] : [cleanLogs setHidden:NO];
-    if ([logsArray count] > 1){
-        [logsTableView reloadData];
-        [logsTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:logsArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-    }
     if ([logsArray count] > 0){
         [cleanLogs setHidden:NO];
         [cleanLogs setEnabled:YES];
