@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D5808A5797EB3C626B5EAA66F84C2F41"
-               BuildableName = "ox_push2_ios_pod.framework"
-               BlueprintName = "ox-push2-ios-pod"
+               BlueprintIdentifier = "09A39DB9505E9B0CBCBD7AA670434C45"
+               BuildableName = "ox_push3.framework"
+               BlueprintName = "ox-push3"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D5808A5797EB3C626B5EAA66F84C2F41"
-            BuildableName = "ox_push2_ios_pod.framework"
-            BlueprintName = "ox-push2-ios-pod"
+            BlueprintIdentifier = "09A39DB9505E9B0CBCBD7AA670434C45"
+            BuildableName = "ox_push3.framework"
+            BlueprintName = "ox-push3"
             ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

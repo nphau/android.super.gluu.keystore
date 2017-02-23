@@ -424,11 +424,6 @@
     OXPushManager* oxPushManager = [[OXPushManager alloc] init];
     [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:NO callback:^(NSDictionary *result,NSError *error){
         [scanButton setEnabled:YES];
-        if (error) {
-            [self showAlertViewWithTitle:[NSString stringWithFormat:@"%@ failed", [self getRequestType]] andMessage:error.description];
-        } else {
-            [self showAlertViewWithTitle:[NSString stringWithFormat:@"%@ success", [self getRequestType]] andMessage:error.description];
-        }
     }];
 }
 
@@ -440,19 +435,7 @@
     OXPushManager* oxPushManager = [[OXPushManager alloc] init];
     [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:YES callback:^(NSDictionary *result,NSError *error){
         [scanButton setEnabled:YES];
-        if (error) {
-            [self showAlertViewWithTitle:[NSString stringWithFormat:@"%@ failed", [self getRequestType]] andMessage:error.description];
-        } else {
-            [self showAlertViewWithTitle:[NSString stringWithFormat:@"%@ success", [self getRequestType]] andMessage:error.description];
-        }
     }];
-}
-
--(NSString*)getRequestType{
-    NSArray* tokenEntities = [[DataStoreManager sharedInstance] getTokenEntities];
-    BOOL isEnroll = [tokenEntities count] > 0 ? NO : YES;
-    
-    return isEnroll ? @"Enrollement" : @"Authentication";
 }
 
 -(void)showAlertViewWithTitle:(NSString*)title andMessage:(NSString*)message{
