@@ -32,10 +32,6 @@
 		BB37DF311C7E0B8E0016D422 /* gluuIcon60x3.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEEF1C7E0B8E0016D422 /* gluuIcon60x3.png */; };
 		BB37DF321C7E0B8E0016D422 /* infoIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEF01C7E0B8E0016D422 /* infoIcon.png */; };
 		BB37DF351C7E0B8E0016D422 /* gl.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEF41C7E0B8E0016D422 /* gl.png */; };
-		BB37DF361C7E0B8E0016D422 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DEF91C7E0B8E0016D422 /* Base64.m */; };
-		BB37DF371C7E0B8E0016D422 /* NSString+URLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DEFB1C7E0B8E0016D422 /* NSString+URLEncode.m */; };
-		BB37DF391C7E0B8E0016D422 /* GMEllipticCurveCrypto+hash.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DF011C7E0B8E0016D422 /* GMEllipticCurveCrypto+hash.m */; };
-		BB37DF3A1C7E0B8E0016D422 /* GMEllipticCurveCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DF031C7E0B8E0016D422 /* GMEllipticCurveCrypto.m */; };
 		BB37DF3C1C7E0B8E0016D422 /* LogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DF091C7E0B8E0016D422 /* LogsViewController.m */; };
 		BB37DF3D1C7E0B8E0016D422 /* KeysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DF0B1C7E0B8E0016D422 /* KeysViewController.m */; };
 		BB37DF3E1C7E0B8E0016D422 /* KeyHandleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DF0E1C7E0B8E0016D422 /* KeyHandleCell.m */; };
@@ -133,14 +129,6 @@
 		BB37DEF01C7E0B8E0016D422 /* infoIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = infoIcon.png; sourceTree = "<group>"; };
 		BB37DEF41C7E0B8E0016D422 /* gl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gl.png; sourceTree = "<group>"; };
 		BB37DEF51C7E0B8E0016D422 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
-		BB37DEF81C7E0B8E0016D422 /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
-		BB37DEF91C7E0B8E0016D422 /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
-		BB37DEFA1C7E0B8E0016D422 /* NSString+URLEncode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncode.h"; sourceTree = "<group>"; };
-		BB37DEFB1C7E0B8E0016D422 /* NSString+URLEncode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncode.m"; sourceTree = "<group>"; };
-		BB37DF001C7E0B8E0016D422 /* GMEllipticCurveCrypto+hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GMEllipticCurveCrypto+hash.h"; sourceTree = "<group>"; };
-		BB37DF011C7E0B8E0016D422 /* GMEllipticCurveCrypto+hash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GMEllipticCurveCrypto+hash.m"; sourceTree = "<group>"; };
-		BB37DF021C7E0B8E0016D422 /* GMEllipticCurveCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMEllipticCurveCrypto.h; sourceTree = "<group>"; };
-		BB37DF031C7E0B8E0016D422 /* GMEllipticCurveCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMEllipticCurveCrypto.m; sourceTree = "<group>"; };
 		BB37DF081C7E0B8E0016D422 /* LogsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogsViewController.h; sourceTree = "<group>"; };
 		BB37DF091C7E0B8E0016D422 /* LogsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogsViewController.m; sourceTree = "<group>"; };
 		BB37DF0A1C7E0B8E0016D422 /* KeysViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeysViewController.h; sourceTree = "<group>"; };
@@ -429,32 +417,8 @@
 				BB2458FF1CBE7B4F00035B5B /* NSMutableAttributedString+Color */,
 				BB18D0591CBCFF9600A73733 /* PAPasscode */,
 				BBB7C0FF1C9042A000833B12 /* NSDate-Time-Ago */,
-				BB37DEF71C7E0B8E0016D422 /* Base64 */,
-				BB37DEFF1C7E0B8E0016D422 /* ECC */,
 			);
 			path = Vendors;
-			sourceTree = "<group>";
-		};
-		BB37DEF71C7E0B8E0016D422 /* Base64 */ = {
-			isa = PBXGroup;
-			children = (
-				BB37DEF81C7E0B8E0016D422 /* Base64.h */,
-				BB37DEF91C7E0B8E0016D422 /* Base64.m */,
-				BB37DEFA1C7E0B8E0016D422 /* NSString+URLEncode.h */,
-				BB37DEFB1C7E0B8E0016D422 /* NSString+URLEncode.m */,
-			);
-			path = Base64;
-			sourceTree = "<group>";
-		};
-		BB37DEFF1C7E0B8E0016D422 /* ECC */ = {
-			isa = PBXGroup;
-			children = (
-				BB37DF001C7E0B8E0016D422 /* GMEllipticCurveCrypto+hash.h */,
-				BB37DF011C7E0B8E0016D422 /* GMEllipticCurveCrypto+hash.m */,
-				BB37DF021C7E0B8E0016D422 /* GMEllipticCurveCrypto.h */,
-				BB37DF031C7E0B8E0016D422 /* GMEllipticCurveCrypto.m */,
-			);
-			path = ECC;
 			sourceTree = "<group>";
 		};
 		BB37DF071C7E0B8E0016D422 /* ViewControllers */ = {
@@ -736,19 +700,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBB7C1021C9042AF00833B12 /* NSDate+NVTimeAgo.m in Sources */,
-				BB37DF391C7E0B8E0016D422 /* GMEllipticCurveCrypto+hash.m in Sources */,
 				BB37DE5C1C7E08320016D422 /* MainViewController.m in Sources */,
 				BBE787231C99781B00E9E0D7 /* PinCodeViewController.m in Sources */,
-				BB37DF3A1C7E0B8E0016D422 /* GMEllipticCurveCrypto.m in Sources */,
 				BB37DF3F1C7E0B8E0016D422 /* LogsTableCell.m in Sources */,
-				BB37DF371C7E0B8E0016D422 /* NSString+URLEncode.m in Sources */,
 				BBE7AAC91C9B18C200BE62AE /* SettingsViewController.m in Sources */,
 				BB37DF3C1C7E0B8E0016D422 /* LogsViewController.m in Sources */,
 				BB2459021CBE7B6700035B5B /* NSMutableAttributedString+Color.m in Sources */,
 				BB3BE1641C87022C00817A46 /* LicenseAgreementView.m in Sources */,
 				BB37DE591C7E08320016D422 /* AppDelegate.m in Sources */,
 				BBB7C1051C90723300833B12 /* InformationViewController.m in Sources */,
-				BB37DF361C7E0B8E0016D422 /* Base64.m in Sources */,
 				BB37DF3D1C7E0B8E0016D422 /* KeysViewController.m in Sources */,
 				BB37DE561C7E08320016D422 /* main.m in Sources */,
 				BB3BE1721C882D0600817A46 /* ApproveDenyViewController.m in Sources */,

@@ -19,19 +19,29 @@
 
 #define IS_FIRST_LOAD @"firstLoad"
 
-@implementation LicenseAgreementView
+@implementation LicenseAgreementView{
+    UIAlertController * alert;
+    
+    BOOL isSucess;
+}
 
 -(void)viewDidLoad{
     
     [super viewDidLoad];
     [self initWiget];
     [self initLocalization];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkLicenseAgreement) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     
-    [self performSelector:@selector(checkLicenseAgreement) withObject:nil afterDelay:0.1];
+//    [self performSelector:@selector(checkLicenseAgreement) withObject:nil afterDelay:0.1];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)initWiget{
@@ -78,11 +88,11 @@
 
 -(void)checkPinProtection{
     BOOL isTouchID = [[NSUserDefaults standardUserDefaults] boolForKey:TOUCH_ID_ENABLED];
-    if (isTouchID){
+    if (isTouchID && !isSucess){
         LAContext *myContext = [[LAContext alloc] init];
         NSError *authError = nil;
         NSString *myLocalizedReasonString = @"Please authenticate with your fingerprint to continue.";
-        
+        [alert dismissViewControllerAnimated:YES completion:nil];
         if ([myContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&authError]) {
             [myContext evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
                       localizedReason:myLocalizedReasonString
@@ -90,22 +100,21 @@
                                     if (success) {
                                         // User authenticated successfully, take appropriate action
                                         NSLog(@"User authenticated successfully, take appropriate action");
-                                        [self loadMainView];
+                                        [alert dismissViewControllerAnimated:YES completion:nil];
+                                        isSucess = YES;
+                                        dispatch_async(dispatch_get_main_queue(), ^{
+                                            [self loadMainView];
+                                        });
                                     } else {
                                         // User did not authenticate successfully, look at error and take appropriate action
-                                        SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-                                        [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:@"Wrong fingerprint, if biometric locked go to TouchID&Passcode settings and reactive it" closeButtonTitle:@"OK" duration:0.0f];
+                                        [self showTouchIDErrorMessage];
+                                        isSucess = NO;
                                     }
                                 }];
         } else {
             // Could not evaluate policy; look at authError and present an appropriate message to user
-            SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-            //[[UIApplication sharedApplication] openURL:[NSURL
-            [alert addButton:@"Ok" actionBlock:^(void) {
-               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-            }];
-            NSString* message  = [NSString stringWithFormat:@"%@ Please add fingerprint in TouchID&Passcode settings", [authError.userInfo valueForKey:@"NSLocalizedDescription"]];
-            [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:message closeButtonTitle:nil duration:0.0f];
+            [self showTiuchIDResultError:authError];
+            isSucess = NO;
         }
     } else {
         BOOL isFirstLoad = [[NSUserDefaults standardUserDefaults] boolForKey:IS_FIRST_LOAD];
@@ -126,17 +135,53 @@
     }
 }
 
+-(void)showTouchIDErrorMessage{
+    alert = [UIAlertController
+                                 alertControllerWithTitle:@"TouchID Failed"
+                                 message:@"Wrong fingerprint, if biometric locked go to TouchID&Passcode settings and reactive it"
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* okButton = [UIAlertAction
+                               actionWithTitle:@"Ok"
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action) {
+                                   //Handle no, thanks button
+                                   [alert dismissViewControllerAnimated:YES completion:nil];
+                                   [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                               }];
+    
+    [alert addAction:okButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+-(void)showTiuchIDResultError:(NSError*) authError{
+    NSString* message  = [NSString stringWithFormat:@"%@ Please add fingerprint in TouchID&Passcode settings", [authError.userInfo valueForKey:@"NSLocalizedDescription"]];
+    alert = [UIAlertController
+                                 alertControllerWithTitle:@"TouchID Failed"
+                                 message:message
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* okButton = [UIAlertAction
+                               actionWithTitle:@"Ok, thanks"
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action) {
+                                   //Handle no, thanks button
+                                   [alert dismissViewControllerAnimated:YES completion:nil];
+                                   [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                               }];
+    
+    [alert addAction:okButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 -(void)loadPinView{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    PinCodeViewController* pinView = [storyboard instantiateViewControllerWithIdentifier:@"PinCodeViewID"];
-    [self presentViewController:pinView animated:YES completion:nil];
+    [self performSegueWithIdentifier:@"pinViewSegue" sender:self];
 }
 
 -(void)loadMainView{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UITabBarController* tabBar = [storyboard instantiateViewControllerWithIdentifier:@"MainTabNavigationID"];
-//    [tabBar setModalPresentationStyle:UIModalPresentationFullScreen];
-    [self presentViewController:tabBar animated:YES completion:nil];
+    [self performSegueWithIdentifier:@"mainViewSegue" sender:self];
 }
 
 @end

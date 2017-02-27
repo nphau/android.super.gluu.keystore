@@ -212,10 +212,7 @@
 // -----------------------------------------------------------------------------------------
 
 -(void)loadMainView{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UITabBarController* tabBar = [storyboard instantiateViewControllerWithIdentifier:@"MainTabNavigationID"];
-    //    [tabBar setModalPresentationStyle:UIModalPresentationFullScreen];
-    [self presentViewController:tabBar animated:YES completion:nil];
+    [self performSegueWithIdentifier:@"mainViewSegue" sender:self];
 }
 
 -(void)startTimer{

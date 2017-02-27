@@ -289,9 +289,7 @@
 
 -(void)showPinView{
     [self dismissViewControllerAnimated:YES completion:nil];
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    PinCodeViewController* pinView = [storyboard instantiateViewControllerWithIdentifier:@"PinCodeViewID"];
-    [self presentViewController:pinView animated:YES completion:nil];
+    [self performSegueWithIdentifier:@"pinViewSegue" sender:self];
 }
 
 -(void)showAlertView{
