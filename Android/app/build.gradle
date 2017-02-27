@@ -6,11 +6,11 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "org.gluu.oxpush2"
+        applicationId "gluu.super.gluu"
         minSdkVersion 17
         targetSdkVersion 23
-        versionCode 2
-        versionName "1.1"
+        versionCode 4
+        versionName "3.0"
         multiDexEnabled true
     }
 
