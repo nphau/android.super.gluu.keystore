@@ -79,14 +79,24 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
         switchSSL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(switchSSL.isChecked()){
+                if (switchSSL.isChecked()) {
                     showWarning(R.string.warning_trust_all_certificate);
                 }
-                GluuApplication.isTrustAllCertificates =switchSSL.isChecked();
+                GluuApplication.isTrustAllCertificates = switchSSL.isChecked();
                 Settings.setSSLEnabled(context, switchSSL.isChecked());
-                Log.v("TAG","SSL Settings enable: "+switchSSL.isChecked());
+                Log.v("TAG", "SSL Settings enable: " + switchSSL.isChecked());
                 // Init network layer
                 CommunicationService.init();
+            }
+        });
+
+        final Switch switchFingerprint = (Switch) view.findViewById(R.id.switch_fingerprint);
+        switchFingerprint.setChecked(Settings.getFingerprintEnabled(context));
+        switchFingerprint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Settings.setFingerprintEnabled(context, switchFingerprint.isChecked());
+                Log.v("TAG", "Fingerprint Settings enable: " + switchFingerprint.isChecked());
             }
         });
 

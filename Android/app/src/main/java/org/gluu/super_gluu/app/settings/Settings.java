@@ -140,4 +140,19 @@ public class Settings {
         Boolean isSSLEnabled = preferences.getBoolean("SSLConnectionSettings", false);
         return isSSLEnabled;
     }
+
+    //Fingerprint settings
+    public static void setFingerprintEnabled(Context context, Boolean isEnabled) {
+        SharedPreferences preferences = context.getSharedPreferences("FingerprintSettings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("FingerprintSettings", isEnabled);
+        editor.apply();
+    }
+
+    public static Boolean getFingerprintEnabled(Context context){
+        SharedPreferences preferences = context.getSharedPreferences("FingerprintSettings", Context.MODE_PRIVATE);
+        Boolean isFingerprintEnabled = preferences.getBoolean("FingerprintSettings", false);
+        return isFingerprintEnabled;
+    }
+
 }

@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="20dp">
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/settings_parent_id"
     android:layout_width="match_parent"
@@ -95,6 +100,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:gravity="center"
         android:text="@string/text_attempts"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -151,4 +158,57 @@
 
     </RelativeLayout>
 
+
+    <TextView
+        android:id="@+id/textViewFingerprint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/fingerprint_title"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/blackColor" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textViewFingerprintOff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="38dp"
+            android:layout_toStartOf="@+id/switch_fingerprint"
+            android:text="@string/tur_off_pin_code"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#050000"
+            android:textSize="14sp" />
+
+        <Switch
+            android:id="@+id/switch_fingerprint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textViewFingerprintOn"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="20dp" />
+
+        <TextView
+            android:id="@+id/textViewFingerprintOn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="41dp"
+            android:layout_toEndOf="@+id/switch_fingerprint"
+            android:text="@string/tur_on_pin_code"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#050000"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
 </LinearLayout>
+
+</ScrollView>

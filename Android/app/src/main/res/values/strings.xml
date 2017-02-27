@@ -107,4 +107,6 @@
     <string name="trust_all_certificate">Trust All Certificates</string>
     <string name="warning_trust_all_certificate">WARNING: Use only for testing! It\'s critically important to validate the SSL certificate for communication between SuperGluu and the Gluu Server.</string>
 
+    <string name="fingerprint_title">Fingerprint</string>
+
 </resources>
