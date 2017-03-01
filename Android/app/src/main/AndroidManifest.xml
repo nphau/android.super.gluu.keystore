@@ -19,6 +19,9 @@
     <!-- On Android M and above, use of these permissions is only requested at run time. -->
     <uses-permission android:name="android.permission.CAMERA"/>
 
+    <!-- Permission to get working with fingerprints -->
+    <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />

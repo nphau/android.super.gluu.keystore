@@ -4,7 +4,7 @@
  *  Copyright (c) 2014, Gluu
  */
 
-package org.gluu.super_gluu.app;
+package org.gluu.super_gluu.app.Fragments;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
@@ -83,71 +83,5 @@ public class KeyRecyclerViewAdapter extends ArrayAdapter {
 
         return view;
     }
-
-//    @Override
-//    public void onBindViewHolder(final ViewHolder holder, int position) {
-////        holder.mItem = mValues.get(position);
-////        holder.mIdView.setText(mValues.get(position).id);
-//        currentPosition = position;
-//        final String tokenEntryString = mValues.get(currentPosition);
-//        String deviceName = android.os.Build.MODEL;
-//        String prefixKeyHandle = holder.mView.getContext().getString(R.string.keyHandleCell);
-//        String keyHandleTitle = prefixKeyHandle + "("+ position + ") " + deviceName;
-//        holder.setItem(keyHandleTitle, tokenEntryString);
-////        holder.mContentView.setText(keyHandleTitle);
-//        LocalBroadcastManager.getInstance(holder.mView.getContext()).registerReceiver(mMessageReceiver,
-//                new IntentFilter(String.valueOf(R.string.deleted_keyhandle_event)));
-//
-//
-//        holder.mView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (null != mListener) {
-//                    int itemPosition = this.getChildPosition(v);
-//                    mListener.onListFragmentInteraction(tokenEntryString);
-//                }
-//            }
-//        });
-//    }
-//
-//    @Override
-//    public int getItemCount() {
-//        return mValues.size();
-//    }
-//
-//    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-//        public final View mView;
-//        public final ImageView mIdView;
-//        public final TextView mContentView;
-//        public String mItem;
-//
-//        public ViewHolder(View view) {
-//            super(view);
-//            mView = view;
-//            mIdView = (ImageView) view.findViewById(R.id.imageView);
-//            mContentView = (TextView) view.findViewById(R.id.content);
-//            view.setOnClickListener(this);
-//        }
-//
-//        public void setItem(String item, String tokenEntityString) {
-//            mContentView.setText(item);
-//            mItem = tokenEntityString;
-//        }
-//
-//        @Override
-//        public String toString() {
-//            return super.toString() + " '" + mContentView.getText() + "'";
-//        }
-//
-//        @Override
-//        public void onClick(View v) {
-//            mListener.onListFragmentInteraction(mItem);
-//        }
-//    }
-//
-//    private void updateList(List<String> data) {
-//        this.mValues = data;
-//        notifyDataSetChanged();
-//    }
 
 }

@@ -403,10 +403,10 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         return isVisible;
     }
 
-    public void setIsButtonVisible(Boolean isVsible){
+    public void setIsButtonVisible(Boolean isVisible){
         SharedPreferences preferences = getApplicationContext().getSharedPreferences("CleanLogsSettings", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isCleanButtonVisible", isVsible);
+        editor.putBoolean("isCleanButtonVisible", isVisible);
         editor.commit();
     }
 

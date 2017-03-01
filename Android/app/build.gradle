@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "gluu.super.gluu"
-        minSdkVersion 17
+        minSdkVersion 23
         targetSdkVersion 23
         versionCode 4
         versionName "3.0"
@@ -105,7 +105,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:multidex:'
+    compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.google.android.gms:play-services:8.4.0'
