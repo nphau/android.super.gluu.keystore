@@ -71,7 +71,8 @@
     jswTurnOnOff.center = [pinCodeTurnOnOff center];
     [jswTurnOnOff addTarget:self action:@selector(onPinCodeTurnOnOf:) forControlEvents:UIControlEventValueChanged];
     pinCodeTurnOnOff.hidden = YES;
-    [jswTurnOnOff setOn:isPin animated:YES];
+    Boolean isPinEnabled = isTouchID ? !isTouchID : isPin;
+    [jswTurnOnOff setOn:isPinEnabled animated:YES];
     if (!isPin){
         jswTurnOnOff.thumbOnTintColor = [UIColor grayColor];
         jswTurnOnOff.thumbOffTintColor = [UIColor grayColor];
@@ -127,12 +128,14 @@
 }
 
 -(void)onPinCodeTurnOnOf:(id)sender{
-    [self initSwitchTurnOnOff:jswTurnOnOff];
     JTMaterialSwitch *sw = sender;
-    touchIDView.center = sw.isOn ? CGPointMake(attemptsView.center.x, attemptsView.center.y+ attemptsView.frame.size.height/2 + 50) : CGPointMake(trustOnOffView.center.x, pinCodeButtonView.center.y+10);
-    trustOnOffView.center = sw.isOn ? CGPointMake(touchIDView.center.x, touchIDView.center.y+ attemptsView.frame.size.height/2 + 20) : CGPointMake(trustOnOffView.center.x, pinCodeButtonView.center.y+70);
-    [setChangePinCode setHidden:!sw.isOn];
-    [attemptsView setHidden:!sw.isOn];
+    if (jswStatus.isOn){
+        [sw setOn:!jswStatus.isOn animated:YES];
+        [self initAttamptsViews:sw.isOn];
+        return;
+    }
+    [self initSwitchTurnOnOff:jswTurnOnOff];
+    [self initAttamptsViews:sw.isOn];
     code = [[NSUserDefaults standardUserDefaults] stringForKey:PIN_CODE];
     if (code == nil || [code isEqualToString:@""]){
         [setChangePinCode setTitle:NSLocalizedString(@"SetPinCode", @"SetPinCode") forState:UIControlStateNormal];
@@ -141,6 +144,13 @@
     }
     
     [[NSUserDefaults standardUserDefaults] setBool:sw.isOn forKey:PIN_PROTECTION_ID];
+}
+
+-(void)initAttamptsViews:(BOOL)isOn{
+    touchIDView.center = isOn ? CGPointMake(attemptsView.center.x, attemptsView.center.y+ attemptsView.frame.size.height/2 + 50) : CGPointMake(trustOnOffView.center.x, pinCodeButtonView.center.y+10);
+    trustOnOffView.center = isOn ? CGPointMake(touchIDView.center.x, touchIDView.center.y+ attemptsView.frame.size.height/2 + 20) : CGPointMake(trustOnOffView.center.x, pinCodeButtonView.center.y+70);
+    [setChangePinCode setHidden:!isOn];
+    [attemptsView setHidden:!isOn];
 }
 
 -(void)onPinCodeTypeSelected:(id)sender{
@@ -167,15 +177,39 @@
             [myContext evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
                       localizedReason:myLocalizedReasonString
                                 reply:^(BOOL success, NSError *error) {
-                                    if (success) {
-                                        // User authenticated successfully, take appropriate action
-                                        NSLog(@"User authenticated successfully, take appropriate action");
-                                        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:TOUCH_ID_ENABLED];
-                                    } else {
-                                        // User did not authenticate successfully, look at error and take appropriate action
-                                        [jswStatus setOn:NO animated:YES];
-                                        [self showWrongTouchID];
-                                    }
+                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                        if (success) {
+                                            // User authenticated successfully, take appropriate action
+                                            NSLog(@"User authenticated successfully, take appropriate action");
+                                            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:TOUCH_ID_ENABLED];
+                                            [jswTurnOnOff setOn:NO animated:YES];
+                                            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:PIN_PROTECTION_ID];
+                                        } else {
+                                            switch (error.code) {
+                                                case LAErrorAuthenticationFailed:
+                                                    NSLog(@"Authentication Failed");
+                                                    [self showWrongTouchID];
+                                                    break;
+                                                    
+                                                case LAErrorUserCancel:
+                                                    NSLog(@"User pressed Cancel button");
+                                                    [self touchIDInfoMessage:@"User pressed Cancel button"];
+                                                    break;
+                                                    
+                                                case LAErrorUserFallback:
+                                                    NSLog(@"User pressed \"Enter Password\"");
+                                                    break;
+                                                    
+                                                default:
+                                                    NSLog(@"Touch ID is not configured");
+                                                    [self touchIDInfoMessage:@"Touch ID is not configured"];
+                                                    break;
+                                            }
+                                            // User did not authenticate successfully, look at error and take appropriate action
+                                            [jswStatus setOn:NO animated:YES];
+                                            
+                                        }
+                                    });
                                 }];
         } else {
             // Could not evaluate policy; look at authError and present an appropriate message to user
@@ -313,6 +347,11 @@
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
     }];
     [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:[authError.userInfo valueForKey:@"NSLocalizedDescription"] closeButtonTitle:nil duration:0.0f];
+}
+
+-(void)touchIDInfoMessage:(NSString*)message{
+    SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:message closeButtonTitle:@"Ok" duration:0.0f];
 }
 
 - (void)didReceiveMemoryWarning {

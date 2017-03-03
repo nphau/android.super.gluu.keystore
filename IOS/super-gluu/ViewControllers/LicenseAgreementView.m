@@ -113,7 +113,7 @@
                                 }];
         } else {
             // Could not evaluate policy; look at authError and present an appropriate message to user
-            [self showTiuchIDResultError:authError];
+            [self showTouchIDResultError:authError];
             isSucess = NO;
         }
     } else {
@@ -126,10 +126,8 @@
             BOOL isPin = [[NSUserDefaults standardUserDefaults] boolForKey:PIN_PROTECTION_ID];
             if (isPin){
                 [self loadPinView];
-                //            [self performSegueWithIdentifier:PIN_VIEW sender:self];
             } else {
                 [self loadMainView];
-                //            [self performSegueWithIdentifier:MAIN_VIEW sender:self];
             }
         }
     }
@@ -155,7 +153,7 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
--(void)showTiuchIDResultError:(NSError*) authError{
+-(void)showTouchIDResultError:(NSError*) authError{
     NSString* message  = [NSString stringWithFormat:@"%@ Please add fingerprint in TouchID&Passcode settings", [authError.userInfo valueForKey:@"NSLocalizedDescription"]];
     alert = [UIAlertController
                                  alertControllerWithTitle:@"TouchID Failed"
