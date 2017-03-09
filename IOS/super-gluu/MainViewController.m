@@ -10,15 +10,18 @@
 #import "QRCodeReader.h"
 #import "QRCodeReaderViewController.h"
 #import "Constants.h"
-//#import "OXPushManager.h"
 #import "OXPushManager.h"
 #import "UserLoginInfo.h"
 #import "LogManager.h"
 #import "SCLAlertView.h"
 #import "TokenEntity.h"
 #import "DataStoreManager.h"
+#import "Super_Gluu-swift.h"
 
-@interface MainViewController ()
+@interface MainViewController () {
+    
+    PeripheralScanner* scanner;
+}
 
 @end
 
@@ -40,11 +43,16 @@
         [self registerForNotification];
     }
     [self checkPushNotification];
+    [self initBLE];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self checkDeviceOrientation];
+}
+
+-(void)initBLE{
+    scanner = [[PeripheralScanner alloc] init];
 }
 
 -(void)checkPushNotification{
