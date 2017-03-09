@@ -69,6 +69,7 @@
 		BBE7AAC91C9B18C200BE62AE /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBE7AAC81C9B18C200BE62AE /* SettingsViewController.m */; };
 		BBE83B9E1E69D1DD0099F83A /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBE83B9D1E69D1DD0099F83A /* CoreBluetooth.framework */; };
 		BBE83BA71E714AB90099F83A /* PeripheralScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE83BA61E714AB90099F83A /* PeripheralScanner.swift */; };
+		BBE83BA91E715F4B0099F83A /* ServiceScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE83BA81E715F4B0099F83A /* ServiceScanner.swift */; };
 		BBEC92001E293179000D522F /* www.gluu.org.cer in Resources */ = {isa = PBXBuildFile; fileRef = BBEC91FF1E293179000D522F /* www.gluu.org.cer */; };
 /* End PBXBuildFile section */
 
@@ -181,6 +182,7 @@
 		BBE83B9D1E69D1DD0099F83A /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		BBE83BA51E714AAB0099F83A /* Super Gluu-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Super Gluu-Bridging-Header.h"; sourceTree = "<group>"; };
 		BBE83BA61E714AB90099F83A /* PeripheralScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PeripheralScanner.swift; path = BLEManager/PeripheralScanner.swift; sourceTree = "<group>"; };
+		BBE83BA81E715F4B0099F83A /* ServiceScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceScanner.swift; path = BLEManager/ServiceScanner.swift; sourceTree = "<group>"; };
 		BBEC91F21E28CE25000D522F /* Super Gluu.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Super Gluu.entitlements"; sourceTree = "<group>"; };
 		BBEC91FF1E293179000D522F /* www.gluu.org.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = www.gluu.org.cer; sourceTree = "<group>"; };
 		BBFCB3091C98164F00F66417 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -483,6 +485,7 @@
 			isa = PBXGroup;
 			children = (
 				BBE83BA61E714AB90099F83A /* PeripheralScanner.swift */,
+				BBE83BA81E715F4B0099F83A /* ServiceScanner.swift */,
 				BBE83BA51E714AAB0099F83A /* Super Gluu-Bridging-Header.h */,
 			);
 			name = BLEManager;
@@ -733,6 +736,7 @@
 				BB3BE1721C882D0600817A46 /* ApproveDenyViewController.m in Sources */,
 				BB37DF3E1C7E0B8E0016D422 /* KeyHandleCell.m in Sources */,
 				BB18D05C1CBCFFAE00A73733 /* PAPasscodeViewController.m in Sources */,
+				BBE83BA91E715F4B0099F83A /* ServiceScanner.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

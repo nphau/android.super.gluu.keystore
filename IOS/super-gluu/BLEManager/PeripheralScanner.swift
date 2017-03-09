@@ -10,21 +10,17 @@ import UIKit
 import CoreBluetooth
 
 struct Constants {
-//    static let PeripheralCell = "PeripheralCell"
-//    static let ServiceCell = "ServiceCell"
-//    static let CharacteristicCell = "CharacteristicCell"
-//    static let CharacteristicAccessCell = "CharacteristicAccessCell"
-//    static let SwitcherCell = "SwitcherCell"
-//    static let ScanUUIDCell = "ScanUUIDCell"
-//    static let FindedPeripheralCell = "FindedPeripheralCell"
-    
     static let ConnectTimeout: TimeInterval = 5
     static let DidUpdateValueForCharacteristic = "didUpdateValueForCharacteristic"
     static let DidWriteValueForCharacteristic = "didWriteValueForCharacteristic"
     static let DidUpdateNotificationStateForCharacteristic = "didUpdateNotificationStateForCharacteristic"
+    
+    static let u2fControlPoint_uuid = "F1D0FFF1-DEAA-ECEE-B42F-C9BA7ED623BB"
+    static let u2fStatus_uuid = "F1D0FFF2-DEAA-ECEE-B42F-C9BA7ED623BB"
+    static let u2fControlPointLength_uuid = "F1D0FFF3-DEAA-ECEE-B42F-C9BA7ED623BB"
 }
 
-class PeripheralScanner : NSObject, CBCentralManagerDelegate {
+class PeripheralScanner : NSObject {
     
     var centralManager: CBCentralManager!
     
@@ -32,10 +28,10 @@ class PeripheralScanner : NSObject, CBCentralManagerDelegate {
     
     var connectTimer: Timer?
     
+    var serviceScanner : ServiceScanner!
+    
     var scanning = false {
         didSet {
-//            title = scanning ? "Scanning..." : "Peripherals"
-//            scanStopButtonItem.title = scanning ? "Stop" : "Scan"
             
             if scanning {
                 //				let uuid1 = CBUUID(string: "180A")
@@ -56,31 +52,31 @@ class PeripheralScanner : NSObject, CBCentralManagerDelegate {
         }
     }
     
-//    @IBAction func clear(_ sender: AnyObject) {
-//        peripherals = [(peripheral: CBPeripheral, serviceCount: Int, UUIDs: [CBUUID]?)]()
-//        tableView.reloadData()
-//        if scanning {
-//            scanning = false
-//            scanning = true
-//        }
-//    }
-    
-//    @IBOutlet weak var scanStopButtonItem: UIBarButtonItem!
-//    func scanStop() {
-//        scanning = !scanning
-//    }
+
     override init() {
         super.init()
         centralManager = CBCentralManager(delegate: self, queue: nil)
+        serviceScanner = ServiceScanner()
     }
     
     func cancelConnections() {
         print("cancelConnections")
         for peripheralCouple in peripherals {
-            //			if peripheralCouple.peripheral.state == .Connected
-            //				|| peripheralCouple.peripheral.state == .Connecting {
             centralManager.cancelPeripheralConnection(peripheralCouple.peripheral)
-            //			}
+        }
+    }
+    
+    func tryToDiscoverVascoToken(){
+        if peripherals.count > 0 {
+            //There is at least one Vasco's token
+            let peripheralCouple = peripherals[0]
+            let peripheral = peripheralCouple.peripheral
+            //Doing service(s) discovering
+            serviceScanner.peripheral = peripheral
+            serviceScanner.advertisementDataUUIDs = peripheralCouple.UUIDs
+            NSLog("connectPeripheral \(peripheral.name) (\(peripheral.state))")
+            centralManager.connect(peripheral, options: nil)
+            connectTimer = Timer.scheduledTimer(timeInterval: Constants.ConnectTimeout, target: self, selector: #selector(PeripheralScanner.cancelConnections), userInfo: nil, repeats: false)
         }
     }
     
@@ -96,19 +92,19 @@ class PeripheralScanner : NSObject, CBCentralManagerDelegate {
 //        cancelConnections()
 //    }
     
-    // MARK: - Central Manager Delegate
-    
+}
+
+
+extension PeripheralScanner : CBCentralManagerDelegate{
+
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         print(centralManager.state)
         if centralManager.state != .poweredOn {
-            //            _=navigationController?.popToViewController(self, animated: true)
             if scanning {
                 UIAlertView(title: "Unable to scan", message: "bluetooth is in \(centralManager.state.rawValue)-state", delegate: nil, cancelButtonTitle: "Ok").show()
             }
-            //            tableView.reloadData()
         }
         scanning = centralManager.state == .poweredOn
-        //        scanStopButtonItem.isEnabled = centralManager.state == .poweredOn
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
@@ -130,43 +126,33 @@ class PeripheralScanner : NSObject, CBCentralManagerDelegate {
                 peripherals.append((peripheral, 0, nil))
             }
         }
-        //        tableView.reloadData()
+        tryToDiscoverVascoToken()
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         NSLog("didConnectPeripheral \(peripheral.name)")
-        //        tableView.reloadData()
         
         connectTimer?.invalidate()
         
-        //        if let serviceTableVC = navigationController?.topViewController as? ServiceTableVC {
-        //            peripheral.delegate = serviceTableVC
-        //        }
+        if let serviceScan = serviceScanner {
+            peripheral.delegate = serviceScan
+        }
+        
         peripheral.discoverServices(nil)
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         NSLog("didDisconnectPeripheral \(peripheral.name)")
-        //        tableView.reloadData()
-        //        _=navigationController?.popToViewController(self, animated: true)
+        peripherals.removeAll()
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         NSLog("\tdidFailToConnectPeripheral \(peripheral.name)")
-        //        tableView.reloadData()
-        //        _=navigationController?.popToViewController(self, animated: true)
         UIAlertView(title: "Fail To Connect", message: nil, delegate: nil, cancelButtonTitle: "Dismiss").show()
     }
     
     func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
         NSLog("willRestoreState \(dict)")
     }
-
     
 }
-
-
-//extension PeripheralScanner : CBCentralManagerDelegate{
-//
-//    
-//}
