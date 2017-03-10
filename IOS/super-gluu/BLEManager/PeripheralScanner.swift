@@ -18,6 +18,10 @@ struct Constants {
     static let u2fControlPoint_uuid = "F1D0FFF1-DEAA-ECEE-B42F-C9BA7ED623BB"
     static let u2fStatus_uuid = "F1D0FFF2-DEAA-ECEE-B42F-C9BA7ED623BB"
     static let u2fControlPointLength_uuid = "F1D0FFF3-DEAA-ECEE-B42F-C9BA7ED623BB"
+    static let battery_uuid = "2A19"
+    
+    static let FFFD = "FFFD"
+    static let Battery = "180F"
 }
 
 class PeripheralScanner : NSObject {
@@ -71,7 +75,7 @@ class PeripheralScanner : NSObject {
             //There is at least one Vasco's token
             let peripheralCouple = peripherals[0]
             let peripheral = peripheralCouple.peripheral
-            //Doing service(s) discovering
+            //Doing service(s) connect and discovering
             serviceScanner.peripheral = peripheral
             serviceScanner.advertisementDataUUIDs = peripheralCouple.UUIDs
             NSLog("connectPeripheral \(peripheral.name) (\(peripheral.state))")
@@ -108,42 +112,41 @@ extension PeripheralScanner : CBCentralManagerDelegate{
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        NSLog("discovered \(peripheral.name ?? "Noname") RSSI: \(RSSI)\n\(advertisementData)")
         
         let contains = peripherals.contains { (peripheralInner: CBPeripheral, serviceCount: Int, UUIDs: [CBUUID]?) -> Bool in
             return peripheral == peripheralInner
         }
         
-        if peripheral.name != "SClick U2F" {
-            return
-        }
-        
         if !contains {
             if let serviceUUIDs = advertisementData[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID] {
-                let UUIDs = advertisementData[CBAdvertisementDataServiceUUIDsKey] as! [CBUUID]
-                peripherals.append((peripheral, serviceUUIDs.count, UUIDs))
-            } else {
-                peripherals.append((peripheral, 0, nil))
+                let isConnectible = advertisementData[CBAdvertisementDataIsConnectable] as! Bool
+                let localName = advertisementData[CBAdvertisementDataLocalNameKey] as! String
+                if isConnectible && localName == "SClick U2F" {
+                    NSLog("discovered \(peripheral.name ?? "Noname") RSSI: \(RSSI)\n advertisementData: \(advertisementData)")
+                    let UUIDs = advertisementData[CBAdvertisementDataServiceUUIDsKey] as! [CBUUID]
+                    peripherals.append((peripheral, serviceUUIDs.count, UUIDs))
+                    tryToDiscoverVascoToken()
+                }
             }
+//            else {
+//                peripherals.append((peripheral, 0, nil))
+//            }
         }
-        tryToDiscoverVascoToken()
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         NSLog("didConnectPeripheral \(peripheral.name)")
         
         connectTimer?.invalidate()
-        
-        if let serviceScan = serviceScanner {
-            peripheral.delegate = serviceScan
-        }
+    
+        peripheral.delegate = serviceScanner
         
         peripheral.discoverServices(nil)
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         NSLog("didDisconnectPeripheral \(peripheral.name)")
-        peripherals.removeAll()
+//        peripherals.removeAll()
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {

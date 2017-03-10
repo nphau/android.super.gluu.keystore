@@ -12,15 +12,17 @@ import CoreBluetooth
 class ServiceScanner: NSObject {
     
     var discovering = true
-    
     var peripheral: CBPeripheral!
     var advertisementDataUUIDs: [CBUUID]?
+    
+    var characteristicScanner : CharacteristicScanner!
     
 //    let scanner = BackgroundScanner.defaultScanner
     
     override init() {
         super.init()
         
+        characteristicScanner = CharacteristicScanner()
     }
     
 }
@@ -47,19 +49,69 @@ extension ServiceScanner : CBPeripheralDelegate {
         if let error = error {
             NSLog("didDiscoverCharacteristicsForService error: \(error.localizedDescription)")
         } else {
-            NSLog("didDiscoverCharacteristicsForService \(service.characteristics?.count)")
-//            if let row = peripheral.services?.index(of: service) {
-//                let indexPath = IndexPath(row: row, section: 1)
-//                tableView.reloadRows(at: [indexPath], with: .automatic)
+//            NSLog("didDiscoverCharacteristicsForService - \(service.description), uuid -- \(service.uuid), --- \(service.characteristics?.count)")
+            
+            //There we should discover characteristics for FFFD service for now
+//            if service.uuid.uuidString == Constants.FFFD {//|| service.uuid.uuidString == Constants.Battery {
+            //Discover whole services
+//                NSLog("Start discover characteristics for service \(service.uuid.uuidString)")
+//                characteristicScanner.service = service
+//                characteristicScanner.peripharal = self.peripheral
+//                characteristicScanner.discoverCharacteristics()
+            
+            
+            for characteristic in service.characteristics! {
+                print("Available value for -- \(characteristic) and characteristic.uuid.uuidString -- \(characteristic.uuid.uuidString)")
+                if characteristic.uuid.uuidString == "2A26" || characteristic.uuid.uuidString == "2A19" || characteristic.uuid.uuidString == "2A27" || characteristic.uuid.uuidString == "2A50" || characteristic.uuid.uuidString == "2A24" || characteristic.uuid.uuidString == "2A28" {//|| characteristic.uuid.uuidString == "2A28" {//"2A19" -- "Battery Level"
+                    let character = characteristic as CBCharacteristic
+                    let type = getTypeOfCahracteristic(characteristic: character)
+                    self.doAction(prop: type, characteristic: character)
+                }
+                //            }
+            }
 //            }
         }
     }
+    
+    func doAction(prop : CBCharacteristicProperties, characteristic: CBCharacteristic) {
+        switch prop {
+        case CBCharacteristicProperties.read:
+//            print("Trying to read value for -- \(characteristic)")
+            peripheral.readValue(for: characteristic)
+//            requesting = true
+            //        case CBCharacteristicProperties.write:
+            //            if let value = "000000".data(using: String.Encoding.utf8) {
+            //                print("Trying to write password for pairing maybe -- \(characteristic)")
+            //                peripharal.writeValue(value, for: characteristic, type: .withResponse)
+            //                requesting = true
+            //            }
+        case CBCharacteristicProperties.notify:
+            print("Sucribed characteristics -- \(characteristic)")
+            peripheral.setNotifyValue(true, for: characteristic)
+        //            requesting = true
+        default: break
+        }
+    }
+    
+    private func getTypeOfCahracteristic(characteristic : CBCharacteristic)-> CBCharacteristicProperties{
+        if characteristic.properties.contains(.read) {
+            return .read
+        } else if characteristic.properties.contains(.write) {
+            return .write
+        }else if characteristic.properties.contains(.notify) {
+            return .notify
+        }
+        return CBCharacteristicProperties()
+    }
+
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         if let error = error {
             NSLog("didUpdateValueForCharacteristic error: \(error.localizedDescription)")
             NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateValueForCharacteristic), object: characteristic, userInfo: ["error": error])
         } else {
+            let value = String(data: characteristic.value!, encoding: String.Encoding.utf8)
+            print("Characteristic value : \(value) with ID \(characteristic.uuid.uuidString)");
             NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateValueForCharacteristic), object: characteristic)
         }
     }
@@ -78,6 +130,7 @@ extension ServiceScanner : CBPeripheralDelegate {
             NSLog("didUpdateNotificationStateForCharacteristic error: \(error.localizedDescription)")
             NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateNotificationStateForCharacteristic), object: characteristic, userInfo: ["error": error])
         } else {
+            print("Characteristic value : \(characteristic.value) with ID \(characteristic.uuid.uuidString)");
             NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateNotificationStateForCharacteristic), object: characteristic)
         }
     }
