@@ -22,6 +22,8 @@ struct Constants {
     
     static let FFFD = "FFFD"
     static let Battery = "180F"
+    static let FirmwareRevision = "2A26"
+    static let HardwareRevision = "2A27"
 }
 
 class PeripheralScanner : NSObject {
@@ -32,7 +34,9 @@ class PeripheralScanner : NSObject {
     
     var connectTimer: Timer?
     
-    var serviceScanner : ServiceScanner!
+    var serviceScanner: ServiceScanner!
+    
+    var valueForWrite: Data!
     
     var scanning = false {
         didSet {
@@ -59,6 +63,9 @@ class PeripheralScanner : NSObject {
 
     override init() {
         super.init()
+    }
+    
+    func start(){
         centralManager = CBCentralManager(delegate: self, queue: nil)
         serviceScanner = ServiceScanner()
     }
@@ -78,6 +85,7 @@ class PeripheralScanner : NSObject {
             //Doing service(s) connect and discovering
             serviceScanner.peripheral = peripheral
             serviceScanner.advertisementDataUUIDs = peripheralCouple.UUIDs
+            serviceScanner.valueForWrite = valueForWrite
             NSLog("connectPeripheral \(peripheral.name) (\(peripheral.state))")
             centralManager.connect(peripheral, options: nil)
             connectTimer = Timer.scheduledTimer(timeInterval: Constants.ConnectTimeout, target: self, selector: #selector(PeripheralScanner.cancelConnections), userInfo: nil, repeats: false)

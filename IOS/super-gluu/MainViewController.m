@@ -19,8 +19,8 @@
 #import "Super_Gluu-swift.h"
 
 @interface MainViewController () {
-    
     PeripheralScanner* scanner;
+    BOOL isSecureClick;
 }
 
 @end
@@ -34,6 +34,7 @@
     [self initQRScanner];
     [self initLocalization];
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(initSecureClickScanner:)    name:INIT_SECURE_CLICK_NOTIFICATION  object:nil];
     [self checkDeviceOrientation];
 
     //For Push Notifications
@@ -43,7 +44,7 @@
         [self registerForNotification];
     }
     [self checkPushNotification];
-    [self initBLE];
+    isSecureClick = YES;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -51,8 +52,11 @@
     [self checkDeviceOrientation];
 }
 
--(void)initBLE{
+-(void)initSecureClickScanner:(NSNotification*)notification{
+    NSData* valueData = notification.object;
     scanner = [[PeripheralScanner alloc] init];
+    scanner.valueForWrite = valueData;
+    [scanner start];
 }
 
 -(void)checkPushNotification{
@@ -430,7 +434,7 @@
     [self updateStatus:message];
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
     OXPushManager* oxPushManager = [[OXPushManager alloc] init];
-    [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:NO callback:^(NSDictionary *result,NSError *error){
+    [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:NO isSecureClick:isSecureClick callback:^(NSDictionary *result,NSError *error){
         [scanButton setEnabled:YES];
     }];
 }
@@ -441,7 +445,7 @@
     [self updateStatus:message];
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
     OXPushManager* oxPushManager = [[OXPushManager alloc] init];
-    [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:YES callback:^(NSDictionary *result,NSError *error){
+    [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:YES isSecureClick:isSecureClick callback:^(NSDictionary *result,NSError *error){
         [scanButton setEnabled:YES];
     }];
 }

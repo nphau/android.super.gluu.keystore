@@ -16,23 +16,71 @@ class CharacteristicScanner: NSObject {
     
     var characteristicObserver : CharacteristicObserver!
     
+    var valueForWrite: Data!
+    
     func discoverCharacteristics(){
         characteristicObserver = CharacteristicObserver()
         for characteristic in service.characteristics! {
             let character = characteristic as CBCharacteristic
-            let type = getTypeOfCahracteristic(characteristic: character)
-            //Currectly we want do only write action for u2fControlPoint characteristic
-//            print("character.uuid.uuidString -- \(character.uuid.uuidString)")
-//            if character.uuid.uuidString == Constants.u2fControlPoint_uuid || character.uuid.uuidString == Constants.battery_uuid {
+            let type = getTypeOfCahracteristic(character)
+            if
+//                characteristic.uuid.uuidString == Constants.FirmwareRevision ||
+//                characteristic.uuid.uuidString == Constants.Battery ||
+                characteristic.uuid.uuidString == Constants.u2fControlPointLength_uuid
+//                    ||
+//                characteristic.uuid.uuidString == Constants.u2fStatus_uuid ||
+//                characteristic.uuid.uuidString == Constants.u2fControlPoint_uuid
+                {
+                
                 characteristicObserver.peripharal = peripharal
                 characteristicObserver.characteristic = character
+                characteristicObserver.valueForWrite = valueForWrite
                 characteristicObserver.prop = type
                 characteristicObserver.doAction()
-//            }
+            }
+        }
+        for characteristic in service.characteristics! {
+            let character = characteristic as CBCharacteristic
+            let type = getTypeOfCahracteristic(character)
+            if
+                //                characteristic.uuid.uuidString == Constants.FirmwareRevision ||
+                //                characteristic.uuid.uuidString == Constants.Battery ||
+//                characteristic.uuid.uuidString == Constants.u2fControlPointLength_uuid
+                //                    ||
+                                characteristic.uuid.uuidString == Constants.u2fStatus_uuid
+//            ||
+                //                characteristic.uuid.uuidString == Constants.u2fControlPoint_uuid
+            {
+                
+                characteristicObserver.peripharal = peripharal
+                characteristicObserver.characteristic = character
+                characteristicObserver.valueForWrite = valueForWrite
+                characteristicObserver.prop = type
+                characteristicObserver.doAction()
+            }
+        }
+        for characteristic in service.characteristics! {
+            let character = characteristic as CBCharacteristic
+            let type = getTypeOfCahracteristic(character)
+            if
+                //                characteristic.uuid.uuidString == Constants.FirmwareRevision ||
+                //                characteristic.uuid.uuidString == Constants.Battery ||
+//                characteristic.uuid.uuidString == Constants.u2fControlPointLength_uuid
+                //                    ||
+                //                characteristic.uuid.uuidString == Constants.u2fStatus_uuid ||
+                                characteristic.uuid.uuidString == Constants.u2fControlPoint_uuid
+            {
+                
+                characteristicObserver.peripharal = peripharal
+                characteristicObserver.characteristic = character
+                characteristicObserver.valueForWrite = valueForWrite
+                characteristicObserver.prop = type
+                characteristicObserver.doAction()
+            }
         }
     }
     
-    private func getTypeOfCahracteristic(characteristic : CBCharacteristic)-> CBCharacteristicProperties{
+    fileprivate func getTypeOfCahracteristic(_ characteristic : CBCharacteristic)-> CBCharacteristicProperties{
         if characteristic.properties.contains(.read) {
             return .read
         } else if characteristic.properties.contains(.write) {
@@ -49,82 +97,31 @@ class CharacteristicScanner: NSObject {
 class CharacteristicObserver: NSObject {
     
     var peripharal: CBPeripheral!
-    var characteristic: CBCharacteristic! {
-        didSet {
-            NotificationCenter.default.addObserver(self, selector: #selector(CharacteristicObserver.didUpdateValueForCharacteristic(_:)), name: NSNotification.Name(rawValue: Constants.DidUpdateValueForCharacteristic), object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(CharacteristicObserver.didWriteValueForCharacteristic(_:)), name: NSNotification.Name(rawValue: Constants.DidWriteValueForCharacteristic), object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(CharacteristicObserver.didUpdateNotificationStateForCharacteristic(_:)), name: NSNotification.Name(rawValue: Constants.DidUpdateNotificationStateForCharacteristic), object: nil)
-        }
-    }
+    var characteristic: CBCharacteristic!
     
     var prop: CBCharacteristicProperties!
     
     var requesting = false
     
+    var valueForWrite: Data!
+    
     func doAction() {
         switch prop {
         case CBCharacteristicProperties.read:
-            print("Trying to read avlue for -- \(characteristic)")
+            print("Trying to read value for -- \(characteristic)")
             peripharal.readValue(for: characteristic)
             requesting = true
-//        case CBCharacteristicProperties.write:
-//            if let value = "000000".data(using: String.Encoding.utf8) {
-//                print("Trying to write password for pairing maybe -- \(characteristic)")
-//                peripharal.writeValue(value, for: characteristic, type: .withResponse)
-//                requesting = true
-//            }
-//        case CBCharacteristicProperties.notify:
-//            print("Sucribed for u2fStatus characteristics -- \(characteristic)")
-//            peripharal.setNotifyValue(true, for: characteristic)
-//            requesting = true
+        case CBCharacteristicProperties.write:
+            if let value = valueForWrite {
+                print("Trying to write for -- \(characteristic)")
+                peripharal.writeValue(value, for: characteristic, type: .withResponse)
+                requesting = true
+            }
+        case CBCharacteristicProperties.notify:
+            print("Sucribed for u2fStatus characteristics -- \(characteristic)")
+            peripharal.setNotifyValue(true, for: characteristic)
+            requesting = true
         default: break
-        }
-    }
-
-    // MARK: observing
-    
-    func didUpdateValueForCharacteristic(_ notification: Notification) {
-        guard requesting else { return }
-        requesting = prop == .notify ? requesting : false
-        guard let characteristic = notification.object as? CBCharacteristic else { return }
-        guard characteristic.uuid.isEqual(self.characteristic.uuid) else { return }
-        if let error = notification.userInfo?["error"] as? NSError {
-            print("error.localizedDescription --- \(error.localizedDescription)")
-        } else {
-            if let value = characteristic.value {
-                print("value --- \(String(data: value, encoding: String.Encoding.utf8))")
-            } else {
-//                valueTextField.text = nil
-            }
-            print("no value")
-        }
-    }
-    
-    func didWriteValueForCharacteristic(_ notification: Notification) {
-        guard requesting else { return }
-        requesting = false
-        guard let characteristic = notification.object as? CBCharacteristic else { return }
-        guard characteristic.uuid.isEqual(self.characteristic.uuid) else { return }
-        if let error = notification.userInfo?["error"] as? NSError {
-            print("error.localizedDescription --- \(error.localizedDescription)")
-        } else {
-            NSLog("ok \(characteristic.value)")
-        }
-    }
-    
-    func didUpdateNotificationStateForCharacteristic(_ notification: Notification) {
-        guard requesting else { return }
-        guard let characteristic = notification.object as? CBCharacteristic else { return }
-        guard characteristic.uuid.isEqual(self.characteristic.uuid) else { return }
-        if let error = notification.userInfo?["error"] as? NSError {
-            print("error.localizedDescription --- \(error.localizedDescription)")
-        } else {
-            if let value = characteristic.value {
-                print("value --- \(String(data: value, encoding: String.Encoding.utf8))")
-            } else {
-//                valueTextField.text = nil
-            }
-            print("no value")
         }
     }
     

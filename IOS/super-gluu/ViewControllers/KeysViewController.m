@@ -145,7 +145,7 @@
     
     NSString *CellIdentifier= @"KeyHandleCellID";
     KeyHandleCell *cell = (KeyHandleCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    TokenEntity* tokenEntity = [keyHandleArray objectAtIndex:indexPath.row];
+    TokenEntity* tokenEntity = (TokenEntity*)[keyHandleArray objectAtIndex:indexPath.row];
     [cell setData:tokenEntity];
     NSString* keyName = tokenEntity->keyName == nil ? [NSString stringWithFormat:@"key for %@", tokenEntity->application] : tokenEntity->keyName;
     [keyCells setObject:keyName forKey:tokenEntity->application];

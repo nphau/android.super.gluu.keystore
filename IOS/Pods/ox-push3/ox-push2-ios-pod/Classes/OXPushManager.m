@@ -21,7 +21,7 @@
 
 @implementation OXPushManager
 
--(void)onOxPushApproveRequest:(NSDictionary*)parameters isDecline:(BOOL)isDecline callback:(RequestCompletionHandler)handler{
+-(void)onOxPushApproveRequest:(NSDictionary*)parameters isDecline:(BOOL)isDecline isSecureClick:(BOOL)isSecureClick callback:(RequestCompletionHandler)handler{
     NSString* app = [parameters objectForKey:@"app"];
     NSString* state = [parameters objectForKey:@"state"];
     NSString* created = [NSString stringWithFormat:@"%@", [NSDate date]];//[parameters objectForKey:@"created"];
@@ -80,7 +80,7 @@
 //                                    if (!isDecline){
 //                                        [self postNotificationAutenticationStarting];
 //                                    }
-                                    [self callServiceChallenge:u2fEndpoint isEnroll:isEnroll andParameters:parameters isDecline:isDecline callback:^(NSDictionary *result,NSError *error){
+                                    [self callServiceChallenge:u2fEndpoint isEnroll:isEnroll andParameters:parameters isDecline:isDecline isSecureClick: isSecureClick callback:^(NSDictionary *result,NSError *error){
                                         if (error) {
                                             handler(nil , error);
                                         } else {
@@ -99,7 +99,7 @@
                     if (!isDecline){
                         [self postNotificationEnrollementStarting];
                     }
-                    [self callServiceChallenge:u2fEndpoint isEnroll:isEnroll andParameters:parameters isDecline:isDecline callback:^(NSDictionary *result,NSError *error){
+                    [self callServiceChallenge:u2fEndpoint isEnroll:isEnroll andParameters:parameters isDecline:isDecline isSecureClick:isSecureClick callback:^(NSDictionary *result,NSError *error){
                         if (error) {
                             handler(nil , error);
                         } else {
@@ -113,41 +113,57 @@
     }
 }
 
--(void)callServiceChallenge:(NSString*)baseUrl isEnroll:(BOOL)isEnroll andParameters:(NSDictionary*)parameters isDecline:(BOOL)isDecline callback:(RequestCompletionHandler)handler{
+-(void)callServiceChallenge:(NSString*)baseUrl isEnroll:(BOOL)isEnroll andParameters:(NSDictionary*)parameters isDecline:(BOOL)isDecline isSecureClick:(BOOL)isSecureClick callback:(RequestCompletionHandler)handler{
     [[ApiServiceManager sharedInstance] doGETUrl:baseUrl :parameters callback:^(NSDictionary *result,NSError *error){
         if (error) {
             handler(nil, error);
 //            [self postNotificationAutenticationFailed];
         } else {
             // Success getting authenticate MetaData
-            [self onChallengeReceived:baseUrl isEnroll:isEnroll metaData:result isDecline:isDecline callback:(RequestCompletionHandler)handler];
+            [self onChallengeReceived:baseUrl isEnroll:isEnroll metaData:result isDecline:isDecline isSecureClick:isSecureClick callback:(RequestCompletionHandler)handler];
         }
     }];
 }
 
--(void)onChallengeReceived:(NSString*)baseUrl isEnroll:(BOOL)isEnroll metaData:(NSDictionary*)result isDecline:(BOOL)isDecline callback:(RequestCompletionHandler)handler{
-    TokenResponse* tokenResponce;
+-(void)onChallengeReceived:(NSString*)baseUrl isEnroll:(BOOL)isEnroll metaData:(NSDictionary*)result isDecline:(BOOL)isDecline isSecureClick:(BOOL)isSecureClick callback:(RequestCompletionHandler)handler{
     TokenManager* tokenManager = [[TokenManager alloc] init];
     if (isEnroll){
         if (!isDecline){
             [self postNotificationEnrollementStarting];
         }
-        tokenResponce = [tokenManager enroll:result baseUrl:baseUrl isDecline:isDecline];
+        [tokenManager enroll:result baseUrl:baseUrl isDecline:isDecline isSecureClick: isSecureClick callBack:^(TokenResponse *response, NSError *error){
+            TokenResponse* tokenResponse = response;
+            if (tokenResponse == nil){
+                tokenResponse = [tokenManager sign:result baseUrl:baseUrl isDecline:isDecline];
+            }
+            NSMutableDictionary* tokenParameters = [[NSMutableDictionary alloc] init];
+            [tokenParameters setObject:@"username" forKey:@"username"];
+            [tokenParameters setObject:[tokenResponse response] forKey:@"tokenResponse"];
+            [self callServiceAuthenticateToken:baseUrl andParameters:tokenParameters isDecline:isDecline callback:^(NSDictionary *result,NSError *error){
+                if (error) {
+                    handler(nil , error);
+                } else {
+                    //Success
+                    handler(result ,nil);
+                }
+            }];
+        }];
+    } else {
+//        if (tokenResponse == nil){
+        TokenResponse* tokenResponse = [tokenManager sign:result baseUrl:baseUrl isDecline:isDecline];
+//        }
+        NSMutableDictionary* tokenParameters = [[NSMutableDictionary alloc] init];
+        [tokenParameters setObject:@"username" forKey:@"username"];
+        [tokenParameters setObject:[tokenResponse response] forKey:@"tokenResponse"];
+        [self callServiceAuthenticateToken:baseUrl andParameters:tokenParameters isDecline:isDecline callback:^(NSDictionary *result,NSError *error){
+            if (error) {
+                handler(nil , error);
+            } else {
+                //Success
+                handler(result ,nil);
+            }
+        }];
     }
-    if (tokenResponce == nil){
-        tokenResponce = [tokenManager sign:result baseUrl:baseUrl isDecline:isDecline];
-    }
-    NSMutableDictionary* tokenParameters = [[NSMutableDictionary alloc] init];
-    [tokenParameters setObject:@"username" forKey:@"username"];
-    [tokenParameters setObject:[tokenResponce response] forKey:@"tokenResponse"];
-    [self callServiceAuthenticateToken:baseUrl andParameters:tokenParameters isDecline:isDecline callback:^(NSDictionary *result,NSError *error){
-        if (error) {
-            handler(nil , error);
-        } else {
-            //Success
-            handler(result ,nil);
-        }
-    }];
 }
 
 -(void)callServiceAuthenticateToken:(NSString*)baseUrl andParameters:(NSDictionary*)parameters isDecline:(BOOL)isDecline callback:(RequestCompletionHandler)handler{

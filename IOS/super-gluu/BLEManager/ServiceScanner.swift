@@ -17,12 +17,12 @@ class ServiceScanner: NSObject {
     
     var characteristicScanner : CharacteristicScanner!
     
+    var valueForWrite: Data!
+    
 //    let scanner = BackgroundScanner.defaultScanner
     
     override init() {
         super.init()
-        
-        characteristicScanner = CharacteristicScanner()
     }
     
 }
@@ -49,51 +49,58 @@ extension ServiceScanner : CBPeripheralDelegate {
         if let error = error {
             NSLog("didDiscoverCharacteristicsForService error: \(error.localizedDescription)")
         } else {
-//            NSLog("didDiscoverCharacteristicsForService - \(service.description), uuid -- \(service.uuid), --- \(service.characteristics?.count)")
-            
-            //There we should discover characteristics for FFFD service for now
-//            if service.uuid.uuidString == Constants.FFFD {//|| service.uuid.uuidString == Constants.Battery {
-            //Discover whole services
-//                NSLog("Start discover characteristics for service \(service.uuid.uuidString)")
-//                characteristicScanner.service = service
-//                characteristicScanner.peripharal = self.peripheral
-//                characteristicScanner.discoverCharacteristics()
-            
+            //read characteristics
+//            characteristicScanner = CharacteristicScanner()
+//            characteristicScanner.peripharal = self.peripheral
+//            characteristicScanner.service = service
+//            characteristicScanner.valueForWrite = valueForWrite
+//            characteristicScanner.discoverCharacteristics()
             
             for characteristic in service.characteristics! {
-                print("Available value for -- \(characteristic) and characteristic.uuid.uuidString -- \(characteristic.uuid.uuidString)")
-                if characteristic.uuid.uuidString == "2A26" || characteristic.uuid.uuidString == "2A19" || characteristic.uuid.uuidString == "2A27" || characteristic.uuid.uuidString == "2A50" || characteristic.uuid.uuidString == "2A24" || characteristic.uuid.uuidString == "2A28" {//|| characteristic.uuid.uuidString == "2A28" {//"2A19" -- "Battery Level"
-                    let character = characteristic as CBCharacteristic
-                    let type = getTypeOfCahracteristic(characteristic: character)
-                    self.doAction(prop: type, characteristic: character)
+                let character = characteristic as CBCharacteristic
+                let type = getTypeOfCahracteristic(character)
+                if characteristic.uuid.uuidString == Constants.u2fControlPointLength_uuid {
+                    self.doAction(prop: type, characteristic: characteristic)
                 }
-                //            }
             }
-//            }
+            for characteristic in service.characteristics! {
+                let character = characteristic as CBCharacteristic
+                let type = getTypeOfCahracteristic(character)
+                if characteristic.uuid.uuidString == Constants.u2fStatus_uuid {
+                    self.doAction(prop: type, characteristic: characteristic)
+                }
+            }
+            for characteristic in service.characteristics! {
+                let character = characteristic as CBCharacteristic
+                let type = getTypeOfCahracteristic(character)
+                if characteristic.uuid.uuidString == Constants.u2fControlPoint_uuid {
+                    self.doAction(prop: type, characteristic: characteristic)
+                }
+            }
         }
     }
     
-    func doAction(prop : CBCharacteristicProperties, characteristic: CBCharacteristic) {
+    func doAction(prop: CBCharacteristicProperties, characteristic: CBCharacteristic) {
         switch prop {
         case CBCharacteristicProperties.read:
-//            print("Trying to read value for -- \(characteristic)")
-            peripheral.readValue(for: characteristic)
+            print("Trying to read value for -- \(characteristic)")
+            self.peripheral.readValue(for: characteristic)
 //            requesting = true
-            //        case CBCharacteristicProperties.write:
-            //            if let value = "000000".data(using: String.Encoding.utf8) {
-            //                print("Trying to write password for pairing maybe -- \(characteristic)")
-            //                peripharal.writeValue(value, for: characteristic, type: .withResponse)
-            //                requesting = true
-            //            }
+        case CBCharacteristicProperties.write:
+            if let value = valueForWrite {
+                print("Trying to write for -- \(characteristic)")
+                self.peripheral.writeValue(value, for: characteristic, type: .withResponse)
+//                requesting = true
+            }
         case CBCharacteristicProperties.notify:
-            print("Sucribed characteristics -- \(characteristic)")
-            peripheral.setNotifyValue(true, for: characteristic)
-        //            requesting = true
+            print("Sucribed for u2fStatus characteristics -- \(characteristic)")
+            self.peripheral.setNotifyValue(true, for: characteristic)
+//            requesting = true
         default: break
         }
     }
     
-    private func getTypeOfCahracteristic(characteristic : CBCharacteristic)-> CBCharacteristicProperties{
+    fileprivate func getTypeOfCahracteristic(_ characteristic : CBCharacteristic)-> CBCharacteristicProperties{
         if characteristic.properties.contains(.read) {
             return .read
         } else if characteristic.properties.contains(.write) {
@@ -103,7 +110,6 @@ extension ServiceScanner : CBPeripheralDelegate {
         }
         return CBCharacteristicProperties()
     }
-
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         if let error = error {
@@ -111,7 +117,7 @@ extension ServiceScanner : CBPeripheralDelegate {
             NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateValueForCharacteristic), object: characteristic, userInfo: ["error": error])
         } else {
             let value = String(data: characteristic.value!, encoding: String.Encoding.utf8)
-            print("Characteristic value : \(value) with ID \(characteristic.uuid.uuidString)");
+            print("Characteristic value : \(value?.description) with ID \(characteristic.uuid.uuidString)");
             NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateValueForCharacteristic), object: characteristic)
         }
     }
@@ -121,7 +127,8 @@ extension ServiceScanner : CBPeripheralDelegate {
             NSLog("didWriteValueForCharacteristic error: \(error.localizedDescription)")
             NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidWriteValueForCharacteristic), object: characteristic, userInfo: ["error": error])
         } else {
-            NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidWriteValueForCharacteristic), object: characteristic)
+            print("Characteristic write value : \(characteristic.value) with ID \(characteristic.uuid.uuidString)");
+            NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidWriteValueForCharacteristic), object: characteristic.value)
         }
     }
     
@@ -130,7 +137,7 @@ extension ServiceScanner : CBPeripheralDelegate {
             NSLog("didUpdateNotificationStateForCharacteristic error: \(error.localizedDescription)")
             NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateNotificationStateForCharacteristic), object: characteristic, userInfo: ["error": error])
         } else {
-            print("Characteristic value : \(characteristic.value) with ID \(characteristic.uuid.uuidString)");
+            print("Characteristic notification value : \(characteristic.value) with ID \(characteristic.uuid.uuidString)");
             NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateNotificationStateForCharacteristic), object: characteristic)
         }
     }
