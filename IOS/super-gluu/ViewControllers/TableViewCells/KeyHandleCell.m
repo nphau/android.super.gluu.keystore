@@ -12,12 +12,14 @@
 @implementation KeyHandleCell
 
 -(void)setData:(TokenEntity*)tokenEntity{
-    _key = [tokenEntity->keyHandle base64EncodedString];
-    NSURL* urlIssuer = [NSURL URLWithString:tokenEntity->issuer];
-    NSString* keyName = tokenEntity->keyName == nil ? [NSString stringWithFormat:@"key for %@", urlIssuer.host] : tokenEntity->keyName;
-    _keyHandleNameLabel.text = keyName;
-    keyHandleTime.text = [self getTime:tokenEntity->pairingTime];
-    self.accessibilityLabel = tokenEntity->application;
+    if ([tokenEntity isKindOfClass:[TokenEntity class]]){
+        _key = [tokenEntity->keyHandle base64EncodedString];
+        NSURL* urlIssuer = [NSURL URLWithString:tokenEntity->issuer];
+        NSString* keyName = tokenEntity->keyName == nil ? [NSString stringWithFormat:@"key for %@", urlIssuer.host] : tokenEntity->keyName;
+        _keyHandleNameLabel.text = keyName;
+        keyHandleTime.text = [self getTime:tokenEntity->pairingTime];
+        self.accessibilityLabel = tokenEntity->application;
+    }
 }
 
 -(NSString*)getTime:(NSString*)createdTime{

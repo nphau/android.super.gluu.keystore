@@ -45,6 +45,7 @@
 		BB79FA2A1E78309000AEAE58 /* PeripheralScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB79FA251E78309000AEAE58 /* PeripheralScanner.swift */; };
 		BB79FA2B1E78309000AEAE58 /* ServiceScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB79FA261E78309000AEAE58 /* ServiceScanner.swift */; };
 		BB79FA2C1E78309000AEAE58 /* CharacteristicScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB79FA271E78309000AEAE58 /* CharacteristicScanner.swift */; };
+		BB79FA381E7A8B6400AEAE58 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB79FA371E7A8B6400AEAE58 /* Data+Extension.swift */; };
 		BB8703061CA3E5D400EEF9A6 /* gluuIconRed.png in Resources */ = {isa = PBXBuildFile; fileRef = BB8703051CA3E5D400EEF9A6 /* gluuIconRed.png */; };
 		BB9B65A11CB7C5A300784AEF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65A01CB7C5A300784AEF /* QuartzCore.framework */; };
 		BBB7C0E71C884E2600833B12 /* approveIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0E61C884E2600833B12 /* approveIcon.png */; };
@@ -154,6 +155,7 @@
 		BB79FA251E78309000AEAE58 /* PeripheralScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PeripheralScanner.swift; path = "../../super-gluu/BLEManager/PeripheralScanner.swift"; sourceTree = "<group>"; };
 		BB79FA261E78309000AEAE58 /* ServiceScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceScanner.swift; path = "../../super-gluu/BLEManager/ServiceScanner.swift"; sourceTree = "<group>"; };
 		BB79FA271E78309000AEAE58 /* CharacteristicScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CharacteristicScanner.swift; path = "../../super-gluu/BLEManager/CharacteristicScanner.swift"; sourceTree = "<group>"; };
+		BB79FA371E7A8B6400AEAE58 /* Data+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Data+Extension.swift"; path = "Extensions/Data+Extension.swift"; sourceTree = "<group>"; };
 		BB8703051CA3E5D400EEF9A6 /* gluuIconRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gluuIconRed.png; sourceTree = "<group>"; };
 		BB9B659C1CB7C57800784AEF /* UbertestersSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UbertestersSDK.framework; sourceTree = "<group>"; };
 		BB9B659E1CB7C59800784AEF /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
@@ -314,6 +316,7 @@
 		BB37DE531C7E08320016D422 /* super-gluu */ = {
 			isa = PBXGroup;
 			children = (
+				BB79FA361E7A8B2C00AEAE58 /* Extensions */,
 				BB79FA291E78309000AEAE58 /* BLEManager */,
 				BBFCC6D71E5D98CB0015A256 /* Protocols */,
 				BB9B65AF1CBCDA8400784AEF /* Configuration */,
@@ -474,6 +477,14 @@
 			);
 			name = BLEManager;
 			path = "../Pods/ox-push3";
+			sourceTree = "<group>";
+		};
+		BB79FA361E7A8B2C00AEAE58 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				BB79FA371E7A8B6400AEAE58 /* Data+Extension.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		BB9B65AF1CBCDA8400784AEF /* Configuration */ = {
@@ -734,6 +745,7 @@
 				BB37DE591C7E08320016D422 /* AppDelegate.m in Sources */,
 				BBB7C1051C90723300833B12 /* InformationViewController.m in Sources */,
 				BB37DF3D1C7E0B8E0016D422 /* KeysViewController.m in Sources */,
+				BB79FA381E7A8B6400AEAE58 /* Data+Extension.swift in Sources */,
 				BB37DE561C7E08320016D422 /* main.m in Sources */,
 				BB79FA2C1E78309000AEAE58 /* CharacteristicScanner.swift in Sources */,
 				BB3BE1721C882D0600817A46 /* ApproveDenyViewController.m in Sources */,

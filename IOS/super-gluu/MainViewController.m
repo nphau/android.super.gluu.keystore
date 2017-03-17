@@ -45,11 +45,17 @@
     }
     [self checkPushNotification];
     isSecureClick = YES;
+//    [self checkValueForWrite];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self checkDeviceOrientation];
+}
+
+-(void)checkValueForWrite{
+//    ServiceScanner* serviceScanner = [[ServiceScanner alloc] init];
+//    [serviceScanner hexMake];
 }
 
 -(void)initSecureClickScanner:(NSNotification*)notification{
