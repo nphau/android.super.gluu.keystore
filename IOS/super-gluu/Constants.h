@@ -79,6 +79,7 @@
 #define PIN_TYPE_IS_4_DIGIT @"is_4_digit"
 #define SSL_ENABLED @"is_ssl_enabled"
 #define TOUCH_ID_ENABLED @"is_touchID_enabled"
+#define SECURE_CLICK_ENABLED @"secure_click_enabled"
 
 #define LOCKED_DATE @"locked_app_date"
 #define LOCKED_ATTEMPTS_COUNT @"locked_attempts_count"

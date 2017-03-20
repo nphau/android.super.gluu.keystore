@@ -44,8 +44,7 @@
         [self registerForNotification];
     }
     [self checkPushNotification];
-    isSecureClick = YES;
-//    [self checkValueForWrite];
+    isSecureClick = NO;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -53,16 +52,12 @@
     [self checkDeviceOrientation];
 }
 
--(void)checkValueForWrite{
-//    ServiceScanner* serviceScanner = [[ServiceScanner alloc] init];
-//    [serviceScanner hexMake];
-}
-
 -(void)initSecureClickScanner:(NSNotification*)notification{
     NSData* valueData = notification.object;
     scanner = [[PeripheralScanner alloc] init];
     scanner.valueForWrite = valueData;
     [scanner start];
+    [self showAlertViewWithTitle:@"SecureClick" andMessage:@"Short click on button"];
 }
 
 -(void)checkPushNotification{
