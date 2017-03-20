@@ -18,26 +18,32 @@ class CharacteristicScanner: NSObject {
     
     var valueForWrite: Data!
     
-    func discoverCharacteristics(){
+    func discoverCharacteristics(isPairing: Bool){
         characteristicObserver = CharacteristicObserver()
         for characteristic in service.characteristics! {
             let character = characteristic as CBCharacteristic
             let type = getTypeOfCahracteristic(character)
-            if
-//                characteristic.uuid.uuidString == Constants.FirmwareRevision ||
-//                characteristic.uuid.uuidString == Constants.Battery ||
-                characteristic.uuid.uuidString == Constants.u2fControlPointLength_uuid ||
+            
+            //Read characteristics for throwing pairing
+            if isPairing && (characteristic.uuid.uuidString == Constants.FirmwareRevision ||
+                characteristic.uuid.uuidString == Constants.Battery) {
+                self.startDiscover(characteristic, type: type)
+            } else if characteristic.uuid.uuidString == Constants.u2fControlPointLength_uuid ||
                 characteristic.uuid.uuidString == Constants.u2fStatus_uuid ||
                 characteristic.uuid.uuidString == Constants.u2fControlPoint_uuid {
-                
-                characteristicObserver.peripharal = peripharal
-                characteristicObserver.characteristic = character
-                characteristicObserver.valueForWrite = valueForWrite
-                characteristicObserver.prop = type
-                characteristicObserver.doAction()
+                self.startDiscover(characteristic, type: type)
             }
         }
     }
+    
+    private func startDiscover(_ character : CBCharacteristic, type: CBCharacteristicProperties){
+        characteristicObserver.peripharal = peripharal
+        characteristicObserver.characteristic = character
+        characteristicObserver.valueForWrite = valueForWrite
+        characteristicObserver.prop = type
+        characteristicObserver.doAction()
+    }
+    
     
     fileprivate func getTypeOfCahracteristic(_ characteristic : CBCharacteristic)-> CBCharacteristicProperties{
         if characteristic.properties.contains(.read) {

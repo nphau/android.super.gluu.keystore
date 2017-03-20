@@ -197,19 +197,20 @@
 
 -(IBAction)onApprove:(id)sender{
     [delegate approveRequest];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self back];
     [timer invalidate];
     timer = nil;
 }
 
 -(IBAction)onDeny:(id)sender{
     [delegate denyRequest];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self back];
     [timer invalidate];
     timer = nil;
 }
 
--(IBAction)back:(id)sender{
+-(IBAction)back{
+    [self.navigationController popViewControllerAnimated:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

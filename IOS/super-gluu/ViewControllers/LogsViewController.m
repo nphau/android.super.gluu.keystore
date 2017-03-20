@@ -126,7 +126,8 @@
     [approveDenyView setIsLogInfo:YES];
     UserLoginInfo* userInfo = [logsArray objectAtIndex:[sender tag]];
     [approveDenyView setUserInfo:userInfo];
-    [self presentViewController:approveDenyView animated:YES completion:nil];
+    [self.navigationController pushViewController:approveDenyView animated:YES];
+//    [self presentViewController:approveDenyView animated:YES completion:nil];
 }
 
 -(void)initAnimationFromRigthToLeft{

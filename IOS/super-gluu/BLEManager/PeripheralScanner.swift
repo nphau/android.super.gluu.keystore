@@ -37,6 +37,7 @@ class PeripheralScanner : NSObject {
     var serviceScanner: ServiceScanner!
     
     var valueForWrite: Data!
+    var isPairing = false
     
     var scanning = false {
         didSet {
@@ -86,23 +87,12 @@ class PeripheralScanner : NSObject {
             serviceScanner.peripheral = peripheral
             serviceScanner.advertisementDataUUIDs = peripheralCouple.UUIDs
             serviceScanner.valueForWrite = valueForWrite
+            serviceScanner.isPairing = isPairing
             NSLog("connectPeripheral \(peripheral.name) (\(peripheral.state))")
             centralManager.connect(peripheral, options: nil)
             connectTimer = Timer.scheduledTimer(timeInterval: Constants.ConnectTimeout, target: self, selector: #selector(PeripheralScanner.cancelConnections), userInfo: nil, repeats: false)
         }
     }
-    
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-////        tableView.rowHeight = UITableViewAutomaticDimension
-////        tableView.estimatedRowHeight = 60
-//        
-//        centralManager = CBCentralManager(delegate: self, queue: nil)
-//    }
-//    
-//    override func viewDidAppear(_ animated: Bool) {
-//        cancelConnections()
-//    }
     
 }
 
@@ -154,7 +144,6 @@ extension PeripheralScanner : CBCentralManagerDelegate{
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         NSLog("didDisconnectPeripheral \(peripheral.name)")
-//        peripherals.removeAll()
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
