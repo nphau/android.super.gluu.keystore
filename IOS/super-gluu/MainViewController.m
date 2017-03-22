@@ -44,7 +44,8 @@
         [self registerForNotification];
     }
     [self checkPushNotification];
-    isSecureClick = NO;
+    BOOL secureClickEnable = [[NSUserDefaults standardUserDefaults] boolForKey:SECURE_CLICK_ENABLED];
+    isSecureClick = secureClickEnable;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -57,7 +58,7 @@
     scanner = [[PeripheralScanner alloc] init];
     scanner.valueForWrite = valueData;
     [scanner start];
-    [self showAlertViewWithTitle:@"SecureClick" andMessage:@"Short click on button"];
+    [self showAlertViewWithTitle:@"SecureClick" andMessage:@"Short click on device button"];
 }
 
 -(void)checkPushNotification{

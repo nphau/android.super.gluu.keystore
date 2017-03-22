@@ -25,9 +25,12 @@ class CharacteristicScanner: NSObject {
             let type = getTypeOfCahracteristic(character)
             
             //Read characteristics for throwing pairing
-            if isPairing && (characteristic.uuid.uuidString == Constants.FirmwareRevision ||
-                characteristic.uuid.uuidString == Constants.Battery) {
-                self.startDiscover(characteristic, type: type)
+            if isPairing {
+                if characteristic.uuid.uuidString == Constants.FirmwareRevision ||
+                    characteristic.uuid.uuidString == Constants.Battery {
+                    self.startDiscover(characteristic, type: type)
+                    print("Doing pairing")
+                }
             } else if characteristic.uuid.uuidString == Constants.u2fControlPointLength_uuid ||
                 characteristic.uuid.uuidString == Constants.u2fStatus_uuid ||
                 characteristic.uuid.uuidString == Constants.u2fControlPoint_uuid {

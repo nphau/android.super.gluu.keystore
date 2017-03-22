@@ -118,7 +118,9 @@ extension PeripheralScanner : CBCentralManagerDelegate{
         if !contains {
             if let serviceUUIDs = advertisementData[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID] {
                 let isConnectible = advertisementData[CBAdvertisementDataIsConnectable] as! Bool
-                let localName = advertisementData[CBAdvertisementDataLocalNameKey] as! String
+                guard let localName:String = advertisementData[CBAdvertisementDataLocalNameKey] as! String? else {
+                    return
+                }
                 if isConnectible && localName == "SClick U2F" {
                     NSLog("discovered \(peripheral.name ?? "Noname") RSSI: \(RSSI)\n advertisementData: \(advertisementData)")
                     let UUIDs = advertisementData[CBAdvertisementDataServiceUUIDsKey] as! [CBUUID]

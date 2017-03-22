@@ -8,17 +8,26 @@
 
 #import "SettingsTableViewController.h"
 #import "SettingsTableCell.h"
+#import "SettingsDetailsViewController.h"
+#import "BLEDevicesViewController.h"
 
 @implementation SettingsTableViewController{
 
     NSArray *settingsTopics;
+    NSArray *settingsKeys;
+    int selectedSettingIndex;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    settingsTopics = [[NSArray alloc] initWithObjects:@"Pin code", @"TouchID (fingerprint)", @"Trust all", @"U2F ble device(s)", nil];
+    settingsTopics = [[NSArray alloc] initWithObjects:@"Pin code", @"TouchID (fingerprint)", @"Trust all (SSL)", @"U2F BLE device(s)", nil];
+    settingsKeys = [[NSArray alloc] initWithObjects:PIN_PROTECTION_ID, TOUCH_ID_ENABLED, SSL_ENABLED, SECURE_CLICK_ENABLED, nil];
     _settingsTable.tableFooterView = [UIView new];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     [_settingsTable reloadData];
 }
 
@@ -66,6 +75,20 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    selectedSettingIndex = (int)indexPath.row;
+    UIStoryboard *storyboardobj=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    if (selectedSettingIndex == 3){
+        BLEDevicesViewController* devicesController = (BLEDevicesViewController*)[storyboardobj instantiateViewControllerWithIdentifier:@"settingsDevicesView"];
+        [self.navigationController pushViewController:devicesController animated:YES];
+    } else {
+        SettingsDetailsViewController* settingsDetails = (SettingsDetailsViewController*)[storyboardobj instantiateViewControllerWithIdentifier:@"settingsDetailsView"];
+        settingsDetails.settingTitle = settingsTopics[selectedSettingIndex];
+        settingsDetails.settingKey = settingsKeys[selectedSettingIndex];
+        [self.navigationController pushViewController:settingsDetails animated:YES];
+    }
 }
 
 @end
