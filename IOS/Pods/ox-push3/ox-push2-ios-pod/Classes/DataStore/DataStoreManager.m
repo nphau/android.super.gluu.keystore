@@ -27,8 +27,10 @@
 }
 
 -(void)saveTokenEntity:(TokenEntity*)tokenEntity{
-    NSMutableArray* tokenArray = (NSMutableArray*)[[[NSUserDefaults standardUserDefaults] valueForKey:KEY_ENTITIES] copy];
-    if (tokenArray != nil){
+    NSMutableArray* tokenArray;
+    NSMutableArray* tokenArrayUserDef = [[NSUserDefaults standardUserDefaults] valueForKey:KEY_ENTITIES];
+    if (tokenArrayUserDef != nil){
+        tokenArray = [[NSMutableArray alloc] initWithArray: tokenArrayUserDef];
         [tokenArray addObject:tokenEntity];
     } else {
         tokenArray = [[NSMutableArray alloc] initWithObjects:tokenEntity, nil];

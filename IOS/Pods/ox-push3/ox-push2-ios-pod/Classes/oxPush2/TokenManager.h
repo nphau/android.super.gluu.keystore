@@ -17,7 +17,10 @@
     U2FKeyImpl* u2FKey;
 }
 
--(TokenResponse*)enroll:(NSDictionary*)parameters baseUrl:(NSString*)baseUrl isDecline:(BOOL)isDecline;
--(TokenResponse*)sign:(NSDictionary*)parameters baseUrl:(NSString*)baseUrl isDecline:(BOOL)isDecline;
+typedef void(^TokenResponseCompletionHandler)(TokenResponse* tokenResponce, NSError *error);
+typedef void(^AuthenticateResponseeCompletionHandler)(AuthenticateResponse* authenticateResponse, NSError *error);
+
+-(void)enroll:(NSDictionary*)parameters baseUrl:(NSString*)baseUrl isDecline:(BOOL)isDecline isSecureClick:(BOOL)isSecureClick callBack:(TokenResponseCompletionHandler)handler;
+-(TokenResponse*)sign:(NSDictionary*)parameters baseUrl:(NSString*)baseUrl isDecline:(BOOL)isDecline isSecureClick:(BOOL)isSecureClick callBack:(AuthenticateResponseeCompletionHandler)handler;
 
 @end

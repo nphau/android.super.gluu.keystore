@@ -20,6 +20,7 @@ class ServiceScanner: NSObject {
     var valueForWrite: Data!//Data for write to device
     var enrollResponseData: Data!//Data received from device
     var isPairing: Bool!
+    var isEnroll: Bool!
     
 //    let scanner = BackgroundScanner.defaultScanner
     
@@ -96,7 +97,8 @@ extension ServiceScanner : CBPeripheralDelegate {
             enrollResponseData.append(contentsOf: characteristic.value!)
             print("got response from F1D0FFF2-DEAA-ECEE-B42F-C9BA7ED623BB -- \(characteristic.value?.count)")
             if (characteristic.value?.count)! <= 10 {
-                NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateValueForCharacteristic), object: ["responseData": enrollResponseData])
+                NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateValueForCharacteristic), object: ["responseData" : enrollResponseData,
+                                                                "isEnroll" : isEnroll])
             }
         } else {
             print("Characteristic value : \(UInt8(strtoul(value, nil, 16))) with ID \(characteristic.uuid.uuidString)");
