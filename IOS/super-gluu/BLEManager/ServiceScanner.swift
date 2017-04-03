@@ -19,8 +19,10 @@ class ServiceScanner: NSObject {
     
     var valueForWrite: Data!//Data for write to device
     var enrollResponseData: Data!//Data received from device
-    var isPairing: Bool!
-    var isEnroll: Bool!
+    var isPairing = false
+    var isEnroll = false
+    
+    var isErrorSent = false
     
 //    let scanner = BackgroundScanner.defaultScanner
     
@@ -57,16 +59,23 @@ extension ServiceScanner : CBPeripheralDelegate {
             characteristicScanner.peripharal = self.peripheral
             characteristicScanner.service = service
             characteristicScanner.valueForWrite = valueForWrite
-            characteristicScanner.discoverCharacteristics(isPairing: isPairing)
+            characteristicScanner.discoverCharacteristics(isEnroll: isEnroll, isPairing: isPairing)
         }
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         if let error = error {
             NSLog("didUpdateValueForCharacteristic error: \(error.localizedDescription)")
-            NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateValueForCharacteristic), object: characteristic, userInfo: ["error": error])
+            NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateValueForCharacteristic), object: characteristic, userInfo: ["error": error.localizedDescription])
         } else {
-            handleResult(characteristic: characteristic)
+            if self.isEnroll {
+                if self.isPairing {
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateValueForPairing), object: nil)
+                } else {
+                    handleResult(characteristic: characteristic)
+                }
+            } else {
+                handleAuthResult(characteristic: characteristic)}
         }
     }
     
@@ -95,14 +104,45 @@ extension ServiceScanner : CBPeripheralDelegate {
         if characteristic.uuid.uuidString == Constants.u2fStatus_uuid {
             //We should split all response packets (34 by 20 bytes and last one 9 bytes)
             enrollResponseData.append(contentsOf: characteristic.value!)
-            print("got response from F1D0FFF2-DEAA-ECEE-B42F-C9BA7ED623BB -- \(characteristic.value?.count)")
-            if (characteristic.value?.count)! <= 10 {
+            print("got response from F1D0FFF2-DEAA-ECEE-B42F-C9BA7ED623BB -- \(characteristic.value?.count) ---- \(characteristic.value)")
+            if (characteristic.value?.count)! >= 7 && (characteristic.value?.count)! <= 10 {
                 NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateValueForCharacteristic), object: ["responseData" : enrollResponseData,
                                                                 "isEnroll" : isEnroll])
+                isErrorSent = !isErrorSent
+            } else if (characteristic.value?.count)! <= 4 && !isErrorSent {
+                NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateValueForCharacteristic), object: ["error": "error",
+                                                               "isEnroll" : isEnroll])
+                isErrorSent = !isErrorSent
             }
         } else {
             print("Characteristic value : \(UInt8(strtoul(value, nil, 16))) with ID \(characteristic.uuid.uuidString)");
         }
     }
 
+    func handleAuthResult(characteristic: CBCharacteristic){
+        let value = String(data: characteristic.value!, encoding: String.Encoding.utf8)
+        if characteristic.uuid.uuidString == Constants.u2fStatus_uuid {
+            //We should check is response is short (keyHandle generated not using SecureClick) or long (keyHandle generated using SecureClick)
+            print("got response from F1D0FFF2-DEAA-ECEE-B42F-C9BA7ED623BB --- \(characteristic.value)")
+            if characteristic.value?.count == 5 {//Short response
+                enrollResponseData.append(contentsOf: characteristic.value!)
+                NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateValueForCharacteristic), object: ["responseData" : enrollResponseData,
+                                                                                                                                       "isEnroll" : isEnroll])
+                isErrorSent = !isErrorSent
+            } else {//Long response
+                enrollResponseData.append(contentsOf: characteristic.value!)
+            }
+//            if (characteristic.value?.count)! >= 7 && (characteristic.value?.count)! <= 10 {
+//                
+//            } else if (characteristic.value?.count)! <= 4 && !isErrorSent {
+//                NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateValueForCharacteristic), object: ["error": "error",
+//                                                                                                                                       "isEnroll" : isEnroll])
+//                isErrorSent = !isErrorSent
+//            }
+        } else {
+            print("Characteristic value : \(UInt8(strtoul(value, nil, 16))) with ID \(characteristic.uuid.uuidString)");
+        }
+    }
+
+    
 }

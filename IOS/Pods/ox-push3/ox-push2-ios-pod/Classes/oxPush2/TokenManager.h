@@ -18,9 +18,8 @@
 }
 
 typedef void(^TokenResponseCompletionHandler)(TokenResponse* tokenResponce, NSError *error);
-typedef void(^AuthenticateResponseeCompletionHandler)(AuthenticateResponse* authenticateResponse, NSError *error);
 
 -(void)enroll:(NSDictionary*)parameters baseUrl:(NSString*)baseUrl isDecline:(BOOL)isDecline isSecureClick:(BOOL)isSecureClick callBack:(TokenResponseCompletionHandler)handler;
--(TokenResponse*)sign:(NSDictionary*)parameters baseUrl:(NSString*)baseUrl isDecline:(BOOL)isDecline isSecureClick:(BOOL)isSecureClick callBack:(AuthenticateResponseeCompletionHandler)handler;
+-(void)sign:(NSDictionary*)parameters baseUrl:(NSString*)baseUrl isDecline:(BOOL)isDecline isSecureClick:(BOOL)isSecureClick callBack:(TokenResponseCompletionHandler)handler;
 
 @end

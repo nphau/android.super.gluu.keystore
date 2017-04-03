@@ -60,11 +60,11 @@
 
 -(NSData*)makeAuthenticateMessage:(NSData*)applicationSha256 challengeSha256:(NSData*)challengeSha256 keyHandle:(NSData*)keyHandle{
     
-    Byte AUTHENTICATION_RESERVED_BYTE_VALUE = 0x03;
+//    Byte AUTHENTICATION_RESERVED_BYTE_VALUE = 0x03;
     
     NSMutableData* result = [[NSMutableData alloc] init];
     int keyHandleLength = (int)[keyHandle length];
-    [result appendBytes:&AUTHENTICATION_RESERVED_BYTE_VALUE length:1];
+//    [result appendBytes:&AUTHENTICATION_RESERVED_BYTE_VALUE length:1];
     [result appendData:challengeSha256];
     [result appendData:applicationSha256];
     [result appendBytes:&keyHandleLength length:1];
@@ -72,5 +72,6 @@
     
     return result;
 }
+
 
 @end

@@ -12,6 +12,7 @@
 		BB128D861E8006A40041BD21 /* SettingsTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB128D851E8006A40041BD21 /* SettingsTableCell.m */; };
 		BB128D891E8013D90041BD21 /* SettingsDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB128D881E8013D90041BD21 /* SettingsDetailsViewController.m */; };
 		BB128D8E1E8266470041BD21 /* BLEDevicesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB128D8D1E8266470041BD21 /* BLEDevicesViewController.m */; };
+		BB128D931E8903DA0041BD21 /* U2FMessageCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB128D921E8903DA0041BD21 /* U2FMessageCoder.swift */; };
 		BB18D05C1CBCFFAE00A73733 /* PAPasscodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB18D05B1CBCFFAE00A73733 /* PAPasscodeViewController.m */; };
 		BB2458FE1CBD59D600035B5B /* gluuIconAlert.png in Resources */ = {isa = PBXBuildFile; fileRef = BB2458FD1CBD59D600035B5B /* gluuIconAlert.png */; };
 		BB2459021CBE7B6700035B5B /* NSMutableAttributedString+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = BB2459011CBE7B6700035B5B /* NSMutableAttributedString+Color.m */; };
@@ -107,6 +108,7 @@
 		BB128D881E8013D90041BD21 /* SettingsDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsDetailsViewController.m; path = Settings/SettingsDetailsViewController.m; sourceTree = "<group>"; };
 		BB128D8C1E8266470041BD21 /* BLEDevicesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLEDevicesViewController.h; path = Settings/BLEDevicesViewController.h; sourceTree = "<group>"; };
 		BB128D8D1E8266470041BD21 /* BLEDevicesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLEDevicesViewController.m; path = Settings/BLEDevicesViewController.m; sourceTree = "<group>"; };
+		BB128D921E8903DA0041BD21 /* U2FMessageCoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = U2FMessageCoder.swift; path = "super-gluu/BLEManager/U2FMessageCoder/U2FMessageCoder.swift"; sourceTree = SOURCE_ROOT; };
 		BB18D05A1CBCFFAE00A73733 /* PAPasscodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PAPasscodeViewController.h; path = PAPasscode/PAPasscodeViewController.h; sourceTree = "<group>"; };
 		BB18D05B1CBCFFAE00A73733 /* PAPasscodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAPasscodeViewController.m; path = PAPasscode/PAPasscodeViewController.m; sourceTree = "<group>"; };
 		BB2458FD1CBD59D600035B5B /* gluuIconAlert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gluuIconAlert.png; sourceTree = "<group>"; };
@@ -302,6 +304,14 @@
 				BB128D851E8006A40041BD21 /* SettingsTableCell.m */,
 			);
 			name = Cells;
+			sourceTree = "<group>";
+		};
+		BB128D911E8903950041BD21 /* U2FMessageCoder */ = {
+			isa = PBXGroup;
+			children = (
+				BB128D921E8903DA0041BD21 /* U2FMessageCoder.swift */,
+			);
+			name = U2FMessageCoder;
 			sourceTree = "<group>";
 		};
 		BB18D0591CBCFF9600A73733 /* PAPasscode */ = {
@@ -502,6 +512,7 @@
 		BB79FA291E78309000AEAE58 /* BLEManager */ = {
 			isa = PBXGroup;
 			children = (
+				BB128D911E8903950041BD21 /* U2FMessageCoder */,
 				BB79FA251E78309000AEAE58 /* PeripheralScanner.swift */,
 				BB79FA261E78309000AEAE58 /* ServiceScanner.swift */,
 				BB79FA271E78309000AEAE58 /* CharacteristicScanner.swift */,
@@ -784,6 +795,7 @@
 				BB128D8E1E8266470041BD21 /* BLEDevicesViewController.m in Sources */,
 				BB3BE1721C882D0600817A46 /* ApproveDenyViewController.m in Sources */,
 				BB37DF3E1C7E0B8E0016D422 /* KeyHandleCell.m in Sources */,
+				BB128D931E8903DA0041BD21 /* U2FMessageCoder.swift in Sources */,
 				BB18D05C1CBCFFAE00A73733 /* PAPasscodeViewController.m in Sources */,
 				BB79FA2B1E78309000AEAE58 /* ServiceScanner.swift in Sources */,
 			);

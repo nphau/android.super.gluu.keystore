@@ -131,37 +131,19 @@
         if (!isDecline){
             [self postNotificationEnrollementStarting];
         }
-        [tokenManager enroll:result baseUrl:baseUrl isDecline:isDecline isSecureClick: isSecureClick callBack:^(TokenResponse *response, NSError *error){
-            TokenResponse* tokenResponse = response;
-            if (tokenResponse == nil){
-                tokenResponse = [tokenManager sign:result baseUrl:baseUrl isDecline:isDecline];
-            }
-            NSMutableDictionary* tokenParameters = [[NSMutableDictionary alloc] init];
-            [tokenParameters setObject:@"username" forKey:@"username"];
-            [tokenParameters setObject:[tokenResponse response] forKey:@"tokenResponse"];
-            [self callServiceAuthenticateToken:baseUrl andParameters:tokenParameters isDecline:isDecline callback:^(NSDictionary *result,NSError *error){
-                if (error) {
-                    handler(nil , error);
-                } else {
-                    //Success
-                    handler(result ,nil);
-                }
-            }];
+        [tokenManager enroll:result baseUrl:baseUrl isDecline:isDecline isSecureClick: isSecureClick callBack:^(TokenResponse *tokenResponse, NSError *error){
+//            TokenResponse* tokenResponse = response;
+            //Not sure about this code, maybe should be removed
+//            if (tokenResponse == nil){
+//                [tokenManager sign:result baseUrl:baseUrl isDecline:isDecline isSecureClick:isSecureClick callBack:^(TokenResponse* tokenResponse, NSError *error){
+//                    [self handleTokenResponse:tokenResponse baseUrl:baseUrl isDecline:isDecline callback:handler];
+//                }];
+//            }
+            [self handleTokenResponse:tokenResponse baseUrl:baseUrl isDecline:isDecline callback:handler];
         }];
     } else {
-//        if (tokenResponse == nil){
-        TokenResponse* tokenResponse = [tokenManager sign:result baseUrl:baseUrl isDecline:isDecline];
-//        }
-        NSMutableDictionary* tokenParameters = [[NSMutableDictionary alloc] init];
-        [tokenParameters setObject:@"username" forKey:@"username"];
-        [tokenParameters setObject:[tokenResponse response] forKey:@"tokenResponse"];
-        [self callServiceAuthenticateToken:baseUrl andParameters:tokenParameters isDecline:isDecline callback:^(NSDictionary *result,NSError *error){
-            if (error) {
-                handler(nil , error);
-            } else {
-                //Success
-                handler(result ,nil);
-            }
+        [tokenManager sign:result baseUrl:baseUrl isDecline:isDecline isSecureClick:isSecureClick callBack:^(TokenResponse* tokenResponse, NSError *error){
+            [self handleTokenResponse:tokenResponse baseUrl:baseUrl isDecline:isDecline callback:handler];
         }];
     }
 }
@@ -175,6 +157,27 @@
             handler(result ,nil);
         }
     }];
+}
+
+-(void)handleTokenResponse:(TokenResponse*) tokenResponse baseUrl:(NSString*)baseUrl isDecline:(BOOL)isDecline callback:(RequestCompletionHandler)handler {
+    if (tokenResponse == nil){
+        handler(nil , nil);
+        [UserLoginInfo sharedInstance]->logState = LOGIN_FAILED;
+        [[DataStoreManager sharedInstance] saveUserLoginInfo:[UserLoginInfo sharedInstance]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AUTENTIFICATION_FAILED object:nil];
+    } else {
+        NSMutableDictionary* tokenParameters = [[NSMutableDictionary alloc] init];
+        [tokenParameters setObject:@"username" forKey:@"username"];
+        [tokenParameters setObject:[tokenResponse response] forKey:@"tokenResponse"];
+        [self callServiceAuthenticateToken:baseUrl andParameters:tokenParameters isDecline:isDecline callback:^(NSDictionary *result,NSError *error){
+            if (error) {
+                handler(nil , error);
+            } else {
+                //Success
+                handler(result ,nil);
+            }
+        }];
+    }
 }
 
 -(void)postNotificationAutenticationStarting{

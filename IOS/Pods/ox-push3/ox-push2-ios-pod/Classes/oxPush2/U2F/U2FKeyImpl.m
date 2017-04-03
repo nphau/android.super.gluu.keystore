@@ -165,13 +165,21 @@ int keyHandleLength = 64;
 
 -(void)waitForSecureClickNotification:(NSNotification*)notification{
     NSDictionary* dic = notification.object;
+    if ([dic objectForKey:@"error"]){
+        secureClickHandler != nil ? secureClickHandler(nil, nil) : secureClickAuthHandler(nil, nil);
+    }
     NSData* responseData = [dic objectForKey:@"responseData"];
-    
     BOOL isEnroll = [dic objectForKey:@"isEnroll"];
-    
     if (responseData != nil){
         if (isEnroll){
-            EnrollmentResponse* response = [self makeEnrollmentResponse:responseData crypto:secureClickCrypto userPublicKey:secureClickUserPublicKey keyHandle:secureClickKeyHandle];
+            //So we should extract userPublicKey and keyHandle from response data
+            
+            NSData* userPublicKey = [self extractUserPublicKey:responseData];
+            NSData* keyHandle = [self extractKeyHandle:responseData];
+            NSData* u2FMessage = [self extractU2FMessage:responseData];
+            
+            EnrollmentResponse* response = [self makeEnrollmentResponse:responseData crypto:secureClickCrypto userPublicKey:userPublicKey keyHandle:keyHandle];
+            response.secureClickEnrollData = u2FMessage;
             secureClickHandler(response, nil);
         } else {
             GMEllipticCurveCrypto* crypto = [GMEllipticCurveCrypto generateKeyPairForCurve:
@@ -184,6 +192,52 @@ int keyHandleLength = 64;
             secureClickAuthHandler(response, nil);
         }
     }
+}
+
+-(NSData*)extractUserPublicKey:(NSData*)responseData{
+    NSData* userPublicKey = [[NSData alloc] init];
+    // userPublicKey range 2...65 (0 -u2f message, 1 u2f message length and 65 userPublicKey length)
+    userPublicKey = [responseData subdataWithRange:NSMakeRange(4, 65)];
+    
+    return userPublicKey;
+}
+
+-(NSData*)extractKeyHandle:(NSData*)responseData{
+    NSData* keyHandle = [[NSData alloc] init];
+    // userPublicKey range 67...length (0 reserved byte, 65 userPublicKey length, 1 byte length, length)
+    NSData* keyHandleLengthByte = [responseData subdataWithRange:NSMakeRange(69, 1)];
+    NSString* lengthStr = [keyHandleLengthByte.description substringWithRange:NSMakeRange(1, 2)];
+    int length = [self intFromHexString: lengthStr];
+    keyHandle = [responseData subdataWithRange:NSMakeRange(70, length)];
+    NSLog([NSString stringWithFormat:@"keyHandle length --- %i", length]);
+    return keyHandle;
+}
+
+-(NSData*)extractU2FMessage:(NSData*)responseData{
+    NSData* u2FMessage = [[NSData alloc] init];
+    // userPublicKey range 2...65 (0 -u2f message, 1 -u2f message length)
+    NSData* u2FMessageLengthByte = [responseData subdataWithRange:NSMakeRange(1, 2)];
+    NSString* lengthStr = [u2FMessageLengthByte.description substringWithRange:NSMakeRange(1, 4)];
+    int length = [self intFromHexString: lengthStr];
+    u2FMessage = [responseData subdataWithRange:NSMakeRange(3, length)];//responseData.length-5
+    
+    return u2FMessage;
+}
+
+- (unsigned int)intFromHexString:(NSString *) hexStr
+{
+    unsigned int hexInt = 0;
+    
+    // Create scanner
+    NSScanner *scanner = [NSScanner scannerWithString:hexStr];
+    
+    // Tell scanner to skip the # character
+    [scanner setCharactersToBeSkipped:[NSCharacterSet characterSetWithCharactersInString:@"#"]];
+    
+    // Scan hex value
+    [scanner scanHexInt:&hexInt];
+    
+    return hexInt;
 }
 
 @end

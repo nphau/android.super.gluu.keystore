@@ -59,7 +59,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="375" height="131"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1lt-Wr-UNb" id="J8g-Lv-5NH">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="130"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="131"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" id="gbl-CT-0e2" userLabel="cellBackgroundView">
@@ -112,7 +112,7 @@
                                                 <rect key="frame" x="0.0" y="159" width="375" height="75"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bQO-HN-Zml" id="2s3-7S-Dvh">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="74"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" id="3Y5-jp-uqa" userLabel="cellBackgroundView">
@@ -465,7 +465,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="359" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fEM-pi-ogh" id="tJO-iy-ulk">
-                                                    <rect key="frame" x="0.0" y="0.0" width="359" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="359" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="key's name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Q80-Mo-HG3">
@@ -1166,7 +1166,7 @@ In the event you are using the Services in connection with a device provided by 
         <!--Pin Code View Controller-->
         <scene sceneID="BIF-4m-wP5">
             <objects>
-                <viewController id="Gfe-Ja-dd4" customClass="PinCodeViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="pinViewController" id="Gfe-Ja-dd4" customClass="PinCodeViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eF3-u8-lHJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1269,7 +1269,7 @@ In the event you are using the Services in connection with a device provided by 
         <!--Tab Bar Controller-->
         <scene sceneID="UCM-2a-iBq">
             <objects>
-                <tabBarController id="EoK-Gf-BRf" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="mainTabView" id="EoK-Gf-BRf" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="zQH-Nt-kuH"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="QTx-Se-In1">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -1351,7 +1351,7 @@ In the event you are using the Services in connection with a device provided by 
                                         <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9yN-np-wI3" id="xJe-MP-HKl">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Setting title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="54h-rc-1xH">
@@ -1453,6 +1453,13 @@ In the event you are using the Services in connection with a device provided by 
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Click for 3 seconds for pairing or once in case you've already paired before. Password for pairing - 000000" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JLE-ql-aUS">
+                                        <rect key="frame" x="20" y="145" width="334" height="134"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -1462,6 +1469,7 @@ In the event you are using the Services in connection with a device provided by 
                     <connections>
                         <outlet property="settingsSwitch" destination="G0e-Il-HwI" id="DUm-7V-aVd"/>
                         <outlet property="settingsTitleLabel" destination="VC7-zX-U1B" id="mtR-I2-SBV"/>
+                        <outlet property="textLabel" destination="JLE-ql-aUS" id="b3T-jt-Bbc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FNU-hd-pDf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1664,7 +1672,7 @@ In the event you are using the Services in connection with a device provided by 
         <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Rgr-ya-ssd"/>
-        <segue reference="HKO-CF-hFe"/>
+        <segue reference="8WU-5C-hkf"/>
+        <segue reference="mPM-80-Qwo"/>
     </inferredMetricsTieBreakers>
 </document>

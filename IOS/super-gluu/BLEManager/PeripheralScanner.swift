@@ -11,9 +11,11 @@ import CoreBluetooth
 
 struct Constants {
     static let ConnectTimeout: TimeInterval = 5
+    static let DidUpdateValueForPairing = "DidUpdateValueForPairing"
     static let DidUpdateValueForCharacteristic = "didUpdateValueForCharacteristic"
     static let DidWriteValueForCharacteristic = "didWriteValueForCharacteristic"
     static let DidUpdateNotificationStateForCharacteristic = "didUpdateNotificationStateForCharacteristic"
+    static let DidDisconnectPeripheral = "didDisconnectPeripheral"
     
     static let u2fControlPoint_uuid = "F1D0FFF1-DEAA-ECEE-B42F-C9BA7ED623BB"
     static let u2fStatus_uuid = "F1D0FFF2-DEAA-ECEE-B42F-C9BA7ED623BB"
@@ -38,6 +40,7 @@ class PeripheralScanner : NSObject {
     
     var valueForWrite: Data!
     var isPairing = false
+    var isEnroll = false
     
     var scanning = false {
         didSet {
@@ -88,6 +91,7 @@ class PeripheralScanner : NSObject {
             serviceScanner.advertisementDataUUIDs = peripheralCouple.UUIDs
             serviceScanner.valueForWrite = valueForWrite
             serviceScanner.isPairing = isPairing
+            serviceScanner.isEnroll = isEnroll
             NSLog("connectPeripheral \(peripheral.name) (\(peripheral.state))")
             centralManager.connect(peripheral, options: nil)
             connectTimer = Timer.scheduledTimer(timeInterval: Constants.ConnectTimeout, target: self, selector: #selector(PeripheralScanner.cancelConnections), userInfo: nil, repeats: false)
@@ -146,6 +150,7 @@ extension PeripheralScanner : CBCentralManagerDelegate{
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         NSLog("didDisconnectPeripheral \(peripheral.name)")
+        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidDisconnectPeripheral), object: nil)
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {

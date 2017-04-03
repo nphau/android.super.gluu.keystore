@@ -24,6 +24,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initWidget];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationDidPairPeritheral:) name:DID_UPDATE_VALUE_FOR_PAIRING object:nil];
 }
 
 - (void)initWidget{
@@ -32,6 +34,7 @@
     customSwitch = [[JTMaterialSwitch alloc] init];
     customSwitch.center = CGPointMake(_settingsSwitch.center.x, _settingsSwitch.center.y + _settingsTitleLabel.center.y/1.7);
     [customSwitch setOn:settingStatus animated:YES];
+    _textLabel.hidden = !customSwitch.isOn;
     [customSwitch addTarget:self action:@selector(onSecureClickSelected:) forControlEvents:UIControlEventValueChanged];
     _settingsSwitch.hidden = YES;
     if (!settingStatus){
@@ -62,8 +65,12 @@
         scanner = [[PeripheralScanner alloc] init];
         scanner.isPairing = YES;
         [scanner start];
-        [self showAlertViewWithTitle:@"SecureClick" andText:@"Click for 3 seconds for pairing or once in case you've already paired before. Password for pairing - 000000"];
     }
+    _textLabel.hidden = !sw.isOn;
+}
+
+-(void)notificationDidPairPeritheral:(NSNotification*)notification{
+    [self showAlertViewWithTitle:@"BLE device" andText:@"You've succefully paired"];
 }
 
 -(void)showAlertViewWithTitle:(NSString*)title andText:(NSString*)text{

@@ -21,6 +21,7 @@
 @interface MainViewController () {
     PeripheralScanner* scanner;
     BOOL isSecureClick;
+    BOOL isEnroll;
 }
 
 @end
@@ -44,19 +45,22 @@
         [self registerForNotification];
     }
     [self checkPushNotification];
-    BOOL secureClickEnable = [[NSUserDefaults standardUserDefaults] boolForKey:SECURE_CLICK_ENABLED];
-    isSecureClick = secureClickEnable;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self checkDeviceOrientation];
+    BOOL secureClickEnable = [[NSUserDefaults standardUserDefaults] boolForKey:SECURE_CLICK_ENABLED];
+    isSecureClick = secureClickEnable;
+    NSArray* tokenEntities = [[DataStoreManager sharedInstance] getTokenEntities];
+    isEnroll = [tokenEntities count] > 0 ? NO : YES;
 }
 
 -(void)initSecureClickScanner:(NSNotification*)notification{
     NSData* valueData = notification.object;
     scanner = [[PeripheralScanner alloc] init];
     scanner.valueForWrite = valueData;
+    scanner.isEnroll = isEnroll;
     [scanner start];
     [self showAlertViewWithTitle:@"SecureClick" andMessage:@"Short click on device button"];
 }
@@ -229,7 +233,14 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationRecieved:) name:NOTIFICATION_DECLINE_SUCCESS object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationRecieved:) name:NOTIFICATION_PUSH_TIMEOVER object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationDidDisconnecPeritheralRecieved:) name:DID_DISCONNECT_PERIPHERAL object:nil];
+}
 
+-(void)notificationDidDisconnecPeritheralRecieved:(NSNotification*)notification{
+    [scanButton setEnabled:YES];
+    NSArray* tokenEntities = [[DataStoreManager sharedInstance] getTokenEntities];
+    isEnroll = [tokenEntities count] > 0 ? NO : YES;
 }
 
 -(void)notificationRecieved:(NSNotification*)notification{
@@ -539,7 +550,7 @@
     [UserLoginInfo sharedInstance]->issuer = issuer;
     [UserLoginInfo sharedInstance]->userName = username;
     NSArray* tokenEntities = [[DataStoreManager sharedInstance] getTokenEntitiesByID:app];
-    BOOL isEnroll = [tokenEntities count] > 0 ? NO : YES;
+    isEnroll = [tokenEntities count] > 0 ? NO : YES;
     if (isEnroll){
         NSString* type = NSLocalizedString(@"Enrol", @"Enrol");
         [UserLoginInfo sharedInstance]->authenticationType = type;

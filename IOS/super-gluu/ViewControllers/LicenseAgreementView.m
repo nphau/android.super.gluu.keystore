@@ -175,11 +175,17 @@
 }
 
 -(void)loadPinView{
-    [self performSegueWithIdentifier:@"pinViewSegue" sender:self];
+//    [self performSegueWithIdentifier:@"pinViewSegue" sender:self];
+    UIStoryboard *storyboardobj=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    PinCodeViewController* pinView = (PinCodeViewController*)[storyboardobj instantiateViewControllerWithIdentifier:@"pinViewController"];
+    [self presentViewController:pinView animated:YES completion:nil];
 }
 
 -(void)loadMainView{
-    [self performSegueWithIdentifier:@"mainViewSegue" sender:self];
+//    [self performSegueWithIdentifier:@"mainViewSegue" sender:self];
+    UIStoryboard *storyboardobj=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UITabBarController* mainTabView = (UITabBarController*)[storyboardobj instantiateViewControllerWithIdentifier:@"mainTabView"];
+    [self presentViewController:mainTabView animated:YES completion:nil];
 }
 
 @end
