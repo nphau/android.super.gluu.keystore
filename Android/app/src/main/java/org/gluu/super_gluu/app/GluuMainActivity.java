@@ -36,10 +36,10 @@ import android.view.MenuItem;
 import android.widget.Toast;
 import com.google.gson.Gson;
 
-import org.gluu.super_gluu.app.Activities.GluuApplication;
-import org.gluu.super_gluu.app.Activities.MainActivity;
-import org.gluu.super_gluu.app.CustomGluuAlertView.CustomGluuAlert;
-import org.gluu.super_gluu.app.Fragments.PinCodeFragment.PinCodeFragment;
+import org.gluu.super_gluu.app.activities.GluuApplication;
+import org.gluu.super_gluu.app.activities.MainActivity;
+import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
+import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
 import org.gluu.super_gluu.app.listener.PushNotificationRegistrationListener;
 import org.gluu.super_gluu.app.settings.Settings;

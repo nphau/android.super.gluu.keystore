@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app.Fragments.KeysFragment;
+package org.gluu.super_gluu.app.fragments.KeysFragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
-import org.gluu.super_gluu.app.CustomGluuAlertView.CustomGluuAlert;
+import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.app.KeyHandleInfoFragment;
 import SuperGluu.app.R;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;

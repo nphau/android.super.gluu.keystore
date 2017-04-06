@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app.Fragments.SettingsFragment;
+package org.gluu.super_gluu.app.fragments.SettingsFragment;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -18,12 +18,12 @@ import android.widget.Switch;
 import android.widget.TextView;
 import com.hrules.horizontalnumberpicker.HorizontalNumberPicker;
 import com.hrules.horizontalnumberpicker.HorizontalNumberPickerListener;
-import org.gluu.super_gluu.app.Activities.GluuApplication;
-import org.gluu.super_gluu.app.CustomGluuAlertView.CustomGluuAlert;
-import org.gluu.super_gluu.app.Fragments.PinCodeFragment.PinCodeFragment;
-import org.gluu.super_gluu.app.GluuMainActivity;
-import org.gluu.super_gluu.app.GluuToast.GluuToast;
+import org.gluu.super_gluu.app.activities.GluuApplication;
+import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.app.fingerprint.Fingerprint;
+import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
+import org.gluu.super_gluu.app.GluuMainActivity;
+import org.gluu.super_gluu.app.gluuToast.GluuToast;
 import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.net.CommunicationService;
 
@@ -36,10 +36,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
 
     Button setResetPinButton;
     private Context context;
+    private LayoutInflater inflater;
     private PinCodeFragment pinCodeFragment;
     private LinearLayout attemptsLayout;
     private TextView attemptsLabel;
-//    private Fingerprint fingerprint;
+    private Fingerprint fingerprint;
     private Switch switchFingerprint;
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
@@ -69,7 +70,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
 
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         context = getContext();
-//        fingerprint = new Fingerprint(context);
+        this.inflater = inflater;
+        fingerprint = new Fingerprint(context);
         setResetPinButton = (Button) view.findViewById(R.id.set_reset_pin_button);
         setResetPinButton.setOnClickListener(this);
         attemptsLayout = (LinearLayout) view.findViewById(R.id.numbers_attempts_view);
@@ -120,12 +122,13 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
         switchFingerprint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (switchFingerprint.isChecked() && fingerprint.startFingerprintService()) {
-//                    Settings.setFingerprintEnabled(context, switchFingerprint.isChecked());
-//                    Log.v("TAG", "Fingerprint Settings enable: " + switchFingerprint.isChecked());
-//                } else {
-//                    switchFingerprint.setChecked(false);
-//                }
+                if (switchFingerprint.isChecked() && fingerprint.startFingerprintService()) {
+                    Settings.setFingerprintEnabled(context, switchFingerprint.isChecked());
+                    Log.v("TAG", "Fingerprint Settings enable: " + switchFingerprint.isChecked());
+                } else {
+                    switchFingerprint.setChecked(false);
+                    showToastWithText("Fingerprint is not available for this device");
+                }
 
             }
         });
@@ -135,6 +138,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
                 new IntentFilter("fingerprint_authentication_result"));
 
         return view;
+    }
+
+    private void showToastWithText(String text){
+        GluuToast gluuToast = new GluuToast(context);
+        View view = inflater.inflate(R.layout.gluu_toast, null);
+        gluuToast.showGluuToastWithText(view, text);
     }
 
     private void setPinCode(Boolean isTurnOn) {

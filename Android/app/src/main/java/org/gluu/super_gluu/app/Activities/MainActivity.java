@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app.Activities;
+package org.gluu.super_gluu.app.activities;
 
 import android.app.NotificationManager;
 import android.content.Context;
@@ -8,11 +8,11 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
-import org.gluu.super_gluu.app.CustomGluuAlertView.CustomGluuAlert;
-import org.gluu.super_gluu.app.Fragments.LicenseFragment.LicenseFragment;
-import org.gluu.super_gluu.app.Fragments.LockFragment.LockFragment;
-import org.gluu.super_gluu.app.Fragments.PinCodeFragment.PinCodeFragment;
-import org.gluu.super_gluu.app.Fragments.PinCodeFragment.PinCodeSettingFragment;
+import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
+import org.gluu.super_gluu.app.fragments.LicenseFragment.LicenseFragment;
+import org.gluu.super_gluu.app.fragments.LockFragment.LockFragment;
+import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
+import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeSettingFragment;
 import org.gluu.super_gluu.app.GluuMainActivity;
 import org.gluu.super_gluu.app.KeyHandleInfoFragment;
 import org.gluu.super_gluu.app.fingerprint.Fingerprint;
@@ -33,14 +33,14 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
     public static final String TIME_SERVER = "time-a.nist.gov";
     private static final String DENY_ACTION = "DENY_ACTION";
     private static final String APPROVE_ACTION = "APPROVE_ACTION";
-//    private Fingerprint fingerprint;
+    private Fingerprint fingerprint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-//        fingerprint = new Fingerprint(getApplicationContext());
+        fingerprint = new Fingerprint(getApplicationContext());
         GluuApplication.isTrustAllCertificates = Settings.getSSLEnabled(this);
 
         // Check if we get push notification
@@ -49,14 +49,16 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
         //Check if user tap on Approve/Deny button or just on push body
         if (intent.getAction() != null && intent.getAction().equalsIgnoreCase(APPROVE_ACTION)){
             userChossed("approve", intent);
+            return;
         } else if (intent.getAction() != null && intent.getAction().equalsIgnoreCase(DENY_ACTION)){
             userChossed("deny", intent);
+            return;
         }
         //Check is fingerprint secure enabled in settings
         Boolean isFingerprint = Settings.getFingerprintEnabled(getApplicationContext());
-//        if (isFingerprint && fingerprint.startFingerprintService()){
-//            loadGluuMainActivity();
-//        } else {
+        if (fingerprint != null && isFingerprint && fingerprint.startFingerprintService()){
+            loadGluuMainActivity();
+        } else {
             if (isAppLocked) {
                 loadLockedFragment(true);
             } else {
@@ -72,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
                     fragmentTransaction.commit();
                 }
             }
-//        }
+        }
     }
 
     private void userChossed(String answer, Intent intent){
@@ -235,12 +237,6 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("appLockedTime", lockedTime);
         editor.commit();
-    }
-
-    private void showAlertView(String message) {
-        CustomGluuAlert gluuAlert = new CustomGluuAlert(this);
-        gluuAlert.setMessage(message);
-        gluuAlert.show();
     }
 
     @Override

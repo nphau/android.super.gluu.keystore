@@ -11,7 +11,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import org.gluu.super_gluu.app.GluuToast.GluuToast;
+import org.gluu.super_gluu.app.gluuToast.GluuToast;
 
 import SuperGluu.app.R;
 

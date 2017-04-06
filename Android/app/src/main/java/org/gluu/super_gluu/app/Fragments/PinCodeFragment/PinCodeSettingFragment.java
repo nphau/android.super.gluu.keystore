@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app.Fragments.PinCodeFragment;
+package org.gluu.super_gluu.app.fragments.PinCodeFragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.gluu.super_gluu.app.Fragments.LicenseFragment.LicenseFragment;
+import org.gluu.super_gluu.app.fragments.LicenseFragment.LicenseFragment;
 import SuperGluu.app.R;
 
 /**

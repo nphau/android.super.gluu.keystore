@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app.Fragments.LockFragment;
+package org.gluu.super_gluu.app.fragments.LockFragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.simonpercic.rxtime.RxTime;
-import org.gluu.super_gluu.app.Activities.MainActivity;
-import org.gluu.super_gluu.app.CustomGluuAlertView.CustomGluuAlert;
+import org.gluu.super_gluu.app.activities.MainActivity;
+import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.app.settings.Settings;
 
 import SuperGluu.app.R;

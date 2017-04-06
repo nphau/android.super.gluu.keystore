@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app.Fragments.LogsFragment;
+package org.gluu.super_gluu.app.fragments.LogsFragment;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.gluu.super_gluu.app.ApproveDenyFragment;
-import org.gluu.super_gluu.app.CustomGluuAlertView.CustomGluuAlert;
+import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.app.LogState;
 import SuperGluu.app.R;
 import org.gluu.super_gluu.app.model.LogInfo;

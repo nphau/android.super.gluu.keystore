@@ -21,8 +21,8 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
 
-import org.gluu.super_gluu.app.Activities.GluuApplication;
-import org.gluu.super_gluu.app.Activities.MainActivity;
+import org.gluu.super_gluu.app.activities.GluuApplication;
+import org.gluu.super_gluu.app.activities.MainActivity;
 import org.gluu.super_gluu.util.Utils;
 
 import SuperGluu.app.R;

@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app.Fragments.LogsFragment;
+package org.gluu.super_gluu.app.fragments.LogsFragment;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

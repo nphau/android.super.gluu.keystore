@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app.Services;
+package org.gluu.super_gluu.app.services;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -16,8 +16,8 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import org.gluu.super_gluu.app.Activities.GluuApplication;
-import org.gluu.super_gluu.app.Activities.MainActivity;
+import org.gluu.super_gluu.app.activities.GluuApplication;
+import org.gluu.super_gluu.app.activities.MainActivity;
 import org.gluu.super_gluu.app.GluuMainActivity;
 import org.gluu.super_gluu.util.Utils;
 
@@ -75,7 +75,7 @@ public class SuperGluuFirebaseMessagingService extends FirebaseMessagingService 
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.app_icon_push_image)
+                .setSmallIcon(R.drawable.app_icon_push)
                 .setContentText(title)
                 .setSound(defaultSoundUri)
                 .setDefaults(Notification.DEFAULT_ALL)
