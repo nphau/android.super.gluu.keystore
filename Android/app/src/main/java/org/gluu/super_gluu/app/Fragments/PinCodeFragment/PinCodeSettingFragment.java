@@ -62,13 +62,6 @@ public class PinCodeSettingFragment extends Fragment implements View.OnClickList
 
     }
 
-
-    public Boolean getPincodeEnabled(){
-        SharedPreferences preferences = getContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        Boolean isPinEnabled = preferences.getBoolean("isPinEnabled", false);
-        return isPinEnabled;
-    }
-
     public void setPincodeEnabled(Boolean isEnabled){
         SharedPreferences preferences = getContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();

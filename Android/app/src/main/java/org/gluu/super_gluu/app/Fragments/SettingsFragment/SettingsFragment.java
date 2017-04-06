@@ -1,7 +1,9 @@
 package org.gluu.super_gluu.app.Fragments.SettingsFragment;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -20,6 +22,7 @@ import org.gluu.super_gluu.app.Activities.GluuApplication;
 import org.gluu.super_gluu.app.CustomGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.app.Fragments.PinCodeFragment.PinCodeFragment;
 import org.gluu.super_gluu.app.GluuMainActivity;
+import org.gluu.super_gluu.app.GluuToast.GluuToast;
 import org.gluu.super_gluu.app.fingerprint.Fingerprint;
 import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.net.CommunicationService;
@@ -36,7 +39,19 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
     private PinCodeFragment pinCodeFragment;
     private LinearLayout attemptsLayout;
     private TextView attemptsLabel;
-    private Fingerprint fingerprint;
+//    private Fingerprint fingerprint;
+    private Switch switchFingerprint;
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            boolean success = intent.getBooleanExtra("message", false);
+            switchFingerprint.setChecked(success);
+            String message = success ? "You've success authenticated by fingerprint" : "You've failed authenticated by fingerprint";
+            showToast(message);
+        }
+    };
 
     @Override
     public void onDestroy() {
@@ -44,11 +59,17 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mMessageReceiver);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         context = getContext();
-        fingerprint = new Fingerprint(context);
+//        fingerprint = new Fingerprint(context);
         setResetPinButton = (Button) view.findViewById(R.id.set_reset_pin_button);
         setResetPinButton.setOnClickListener(this);
         attemptsLayout = (LinearLayout) view.findViewById(R.id.numbers_attempts_view);
@@ -91,20 +112,27 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
             }
         });
 
-        final Switch switchFingerprint = (Switch) view.findViewById(R.id.switch_fingerprint);
+        switchFingerprint = (Switch) view.findViewById(R.id.switch_fingerprint);
         switchFingerprint.setChecked(Settings.getFingerprintEnabled(context));
+        turOn.setChecked(!switchFingerprint.isChecked());
+        setPinCode(turOn.isChecked());
+        Settings.setPinCodeEnabled(context, turOn.isChecked());
         switchFingerprint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (switchFingerprint.isChecked() && fingerprint.startFingerprintService()) {
-                    Settings.setFingerprintEnabled(context, switchFingerprint.isChecked());
-                    Log.v("TAG", "Fingerprint Settings enable: " + switchFingerprint.isChecked());
-                } else {
-                    switchFingerprint.setChecked(false);
-                }
+//                if (switchFingerprint.isChecked() && fingerprint.startFingerprintService()) {
+//                    Settings.setFingerprintEnabled(context, switchFingerprint.isChecked());
+//                    Log.v("TAG", "Fingerprint Settings enable: " + switchFingerprint.isChecked());
+//                } else {
+//                    switchFingerprint.setChecked(false);
+//                }
 
             }
         });
+
+        //Setup message receiver
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
+                new IntentFilter("fingerprint_authentication_result"));
 
         return view;
     }
@@ -173,6 +201,13 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
         // You can also include some extra data.
         intent.putExtra("message", message);
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
+
+    public void showToast(String text){
+        GluuToast gluuToast = new GluuToast(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View view = inflater.inflate(R.layout.gluu_toast, null);
+        gluuToast.showGluuToastWithText(view, text);
     }
 
 }
