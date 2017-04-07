@@ -34,6 +34,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.gson.Gson;
 
 import org.gluu.super_gluu.app.activities.GluuApplication;
@@ -195,6 +199,12 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
         //temporary turn off rotation
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+
+        //Init GoogleMobile AD
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-3932761366188106~2301594871");
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
     @Override

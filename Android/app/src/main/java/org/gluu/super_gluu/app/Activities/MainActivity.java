@@ -7,8 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-
-import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.app.fragments.LicenseFragment.LicenseFragment;
 import org.gluu.super_gluu.app.fragments.LockFragment.LockFragment;
 import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
@@ -17,9 +15,7 @@ import org.gluu.super_gluu.app.GluuMainActivity;
 import org.gluu.super_gluu.app.KeyHandleInfoFragment;
 import org.gluu.super_gluu.app.fingerprint.Fingerprint;
 import org.gluu.super_gluu.app.settings.Settings;
-
 import com.github.simonpercic.rxtime.RxTime;
-
 import SuperGluu.app.R;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
