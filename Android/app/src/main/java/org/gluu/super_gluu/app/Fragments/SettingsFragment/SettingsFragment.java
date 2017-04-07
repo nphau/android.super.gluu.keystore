@@ -79,11 +79,14 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
 
         final Switch turOn = (Switch) view.findViewById(R.id.switch_pin_code);
         turOn.setChecked(Settings.getPinCodeEnabled(context));
-        setPinCode(turOn.isChecked());
         turOn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setPinCode(turOn.isChecked());
+                if (turOn.isChecked()) {
+                    Settings.setFingerprintEnabled(context, !turOn.isChecked());
+                    switchFingerprint.setChecked(!turOn.isChecked());
+                }
             }
         });
         if (Settings.getPinCodeEnabled(context)) {
@@ -116,14 +119,13 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
 
         switchFingerprint = (Switch) view.findViewById(R.id.switch_fingerprint);
         switchFingerprint.setChecked(Settings.getFingerprintEnabled(context));
-        turOn.setChecked(!switchFingerprint.isChecked());
-        setPinCode(turOn.isChecked());
-        Settings.setPinCodeEnabled(context, turOn.isChecked());
         switchFingerprint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (switchFingerprint.isChecked() && fingerprint.startFingerprintService()) {
                     Settings.setFingerprintEnabled(context, switchFingerprint.isChecked());
+                    turOn.setChecked(!switchFingerprint.isChecked());
+                    setPinCode(turOn.isChecked());
                     Log.v("TAG", "Fingerprint Settings enable: " + switchFingerprint.isChecked());
                 } else {
                     switchFingerprint.setChecked(false);
