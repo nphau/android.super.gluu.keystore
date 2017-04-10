@@ -54,13 +54,6 @@
             android:name="org.gluu.super_gluu.app.activities.GluuApplication"
             android:label="">
         </activity>
-        <service
-            android:name="org.gluu.super_gluu.app.PushNotificationService"
-            android:exported="false" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-            </intent-filter>
-        </service>
         <!--For FCM instead of GMS-->
         <service
             android:name="org.gluu.super_gluu.app.services.SuperGluuFirebaseInstanceIDService">
