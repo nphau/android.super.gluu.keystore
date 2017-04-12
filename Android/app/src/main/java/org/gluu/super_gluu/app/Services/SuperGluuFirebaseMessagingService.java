@@ -96,7 +96,7 @@ public class SuperGluuFirebaseMessagingService extends FirebaseMessagingService 
         Intent intent = new Intent(this, MainActivity.class);//GluuMainActivity
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
-        if (type == 0){
+        if (type == 10){
             intent.setAction(DENY_ACTION);
         } else {
             intent.setAction(APPROVE_ACTION);
