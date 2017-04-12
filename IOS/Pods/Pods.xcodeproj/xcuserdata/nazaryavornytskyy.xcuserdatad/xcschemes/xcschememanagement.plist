@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>GoogleToolboxForMac.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>JTMaterialSwitch-JTMaterialSwitch.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -72,7 +77,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7258B6DC6CFAFA97A1561392E2782EE0</key>
+		<key>92BB131FA876445E027D20AE23EA7B5F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9DB57F2B8942C9B6F765027422AEF6C5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -87,17 +97,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>CD7CA44D6C8A2C9C24D2F18BA81BB1B3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DB4AF81E171FF6C7CD1C408A90FAFA1E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>E2E98B9CD754B4954C3FBD110D724837</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E324786C77AED74ED2D229DE0F3AE459</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F594BCB45651E67DCB666E7A2278057A</key>
 		<dict>
 			<key>primary</key>
 			<true/>

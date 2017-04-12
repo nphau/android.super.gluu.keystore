@@ -21,6 +21,23 @@ PODS:
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - CocoaAsyncSocket (7.4.1)
+  - Firebase/AdMob (3.13.0):
+    - Firebase/Core
+    - Google-Mobile-Ads-SDK (= 7.17.0)
+  - Firebase/Core (3.13.0):
+    - FirebaseAnalytics (= 3.7.0)
+    - FirebaseCore (= 3.5.0)
+  - FirebaseAnalytics (3.7.0):
+    - FirebaseCore (~> 3.5)
+    - FirebaseInstanceID (~> 1.0)
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseCore (3.5.0):
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseInstanceID (1.0.9)
+  - Google-Mobile-Ads-SDK (7.17.0)
+  - GoogleToolboxForMac/Defines (2.1.1)
+  - GoogleToolboxForMac/NSData+zlib (2.1.1):
+    - GoogleToolboxForMac/Defines (= 2.1.1)
   - JTMaterialSwitch (1.1)
   - NHNetworkTime (1.5):
     - CocoaAsyncSocket (<= 7.4.1)
@@ -34,6 +51,8 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 2.5)
+  - Firebase/AdMob
+  - Firebase/Core
   - JTMaterialSwitch
   - NHNetworkTime
   - NSHash (~> 1.1.0)
@@ -44,6 +63,12 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   CocoaAsyncSocket: 7cbf214b27f8e7f7574db6a3fd96352ffaed433d
+  Firebase: 5bc34d7b5ff5792e3386c8b28dc6265deeab0da4
+  FirebaseAnalytics: 0d1b7d81d5021155be37702a94ba1ec16d45365d
+  FirebaseCore: 1c0a13bf59bb95cdd19577252499f0ec6a03e999
+  FirebaseInstanceID: 2d0518b1378fe9d685ef40cbdd63d2fdc1125339
+  Google-Mobile-Ads-SDK: a8bf4211624999b73e4184be516f94770b139525
+  GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   JTMaterialSwitch: cad8093c3773ff9f6c60005c98d269eb869b5e04
   NHNetworkTime: 945d229cb2c3f43013a17bc717328a5045125f8b
   NSHash: 61d598c6d48957c5557f1eef0aeafd6ef5ec5fb7
@@ -51,6 +76,6 @@ SPEC CHECKSUMS:
   QRCodeReaderViewController: 6538745c8f4ffa9407a26bd7f9489ea01739e7b0
   SCLAlertView-Objective-C: 25f7ea3a3526dde177d8b8056a0b88fe4187651e
 
-PODFILE CHECKSUM: 9572e445e106676b090589a7ac7d5977a59b1984
+PODFILE CHECKSUM: 958e8ebcda23ad8caafac44c370afbb817205f0f
 
 COCOAPODS: 1.0.0

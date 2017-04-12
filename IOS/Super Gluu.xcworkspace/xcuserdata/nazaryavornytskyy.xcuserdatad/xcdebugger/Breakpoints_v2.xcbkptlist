@@ -90,12 +90,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "super-gluu/AppDelegate.m"
-            timestampString = "509534875.279161"
+            timestampString = "512489392.847009"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "276"
             endingLineNumber = "276"
             landmarkName = "-isTimeOver"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/ox-push3/ox-push2-ios-pod/Classes/oxPush2/U2F/U2FKeyImpl.m"
+            timestampString = "512650631.701152"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
+            landmarkName = "-waitForSecureClickNotification:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

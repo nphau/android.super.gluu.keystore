@@ -13,6 +13,8 @@ pod 'NSHash', '~> 1.1.0'
 pod 'JTMaterialSwitch'
 pod 'NHNetworkTime'
 pod 'SCLAlertView-Objective-C'
+pod 'Firebase/Core'
+pod 'Firebase/AdMob'
 
 # use ox-push2 lib instead of local copy
 pod 'ox-push3', '~> 0.1.8'

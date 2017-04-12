@@ -147,8 +147,10 @@
     KeyHandleCell *cell = (KeyHandleCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     TokenEntity* tokenEntity = (TokenEntity*)[keyHandleArray objectAtIndex:indexPath.row];
     [cell setData:tokenEntity];
-    NSString* keyName = tokenEntity->keyName == nil ? [NSString stringWithFormat:@"key for %@", tokenEntity->application] : tokenEntity->keyName;
-    [keyCells setObject:keyName forKey:tokenEntity->application];
+    if ([tokenEntity isKindOfClass:[TokenEntity class]]){
+        NSString* keyName = tokenEntity->keyName == nil ? [NSString stringWithFormat:@"key for %@", tokenEntity->application] : tokenEntity->keyName;
+        [keyCells setObject:keyName forKey:tokenEntity->application];
+    }
     
     return cell;
 }
