@@ -85,7 +85,7 @@ class U2FMessageCoder {
     private func makeAuthBytes(data: Data)->Array<Data>{
         //data - 152-151
         let tempRange:Range<Int> = 0..<data.count
-        let tempData = makeAuthPoket(data: data, range:tempRange)
+        let tempData = makePoket(data: data, range:tempRange)
         print("tempData -- \(tempData)")
         var dataArray = Array<Data>()
         let count = data.count/19
@@ -107,13 +107,13 @@ class U2FMessageCoder {
                 index = index2
             }
             print("range -- \(range)") //Should be removed after testing
-            firstParameter.append(contentsOf: makeAuthPoket(data: data, range:range))
+            firstParameter.append(contentsOf: makePoket(data: data, range:range))
             dataArray.append(firstParameter)
         }
         let range:Range<Int> = index..<data.count
         print("range -- \(range)") //Should be removed after testing
         var firstParameter = Data.init(bytes: [UInt8(bitPattern: Int8(count))])
-        firstParameter.append(makeAuthPoket(data: data, range:range))
+        firstParameter.append(makePoket(data: data, range:range))
         firstParameter.append(contentsOf: Data.init(bytes: [0x00, 0x00]))
         dataArray.append(firstParameter)
         print("dataArray -- \(dataArray)")
@@ -121,7 +121,7 @@ class U2FMessageCoder {
         return dataArray
     }
     
-    private func makeAuthPoket(data: Data, range: Range<Int>)->Data{
+    private func makePoket(data: Data, range: Range<Int>)->Data{
         var firstParameter = Data()
         let pocket = data.subdata(in: range)
         

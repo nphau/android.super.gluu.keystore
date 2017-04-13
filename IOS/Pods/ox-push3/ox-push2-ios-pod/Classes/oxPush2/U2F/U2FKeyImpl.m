@@ -184,7 +184,7 @@ int keyHandleLength = 64;
         } else {
             GMEllipticCurveCrypto* crypto = [GMEllipticCurveCrypto generateKeyPairForCurve:
                                              GMEllipticCurveSecp256r1];
-            
+            NSData* u2FMessage = [self extractU2FMessage:responseData];
             NSData *signature = [crypto hashSHA256AndSignDataEncoded:responseData];
             UserPresenceVerifier* userPres = [[UserPresenceVerifier alloc] init];
             NSData* userPresence = [userPres verifyUserPresence];
@@ -196,8 +196,8 @@ int keyHandleLength = 64;
 
 -(NSData*)extractUserPublicKey:(NSData*)responseData{
     NSData* userPublicKey = [[NSData alloc] init];
-    // userPublicKey range 2...65 (0 -u2f message, 1 u2f message length and 65 userPublicKey length)
-    userPublicKey = [responseData subdataWithRange:NSMakeRange(4, 65)];
+    // userPublicKey range 1...65 (0 -0x05, from 1 till 65 userPublicKey)
+    userPublicKey = [responseData subdataWithRange:NSMakeRange(1, 65)];
     
     return userPublicKey;
 }
@@ -205,23 +205,18 @@ int keyHandleLength = 64;
 -(NSData*)extractKeyHandle:(NSData*)responseData{
     NSData* keyHandle = [[NSData alloc] init];
     // userPublicKey range 67...length (0 reserved byte, 65 userPublicKey length, 1 byte length, length)
-    NSData* keyHandleLengthByte = [responseData subdataWithRange:NSMakeRange(69, 1)];
+    NSData* keyHandleLengthByte = [responseData subdataWithRange:NSMakeRange(66, 1)];
     NSString* lengthStr = [keyHandleLengthByte.description substringWithRange:NSMakeRange(1, 2)];
     int length = [self intFromHexString: lengthStr];
-    keyHandle = [responseData subdataWithRange:NSMakeRange(70, length)];
-    NSLog([NSString stringWithFormat:@"keyHandle length --- %i", length]);
+    keyHandle = [responseData subdataWithRange:NSMakeRange(67, length)];
     return keyHandle;
 }
 
 -(NSData*)extractU2FMessage:(NSData*)responseData{
     NSData* u2FMessage = [[NSData alloc] init];
-    // userPublicKey range 2...65 (0 -u2f message, 1 -u2f message length)
-    NSData* u2FMessageLengthByte = [responseData subdataWithRange:NSMakeRange(1, 2)];
-    NSString* lengthStr = [u2FMessageLengthByte.description substringWithRange:NSMakeRange(1, 4)];
-    int length = [self intFromHexString: lengthStr];
-    u2FMessage = [responseData subdataWithRange:NSMakeRange(3, length)];//responseData.length-5
+    NSData* u2FMessageBytes = [responseData subdataWithRange:NSMakeRange(0, responseData.length-2)];
     
-    return u2FMessage;
+    return u2FMessageBytes;
 }
 
 - (unsigned int)intFromHexString:(NSString *) hexStr

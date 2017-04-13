@@ -116,7 +116,7 @@
                                             // User authenticated successfully, take appropriate action
                                             NSLog(@"User authenticated successfully, take appropriate action");
                                             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:TOUCH_ID_ENABLED];
-                                            [sw setOn:NO animated:YES];
+                                            [sw setOn:YES animated:YES];
                                             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:PIN_PROTECTION_ID];
                                         } else {
                                             switch (error.code) {
@@ -140,7 +140,7 @@
                                                     break;
                                             }
                                             // User did not authenticate successfully, look at error and take appropriate action
-//                                            [jswStatus setOn:NO animated:YES];
+                                            [sw setOn:YES animated:YES];
                                             
                                         }
                                     });

@@ -94,7 +94,7 @@ Byte CHECK_ONLY = 0x07;
         }
         NSData* controlData = [[NSData alloc] initWithBytes:&USER_PRESENCE_SIGN length:1];
         [u2FKey autenticate:[[AuthenticateRequest alloc] initWithVersion:version control:controlData challenge:challenge application:appParam keyHandle:keyHandle] isSecureClick:isSecureClick callback: ^(AuthenticateResponse *response, NSError *error){
-            TokenResponse* tokenResponse = [self makeAuthenticationResponse:response authenticatedChallenge:challenge isDecline:isDecline authRequest:authRequest baseUrl:baseUrl];
+            TokenResponse* tokenResponse = [self makeAuthenticationResponse:response authenticatedChallenge:challenge isDecline:isDecline isSecureClick: isSecureClick authRequest:authRequest baseUrl:baseUrl];
             handler(tokenResponse, nil);
         }];
     }
@@ -137,7 +137,7 @@ Byte CHECK_ONLY = 0x07;
     return tokenResponse;
 }
 
--(TokenResponse*)makeAuthenticationResponse:(AuthenticateResponse*) authenticateResponse authenticatedChallenge:(NSString*)authenticatedChallenge isDecline:(BOOL)isDecline authRequest:(NSDictionary*) authRequest baseUrl:(NSString*)baseUrl{
+-(TokenResponse*)makeAuthenticationResponse:(AuthenticateResponse*) authenticateResponse authenticatedChallenge:(NSString*)authenticatedChallenge isDecline:(BOOL)isDecline isSecureClick:(BOOL)isSecureClick authRequest:(NSDictionary*) authRequest baseUrl:(NSString*)baseUrl{
     if (authenticateResponse == nil){
         return nil;
     }
@@ -155,7 +155,7 @@ Byte CHECK_ONLY = 0x07;
     NSData *clientData = [NSJSONSerialization dataWithJSONObject:clientMutableData options:NSJSONWritingPrettyPrinted error:nil];
     NSString* clientDataString = [clientData base64EncodedStringWithOptions:0];
     
-    NSData* resp = [codec encodeAuthenticateResponse:authenticateResponse];
+    NSData* resp = isSecureClick ? authenticateResponse.secureClickData : [codec encodeAuthenticateResponse:authenticateResponse];
     
     NSMutableDictionary* response = [[NSMutableDictionary alloc] init];
     [response setObject:[resp base64EncodedString] forKey:@"signatureData"];

@@ -103,7 +103,10 @@ extension ServiceScanner : CBPeripheralDelegate {
         let value = String(data: characteristic.value!, encoding: String.Encoding.utf8)
         if characteristic.uuid.uuidString == Constants.u2fStatus_uuid {
             //We should split all response packets (34 by 20 bytes and last one 9 bytes)
-            enrollResponseData.append(contentsOf: characteristic.value!)
+            let startIndex = enrollResponseData.count == 0 ? 3 : 1
+            let range:Range<Int> = startIndex..<characteristic.value!.count
+            let newPacketBytes = characteristic.value!.subdata(in: range)
+            enrollResponseData.append(contentsOf: newPacketBytes)
             print("got response from F1D0FFF2-DEAA-ECEE-B42F-C9BA7ED623BB -- \(characteristic.value?.count) ---- \(characteristic.value)")
             if (characteristic.value?.count)! >= 7 && (characteristic.value?.count)! <= 10 {
                 NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateValueForCharacteristic), object: ["responseData" : enrollResponseData,

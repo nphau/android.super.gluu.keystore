@@ -241,6 +241,7 @@
     [scanButton setEnabled:YES];
     NSArray* tokenEntities = [[DataStoreManager sharedInstance] getTokenEntities];
     isEnroll = [tokenEntities count] > 0 ? NO : YES;
+    [scanner setScanning:NO];
 }
 
 -(void)notificationRecieved:(NSNotification*)notification{
