@@ -68,7 +68,6 @@ public class SuperGluuFirebaseMessagingService extends FirebaseMessagingService 
         PendingIntent approveIntent = createPendingIntent(20, message);
 
         Intent mainIntent = new Intent(this, MainActivity.class);
-//        mainIntent.putExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
         mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                 | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,mainIntent,0);
@@ -79,7 +78,7 @@ public class SuperGluuFirebaseMessagingService extends FirebaseMessagingService 
                 .setContentText(title)
                 .setSound(defaultSoundUri)
                 .setDefaults(Notification.DEFAULT_ALL)
-                .setTicker("Authentication request")//(message)
+                .setTicker("Authentication request")
                 .setAutoCancel(true)
                 .setVibrate(new long[]{ 100, 250, 100, 250, 100, 250})
                 .setPriority(Notification.PRIORITY_HIGH)
@@ -93,7 +92,7 @@ public class SuperGluuFirebaseMessagingService extends FirebaseMessagingService 
     }
 
     private PendingIntent createPendingIntent(int type, String message){
-        Intent intent = new Intent(this, MainActivity.class);//GluuMainActivity
+        Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
         if (type == 10){
@@ -102,10 +101,9 @@ public class SuperGluuFirebaseMessagingService extends FirebaseMessagingService 
             intent.setAction(APPROVE_ACTION);
         }
         Bundle noBundle = new Bundle();
-        noBundle.putInt("requestType", type);//This is the value I want to pass
+        noBundle.putInt("requestType", type);
         intent.putExtras(noBundle);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, PendingIntent.FLAG_ONE_SHOT);
-                //PendingIntent.FLAG_UPDATE_CURRENT);
 
         return pendingIntent;
     }
