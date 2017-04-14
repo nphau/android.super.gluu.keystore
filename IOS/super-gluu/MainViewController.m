@@ -487,13 +487,6 @@
     }
 }
 
-- (IBAction)infoAction:(id)sender{
-    if (!isStatusViewVisible){
-        [self updateStatus:nil];
-        [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:7.0];
-    }
-}
-
 -(void)updateStatus:(NSString*)status{
     if (status != nil){
         statusLabel.text = status;

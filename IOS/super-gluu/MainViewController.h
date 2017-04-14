@@ -15,7 +15,6 @@
 @interface MainViewController : UIViewController <QRCodeReaderDelegate, ApproveDenyDelegate>{
     
     IBOutlet UIButton* scanButton;
-    IBOutlet UIButton* infoButton;
     IBOutlet UILabel* statusLabel;
     IBOutlet UIView* statusView;
     
@@ -38,7 +37,6 @@
 }
 
 - (IBAction)scanAction:(id)sender;
-- (IBAction)infoAction:(id)sender;
 
 @end
 

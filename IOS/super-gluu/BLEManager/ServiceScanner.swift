@@ -135,13 +135,6 @@ extension ServiceScanner : CBPeripheralDelegate {
             } else {//Long response
                 enrollResponseData.append(contentsOf: characteristic.value!)
             }
-//            if (characteristic.value?.count)! >= 7 && (characteristic.value?.count)! <= 10 {
-//                
-//            } else if (characteristic.value?.count)! <= 4 && !isErrorSent {
-//                NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateValueForCharacteristic), object: ["error": "error",
-//                                                                                                                                       "isEnroll" : isEnroll])
-//                isErrorSent = !isErrorSent
-//            }
         } else {
             print("Characteristic value : \(UInt8(strtoul(value, nil, 16))) with ID \(characteristic.uuid.uuidString)");
         }

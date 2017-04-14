@@ -129,13 +129,6 @@
             [self postNotificationEnrollementStarting];
         }
         [tokenManager enroll:result baseUrl:baseUrl isDecline:isDecline isSecureClick: isSecureClick callBack:^(TokenResponse *tokenResponse, NSError *error){
-//            TokenResponse* tokenResponse = response;
-            //Not sure about this code, maybe should be removed
-//            if (tokenResponse == nil){
-//                [tokenManager sign:result baseUrl:baseUrl isDecline:isDecline isSecureClick:isSecureClick callBack:^(TokenResponse* tokenResponse, NSError *error){
-//                    [self handleTokenResponse:tokenResponse baseUrl:baseUrl isDecline:isDecline callback:handler];
-//                }];
-//            }
             [self handleTokenResponse:tokenResponse baseUrl:baseUrl isDecline:isDecline callback:handler];
         }];
     } else {
