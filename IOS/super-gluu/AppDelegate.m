@@ -14,6 +14,8 @@
 
 //#import <UbertestersSDK/Ubertesters.h>
 
+@import GoogleMobileAds;
+
 @interface AppDelegate ()
 
 @end
@@ -49,6 +51,8 @@
 //    [[Ubertesters shared] initialize];
     
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:1/256.0 green:161/256.0 blue:97/256.0 alpha:1.0]];
+    
+    [GADMobileAds configureWithApplicationID:@"ca-app-pub-3932761366188106~2301594871"];
     
     return YES;
 }

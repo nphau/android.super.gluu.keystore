@@ -52,6 +52,7 @@
 		BB79FA2C1E78309000AEAE58 /* CharacteristicScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB79FA271E78309000AEAE58 /* CharacteristicScanner.swift */; };
 		BB79FA381E7A8B6400AEAE58 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB79FA371E7A8B6400AEAE58 /* Data+Extension.swift */; };
 		BB8703061CA3E5D400EEF9A6 /* gluuIconRed.png in Resources */ = {isa = PBXBuildFile; fileRef = BB8703051CA3E5D400EEF9A6 /* gluuIconRed.png */; };
+		BB87A2811EA0DAD8007F70E9 /* MainTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB87A2801EA0DAD8007F70E9 /* MainTabViewController.m */; };
 		BB9B65A11CB7C5A300784AEF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65A01CB7C5A300784AEF /* QuartzCore.framework */; };
 		BBB7C0E71C884E2600833B12 /* approveIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0E61C884E2600833B12 /* approveIcon.png */; };
 		BBB7C0E91C8851B900833B12 /* denyIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0E81C8851B900833B12 /* denyIcon.png */; };
@@ -170,6 +171,8 @@
 		BB79FA271E78309000AEAE58 /* CharacteristicScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CharacteristicScanner.swift; path = "../../super-gluu/BLEManager/CharacteristicScanner.swift"; sourceTree = "<group>"; };
 		BB79FA371E7A8B6400AEAE58 /* Data+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Data+Extension.swift"; path = "Extensions/Data+Extension.swift"; sourceTree = "<group>"; };
 		BB8703051CA3E5D400EEF9A6 /* gluuIconRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gluuIconRed.png; sourceTree = "<group>"; };
+		BB87A27F1EA0DAD8007F70E9 /* MainTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainTabViewController.h; path = MainTab/MainTabViewController.h; sourceTree = "<group>"; };
+		BB87A2801EA0DAD8007F70E9 /* MainTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainTabViewController.m; path = MainTab/MainTabViewController.m; sourceTree = "<group>"; };
 		BB9B659C1CB7C57800784AEF /* UbertestersSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UbertestersSDK.framework; sourceTree = "<group>"; };
 		BB9B659E1CB7C59800784AEF /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		BB9B65A01CB7C5A300784AEF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -480,6 +483,7 @@
 		BB37DF071C7E0B8E0016D422 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				BB87A27C1EA0D93B007F70E9 /* MainTab */,
 				BB128D7F1E8000790041BD21 /* Settings */,
 				BBE787211C99781B00E9E0D7 /* PinCodeViewController.h */,
 				BBE787221C99781B00E9E0D7 /* PinCodeViewController.m */,
@@ -527,6 +531,15 @@
 				BB79FA371E7A8B6400AEAE58 /* Data+Extension.swift */,
 			);
 			name = Extensions;
+			sourceTree = "<group>";
+		};
+		BB87A27C1EA0D93B007F70E9 /* MainTab */ = {
+			isa = PBXGroup;
+			children = (
+				BB87A27F1EA0DAD8007F70E9 /* MainTabViewController.h */,
+				BB87A2801EA0DAD8007F70E9 /* MainTabViewController.m */,
+			);
+			name = MainTab;
 			sourceTree = "<group>";
 		};
 		BB9B65AF1CBCDA8400784AEF /* Configuration */ = {
@@ -788,6 +801,7 @@
 				BB37DE591C7E08320016D422 /* AppDelegate.m in Sources */,
 				BBB7C1051C90723300833B12 /* InformationViewController.m in Sources */,
 				BB37DF3D1C7E0B8E0016D422 /* KeysViewController.m in Sources */,
+				BB87A2811EA0DAD8007F70E9 /* MainTabViewController.m in Sources */,
 				BB128D821E8002890041BD21 /* SettingsTableViewController.m in Sources */,
 				BB79FA381E7A8B6400AEAE58 /* Data+Extension.swift in Sources */,
 				BB37DE561C7E08320016D422 /* main.m in Sources */,
