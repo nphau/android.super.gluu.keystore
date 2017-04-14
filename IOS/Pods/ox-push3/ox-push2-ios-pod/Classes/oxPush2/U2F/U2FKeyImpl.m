@@ -56,7 +56,7 @@ int keyHandleLength = 64;
         [keyHandle appendBytes:&randomByte length:1];
     }
     if (!isDecline){
-        //Save new keys into database
+        //Save new key into database
         TokenEntity* newTokenEntity = [[TokenEntity alloc] init];
         NSString* keyID = application;
         newTokenEntity->ID = keyID;
@@ -91,14 +91,14 @@ int keyHandleLength = 64;
     }
 }
 
--(void)autenticate:(AuthenticateRequest*)request isSecureClick:(BOOL)isSecureClick callback:(SecureClickAuthCompletionHandler)handler{
+-(void)autenticate:(AuthenticateRequest*)request isSecureClick:(BOOL)isSecureClick userName:(NSString*)userName callback:(SecureClickAuthCompletionHandler)handler{
     
     //    NSData* control = [request control];
     NSString* application = [request application];
     NSString* challenge = [request challenge];
     //    NSData* keyHandle = [request keyHandle];
     TokenEntity* tokenEntity = nil;
-    NSArray* tokenEntities = [[DataStoreManager sharedInstance] getTokenEntitiesByID:application];
+    NSArray* tokenEntities = [[DataStoreManager sharedInstance] getTokenEntitiesByID:application userName:userName];
     if ([tokenEntities count] > 0){
         tokenEntity = [tokenEntities objectAtIndex:0];
     } else {

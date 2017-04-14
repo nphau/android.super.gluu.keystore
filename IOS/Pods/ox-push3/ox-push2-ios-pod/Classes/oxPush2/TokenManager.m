@@ -77,7 +77,7 @@ Byte CHECK_ONLY = 0x07;
     
 }
 
--(TokenResponse*)sign:(NSDictionary*)parameters baseUrl:(NSString*)baseUrl isDecline:(BOOL)isDecline isSecureClick:(BOOL)isSecureClick callBack:(TokenResponseCompletionHandler)handler{
+-(TokenResponse*)sign:(NSDictionary*)parameters baseUrl:(NSString*)baseUrl isDecline:(BOOL)isDecline isSecureClick:(BOOL)isSecureClick userName:(NSString*)userName callBack:(TokenResponseCompletionHandler)handler{
     NSArray* autenticateRequests = [parameters objectForKey:JSON_PROPERTY_AUTENTICATION_REQUEST];
     AuthenticateResponse* authenticateResponse = [[AuthenticateResponse alloc] init];
     NSString* authenticatedChallenge;
@@ -93,7 +93,7 @@ Byte CHECK_ONLY = 0x07;
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_UNSUPPORTED_VERSION object:nil];
         }
         NSData* controlData = [[NSData alloc] initWithBytes:&USER_PRESENCE_SIGN length:1];
-        [u2FKey autenticate:[[AuthenticateRequest alloc] initWithVersion:version control:controlData challenge:challenge application:appParam keyHandle:keyHandle] isSecureClick:isSecureClick callback: ^(AuthenticateResponse *response, NSError *error){
+        [u2FKey autenticate:[[AuthenticateRequest alloc] initWithVersion:version control:controlData challenge:challenge application:appParam keyHandle:keyHandle] isSecureClick:isSecureClick userName: userName callback: ^(AuthenticateResponse *response, NSError *error){
             TokenResponse* tokenResponse = [self makeAuthenticationResponse:response authenticatedChallenge:challenge isDecline:isDecline isSecureClick: isSecureClick authRequest:authRequest baseUrl:baseUrl];
             handler(tokenResponse, nil);
         }];

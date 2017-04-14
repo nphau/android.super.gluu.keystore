@@ -28,7 +28,7 @@
     if (bannerView == nil){
         bannerView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
         [self.view addSubview:bannerView];
-        bannerView.center = CGPointMake(bannerView.center.x, [UIScreen mainScreen].bounds.size.height - 50);
+        bannerView.center = CGPointMake(bannerView.center.x, [UIScreen mainScreen].bounds.size.height - 75);
         bannerView.adUnitID = @"ca-app-pub-3932761366188106/5255061278";
         bannerView.rootViewController = self;
         [bannerView loadRequest:[GADRequest request]];

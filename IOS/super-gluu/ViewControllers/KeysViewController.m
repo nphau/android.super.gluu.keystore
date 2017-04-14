@@ -88,7 +88,7 @@
     [alert addButton:@"Save" actionBlock:^(void) {
         NSLog(@"Text value: %@", textField.text);
         if ([self checkUniqueName:textField.text andID:cell.accessibilityLabel]){
-            [[DataStoreManager sharedInstance] setTokenEntitiesNameByID:cell.accessibilityLabel newName:textField.text];
+            [[DataStoreManager sharedInstance] setTokenEntitiesNameByID:cell.accessibilityLabel userName:cell.accessibilityValue newName:textField.text];
             [self loadKeyHandlesFromDatabase];
         } else {
             SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
@@ -181,7 +181,7 @@
 
 -(void)deleteRow{
     TokenEntity* tokenEntity = [keyHandleArray objectAtIndex:rowToDelete];
-    [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:tokenEntity->application];
+    [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:tokenEntity->application userName:tokenEntity->userName];
     [self loadKeyHandlesFromDatabase];
 }
 

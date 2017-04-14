@@ -22,6 +22,6 @@ typedef void(^SecureClickAuthCompletionHandler)(AuthenticateResponse *response, 
 
 -(void)registerRequest:(EnrollmentRequest*)request isDecline:(BOOL)isDecline isSecureClick:(BOOL)isSecureClick callback:(SecureClickCompletionHandler)handler;
 
--(void)autenticate:(AuthenticateRequest*)request isSecureClick:(BOOL)isSecureClick callback:(SecureClickAuthCompletionHandler)handler;
+-(void)autenticate:(AuthenticateRequest*)request isSecureClick:(BOOL)isSecureClick userName:(NSString*)userName callback:(SecureClickAuthCompletionHandler)handler;
 
 @end

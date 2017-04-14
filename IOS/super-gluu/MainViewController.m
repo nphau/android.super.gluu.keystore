@@ -550,7 +550,7 @@
     [UserLoginInfo sharedInstance]->created = created;
     [UserLoginInfo sharedInstance]->issuer = issuer;
     [UserLoginInfo sharedInstance]->userName = username;
-    NSArray* tokenEntities = [[DataStoreManager sharedInstance] getTokenEntitiesByID:app];
+    NSArray* tokenEntities = [[DataStoreManager sharedInstance] getTokenEntitiesByID:app userName:username];
     isEnroll = [tokenEntities count] > 0 ? NO : YES;
     if (isEnroll){
         NSString* type = NSLocalizedString(@"Enrol", @"Enrol");

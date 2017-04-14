@@ -31,7 +31,7 @@
 }
 
 -(void)setupInformation{
-    if (_token != nil){
+    if ([_token isKindOfClass:[TokenEntity class]]){
         NSURL* url = [NSURL URLWithString:_token->application];
         applicationValueLabel.text = url.host;
         issuerValueLabel.text = _token->issuer;
@@ -87,7 +87,7 @@
 }
 
 -(void)deleteKey{
-    [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:_token->application];
+    [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:_token->application userName:_token->userName];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

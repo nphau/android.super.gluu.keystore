@@ -19,6 +19,7 @@
         _keyHandleNameLabel.text = keyName;
         keyHandleTime.text = [self getTime:tokenEntity->pairingTime];
         self.accessibilityLabel = tokenEntity->application;
+        self.accessibilityValue = tokenEntity->userName;
     }
 }
 
