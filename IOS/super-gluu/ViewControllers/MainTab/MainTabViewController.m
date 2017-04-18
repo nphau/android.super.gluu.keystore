@@ -21,6 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //Currently AD view will be shown all the time, should be configurable from Server
     [self initADView];
 }
 
@@ -29,7 +30,7 @@
         bannerView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
         [self.view addSubview:bannerView];
         bannerView.center = CGPointMake(bannerView.center.x, [UIScreen mainScreen].bounds.size.height - 75);
-        bannerView.adUnitID = @"ca-app-pub-3932761366188106/5255061278";
+        bannerView.adUnitID = @"ca-app-pub-3326465223655655/9778254436";
         bannerView.rootViewController = self;
         [bannerView loadRequest:[GADRequest request]];
         NSLog(@"Banner loaded successfully");
