@@ -52,8 +52,6 @@
     [self checkDeviceOrientation];
     BOOL secureClickEnable = [[NSUserDefaults standardUserDefaults] boolForKey:SECURE_CLICK_ENABLED];
     isSecureClick = secureClickEnable;
-    NSArray* tokenEntities = [[DataStoreManager sharedInstance] getTokenEntities];
-    isEnroll = [tokenEntities count] > 0 ? NO : YES;
 }
 
 -(void)initSecureClickScanner:(NSNotification*)notification{
@@ -239,8 +237,6 @@
 
 -(void)notificationDidDisconnecPeritheralRecieved:(NSNotification*)notification{
     [scanButton setEnabled:YES];
-    NSArray* tokenEntities = [[DataStoreManager sharedInstance] getTokenEntities];
-    isEnroll = [tokenEntities count] > 0 ? NO : YES;
     [scanner setScanning:NO];
 }
 
@@ -543,8 +539,7 @@
     [UserLoginInfo sharedInstance]->created = created;
     [UserLoginInfo sharedInstance]->issuer = issuer;
     [UserLoginInfo sharedInstance]->userName = username;
-    NSArray* tokenEntities = [[DataStoreManager sharedInstance] getTokenEntitiesByID:app userName:username];
-    isEnroll = [tokenEntities count] > 0 ? NO : YES;
+    isEnroll = [method isEqualToString:@"enroll"] ? YES : NO;
     if (isEnroll){
         NSString* type = NSLocalizedString(@"Enrol", @"Enrol");
         [UserLoginInfo sharedInstance]->authenticationType = type;
