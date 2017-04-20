@@ -31,7 +31,6 @@ int keyHandleLength = 64;
     GMEllipticCurveCrypto *secureClickCrypto;
     NSData* secureClickUserPublicKey;
     NSMutableData* secureClickKeyHandle;
-    int countAuth;
 }
 
 -(id)init{
@@ -81,8 +80,8 @@ int keyHandleLength = 64;
     if (isSecureClick) {
         NSData* applicationSha256Data = [application SHA256Data];
         NSData* challengeSha256Data = [challenge SHA256Data];
-        [signedData appendData:applicationSha256Data];
         [signedData appendData:challengeSha256Data];
+        [signedData appendData:applicationSha256Data];
         [self initBLE:signedData crypto:crypto userPublicKey:userPublicKey keyHandle:keyHandle callback:handler];
     } else {
         signedData = [codec encodeEnrollementSignedBytes:REGISTRATION_RESERVED_BYTE_VALUE applicationSha256:applicationSha256 challengeSha256:challengeSha256 keyHandle:keyHandle userPublicKey:userPublicKey];
@@ -109,9 +108,6 @@ int keyHandleLength = 64;
     } else {
         //There is no keyPair
     }
-    int count = [[DataStoreManager sharedInstance] incrementCountForToken:tokenEntity];
-    UserPresenceVerifier* userPres = [[UserPresenceVerifier alloc] init];
-    NSData* userPresence = [userPres verifyUserPresence];
     NSData* applicationSha256 = [[application SHA256] dataUsingEncoding:NSUTF8StringEncoding];
     NSData* challengeSha256 = [[challenge SHA256] dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -122,9 +118,11 @@ int keyHandleLength = 64;
         NSData* applicationSha256Data = [application SHA256Data];
         NSData* challengeSha256Data = [challenge SHA256Data];
         signedData = [codec makeAuthenticateMessage:applicationSha256Data challengeSha256:challengeSha256Data keyHandle:request.keyHandle];
-        [self initBLEForAuthentication:signedData count:count callback:handler];
+        [self initBLEForAuthentication:signedData callback:handler];
     } else {
-        
+        int count = [[DataStoreManager sharedInstance] incrementCountForToken:tokenEntity];
+        UserPresenceVerifier* userPres = [[UserPresenceVerifier alloc] init];
+        NSData* userPresence = [userPres verifyUserPresence];
         signedData = [codec encodeAuthenticateSignedBytes:applicationSha256 userPresence:userPresence counter:count challengeSha256:challengeSha256];
         
         GMEllipticCurveCrypto* crypto2 = [GMEllipticCurveCrypto generateKeyPairForCurve:
@@ -156,10 +154,8 @@ int keyHandleLength = 64;
     [[NSNotificationCenter defaultCenter] postNotificationName:INIT_SECURE_CLICK_NOTIFICATION object:valueData];
 }
 
--(void)initBLEForAuthentication:(NSData*)valueData count:(int)count callback:(SecureClickAuthCompletionHandler)handler{
-    
+-(void)initBLEForAuthentication:(NSData*)valueData callback:(SecureClickAuthCompletionHandler)handler{
     secureClickAuthHandler = handler;
-    countAuth = count;
     [[NSNotificationCenter defaultCenter] postNotificationName:INIT_SECURE_CLICK_NOTIFICATION object:valueData];
 }
 
@@ -169,27 +165,36 @@ int keyHandleLength = 64;
         secureClickHandler != nil ? secureClickHandler(nil, nil) : secureClickAuthHandler(nil, nil);
     }
     NSData* responseData = [dic objectForKey:@"responseData"];
-    BOOL isEnroll = [dic objectForKey:@"isEnroll"];
+    NSString* isEnrollStr = [dic objectForKey:@"isEnroll"];
+    BOOL isEnroll = [isEnrollStr boolValue];
     if (responseData != nil){
-        if (isEnroll){
-            //So we should extract userPublicKey and keyHandle from response data
-            
-            NSData* userPublicKey = [self extractUserPublicKey:responseData];
-            NSData* keyHandle = [self extractKeyHandle:responseData];
-            NSData* u2FMessage = [self extractU2FMessage:responseData];
-            
-            EnrollmentResponse* response = [self makeEnrollmentResponse:responseData crypto:secureClickCrypto userPublicKey:userPublicKey keyHandle:keyHandle];
-            response.secureClickEnrollData = u2FMessage;
-            secureClickHandler(response, nil);
+        //response when keyHandle and/or public key not from u2f
+        if (responseData.length == 5){
+            secureClickAuthHandler(nil, nil);
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ERROR object:@"KeyHandle and/or public key not from u2f"];
         } else {
-            GMEllipticCurveCrypto* crypto = [GMEllipticCurveCrypto generateKeyPairForCurve:
-                                             GMEllipticCurveSecp256r1];
-            NSData* u2FMessage = [self extractU2FMessage:responseData];
-            NSData *signature = [crypto hashSHA256AndSignDataEncoded:responseData];
-            UserPresenceVerifier* userPres = [[UserPresenceVerifier alloc] init];
-            NSData* userPresence = [userPres verifyUserPresence];
-            AuthenticateResponse* response = [[AuthenticateResponse alloc] initWithUserPresence:userPresence counter:countAuth signature:signature];
-            secureClickAuthHandler(response, nil);
+            if (isEnroll){
+                //So we should extract userPublicKey and keyHandle from response data
+                NSData* userPublicKey = [self extractUserPublicKey:responseData];
+                NSData* keyHandle = [self extractKeyHandle:responseData];
+                NSData* u2FMessage = [self extractU2FMessage:responseData];
+                NSString* keyHandleStr = [keyHandle base64EncodedString];
+                
+                EnrollmentResponse* response = [self makeEnrollmentResponse:responseData crypto:secureClickCrypto userPublicKey:userPublicKey keyHandle:keyHandle];
+                response.secureClickEnrollData = u2FMessage;
+                secureClickHandler(response, nil);
+            } else {
+                GMEllipticCurveCrypto* crypto = [GMEllipticCurveCrypto generateKeyPairForCurve:
+                                                 GMEllipticCurveSecp256r1];
+                NSData* u2FCounter = [self extractCounter:responseData];
+                NSData *signature = [self extractSignature:responseData];
+                NSData *authMessage = [self extractAuthMessage:responseData];
+                UserPresenceVerifier* userPres = [[UserPresenceVerifier alloc] init];
+                NSData* userPresence = [userPres verifyUserPresence];
+                AuthenticateResponse* response = [[AuthenticateResponse alloc] initWithUserPresence:userPresence counter:u2FCounter signature:signature];
+                response.secureClickData = authMessage;
+                secureClickAuthHandler(response, nil);
+            }
         }
     }
 }
@@ -213,10 +218,32 @@ int keyHandleLength = 64;
 }
 
 -(NSData*)extractU2FMessage:(NSData*)responseData{
-    NSData* u2FMessage = [[NSData alloc] init];
     NSData* u2FMessageBytes = [responseData subdataWithRange:NSMakeRange(0, responseData.length-2)];
     
     return u2FMessageBytes;
+}
+
+-(NSData*)extractCounter:(NSData*)responseData{
+    NSData* u2FCounterBytes = [responseData subdataWithRange:NSMakeRange(0, 4)];
+    
+    return u2FCounterBytes;
+}
+
+-(NSData*)extractSignature:(NSData*)responseData{
+    NSData* u2FSignatureBytes = [responseData subdataWithRange:NSMakeRange(4, responseData.length-6)];
+    
+    return u2FSignatureBytes;
+}
+
+-(NSData*)extractAuthMessage:(NSData*)responseData{
+    NSMutableData* u2FAuthMessageBytes = [[NSMutableData alloc] init];
+    NSData* u2FAuthMessage = [[responseData subdataWithRange:NSMakeRange(0, responseData.length-2)] copy];
+    UserPresenceVerifier* userPres = [[UserPresenceVerifier alloc] init];
+    NSData* userPresence = [userPres verifyUserPresence];
+    [u2FAuthMessageBytes appendData:userPresence];
+    [u2FAuthMessageBytes appendData:u2FAuthMessage];
+    
+    return u2FAuthMessageBytes;
 }
 
 - (unsigned int)intFromHexString:(NSString *) hexStr

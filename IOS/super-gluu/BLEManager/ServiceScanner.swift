@@ -130,10 +130,17 @@ extension ServiceScanner : CBPeripheralDelegate {
             if characteristic.value?.count == 5 {//Short response
                 enrollResponseData.append(contentsOf: characteristic.value!)
                 NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateValueForCharacteristic), object: ["responseData" : enrollResponseData,
-                                                                                                                                       "isEnroll" : isEnroll])
+                                                                                                                                       "isEnroll" : self.isEnroll])
                 isErrorSent = !isErrorSent
             } else {//Long response
-                enrollResponseData.append(contentsOf: characteristic.value!)
+                let startIndex = enrollResponseData.count == 0 ? 3 : 1
+                let range:Range<Int> = startIndex..<characteristic.value!.count
+                let newPacketBytes = characteristic.value!.subdata(in: range)
+                enrollResponseData.append(contentsOf: newPacketBytes)
+                if (characteristic.value?.count)! <= 6 {
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateValueForCharacteristic), object: ["responseData" : enrollResponseData,
+                                                                                                                                           "isEnroll" : self.isEnroll.description])
+                }
             }
         } else {
             print("Characteristic value : \(UInt8(strtoul(value, nil, 16))) with ID \(characteristic.uuid.uuidString)");

@@ -88,7 +88,11 @@ Byte CHECK_ONLY = 0x07;
         NSString* version = [authRequest valueForKey:JSON_PROPERTY_VERSION];
         NSString* appParam = [authRequest valueForKey:JSON_PROPERTY_APP_ID];
         NSString* challenge = [authRequest valueForKey:JSON_PROPERTY_SERVER_CHALLENGE];
-        NSData* keyHandle = [[authRequest valueForKey:JSON_PROPERTY_KEY_HANDLE] dataUsingEncoding:NSUTF8StringEncoding];
+        NSString* keyHandleString = [authRequest valueForKey:JSON_PROPERTY_KEY_HANDLE];
+        keyHandleString = [keyHandleString stringByReplacingOccurrencesOfString:@"_" withString:@"/"];
+        keyHandleString = [keyHandleString stringByReplacingOccurrencesOfString:@"-" withString:@"+"];
+        keyHandleString = [keyHandleString stringByAppendingString:@"="];
+        NSData* keyHandle = [keyHandleString base64DecodedData];//[keyHandleString dataUsingEncoding:NSUTF8StringEncoding];
         if (![version isEqualToString:SUPPORTED_U2F_VERSION]){
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_UNSUPPORTED_VERSION object:nil];
         }
@@ -132,7 +136,7 @@ Byte CHECK_ONLY = 0x07;
     TokenResponse* tokenResponse = [[TokenResponse alloc] init];
     [tokenResponse setResponse:responseJSONString];
     [tokenResponse setChallenge:challenge];
-    [tokenResponse setKeyHandle:[[enrollmentResponse keyHandle] base64EncodedStringWithOptions:0]];
+    [tokenResponse setKeyHandle:[[enrollmentResponse keyHandle] base64EncodedString]];//base64EncodedStringWithOptions:0]];
     
     return tokenResponse;
 }

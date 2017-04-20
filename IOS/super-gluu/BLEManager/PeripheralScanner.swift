@@ -158,8 +158,8 @@ extension PeripheralScanner : CBCentralManagerDelegate{
         UIAlertView(title: "Fail To Connect", message: nil, delegate: nil, cancelButtonTitle: "Dismiss").show()
     }
     
-    func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
-        NSLog("willRestoreState \(dict)")
-    }
+//    func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
+//        NSLog("willRestoreState \(dict)")
+//    }
     
 }

@@ -72,12 +72,6 @@ class U2FMessageCoder {
     
     func separateAuthMessage(data: Data)->Array<Data>{
         let dataArray = U2FMessageCoder.sharedInstance.makeAuthBytes(data: data)
-//        let hexArray = dataArray.map{String(format: "%02X", $0 as! CVarArg)}
-//        var resultDataArray = [Data]()
-//        for dataAr in dataArray {
-//            let dataAr = Data(bytes: ar)
-//            resultDataArray.append(dataAr)
-//        }
         
         return dataArray
     }
@@ -95,7 +89,7 @@ class U2FMessageCoder {
             var range:Range<Int>!
             if i == 0 {
                 range = 0..<10
-                firstParameter = Data.init(bytes: [0x83, 0x00, 0xA0, 0x00, 0x02, 0x03, 0x00, 0x00, 0x00, 0x97])
+                firstParameter = Data.init(bytes: [0x83, 0x00, 0x9a, 0x00, 0x02, 0x03, 0x00, 0x00, 0x00, 0x91])
             } else if i == 1 {
                 firstParameter = Data.init(bytes: [UInt8(bitPattern: Int8(i-1))])
                 index = i*20+9
