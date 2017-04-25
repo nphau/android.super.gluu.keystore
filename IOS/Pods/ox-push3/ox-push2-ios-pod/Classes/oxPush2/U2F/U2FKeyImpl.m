@@ -54,7 +54,7 @@ int keyHandleLength = 64;
         int randomByte = arc4random() % 256;
         [keyHandle appendBytes:&randomByte length:1];
     }
-    if (!isDecline){
+    if (!isDecline && !isSecureClick){
         //Save new key into database
         TokenEntity* newTokenEntity = [[TokenEntity alloc] init];
         NSString* keyID = application;
@@ -84,7 +84,7 @@ int keyHandleLength = 64;
         [signedData appendData:applicationSha256Data];
         [self initBLE:signedData crypto:crypto userPublicKey:userPublicKey keyHandle:keyHandle callback:handler];
     } else {
-        signedData = [codec encodeEnrollementSignedBytes:REGISTRATION_RESERVED_BYTE_VALUE applicationSha256:applicationSha256 challengeSha256:challengeSha256 keyHandle:keyHandle userPublicKey:userPublicKey];
+        signedData = [[NSMutableData alloc] initWithData:[codec encodeEnrollementSignedBytes:REGISTRATION_RESERVED_BYTE_VALUE applicationSha256:applicationSha256 challengeSha256:challengeSha256 keyHandle:keyHandle userPublicKey:userPublicKey]];
         EnrollmentResponse* response = [self makeEnrollmentResponse:signedData crypto:crypto userPublicKey:userPublicKey keyHandle:keyHandle];
         handler(response ,nil);
     }
@@ -117,13 +117,13 @@ int keyHandleLength = 64;
         //Make authentication message for VASCO SecureClick device 
         NSData* applicationSha256Data = [application SHA256Data];
         NSData* challengeSha256Data = [challenge SHA256Data];
-        signedData = [codec makeAuthenticateMessage:applicationSha256Data challengeSha256:challengeSha256Data keyHandle:request.keyHandle];
+        signedData = [[NSMutableData alloc] initWithData:[codec makeAuthenticateMessage:applicationSha256Data challengeSha256:challengeSha256Data keyHandle:request.keyHandle]];
         [self initBLEForAuthentication:signedData callback:handler];
     } else {
         int count = [[DataStoreManager sharedInstance] incrementCountForToken:tokenEntity];
         UserPresenceVerifier* userPres = [[UserPresenceVerifier alloc] init];
         NSData* userPresence = [userPres verifyUserPresence];
-        signedData = [codec encodeAuthenticateSignedBytes:applicationSha256 userPresence:userPresence counter:count challengeSha256:challengeSha256];
+        signedData = [[NSMutableData alloc] initWithData:[codec encodeAuthenticateSignedBytes:applicationSha256 userPresence:userPresence counter:count challengeSha256:challengeSha256]];
         
         GMEllipticCurveCrypto* crypto2 = [GMEllipticCurveCrypto generateKeyPairForCurve:
                                           GMEllipticCurveSecp256r1];
@@ -150,7 +150,7 @@ int keyHandleLength = 64;
     secureClickHandler = handler;
     secureClickCrypto = crypto;
     secureClickUserPublicKey = userPublicKey;
-    secureClickKeyHandle = keyHandle;
+    secureClickKeyHandle = [[NSMutableData alloc] initWithData:keyHandle];
     [[NSNotificationCenter defaultCenter] postNotificationName:INIT_SECURE_CLICK_NOTIFICATION object:valueData];
 }
 
@@ -178,22 +178,31 @@ int keyHandleLength = 64;
                 NSData* userPublicKey = [self extractUserPublicKey:responseData];
                 NSData* keyHandle = [self extractKeyHandle:responseData];
                 NSData* u2FMessage = [self extractU2FMessage:responseData];
-                NSString* keyHandleStr = [keyHandle base64EncodedString];
                 
                 EnrollmentResponse* response = [self makeEnrollmentResponse:responseData crypto:secureClickCrypto userPublicKey:userPublicKey keyHandle:keyHandle];
                 response.secureClickEnrollData = u2FMessage;
-                secureClickHandler(response, nil);
+                if (secureClickHandler == nil){
+                    
+                } else {
+                    secureClickHandler(response, nil);
+                }
             } else {
-                GMEllipticCurveCrypto* crypto = [GMEllipticCurveCrypto generateKeyPairForCurve:
-                                                 GMEllipticCurveSecp256r1];
-                NSData* u2FCounter = [self extractCounter:responseData];
+                int u2FCounter = [self extractCounter:responseData];
                 NSData *signature = [self extractSignature:responseData];
                 NSData *authMessage = [self extractAuthMessage:responseData];
                 UserPresenceVerifier* userPres = [[UserPresenceVerifier alloc] init];
                 NSData* userPresence = [userPres verifyUserPresence];
-                AuthenticateResponse* response = [[AuthenticateResponse alloc] initWithUserPresence:userPresence counter:u2FCounter signature:signature];
+                GMEllipticCurveCrypto* crypto = [GMEllipticCurveCrypto generateKeyPairForCurve:
+                                                  GMEllipticCurveSecp256r1];
+                
+                NSData *signatureData = [crypto hashSHA256AndSignDataEncoded:signature];
+                AuthenticateResponse* response = [[AuthenticateResponse alloc] initWithUserPresence:userPresence counter:u2FCounter signature:signatureData];
                 response.secureClickData = authMessage;
-                secureClickAuthHandler(response, nil);
+                if (secureClickAuthHandler == nil){
+                
+                } else {
+                    secureClickAuthHandler(response, nil);
+                }
             }
         }
     }
@@ -223,10 +232,11 @@ int keyHandleLength = 64;
     return u2FMessageBytes;
 }
 
--(NSData*)extractCounter:(NSData*)responseData{
-    NSData* u2FCounterBytes = [responseData subdataWithRange:NSMakeRange(0, 4)];
-    
-    return u2FCounterBytes;
+-(int)extractCounter:(NSData*)responseData{
+    NSData* u2FCounterBytes = [responseData subdataWithRange:NSMakeRange(0, 1)];
+    NSString* lengthStr = [u2FCounterBytes.description substringWithRange:NSMakeRange(1, 2)];
+    int counter = [self intFromHexString: lengthStr];
+    return counter;
 }
 
 -(NSData*)extractSignature:(NSData*)responseData{

@@ -40,7 +40,7 @@
         if (!oneStep){
             [parameters setObject:[oxRequest userName] forKey:@"username"];
         }
-        NSString* created = [parameters objectForKey:@"created"];
+//        NSString* created = [parameters objectForKey:@"created"];
 //        [[UserLoginInfo sharedInstance] setIssuer:issuer];
 //        [[UserLoginInfo sharedInstance] setCreated:created];
         [[ApiServiceManager sharedInstance] doRequest:oxRequest callback:^(NSDictionary *result,NSError *error){
@@ -80,6 +80,7 @@
                                     [self callServiceChallenge:u2fEndpoint isEnroll:isEnroll andParameters:parameters isDecline:isDecline isSecureClick: isSecureClick userName: username callback:^(NSDictionary *result,NSError *error){
                                         if (error) {
                                             handler(nil , error);
+                                            return;
                                         } else {
                                             //Success
                                             handler(result ,nil);
@@ -92,6 +93,23 @@
                             break;
                         }
                     }
+                    [[ApiServiceManager sharedInstance] doGETUrl:u2fEndpoint :parameters callback:^(NSDictionary *result,NSError *error){
+                        if (error) {
+                            handler(nil , error);
+                            //                                    [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:@""];
+                        } else {
+                            // Success
+                            isResult = YES;
+                            [self callServiceChallenge:u2fEndpoint isEnroll:isEnroll andParameters:parameters isDecline:isDecline isSecureClick: isSecureClick userName: username callback:^(NSDictionary *result,NSError *error){
+                                if (error) {
+                                    handler(nil , error);
+                                } else {
+                                    //Success
+                                    handler(result ,nil);
+                                }
+                            }];
+                        }
+                    }];
                 } else {
                     if (!isDecline){
                         [self postNotificationEnrollementStarting];
@@ -124,6 +142,7 @@
 
 -(void)onChallengeReceived:(NSString*)baseUrl isEnroll:(BOOL)isEnroll metaData:(NSDictionary*)result isDecline:(BOOL)isDecline isSecureClick:(BOOL)isSecureClick userName:(NSString*)userName callback:(RequestCompletionHandler)handler{
     TokenManager* tokenManager = [[TokenManager alloc] init];
+    tokenManager.u2FKey = [[U2FKeyImpl alloc] init];
     if (isEnroll){
         if (!isDecline){
             [self postNotificationEnrollementStarting];

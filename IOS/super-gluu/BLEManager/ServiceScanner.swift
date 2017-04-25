@@ -126,12 +126,12 @@ extension ServiceScanner : CBPeripheralDelegate {
         let value = String(data: characteristic.value!, encoding: String.Encoding.utf8)
         if characteristic.uuid.uuidString == Constants.u2fStatus_uuid {
             //We should check is response is short (keyHandle generated not using SecureClick) or long (keyHandle generated using SecureClick)
-            print("got response from F1D0FFF2-DEAA-ECEE-B42F-C9BA7ED623BB --- \(characteristic.value)")
+            print("got response from F1D0FFF2-DEAA-ECEE-B42F-C9BA7ED623BB --- \(String(describing: characteristic.value))")
             if characteristic.value?.count == 5 {//Short response
-                enrollResponseData.append(contentsOf: characteristic.value!)
-                NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateValueForCharacteristic), object: ["responseData" : enrollResponseData,
-                                                                                                                                       "isEnroll" : self.isEnroll])
-                isErrorSent = !isErrorSent
+//                enrollResponseData.append(contentsOf: characteristic.value!)
+//                NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateValueForCharacteristic), object: ["responseData" : enrollResponseData,
+//                                                                                                                                       "isEnroll" : self.isEnroll])
+//                isErrorSent = !isErrorSent
             } else {//Long response
                 let startIndex = enrollResponseData.count == 0 ? 3 : 1
                 let range:Range<Int> = startIndex..<characteristic.value!.count

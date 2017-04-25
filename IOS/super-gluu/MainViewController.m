@@ -16,12 +16,14 @@
 #import "SCLAlertView.h"
 #import "TokenEntity.h"
 #import "DataStoreManager.h"
-#import "Super_Gluu-swift.h"
+#import "Super_Gluu-Swift.h"
 
 @interface MainViewController () {
     PeripheralScanner* scanner;
     BOOL isSecureClick;
     BOOL isEnroll;
+    
+    OXPushManager* oxPushManager;
 }
 
 @end
@@ -34,6 +36,7 @@
     [self initNotifications];
     [self initQRScanner];
     [self initLocalization];
+    oxPushManager = [[OXPushManager alloc] init];
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(initSecureClickScanner:)    name:INIT_SECURE_CLICK_NOTIFICATION  object:nil];
     [self checkDeviceOrientation];
@@ -443,9 +446,12 @@
     NSString* message = [NSString stringWithFormat:@"%@", NSLocalizedString(@"StartAuthentication", @"Authentication...")];
     [self updateStatus:message];
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
-    OXPushManager* oxPushManager = [[OXPushManager alloc] init];
+    
     [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:NO isSecureClick:isSecureClick callback:^(NSDictionary *result,NSError *error){
         [scanButton setEnabled:YES];
+        if (error){
+            [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:error.localizedDescription];
+        }
     }];
 }
 
@@ -454,7 +460,6 @@
     NSString* message = @"Decline starting";
     [self updateStatus:message];
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
-    OXPushManager* oxPushManager = [[OXPushManager alloc] init];
     [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:YES isSecureClick:isSecureClick callback:^(NSDictionary *result,NSError *error){
         [scanButton setEnabled:YES];
     }];

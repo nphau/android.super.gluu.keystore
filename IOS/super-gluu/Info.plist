@@ -19,7 +19,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -27,12 +27,14 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Super Gluu requires Bluetooth service to work</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Do you want to access to camera?</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This application requires location services to work</string>
+	<string>Super Gluu requires location services to work</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This application requires location services to work</string>
+	<string>Super Gluu requires location services to work</string>
 	<key>NSMotionUsageDescription</key>
 	<string>YES</string>
 	<key>NSPhotoLibraryUsageDescription</key>
