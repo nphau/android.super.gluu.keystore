@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6A858E7909FD7D0E999EE1BC /* Pods_Super_Gluu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA0B4AB7F1B002A0FF2049D /* Pods_Super_Gluu.framework */; };
+		BB05D1C61EB08B34007E0B72 /* NetworkChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = BB05D1C51EB08B34007E0B72 /* NetworkChecker.m */; };
 		BB128D821E8002890041BD21 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB128D811E8002890041BD21 /* SettingsTableViewController.m */; };
 		BB128D861E8006A40041BD21 /* SettingsTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB128D851E8006A40041BD21 /* SettingsTableCell.m */; };
 		BB128D891E8013D90041BD21 /* SettingsDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB128D881E8013D90041BD21 /* SettingsDetailsViewController.m */; };
@@ -101,6 +102,8 @@
 		5BA0B4AB7F1B002A0FF2049D /* Pods_Super_Gluu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Super_Gluu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EB98658935DC37AA97BA494 /* Pods-Super Gluu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Super Gluu.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Super Gluu/Pods-Super Gluu.debug.xcconfig"; sourceTree = "<group>"; };
 		B84F8928A16117787C96522F /* Pods-Super Gluu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Super Gluu.release.xcconfig"; path = "Pods/Target Support Files/Pods-Super Gluu/Pods-Super Gluu.release.xcconfig"; sourceTree = "<group>"; };
+		BB05D1C41EB08B34007E0B72 /* NetworkChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkChecker.h; path = NetworkChecker/NetworkChecker.h; sourceTree = "<group>"; };
+		BB05D1C51EB08B34007E0B72 /* NetworkChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetworkChecker.m; path = NetworkChecker/NetworkChecker.m; sourceTree = "<group>"; };
 		BB128D801E8002890041BD21 /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsTableViewController.h; path = Settings/SettingsTableViewController.h; sourceTree = "<group>"; };
 		BB128D811E8002890041BD21 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsTableViewController.m; path = Settings/SettingsTableViewController.m; sourceTree = "<group>"; };
 		BB128D841E8006A40041BD21 /* SettingsTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsTableCell.h; path = Settings/Cells/SettingsTableCell.h; sourceTree = "<group>"; };
@@ -284,6 +287,15 @@
 				B84F8928A16117787C96522F /* Pods-Super Gluu.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		BB05D1C31EB08B22007E0B72 /* NetworkChecker */ = {
+			isa = PBXGroup;
+			children = (
+				BB05D1C41EB08B34007E0B72 /* NetworkChecker.h */,
+				BB05D1C51EB08B34007E0B72 /* NetworkChecker.m */,
+			);
+			name = NetworkChecker;
 			sourceTree = "<group>";
 		};
 		BB128D7F1E8000790041BD21 /* Settings */ = {
@@ -473,6 +485,7 @@
 		BB37DEF61C7E0B8E0016D422 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				BB05D1C31EB08B22007E0B72 /* NetworkChecker */,
 				BB2458FF1CBE7B4F00035B5B /* NSMutableAttributedString+Color */,
 				BB18D0591CBCFF9600A73733 /* PAPasscode */,
 				BBB7C0FF1C9042A000833B12 /* NSDate-Time-Ago */,
@@ -810,6 +823,7 @@
 				BB3BE1721C882D0600817A46 /* ApproveDenyViewController.m in Sources */,
 				BB37DF3E1C7E0B8E0016D422 /* KeyHandleCell.m in Sources */,
 				BB128D931E8903DA0041BD21 /* U2FMessageCoder.swift in Sources */,
+				BB05D1C61EB08B34007E0B72 /* NetworkChecker.m in Sources */,
 				BB18D05C1CBCFFAE00A73733 /* PAPasscodeViewController.m in Sources */,
 				BB79FA2B1E78309000AEAE58 /* ServiceScanner.swift in Sources */,
 			);

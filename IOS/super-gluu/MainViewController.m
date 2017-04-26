@@ -16,6 +16,7 @@
 #import "SCLAlertView.h"
 #import "TokenEntity.h"
 #import "DataStoreManager.h"
+#import "NetworkChecker.h"
 #import "Super_Gluu-Swift.h"
 
 @interface MainViewController () {
@@ -55,6 +56,7 @@
     [self checkDeviceOrientation];
     BOOL secureClickEnable = [[NSUserDefaults standardUserDefaults] boolForKey:SECURE_CLICK_ENABLED];
     isSecureClick = secureClickEnable;
+    [self checkNetworkConnection];
 }
 
 -(void)initSecureClickScanner:(NSNotification*)notification{
@@ -570,6 +572,52 @@
     transition.subtype = kCATransitionPush;
     [transition setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
     [contentView.layer addAnimation:transition forKey:nil];
+}
+
+-(void)checkNetworkConnection{
+    // Allocate a reachability object
+    NetworkChecker* reach = [NetworkChecker reachabilityWithHostname:@"www.google.com"];
+    
+    // Set the blocks
+    reach.reachableBlock = ^(NetworkChecker *reach)
+    {
+        // keep in mind this is called on a background thread
+        // and if you are updating the UI it needs to happen
+        // on the main thread, like this:
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"REACHABLE!");
+        });
+    };
+    
+    reach.unreachableBlock = ^(NetworkChecker *reach)
+    {
+        NSLog(@"UNREACHABLE!");
+        [self showSystemMessage:@"Network Unavailable" message:@"Your device is currently unable to establish a network connection. You will need a connection to approve or deny authentication requests with Super Gluu."];
+    };
+    
+    // Start the notifier, which will cause the reachability object to retain itself!
+    [reach startNotifier];
+}
+
+-(void)showSystemMessage:(NSString*) title message: (NSString*)message {
+    UIAlertController * alert = [UIAlertController
+                                 alertControllerWithTitle:title
+                                 message:message
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    
+    
+    
+    UIAlertAction* yesButton = [UIAlertAction
+                                actionWithTitle:@"OK"
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action) {
+                                    //Handle your yes please button action here
+                                }];
+    
+    [alert addAction:yesButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 @end
