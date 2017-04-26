@@ -9,7 +9,7 @@
 #import "BLEDevicesViewController.h"
 #import "JTMaterialSwitch.h"
 #import "SCLAlertView.h"
-#import "Super_Gluu-swift.h"
+#import "Super_Gluu-Swift.h"
 
 @interface BLEDevicesViewController (){
 
@@ -32,9 +32,9 @@
     //Init custom uiSwitch
     BOOL settingStatus = [[NSUserDefaults standardUserDefaults] boolForKey:SECURE_CLICK_ENABLED];
     customSwitch = [[JTMaterialSwitch alloc] init];
-    customSwitch.center = CGPointMake(_settingsSwitch.center.x, _settingsSwitch.center.y + _settingsTitleLabel.center.y/1.7);
+    customSwitch.center = CGPointMake(_settingsSwitch.center.x, _settingsSwitch.center.y + _settingsTitleLabel.center.y + _settingsTitleLabel.center.y/2 + 5);
     [customSwitch setOn:settingStatus animated:YES];
-    _textLabel.hidden = !customSwitch.isOn;
+    _infoView.hidden = false;
     [customSwitch addTarget:self action:@selector(onSecureClickSelected:) forControlEvents:UIControlEventValueChanged];
     _settingsSwitch.hidden = YES;
     if (!settingStatus){
@@ -66,7 +66,7 @@
         scanner.isPairing = YES;
         [scanner start];
     }
-    _textLabel.hidden = !sw.isOn;
+//    _infoView.hidden = !sw.isOn;
 }
 
 -(void)notificationDidPairPeritheral:(NSNotification*)notification{

@@ -19,8 +19,8 @@
 @property (nonatomic, assign) NSString *settingKey;
 
 
-//For SSL Settings
-@property (nonatomic, retain) IBOutlet UILabel *sslWarningLabel;
+//Info Settings
+@property (nonatomic, retain) IBOutlet UILabel *infoLabel;
 
 //Pin code additional views
 @property (nonatomic, retain) IBOutlet UIView* pinCodeView;

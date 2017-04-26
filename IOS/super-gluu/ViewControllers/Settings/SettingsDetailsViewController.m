@@ -72,10 +72,14 @@
 }
 
 - (void)updateUI{
+    if ([_settingKey isEqualToString:TOUCH_ID_ENABLED]){
+       _infoLabel.text = @"When enabled, access to your Super Gluu app will be protected by your TouchID fingerprint.";
+    }
     if ([_settingKey isEqualToString:SSL_ENABLED]){
-        _sslWarningLabel.hidden = ![[NSUserDefaults standardUserDefaults] boolForKey:_settingKey];
-    } else {
-        _sslWarningLabel.hidden = YES;
+        _infoLabel.text = @"Enable this option only during development. When enabled, Super Gluu will trust self-signed certificates. If the certificate is signed by a certificate authority (CA) trust all should be disabled.";
+    }
+    if ([_settingKey isEqualToString:PIN_PROTECTION_ID]){
+        _infoLabel.text = @"When enabled, access to your Super Gluu app will be protected by a pin code of your choice.";
     }
     if ([_settingKey isEqualToString:PIN_PROTECTION_ID]){
         _pinCodeView.hidden = ![[NSUserDefaults standardUserDefaults] boolForKey:_settingKey];
@@ -164,9 +168,9 @@
 -(void)touchIDErrorMessage:(NSError*)authError{
     SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
     [alert addButton:@"Ok" actionBlock:^(void) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+//        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
     }];
-    [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:[authError.userInfo valueForKey:@"NSLocalizedDescription"] closeButtonTitle:nil duration:0.0f];
+    [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:@"TouchID verification is not available on this device." closeButtonTitle:nil duration:0.0f];//[authError.userInfo valueForKey:@"NSLocalizedDescription"]
 }
 
 -(void)touchIDInfoMessage:(NSString*)message{

@@ -11,7 +11,7 @@
 @interface BLEDevicesViewController : UIViewController
 
 @property (nonatomic, retain) IBOutlet UILabel *settingsTitleLabel;
-@property (nonatomic, retain) IBOutlet UILabel *textLabel;
+@property (nonatomic, retain) IBOutlet UIView *infoView;
 @property (nonatomic, retain) IBOutlet UISwitch *settingsSwitch;
 
 @end
