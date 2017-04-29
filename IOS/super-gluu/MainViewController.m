@@ -49,6 +49,7 @@
         [self registerForNotification];
     }
     [self checkPushNotification];
+    [self checkNetworkConnection];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -56,7 +57,7 @@
     [self checkDeviceOrientation];
     BOOL secureClickEnable = [[NSUserDefaults standardUserDefaults] boolForKey:SECURE_CLICK_ENABLED];
     isSecureClick = secureClickEnable;
-    [self checkNetworkConnection];
+    [_notificationNetworkView checkNetwork];
 }
 
 -(void)initSecureClickScanner:(NSNotification*)notification{
@@ -435,12 +436,14 @@
 
 - (IBAction)scanAction:(id)sender
 {
-    [self initQRScanner];
-    if ([QRCodeReader isAvailable]){
-        [self updateStatus:NSLocalizedString(@"QRCodeScanning", @"QR Code Scanning")];
-        [self presentViewController:qrScanerVC animated:YES completion:NULL];
-    } else {
-        [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:NSLocalizedString(@"AlertMessageNoQRScanning", @"No QR Scanning available")];
+    if (_notificationNetworkView.isNetworkAvailable){
+        [self initQRScanner];
+        if ([QRCodeReader isAvailable]){
+            [self updateStatus:NSLocalizedString(@"QRCodeScanning", @"QR Code Scanning")];
+            [self presentViewController:qrScanerVC animated:YES completion:NULL];
+        } else {
+            [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:NSLocalizedString(@"AlertMessageNoQRScanning", @"No QR Scanning available")];
+        }
     }
 }
 
@@ -501,7 +504,7 @@
         
         [UIView animateWithDuration:0.5 animations:^{
             [statusView setAlpha:1.0];
-            if (IS_IPHONE_4 || IS_IPHONE_5){
+            if (IS_IPHONE_5){//IS_IPHONE_4 ||
                 if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
                 {
                     // code for landscape orientation
@@ -587,17 +590,23 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"REACHABLE!");
+            [_notificationNetworkView checkNetwork];
         });
     };
     
     reach.unreachableBlock = ^(NetworkChecker *reach)
     {
         NSLog(@"UNREACHABLE!");
-        [self showSystemMessage:@"Network Unavailable" message:@"Your device is currently unable to establish a network connection. You will need a connection to approve or deny authentication requests with Super Gluu."];
+        [self showNetworkUnavailableMessage];
     };
     
     // Start the notifier, which will cause the reachability object to retain itself!
     [reach startNotifier];
+}
+
+-(void)showNetworkUnavailableMessage{
+    [self showSystemMessage:@"Network Unavailable" message:@"Your device is currently unable to establish a network connection. You will need a connection to approve or deny authentication requests with Super Gluu."];
+    [_notificationNetworkView checkNetwork];
 }
 
 -(void)showSystemMessage:(NSString*) title message: (NSString*)message {

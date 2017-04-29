@@ -56,10 +56,10 @@
                                         <color key="sectionIndexTrackingBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LogsTableCellID" rowHeight="131" id="1lt-Wr-UNb" customClass="LogsTableCell">
-                                                <rect key="frame" x="-28" y="28" width="376" height="131"/>
+                                                <rect key="frame" x="0.0" y="28" width="320" height="131"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1lt-Wr-UNb" id="J8g-Lv-5NH">
-                                                    <rect key="frame" x="0.0" y="0.0" width="376" height="131"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="131"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" misplaced="YES" id="gbl-CT-0e2" userLabel="cellBackgroundView">
@@ -109,10 +109,10 @@
                                                 </connections>
                                             </tableViewCell>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LogsFailedTableCellID" rowHeight="75" id="bQO-HN-Zml" customClass="LogsTableCell">
-                                                <rect key="frame" x="-28" y="159" width="376" height="75"/>
+                                                <rect key="frame" x="0.0" y="159" width="320" height="75"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bQO-HN-Zml" id="2s3-7S-Dvh">
-                                                    <rect key="frame" x="0.0" y="0.0" width="376" height="75"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" misplaced="YES" id="3Y5-jp-uqa" userLabel="cellBackgroundView">
@@ -588,8 +588,8 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You may be presented with a QR code for enrollment or authentication. Click the button to open your QR scanner." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mMq-pl-qUw">
-                                                <rect key="frame" x="0.0" y="128" width="269" height="76"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="You may be presented with a QR code for enrollment or authentication. Click the button to open your QR scanner." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mMq-pl-qUw">
+                                                <rect key="frame" x="0.0" y="127" width="269" height="85"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <nil key="highlightedColor"/>
@@ -610,6 +610,35 @@
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" misplaced="YES" id="bjj-T3-TOM" userLabel="NoNetworkView" customClass="NotificationNetworkView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="zg5-6b-Unc">
+                                        <rect key="frame" x="210" y="8" width="91" height="24"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                        <state key="normal" title="Retry">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="retry:" destination="bjj-T3-TOM" eventType="touchUpInside" id="0xg-Ny-L0W"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Network unavailable" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ngh-Gf-l42">
+                                        <rect key="frame" x="24" y="9" width="178" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.98431372549999996" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="retryButton" destination="zg5-6b-Unc" id="rof-rT-2t7"/>
+                                </connections>
                             </view>
                             <view contentMode="scaleToFill" id="xUw-eN-IGT" userLabel="NavigationView">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="66"/>
@@ -634,6 +663,7 @@
                     </tabBarItem>
                     <connections>
                         <outlet property="contentView" destination="ogb-Jc-RlP" id="xNJ-B6-Czf"/>
+                        <outlet property="notificationNetworkView" destination="bjj-T3-TOM" id="vQC-5A-nOP"/>
                         <outlet property="scanButton" destination="ffN-SG-7rx" id="l5O-kn-9tP"/>
                         <outlet property="scanTextLabel" destination="mMq-pl-qUw" id="NAd-Qa-KT4"/>
                         <outlet property="statusLabel" destination="0s9-Pu-KnT" id="gkP-5Z-QdY"/>
@@ -644,7 +674,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6bS-RT-Ozd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1840.5" y="-233.5"/>
+            <point key="canvasLocation" x="1840" y="-234"/>
         </scene>
         <!--Approve Deny View Controller-->
         <scene sceneID="Scx-e9-HhI">
@@ -1369,7 +1399,7 @@ In the event you are using the Services in connection with a device provided by 
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="&gt;" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="la3-9R-g2t">
-                                                    <rect key="frame" x="340" y="7" width="26" height="64"/>
+                                                    <rect key="frame" x="340" y="6" width="26" height="64"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                                     <color key="textColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1608,7 +1638,7 @@ In the event you are using the Services in connection with a device provided by 
                                         </subviews>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="atr-ha-ywR">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="atr-ha-ywR">
                                         <rect key="frame" x="16" y="73" width="288" height="93"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                         <string key="text">WARNING: Use only for testing! It's critically important to validate the SSL certificate for communication between SuperGluu and the Gluu Server.</string>

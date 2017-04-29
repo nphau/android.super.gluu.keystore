@@ -11,6 +11,7 @@
 #import "ApproveDenyViewController.h"
 #import "UserLoginInfo.h"
 #import "LecenseAgreementDelegate.h"
+#import "NotificationNetworkView.h"
 
 @interface MainViewController : UIViewController <QRCodeReaderDelegate, ApproveDenyDelegate>{
     
@@ -35,6 +36,8 @@
     BOOL isLandScape;
 
 }
+
+@property (nonatomic, weak) IBOutlet NotificationNetworkView* notificationNetworkView;
 
 - (IBAction)scanAction:(id)sender;
 
