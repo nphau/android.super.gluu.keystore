@@ -67,7 +67,7 @@
 
 -(void)showHideView{
     _retryButton.layer.cornerRadius = CORNER_RADIUS;
-    CGFloat newY = self.isNetworkAvailable ? [self getYforDevice] : [self getYforDevice];
+    CGFloat newY = self.isNetworkAvailable ? 0.0 : [self getYforDevice];
     [UIView animateWithDuration:0.5 animations: ^{
         self.center = CGPointMake(self.center.x, newY);
     }];
