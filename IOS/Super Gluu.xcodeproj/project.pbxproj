@@ -75,6 +75,7 @@
 		BBDE9B8F1DA788B0003B6673 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BBDE9B8E1DA788B0003B6673 /* libsqlite3.tbd */; };
 		BBDE9B911DA788B8003B6673 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BBDE9B901DA788B8003B6673 /* libz.tbd */; };
 		BBDE9B931DA788C1003B6673 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBDE9B921DA788C1003B6673 /* CoreVideo.framework */; };
+		BBDFCCCC1EB86C740028D8C0 /* SuperGluuBannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDFCCCB1EB86C740028D8C0 /* SuperGluuBannerView.m */; };
 		BBE787231C99781B00E9E0D7 /* PinCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBE787221C99781B00E9E0D7 /* PinCodeViewController.m */; };
 		BBE787271C99954600E9E0D7 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BBE787261C99954600E9E0D7 /* Settings.bundle */; };
 		BBE83B9E1E69D1DD0099F83A /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBE83B9D1E69D1DD0099F83A /* CoreBluetooth.framework */; };
@@ -200,6 +201,8 @@
 		BBDE9B8E1DA788B0003B6673 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		BBDE9B901DA788B8003B6673 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		BBDE9B921DA788C1003B6673 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		BBDFCCCA1EB86C740028D8C0 /* SuperGluuBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperGluuBannerView.h; path = Models/Banner/SuperGluuBannerView.h; sourceTree = "<group>"; };
+		BBDFCCCB1EB86C740028D8C0 /* SuperGluuBannerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SuperGluuBannerView.m; path = Models/Banner/SuperGluuBannerView.m; sourceTree = "<group>"; };
 		BBE787211C99781B00E9E0D7 /* PinCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinCodeViewController.h; sourceTree = "<group>"; };
 		BBE787221C99781B00E9E0D7 /* PinCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinCodeViewController.m; sourceTree = "<group>"; };
 		BBE787261C99954600E9E0D7 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = ../Settings.bundle; sourceTree = "<group>"; };
@@ -376,6 +379,7 @@
 		BB37DE531C7E08320016D422 /* super-gluu */ = {
 			isa = PBXGroup;
 			children = (
+				BBDFCCC81EB86BDA0028D8C0 /* Models */,
 				BB79FA361E7A8B2C00AEAE58 /* Extensions */,
 				BB79FA291E78309000AEAE58 /* BLEManager */,
 				BBFCC6D71E5D98CB0015A256 /* Protocols */,
@@ -574,6 +578,23 @@
 				BBB7C1011C9042AF00833B12 /* NSDate+NVTimeAgo.m */,
 			);
 			name = "NSDate-Time-Ago";
+			sourceTree = "<group>";
+		};
+		BBDFCCC81EB86BDA0028D8C0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BBDFCCC91EB86BED0028D8C0 /* Banner */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		BBDFCCC91EB86BED0028D8C0 /* Banner */ = {
+			isa = PBXGroup;
+			children = (
+				BBDFCCCA1EB86C740028D8C0 /* SuperGluuBannerView.h */,
+				BBDFCCCB1EB86C740028D8C0 /* SuperGluuBannerView.m */,
+			);
+			name = Banner;
 			sourceTree = "<group>";
 		};
 		BBF760381EB46268005B9793 /* Notifications */ = {
@@ -825,6 +846,7 @@
 				BB128D861E8006A40041BD21 /* SettingsTableCell.m in Sources */,
 				BB79FA2A1E78309000AEAE58 /* PeripheralScanner.swift in Sources */,
 				BB37DE591C7E08320016D422 /* AppDelegate.m in Sources */,
+				BBDFCCCC1EB86C740028D8C0 /* SuperGluuBannerView.m in Sources */,
 				BBB7C1051C90723300833B12 /* InformationViewController.m in Sources */,
 				BB37DF3D1C7E0B8E0016D422 /* KeysViewController.m in Sources */,
 				BB87A2811EA0DAD8007F70E9 /* MainTabViewController.m in Sources */,

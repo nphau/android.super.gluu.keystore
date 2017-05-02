@@ -1399,7 +1399,7 @@ In the event you are using the Services in connection with a device provided by 
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="&gt;" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="la3-9R-g2t">
-                                                    <rect key="frame" x="340" y="6" width="26" height="64"/>
+                                                    <rect key="frame" x="340" y="5" width="26" height="64"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                                     <color key="textColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

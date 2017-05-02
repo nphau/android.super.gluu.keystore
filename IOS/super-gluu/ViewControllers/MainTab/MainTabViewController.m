@@ -7,12 +7,12 @@
 //
 
 #import "MainTabViewController.h"
+#import "SuperGluuBannerView.h"
 
-@import GoogleMobileAds;
 
 @interface MainTabViewController (){
-
-    GADBannerView *bannerView;
+    
+    SuperGluuBannerView* bannerView;
 }
 
 @end
@@ -23,18 +23,23 @@
     [super viewDidLoad];
     //Currently AD view will be shown all the time, should be configurable from Server
     [self initADView];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initFullPageBanner:) name:NOTIFICATION_REGISTRATION_SUCCESS object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initFullPageBanner:) name:NOTIFICATION_REGISTRATION_FAILED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initFullPageBanner:) name:NOTIFICATION_AUTENTIFICATION_SUCCESS object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initFullPageBanner:) name:NOTIFICATION_AUTENTIFICATION_FAILED object:nil];
 }
 
 -(void)initADView{
-    if (bannerView == nil){
-        bannerView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
-        [self.view addSubview:bannerView];
-        bannerView.center = CGPointMake(bannerView.center.x, [UIScreen mainScreen].bounds.size.height - 75);
-        bannerView.adUnitID = @"ca-app-pub-3326465223655655/9778254436";
-        bannerView.rootViewController = self;
-        [bannerView loadRequest:[GADRequest request]];
-        NSLog(@"Banner loaded successfully");
-    }
+    SuperGluuBannerView* smallBannerView = [[SuperGluuBannerView alloc] initWithAdSize:kGADAdSizeBanner andRootView:self];
+    smallBannerView.alpha = 1.0;
+}
+
+-(void)initFullPageBanner:(NSNotification*)notification{
+    bannerView = [[SuperGluuBannerView alloc] initWithAdSize:GADAdSizeFullWidthPortraitWithHeight([UIScreen mainScreen].bounds.size.height) andRootView:self];
+}
+
+-(void)closeAD{
+    [bannerView closeAD];
 }
 
 - (void)didReceiveMemoryWarning {
