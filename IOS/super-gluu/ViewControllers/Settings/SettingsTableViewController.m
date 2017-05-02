@@ -21,8 +21,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    settingsTopics = [[NSArray alloc] initWithObjects:@"Pin code", @"TouchID (fingerprint)", @"U2F BLE device(s)", @"Trust all (SSL)", nil];
-    settingsKeys = [[NSArray alloc] initWithObjects:PIN_PROTECTION_ID, TOUCH_ID_ENABLED, SECURE_CLICK_ENABLED, SSL_ENABLED, nil];
+    settingsTopics = [[NSArray alloc] initWithObjects:@"Pin code", @"TouchID (fingerprint)", @"Trust all (SSL)", nil];//@"U2F BLE device(s)",
+    settingsKeys = [[NSArray alloc] initWithObjects:PIN_PROTECTION_ID, TOUCH_ID_ENABLED, SSL_ENABLED, nil];// SECURE_CLICK_ENABLED,
     _settingsTable.tableFooterView = [UIView new];
 }
 
@@ -80,15 +80,15 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     selectedSettingIndex = (int)indexPath.row;
     UIStoryboard *storyboardobj=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    if (selectedSettingIndex == 2){
-        BLEDevicesViewController* devicesController = (BLEDevicesViewController*)[storyboardobj instantiateViewControllerWithIdentifier:@"settingsDevicesView"];
-        [self.navigationController pushViewController:devicesController animated:YES];
-    } else {
+//    if (selectedSettingIndex == 2){
+//        BLEDevicesViewController* devicesController = (BLEDevicesViewController*)[storyboardobj instantiateViewControllerWithIdentifier:@"settingsDevicesView"];
+//        [self.navigationController pushViewController:devicesController animated:YES];
+//    } else {
         SettingsDetailsViewController* settingsDetails = (SettingsDetailsViewController*)[storyboardobj instantiateViewControllerWithIdentifier:@"settingsDetailsView"];
         settingsDetails.settingTitle = settingsTopics[selectedSettingIndex];
         settingsDetails.settingKey = settingsKeys[selectedSettingIndex];
         [self.navigationController pushViewController:settingsDetails animated:YES];
-    }
+//    }
 }
 
 @end
