@@ -93,23 +93,25 @@
                             break;
                         }
                     }
-                    [[ApiServiceManager sharedInstance] doGETUrl:u2fEndpoint :parameters callback:^(NSDictionary *result,NSError *error){
-                        if (error) {
-                            handler(nil , error);
-                            //                                    [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:@""];
-                        } else {
-                            // Success
-                            isResult = YES;
-                            [self callServiceChallenge:u2fEndpoint isEnroll:isEnroll andParameters:parameters isDecline:isDecline isSecureClick: isSecureClick userName: username callback:^(NSDictionary *result,NSError *error){
-                                if (error) {
-                                    handler(nil , error);
-                                } else {
-                                    //Success
-                                    handler(result ,nil);
-                                }
-                            }];
-                        }
-                    }];
+                    if (isSecureClick){
+                        [[ApiServiceManager sharedInstance] doGETUrl:u2fEndpoint :parameters callback:^(NSDictionary *result,NSError *error){
+                            if (error) {
+                                handler(nil , error);
+                                //                                    [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:@""];
+                            } else {
+                                // Success
+                                isResult = YES;
+                                [self callServiceChallenge:u2fEndpoint isEnroll:isEnroll andParameters:parameters isDecline:isDecline isSecureClick: isSecureClick userName: username callback:^(NSDictionary *result,NSError *error){
+                                    if (error) {
+                                        handler(nil , error);
+                                    } else {
+                                        //Success
+                                        handler(result ,nil);
+                                    }
+                                }];
+                            }
+                        }];
+                    }
                 } else {
                     if (!isDecline){
                         [self postNotificationEnrollementStarting];

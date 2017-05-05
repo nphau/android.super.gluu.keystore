@@ -50,6 +50,8 @@
     }
     [self checkPushNotification];
     [self checkNetworkConnection];
+    //Disable BLE support
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:SECURE_CLICK_ENABLED];
 }
 
 -(void)viewWillAppear:(BOOL)animated{

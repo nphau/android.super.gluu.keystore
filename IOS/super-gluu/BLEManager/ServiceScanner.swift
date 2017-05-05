@@ -39,7 +39,7 @@ extension ServiceScanner : CBPeripheralDelegate {
         if let error = error {
             NSLog("didDiscoverServices error: \(error.localizedDescription)")
         } else {
-            NSLog("didDiscoverServices \(peripheral.services?.count)")
+            NSLog("didDiscoverServices \(String(describing: peripheral.services?.count))")
         }
         discovering = false
         
@@ -84,7 +84,7 @@ extension ServiceScanner : CBPeripheralDelegate {
             NSLog("didWriteValueForCharacteristic error: \(error.localizedDescription)")
             NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidWriteValueForCharacteristic), object: characteristic, userInfo: ["error": error])
         } else {
-            print("Characteristic write value : \(characteristic.value) with ID \(characteristic.uuid.uuidString)");
+            print("Characteristic write value : \(String(describing: characteristic.value)) with ID \(characteristic.uuid.uuidString)");
             NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidWriteValueForCharacteristic), object: characteristic.value)
         }
     }
@@ -140,6 +140,7 @@ extension ServiceScanner : CBPeripheralDelegate {
                 if (characteristic.value?.count)! <= 6 && !isErrorSent {
                     NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateValueForCharacteristic), object: ["responseData" : enrollResponseData,
                                                                                                                                            "isEnroll" : self.isEnroll.description])
+                    print("Authentication response sent!!!!!!")
                     isErrorSent = !isErrorSent
                 }
             }

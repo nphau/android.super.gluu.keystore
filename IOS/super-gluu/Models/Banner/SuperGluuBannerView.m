@@ -28,6 +28,8 @@
         if (adSize.size.height == kGADAdSizeBanner.size.height &&
             adSize.size.width == kGADAdSizeBanner.size.width){
             bannerView.center = CGPointMake(bannerView.center.x, [UIScreen mainScreen].bounds.size.height - 75);
+//            bannerView.adUnitID = @"ca-app-pub-3326465223655655/1731023230";
+            bannerView.adUnitID = @"ca-app-pub-3326465223655655/9778254436";
         } else {
             //Add close button for full screen AD
             UIButton* closeButton = [[UIButton alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 80, [UIScreen mainScreen].bounds.size.height - 35, 70, 30)];
@@ -37,9 +39,9 @@
             closeButton.layer.borderColor = [UIColor whiteColor].CGColor;
             closeButton.layer.borderWidth = 2.0;
             [bannerView addSubview:closeButton];
-            
+            bannerView.adUnitID = @"ca-app-pub-3326465223655655/9778254436";
+//          bannerView.adUnitID = @"ca-app-pub-3326465223655655/1731023230";
         }
-        bannerView.adUnitID = @"ca-app-pub-3326465223655655/9778254436";
         bannerView.rootViewController = rootView;
         [bannerView loadRequest:[GADRequest request]];
         NSLog(@"Banner loaded successfully");
