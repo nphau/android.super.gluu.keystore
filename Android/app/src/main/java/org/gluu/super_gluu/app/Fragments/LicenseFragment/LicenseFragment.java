@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app.Fragments.LicenseFragment;
+package org.gluu.super_gluu.app.fragments.LicenseFragment;
 
 import android.content.Context;
 import android.os.Bundle;

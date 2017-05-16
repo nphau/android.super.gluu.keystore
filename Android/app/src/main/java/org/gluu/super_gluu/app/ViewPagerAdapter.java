@@ -13,7 +13,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
 
-import org.gluu.super_gluu.app.Fragments.PageRootFragment;
+import org.gluu.super_gluu.app.fragments.PageRootFragment;
 
 import SuperGluu.app.R;
 

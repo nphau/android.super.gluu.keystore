@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app.Fragments.PinCodeFragment;
+package org.gluu.super_gluu.app.fragments.PinCodeFragment;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.github.simonpercic.rxtime.RxTime;
 import com.mhk.android.passcodeview.PasscodeView;
 
-import org.gluu.super_gluu.app.CustomGluuAlertView.CustomGluuAlert;
+import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.app.settings.Settings;
 
 import SuperGluu.app.R;

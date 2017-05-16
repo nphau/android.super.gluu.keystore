@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app.CustomGluuAlertView;
+package org.gluu.super_gluu.app.customGluuAlertView;
 
 import android.app.Activity;
 import android.app.Dialog;

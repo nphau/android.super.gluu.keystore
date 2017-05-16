@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app.Activities;
+package org.gluu.super_gluu.app.activities;
 
 import android.app.NotificationManager;
 import android.content.Context;
@@ -7,18 +7,15 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-
-import org.gluu.super_gluu.app.CustomGluuAlertView.CustomGluuAlert;
-import org.gluu.super_gluu.app.Fragments.LicenseFragment.LicenseFragment;
-import org.gluu.super_gluu.app.Fragments.LockFragment.LockFragment;
-import org.gluu.super_gluu.app.Fragments.PinCodeFragment.PinCodeFragment;
-import org.gluu.super_gluu.app.Fragments.PinCodeFragment.PinCodeSettingFragment;
+import org.gluu.super_gluu.app.fragments.LicenseFragment.LicenseFragment;
+import org.gluu.super_gluu.app.fragments.LockFragment.LockFragment;
+import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
+import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeSettingFragment;
 import org.gluu.super_gluu.app.GluuMainActivity;
 import org.gluu.super_gluu.app.KeyHandleInfoFragment;
+import org.gluu.super_gluu.app.fingerprint.Fingerprint;
 import org.gluu.super_gluu.app.settings.Settings;
-
 import com.github.simonpercic.rxtime.RxTime;
-
 import SuperGluu.app.R;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -30,51 +27,63 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
 
 
     public static final String TIME_SERVER = "time-a.nist.gov";
+    private static final String DENY_ACTION = "DENY_ACTION";
+    private static final String APPROVE_ACTION = "APPROVE_ACTION";
+    private Fingerprint fingerprint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
+        fingerprint = new Fingerprint(getApplicationContext());
         GluuApplication.isTrustAllCertificates = Settings.getSSLEnabled(this);
 
         // Check if we get push notification
         Intent intent = getIntent();
         Boolean isAppLocked = Settings.isAppLocked(getApplicationContext());
-        if (intent.hasExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE)) {
-            String requestJson = intent.getStringExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE);
-            Bundle answerBundle = intent.getExtras();
-            int userAnswer = answerBundle.getInt("requestType");
-            if (userAnswer == 10) {//deny action
-                saveUserDecision("deny", requestJson);
-            } else if (userAnswer == 20) {//approve action
-                saveUserDecision("approve", requestJson);
-            }
+        //Check if user tap on Approve/Deny button or just on push body
+        if (intent.getAction() != null && intent.getAction().equalsIgnoreCase(APPROVE_ACTION)){
+            userChossed("approve", intent);
+            return;
+        } else if (intent.getAction() != null && intent.getAction().equalsIgnoreCase(DENY_ACTION)){
+            userChossed("deny", intent);
+            return;
+        }
+        //Check is fingerprint secure enabled in settings
+        Boolean isFingerprint = Settings.getFingerprintEnabled(getApplicationContext());
+        if (fingerprint != null && isFingerprint && fingerprint.startFingerprintService()){
+            loadGluuMainActivity();
+        } else {
             if (isAppLocked) {
                 loadLockedFragment(true);
             } else {
-                checkPinCodeEnabled();
-            }
-            NotificationManager nMgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            nMgr.cancel(GluuMainActivity.MESSAGE_NOTIFICATION_ID);
-        }
+                if (Settings.getAccept(getApplicationContext())) {
+                    checkPinCodeEnabled();
+                } else {
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    LicenseFragment licenseFragment = new LicenseFragment();
 
+                    fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    fragmentTransaction.replace(R.id.fragment_container, licenseFragment);
+//            fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            }
+        }
+    }
+
+    private void userChossed(String answer, Intent intent){
+        Boolean isAppLocked = Settings.isAppLocked(getApplicationContext());
+        String requestJson = intent.getStringExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE);
+        saveUserDecision(answer, requestJson);
         if (isAppLocked) {
             loadLockedFragment(true);
         } else {
-            if (Settings.getAccept(getApplicationContext())) {
-                checkPinCodeEnabled();
-            } else {
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                LicenseFragment licenseFragment = new LicenseFragment();
-
-                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                fragmentTransaction.replace(R.id.fragment_container, licenseFragment);
-//            fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
+            checkPinCodeEnabled();
         }
+        NotificationManager nMgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        nMgr.cancel(GluuMainActivity.MESSAGE_NOTIFICATION_ID);
     }
 
     @Override
@@ -224,12 +233,6 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("appLockedTime", lockedTime);
         editor.commit();
-    }
-
-    private void showAlertView(String message) {
-        CustomGluuAlert gluuAlert = new CustomGluuAlert(this);
-        gluuAlert.setMessage(message);
-        gluuAlert.show();
     }
 
     @Override

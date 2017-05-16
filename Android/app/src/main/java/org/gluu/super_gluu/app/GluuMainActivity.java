@@ -33,19 +33,20 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.Toast;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.gson.Gson;
-
-import org.gluu.super_gluu.app.Activities.GluuApplication;
-import org.gluu.super_gluu.app.Activities.MainActivity;
-import org.gluu.super_gluu.app.CustomGluuAlertView.CustomGluuAlert;
-import org.gluu.super_gluu.app.Fragments.PinCodeFragment.PinCodeFragment;
+import org.gluu.super_gluu.app.activities.GluuApplication;
+import org.gluu.super_gluu.app.activities.MainActivity;
+import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
+import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
-import org.gluu.super_gluu.app.listener.PushNotificationRegistrationListener;
 import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.model.OxPush2Request;
 import org.gluu.super_gluu.net.CommunicationService;
-import org.gluu.super_gluu.push.PushNotificationManager;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
 import org.gluu.super_gluu.u2f.v2.SoftwareDevice;
 import org.gluu.super_gluu.u2f.v2.exception.U2FException;
@@ -64,7 +65,7 @@ import SuperGluu.app.R;
  *
  * Created by Yuriy Movchan on 12/28/2015.
  */
-public class GluuMainActivity extends AppCompatActivity implements OxPush2RequestListener, PushNotificationRegistrationListener, KeyHandleInfoFragment.OnDeleteKeyHandleListener, PinCodeFragment.PinCodeViewListener {
+public class GluuMainActivity extends AppCompatActivity implements OxPush2RequestListener, KeyHandleInfoFragment.OnDeleteKeyHandleListener, PinCodeFragment.PinCodeViewListener {
 
     private static final String TAG = "main-activity";
 
@@ -81,6 +82,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     private AndroidKeyDataStore dataStore;
     private static Context context;
 
+    private Boolean isADS = true;
     private Boolean isShowClearMenu = false;
 
     private BroadcastReceiver mPushMessageReceiver = new BroadcastReceiver() {
@@ -108,10 +110,57 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         // Get the view from gluu_activity_main_main.xml
         setContentView(R.layout.gluu_activity_main);
         context = getApplicationContext();
 
+        //Init main tab vie and pager
+        initMainTabView();
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mPushMessageReceiver,
+                new IntentFilter(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION));
+
+        // Init network layer
+        CommunicationService.init();
+
+        // Init device UUID service
+        DeviceUuidManager deviceUuidFactory = new DeviceUuidManager();
+        deviceUuidFactory.init(this);
+
+        this.dataStore = new AndroidKeyDataStore(context);
+        this.u2f = new SoftwareDevice(this, dataStore);
+        setIsButtonVisible(dataStore.getLogs().size() != 0);
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.ic_title_icon);
+
+        // Check if we get push notification
+        checkIsPush();
+
+        checkUserCameraPermission();
+
+        //temporary turn off rotation
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+
+        //Init GoogleMobile AD
+        initGoogleADS();
+    }
+
+    private void initGoogleADS(){
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        if (isADS) {
+            MobileAds.initialize(getApplicationContext(), "ca-app-pub-3932761366188106~2301594871");
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+        } else {
+            ViewGroup.LayoutParams params = mAdView.getLayoutParams();
+            params.height = 0;
+            mAdView.setLayoutParams(params);
+        }
+    }
+
+    private void initMainTabView(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -156,45 +205,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
             }
         });
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(mPushMessageReceiver,
-                new IntentFilter(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION));
-
-        // Init network layer
-        CommunicationService.init();
-
-        // Init device UUID service
-        DeviceUuidManager deviceUuidFactory = new DeviceUuidManager();
-        deviceUuidFactory.init(this);
-
-        // Init GCM service
-        PushNotificationManager pushNotificationManager = new PushNotificationManager(BuildConfig.PROJECT_NUMBER);
-        pushNotificationManager.registerIfNeeded(this, this);
-
-        this.dataStore = new AndroidKeyDataStore(context);
-        this.u2f = new SoftwareDevice(this, dataStore);
-        setIsButtonVisible(dataStore.getLogs().size() != 0);
-
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_title_icon);
-
-//        LogInfo log = new LogInfo();
-//        log.setIssuer("oxPush2Request.getIssuer()");
-//        log.setUserName("oxPush2Request.getUserName()");
-//        log.setLocationIP("oxPush2Request.getLocationIP()");
-//        log.setLocationAddress("oxPush2Request.getLocationCity()");
-//        log.setCreatedDate(String.valueOf(System.currentTimeMillis()));//"oxPush2Request.getCreated()");
-//        log.setMethod("oxPush2Request.getMethod()");
-//        log.setLogState(LogState.LOGIN_SUCCESS);
-//        dataStore.saveLog(log);
-
-        // Check if we get push notification
-        checkIsPush();
-
-        checkUserCameraPermission();
-
-        //temporary turn off rotation
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
     }
 
     @Override
@@ -349,20 +359,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         }
 
         return result;
-    }
-
-    @Override
-    public void onPushRegistrationSuccess(String registrationId, boolean isNewRegistration) {
-    }
-
-    @Override
-    public void onPushRegistrationFailure(Exception ex) {
-        this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getApplicationContext(), R.string.failed_subscribe_push_notification, Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
     @Override

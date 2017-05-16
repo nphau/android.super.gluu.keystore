@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app.Fragments;
+package org.gluu.super_gluu.app.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.gluu.super_gluu.app.FragmentType;
-import org.gluu.super_gluu.app.Fragments.KeysFragment.KeyFragmentListFragment;
-import org.gluu.super_gluu.app.Fragments.LogsFragment.LogsFragment;
-import org.gluu.super_gluu.app.Fragments.SettingsFragment.SettingsFragment;
+import org.gluu.super_gluu.app.fragments.KeysFragment.KeyFragmentListFragment;
+import org.gluu.super_gluu.app.fragments.LogsFragment.LogsFragment;
+import org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsFragment;
 import org.gluu.super_gluu.app.MainActivityFragment;
 
 import SuperGluu.app.R;

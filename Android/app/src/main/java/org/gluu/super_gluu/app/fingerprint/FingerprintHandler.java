@@ -2,14 +2,16 @@ package org.gluu.super_gluu.app.fingerprint;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.CancellationSignal;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import org.gluu.super_gluu.app.GluuToast.GluuToast;
+import org.gluu.super_gluu.app.gluuToast.GluuToast;
 
 import SuperGluu.app.R;
 
@@ -61,6 +63,11 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 
     public void update(String e, Boolean success){
         showToast(e);
+        //Notify result of authentication by fingerprint method
+        Intent intent = new Intent("fingerprint_authentication_result");
+        // You can also include some extra data.
+        intent.putExtra("success", success);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
     public void showToast(String text){
