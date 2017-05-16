@@ -35,8 +35,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.gson.Gson;
 import org.gluu.super_gluu.app.activities.GluuApplication;
@@ -83,6 +86,8 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     private static Context context;
 
     private Boolean isADS = true;
+    private InterstitialAd mInterstitialAd;
+
     private Boolean isShowClearMenu = false;
 
     private BroadcastReceiver mPushMessageReceiver = new BroadcastReceiver() {
@@ -145,12 +150,13 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
         //Init GoogleMobile AD
         initGoogleADS();
+        initGoogleInterstitialAd();
     }
 
     private void initGoogleADS(){
         AdView mAdView = (AdView) findViewById(R.id.adView);
         if (isADS) {
-            MobileAds.initialize(getApplicationContext(), "ca-app-pub-3932761366188106~2301594871");
+            MobileAds.initialize(getApplicationContext(), "ca-app-pub-3326465223655655~8301521230");
             AdRequest adRequest = new AdRequest.Builder().build();
             mAdView.loadAd(adRequest);
         } else {
@@ -158,6 +164,27 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             params.height = 0;
             mAdView.setLayoutParams(params);
         }
+    }
+
+    private void initGoogleInterstitialAd(){
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3326465223655655/1731023230");
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+            }
+        });
+        requestNewInterstitial();
+    }
+
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+
+        mInterstitialAd.loadAd(adRequest);
     }
 
     private void initMainTabView(){
@@ -391,6 +418,9 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         CustomGluuAlert gluuAlert = new CustomGluuAlert(this);
         gluuAlert.setMessage(message);
         gluuAlert.show();
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
     }
 
     public Boolean getIsButtonVisible(){
