@@ -51,7 +51,7 @@
     [self checkPushNotification];
     [self checkNetworkConnection];
     //Disable BLE support
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:SECURE_CLICK_ENABLED];
+//    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:SECURE_CLICK_ENABLED];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -60,6 +60,7 @@
     BOOL secureClickEnable = [[NSUserDefaults standardUserDefaults] boolForKey:SECURE_CLICK_ENABLED];
     isSecureClick = secureClickEnable;
     [_notificationNetworkView checkNetwork];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_INTERSTIAL object:nil];
 }
 
 -(void)initSecureClickScanner:(NSNotification*)notification{
@@ -256,6 +257,7 @@
         [scanButton setEnabled:YES];
         message = NSLocalizedString(@"SuccessEnrollment", @"Success Authentication");
         [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitleSuccess", @"Success") andMessage:message];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_INTERSTIAL object:nil];
     } else
     if ([[notification name] isEqualToString:NOTIFICATION_REGISTRATION_FAILED]){
         [scanButton setEnabled:YES];
@@ -266,6 +268,7 @@
             message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"TwoStep", @"TwoStep Authentication"), NSLocalizedString(@"FailedEnrollment", @"Failed Enrollment")];
         }
         [self showAlertViewWithTitle:NSLocalizedString(@"FailedEnrollment", @"Failed Enrollment") andMessage:message];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_INTERSTIAL object:nil];
     } else
     if ([[notification name] isEqualToString:NOTIFICATION_REGISTRATION_STARTING]){
         message = NSLocalizedString(@"StartRegistration", @"Registration...");
@@ -280,6 +283,7 @@
         [scanButton setEnabled:YES];
         message = NSLocalizedString(@"SuccessAuthentication", @"Success Authentication");
         [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitleSuccess", @"Success") andMessage:message];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_INTERSTIAL object:nil];
     } else
     if ([[notification name] isEqualToString:NOTIFICATION_AUTENTIFICATION_FAILED]){
         [scanButton setEnabled:YES];
@@ -290,6 +294,7 @@
             message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"TwoStep", @"TwoStep Authentication"), NSLocalizedString(@"FailedAuthentication", @"Failed Authentication")];
         }
         [self showAlertViewWithTitle:NSLocalizedString(@"FailedAuthentication", @"Failed Authentication") andMessage:message];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_INTERSTIAL object:nil];
     } else
     if ([[notification name] isEqualToString:NOTIFICATION_AUTENTIFICATION_STARTING]){
         if (oneStep){

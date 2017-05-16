@@ -14,6 +14,10 @@
 
 -(id)initWithAdSize:(GADAdSize)adSize andRootView:(UIViewController*)rootView;
 
+- (void)createInterstitial:(UIViewController*)rootView;
+
+- (void)showInterstitial:(UIViewController*)rootView;
+
 -(void)closeAD;
 
 @end

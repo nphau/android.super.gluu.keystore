@@ -23,6 +23,7 @@ class ServiceScanner: NSObject {
     var isEnroll = false
     
     var isErrorSent = false
+    var isAuthSent = false
     
 //    let scanner = BackgroundScanner.defaultScanner
     
@@ -42,6 +43,7 @@ extension ServiceScanner : CBPeripheralDelegate {
             NSLog("didDiscoverServices \(String(describing: peripheral.services?.count))")
         }
         discovering = false
+        isAuthSent = false
         
         if let services = peripheral.services {
             for service in services {
@@ -137,11 +139,11 @@ extension ServiceScanner : CBPeripheralDelegate {
                 let range:Range<Int> = startIndex..<characteristic.value!.count
                 let newPacketBytes = characteristic.value!.subdata(in: range)
                 enrollResponseData.append(contentsOf: newPacketBytes)
-                if (characteristic.value?.count)! <= 6 && !isErrorSent {
+                if (characteristic.value?.count)! <= 6 && !isAuthSent {
                     NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateValueForCharacteristic), object: ["responseData" : enrollResponseData,
                                                                                                                                            "isEnroll" : self.isEnroll.description])
                     print("Authentication response sent!!!!!!")
-                    isErrorSent = !isErrorSent
+                    isAuthSent = !isAuthSent
                 }
             }
         } else {

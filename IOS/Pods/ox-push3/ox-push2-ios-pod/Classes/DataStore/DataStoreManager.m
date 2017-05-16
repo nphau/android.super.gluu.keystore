@@ -163,7 +163,7 @@
     if (tokenArray != nil){
         for (NSData* tokenData in tokenArray){
             TokenEntity* token = [NSKeyedUnarchiver unarchiveObjectWithData:tokenData];
-            if ([token->ID isEqualToString:keyID]) {
+            if ([token->ID isEqualToString:keyID] && [token->userName isEqualToString:userName]) {
                 [newTokenArray removeObject:tokenData];
             }
         }

@@ -31,6 +31,8 @@ int keyHandleLength = 64;
     GMEllipticCurveCrypto *secureClickCrypto;
     NSData* secureClickUserPublicKey;
     NSMutableData* secureClickKeyHandle;
+    
+    Boolean isAuthSent;
 }
 
 -(id)init{
@@ -91,7 +93,7 @@ int keyHandleLength = 64;
 }
 
 -(void)autenticate:(AuthenticateRequest*)request isSecureClick:(BOOL)isSecureClick userName:(NSString*)userName callback:(SecureClickAuthCompletionHandler)handler{
-    
+    isAuthSent = false;
     //    NSData* control = [request control];
     NSString* application = [request application];
     NSString* challenge = [request challenge];
@@ -187,25 +189,29 @@ int keyHandleLength = 64;
                     secureClickHandler(response, nil);
                 }
             } else {
-                int u2FCounter = [self extractCounter:responseData];
-                NSData *signature = [self extractSignature:responseData];
-                NSData *authMessage = [self extractAuthMessage:responseData];
-                UserPresenceVerifier* userPres = [[UserPresenceVerifier alloc] init];
-                NSData* userPresence = [userPres verifyUserPresence];
-                GMEllipticCurveCrypto* crypto = [GMEllipticCurveCrypto generateKeyPairForCurve:
-                                                  GMEllipticCurveSecp256r1];
-                
-                NSData *signatureData = [crypto hashSHA256AndSignDataEncoded:signature];
-                AuthenticateResponse* response = [[AuthenticateResponse alloc] initWithUserPresence:userPresence counter:u2FCounter signature:signatureData];
-                response.secureClickData = authMessage;
-                if (secureClickAuthHandler == nil){
-                
-                } else {
-                    secureClickAuthHandler(response, nil);
+                if (!isAuthSent) {
+                    isAuthSent = !isAuthSent;
+                    int u2FCounter = [self extractCounter:responseData];
+                    NSData *signature = [self extractSignature:responseData];
+                    NSData *authMessage = [self extractAuthMessage:responseData];
+                    UserPresenceVerifier* userPres = [[UserPresenceVerifier alloc] init];
+                    NSData* userPresence = [userPres verifyUserPresence];
+                    GMEllipticCurveCrypto* crypto = [GMEllipticCurveCrypto generateKeyPairForCurve:
+                                                     GMEllipticCurveSecp256r1];
+                    
+                    NSData *signatureData = [crypto hashSHA256AndSignDataEncoded:signature];
+                    AuthenticateResponse* response = [[AuthenticateResponse alloc] initWithUserPresence:userPresence counter:u2FCounter signature:signatureData];
+                    response.secureClickData = authMessage;
+                    if (secureClickAuthHandler == nil){
+                        
+                    } else {
+                        secureClickAuthHandler(response, nil);
+                    }
                 }
             }
         }
     }
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(NSData*)extractUserPublicKey:(NSData*)responseData{
@@ -233,14 +239,14 @@ int keyHandleLength = 64;
 }
 
 -(int)extractCounter:(NSData*)responseData{
-    NSData* u2FCounterBytes = [responseData subdataWithRange:NSMakeRange(0, 1)];
+    NSData* u2FCounterBytes = [responseData subdataWithRange:NSMakeRange(4, 1)];
     NSString* lengthStr = [u2FCounterBytes.description substringWithRange:NSMakeRange(1, 2)];
     int counter = [self intFromHexString: lengthStr];
     return counter;
 }
 
 -(NSData*)extractSignature:(NSData*)responseData{
-    NSData* u2FSignatureBytes = [responseData subdataWithRange:NSMakeRange(4, responseData.length-6)];
+    NSData* u2FSignatureBytes = [responseData subdataWithRange:NSMakeRange(5, responseData.length-7)];
     
     return u2FSignatureBytes;
 }

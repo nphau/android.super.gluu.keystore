@@ -11,6 +11,7 @@
 @implementation SuperGluuBannerView{
 
     GADBannerView *bannerView;
+    GADInterstitial *interstitial;
 }
 
 /*
@@ -22,31 +23,42 @@
 */
 
 -(id)initWithAdSize:(GADAdSize)adSize andRootView:(UIViewController*)rootView{
-    if (bannerView == nil){
-        bannerView = [[GADBannerView alloc] initWithAdSize:adSize];
-        [rootView.view addSubview:bannerView];
-        if (adSize.size.height == kGADAdSizeBanner.size.height &&
-            adSize.size.width == kGADAdSizeBanner.size.width){
-            bannerView.center = CGPointMake(bannerView.center.x, [UIScreen mainScreen].bounds.size.height - 75);
-//            bannerView.adUnitID = @"ca-app-pub-3326465223655655/1731023230";
-            bannerView.adUnitID = @"ca-app-pub-3326465223655655/9778254436";
-        } else {
-            //Add close button for full screen AD
-            UIButton* closeButton = [[UIButton alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 80, [UIScreen mainScreen].bounds.size.height - 35, 70, 30)];
-            [closeButton setTitle:@"Close" forState:UIControlStateNormal];
-            [closeButton addTarget:rootView action:@selector(closeAD) forControlEvents:UIControlEventTouchUpInside];
-            closeButton.layer.cornerRadius = CORNER_RADIUS;
-            closeButton.layer.borderColor = [UIColor whiteColor].CGColor;
-            closeButton.layer.borderWidth = 2.0;
-            [bannerView addSubview:closeButton];
-            bannerView.adUnitID = @"ca-app-pub-3326465223655655/9778254436";
-//          bannerView.adUnitID = @"ca-app-pub-3326465223655655/1731023230";
+    //Determine type of AD (banner or interstitial)
+    if (adSize.size.height == kGADAdSizeBanner.size.height &&
+        adSize.size.width == kGADAdSizeBanner.size.width){
+        //Banner
+        if (bannerView == nil){
+            bannerView = [[GADBannerView alloc] initWithAdSize:adSize];
+            [rootView.view addSubview:bannerView];
+            if (adSize.size.height == kGADAdSizeBanner.size.height &&
+                adSize.size.width == kGADAdSizeBanner.size.width){
+                bannerView.center = CGPointMake(bannerView.center.x, [UIScreen mainScreen].bounds.size.height - 75);
+                bannerView.adUnitID = @"ca-app-pub-3326465223655655/9778254436";
+            }
+            bannerView.rootViewController = rootView;
+            [bannerView loadRequest:[GADRequest request]];
+            NSLog(@"Banner loaded successfully");
         }
-        bannerView.rootViewController = rootView;
-        [bannerView loadRequest:[GADRequest request]];
-        NSLog(@"Banner loaded successfully");
+    } else {
+        //interstitial
+        [self showInterstitial:rootView];
     }
     return self;
+}
+
+- (void)createInterstitial:(UIViewController*)rootView {
+    interstitial = [[GADInterstitial alloc] initWithAdUnitID:@"ca-app-pub-3326465223655655/1731023230"];
+    GADRequest *request = [GADRequest request];
+    request.testDevices = @[kGADSimulatorID];
+    [interstitial loadRequest:request];
+}
+
+- (void)showInterstitial:(UIViewController*)rootView{
+    if (interstitial.isReady) {
+        [interstitial presentFromRootViewController:rootView];
+    } else {
+        NSLog(@"Ad wasn't ready");
+    }
 }
 
 -(void)closeAD{
