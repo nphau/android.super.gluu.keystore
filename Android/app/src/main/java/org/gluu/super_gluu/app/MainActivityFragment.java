@@ -27,6 +27,9 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -52,6 +55,8 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
     private LayoutInflater inflater;
 
     private Context context;
+
+    private InterstitialAd mInterstitialAd;
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -99,6 +104,8 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
 //        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mPushMessageReceiver,
 //                new IntentFilter(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION));
         context = view.getContext();
+        //Init GoogleMobile AD
+        initGoogleInterstitialAd();
         return view;
     }
 
@@ -174,6 +181,27 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         return false;
     }
 
+    private void initGoogleInterstitialAd(){
+        mInterstitialAd = new InterstitialAd(context);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3326465223655655/1731023230");
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+            }
+        });
+        requestNewInterstitial();
+    }
+
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+
+        mInterstitialAd.loadAd(adRequest);
+    }
+
     private void onQrRequest(OxPush2Request oxPush2Request){
         if (oxPush2Request == null){
             showToastWithText("You scanned wrong QR code");
@@ -186,6 +214,9 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         GluuToast gluuToast = new GluuToast(context);
         View view = inflater.inflate(R.layout.gluu_toast, null);
         gluuToast.showGluuToastWithText(view, text);
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
     }
 
     private void submit() {
