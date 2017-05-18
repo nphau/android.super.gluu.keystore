@@ -75,7 +75,8 @@
     <string name="scan_text">You may be presented with a QR code for enrollment or authentication. Click the button to open your QR scanner.</string>
 
     <string name="settings_title">Settings</string>
-    <string name="pin_code_settings">Pin code Settings</string>
+    <string name="pin_code_settings">Pin code</string>
+    <string name="pin_code_text">When enabled, access to your Super Gluu app will be protected by a pin code of your choice.</string>
 
     <string name="set_new_pin_code">Set new Pin code</string>
     <string name="enter_pin_code">Enter Pin code</string>

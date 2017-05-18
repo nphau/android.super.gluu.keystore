@@ -142,7 +142,7 @@ public class SoftwareDevice {
 
         DeviceData deviceData = new DeviceData();
         deviceData.setUuid(DeviceUuidManager.getDeviceUuid(context).toString());
-        deviceData.setPushToken(new SuperGluuFirebaseInstanceIDService().getPushRegistrationId());
+        deviceData.setPushToken(new SuperGluuFirebaseInstanceIDService().getPushRegistrationId(this.context));
         deviceData.setType(deviceType);
         deviceData.setPlatform("android");
         deviceData.setName(Build.MODEL);

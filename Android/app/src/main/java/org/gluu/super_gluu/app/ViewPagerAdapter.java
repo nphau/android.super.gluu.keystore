@@ -52,7 +52,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             case 2:
                 return rootFragment.newInstance(FragmentType.FRAGMENT_TYPE.KEYS_FRAGMENT);//new KeysRootFragment();//KeyFragmentListFragment();
             case 3:
-                return rootFragment.newInstance(FragmentType.FRAGMENT_TYPE.SETTINGS_FRAGMENT);//new SettingsRootFragment();//SettingsFragment.createInstance();
+                return rootFragment.newInstance(FragmentType.FRAGMENT_TYPE.SETTINGS_FRAGMENT);//new SettingsRootFragment();//SettingsListFragment.createInstance();
         }
         return null;
     }
