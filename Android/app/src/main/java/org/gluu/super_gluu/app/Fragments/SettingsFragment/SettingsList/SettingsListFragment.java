@@ -3,6 +3,7 @@ package org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsList;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,11 +38,11 @@ public class SettingsListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_settings, container, false);
         context = getContext();
         this.inflater = inflater;
-        View rootView = inflater.inflate(R.layout.fragment_key_list, container, false);
+        View rootView = inflater.inflate(R.layout.settings_list, container, false);
 
+        listSettings = new ArrayList<String>();
         listSettings.add("Pin code");
         listSettings.add("TouchID (fingerprint)");
 //        listSettings.add("U2F BLE device(s)");
@@ -49,8 +50,12 @@ public class SettingsListFragment extends Fragment {
 
         mListener = new SettingsListListener() {
             @Override
-            public void onSettingsList(String settingsName) {
+            public void onSettingsList(Fragment settingsFragment) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
+                transaction.replace(R.id.root_frame, settingsFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         };
 
@@ -58,11 +63,11 @@ public class SettingsListFragment extends Fragment {
         ListView lv = (ListView) rootView.findViewById(R.id.settingsListView);
         lv.setAdapter(listAdapter);
 
-        return view;
+        return rootView;
     }
 
     public interface SettingsListListener {
-        void onSettingsList(String settingsName);
+        void onSettingsList(Fragment settingsFragment);
     }
 
 }

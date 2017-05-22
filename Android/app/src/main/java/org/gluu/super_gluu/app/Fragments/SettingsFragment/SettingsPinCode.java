@@ -39,7 +39,7 @@ public class SettingsPinCode extends Fragment implements HorizontalNumberPickerL
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        View view = inflater.inflate(R.layout.settings_pincode, container, false);
         context = getContext();
         this.inflater = inflater;
         setResetPinButton = (Button) view.findViewById(R.id.set_reset_pin_button);
@@ -66,6 +66,7 @@ public class SettingsPinCode extends Fragment implements HorizontalNumberPickerL
 
         final Switch turOn = (Switch) view.findViewById(R.id.switch_pin_code);
         turOn.setChecked(Settings.getPinCodeEnabled(context));
+        setPinCode(turOn.isChecked());
         turOn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,6 +87,14 @@ public class SettingsPinCode extends Fragment implements HorizontalNumberPickerL
         numberPicker.setValue(Settings.getPinCodeAttempts(context));
         numberPicker.setListener(this);
         checkPinCode();
+
+        Button backButton = (Button) view.findViewById(R.id.settings_back);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().popBackStack();
+            }
+        });
 
         return view;
     }

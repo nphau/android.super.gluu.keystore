@@ -157,4 +157,17 @@ public class Settings {
         return isFingerprintEnabled;
     }
 
+    public static Boolean getSettingsValueEnabled(Context context, String key){
+        SharedPreferences preferences = context.getSharedPreferences(key, Context.MODE_PRIVATE);
+        Boolean isValue = preferences.getBoolean(key, false);
+        return isValue;
+    }
+
+    public static void setSettingsValueEnabled(Context context, String key, Boolean isEnabled) {
+        SharedPreferences preferences = context.getSharedPreferences(key, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(key, isEnabled);
+        editor.apply();
+    }
+
 }

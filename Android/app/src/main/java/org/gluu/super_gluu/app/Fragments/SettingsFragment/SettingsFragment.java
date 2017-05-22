@@ -11,7 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import org.gluu.super_gluu.app.activities.GluuApplication;
 import org.gluu.super_gluu.app.fingerprint.Fingerprint;
@@ -30,14 +32,14 @@ public class SettingsFragment extends Fragment {
     private Context context;
     private LayoutInflater inflater;
     private Fingerprint fingerprint;
-    private Switch switchFingerprint;
+    private Switch switchSettings;
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
             boolean success = intent.getBooleanExtra("message", false);
-            switchFingerprint.setChecked(success);
+            switchSettings.setChecked(success);
             String message = success ? "You've success authenticated by fingerprint" : "You've failed authenticated by fingerprint";
             showToast(message);
         }
@@ -51,35 +53,40 @@ public class SettingsFragment extends Fragment {
         this.inflater = inflater;
         fingerprint = new Fingerprint(context);
 
-        final Switch switchSSL = (Switch) view.findViewById(R.id.switch_ssl);
-        switchSSL.setChecked(Settings.getSSLEnabled(context));
-        switchSSL.setOnClickListener(new View.OnClickListener() {
+        final String settingsId = this.getArguments().getString("settingsId");
+
+        TextView textSettings = (TextView)view.findViewById(R.id.textViewSettings);
+
+        switchSettings = (Switch) view.findViewById(R.id.switch_setting);
+        textSettings.setText(settingsId.equalsIgnoreCase("SSLConnectionSettings") ? getString(R.string.trust_all_certificate) : getString(R.string.fingerprint_title));
+        switchSettings.setChecked(Settings.getSettingsValueEnabled(context, settingsId));
+        switchSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (switchSSL.isChecked()) {
-                    showWarning(R.string.warning_trust_all_certificate);
+                if (settingsId.equalsIgnoreCase("SSLConnectionSettings")) {
+                    GluuApplication.isTrustAllCertificates = switchSettings.isChecked();
+                    if (switchSettings.isChecked()) {
+                        showWarning(R.string.warning_trust_all_certificate);
+                    }
+                } else {
+                    if (switchSettings.isChecked() && fingerprint.startFingerprintService()) {
+                        Log.v("TAG", "Fingerprint Settings enable: " + switchSettings.isChecked());
+                    } else {
+                        switchSettings.setChecked(false);
+                        showToastWithText("Fingerprint is not available for this device");
+                    }
                 }
-                GluuApplication.isTrustAllCertificates = switchSSL.isChecked();
-                Settings.setSSLEnabled(context, switchSSL.isChecked());
-                Log.v("TAG", "SSL Settings enable: " + switchSSL.isChecked());
+                Settings.setSettingsValueEnabled(context, settingsId, switchSettings.isChecked());
                 // Init network layer
                 CommunicationService.init();
             }
         });
 
-        switchFingerprint = (Switch) view.findViewById(R.id.switch_fingerprint);
-        switchFingerprint.setChecked(Settings.getFingerprintEnabled(context));
-        switchFingerprint.setOnClickListener(new View.OnClickListener() {
+        Button closeButton = (Button) view.findViewById(R.id.backButton);
+        closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (switchFingerprint.isChecked() && fingerprint.startFingerprintService()) {
-                    Settings.setFingerprintEnabled(context, switchFingerprint.isChecked());
-                    Log.v("TAG", "Fingerprint Settings enable: " + switchFingerprint.isChecked());
-                } else {
-                    switchFingerprint.setChecked(false);
-                    showToastWithText("Fingerprint is not available for this device");
-                }
-
+                getActivity().onBackPressed();
             }
         });
 
