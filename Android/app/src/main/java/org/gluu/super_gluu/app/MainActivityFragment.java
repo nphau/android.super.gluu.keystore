@@ -14,6 +14,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -25,6 +27,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdListener;
@@ -37,6 +40,10 @@ import com.google.zxing.integration.android.IntentResult;
 import org.gluu.super_gluu.app.gluuToast.GluuToast;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
 import org.gluu.super_gluu.model.OxPush2Request;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import SuperGluu.app.BuildConfig;
 import SuperGluu.app.R;
@@ -57,6 +64,8 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
     private Context context;
 
     private InterstitialAd mInterstitialAd;
+
+    private Button scanButton;
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -97,7 +106,8 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         this.inflater = inflater;
-        view.findViewById(R.id.button_scan).setOnClickListener(this);
+        scanButton = (Button) view.findViewById(R.id.button_scan);
+        scanButton.setOnClickListener(this);
         //Setup message receiver
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
                 new IntentFilter("ox_request-precess-event"));
@@ -112,6 +122,12 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
     @Override
     public void onResume() {
         super.onResume();
+        if (!isConnected(context)) {
+            showToastWithText("Your device is currently unable to establish a network connection. You will need a connection to approve or deny authentication requests with Super Gluu.");
+            scanButton.setEnabled(false);
+        } else {
+            scanButton.setEnabled(true);
+        }
     }
 
     @Override
@@ -235,6 +251,16 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
             integrator.setPrompt(getString(R.string.scan_oxpush2_prompt));
             integrator.initiateScan();
         }
+    }
+
+    private static boolean isConnected(final Context context) {
+        ConnectivityManager cm =
+                (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        return isConnected;
     }
 
 }
