@@ -55,6 +55,9 @@
 //    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:SECURE_CLICK_ENABLED];
     //Here we should also check subsciption for AD free
     _adFreeView.hidden = YES;
+    _adFreeView.layer.borderColor = [UIColor blackColor].CGColor;
+    _adFreeView.layer.borderWidth = 2.0;
+    _adFreeButton.layer.cornerRadius = CORNER_RADIUS;
     [self isSubscriptionExpired];
 }
 
