@@ -30,8 +30,8 @@
     [super viewDidLoad];
     [self initWiget];
     [self initLocalization];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkLicenseAgreement) name:UIApplicationDidBecomeActiveNotification object:nil];
+    [self performSelector:@selector(checkLicenseAgreement) withObject:nil afterDelay:0.1];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkLicenseAgreement) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -185,7 +185,7 @@
 //    [self performSegueWithIdentifier:@"mainViewSegue" sender:self];
     UIStoryboard *storyboardobj=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UITabBarController* mainTabView = (UITabBarController*)[storyboardobj instantiateViewControllerWithIdentifier:@"mainTabView"];
-    [self presentViewController:mainTabView animated:YES completion:nil];
+    [self presentViewController:mainTabView animated:NO completion:nil];
 }
 
 @end

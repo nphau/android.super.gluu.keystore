@@ -48,6 +48,7 @@
 		BB3BE1721C882D0600817A46 /* ApproveDenyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB3BE1711C882D0600817A46 /* ApproveDenyViewController.m */; };
 		BB50AE1C1E5F0978003AEC78 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB50AE1B1E5F0978003AEC78 /* LocalAuthentication.framework */; };
 		BB78BFB71C99C6C600558042 /* gluu.png in Resources */ = {isa = PBXBuildFile; fileRef = BB78BFB61C99C6C600558042 /* gluu.png */; };
+		BB7927E21ED4837400414EAC /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB7927E11ED4837400414EAC /* StoreKit.framework */; };
 		BB79FA2A1E78309000AEAE58 /* PeripheralScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB79FA251E78309000AEAE58 /* PeripheralScanner.swift */; };
 		BB79FA2B1E78309000AEAE58 /* ServiceScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB79FA261E78309000AEAE58 /* ServiceScanner.swift */; };
 		BB79FA2C1E78309000AEAE58 /* CharacteristicScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB79FA271E78309000AEAE58 /* CharacteristicScanner.swift */; };
@@ -171,6 +172,7 @@
 		BB3BE1711C882D0600817A46 /* ApproveDenyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApproveDenyViewController.m; sourceTree = "<group>"; };
 		BB50AE1B1E5F0978003AEC78 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		BB78BFB61C99C6C600558042 /* gluu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gluu.png; sourceTree = "<group>"; };
+		BB7927E11ED4837400414EAC /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		BB79FA251E78309000AEAE58 /* PeripheralScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PeripheralScanner.swift; path = "../../super-gluu/BLEManager/PeripheralScanner.swift"; sourceTree = "<group>"; };
 		BB79FA261E78309000AEAE58 /* ServiceScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceScanner.swift; path = "../../super-gluu/BLEManager/ServiceScanner.swift"; sourceTree = "<group>"; };
 		BB79FA271E78309000AEAE58 /* CharacteristicScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CharacteristicScanner.swift; path = "../../super-gluu/BLEManager/CharacteristicScanner.swift"; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				BBDE9B8F1DA788B0003B6673 /* libsqlite3.tbd in Frameworks */,
 				BBDE9B8D1DA788A3003B6673 /* AVFoundation.framework in Frameworks */,
 				BBDE9B8B1DA78895003B6673 /* CoreMedia.framework in Frameworks */,
+				BB7927E21ED4837400414EAC /* StoreKit.framework in Frameworks */,
 				BBDE9B891DA7888A003B6673 /* MediaPlayer.framework in Frameworks */,
 				BBDE9B871DA78880003B6673 /* CoreMotion.framework in Frameworks */,
 				BBDE9B861DA78878003B6673 /* OpenGLES.framework in Frameworks */,
@@ -262,6 +265,7 @@
 		3F430CE55ADBDA89388FF131 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BB7927E11ED4837400414EAC /* StoreKit.framework */,
 				BBE83B9D1E69D1DD0099F83A /* CoreBluetooth.framework */,
 				BB50AE1B1E5F0978003AEC78 /* LocalAuthentication.framework */,
 				BBDE9B921DA788C1003B6673 /* CoreVideo.framework */,
@@ -689,6 +693,9 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.InAppPurchase = {
 								enabled = 1;
 							};
 							com.apple.Maps.iOS = {

@@ -12,6 +12,7 @@
 
 @interface MainTabViewController (){
     
+    SuperGluuBannerView* smallBannerView;
     SuperGluuBannerView* bannerView;
 }
 
@@ -21,8 +22,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //Currently AD view will be shown all the time, should be configurable from Server
-    [self initADView];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideADView:) name:NOTIFICATION_AD_FREE object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initADView:) name:NOTIFICATION_AD_NOT_FREE object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadInterstial:) name:NOTIFICATION_INTERSTIAL object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initFullPageBanner:) name:NOTIFICATION_REGISTRATION_SUCCESS object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initFullPageBanner:) name:NOTIFICATION_REGISTRATION_FAILED object:nil];
@@ -32,9 +33,15 @@
     [bannerView createInterstitial:self];
 }
 
--(void)initADView{
-    SuperGluuBannerView* smallBannerView = [[SuperGluuBannerView alloc] initWithAdSize:kGADAdSizeBanner andRootView:self];
+-(void)initADView:(NSNotification*)notification{
+    smallBannerView = [[SuperGluuBannerView alloc] initWithAdSize:kGADAdSizeBanner andRootView:self];
     smallBannerView.alpha = 1.0;
+}
+
+-(void)hideADView:(NSNotification*)notification{
+    if (smallBannerView != nil){
+        [smallBannerView closeAD];
+    }
 }
 
 -(void)reloadInterstial:(NSNotification*)notification{
@@ -44,7 +51,6 @@
 
 -(void)initFullPageBanner:(NSNotification*)notification{
     [bannerView showInterstitial:self];
-//    bannerView = [[SuperGluuBannerView alloc] initWithAdSize:GADAdSizeFullWidthPortraitWithHeight([UIScreen mainScreen].bounds.size.height) andRootView:self];
 }
 
 -(void)closeAD{

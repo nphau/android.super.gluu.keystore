@@ -15,6 +15,7 @@ pod 'NHNetworkTime'
 pod 'SCLAlertView-Objective-C'
 pod 'Firebase/Core'
 pod 'Firebase/AdMob'
+pod 'IAPHelper'
 
 # use ox-push2 lib instead of local copy
 pod 'ox-push3', '~> 0.1.8'

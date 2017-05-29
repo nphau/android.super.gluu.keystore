@@ -608,6 +608,21 @@
                                         </subviews>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
+                                    <view contentMode="scaleToFill" misplaced="YES" id="yve-mW-djg">
+                                        <rect key="frame" x="40" y="330" width="240" height="53"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="U1a-Fo-7YL">
+                                                <rect key="frame" x="8" y="11" width="224" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" title="AD Free"/>
+                                                <connections>
+                                                    <action selector="adFreeAction:" destination="OWT-hQ-veb" eventType="touchUpInside" id="hi2-fi-YpS"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
@@ -662,6 +677,7 @@
                         </userDefinedRuntimeAttributes>
                     </tabBarItem>
                     <connections>
+                        <outlet property="adFreeView" destination="yve-mW-djg" id="OTk-k3-88x"/>
                         <outlet property="contentView" destination="ogb-Jc-RlP" id="xNJ-B6-Czf"/>
                         <outlet property="notificationNetworkView" destination="bjj-T3-TOM" id="vQC-5A-nOP"/>
                         <outlet property="scanButton" destination="ffN-SG-7rx" id="l5O-kn-9tP"/>
@@ -1399,7 +1415,7 @@ In the event you are using the Services in connection with a device provided by 
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="&gt;" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="la3-9R-g2t">
-                                                    <rect key="frame" x="340" y="3" width="26" height="64"/>
+                                                    <rect key="frame" x="340" y="2" width="26" height="64"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                                     <color key="textColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

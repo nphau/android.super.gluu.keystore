@@ -62,7 +62,8 @@
 }
 
 -(void)closeAD{
-    [bannerView removeFromSuperview];
+    bannerView.hidden = YES;
+    //bannerView.center = CGPointMake(bannerView.center.x, [UIScreen mainScreen].bounds.size.height + 75);
 }
 
 @end

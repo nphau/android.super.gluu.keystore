@@ -36,33 +36,25 @@
 }
 
 -(void)checkNetwork{
+    self.retryButton.enabled = NO;
     // Allocate a reachability object
-    NetworkChecker* reach = [NetworkChecker reachabilityWithHostname:@"www.google.com"];
+    NetworkChecker *checker = [NetworkChecker reachabilityWithHostName:@"www.google.com"];
+    NetworkStatus internetStatus = [checker currentReachabilityStatus];
     
-    // Set the blocks
-    reach.reachableBlock = ^(NetworkChecker *reach)
-    {
-        // keep in mind this is called on a background thread
-        // and if you are updating the UI it needs to happen
-        // on the main thread, like this:
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"REACHABLE!");
-            self.isNetworkAvailable = YES;
-            [self showHideView];
-        });
-    };
-    
-    reach.unreachableBlock = ^(NetworkChecker *reach)
+    if ((internetStatus != ReachableViaWiFi) && (internetStatus != ReachableViaWWAN))
     {
         NSLog(@"UNREACHABLE!");
         self.isNetworkAvailable = NO;
         [self showHideView];
-    };
-    
-    // Start the notifier, which will cause the reachability object to retain itself!
-    [reach startNotifier];
-
+        self.retryButton.enabled = YES;
+    }
+    else
+    {
+        NSLog(@"REACHABLE!");
+        self.isNetworkAvailable = YES;
+        [self showHideView];
+        self.retryButton.enabled = YES;
+    }
 }
 
 -(void)showHideView{

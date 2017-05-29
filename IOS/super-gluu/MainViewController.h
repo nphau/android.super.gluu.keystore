@@ -38,6 +38,7 @@
 }
 
 @property (nonatomic, weak) IBOutlet NotificationNetworkView* notificationNetworkView;
+@property (nonatomic, weak) IBOutlet UIView* adFreeView;
 
 - (IBAction)scanAction:(id)sender;
 

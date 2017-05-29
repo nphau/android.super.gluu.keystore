@@ -38,6 +38,7 @@ PODS:
   - GoogleToolboxForMac/Defines (2.1.1)
   - GoogleToolboxForMac/NSData+zlib (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
+  - IAPHelper (1.1)
   - JTMaterialSwitch (1.1)
   - NHNetworkTime (1.5):
     - CocoaAsyncSocket (<= 7.4.1)
@@ -53,6 +54,7 @@ DEPENDENCIES:
   - AFNetworking (~> 2.5)
   - Firebase/AdMob
   - Firebase/Core
+  - IAPHelper
   - JTMaterialSwitch
   - NHNetworkTime
   - NSHash (~> 1.1.0)
@@ -69,6 +71,7 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: 2d0518b1378fe9d685ef40cbdd63d2fdc1125339
   Google-Mobile-Ads-SDK: a8bf4211624999b73e4184be516f94770b139525
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
+  IAPHelper: fd74f53b0ac142eed085777b88b86a11746a2dd4
   JTMaterialSwitch: cad8093c3773ff9f6c60005c98d269eb869b5e04
   NHNetworkTime: 945d229cb2c3f43013a17bc717328a5045125f8b
   NSHash: 61d598c6d48957c5557f1eef0aeafd6ef5ec5fb7
@@ -76,6 +79,6 @@ SPEC CHECKSUMS:
   QRCodeReaderViewController: 6538745c8f4ffa9407a26bd7f9489ea01739e7b0
   SCLAlertView-Objective-C: 25f7ea3a3526dde177d8b8056a0b88fe4187651e
 
-PODFILE CHECKSUM: 958e8ebcda23ad8caafac44c370afbb817205f0f
+PODFILE CHECKSUM: 20695f32922ab41c53aca3f66659c2d67bf1f754
 
 COCOAPODS: 1.0.0

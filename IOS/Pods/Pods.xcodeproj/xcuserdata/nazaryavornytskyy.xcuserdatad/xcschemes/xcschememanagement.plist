@@ -19,6 +19,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>IAPHelper.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>JTMaterialSwitch-JTMaterialSwitch.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -77,12 +82,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>92BB131FA876445E027D20AE23EA7B5F</key>
+		<key>60AA9BE8C25CFBDF12DA8DB234483D3B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9DB57F2B8942C9B6F765027422AEF6C5</key>
+		<key>92BB131FA876445E027D20AE23EA7B5F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -97,12 +102,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CD7CA44D6C8A2C9C24D2F18BA81BB1B3</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>DB4AF81E171FF6C7CD1C408A90FAFA1E</key>
+		<key>D803197D09829C56C1A665AC6DCB8D18</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -112,7 +112,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>F3C9AC3FD6ABF561C713B9DB63164688</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>F79089F4FF30C0031D264214DF325090</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FDCDD5B77407E27BFD144557E23044B1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
