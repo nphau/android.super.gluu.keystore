@@ -24,6 +24,7 @@ class ServiceScanner: NSObject {
     
     var isErrorSent = false
     var isAuthSent = false
+    var nilCount = 0
     
 //    let scanner = BackgroundScanner.defaultScanner
     
@@ -68,7 +69,7 @@ extension ServiceScanner : CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         if let error = error {
             NSLog("didUpdateValueForCharacteristic error: \(error.localizedDescription)")
-            NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateValueForCharacteristic), object: characteristic, userInfo: ["error": error.localizedDescription])
+            NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateValueForCharacteristic), object: ["error": error.localizedDescription], userInfo: nil)
         } else {
             if self.isEnroll {
                 if self.isPairing {
@@ -87,6 +88,11 @@ extension ServiceScanner : CBPeripheralDelegate {
             NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidWriteValueForCharacteristic), object: characteristic, userInfo: ["error": error])
         } else {
             print("Characteristic write value : \(String(describing: characteristic.value)) with ID \(characteristic.uuid.uuidString)");
+            if characteristic.value == nil && characteristic.uuid.uuidString == "F1D0FFF1-DEAA-ECEE-B42F-C9BA7ED623BB" && nilCount > 5 {
+                NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateValueForCharacteristic), object: ["error": "error",
+                                                                                                                                       "isEnroll" : isEnroll])
+                nilCount += 1
+            }
             NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidWriteValueForCharacteristic), object: characteristic.value)
         }
     }
@@ -96,7 +102,7 @@ extension ServiceScanner : CBPeripheralDelegate {
             NSLog("didUpdateNotificationStateForCharacteristic error: \(error.localizedDescription)")
             NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateNotificationStateForCharacteristic), object: characteristic, userInfo: ["error": error])
         } else {
-            print("Characteristic notification value : \(characteristic.value) with ID \(characteristic.uuid.uuidString)");
+            print("Characteristic notification value : \(String(describing: characteristic.value)) with ID \(characteristic.uuid.uuidString)");
             NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidUpdateNotificationStateForCharacteristic), object: characteristic)
         }
     }

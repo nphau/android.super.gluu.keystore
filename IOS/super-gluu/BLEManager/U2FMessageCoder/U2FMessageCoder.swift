@@ -96,7 +96,8 @@ class U2FMessageCoder {
                 range = 10..<index//29
             } else {
                 firstParameter = Data.init(bytes: [UInt8(bitPattern: Int8(i-1))])
-                let index2 = index+19
+                var index2 = index+19
+                index2 = index2 >= data.count ? data.count : index2
                 range = index..<index2
                 index = index2
             }

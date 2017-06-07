@@ -79,7 +79,6 @@
 -(void)setTokenEntitiesNameByID:(NSString*)keyID userName:(NSString*)userName newName:(NSString*)newName{
     NSMutableArray* tokenArray = [[NSUserDefaults standardUserDefaults] valueForKey:KEY_ENTITIES];
     NSMutableArray* newTokenArray = [[NSMutableArray alloc] initWithArray:tokenArray];
-    int intCount = 0;
     if (tokenArray != nil){
         for (NSData* tokenData in tokenArray){
             TokenEntity* token = [NSKeyedUnarchiver unarchiveObjectWithData:tokenData];
@@ -108,7 +107,6 @@
 
 -(TokenEntity*)getTokenEntityByKeyHandle:(NSString*)keyHandle{
     NSMutableArray* tokenArray = [[NSUserDefaults standardUserDefaults] valueForKey:KEY_ENTITIES];
-    int intCount = 0;
     if (tokenArray != nil){
         for (NSData* tokenData in tokenArray){
             TokenEntity* token = [NSKeyedUnarchiver unarchiveObjectWithData:tokenData];
@@ -159,7 +157,6 @@
 -(BOOL)deleteTokenEntitiesByID:(NSString*)keyID userName:(NSString*) userName {
     NSMutableArray* tokenArray = [[NSUserDefaults standardUserDefaults] valueForKey:KEY_ENTITIES];
     NSMutableArray* newTokenArray = [[NSMutableArray alloc] initWithArray:tokenArray];
-    int intCount = 0;
     if (tokenArray != nil){
         for (NSData* tokenData in tokenArray){
             TokenEntity* token = [NSKeyedUnarchiver unarchiveObjectWithData:tokenData];

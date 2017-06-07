@@ -15,6 +15,7 @@ struct Constants {
     static let DidUpdateValueForCharacteristic = "didUpdateValueForCharacteristic"
     static let DidWriteValueForCharacteristic = "didWriteValueForCharacteristic"
     static let DidUpdateNotificationStateForCharacteristic = "didUpdateNotificationStateForCharacteristic"
+    static let DidConnectPeripheral = "didConnectPeripheral"
     static let DidDisconnectPeripheral = "didDisconnectPeripheral"
     
     static let u2fControlPoint_uuid = "F1D0FFF1-DEAA-ECEE-B42F-C9BA7ED623BB"
@@ -92,7 +93,7 @@ class PeripheralScanner : NSObject {
             serviceScanner.valueForWrite = valueForWrite
             serviceScanner.isPairing = isPairing
             serviceScanner.isEnroll = isEnroll
-            NSLog("connectPeripheral \(peripheral.name) (\(peripheral.state))")
+            NSLog("connectPeripheral \(String(describing: peripheral.name)) (\(peripheral.state))")
             centralManager.connect(peripheral, options: nil)
             connectTimer = Timer.scheduledTimer(timeInterval: Constants.ConnectTimeout, target: self, selector: #selector(PeripheralScanner.cancelConnections), userInfo: nil, repeats: false)
         }
@@ -108,6 +109,12 @@ extension PeripheralScanner : CBCentralManagerDelegate{
         if centralManager.state != .poweredOn {
             if scanning {
                 UIAlertView(title: "Unable to scan", message: "bluetooth is in \(centralManager.state.rawValue)-state", delegate: nil, cancelButtonTitle: "Ok").show()
+            }
+        }
+        if centralManager.state == .poweredOn {
+            let connectedDevices = centralManager.retrieveConnectedPeripherals(withServices: [CBUUID(string: "8610C427-C32E-4AEB-A086-D6ACF31BCF24")])
+            for uuid in connectedDevices {
+                print("Device Found. UUID = \(uuid) and name \(String(describing: uuid.name))");
             }
         }
         scanning = centralManager.state == .poweredOn
@@ -139,22 +146,22 @@ extension PeripheralScanner : CBCentralManagerDelegate{
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        NSLog("didConnectPeripheral \(peripheral.name)")
+        NSLog("didConnectPeripheral \(String(describing: peripheral.name))")
         
         connectTimer?.invalidate()
-    
         peripheral.delegate = serviceScanner
-        
         peripheral.discoverServices(nil)
+        
+        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidConnectPeripheral), object: ["peripheralName": peripheral.name], userInfo: nil)
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-        NSLog("didDisconnectPeripheral \(peripheral.name)")
+        NSLog("didDisconnectPeripheral \(String(describing: peripheral.name))")
         NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.DidDisconnectPeripheral), object: nil)
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
-        NSLog("\tdidFailToConnectPeripheral \(peripheral.name)")
+        NSLog("\tdidFailToConnectPeripheral \(String(describing: peripheral.name))")
         UIAlertView(title: "Fail To Connect", message: nil, delegate: nil, cancelButtonTitle: "Dismiss").show()
     }
     

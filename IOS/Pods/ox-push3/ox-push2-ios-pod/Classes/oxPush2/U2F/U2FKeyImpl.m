@@ -164,7 +164,13 @@ int keyHandleLength = 64;
 -(void)waitForSecureClickNotification:(NSNotification*)notification{
     NSDictionary* dic = notification.object;
     if ([dic objectForKey:@"error"]){
-        secureClickHandler != nil ? secureClickHandler(nil, nil) : secureClickAuthHandler(nil, nil);
+        NSString* errorMessage = [dic objectForKey:@"error"];
+        NSError *err = [NSError errorWithDomain:@"Super_Gluu"
+                                           code:100
+                                       userInfo:@{
+                                                  NSLocalizedDescriptionKey:errorMessage
+                                                  }];
+        secureClickHandler != nil ? secureClickHandler(nil, err) : secureClickAuthHandler(nil, err);
     }
     NSData* responseData = [dic objectForKey:@"responseData"];
     NSString* isEnrollStr = [dic objectForKey:@"isEnroll"];

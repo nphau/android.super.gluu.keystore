@@ -24,6 +24,21 @@
 				</array>
 			</dict>
 		</dict>
+		<key>011993FAC3C9ED6F23CFC146F9C29F2E</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>CocoaAsyncSocket.framework</string>
+			<key>path</key>
+			<string>CocoaAsyncSocket.framework</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
 		<key>019798C6EF067E3373A004BF13E52818</key>
 		<dict>
 			<key>fileRef</key>
@@ -119,6 +134,21 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>032EA4B4E38D0EF2FD4CA1E5867E4281</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>ox_push3.framework</string>
+			<key>path</key>
+			<string>ox-push3.framework</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
 		<key>0395229CB09CFA179BE586253A300D7E</key>
 		<dict>
 			<key>fileRef</key>
@@ -167,6 +197,31 @@
 					<string>Public</string>
 				</array>
 			</dict>
+		</dict>
+		<key>04E2536597D1C8660347A57B9BFB7135</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>B353A1FE34C0C697090B7D8B65642B49</string>
+				<string>011993FAC3C9ED6F23CFC146F9C29F2E</string>
+				<string>6758FCE2EF1CB7AD25D73EB1DEBABCCB</string>
+				<string>826F40E85D475E6057CE57D8994B6F05</string>
+				<string>92F4AC0E97E64C1E06DB228F651EF1BE</string>
+				<string>09954319D62228A7EDAE830622104D82</string>
+				<string>96987624DCF683A1707DACA271D929D8</string>
+				<string>328C6DA04F60F8B84545D1EDC31BCA28</string>
+				<string>032EA4B4E38D0EF2FD4CA1E5867E4281</string>
+				<string>3DAAE57423402A6AC59E6EAC57A16503</string>
+				<string>5ADC63470390B32E3FAB34916FCFB159</string>
+				<string>B568E5DBAB2DBD8216579402B845D3FE</string>
+				<string>855E59077E8722A251A6930729E05D8C</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>052CC8C1472EF8AF6841FA84FA380CD0</key>
 		<dict>
@@ -267,21 +322,6 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>08CFFEC962181E5FB16BEDD049D97176</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.framework</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>NHNetworkTime.framework</string>
-			<key>path</key>
-			<string>NHNetworkTime.framework</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
 		<key>095B5865080BDDFE6B294B246CBBAFC0</key>
 		<dict>
 			<key>fileRef</key>
@@ -310,6 +350,21 @@
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<string>0</string>
 		</dict>
+		<key>09954319D62228A7EDAE830622104D82</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>JTMaterialSwitch.framework</string>
+			<key>path</key>
+			<string>JTMaterialSwitch.framework</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
 		<key>09A39DB9505E9B0CBCBD7AA670434C45</key>
 		<dict>
 			<key>buildConfigurationList</key>
@@ -336,7 +391,7 @@
 			<key>productName</key>
 			<string>ox-push3</string>
 			<key>productReference</key>
-			<string>F351CC1F5E7773BFEDDD741157411FFE</string>
+			<string>032EA4B4E38D0EF2FD4CA1E5867E4281</string>
 			<key>productType</key>
 			<string>com.apple.product-type.framework</string>
 		</dict>
@@ -458,6 +513,19 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>0DB3B328A1397EE41DDE4162F34590EF</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>D41D8CD98F00B204E9800998ECF8427E</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>60AA9BE8C25CFBDF12DA8DB234483D3B</string>
+			<key>remoteInfo</key>
+			<string>IAPHelper</string>
+		</dict>
 		<key>0F4D8667D1C4FDF860F34A083D646EDD</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -514,19 +582,6 @@
 			<string>461B01DB0B58190C34082E015EB541D8</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
-		</dict>
-		<key>1147CA946F1BA2FA62650F8EEC433449</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>945BDA9A6EA73C92E1AE3B99B8064F6C</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Targets Support Files</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
 		</dict>
 		<key>11FB29C3464F444D3538491E2ACE2BDF</key>
 		<dict>
@@ -718,6 +773,19 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>1D1A3D17163F280685FEF01F2E6DBCC3</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Pods-Super Gluu (ad free)-umbrella.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>1D3F6717CA73EA41201568C4D5408987</key>
 		<dict>
 			<key>fileRef</key>
@@ -749,7 +817,7 @@
 		<key>1E184A1ABC48BCEDCE365072276A66DE</key>
 		<dict>
 			<key>fileRef</key>
-			<string>A6DD4A0B01E6D6B6A7D3EFFDF939C506</string>
+			<string>90B47569804E9E8E1ACCA740784B5C63</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 			<key>settings</key>
@@ -813,6 +881,19 @@
 			<string>PBXHeadersBuildPhase</string>
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<string>0</string>
+		</dict>
+		<key>205D655C7ABDAD33ABFB26FE25769344</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>D41D8CD98F00B204E9800998ECF8427E</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>C2550C2DDD8A3B6A86481A5A031BFE6F</string>
+			<key>remoteInfo</key>
+			<string>JTMaterialSwitch</string>
 		</dict>
 		<key>2120FD0ACE305292B21ABA11679DD5E8</key>
 		<dict>
@@ -1015,6 +1096,17 @@
 				</array>
 			</dict>
 		</dict>
+		<key>29268960650A26CFA9A548FEBB17D063</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>name</key>
+			<string>ox-push3</string>
+			<key>target</key>
+			<string>09A39DB9505E9B0CBCBD7AA670434C45</string>
+			<key>targetProxy</key>
+			<string>C76DF03ECE6623B0839964807D09BA75</string>
+		</dict>
 		<key>29B7791C44FAD7894699D398A4ACCE3D</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -1087,6 +1179,30 @@
 			<string>2EFAEEAD2D291293246A28881A03DFF0</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>2CD8E8547F0943275995B2EBDDD1F3E1</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>F5044AD6CFD02ADE39080A0894DB1F85</string>
+				<string>925D0BF533929C2C4CB60890116CA0F6</string>
+				<string>61B18434E768B360D3C140D3B4E7BD17</string>
+				<string>841CD3A17378FFA93B2664961F587CFB</string>
+				<string>A7195CCDFAF67DF38B96AE5BE7543046</string>
+				<string>B1A9CFF1EFB0B040E616140255C799DF</string>
+				<string>D40A2C13FF880A3F0BD742D4FB0DBCB1</string>
+				<string>90B47569804E9E8E1ACCA740784B5C63</string>
+				<string>79A0F40C8B0249E0A8EEBFD0354BBAE5</string>
+				<string>9EDDFD6C9F8D47A358F6EE261285BBC5</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods-Super Gluu</string>
+			<key>path</key>
+			<string>Target Support Files/Pods-Super Gluu</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>2D380C1869E59FEDF92229138A9F11D8</key>
 		<dict>
@@ -1171,21 +1287,6 @@
 			<string>IAPHelper/IAPHelper.m</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
-		</dict>
-		<key>2F71E848B09630554CFEF9288855A1F5</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.framework</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>JTMaterialSwitch.framework</string>
-			<key>path</key>
-			<string>JTMaterialSwitch.framework</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
 		<key>2F9EB470DF692080DE42B5A2ACB79FFC</key>
 		<dict>
@@ -1377,6 +1478,21 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>328C6DA04F60F8B84545D1EDC31BCA28</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>NSHash.framework</string>
+			<key>path</key>
+			<string>NSHash.framework</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
 		<key>32BE0FB08D9ECD2974197D862E320E36</key>
 		<dict>
 			<key>fileRef</key>
@@ -1390,6 +1506,19 @@
 					<string>Public</string>
 				</array>
 			</dict>
+		</dict>
+		<key>331D0B7A0107CD1EB418C3EC59C2A89D</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>D41D8CD98F00B204E9800998ECF8427E</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>92BB131FA876445E027D20AE23EA7B5F</string>
+			<key>remoteInfo</key>
+			<string>GoogleToolboxForMac</string>
 		</dict>
 		<key>33331FFF0CA4F1C32E0E63C671D96432</key>
 		<dict>
@@ -1480,7 +1609,7 @@
 			<key>productName</key>
 			<string>JTMaterialSwitch-JTMaterialSwitch</string>
 			<key>productReference</key>
-			<string>4EF28955F088441954E0BB3ADCEBC78B</string>
+			<string>92F4AC0E97E64C1E06DB228F651EF1BE</string>
 			<key>productType</key>
 			<string>com.apple.product-type.bundle</string>
 		</dict>
@@ -1539,6 +1668,74 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>3695130498FF731E230F03671CD9B816</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>854352172077EBDC9ABBA6A33AFD3B37</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>1</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf</string>
+				<key>DEFINES_MODULE</key>
+				<string>YES</string>
+				<key>DYLIB_COMPATIBILITY_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_CURRENT_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_INSTALL_NAME_BASE</key>
+				<string>@rpath</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Target Support Files/Pods-Super Gluu (ad free)/Info.plist</string>
+				<key>INSTALL_PATH</key>
+				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>8.0</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>@executable_path/Frameworks</string>
+					<string>@loader_path/Frameworks</string>
+				</array>
+				<key>MACH_O_TYPE</key>
+				<string>staticlib</string>
+				<key>MODULEMAP_FILE</key>
+				<string>Target Support Files/Pods-Super Gluu (ad free)/Pods-Super Gluu (ad free).modulemap</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>YES</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PODS_ROOT</key>
+				<string>$(SRCROOT)</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
+				<key>PRODUCT_NAME</key>
+				<string>Pods_Super_Gluu__ad_free_</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+				<key>VERSIONING_SYSTEM</key>
+				<string>apple-generic</string>
+				<key>VERSION_INFO_PREFIX</key>
+				<string></string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
 		<key>36FFEF215D060FD20BE0FC27EDDADD2D</key>
 		<dict>
 			<key>fileRef</key>
@@ -1573,21 +1770,6 @@
 			<string>Frameworks</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
-		</dict>
-		<key>38289582A15B265EEF308AD9B4692C87</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.framework</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>NSHash.framework</string>
-			<key>path</key>
-			<string>NSHash.framework</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
 		<key>38FBF7549C6D08EF041DF85828AFA405</key>
 		<dict>
@@ -1685,6 +1867,20 @@
 			<key>name</key>
 			<string>Release</string>
 		</dict>
+		<key>3B03AF08C46EB3E60DE43BA4FB96E85F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>1D1A3D17163F280685FEF01F2E6DBCC3</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>Public</string>
+				</array>
+			</dict>
+		</dict>
 		<key>3B0C03C33E9879A5C58247AEFCE813E4</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -1713,7 +1909,7 @@
 		<key>3B8B08AC3BE06B474AE6712D09E5BBF0</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>3D8BDC67937573878EE9B6B5D8C6D230</string>
+			<string>9EDDFD6C9F8D47A358F6EE261285BBC5</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
@@ -1843,18 +2039,20 @@
 			<key>targetProxy</key>
 			<string>CA2C6C8CE5AA7A9F7BDAED2BADA91E0D</string>
 		</dict>
-		<key>3D8BDC67937573878EE9B6B5D8C6D230</key>
+		<key>3DAAE57423402A6AC59E6EAC57A16503</key>
 		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
 			<key>includeInIndex</key>
-			<string>1</string>
+			<string>0</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods_Super_Gluu.framework</string>
 			<key>path</key>
-			<string>Pods-Super Gluu.release.xcconfig</string>
+			<string>Pods-Super Gluu.framework</string>
 			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
+			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
 		<key>3EA9554B410C16AC1D9164877AB8FAD6</key>
 		<dict>
@@ -1914,6 +2112,19 @@
 				</array>
 			</dict>
 		</dict>
+		<key>4110B5C32061DE0157B71FA43E2EF3D4</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text</string>
+			<key>path</key>
+			<string>Pods-Super Gluu (ad free)-acknowledgements.markdown</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>4126FC06B09C1514C4623BEF344EEDF2</key>
 		<dict>
 			<key>fileRef</key>
@@ -1942,6 +2153,19 @@
 			<string>SCLAlertView/SCLTextView.h</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>4180ADEFAD9F8B1E2B83E12B1B53ADBE</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>D41D8CD98F00B204E9800998ECF8427E</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>4878C70B21CA37D7CB8A476BF986741B</string>
+			<key>remoteInfo</key>
+			<string>AFNetworking</string>
 		</dict>
 		<key>41A9983F287F3B977B2463551F032E61</key>
 		<dict>
@@ -2044,6 +2268,17 @@
 				</array>
 			</dict>
 		</dict>
+		<key>43D2F8C27414B668A116B14F75A817E3</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>name</key>
+			<string>AFNetworking</string>
+			<key>target</key>
+			<string>4878C70B21CA37D7CB8A476BF986741B</string>
+			<key>targetProxy</key>
+			<string>4180ADEFAD9F8B1E2B83E12B1B53ADBE</string>
+		</dict>
 		<key>43ECF6C79D1C05C6D8EA15D4925EFC7F</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -2111,6 +2346,19 @@
 			<string>GoogleToolboxForMac-prefix.pch</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>45AB2963D2B04E1C585EDE6A1D97A354</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>D41D8CD98F00B204E9800998ECF8427E</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>F3C9AC3FD6ABF561C713B9DB63164688</string>
+			<key>remoteInfo</key>
+			<string>SCLAlertView-Objective-C</string>
 		</dict>
 		<key>461B01DB0B58190C34082E015EB541D8</key>
 		<dict>
@@ -2287,6 +2535,19 @@
 			<key>name</key>
 			<string>Debug</string>
 		</dict>
+		<key>47F367520A3C8585A56B3D00230F5D9B</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>8759638F41BBA89336D568D41843ADBB</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
 		<key>482801A5823139815BAB5FB8A4F2DFEE</key>
 		<dict>
 			<key>fileRef</key>
@@ -2322,9 +2583,22 @@
 			<key>productName</key>
 			<string>AFNetworking</string>
 			<key>productReference</key>
-			<string>8C9D98D92D58ABAA0F1BE1E91853964B</string>
+			<string>B353A1FE34C0C697090B7D8B65642B49</string>
 			<key>productType</key>
 			<string>com.apple.product-type.framework</string>
+		</dict>
+		<key>48F1D7F6A79C3A01F999AECDD212A43B</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>D41D8CD98F00B204E9800998ECF8427E</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>E2E98B9CD754B4954C3FBD110D724837</string>
+			<key>remoteInfo</key>
+			<string>NSHash</string>
 		</dict>
 		<key>4918B47BE33F671981C5475994B656C3</key>
 		<dict>
@@ -2338,6 +2612,17 @@
 			<string>UIRefreshControl+AFNetworking.m</string>
 			<key>path</key>
 			<string>UIKit+AFNetworking/UIRefreshControl+AFNetworking.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>493DCFFC9C6C96CF0A8B1011DF4BCB06</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Pods-Super Gluu (ad free).modulemap</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -2469,21 +2754,6 @@
 			<string>PBXSourcesBuildPhase</string>
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<string>0</string>
-		</dict>
-		<key>4EF28955F088441954E0BB3ADCEBC78B</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.cfbundle</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>JTMaterialSwitch.bundle</string>
-			<key>path</key>
-			<string>JTMaterialSwitch.bundle</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
 		<key>4F093F6FBA6E6B060CF66145CF214E14</key>
 		<dict>
@@ -2698,17 +2968,6 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>54964816270D243C65648775048110C9</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>Pods-Super Gluu.modulemap</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
 		<key>54AD5C9202E11333E0B4395BC0F128E2</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -2868,6 +3127,19 @@
 				</array>
 			</dict>
 		</dict>
+		<key>583DE8E6CA12CCDEC6FF16914BAEB5E6</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-Super Gluu (ad free).release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>5889288F81905ADD395AA9E0A3940C8C</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -2965,21 +3237,6 @@
 			<key>name</key>
 			<string>Debug</string>
 		</dict>
-		<key>59C2AD82BC4B5A1EAB4255238B41A80D</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.framework</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>GoogleToolboxForMac.framework</string>
-			<key>path</key>
-			<string>GoogleToolboxForMac.framework</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
 		<key>59E32510D0201F13D14DF5CB41CD0E96</key>
 		<dict>
 			<key>fileRef</key>
@@ -3032,6 +3289,21 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>5ADC63470390B32E3FAB34916FCFB159</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>Pods_Super_Gluu__ad_free_.framework</string>
+			<key>path</key>
+			<string>Pods-Super Gluu (ad free).framework</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
 		<key>5B3B23492A1E7BDB4669CE90E8DC5ECA</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -3074,6 +3346,17 @@
 			<string>Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Accelerate.framework</string>
 			<key>sourceTree</key>
 			<string>DEVELOPER_DIR</string>
+		</dict>
+		<key>5BC58CD3D5122E8E370C8CEA13EAEFA9</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>name</key>
+			<string>NHNetworkTime</string>
+			<key>target</key>
+			<string>F79089F4FF30C0031D264214DF325090</string>
+			<key>targetProxy</key>
+			<string>7D3B7BEF89A82D23F4AB863D7E66FC03</string>
 		</dict>
 		<key>5BDF9B6843B19D18A4425ACDB306BFE2</key>
 		<dict>
@@ -3327,7 +3610,7 @@
 			<key>productName</key>
 			<string>IAPHelper</string>
 			<key>productReference</key>
-			<string>E976E941842399243B380BAB9A077C81</string>
+			<string>826F40E85D475E6057CE57D8994B6F05</string>
 			<key>productType</key>
 			<string>com.apple.product-type.framework</string>
 		</dict>
@@ -3384,6 +3667,32 @@
 			<string>SCLAlertView.h</string>
 			<key>path</key>
 			<string>SCLAlertView/SCLAlertView.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>61B18434E768B360D3C140D3B4E7BD17</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text</string>
+			<key>path</key>
+			<string>Pods-Super Gluu-acknowledgements.markdown</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>6217D71DC72DE472439FA42DF46FFCA8</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -3510,19 +3819,6 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>62BE878A86E8FCC69204076469FC0128</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.script.sh</string>
-			<key>path</key>
-			<string>Pods-Super Gluu-frameworks.sh</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
 		<key>637BB22457F1AB12BF0D604E3F509982</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -3576,6 +3872,17 @@
 			<string>ox-push3-dummy.m</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>6518F7487353A07500B5C51DA69C7833</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>name</key>
+			<string>QRCodeReaderViewController</string>
+			<key>target</key>
+			<string>FDCDD5B77407E27BFD144557E23044B1</string>
+			<key>targetProxy</key>
+			<string>F7B36443364B01C985C43DEBC249A739</string>
 		</dict>
 		<key>65241F5D462E862C74A4069C49B2EA7A</key>
 		<dict>
@@ -3699,12 +4006,38 @@
 			<key>targetProxy</key>
 			<string>612C59F20EA2394A6DA94BC4F7D47FEA</string>
 		</dict>
+		<key>6758FCE2EF1CB7AD25D73EB1DEBABCCB</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>GoogleToolboxForMac.framework</string>
+			<key>path</key>
+			<string>GoogleToolboxForMac.framework</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
 		<key>686556E6DEB5AD8850CC2533BDC884FE</key>
 		<dict>
 			<key>fileRef</key>
 			<string>0BFEB82B36BF12F9AF71014A71F0E938</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>68D4615FE978361D1B879DC5C8698696</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>name</key>
+			<string>SCLAlertView-Objective-C</string>
+			<key>target</key>
+			<string>F3C9AC3FD6ABF561C713B9DB63164688</string>
+			<key>targetProxy</key>
+			<string>45AB2963D2B04E1C585EDE6A1D97A354</string>
 		</dict>
 		<key>68F25493DF29423FEA798D2247A6C918</key>
 		<dict>
@@ -3803,19 +4136,6 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>6DECA02DE51C628EC4E5C18E03F69B56</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.xml</string>
-			<key>path</key>
-			<string>Info.plist</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
 		<key>6E8D559F87B316A9172C360A88878E01</key>
 		<dict>
 			<key>children</key>
@@ -3844,6 +4164,17 @@
 			<string>Release</string>
 			<key>isa</key>
 			<string>XCConfigurationList</string>
+		</dict>
+		<key>6EC8A2E6D01D73B3F0B977789F84B343</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>name</key>
+			<string>GoogleToolboxForMac</string>
+			<key>target</key>
+			<string>92BB131FA876445E027D20AE23EA7B5F</string>
+			<key>targetProxy</key>
+			<string>331D0B7A0107CD1EB418C3EC59C2A89D</string>
 		</dict>
 		<key>6FB1506CDAD83A7AB80AB887B0D7F6B7</key>
 		<dict>
@@ -4014,6 +4345,20 @@
 			<string>5A38E3F93270FC33474565AB27DDB462</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>767094574F96B02A9C2E28C09884B9C5</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>3695130498FF731E230F03671CD9B816</string>
+				<string>F365E8248710C8F3CC306812D1649C6A</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
 		</dict>
 		<key>7686F58C6B09BF33C8AB46A83E54E8ED</key>
 		<dict>
@@ -4190,6 +4535,19 @@
 				</array>
 			</dict>
 		</dict>
+		<key>79A0F40C8B0249E0A8EEBFD0354BBAE5</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-Super Gluu.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>79A3F490288AC53F7CA309DD48876A1A</key>
 		<dict>
 			<key>fileRef</key>
@@ -4358,6 +4716,19 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>7D3B7BEF89A82D23F4AB863D7E66FC03</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>D41D8CD98F00B204E9800998ECF8427E</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>F79089F4FF30C0031D264214DF325090</string>
+			<key>remoteInfo</key>
+			<string>NHNetworkTime</string>
+		</dict>
 		<key>7D463D3FDD7FD0CC940E0F1425C97275</key>
 		<dict>
 			<key>children</key>
@@ -4410,8 +4781,8 @@
 				<string>93A4A3777CF96A4AAC1D13BA6DCCEA73</string>
 				<string>42211DFA64869C094CA1FE0DB6BF0990</string>
 				<string>FA911A20ABD0AB21ABEC485EDB6AA832</string>
-				<string>E5093A97528921C777372C25043727B6</string>
-				<string>1147CA946F1BA2FA62650F8EEC433449</string>
+				<string>04E2536597D1C8660347A57B9BFB7135</string>
+				<string>BD34AE4900E4D399C6ED3509C88EFD3B</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -4574,12 +4945,51 @@
 				</array>
 			</dict>
 		</dict>
+		<key>8193BAD5945750647C77D142572CE16D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>name</key>
+			<string>IAPHelper</string>
+			<key>target</key>
+			<string>60AA9BE8C25CFBDF12DA8DB234483D3B</string>
+			<key>targetProxy</key>
+			<string>0DB3B328A1397EE41DDE4162F34590EF</string>
+		</dict>
+		<key>826F40E85D475E6057CE57D8994B6F05</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>IAPHelper.framework</string>
+			<key>path</key>
+			<string>IAPHelper.framework</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
 		<key>831077FFFB3AEF00EB90334D4662738F</key>
 		<dict>
 			<key>fileRef</key>
 			<string>D92C46CB8C8C2E58251124370C153F10</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>841CD3A17378FFA93B2664961F587CFB</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Pods-Super Gluu-acknowledgements.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>84D0A2F4CE490F2B937D9111C19E7B02</key>
 		<dict>
@@ -4641,6 +5051,34 @@
 			<key>name</key>
 			<string>Debug</string>
 		</dict>
+		<key>854352172077EBDC9ABBA6A33AFD3B37</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-Super Gluu (ad free).debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>855E59077E8722A251A6930729E05D8C</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>SCLAlertView_Objective_C.framework</string>
+			<key>path</key>
+			<string>SCLAlertView-Objective-C.framework</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
 		<key>8598E8698EFBDFE36F479752C3AFDDAC</key>
 		<dict>
 			<key>isa</key>
@@ -4654,19 +5092,6 @@
 			<key>sourceTree</key>
 			<string>DEVELOPER_DIR</string>
 		</dict>
-		<key>85BF596D18306290FBF5FFAB9C9A4926</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text</string>
-			<key>path</key>
-			<string>Pods-Super Gluu-acknowledgements.markdown</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
 		<key>86462FE48DBF4ADDBF9EA0F54D8C8F9B</key>
 		<dict>
 			<key>isa</key>
@@ -4677,6 +5102,13 @@
 			<string>B1D17BA74BEACBD28F897F231B5907A4</string>
 			<key>targetProxy</key>
 			<string>A817C9DC9FCC4AC235F4FDC541FFEE0B</string>
+		</dict>
+		<key>8759638F41BBA89336D568D41843ADBB</key>
+		<dict>
+			<key>fileRef</key>
+			<string>0BFEB82B36BF12F9AF71014A71F0E938</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>877D04314800F23F1FDF1E8DFDE3D78F</key>
 		<dict>
@@ -4807,32 +5239,6 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>8ACEB1DD93BAC324572134AF010D7A25</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.xml</string>
-			<key>path</key>
-			<string>Pods-Super Gluu-acknowledgements.plist</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>8AE229B78CC56F337C0061A91C2682F0</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>path</key>
-			<string>Pods-Super Gluu.debug.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
 		<key>8B465D54C800F29955B1EAA69CEF1CAD</key>
 		<dict>
 			<key>fileRef</key>
@@ -4865,7 +5271,7 @@
 		<key>8C5B98A5414B39C2AA6749DAF6A423E1</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>8AE229B78CC56F337C0061A91C2682F0</string>
+			<string>79A0F40C8B0249E0A8EEBFD0354BBAE5</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
@@ -4945,21 +5351,6 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>8C9D98D92D58ABAA0F1BE1E91853964B</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.framework</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>AFNetworking.framework</string>
-			<key>path</key>
-			<string>AFNetworking.framework</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
 		<key>8CF0207A8E014C7C8FB00E042D62693B</key>
 		<dict>
 			<key>children</key>
@@ -4988,18 +5379,16 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>8D5066CE3C998FF579E27FBF796369FB</key>
+		<key>8D59A55E06B4C26D4AA146DB3C15BB62</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
 			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.script.sh</string>
-			<key>path</key>
-			<string>Pods-Super Gluu-resources.sh</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
+			<string>PBXTargetDependency</string>
+			<key>name</key>
+			<string>NSHash</string>
+			<key>target</key>
+			<string>E2E98B9CD754B4954C3FBD110D724837</string>
+			<key>targetProxy</key>
+			<string>48F1D7F6A79C3A01F999AECDD212A43B</string>
 		</dict>
 		<key>8E79DA427DA4D60B4946544818A17B8F</key>
 		<dict>
@@ -5089,6 +5478,32 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>901CA16E71AEAB312DB28F1471116E47</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-Super Gluu (ad free)-frameworks.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>90B47569804E9E8E1ACCA740784B5C63</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Pods-Super Gluu-umbrella.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>90E049D13085E062FEBE5EC23A381154</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -5134,6 +5549,17 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>925D0BF533929C2C4CB60890116CA0F6</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Pods-Super Gluu.modulemap</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>92BB131FA876445E027D20AE23EA7B5F</key>
 		<dict>
 			<key>buildConfigurationList</key>
@@ -5155,7 +5581,7 @@
 			<key>productName</key>
 			<string>GoogleToolboxForMac</string>
 			<key>productReference</key>
-			<string>59C2AD82BC4B5A1EAB4255238B41A80D</string>
+			<string>6758FCE2EF1CB7AD25D73EB1DEBABCCB</string>
 			<key>productType</key>
 			<string>com.apple.product-type.framework</string>
 		</dict>
@@ -5172,6 +5598,21 @@
 					<string>Public</string>
 				</array>
 			</dict>
+		</dict>
+		<key>92F4AC0E97E64C1E06DB228F651EF1BE</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.cfbundle</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>JTMaterialSwitch.bundle</string>
+			<key>path</key>
+			<string>JTMaterialSwitch.bundle</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
 		<key>9340D8E4B2DD920B75C8F847CAD25BB7</key>
 		<dict>
@@ -5266,30 +5707,6 @@
 				</array>
 			</dict>
 		</dict>
-		<key>945BDA9A6EA73C92E1AE3B99B8064F6C</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>6DECA02DE51C628EC4E5C18E03F69B56</string>
-				<string>54964816270D243C65648775048110C9</string>
-				<string>85BF596D18306290FBF5FFAB9C9A4926</string>
-				<string>8ACEB1DD93BAC324572134AF010D7A25</string>
-				<string>CF017584B7E4D6EA82B84018433315B6</string>
-				<string>62BE878A86E8FCC69204076469FC0128</string>
-				<string>8D5066CE3C998FF579E27FBF796369FB</string>
-				<string>A6DD4A0B01E6D6B6A7D3EFFDF939C506</string>
-				<string>8AE229B78CC56F337C0061A91C2682F0</string>
-				<string>3D8BDC67937573878EE9B6B5D8C6D230</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Pods-Super Gluu</string>
-			<key>path</key>
-			<string>Target Support Files/Pods-Super Gluu</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
 		<key>945C9834347A969CDD4FB9A5AB9FF0E0</key>
 		<dict>
 			<key>fileRef</key>
@@ -5341,9 +5758,24 @@
 		<key>9688FA2BEFB15A2E79125067E3BEC996</key>
 		<dict>
 			<key>fileRef</key>
-			<string>CF017584B7E4D6EA82B84018433315B6</string>
+			<string>A7195CCDFAF67DF38B96AE5BE7543046</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>96987624DCF683A1707DACA271D929D8</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>NHNetworkTime.framework</string>
+			<key>path</key>
+			<string>NHNetworkTime.framework</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
 		<key>9729B9A5E3D7FF0C9F74BC04BC8D7FB1</key>
 		<dict>
@@ -5700,6 +6132,19 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>9EDDFD6C9F8D47A358F6EE261285BBC5</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-Super Gluu.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>9F9A85BB8BEECBD86C18F66BD6104718</key>
 		<dict>
 			<key>buildConfigurations</key>
@@ -5936,6 +6381,19 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>A605D6FEF59A99BD7432E568EFCD3FD5</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Pods-Super Gluu (ad free)-acknowledgements.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>A667AE5FC8E54B764AD281E75EBA6591</key>
 		<dict>
 			<key>fileRef</key>
@@ -5946,7 +6404,7 @@
 		<key>A69DD3C1AF78FB43ADB491A16B786C52</key>
 		<dict>
 			<key>fileRef</key>
-			<string>4EF28955F088441954E0BB3ADCEBC78B</string>
+			<string>92F4AC0E97E64C1E06DB228F651EF1BE</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -5962,19 +6420,6 @@
 			<string>IAPHelper.h</string>
 			<key>path</key>
 			<string>IAPHelper/IAPHelper.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>A6DD4A0B01E6D6B6A7D3EFFDF939C506</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>Pods-Super Gluu-umbrella.h</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -6003,6 +6448,19 @@
 			<string>sourcecode.c.h</string>
 			<key>path</key>
 			<string>QRCodeReaderViewController-prefix.pch</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>A7195CCDFAF67DF38B96AE5BE7543046</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Pods-Super Gluu-dummy.m</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -6202,6 +6660,19 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>A9F4F6C6AA73950FC319AC630B0C8288</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Pods-Super Gluu (ad free)-dummy.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>AA88258F920E86FD9F270A95F4F17D97</key>
 		<dict>
 			<key>buildActionMask</key>
@@ -6380,6 +6851,19 @@
 			<key>remoteInfo</key>
 			<string>JTMaterialSwitch</string>
 		</dict>
+		<key>AD9A40AB870ACF34DE1E0249857A0CA4</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>D41D8CD98F00B204E9800998ECF8427E</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>B1D17BA74BEACBD28F897F231B5907A4</string>
+			<key>remoteInfo</key>
+			<string>CocoaAsyncSocket</string>
+		</dict>
 		<key>ADB89818A3B94F67C7DA19ADC8004969</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -6509,6 +6993,19 @@
 				<string>-DOS_OBJECT_USE_OBJC=0</string>
 			</dict>
 		</dict>
+		<key>B1A9CFF1EFB0B040E616140255C799DF</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-Super Gluu-frameworks.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>B1D17BA74BEACBD28F897F231B5907A4</key>
 		<dict>
 			<key>buildConfigurationList</key>
@@ -6530,7 +7027,7 @@
 			<key>productName</key>
 			<string>CocoaAsyncSocket</string>
 			<key>productReference</key>
-			<string>E320AEE6BDF3F2C36EC4197761580147</string>
+			<string>011993FAC3C9ED6F23CFC146F9C29F2E</string>
 			<key>productType</key>
 			<string>com.apple.product-type.framework</string>
 		</dict>
@@ -6546,6 +7043,21 @@
 			<string>Info.plist</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B353A1FE34C0C697090B7D8B65642B49</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>AFNetworking.framework</string>
+			<key>path</key>
+			<string>AFNetworking.framework</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
 		<key>B37E0D995464D31DB39B3AFCA0C30ACB</key>
 		<dict>
@@ -6626,6 +7138,21 @@
 			<string>ox-push2-ios-pod/Classes/OXPushManager.h</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B568E5DBAB2DBD8216579402B845D3FE</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>QRCodeReaderViewController.framework</string>
+			<key>path</key>
+			<string>QRCodeReaderViewController.framework</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
 		<key>B5A251945C39C59B569A1137CC030C85</key>
 		<dict>
@@ -6794,6 +7321,17 @@
 				</array>
 			</dict>
 		</dict>
+		<key>BA8D770F0AAC46E523EEC1909A6950E1</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>name</key>
+			<string>JTMaterialSwitch</string>
+			<key>target</key>
+			<string>C2550C2DDD8A3B6A86481A5A031BFE6F</string>
+			<key>targetProxy</key>
+			<string>205D655C7ABDAD33ABFB26FE25769344</string>
+		</dict>
 		<key>BB2DD802BA6DBD889A3601952F21149A</key>
 		<dict>
 			<key>fileRef</key>
@@ -6867,6 +7405,20 @@
 			<string>90154FAADA15884DF26E19FC6C57B0EB</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>BD34AE4900E4D399C6ED3509C88EFD3B</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>2CD8E8547F0943275995B2EBDDD1F3E1</string>
+				<string>E27AEC2D4630402C9074795826FBF892</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Targets Support Files</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>BDE8D1E013832E6E37E9075720C8C711</key>
 		<dict>
@@ -7086,7 +7638,7 @@
 			<key>productName</key>
 			<string>JTMaterialSwitch</string>
 			<key>productReference</key>
-			<string>2F71E848B09630554CFEF9288855A1F5</string>
+			<string>09954319D62228A7EDAE830622104D82</string>
 			<key>productType</key>
 			<string>com.apple.product-type.framework</string>
 		</dict>
@@ -7272,21 +7824,6 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
-		<key>C62DD84719A980F57CFA0468F4A1FFEE</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.framework</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>Pods_Super_Gluu.framework</string>
-			<key>path</key>
-			<string>Pods-Super Gluu.framework</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
 		<key>C67008672488FA92B511F4422F6FF82E</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -7352,6 +7889,19 @@
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<string>0</string>
 		</dict>
+		<key>C76DF03ECE6623B0839964807D09BA75</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>D41D8CD98F00B204E9800998ECF8427E</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>09A39DB9505E9B0CBCBD7AA670434C45</string>
+			<key>remoteInfo</key>
+			<string>ox-push3</string>
+		</dict>
 		<key>C7B655603FB1089A5E2D28FCE12DF12F</key>
 		<dict>
 			<key>fileRef</key>
@@ -7393,6 +7943,19 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>C8FEEFFA8B7675A19185D062BA3EE037</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>3B03AF08C46EB3E60DE43BA4FB96E85F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXHeadersBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
 		<key>C9BB3B147837ED4DC6D001A31E437EE8</key>
 		<dict>
 			<key>isa</key>
@@ -7420,21 +7983,6 @@
 			<string>PBXSourcesBuildPhase</string>
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<string>0</string>
-		</dict>
-		<key>C9DB369EFCD5374324EBD7EAA7A32569</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.framework</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>SCLAlertView_Objective_C.framework</string>
-			<key>path</key>
-			<string>SCLAlertView-Objective-C.framework</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
 		<key>CA2C6C8CE5AA7A9F7BDAED2BADA91E0D</key>
 		<dict>
@@ -7617,19 +8165,6 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>CF017584B7E4D6EA82B84018433315B6</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>Pods-Super Gluu-dummy.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
 		<key>CF051D17275C20E0FBF5736E3C8A0573</key>
 		<dict>
 			<key>fileRef</key>
@@ -7702,6 +8237,19 @@
 			<string>sourcecode.c.objc</string>
 			<key>path</key>
 			<string>AFNetworking-dummy.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>D150D3C5F6D8F63004857004CF2EA20E</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-Super Gluu (ad free)-resources.sh</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -7820,6 +8368,19 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>D40A2C13FF880A3F0BD742D4FB0DBCB1</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-Super Gluu-resources.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>D41D8CD98F00B204E9800998ECF8427E</key>
 		<dict>
 			<key>attributes</key>
@@ -7846,7 +8407,7 @@
 			<key>mainGroup</key>
 			<string>7DB346D0F39D3F0E887471402A8071AB</string>
 			<key>productRefGroup</key>
-			<string>E5093A97528921C777372C25043727B6</string>
+			<string>04E2536597D1C8660347A57B9BFB7135</string>
 			<key>projectDirPath</key>
 			<string></string>
 			<key>projectReferences</key>
@@ -7865,6 +8426,7 @@
 				<string>E2E98B9CD754B4954C3FBD110D724837</string>
 				<string>09A39DB9505E9B0CBCBD7AA670434C45</string>
 				<string>D803197D09829C56C1A665AC6DCB8D18</string>
+				<string>E82F1EB948F73E5BE21E0059CA46A15C</string>
 				<string>FDCDD5B77407E27BFD144557E23044B1</string>
 				<string>F3C9AC3FD6ABF561C713B9DB63164688</string>
 			</array>
@@ -7882,21 +8444,6 @@
 					<string>Public</string>
 				</array>
 			</dict>
-		</dict>
-		<key>D4EEC95C752870E842F2DE7B6E79DAE8</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.framework</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>QRCodeReaderViewController.framework</string>
-			<key>path</key>
-			<string>QRCodeReaderViewController.framework</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
 		<key>D4F003256F27F3665164EBADFBE8DA64</key>
 		<dict>
@@ -7997,6 +8544,19 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>D6C840FEC7E0E1666D86468138990F8B</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>EC361754423DB246BA27DBCE65D8B524</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
 		<key>D728EB755F97A26695A243A03AB0F317</key>
 		<dict>
 			<key>fileRef</key>
@@ -8078,7 +8638,7 @@
 			<key>productName</key>
 			<string>Pods-Super Gluu</string>
 			<key>productReference</key>
-			<string>C62DD84719A980F57CFA0468F4A1FFEE</string>
+			<string>3DAAE57423402A6AC59E6EAC57A16503</string>
 			<key>productType</key>
 			<string>com.apple.product-type.framework</string>
 		</dict>
@@ -8465,6 +9025,30 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>E27AEC2D4630402C9074795826FBF892</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>6217D71DC72DE472439FA42DF46FFCA8</string>
+				<string>493DCFFC9C6C96CF0A8B1011DF4BCB06</string>
+				<string>4110B5C32061DE0157B71FA43E2EF3D4</string>
+				<string>A605D6FEF59A99BD7432E568EFCD3FD5</string>
+				<string>A9F4F6C6AA73950FC319AC630B0C8288</string>
+				<string>901CA16E71AEAB312DB28F1471116E47</string>
+				<string>D150D3C5F6D8F63004857004CF2EA20E</string>
+				<string>1D1A3D17163F280685FEF01F2E6DBCC3</string>
+				<string>854352172077EBDC9ABBA6A33AFD3B37</string>
+				<string>583DE8E6CA12CCDEC6FF16914BAEB5E6</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods-Super Gluu (ad free)</string>
+			<key>path</key>
+			<string>Target Support Files/Pods-Super Gluu (ad free)</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>E2C9CC54B6B82F0FF48B78949BB087BD</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -8501,24 +9085,9 @@
 			<key>productName</key>
 			<string>NSHash</string>
 			<key>productReference</key>
-			<string>38289582A15B265EEF308AD9B4692C87</string>
+			<string>328C6DA04F60F8B84545D1EDC31BCA28</string>
 			<key>productType</key>
 			<string>com.apple.product-type.framework</string>
-		</dict>
-		<key>E320AEE6BDF3F2C36EC4197761580147</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.framework</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>CocoaAsyncSocket.framework</string>
-			<key>path</key>
-			<string>CocoaAsyncSocket.framework</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
 		<key>E38BE486C5E3FDBC72C0195077C83C67</key>
 		<dict>
@@ -8546,30 +9115,6 @@
 			<string>AFNetworkActivityIndicatorManager.m</string>
 			<key>path</key>
 			<string>UIKit+AFNetworking/AFNetworkActivityIndicatorManager.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>E5093A97528921C777372C25043727B6</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>8C9D98D92D58ABAA0F1BE1E91853964B</string>
-				<string>E320AEE6BDF3F2C36EC4197761580147</string>
-				<string>59C2AD82BC4B5A1EAB4255238B41A80D</string>
-				<string>E976E941842399243B380BAB9A077C81</string>
-				<string>4EF28955F088441954E0BB3ADCEBC78B</string>
-				<string>2F71E848B09630554CFEF9288855A1F5</string>
-				<string>08CFFEC962181E5FB16BEDD049D97176</string>
-				<string>38289582A15B265EEF308AD9B4692C87</string>
-				<string>F351CC1F5E7773BFEDDD741157411FFE</string>
-				<string>C62DD84719A980F57CFA0468F4A1FFEE</string>
-				<string>D4EEC95C752870E842F2DE7B6E79DAE8</string>
-				<string>C9DB369EFCD5374324EBD7EAA7A32569</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Products</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -8693,6 +9238,42 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>E82F1EB948F73E5BE21E0059CA46A15C</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>767094574F96B02A9C2E28C09884B9C5</string>
+			<key>buildPhases</key>
+			<array>
+				<string>D6C840FEC7E0E1666D86468138990F8B</string>
+				<string>47F367520A3C8585A56B3D00230F5D9B</string>
+				<string>C8FEEFFA8B7675A19185D062BA3EE037</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array>
+				<string>43D2F8C27414B668A116B14F75A817E3</string>
+				<string>F05F87733E56BA83F218326384DCE226</string>
+				<string>6EC8A2E6D01D73B3F0B977789F84B343</string>
+				<string>8193BAD5945750647C77D142572CE16D</string>
+				<string>BA8D770F0AAC46E523EEC1909A6950E1</string>
+				<string>5BC58CD3D5122E8E370C8CEA13EAEFA9</string>
+				<string>8D59A55E06B4C26D4AA146DB3C15BB62</string>
+				<string>6518F7487353A07500B5C51DA69C7833</string>
+				<string>68D4615FE978361D1B879DC5C8698696</string>
+				<string>29268960650A26CFA9A548FEBB17D063</string>
+			</array>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>Pods-Super Gluu (ad free)</string>
+			<key>productName</key>
+			<string>Pods-Super Gluu (ad free)</string>
+			<key>productReference</key>
+			<string>5ADC63470390B32E3FAB34916FCFB159</string>
+			<key>productType</key>
+			<string>com.apple.product-type.framework</string>
+		</dict>
 		<key>E915A6A094585B2D5EF71E2E206365FE</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -8707,21 +9288,6 @@
 			<string>UIKit+AFNetworking/UIActivityIndicatorView+AFNetworking.h</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
-		</dict>
-		<key>E976E941842399243B380BAB9A077C81</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.framework</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>IAPHelper.framework</string>
-			<key>path</key>
-			<string>IAPHelper.framework</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
 		<key>E97EAB993A7660E0545EF58B88BD1494</key>
 		<dict>
@@ -8830,6 +9396,13 @@
 					<string>Public</string>
 				</array>
 			</dict>
+		</dict>
+		<key>EC361754423DB246BA27DBCE65D8B524</key>
+		<dict>
+			<key>fileRef</key>
+			<string>A9F4F6C6AA73950FC319AC630B0C8288</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>ECAFED871D85A9BF4FD8E873C0D1BC7A</key>
 		<dict>
@@ -8961,6 +9534,17 @@
 			<string>Frameworks/FirebaseAnalytics.framework</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>F05F87733E56BA83F218326384DCE226</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>name</key>
+			<string>CocoaAsyncSocket</string>
+			<key>target</key>
+			<string>B1D17BA74BEACBD28F897F231B5907A4</string>
+			<key>targetProxy</key>
+			<string>AD9A40AB870ACF34DE1E0249857A0CA4</string>
 		</dict>
 		<key>F0ECDBF7A55379A7ECB9EEE69B6BB64F</key>
 		<dict>
@@ -9180,20 +9764,73 @@
 			<key>name</key>
 			<string>Debug</string>
 		</dict>
-		<key>F351CC1F5E7773BFEDDD741157411FFE</key>
+		<key>F365E8248710C8F3CC306812D1649C6A</key>
 		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.framework</string>
-			<key>includeInIndex</key>
-			<string>0</string>
+			<key>baseConfigurationReference</key>
+			<string>583DE8E6CA12CCDEC6FF16914BAEB5E6</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>1</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf-with-dsym</string>
+				<key>DEFINES_MODULE</key>
+				<string>YES</string>
+				<key>DYLIB_COMPATIBILITY_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_CURRENT_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_INSTALL_NAME_BASE</key>
+				<string>@rpath</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Target Support Files/Pods-Super Gluu (ad free)/Info.plist</string>
+				<key>INSTALL_PATH</key>
+				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>8.0</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>@executable_path/Frameworks</string>
+					<string>@loader_path/Frameworks</string>
+				</array>
+				<key>MACH_O_TYPE</key>
+				<string>staticlib</string>
+				<key>MODULEMAP_FILE</key>
+				<string>Target Support Files/Pods-Super Gluu (ad free)/Pods-Super Gluu (ad free).modulemap</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>NO</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PODS_ROOT</key>
+				<string>$(SRCROOT)</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
+				<key>PRODUCT_NAME</key>
+				<string>Pods_Super_Gluu__ad_free_</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+				<key>VERSIONING_SYSTEM</key>
+				<string>apple-generic</string>
+				<key>VERSION_INFO_PREFIX</key>
+				<string></string>
+			</dict>
 			<key>isa</key>
-			<string>PBXFileReference</string>
+			<string>XCBuildConfiguration</string>
 			<key>name</key>
-			<string>ox_push3.framework</string>
-			<key>path</key>
-			<string>ox-push3.framework</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
+			<string>Release</string>
 		</dict>
 		<key>F3C9AC3FD6ABF561C713B9DB63164688</key>
 		<dict>
@@ -9216,9 +9853,22 @@
 			<key>productName</key>
 			<string>SCLAlertView-Objective-C</string>
 			<key>productReference</key>
-			<string>C9DB369EFCD5374324EBD7EAA7A32569</string>
+			<string>855E59077E8722A251A6930729E05D8C</string>
 			<key>productType</key>
 			<string>com.apple.product-type.framework</string>
+		</dict>
+		<key>F5044AD6CFD02ADE39080A0894DB1F85</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>F561C1C2BA5DFFBABF281575555917D8</key>
 		<dict>
@@ -9273,9 +9923,22 @@
 			<key>productName</key>
 			<string>NHNetworkTime</string>
 			<key>productReference</key>
-			<string>08CFFEC962181E5FB16BEDD049D97176</string>
+			<string>96987624DCF683A1707DACA271D929D8</string>
 			<key>productType</key>
 			<string>com.apple.product-type.framework</string>
+		</dict>
+		<key>F7B36443364B01C985C43DEBC249A739</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>D41D8CD98F00B204E9800998ECF8427E</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>FDCDD5B77407E27BFD144557E23044B1</string>
+			<key>remoteInfo</key>
+			<string>QRCodeReaderViewController</string>
 		</dict>
 		<key>F7BCC0CB8DFB22AB34ECE9BC5C72DD2B</key>
 		<dict>
@@ -9495,7 +10158,7 @@
 			<key>productName</key>
 			<string>QRCodeReaderViewController</string>
 			<key>productReference</key>
-			<string>D4EEC95C752870E842F2DE7B6E79DAE8</string>
+			<string>B568E5DBAB2DBD8216579402B845D3FE</string>
 			<key>productType</key>
 			<string>com.apple.product-type.framework</string>
 		</dict>

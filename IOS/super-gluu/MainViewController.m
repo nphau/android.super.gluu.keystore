@@ -58,7 +58,11 @@
     _adFreeView.layer.borderColor = [UIColor blackColor].CGColor;
     _adFreeView.layer.borderWidth = 2.0;
     _adFreeButton.layer.cornerRadius = CORNER_RADIUS;
+#ifdef ADFREE
+    //skip here
+#else
     [self isSubscriptionExpired];
+#endif
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -411,12 +415,13 @@
     // Or use blocks
     [reader setCompletionWithBlock:^(NSString *resultAsString) {
         if(resultAsString && !isResultFromScan){
-            isResultFromScan = YES;
-            NSLog(@"%@", resultAsString);
-            NSData *data = [resultAsString dataUsingEncoding:NSUTF8StringEncoding];
-            NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            [self sendQRCodeRequest:jsonDictionary];
-            [qrScanerVC dismissViewControllerAnimated:YES completion:nil];
+            [qrScanerVC dismissViewControllerAnimated:YES completion:^(){
+                isResultFromScan = YES;
+                NSLog(@"%@", resultAsString);
+                NSData *data = [resultAsString dataUsingEncoding:NSUTF8StringEncoding];
+                NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                [self sendQRCodeRequest:jsonDictionary];
+            }];
         }
     }];
     
@@ -427,7 +432,8 @@
     if (jsonDictionary != nil){
         scanJsonDictionary = jsonDictionary;
         [self initUserInfo:jsonDictionary];
-        [self performSelector:@selector(provideScanRequest) withObject:nil afterDelay:1.0];
+//        [self performSelector:@selector(provideScanRequest) withObject:nil afterDelay:0.5];
+        [self provideScanRequest];
     } else {
         [self updateStatus:NSLocalizedString(@"WrongQRImage", @"Wrong QR Code image")];
         [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
@@ -711,11 +717,16 @@
         [IAPShare sharedHelper].iap = [[IAPHelper alloc] initWithProductIdentifiers:dataSet];
     }
     
-    [IAPShare sharedHelper].iap.production = NO;
+    [IAPShare sharedHelper].iap.production = YES;
     
     //Get receipt with info about subscription
     [[IAPShare sharedHelper].iap checkReceipt:[NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]] AndSharedSecret:@"ec030e99b38946ce9ac5394382379b72" onCompletion:^(NSString *response, NSError *error) {
         
+        if (response == nil){
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_NOT_FREE object:nil];
+            _adFreeView.hidden = NO;
+            return;
+        }
         //Convert JSON String to NSDictionary
         NSDictionary* rec = [IAPShare toJSON:response];
         
@@ -727,7 +738,7 @@
             NSDate* expiredDate = [self extractDate:expires_date];
             NSCalendar *calender = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
             if ([IAPShare sharedHelper].iap.production){
-                NSDateComponents *dateComponent = [calender components:NSCalendarUnitDay fromDate:expiredDate toDate:[NSDate date] options:0];
+                NSDateComponents *dateComponent = [calender components:NSCalendarUnitDay fromDate:[NSDate date] toDate:expiredDate options:0];
                 NSInteger days = [dateComponent day];
                 if (days >= 0){
                     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_FREE object:nil];
