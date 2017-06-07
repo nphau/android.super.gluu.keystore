@@ -126,7 +126,7 @@ extension ServiceScanner : CBPeripheralDelegate {
                 isErrorSent = !isErrorSent
             }
         } else {
-            print("Characteristic value : \(UInt8(strtoul(value, nil, 16))) with ID \(characteristic.uuid.uuidString)");
+            print("Characteristic value : \(String(describing: value)) with ID \(characteristic.uuid.uuidString)")
         }
     }
 

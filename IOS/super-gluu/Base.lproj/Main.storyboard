@@ -58,7 +58,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="320" height="131"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1lt-Wr-UNb" id="J8g-Lv-5NH">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="130.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="131"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" misplaced="YES" id="gbl-CT-0e2" userLabel="cellBackgroundView">
@@ -111,7 +111,7 @@
                                                 <rect key="frame" x="0.0" y="159" width="320" height="75"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bQO-HN-Zml" id="2s3-7S-Dvh">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="74.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" misplaced="YES" id="3Y5-jp-uqa" userLabel="cellBackgroundView">
@@ -1517,7 +1517,7 @@ In the event you are using the Services in connection with a device provided by 
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EUp-g1-Fuy">
                                                 <rect key="frame" x="4" y="34" width="300" height="94"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <string key="text">You can pair a U2F blue tooth enabled device with Super Gluu to add an additional layer of security to authentications. When enabled, you will be prompted to tap your U2F device after approving the authentication request on Super Gluu.</string>
+                                                <string key="text">You can pair a U2F bluetooth enabled device with Super Gluu to add an additional layer of security to authentications. When enabled, you will be prompted to tap your U2F device after approving the authentication request on Super Gluu.</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>

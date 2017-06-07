@@ -24,7 +24,7 @@ struct Constants {
     static let battery_uuid = "2A19"
     
     static let FFFD = "FFFD"
-    static let Battery = "180F"
+    static let Battery = "2A19"//"180F"
     static let FirmwareRevision = "2A26"
     static let HardwareRevision = "2A27"
 }

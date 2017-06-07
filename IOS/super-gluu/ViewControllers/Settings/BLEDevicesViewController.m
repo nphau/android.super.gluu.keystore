@@ -126,13 +126,14 @@
         case CBCentralManagerStateResetting: stateString = @"The connection with the system service was momentarily lost, update imminent."; break;
         case CBCentralManagerStateUnsupported: stateString = @"The platform doesn't support Bluetooth Low Energy."; break;
         case CBCentralManagerStateUnauthorized: stateString = @"The app is not authorized to use Bluetooth Low Energy."; break;
-        case CBCentralManagerStatePoweredOff: stateString = @"Bluetooth is currently powered off."; break;
+        case CBCentralManagerStatePoweredOff: stateString = @"Bluetooth is currently powered off. Please turn on in Settings."; break;
         case CBCentralManagerStatePoweredOn:
             [self startBLEScanner];
             [self updateUI];
             break;
         default: stateString = @"State unknown, update imminent."; break;
     }
+    
     if (stateString == nil){return;}
     NSLog(@"Bluetooth State: %@",stateString);
     [self showAlertViewWithTitle:@"BLE manager" andText:stateString];

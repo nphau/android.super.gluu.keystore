@@ -31,6 +31,14 @@ class CharacteristicScanner: NSObject {
                     characteristic.uuid.uuidString == Constants.u2fControlPointLength_uuid ||
                     characteristic.uuid.uuidString == Constants.u2fControlPoint_uuid {
                     valueForWrite = Data.init(bytes: [0x03])
+                    if characteristic.uuid.uuidString == Constants.Battery {
+                        let batteryValueData = characteristic.value
+                        if batteryValueData != nil {
+                            let batteryValue = batteryValueData?.hexEncodedString()
+                            let batteryLevel = UInt8(strtoul(batteryValue, nil, 16))
+                            print("Battery Level -- \(batteryLevel)")
+                        }
+                    }
                     self.startDiscover(characteristic, type: type, isPairing: isPairing, isEnroll: isEnroll)
                     print("Doing pairing")
                 }
