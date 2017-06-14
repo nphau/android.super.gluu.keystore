@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="1PX-C3-Uj4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="1PX-C3-Uj4">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -28,9 +28,9 @@
                                             <action selector="cleanLogs:" destination="9lV-D3-rAo" eventType="touchUpInside" id="bSz-am-laV"/>
                                         </connections>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gluu.png" id="SHU-Ck-FhL">
-                                        <rect key="frame" x="109" y="20" width="102" height="45"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="gluu.png" id="SHU-Ck-FhL">
+                                        <rect key="frame" x="73" y="21" width="175" height="45"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -58,7 +58,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="320" height="131"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1lt-Wr-UNb" id="J8g-Lv-5NH">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="131"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="130.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" misplaced="YES" id="gbl-CT-0e2" userLabel="cellBackgroundView">
@@ -111,7 +111,7 @@
                                                 <rect key="frame" x="0.0" y="159" width="320" height="75"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bQO-HN-Zml" id="2s3-7S-Dvh">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="74.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" misplaced="YES" id="3Y5-jp-uqa" userLabel="cellBackgroundView">
@@ -179,6 +179,7 @@
                         <outlet property="contentView" destination="9gX-87-vc5" id="teW-X7-t1d"/>
                         <outlet property="logsTableView" destination="rek-sC-UUS" id="Mg5-Pi-aAT"/>
                         <outlet property="noLogsLabel" destination="V0H-np-GNp" id="hL2-JC-V9G"/>
+                        <outlet property="topView" destination="sQD-Wd-VtZ" id="Fky-RB-GHR"/>
                         <segue destination="Mge-71-NJN" kind="modal" identifier="LogInfo" id="nbb-Ne-tyY"/>
                     </connections>
                 </viewController>
@@ -386,9 +387,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="66"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gluu.png" id="Dxn-JC-7e2">
-                                        <rect key="frame" x="109" y="20" width="102" height="45"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="gluu.png" id="Dxn-JC-7e2">
+                                        <rect key="frame" x="72" y="20" width="175" height="45"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -410,6 +411,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="NT0-wF-dLs"/>
                     <connections>
+                        <outlet property="topView" destination="Li8-mb-COO" id="ex0-DR-4O5"/>
                         <segue destination="Gfe-Ja-dd4" kind="modal" identifier="pinViewSegue" id="HKO-CF-hFe"/>
                     </connections>
                 </viewController>
@@ -429,9 +431,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="66"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gluu.png" id="zoX-Ve-eFF">
-                                        <rect key="frame" x="109" y="20" width="102" height="45"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="gluu.png" id="zoX-Ve-eFF">
+                                        <rect key="frame" x="73" y="21" width="175" height="45"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -464,7 +466,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="304" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fEM-pi-ogh" id="tJO-iy-ulk">
-                                                    <rect key="frame" x="0.0" y="0.0" width="304" height="44"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="304" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="key's name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Q80-Mo-HG3">
@@ -536,6 +538,7 @@
                         <outlet property="keyHandleLabel" destination="APd-9B-abm" id="4kV-Fu-uBq"/>
                         <outlet property="keyHandleTableView" destination="RP3-gx-BOp" id="igc-Tt-rVl"/>
                         <outlet property="keyRenameInfoLabel" destination="g63-4O-uuc" id="DgQ-b7-Q10"/>
+                        <outlet property="topView" destination="yrK-Cx-NZ1" id="nq5-eo-u7m"/>
                         <outlet property="uniqueKeyLabel" destination="N4Y-mm-Y7d" id="pXn-4a-6lG"/>
                     </connections>
                 </viewController>
@@ -607,7 +610,7 @@
                                         </subviews>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
-                                    <view contentMode="scaleToFill" misplaced="YES" id="yve-mW-djg">
+                                    <view contentMode="scaleToFill" misplaced="YES" id="yve-mW-djg" customClass="ADViewSubscriber">
                                         <rect key="frame" x="40" y="340" width="240" height="53"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                         <subviews>
@@ -620,7 +623,7 @@
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="adFreeAction:" destination="OWT-hQ-veb" eventType="touchUpInside" id="hi2-fi-YpS"/>
+                                                    <action selector="adFreeAction:" destination="yve-mW-djg" eventType="touchUpInside" id="83G-6G-dvd"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Tired of ads? Upgrade to ad free for $0.99/month!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vtS-ST-8Mq">
@@ -632,6 +635,9 @@
                                             </label>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="adFreeButton" destination="U1a-Fo-7YL" id="UgN-Nd-KmH"/>
+                                        </connections>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -669,9 +675,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="66"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gluu.png" id="5IA-gr-62u">
-                                        <rect key="frame" x="109" y="20" width="102" height="45"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="gluu.png" id="5IA-gr-62u">
+                                        <rect key="frame" x="73" y="21" width="175" height="45"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -687,7 +693,6 @@
                         </userDefinedRuntimeAttributes>
                     </tabBarItem>
                     <connections>
-                        <outlet property="adFreeButton" destination="U1a-Fo-7YL" id="5DE-6M-Yq5"/>
                         <outlet property="adFreeView" destination="yve-mW-djg" id="OTk-k3-88x"/>
                         <outlet property="contentView" destination="ogb-Jc-RlP" id="xNJ-B6-Czf"/>
                         <outlet property="notificationNetworkView" destination="bjj-T3-TOM" id="vQC-5A-nOP"/>
@@ -695,6 +700,7 @@
                         <outlet property="scanTextLabel" destination="mMq-pl-qUw" id="NAd-Qa-KT4"/>
                         <outlet property="statusLabel" destination="0s9-Pu-KnT" id="gkP-5Z-QdY"/>
                         <outlet property="statusView" destination="G0I-DM-Z4P" id="kF8-0R-Ey7"/>
+                        <outlet property="topView" destination="xUw-eN-IGT" id="tFN-fW-zKH"/>
                         <outlet property="welcomeLabel" destination="FDP-Hk-qh3" id="nxG-dp-AZT"/>
                         <outlet property="welcomeView" destination="WkL-NJ-ypG" id="2OA-7W-pLN"/>
                     </connections>
@@ -1232,8 +1238,8 @@ In the event you are using the Services in connection with a device provided by 
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="66"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gluu.png" id="3bN-Bh-Yoz">
-                                        <rect key="frame" x="109" y="20" width="102" height="45"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="gluu.png" id="3bN-Bh-Yoz">
+                                        <rect key="frame" x="73" y="21" width="175" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                 </subviews>
@@ -1469,8 +1475,8 @@ In the event you are using the Services in connection with a device provided by 
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="66"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gluu.png" id="oR6-py-9Fu">
-                                        <rect key="frame" x="109" y="20" width="102" height="45"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="gluu.png" id="oR6-py-9Fu">
+                                        <rect key="frame" x="86" y="20" width="149" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="hxa-64-6zC">
@@ -1550,6 +1556,7 @@ In the event you are using the Services in connection with a device provided by 
                         <outlet property="infoView" destination="mxz-7a-8vY" id="tXH-k7-uje"/>
                         <outlet property="settingsSwitch" destination="G0e-Il-HwI" id="DUm-7V-aVd"/>
                         <outlet property="settingsTitleLabel" destination="VC7-zX-U1B" id="mtR-I2-SBV"/>
+                        <outlet property="topView" destination="Brd-kM-SLe" id="GCx-ut-amV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FNU-hd-pDf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1568,9 +1575,9 @@ In the event you are using the Services in connection with a device provided by 
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="66"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gluu.png" id="CMW-d3-LuW">
-                                        <rect key="frame" x="109" y="20" width="102" height="45"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="gluu.png" id="CMW-d3-LuW">
+                                        <rect key="frame" x="86" y="20" width="148" height="45"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Xq7-if-v8d">
                                         <rect key="frame" x="8" y="27" width="70" height="30"/>
@@ -1616,7 +1623,6 @@ In the event you are using the Services in connection with a device provided by 
                                                                     <color key="titleColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <action selector="changePasscode:" destination="HZ7-Ii-nGF" eventType="touchUpInside" id="8dg-HH-pGl"/>
                                                                     <action selector="changePasscode:" destination="O89-PN-vX2" eventType="touchUpInside" id="lcB-c6-DJh"/>
                                                                 </connections>
                                                             </button>
@@ -1633,7 +1639,6 @@ In the event you are using the Services in connection with a device provided by 
                                                                 <color key="tintColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <connections>
                                                                     <action selector="attemptsValueChanged:" destination="O89-PN-vX2" eventType="valueChanged" id="6Xl-wN-rpz"/>
-                                                                    <action selector="attemptsValueChanged:" destination="HZ7-Ii-nGF" eventType="valueChanged" id="foE-TI-wdN"/>
                                                                 </connections>
                                                             </stepper>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of attempts:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dEx-a7-Rj7">
@@ -1692,6 +1697,7 @@ In the event you are using the Services in connection with a device provided by 
                         <outlet property="setChangePinCode" destination="BC3-An-3eL" id="YyO-bR-6pT"/>
                         <outlet property="settingSwitch" destination="TQy-vg-Kpm" id="0By-aS-36v"/>
                         <outlet property="settingsTitleLabel" destination="TYr-jp-4Sp" id="1Gb-cT-q1P"/>
+                        <outlet property="topView" destination="JRl-Um-WAQ" id="Vp9-sX-EXB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RHW-3d-AnP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1752,7 +1758,7 @@ In the event you are using the Services in connection with a device provided by 
         <simulatedScreenMetrics key="destination" type="retina4_0.fullscreen"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="8WU-5C-hkf"/>
-        <segue reference="mPM-80-Qwo"/>
+        <segue reference="Rgr-ya-ssd"/>
+        <segue reference="HKO-CF-hFe"/>
     </inferredMetricsTieBreakers>
 </document>

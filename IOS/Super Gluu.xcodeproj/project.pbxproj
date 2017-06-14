@@ -47,6 +47,10 @@
 		BB3A22691CB39B1700EBD799 /* type_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BB3A22681CB39B1700EBD799 /* type_icon.png */; };
 		BB3BE1641C87022C00817A46 /* LicenseAgreementView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB3BE1631C87022C00817A46 /* LicenseAgreementView.m */; };
 		BB3BE1721C882D0600817A46 /* ApproveDenyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB3BE1711C882D0600817A46 /* ApproveDenyViewController.m */; };
+		BB4732BF1EEADDCE007B8173 /* ADSubsriber.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4732BE1EEADDCE007B8173 /* ADSubsriber.m */; };
+		BB4732C01EEADDCE007B8173 /* ADSubsriber.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4732BE1EEADDCE007B8173 /* ADSubsriber.m */; };
+		BB4732C41EEAEE20007B8173 /* ADViewSubscriber.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4732C31EEAEE20007B8173 /* ADViewSubscriber.m */; };
+		BB4732C51EEAEE20007B8173 /* ADViewSubscriber.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4732C31EEAEE20007B8173 /* ADViewSubscriber.m */; };
 		BB50AE1C1E5F0978003AEC78 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB50AE1B1E5F0978003AEC78 /* LocalAuthentication.framework */; };
 		BB58C1611EDDB32800FEEC78 /* NSDate+NVTimeAgo.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB7C1011C9042AF00833B12 /* NSDate+NVTimeAgo.m */; };
 		BB58C1621EDDB32800FEEC78 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE5B1C7E08320016D422 /* MainViewController.m */; };
@@ -136,6 +140,12 @@
 		BBB7C0FC1C89FE3100833B12 /* gluuIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0FB1C89FE3100833B12 /* gluuIcon.png */; };
 		BBB7C1021C9042AF00833B12 /* NSDate+NVTimeAgo.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB7C1011C9042AF00833B12 /* NSDate+NVTimeAgo.m */; };
 		BBB7C1051C90723300833B12 /* InformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB7C1041C90723300833B12 /* InformationViewController.m */; };
+		BBC643C51EF14DEA009FEDD1 /* appConfiguration.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBC643C41EF14DEA009FEDD1 /* appConfiguration.plist */; };
+		BBC643C61EF14DEA009FEDD1 /* appConfiguration.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBC643C41EF14DEA009FEDD1 /* appConfiguration.plist */; };
+		BBC643C91EF14E6F009FEDD1 /* AppConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC643C81EF14E6F009FEDD1 /* AppConfiguration.m */; };
+		BBC643CA1EF14E6F009FEDD1 /* AppConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC643C81EF14E6F009FEDD1 /* AppConfiguration.m */; };
+		BBC643CE1EF16C13009FEDD1 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC643CD1EF16C13009FEDD1 /* SettingsViewController.m */; };
+		BBC643CF1EF16C13009FEDD1 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC643CD1EF16C13009FEDD1 /* SettingsViewController.m */; };
 		BBDE9B801DA78835003B6673 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B659E1CB7C59800784AEF /* AdSupport.framework */; };
 		BBDE9B811DA78847003B6673 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65A21CB7C5AE00784AEF /* CoreImage.framework */; };
 		BBDE9B821DA78851003B6673 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65A41CB7C5B900784AEF /* SystemConfiguration.framework */; };
@@ -249,6 +259,10 @@
 		BB3BE1671C88165800817A46 /* Super-gluu_PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Super-gluu_PrefixHeader.pch"; sourceTree = "<group>"; };
 		BB3BE1701C882D0600817A46 /* ApproveDenyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApproveDenyViewController.h; sourceTree = "<group>"; };
 		BB3BE1711C882D0600817A46 /* ApproveDenyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApproveDenyViewController.m; sourceTree = "<group>"; };
+		BB4732BD1EEADDCE007B8173 /* ADSubsriber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADSubsriber.h; path = Models/ADSubsriber.h; sourceTree = "<group>"; };
+		BB4732BE1EEADDCE007B8173 /* ADSubsriber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADSubsriber.m; path = Models/ADSubsriber.m; sourceTree = "<group>"; };
+		BB4732C21EEAEE20007B8173 /* ADViewSubscriber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADViewSubscriber.h; path = Models/ADViewSubscriber/ADViewSubscriber.h; sourceTree = "<group>"; };
+		BB4732C31EEAEE20007B8173 /* ADViewSubscriber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADViewSubscriber.m; path = Models/ADViewSubscriber/ADViewSubscriber.m; sourceTree = "<group>"; };
 		BB50AE1B1E5F0978003AEC78 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		BB58C1B11EDDB32800FEEC78 /* Super Gluu - Ad Free.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Super Gluu - Ad Free.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB58C1B21EDDB32E00FEEC78 /* Super Gluu (ad free)-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Super Gluu (ad free)-Info.plist"; path = "/Users/nazaryavornytskyy/super-gluu/IOS/Super Gluu (ad free)-Info.plist"; sourceTree = "<absolute>"; };
@@ -279,6 +293,12 @@
 		BBB7C1011C9042AF00833B12 /* NSDate+NVTimeAgo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+NVTimeAgo.m"; path = "NSDate-Time-Ago/NSDate+NVTimeAgo.m"; sourceTree = "<group>"; };
 		BBB7C1031C90723300833B12 /* InformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformationViewController.h; sourceTree = "<group>"; };
 		BBB7C1041C90723300833B12 /* InformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformationViewController.m; sourceTree = "<group>"; };
+		BBC643C41EF14DEA009FEDD1 /* appConfiguration.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = appConfiguration.plist; path = Configuration/appConfiguration.plist; sourceTree = "<group>"; };
+		BBC643C71EF14E6F009FEDD1 /* AppConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppConfiguration.h; path = Configuration/AppConfiguration.h; sourceTree = "<group>"; };
+		BBC643C81EF14E6F009FEDD1 /* AppConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppConfiguration.m; path = Configuration/AppConfiguration.m; sourceTree = "<group>"; };
+		BBC643CB1EF16176009FEDD1 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		BBC643CC1EF16C13009FEDD1 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = Settings/SettingsViewController.h; sourceTree = "<group>"; };
+		BBC643CD1EF16C13009FEDD1 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = Settings/SettingsViewController.m; sourceTree = "<group>"; };
 		BBDE9B881DA7888A003B6673 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		BBDE9B8A1DA78895003B6673 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		BBDE9B8C1DA788A3003B6673 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -431,6 +451,8 @@
 				BB128D881E8013D90041BD21 /* SettingsDetailsViewController.m */,
 				BB128D8C1E8266470041BD21 /* BLEDevicesViewController.h */,
 				BB128D8D1E8266470041BD21 /* BLEDevicesViewController.m */,
+				BBC643CC1EF16C13009FEDD1 /* SettingsViewController.h */,
+				BBC643CD1EF16C13009FEDD1 /* SettingsViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -654,6 +676,15 @@
 			path = TableViewCells;
 			sourceTree = "<group>";
 		};
+		BB4732C11EEAEDE2007B8173 /* ADViewSubscriber */ = {
+			isa = PBXGroup;
+			children = (
+				BB4732C21EEAEE20007B8173 /* ADViewSubscriber.h */,
+				BB4732C31EEAEE20007B8173 /* ADViewSubscriber.m */,
+			);
+			name = ADViewSubscriber;
+			sourceTree = "<group>";
+		};
 		BB79FA291E78309000AEAE58 /* BLEManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -688,6 +719,10 @@
 			isa = PBXGroup;
 			children = (
 				BBEC91FF1E293179000D522F /* www.gluu.org.cer */,
+				BBC643C41EF14DEA009FEDD1 /* appConfiguration.plist */,
+				BBC643C71EF14E6F009FEDD1 /* AppConfiguration.h */,
+				BBC643C81EF14E6F009FEDD1 /* AppConfiguration.m */,
+				BBC643CB1EF16176009FEDD1 /* PrefixHeader.pch */,
 			);
 			name = Configuration;
 			sourceTree = "<group>";
@@ -704,7 +739,10 @@
 		BBDFCCC81EB86BDA0028D8C0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				BB4732C11EEAEDE2007B8173 /* ADViewSubscriber */,
 				BBDFCCC91EB86BED0028D8C0 /* Banner */,
+				BB4732BD1EEADDCE007B8173 /* ADSubsriber.h */,
+				BB4732BE1EEADDCE007B8173 /* ADSubsriber.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -905,6 +943,7 @@
 				BB37DF281C7E0B8E0016D422 /* gluuIcon29.png in Resources */,
 				BB37DF241C7E0B8E0016D422 /* Localizable.strings in Resources */,
 				BB78BFB71C99C6C600558042 /* gluu.png in Resources */,
+				BBC643C51EF14DEA009FEDD1 /* appConfiguration.plist in Resources */,
 				BB37DF311C7E0B8E0016D422 /* gluuIcon60x3.png in Resources */,
 				BBB7C0E71C884E2600833B12 /* approveIcon.png in Resources */,
 				BBB7C0E91C8851B900833B12 /* denyIcon.png in Resources */,
@@ -952,6 +991,7 @@
 				BB58C19B1EDDB32800FEEC78 /* gluuIcon29.png in Resources */,
 				BB58C19C1EDDB32800FEEC78 /* Localizable.strings in Resources */,
 				BB58C19D1EDDB32800FEEC78 /* gluu.png in Resources */,
+				BBC643C61EF14DEA009FEDD1 /* appConfiguration.plist in Resources */,
 				BB58C19E1EDDB32800FEEC78 /* gluuIcon60x3.png in Resources */,
 				BB58C19F1EDDB32800FEEC78 /* approveIcon.png in Resources */,
 				BB58C1A01EDDB32800FEEC78 /* denyIcon.png in Resources */,
@@ -1072,6 +1112,7 @@
 				BBB7C1021C9042AF00833B12 /* NSDate+NVTimeAgo.m in Sources */,
 				BB37DE5C1C7E08320016D422 /* MainViewController.m in Sources */,
 				BBE787231C99781B00E9E0D7 /* PinCodeViewController.m in Sources */,
+				BBC643CE1EF16C13009FEDD1 /* SettingsViewController.m in Sources */,
 				BB37DF3F1C7E0B8E0016D422 /* LogsTableCell.m in Sources */,
 				BB128D891E8013D90041BD21 /* SettingsDetailsViewController.m in Sources */,
 				BB37DF3C1C7E0B8E0016D422 /* LogsViewController.m in Sources */,
@@ -1090,13 +1131,16 @@
 				BBF7603B1EB462D2005B9793 /* NotificationNetworkView.m in Sources */,
 				BB37DE561C7E08320016D422 /* main.m in Sources */,
 				BB79FA2C1E78309000AEAE58 /* CharacteristicScanner.swift in Sources */,
+				BBC643C91EF14E6F009FEDD1 /* AppConfiguration.m in Sources */,
 				BB128D8E1E8266470041BD21 /* BLEDevicesViewController.m in Sources */,
+				BB4732BF1EEADDCE007B8173 /* ADSubsriber.m in Sources */,
 				BB3BE1721C882D0600817A46 /* ApproveDenyViewController.m in Sources */,
 				BB37DF3E1C7E0B8E0016D422 /* KeyHandleCell.m in Sources */,
 				BB128D931E8903DA0041BD21 /* U2FMessageCoder.swift in Sources */,
 				BB05D1C61EB08B34007E0B72 /* NetworkChecker.m in Sources */,
 				BB18D05C1CBCFFAE00A73733 /* PAPasscodeViewController.m in Sources */,
 				BB79FA2B1E78309000AEAE58 /* ServiceScanner.swift in Sources */,
+				BB4732C41EEAEE20007B8173 /* ADViewSubscriber.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1126,13 +1170,16 @@
 				BB58C1641EDDB32800FEEC78 /* LogsTableCell.m in Sources */,
 				BB58C1651EDDB32800FEEC78 /* SettingsDetailsViewController.m in Sources */,
 				BB58C1661EDDB32800FEEC78 /* LogsViewController.m in Sources */,
+				BB4732C01EEADDCE007B8173 /* ADSubsriber.m in Sources */,
 				BB58C1671EDDB32800FEEC78 /* NSMutableAttributedString+Color.m in Sources */,
 				BB58C1681EDDB32800FEEC78 /* LicenseAgreementView.m in Sources */,
 				BB58C1691EDDB32800FEEC78 /* SettingsTableCell.m in Sources */,
+				BBC643CA1EF14E6F009FEDD1 /* AppConfiguration.m in Sources */,
 				BB58C16A1EDDB32800FEEC78 /* PeripheralScanner.swift in Sources */,
 				BB58C16B1EDDB32800FEEC78 /* AppDelegate.m in Sources */,
 				BB58C16C1EDDB32800FEEC78 /* SuperGluuBannerView.m in Sources */,
 				BB58C16D1EDDB32800FEEC78 /* InformationViewController.m in Sources */,
+				BB4732C51EEAEE20007B8173 /* ADViewSubscriber.m in Sources */,
 				BB58C16E1EDDB32800FEEC78 /* KeysViewController.m in Sources */,
 				BB58C16F1EDDB32800FEEC78 /* MainTabViewController.m in Sources */,
 				BB58C1701EDDB32800FEEC78 /* SettingsTableViewController.m in Sources */,
@@ -1142,6 +1189,7 @@
 				BB58C1741EDDB32800FEEC78 /* CharacteristicScanner.swift in Sources */,
 				BB58C1751EDDB32800FEEC78 /* BLEDevicesViewController.m in Sources */,
 				BB58C1761EDDB32800FEEC78 /* ApproveDenyViewController.m in Sources */,
+				BBC643CF1EF16C13009FEDD1 /* SettingsViewController.m in Sources */,
 				BB58C1771EDDB32800FEEC78 /* KeyHandleCell.m in Sources */,
 				BB58C1781EDDB32800FEEC78 /* U2FMessageCoder.swift in Sources */,
 				BB58C1791EDDB32800FEEC78 /* NetworkChecker.m in Sources */,
@@ -1289,7 +1337,7 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SRCROOT)/super-gluu/Super-gluu_PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "/Users/nazaryavornytskyy/super-gluu/IOS/super-gluu/PrefixHeader.pch";
 				INFOPLIST_FILE = "super-gluu/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1323,7 +1371,7 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SRCROOT)/super-gluu/Super-gluu_PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "/Users/nazaryavornytskyy/super-gluu/IOS/super-gluu/PrefixHeader.pch";
 				INFOPLIST_FILE = "super-gluu/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

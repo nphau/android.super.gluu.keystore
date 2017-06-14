@@ -8,7 +8,7 @@
 
 #import "MainTabViewController.h"
 #import "SuperGluuBannerView.h"
-
+#import "ADSubsriber.h"
 
 @interface MainTabViewController (){
     
@@ -32,6 +32,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initFullPageBanner:) name:NOTIFICATION_REGISTRATION_FAILED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initFullPageBanner:) name:NOTIFICATION_AUTENTIFICATION_SUCCESS object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initFullPageBanner:) name:NOTIFICATION_AUTENTIFICATION_FAILED object:nil];
+    
+    //Here we should also check subsciption for AD free
+    [[ADSubsriber sharedInstance] isSubscriptionExpired];
 #endif
     bannerView = [[SuperGluuBannerView alloc] init];
     [bannerView createInterstitial:self];

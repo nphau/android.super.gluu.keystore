@@ -13,6 +13,7 @@
 #import "DataStoreManager.h"
 #import "UserLoginInfo.h"
 #import "SCLAlertView.h"
+#import "AppConfiguration.h"
 
 @implementation LogsViewController
 
@@ -21,6 +22,7 @@
     [super viewDidLoad];
     [self getLogs];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initPushView) name:NOTIFICATION_PUSH_ONLINE object:nil];
+    topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -54,7 +56,7 @@
     [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
         NSLog(@"NO clicked");
     }];
-    [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"AlertTitle", @"Into") subTitle:NSLocalizedString(@"ClearLogs", @"Clear Logs") closeButtonTitle:nil duration:0.0f];
+    [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"AlertTitle", @"Into") subTitle:NSLocalizedString(@"ClearLogs", @"Clear Logs") closeButtonTitle:nil duration:0.0f];
 }
 
 #pragma mark UITableview Delegate
@@ -113,7 +115,7 @@
             }
         }
         SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-        [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:message closeButtonTitle:@"Close" duration:0.0f];
+        [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Info", @"Info") subTitle:message closeButtonTitle:@"Close" duration:0.0f];
     } else {
         [self loadApproveDenyView:sender];
     }

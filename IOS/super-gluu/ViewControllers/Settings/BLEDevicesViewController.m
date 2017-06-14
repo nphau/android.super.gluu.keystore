@@ -45,6 +45,7 @@
     _infoView.hidden = !settingStatus;
     [customSwitch addTarget:self action:@selector(onSecureClickSelected:) forControlEvents:UIControlEventValueChanged];
     _settingsSwitch.hidden = YES;
+    topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
     if (!settingStatus){
         customSwitch.thumbOnTintColor = [UIColor grayColor];
         customSwitch.thumbOffTintColor = [UIColor grayColor];
@@ -57,7 +58,7 @@
 }
 
 - (void) initSwitchTurnOnOff:(JTMaterialSwitch*) jtSwitch {
-    jtSwitch.thumbOnTintColor = CUSTOM_GREEN_COLOR;
+    jtSwitch.thumbOnTintColor = [[AppConfiguration sharedInstance] systemColor];
     jtSwitch.thumbOffTintColor = [UIColor grayColor];
     jtSwitch.trackOnTintColor = [UIColor greenColor];
     jtSwitch.trackOffTintColor = [UIColor grayColor];
@@ -104,7 +105,7 @@
     [alert addButton:@"Close" actionBlock:^(void) {
         NSLog(@"Closed alert");
     }];
-    [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:text closeButtonTitle:nil duration:3.0f];
+    [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Info", @"Info") subTitle:text closeButtonTitle:nil duration:3.0f];
 }
 
 -(IBAction)onBack:(id)sender{

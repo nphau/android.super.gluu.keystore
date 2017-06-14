@@ -11,6 +11,7 @@
 @interface LogsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>{
 
     NSMutableArray* logsArray;
+    IBOutlet UIView* topView;
     IBOutlet UITableView* logsTableView;
     IBOutlet UIButton* cleanLogs;
     IBOutlet UILabel* noLogsLabel;

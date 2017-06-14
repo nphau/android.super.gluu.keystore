@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SettingsDetailsViewController : UIViewController
+@interface SettingsDetailsViewController : UIViewController{
+    
+    IBOutlet UIView* topView;
+}
 
 //Settings title
 @property (nonatomic, retain) IBOutlet UILabel *settingsTitleLabel;

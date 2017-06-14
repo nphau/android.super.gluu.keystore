@@ -343,7 +343,7 @@ static NSTimeInterval AnimationDuration = 0.3;
     _failedAttemptsView.hidden = NO;
     int attemptsCount = (int)[[NSUserDefaults standardUserDefaults] integerForKey:LOCKED_ATTEMPTS_COUNT];
     if (_failedAttempts < 3) {
-        [_failedAttemptsView setBackgroundColor:CUSTOM_GREEN_COLOR];
+        [_failedAttemptsView setBackgroundColor:[[AppConfiguration sharedInstance] systemColor]];
 //        failedAttemptsLabel.text = NSLocalizedString(@"1 attempt(s) left", nil);//Failed Passcode
     } else {
         [_failedAttemptsView setBackgroundColor:[UIColor redColor]];

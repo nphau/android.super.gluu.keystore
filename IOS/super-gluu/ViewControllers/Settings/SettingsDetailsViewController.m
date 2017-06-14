@@ -43,6 +43,9 @@
     } else {
         [customSwitch addTarget:self action:@selector(onSwitchSelected:) forControlEvents:UIControlEventValueChanged];
     }
+    [_setChangePinCode setTitleColor:[[AppConfiguration sharedInstance] systemColor] forState:UIControlStateNormal];
+    [_attemptsStepper setTintColor:[[AppConfiguration sharedInstance] systemColor]];
+    topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
     _settingSwitch.hidden = YES;
     if (!settingStatus){
         customSwitch.thumbOnTintColor = [UIColor grayColor];
@@ -57,7 +60,7 @@
 }
 
 - (void) initSwitchTurnOnOff:(JTMaterialSwitch*) jtSwitch {
-    jtSwitch.thumbOnTintColor = CUSTOM_GREEN_COLOR;
+    jtSwitch.thumbOnTintColor = [[AppConfiguration sharedInstance] systemColor];
     jtSwitch.thumbOffTintColor = [UIColor grayColor];
     jtSwitch.trackOnTintColor = [UIColor greenColor];
     jtSwitch.trackOffTintColor = [UIColor grayColor];
@@ -162,7 +165,7 @@
 
 -(void)showWrongTouchID{
     SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-    [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:@"Wrong fingerprint, if biometric locked go to TouchID&Passcode settings and reactive it" closeButtonTitle:@"OK" duration:0.0f];
+    [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Info", @"Info") subTitle:@"Wrong fingerprint, if biometric locked go to TouchID&Passcode settings and reactive it" closeButtonTitle:@"OK" duration:0.0f];
 }
 
 -(void)touchIDErrorMessage:(NSError*)authError{
@@ -170,12 +173,12 @@
     [alert addButton:@"Ok" actionBlock:^(void) {
 //        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
     }];
-    [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:@"TouchID verification is not available on this device." closeButtonTitle:nil duration:0.0f];//[authError.userInfo valueForKey:@"NSLocalizedDescription"]
+    [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Info", @"Info") subTitle:@"TouchID verification is not available on this device." closeButtonTitle:nil duration:0.0f];//[authError.userInfo valueForKey:@"NSLocalizedDescription"]
 }
 
 -(void)touchIDInfoMessage:(NSString*)message{
     SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-    [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:message closeButtonTitle:@"Ok" duration:0.0f];
+    [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Info", @"Info") subTitle:message closeButtonTitle:@"Ok" duration:0.0f];
 }
 
 
@@ -226,7 +229,7 @@
     [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
         NSLog(@"NO clicked");
     }];
-    [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:title subTitle:message closeButtonTitle:nil duration:0.0f];
+    [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:title subTitle:message closeButtonTitle:nil duration:0.0f];
 }
 
 -(void)changePinCode{
@@ -262,10 +265,10 @@
         NSString* oldPassword = [[NSUserDefaults standardUserDefaults] objectForKey:PIN_CODE];
         if ([newPassword isEqualToString:oldPassword]){
             SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-            [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:@"You cannot set a new Pin code the same like old" closeButtonTitle:@"Close" duration:0.0f];
+            [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Info", @"Info") subTitle:@"You cannot set a new Pin code the same like old" closeButtonTitle:@"Close" duration:0.0f];
         } else {
             SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-            [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:@"You have successfully set a new Pin code" closeButtonTitle:@"Close" duration:0.0f];
+            [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Info", @"Info") subTitle:@"You have successfully set a new Pin code" closeButtonTitle:@"Close" duration:0.0f];
             [[NSUserDefaults standardUserDefaults] setObject:controller.passcode forKey:PIN_CODE];
         }
     }];
@@ -312,7 +315,7 @@
         NSLog(@"Closed alert");
         [passcodeViewController showKeyboard];
     }];
-    [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:NSLocalizedString(@"LastAttempts", @"LastAttempts") closeButtonTitle:nil duration:0.0f];
+    [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Info", @"Info") subTitle:NSLocalizedString(@"LastAttempts", @"LastAttempts") closeButtonTitle:nil duration:0.0f];
     [passcodeViewController hideKeyboard];
 }
 
@@ -322,7 +325,7 @@
         NSLog(@"Closed alert");
         [passcodeViewController showKeyboard];
     }];
-    [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:text closeButtonTitle:nil duration:0.0f];
+    [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Info", @"Info") subTitle:text closeButtonTitle:nil duration:0.0f];
     [passcodeViewController hideKeyboard];
 }
 

@@ -11,6 +11,7 @@
 #import "NSDate+NetworkClock.h"
 #import "NHNetworkClock.h"
 #import "SCLAlertView.h"
+#import "AppConfiguration.h"
 
 #define MAIN_VIEW @"MainTabView"
 #define PIN_PROTECTION_ID @"enabledPinCode"
@@ -42,7 +43,7 @@
     [[nextButton layer] setMasksToBounds:YES];
     [[nextButton layer] setCornerRadius:CORNER_RADIUS];
     [[nextButton layer] setBorderWidth:2.0f];
-    [[nextButton layer] setBorderColor:CUSTOM_GREEN_COLOR.CGColor];
+    [[nextButton layer] setBorderColor:[[AppConfiguration sharedInstance] systemColor].CGColor];
     
     [[skipButton layer] setMasksToBounds:YES];
     [[skipButton layer] setCornerRadius:CORNER_RADIUS];
@@ -50,7 +51,7 @@
     [[enterPinButton layer] setMasksToBounds:YES];
     [[enterPinButton layer] setCornerRadius:CORNER_RADIUS];
     [[enterPinButton layer] setBorderWidth:2.0f];
-    [[enterPinButton layer] setBorderColor:[UIColor colorWithRed:57/255.0 green:127/255.0 blue:255/255.0 alpha:1.0].CGColor];
+    [[enterPinButton layer] setBorderColor:[[AppConfiguration sharedInstance] systemColor].CGColor];
 }
 
 -(void)checkPinCodeEnabled{
@@ -279,7 +280,7 @@
         NSLog(@"Closed alert");
         [passcodeViewController showKeyboard];
     }];
-    [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:NSLocalizedString(@"LastAttempts", @"LastAttempts") closeButtonTitle:nil duration:0.0f];
+    [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Info", @"Info") subTitle:NSLocalizedString(@"LastAttempts", @"LastAttempts") closeButtonTitle:nil duration:0.0f];
     [passcodeViewController hideKeyboard];
 
 //    [[CustomIOSAlertView alertWithTitle:NSLocalizedString(@"Info", @"Info") message:NSLocalizedString(@"LastAttempts", @"LastAttempts")] show];

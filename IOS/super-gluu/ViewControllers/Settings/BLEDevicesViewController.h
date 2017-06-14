@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BLEDevicesViewController : UIViewController
+@interface BLEDevicesViewController : UIViewController{
+    
+    IBOutlet UIView* topView;
+}
+
 
 @property (nonatomic, retain) IBOutlet UILabel *settingsTitleLabel;
 @property (nonatomic, retain) IBOutlet UIView *infoView;

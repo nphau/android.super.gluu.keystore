@@ -12,6 +12,7 @@
 #import "NSMutableAttributedString+Color.h"
 #import <LocalAuthentication/LocalAuthentication.h>
 #import "SCLAlertView.h"
+#import "AppConfiguration.h"
 
 #define LICENSE_AGREEMENT @"LicenseAgreement"
 #define MAIN_VIEW @"MainTabView"
@@ -52,7 +53,7 @@
     [[_acceptButton layer] setMasksToBounds:YES];
     [[_acceptButton layer] setCornerRadius:CORNER_RADIUS];
     [[_acceptButton layer] setBorderWidth:2.0f];
-    [[_acceptButton layer] setBorderColor:[UIColor colorWithRed:1/255.0 green:161/255.0 blue:97/255.0 alpha:1.0].CGColor];
+    [[_acceptButton layer] setBorderColor:[[AppConfiguration sharedInstance] systemColor].CGColor];
     [self colorHashtag];
 }
 

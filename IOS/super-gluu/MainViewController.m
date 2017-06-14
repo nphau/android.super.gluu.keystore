@@ -39,9 +39,7 @@
     [self initQRScanner];
     [self initLocalization];
     oxPushManager = [[OXPushManager alloc] init];
-    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(initSecureClickScanner:)    name:INIT_SECURE_CLICK_NOTIFICATION  object:nil];
-    [self checkDeviceOrientation];
 
     //For Push Notifications
     if ([[[UIDevice currentDevice] systemVersion] floatValue] > 7){//for ios 8 and higth
@@ -53,21 +51,10 @@
     [self checkNetworkConnection];
     //Disable BLE support
 //    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:SECURE_CLICK_ENABLED];
-    //Here we should also check subsciption for AD free
-    _adFreeView.hidden = YES;
-    _adFreeView.layer.borderColor = [UIColor blackColor].CGColor;
-    _adFreeView.layer.borderWidth = 2.0;
-    _adFreeButton.layer.cornerRadius = CORNER_RADIUS;
-#ifdef ADFREE
-    //skip here
-#else
-    [self isSubscriptionExpired];
-#endif
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self checkDeviceOrientation];
     BOOL secureClickEnable = [[NSUserDefaults standardUserDefaults] boolForKey:SECURE_CLICK_ENABLED];
     isSecureClick = secureClickEnable;
     [_notificationNetworkView checkNetwork];
@@ -153,56 +140,6 @@
     [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
 }
 
--(void)checkDeviceOrientation{
-    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
-    {
-        // code for landscape orientation
-        [[NSNotificationCenter defaultCenter] postNotificationName:UIDeviceOrientationDidChangeNotification object:nil];
-    }
-}
-
-- (void)orientationChanged:(NSNotification *)notification{
-    [self adjustViewsForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
-}
-
-- (void) adjustViewsForOrientation:(UIInterfaceOrientation) orientation {
-    
-    switch (orientation)
-    {
-        case UIInterfaceOrientationPortrait:
-        case UIInterfaceOrientationPortraitUpsideDown:
-        {
-            //load the portrait view
-            if (isLandScape){
-                int y = [[UIScreen mainScreen] bounds].size.height/2.8;
-                [welcomeView setCenter:CGPointMake(welcomeView.center.x, y)];
-                [statusView setCenter:CGPointMake(statusView.center.x, y/4)];
-                [scanTextLabel setCenter:CGPointMake(scanTextLabel.center.x, scanButton.center.y + 80)];
-                [welcomeLabel setCenter:CGPointMake(welcomeLabel.center.x, scanButton.center.y - 70)];
-                isLandScape = NO;
-            }
-        }
-            
-            break;
-        case UIInterfaceOrientationLandscapeLeft:
-        case UIInterfaceOrientationLandscapeRight:
-        {
-            //load the landscape view
-            if (!isLandScape){
-                int y = [[UIScreen mainScreen] bounds].size.height/2.3;//140;
-                [welcomeView setCenter:CGPointMake(welcomeView.center.x, y)];
-                [statusView setCenter:CGPointMake(statusView.center.x, y/4)];
-                [scanTextLabel setCenter:CGPointMake(scanTextLabel.center.x, scanButton.center.y + 50)];
-                [welcomeLabel setCenter:CGPointMake(welcomeLabel.center.x, scanButton.center.y - 50)];
-                isLandScape = YES;
-            }
-            
-        }
-            break;
-        case UIInterfaceOrientationUnknown:break;
-    }
-}
-
 -(void)initWiget{
     if (IS_IPHONE_6){
         scanTextLabel.font = [UIFont systemFontOfSize:17];
@@ -210,9 +147,10 @@
     statusView.layer.cornerRadius = BUTTON_CORNER_RADIUS;
     
     scanButton.layer.cornerRadius = CORNER_RADIUS;
-    scanButton.layer.borderColor = CUSTOM_GREEN_COLOR.CGColor;
     scanButton.layer.borderWidth = 2.0;
-    
+    scanButton.layer.borderColor = [[AppConfiguration sharedInstance] systemColor].CGColor;
+    [scanButton setTitleColor:[[AppConfiguration sharedInstance] systemColor] forState:UIControlStateNormal];
+    topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
     isUserInfo = NO;
 }
 
@@ -454,10 +392,6 @@
     [self presentViewController:approveDenyView animated:YES completion:nil];
 }
 
-- (IBAction)adFreeAction:(id)sender{
-    [self tryToSubsribe];
-}
-
 - (IBAction)scanAction:(id)sender
 {
     if (_notificationNetworkView.isNetworkAvailable){
@@ -496,7 +430,7 @@
 
 -(void)showAlertViewWithTitle:(NSString*)title andMessage:(NSString*)message{
     SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-    [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:title subTitle:message closeButtonTitle:@"Close" duration:3.0f];
+    [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:title subTitle:message closeButtonTitle:@"Close" duration:3.0f];
 }
 
 #pragma mark - QRCodeReader Delegate Methods
@@ -643,137 +577,5 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
--(void)tryToSubsribe{
-    NSString* purchaceID = @"com.gluu.org.monthly.ad.free";
-    if (/* DISABLES CODE */ (YES)){
-        if(![IAPShare sharedHelper].iap) {
-            NSSet* dataSet = [[NSSet alloc] initWithObjects:purchaceID, nil];
-            
-            [IAPShare sharedHelper].iap = [[IAPHelper alloc] initWithProductIdentifiers:dataSet];
-        }
-        
-        [IAPShare sharedHelper].iap.production = NO;
-        
-        [[IAPShare sharedHelper].iap requestProductsWithCompletion:^(SKProductsRequest* request,SKProductsResponse* response)
-         {
-             if(response > 0 && [IAPShare sharedHelper].iap.products.count > 0) {
-                 SKProduct* product =[[IAPShare sharedHelper].iap.products objectAtIndex:0];
-                 
-                 NSLog(@"Price: %@",[[IAPShare sharedHelper].iap getLocalePrice:product]);
-                 NSLog(@"Title: %@",product.localizedTitle);
-                 
-                 [[IAPShare sharedHelper].iap buyProduct:product
-                                            onCompletion:^(SKPaymentTransaction* trans){
-                                                
-                                                if(trans.error)
-                                                {
-                                                    NSLog(@"Fail %@",[trans.error localizedDescription]);
-                                                }
-                                                else if(trans.transactionState == SKPaymentTransactionStatePurchased) {
-                                                    
-                                                    [[IAPShare sharedHelper].iap checkReceipt:[NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]] AndSharedSecret:@"ec030e99b38946ce9ac5394382379b72" onCompletion:^(NSString *response, NSError *error) {
-                                                        
-                                                        //Convert JSON String to NSDictionary
-                                                        NSDictionary* rec = [IAPShare toJSON:response];
-                                                        
-                                                        if([rec[@"status"] integerValue]==0)
-                                                        {
-                                                            
-                                                            [[IAPShare sharedHelper].iap provideContentWithTransaction:trans];
-                                                            NSLog(@"SUCCESS %@",response);
-                                                            NSLog(@"Pruchases %@",[IAPShare sharedHelper].iap.purchasedProducts);
-                                                            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_FREE object:nil];
-                                                            _adFreeView.hidden = YES;
-                                                        }
-                                                        else {
-                                                            NSLog(@"Fail");
-                                                            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_NOT_FREE object:nil];
-                                                            _adFreeView.hidden = NO;
-                                                        }
-                                                    }];
-                                                }
-                                                else if(trans.transactionState == SKPaymentTransactionStateFailed) {
-                                                    NSLog(@"Fail");
-                                                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_NOT_FREE object:nil];
-                                                    _adFreeView.hidden = NO;
-                                                }
-                                            }];//end of buy product
-             }
-         }];
-    } else {
-        NSLog(@"You've successfully subscribed");
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_FREE object:nil];
-        _adFreeView.hidden = YES;
-    }
-}
-
--(void)isSubscriptionExpired{
-    
-    NSString* purchaceID = @"com.gluu.org.monthly.ad.free";
-    
-    if(![IAPShare sharedHelper].iap) {
-        NSSet* dataSet = [[NSSet alloc] initWithObjects:purchaceID, nil];
-        
-        [IAPShare sharedHelper].iap = [[IAPHelper alloc] initWithProductIdentifiers:dataSet];
-    }
-    
-    [IAPShare sharedHelper].iap.production = YES;
-    
-    //Get receipt with info about subscription
-    [[IAPShare sharedHelper].iap checkReceipt:[NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]] AndSharedSecret:@"ec030e99b38946ce9ac5394382379b72" onCompletion:^(NSString *response, NSError *error) {
-        
-        if (response == nil){
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_NOT_FREE object:nil];
-            _adFreeView.hidden = NO;
-            return;
-        }
-        //Convert JSON String to NSDictionary
-        NSDictionary* rec = [IAPShare toJSON:response];
-        
-        if([rec[@"status"] integerValue]==0)
-        {
-            NSArray* latest_receipt_info_ar = rec[@"latest_receipt_info"];
-            NSDictionary* latest_receipt_info_dic = latest_receipt_info_ar.lastObject;
-            NSString* expires_date = latest_receipt_info_dic[@"expires_date"];
-            NSDate* expiredDate = [self extractDate:expires_date];
-            NSCalendar *calender = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-            if ([IAPShare sharedHelper].iap.production){
-                NSDateComponents *dateComponent = [calender components:NSCalendarUnitDay fromDate:[NSDate date] toDate:expiredDate options:0];
-                NSInteger days = [dateComponent day];
-                if (days >= 0){
-                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_FREE object:nil];
-                    _adFreeView.hidden = YES;
-                } else {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_NOT_FREE object:nil];
-                    _adFreeView.hidden = NO;
-                }
-                NSLog(@"Days - %ld", (long)days);
-            } else {
-                NSDateComponents *dateComponent = [calender components:NSCalendarUnitMinute fromDate:[NSDate date] toDate:expiredDate options:0];
-                NSInteger mins = [dateComponent minute];
-                if (mins >= 0){
-                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_FREE object:nil];
-                    _adFreeView.hidden = YES;
-                } else {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_NOT_FREE object:nil];
-                    _adFreeView.hidden = NO;
-                }
-                NSLog(@"Minutes - %ld", (long)mins);
-            }
-        }
-        else {
-            NSLog(@"Fail");
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_NOT_FREE object:nil];
-            _adFreeView.hidden = NO;
-        }
-    }];
-}
-
--(NSDate*)extractDate:(NSString*)date{
-    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss VV"];
-    NSDate* newDate = [formatter dateFromString:date];
-    return newDate;
-}
 
 @end
