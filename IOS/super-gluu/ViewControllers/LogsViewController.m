@@ -70,7 +70,7 @@
     UserLoginInfo* userInfo = (UserLoginInfo*)[logsArray objectAtIndex:indexPath.row];
     CGFloat height = 130.0;
     if (userInfo->logState == LOGIN_FAILED || userInfo->logState == ENROLL_FAILED || userInfo->logState == ENROLL_DECLINED || userInfo->logState == LOGIN_DECLINED){
-        height = 80.0;
+        height = 85.0;
     }
     return height;
 }

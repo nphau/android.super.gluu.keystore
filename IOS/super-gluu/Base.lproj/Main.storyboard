@@ -58,7 +58,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="320" height="131"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1lt-Wr-UNb" id="J8g-Lv-5NH">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="130.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="131"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" misplaced="YES" id="gbl-CT-0e2" userLabel="cellBackgroundView">
@@ -107,15 +107,15 @@
                                                     <outlet property="logo" destination="2VM-h2-jpK" id="zxd-aw-0pY"/>
                                                 </connections>
                                             </tableViewCell>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LogsFailedTableCellID" rowHeight="75" id="bQO-HN-Zml" customClass="LogsTableCell">
-                                                <rect key="frame" x="0.0" y="159" width="320" height="75"/>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LogsFailedTableCellID" rowHeight="85" id="bQO-HN-Zml" customClass="LogsTableCell">
+                                                <rect key="frame" x="0.0" y="159" width="320" height="85"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bQO-HN-Zml" id="2s3-7S-Dvh">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="74.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="85"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" misplaced="YES" id="3Y5-jp-uqa" userLabel="cellBackgroundView">
-                                                            <rect key="frame" x="21" y="0.0" width="291" height="68"/>
+                                                            <rect key="frame" x="20" y="15" width="292" height="68"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11 seconds ago" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wCP-vg-fKp">
@@ -466,7 +466,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="304" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fEM-pi-ogh" id="tJO-iy-ulk">
-                                                    <rect key="frame" x="0.0" y="0.0" width="304" height="43.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="304" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="key's name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Q80-Mo-HG3">

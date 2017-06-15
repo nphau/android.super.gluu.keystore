@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>systemAlertIcon</key>
-	<string>gluuIconAlert.png</string>
-	<key>systemIcon</key>
 	<string>gluu.png</string>
+	<key>systemIcon</key>
+	<string>gluuIconAlert.png</string>
 	<key>systemColor</key>
 	<dict>
 		<key>red</key>

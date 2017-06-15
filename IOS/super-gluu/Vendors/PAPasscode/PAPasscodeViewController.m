@@ -226,10 +226,6 @@ static NSTimeInterval AnimationDuration = 0.3;
     [self.view layoutIfNeeded];
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait|UIInterfaceOrientationMaskPortraitUpsideDown;
-}
-
 - (void)cancel:(id)sender {
     [_delegate PAPasscodeViewControllerDidCancel:self];
 }
@@ -388,7 +384,7 @@ static NSTimeInterval AnimationDuration = 0.3;
         if (finalScreen) {
             self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(handleCompleteField)];
         } else {
-            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Next", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(handleCompleteField)];
+            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Next", nil) style:UIBarButtonItemStylePlain target:self action:@selector(handleCompleteField)];
         }
         self.navigationItem.rightBarButtonItem.enabled = NO;
     }
