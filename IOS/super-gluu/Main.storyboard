@@ -58,7 +58,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="320" height="131"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1lt-Wr-UNb" id="J8g-Lv-5NH">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="131"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="130.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" misplaced="YES" id="gbl-CT-0e2" userLabel="cellBackgroundView">
@@ -111,7 +111,7 @@
                                                 <rect key="frame" x="0.0" y="159" width="320" height="85"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bQO-HN-Zml" id="2s3-7S-Dvh">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="85"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="84.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" misplaced="YES" id="3Y5-jp-uqa" userLabel="cellBackgroundView">
@@ -179,6 +179,7 @@
                         <outlet property="contentView" destination="9gX-87-vc5" id="teW-X7-t1d"/>
                         <outlet property="logsTableView" destination="rek-sC-UUS" id="Mg5-Pi-aAT"/>
                         <outlet property="noLogsLabel" destination="V0H-np-GNp" id="hL2-JC-V9G"/>
+                        <outlet property="topIconView" destination="SHU-Ck-FhL" id="Bjf-Tg-x3j"/>
                         <outlet property="topView" destination="sQD-Wd-VtZ" id="Fky-RB-GHR"/>
                         <segue destination="Mge-71-NJN" kind="modal" identifier="LogInfo" id="nbb-Ne-tyY"/>
                     </connections>
@@ -388,7 +389,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="gluu.png" id="Dxn-JC-7e2">
-                                        <rect key="frame" x="72" y="20" width="175" height="45"/>
+                                        <rect key="frame" x="73" y="21" width="175" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                 </subviews>
@@ -411,6 +412,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="NT0-wF-dLs"/>
                     <connections>
+                        <outlet property="topIconView" destination="Dxn-JC-7e2" id="rjm-Md-eZc"/>
                         <outlet property="topView" destination="Li8-mb-COO" id="ex0-DR-4O5"/>
                         <segue destination="Gfe-Ja-dd4" kind="modal" identifier="pinViewSegue" id="HKO-CF-hFe"/>
                     </connections>
@@ -538,6 +540,7 @@
                         <outlet property="keyHandleLabel" destination="APd-9B-abm" id="4kV-Fu-uBq"/>
                         <outlet property="keyHandleTableView" destination="RP3-gx-BOp" id="igc-Tt-rVl"/>
                         <outlet property="keyRenameInfoLabel" destination="g63-4O-uuc" id="DgQ-b7-Q10"/>
+                        <outlet property="topIconView" destination="zoX-Ve-eFF" id="YRv-vw-Tn7"/>
                         <outlet property="topView" destination="yrK-Cx-NZ1" id="nq5-eo-u7m"/>
                         <outlet property="uniqueKeyLabel" destination="N4Y-mm-Y7d" id="pXn-4a-6lG"/>
                     </connections>
@@ -700,6 +703,7 @@
                         <outlet property="scanTextLabel" destination="mMq-pl-qUw" id="NAd-Qa-KT4"/>
                         <outlet property="statusLabel" destination="0s9-Pu-KnT" id="gkP-5Z-QdY"/>
                         <outlet property="statusView" destination="G0I-DM-Z4P" id="kF8-0R-Ey7"/>
+                        <outlet property="topIconView" destination="5IA-gr-62u" id="YrR-oy-pJy"/>
                         <outlet property="topView" destination="xUw-eN-IGT" id="tFN-fW-zKH"/>
                         <outlet property="welcomeLabel" destination="FDP-Hk-qh3" id="nxG-dp-AZT"/>
                         <outlet property="welcomeView" destination="WkL-NJ-ypG" id="2OA-7W-pLN"/>
@@ -1218,6 +1222,7 @@ In the event you are using the Services in connection with a device provided by 
                         <outlet property="acceptButtonView" destination="Gxd-l6-QDT" id="Rq0-zV-Pot"/>
                         <outlet property="licenseTextField" destination="UEW-oJ-SWQ" id="1g8-jc-PdA"/>
                         <outlet property="titleLabel" destination="UpH-ae-WJf" id="ndb-hA-xZh"/>
+                        <outlet property="topView" destination="Qln-E8-waL" id="qUV-03-b4Q"/>
                         <segue destination="EoK-Gf-BRf" kind="modal" identifier="mainViewSegue" id="mPM-80-Qwo"/>
                         <segue destination="Gfe-Ja-dd4" kind="modal" identifier="pinViewSegue" id="8WU-5C-hkf"/>
                     </connections>
@@ -1322,6 +1327,8 @@ In the event you are using the Services in connection with a device provided by 
                         <outlet property="skipButton" destination="7WO-t3-2Ec" id="o0Y-UV-Pra"/>
                         <outlet property="timerView" destination="Tca-yU-khN" id="xCE-9G-kRs"/>
                         <outlet property="titleLabel" destination="i5t-fi-tKb" id="dbp-wj-tKB"/>
+                        <outlet property="topIconView" destination="3bN-Bh-Yoz" id="cU4-fi-TC8"/>
+                        <outlet property="topView" destination="9u8-dh-r8F" id="Up5-0E-zek"/>
                         <segue destination="EoK-Gf-BRf" kind="modal" identifier="mainViewSegue" id="Rgr-ya-ssd"/>
                     </connections>
                 </viewController>
@@ -1457,6 +1464,7 @@ In the event you are using the Services in connection with a device provided by 
                     <connections>
                         <outlet property="settingsTable" destination="CPd-nS-Bxb" id="7xU-l9-JZn"/>
                         <segue destination="O89-PN-vX2" kind="push" identifier="settingsDetailsSegue" id="qwv-WE-i0H"/>
+                        <segue destination="Qyk-Td-Oil" kind="push" identifier="settingsBLESegue" id="Y8b-kf-Ybm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xov-D9-0u7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1468,7 +1476,7 @@ In the event you are using the Services in connection with a device provided by 
             <objects>
                 <viewController storyboardIdentifier="settingsDevicesView" id="Qyk-Td-Oil" customClass="BLEDevicesViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lU5-bF-TNx">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="443"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" misplaced="YES" id="Brd-kM-SLe" userLabel="NavigationView">
@@ -1476,7 +1484,7 @@ In the event you are using the Services in connection with a device provided by 
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="gluu.png" id="oR6-py-9Fu">
-                                        <rect key="frame" x="86" y="20" width="149" height="45"/>
+                                        <rect key="frame" x="73" y="21" width="175" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="hxa-64-6zC">
@@ -1495,7 +1503,7 @@ In the event you are using the Services in connection with a device provided by 
                                 <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <view contentMode="scaleToFill" misplaced="YES" id="tTJ-ja-YRc">
-                                <rect key="frame" x="0.0" y="69" width="320" height="499"/>
+                                <rect key="frame" x="0.0" y="69" width="320" height="374"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Vasco DP SecureClick" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VC7-zX-U1B">
@@ -1510,7 +1518,7 @@ In the event you are using the Services in connection with a device provided by 
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                     </switch>
                                     <view contentMode="scaleToFill" misplaced="YES" id="mxz-7a-8vY" userLabel="InfoView">
-                                        <rect key="frame" x="7" y="77" width="304" height="244"/>
+                                        <rect key="frame" x="7" y="77" width="304" height="119"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Supported U2F BLE Devices" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="00u-Fg-0x1">
@@ -1552,16 +1560,20 @@ In the event you are using the Services in connection with a device provided by 
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
+                    <navigationItem key="navigationItem" id="X1f-FK-9RE"/>
                     <connections>
+                        <outlet property="bottomLabel" destination="lfD-se-lwa" id="T9o-u4-gbR"/>
                         <outlet property="infoView" destination="mxz-7a-8vY" id="tXH-k7-uje"/>
                         <outlet property="settingsSwitch" destination="G0e-Il-HwI" id="DUm-7V-aVd"/>
                         <outlet property="settingsTitleLabel" destination="VC7-zX-U1B" id="mtR-I2-SBV"/>
+                        <outlet property="topIconView" destination="oR6-py-9Fu" id="C25-kt-2wa"/>
+                        <outlet property="topLabel" destination="EUp-g1-Fuy" id="Rqb-Lq-rN6"/>
                         <outlet property="topView" destination="Brd-kM-SLe" id="GCx-ut-amV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FNU-hd-pDf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="225" y="2611"/>
+            <point key="canvasLocation" x="225" y="2423"/>
         </scene>
         <!--Settings Details View Controller-->
         <scene sceneID="g03-lI-DEu">
@@ -1576,7 +1588,7 @@ In the event you are using the Services in connection with a device provided by 
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="gluu.png" id="CMW-d3-LuW">
-                                        <rect key="frame" x="86" y="20" width="148" height="45"/>
+                                        <rect key="frame" x="73" y="21" width="175" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Xq7-if-v8d">
@@ -1697,6 +1709,7 @@ In the event you are using the Services in connection with a device provided by 
                         <outlet property="setChangePinCode" destination="BC3-An-3eL" id="YyO-bR-6pT"/>
                         <outlet property="settingSwitch" destination="TQy-vg-Kpm" id="0By-aS-36v"/>
                         <outlet property="settingsTitleLabel" destination="TYr-jp-4Sp" id="1Gb-cT-q1P"/>
+                        <outlet property="topIconView" destination="CMW-d3-LuW" id="dKJ-2a-h0R"/>
                         <outlet property="topView" destination="JRl-Um-WAQ" id="Vp9-sX-EXB"/>
                     </connections>
                 </viewController>

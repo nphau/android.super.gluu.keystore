@@ -33,6 +33,7 @@
 
 -(void)adoptLogByState:(NSURL*)serverURL andState:(LogState)logState{
     LogState state = logState;
+    [_logo setImage:[[AppConfiguration sharedInstance] systemLogIcon]];
     switch (state) {
         case LOGIN_SUCCESS:
             _logLabel.text = [NSString stringWithFormat:NSLocalizedString(@"LoggedIn", @"Logged in"), [serverURL host]];
@@ -40,7 +41,7 @@
             
         case LOGIN_FAILED:
             _logLabel.text = [NSString stringWithFormat:NSLocalizedString(@"LoggedInFailed", @"Logged in failed"), [serverURL host]];
-            [_logo setImage:[UIImage imageNamed:@"gluuIconRed.png"]];
+            [_logo setImage:[[AppConfiguration sharedInstance] systemLogRedIcon]];
             break;
         
         case ENROLL_SUCCESS:
@@ -49,7 +50,7 @@
             
         case ENROLL_FAILED:
             _logLabel.text = [NSString stringWithFormat:NSLocalizedString(@"EnrollInFailed", @"Enroll in failed"), [serverURL host]];
-            [_logo setImage:[UIImage imageNamed:@"gluuIconRed.png"]];
+            [_logo setImage:[[AppConfiguration sharedInstance] systemLogRedIcon]];
             break;
             
         case ENROLL_DECLINED:

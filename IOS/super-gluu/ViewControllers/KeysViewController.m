@@ -12,6 +12,7 @@
 #import "DataStoreManager.h"
 #import "InformationViewController.h"
 #import "SCLAlertView.h"
+#import "AppConfiguration.h"
 
 @implementation KeysViewController
 
@@ -27,9 +28,10 @@
     keyHandleTableView.layer.borderWidth = 2.0;
     [keyHandleTableView.layer setMasksToBounds:YES];
     keyCells = [[NSMutableDictionary alloc] init];
-    keyRenameInfoLabel.text = NSLocalizedString(@"RenameKeyNameInfo", @"Rename Key's Name");
-    uniqueKeyLabel.text = NSLocalizedString(@"UniqueKeyLabel", @"UniqueKeyLabel");
+    keyRenameInfoLabel.text = [NSString stringWithFormat:NSLocalizedString(@"RenameKeyNameInfo", @"Rename Key's Name"), [[AppConfiguration sharedInstance] systemTitle]];
+    uniqueKeyLabel.text = [NSString stringWithFormat: NSLocalizedString(@"UniqueKeyLabel", @"UniqueKeyLabel"), [[AppConfiguration sharedInstance] systemTitle]];
     topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
+    topIconView.image = [[AppConfiguration sharedInstance] systemIcon];
     
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initPushView) name:NOTIFICATION_PUSH_ONLINE object:nil];

@@ -11,6 +11,7 @@
 @interface SettingsDetailsViewController : UIViewController{
     
     IBOutlet UIView* topView;
+    IBOutlet UIImageView* topIconView;
 }
 
 //Settings title

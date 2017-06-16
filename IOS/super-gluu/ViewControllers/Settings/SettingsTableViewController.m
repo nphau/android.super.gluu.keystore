@@ -65,6 +65,14 @@
     return [NSString stringWithFormat:@"Status: %@", result];
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"settingsDetailsSegue"]){
+        SettingsDetailsViewController* settingsDetails = (SettingsDetailsViewController*)[segue destinationViewController];
+        settingsDetails.settingTitle = settingsTopics[selectedSettingIndex];
+        settingsDetails.settingKey = settingsKeys[selectedSettingIndex];
+    }
+}
+
 
 #pragma mark UITableview Delegate
 
@@ -85,17 +93,13 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     selectedSettingIndex = (int)indexPath.row;
-    UIStoryboard *storyboardobj=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
     if (selectedSettingIndex == 2){
-        BLEDevicesViewController* devicesController = (BLEDevicesViewController*)[storyboardobj instantiateViewControllerWithIdentifier:@"settingsDevicesView"];
-        [self.navigationController pushViewController:devicesController animated:YES];
+        [self performSegueWithIdentifier:@"settingsBLESegue" sender:self];
     } else if (selectedSettingIndex == settingsKeys.count-1 && [[NSUserDefaults standardUserDefaults] boolForKey:NOTIFICATION_AD_FREE]){
     
     } else {
-        SettingsDetailsViewController* settingsDetails = (SettingsDetailsViewController*)[storyboardobj instantiateViewControllerWithIdentifier:@"settingsDetailsView"];
-        settingsDetails.settingTitle = settingsTopics[selectedSettingIndex];
-        settingsDetails.settingKey = settingsKeys[selectedSettingIndex];
-        [self.navigationController pushViewController:settingsDetails animated:YES];
+        [self performSegueWithIdentifier:@"settingsDetailsSegue" sender:self];
+
     }
 }
 

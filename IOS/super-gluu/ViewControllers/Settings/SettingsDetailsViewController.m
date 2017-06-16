@@ -46,6 +46,7 @@
     [_setChangePinCode setTitleColor:[[AppConfiguration sharedInstance] systemColor] forState:UIControlStateNormal];
     [_attemptsStepper setTintColor:[[AppConfiguration sharedInstance] systemColor]];
     topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
+    topIconView.image = [[AppConfiguration sharedInstance] systemIcon];
     _settingSwitch.hidden = YES;
     if (!settingStatus){
         customSwitch.thumbOnTintColor = [UIColor grayColor];
@@ -76,13 +77,13 @@
 
 - (void)updateUI{
     if ([_settingKey isEqualToString:TOUCH_ID_ENABLED]){
-       _infoLabel.text = @"When enabled, access to your Super Gluu app will be protected by your TouchID fingerprint.";
+       _infoLabel.text = TOUCH_ID_TEXT([[AppConfiguration sharedInstance] systemTitle]);
     }
     if ([_settingKey isEqualToString:SSL_ENABLED]){
-        _infoLabel.text = @"Enable this option only during development. When enabled, Super Gluu will trust self-signed certificates. If the certificate is signed by a certificate authority (CA) trust all should be disabled.";
+        _infoLabel.text = SSL_ENABLED_TEXT([[AppConfiguration sharedInstance] systemTitle]);
     }
     if ([_settingKey isEqualToString:PIN_PROTECTION_ID]){
-        _infoLabel.text = @"When enabled, access to your Super Gluu app will be protected by a pin code of your choice.";
+        _infoLabel.text = PIN_PROTECTION_TEXT([[AppConfiguration sharedInstance] systemTitle]);
     }
     if ([_settingKey isEqualToString:PIN_PROTECTION_ID]){
         _pinCodeView.hidden = ![[NSUserDefaults standardUserDefaults] boolForKey:_settingKey];

@@ -10,11 +10,11 @@
 
 @implementation TokenEntity
 
--(id)initWithID:(NSString*)ID privateKey:(NSString*)privateKey publicKey:(NSString*)publicKey{
+-(id)initWithID:(NSString*)iD privateKey:(NSString*)PrivateKey publicKey:(NSString*)PublicKey{
 
-    ID = ID;
-    privateKey = privateKey;
-    publicKey = publicKey;
+    ID = iD;
+    privateKey = PrivateKey;
+    publicKey = PublicKey;
     
     return self;
 }

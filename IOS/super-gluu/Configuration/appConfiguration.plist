@@ -2,14 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>systemLogIcon</key>
+	<string>gluuIcon.png</string>
+	<key>systemLogRedIcon</key>
+	<string>gluuIconRed.png</string>
 	<key>systemAlertIcon</key>
-	<string>gluu.png</string>
-	<key>systemIcon</key>
 	<string>gluuIconAlert.png</string>
+	<key>systemIcon</key>
+	<string>gluu.png</string>
 	<key>systemColor</key>
 	<dict>
 		<key>red</key>
-		<integer>255</integer>
+		<integer>1</integer>
 		<key>green</key>
 		<integer>161</integer>
 		<key>blue</key>
@@ -18,6 +22,6 @@
 		<integer>1</integer>
 	</dict>
 	<key>systemTitle</key>
-	<string>Super Gluu</string>
+	<string>Super Puper Gluu </string>
 </dict>
 </plist>

@@ -13,6 +13,7 @@
 #import <LocalAuthentication/LocalAuthentication.h>
 #import "SCLAlertView.h"
 #import "AppConfiguration.h"
+#import "ADSubsriber.h"
 
 #define LICENSE_AGREEMENT @"LicenseAgreement"
 #define MAIN_VIEW @"MainTabView"
@@ -31,6 +32,7 @@
     [super viewDidLoad];
     [self initWiget];
     [self initLocalization];
+    [self checkPurchaces];
     [self performSelector:@selector(checkLicenseAgreement) withObject:nil afterDelay:0.1];
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkLicenseAgreement) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
@@ -45,6 +47,10 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+-(void)checkPurchaces{
+    [[ADSubsriber sharedInstance] restorePurchase];
+}
+
 -(void)initWiget{
     [_titleLabel setHidden:YES];
     [_licenseTextField setHidden:YES];
@@ -54,7 +60,9 @@
     [[_acceptButton layer] setCornerRadius:CORNER_RADIUS];
     [[_acceptButton layer] setBorderWidth:2.0f];
     [[_acceptButton layer] setBorderColor:[[AppConfiguration sharedInstance] systemColor].CGColor];
+    [_acceptButton setTitleColor:[[AppConfiguration sharedInstance] systemColor] forState:UIControlStateNormal];
     [self colorHashtag];
+    topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
 }
 
 -(void)initLocalization{

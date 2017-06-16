@@ -18,6 +18,7 @@
     [super viewDidLoad];
     
     topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
+    topIconView.image = [[AppConfiguration sharedInstance] systemIcon];
 }
 
 - (void)didReceiveMemoryWarning {

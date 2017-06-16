@@ -23,6 +23,7 @@
     [self getLogs];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initPushView) name:NOTIFICATION_PUSH_ONLINE object:nil];
     topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
+    topIconView.image = [[AppConfiguration sharedInstance] systemIcon];
 }
 
 -(void)viewWillAppear:(BOOL)animated{

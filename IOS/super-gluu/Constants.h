@@ -95,4 +95,12 @@
 
 #define PUSH_CAME_DATE @"push_recieved_time"
 
+#define BLE_TOP_LABEL_TEXT(value) [NSString stringWithFormat:@"You can pair a U2F bluetooth enabled device with %@ to add an additional layer of security to authentications. When enabled, you will be prompted to tap your U2F device after approving the authentication request on %@.", value, value]
+#define BLE_BOTTOM_LABEL_TEXT(value) [NSString stringWithFormat:@"Hold the button on your SecureClick device for 3 seconds to pair it with %@. When prompted for a password, enter: 000000", value]
+#define TOUCH_ID_TEXT(value) [NSString stringWithFormat:@"When enabled, access to your %@ app will be protected by your TouchID fingerprint.", value]
+#define SSL_ENABLED_TEXT(value) [NSString stringWithFormat:@"Enable this option only during development. When enabled, %@ will trust self-signed certificates. If the certificate is signed by a certificate authority (CA) trust all should be disabled.", value]
+#define PIN_PROTECTION_TEXT(value) [NSString stringWithFormat:@"When enabled, access to your %@ app will be protected by a pin code of your choice.", value]
+
+#define NETWORK_UNREACHABLE_TEXT(value) [NSString stringWithFormat:@"Your device is currently unable to establish a network connection. You will need a connection to approve or deny authentication requests with %@.", value]
+
 #endif /* Constants_h */

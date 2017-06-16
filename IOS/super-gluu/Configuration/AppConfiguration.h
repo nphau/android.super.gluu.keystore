@@ -16,6 +16,8 @@
 -(NSString*)systemTitle;
 -(UIImage*)systemIcon;
 -(UIImage*)systemAlertIcon;
+-(UIImage*)systemLogIcon;
+-(UIImage*)systemLogRedIcon;
 -(UIColor*)systemColor;
 
 @end

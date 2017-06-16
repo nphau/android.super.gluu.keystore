@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 //#import <CoreLocation/CoreLocation.h>
 
-@interface LicenseAgreementView : UIViewController {//<CLLocationManagerDelegate>{
-//    CLLocationManager *locationManager;
+@interface LicenseAgreementView : UIViewController {
+    
+    IBOutlet UIView* topView;
 }
 
 @property (strong, nonatomic) IBOutlet UILabel* titleLabel;

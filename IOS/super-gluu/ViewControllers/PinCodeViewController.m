@@ -52,6 +52,8 @@
     [[enterPinButton layer] setCornerRadius:CORNER_RADIUS];
     [[enterPinButton layer] setBorderWidth:2.0f];
     [[enterPinButton layer] setBorderColor:[[AppConfiguration sharedInstance] systemColor].CGColor];
+    topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
+    topIconView.image = [[AppConfiguration sharedInstance] systemIcon];
 }
 
 -(void)checkPinCodeEnabled{

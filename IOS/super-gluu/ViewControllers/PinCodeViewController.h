@@ -11,6 +11,8 @@
 
 @interface PinCodeViewController : UIViewController <PAPasscodeViewControllerDelegate>{
 
+    IBOutlet UIView* topView;
+    IBOutlet UIImageView* topIconView;
     IBOutlet UILabel* titleLabel;
     IBOutlet UIView* timerView;
     IBOutlet UILabel* minutesLabel;

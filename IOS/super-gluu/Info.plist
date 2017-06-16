@@ -28,13 +28,13 @@
 		<true/>
 	</dict>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Super Gluu requires Bluetooth service to work</string>
+	<string>$(EXECUTABLE_NAME) requires Bluetooth service to work</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Do you want to access to camera?</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Super Gluu requires location services to work</string>
+	<string>$(EXECUTABLE_NAME) requires location services to work</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Super Gluu requires location services to work</string>
+	<string>$(EXECUTABLE_NAME) requires location services to work</string>
 	<key>NSMotionUsageDescription</key>
 	<string>YES</string>
 	<key>NSPhotoLibraryUsageDescription</key>

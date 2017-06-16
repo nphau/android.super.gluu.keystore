@@ -21,6 +21,7 @@
     IBOutlet UIView* statusView;
     
     IBOutlet UIView* topView;
+    IBOutlet UIImageView* topIconView;
     
     IBOutlet UILabel* welcomeLabel;
     IBOutlet UILabel* scanTextLabel;

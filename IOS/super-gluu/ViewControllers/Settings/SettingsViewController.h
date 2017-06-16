@@ -11,6 +11,7 @@
 @interface SettingsViewController : UIViewController{
     
     IBOutlet UIView* topView;
+    IBOutlet UIImageView* topIconView;
 }
 
 @end

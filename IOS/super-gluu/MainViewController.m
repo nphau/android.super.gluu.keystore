@@ -152,6 +152,7 @@
     [scanButton setTitleColor:[[AppConfiguration sharedInstance] systemColor] forState:UIControlStateNormal];
     topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
     statusView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
+    topIconView.image = [[AppConfiguration sharedInstance] systemIcon];
     isUserInfo = NO;
 }
 
@@ -315,7 +316,6 @@
 #pragma LicenseAgreementDelegates
 
 -(void)approveRequest{
-    [self initAnimationFromRigthToLeft];
     NSString* message = NSLocalizedString(@"StartAuthentication", @"Authentication...");
     [self updateStatus:message];
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
@@ -324,7 +324,6 @@
 }
 
 -(void)denyRequest{
-    [self initAnimationFromRigthToLeft];
     NSString* message = @"Request canceled";
     [self updateStatus:message];
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
@@ -527,15 +526,6 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)initAnimationFromRigthToLeft{
-    CATransition *transition = [CATransition animation];
-    transition.duration = 0.5;
-    transition.type = kCATransitionPush;
-    transition.subtype = kCATransitionPush;
-    [transition setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-    [contentView.layer addAnimation:transition forKey:nil];
-}
-
 -(void)checkNetworkConnection{
     // Allocate a reachability object
     NetworkChecker *checker = [NetworkChecker reachabilityWithHostName:@"www.google.com"];
@@ -554,7 +544,7 @@
 }
 
 -(void)showNetworkUnavailableMessage{
-    [self showSystemMessage:@"Network Unavailable" message:@"Your device is currently unable to establish a network connection. You will need a connection to approve or deny authentication requests with Super Gluu."];
+    [self showSystemMessage:@"Network Unavailable" message:NETWORK_UNREACHABLE_TEXT([[AppConfiguration sharedInstance] systemTitle])];
     [_notificationNetworkView checkNetwork];
 }
 

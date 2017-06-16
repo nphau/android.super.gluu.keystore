@@ -16,5 +16,6 @@
 
 -(void)isSubscriptionExpired;
 -(void)tryToSubsribe;
+-(void)restorePurchase;
 
 @end

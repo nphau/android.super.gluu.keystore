@@ -21,7 +21,6 @@
 		BB37DE561C7E08320016D422 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE551C7E08320016D422 /* main.m */; };
 		BB37DE591C7E08320016D422 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE581C7E08320016D422 /* AppDelegate.m */; };
 		BB37DE5C1C7E08320016D422 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE5B1C7E08320016D422 /* MainViewController.m */; };
-		BB37DE5F1C7E08320016D422 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB37DE5D1C7E08320016D422 /* Main.storyboard */; };
 		BB37DE641C7E08320016D422 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB37DE631C7E08320016D422 /* Assets.xcassets */; };
 		BB37DE721C7E08320016D422 /* super_gluuTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE711C7E08320016D422 /* super_gluuTests.m */; };
 		BB37DE7D1C7E08320016D422 /* super_gluuUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE7C1C7E08320016D422 /* super_gluuUITests.m */; };
@@ -117,7 +116,6 @@
 		BB58C1A11EDDB32800FEEC78 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB37DE631C7E08320016D422 /* Assets.xcassets */; };
 		BB58C1A21EDDB32800FEEC78 /* gluuIcon60x2.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEEE1C7E0B8E0016D422 /* gluuIcon60x2.png */; };
 		BB58C1A31EDDB32800FEEC78 /* infoIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEF01C7E0B8E0016D422 /* infoIcon.png */; };
-		BB58C1A41EDDB32800FEEC78 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB37DE5D1C7E08320016D422 /* Main.storyboard */; };
 		BB58C1A51EDDB32800FEEC78 /* clearLogIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEE41C7E0B8E0016D422 /* clearLogIcon.png */; };
 		BB58C1A61EDDB32800FEEC78 /* gluuIconRed.png in Resources */ = {isa = PBXBuildFile; fileRef = BB8703051CA3E5D400EEF9A6 /* gluuIconRed.png */; };
 		BB58C1A71EDDB32800FEEC78 /* type_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BB3A22681CB39B1700EBD799 /* type_icon.png */; };
@@ -134,6 +132,10 @@
 		BB8703061CA3E5D400EEF9A6 /* gluuIconRed.png in Resources */ = {isa = PBXBuildFile; fileRef = BB8703051CA3E5D400EEF9A6 /* gluuIconRed.png */; };
 		BB87A2811EA0DAD8007F70E9 /* MainTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB87A2801EA0DAD8007F70E9 /* MainTabViewController.m */; };
 		BB9B65A11CB7C5A300784AEF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65A01CB7C5A300784AEF /* QuartzCore.framework */; };
+		BBB511481EF2E5B600E19D8E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB37DE681C7E08320016D422 /* Info.plist */; };
+		BBB511491EF2E5B700E19D8E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB37DE681C7E08320016D422 /* Info.plist */; };
+		BBB5114B1EF2EF9500E19D8E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBB5114A1EF2EF9500E19D8E /* Main.storyboard */; };
+		BBB5114C1EF2EF9500E19D8E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBB5114A1EF2EF9500E19D8E /* Main.storyboard */; };
 		BBB7C0E71C884E2600833B12 /* approveIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0E61C884E2600833B12 /* approveIcon.png */; };
 		BBB7C0E91C8851B900833B12 /* denyIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0E81C8851B900833B12 /* denyIcon.png */; };
 		BBB7C0EB1C88569400833B12 /* personIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0EA1C88569400833B12 /* personIcon.png */; };
@@ -216,7 +218,6 @@
 		BB37DE581C7E08320016D422 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		BB37DE5A1C7E08320016D422 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		BB37DE5B1C7E08320016D422 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
-		BB37DE5E1C7E08320016D422 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BB37DE631C7E08320016D422 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BB37DE681C7E08320016D422 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB37DE6D1C7E08320016D422 /* Super Gluu.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Super Gluu.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -284,6 +285,7 @@
 		BB9B65A61CB7C5D100784AEF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		BB9B65A81CB7C5DA00784AEF /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BB9B65AA1CB7C5E400784AEF /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		BBB5114A1EF2EF9500E19D8E /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		BBB7C0E61C884E2600833B12 /* approveIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = approveIcon.png; sourceTree = "<group>"; };
 		BBB7C0E81C8851B900833B12 /* denyIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = denyIcon.png; sourceTree = "<group>"; };
 		BBB7C0EA1C88569400833B12 /* personIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = personIcon.png; sourceTree = "<group>"; };
@@ -531,9 +533,9 @@
 				BB37DF071C7E0B8E0016D422 /* ViewControllers */,
 				BB37DE571C7E08320016D422 /* AppDelegate.h */,
 				BB37DE581C7E08320016D422 /* AppDelegate.m */,
+				BBB5114A1EF2EF9500E19D8E /* Main.storyboard */,
 				BB37DE5A1C7E08320016D422 /* MainViewController.h */,
 				BB37DE5B1C7E08320016D422 /* MainViewController.m */,
-				BB37DE5D1C7E08320016D422 /* Main.storyboard */,
 				BB37DE631C7E08320016D422 /* Assets.xcassets */,
 				BB37DE681C7E08320016D422 /* Info.plist */,
 				BB58C1B21EDDB32E00FEEC78 /* Super Gluu (ad free)-Info.plist */,
@@ -938,6 +940,7 @@
 				BB37DF251C7E0B8E0016D422 /* Oatmeal.ttf in Resources */,
 				BB2458FE1CBD59D600035B5B /* gluuIconAlert.png in Resources */,
 				BB37DF2D1C7E0B8E0016D422 /* gluuIcon57.png in Resources */,
+				BBB5114B1EF2EF9500E19D8E /* Main.storyboard in Resources */,
 				BB37DF351C7E0B8E0016D422 /* gl.png in Resources */,
 				BB37DF2A1C7E0B8E0016D422 /* gluuIcon29x3.png in Resources */,
 				BB37DF281C7E0B8E0016D422 /* gluuIcon29.png in Resources */,
@@ -950,7 +953,7 @@
 				BB37DE641C7E08320016D422 /* Assets.xcassets in Resources */,
 				BB37DF301C7E0B8E0016D422 /* gluuIcon60x2.png in Resources */,
 				BB37DF321C7E0B8E0016D422 /* infoIcon.png in Resources */,
-				BB37DE5F1C7E08320016D422 /* Main.storyboard in Resources */,
+				BBB511481EF2E5B600E19D8E /* Info.plist in Resources */,
 				BB37DF261C7E0B8E0016D422 /* clearLogIcon.png in Resources */,
 				BB8703061CA3E5D400EEF9A6 /* gluuIconRed.png in Resources */,
 				BB3A22691CB39B1700EBD799 /* type_icon.png in Resources */,
@@ -986,6 +989,7 @@
 				BB58C1961EDDB32800FEEC78 /* Oatmeal.ttf in Resources */,
 				BB58C1971EDDB32800FEEC78 /* gluuIconAlert.png in Resources */,
 				BB58C1981EDDB32800FEEC78 /* gluuIcon57.png in Resources */,
+				BBB5114C1EF2EF9500E19D8E /* Main.storyboard in Resources */,
 				BB58C1991EDDB32800FEEC78 /* gl.png in Resources */,
 				BB58C19A1EDDB32800FEEC78 /* gluuIcon29x3.png in Resources */,
 				BB58C19B1EDDB32800FEEC78 /* gluuIcon29.png in Resources */,
@@ -998,7 +1002,7 @@
 				BB58C1A11EDDB32800FEEC78 /* Assets.xcassets in Resources */,
 				BB58C1A21EDDB32800FEEC78 /* gluuIcon60x2.png in Resources */,
 				BB58C1A31EDDB32800FEEC78 /* infoIcon.png in Resources */,
-				BB58C1A41EDDB32800FEEC78 /* Main.storyboard in Resources */,
+				BBB511491EF2E5B700E19D8E /* Info.plist in Resources */,
 				BB58C1A51EDDB32800FEEC78 /* clearLogIcon.png in Resources */,
 				BB58C1A61EDDB32800FEEC78 /* gluuIconRed.png in Resources */,
 				BB58C1A71EDDB32800FEEC78 /* type_icon.png in Resources */,
@@ -1214,14 +1218,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		BB37DE5D1C7E08320016D422 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BB37DE5E1C7E08320016D422 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		BB37DEDB1C7E0B8E0016D422 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1342,7 +1338,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MACH_O_TYPE = mh_execute;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ios.super.gluu.ble;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ios.super.gluu;
 				PRODUCT_NAME = "Super Gluu";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1376,7 +1372,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MACH_O_TYPE = mh_execute;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ios.super.gluu.ble;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ios.super.gluu;
 				PRODUCT_NAME = "Super Gluu";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

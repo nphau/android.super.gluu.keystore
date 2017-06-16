@@ -46,6 +46,7 @@
     [customSwitch addTarget:self action:@selector(onSecureClickSelected:) forControlEvents:UIControlEventValueChanged];
     _settingsSwitch.hidden = YES;
     topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
+    topIconView.image = [[AppConfiguration sharedInstance] systemIcon];
     if (!settingStatus){
         customSwitch.thumbOnTintColor = [UIColor grayColor];
         customSwitch.thumbOffTintColor = [UIColor grayColor];
@@ -54,6 +55,8 @@
     } else {
         [self initSwitchTurnOnOff:customSwitch];
     }
+    topLabel.text = BLE_TOP_LABEL_TEXT([[AppConfiguration sharedInstance] systemTitle]);
+    bottomLabel.text = BLE_BOTTOM_LABEL_TEXT([[AppConfiguration sharedInstance] systemTitle]);
     [self.view addSubview:customSwitch];
 }
 

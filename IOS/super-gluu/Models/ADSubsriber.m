@@ -9,6 +9,9 @@
 #import "ADSubsriber.h"
 #import "IAPShare.h"
 
+#define MONTHLY_SUBSCRIBTION @"com.gluu.org.monthly.ad.free"
+#define SHARED_SECRET_KEY @"44b38fbde32249fe9bf43e30c760ed94"
+
 @implementation ADSubsriber
 
 + (instancetype) sharedInstance {
@@ -20,12 +23,37 @@
     return instance;
 }
 
+-(void)restorePurchase{
+    if(![IAPShare sharedHelper].iap) {
+        NSSet* dataSet = [[NSSet alloc] initWithObjects:MONTHLY_SUBSCRIBTION, nil];
+        
+        [IAPShare sharedHelper].iap = [[IAPHelper alloc] initWithProductIdentifiers:dataSet];
+    }
+    [[IAPShare sharedHelper].iap restoreProductsWithCompletion:^(SKPaymentQueue *payment, NSError *error) {
+        
+        //check with SKPaymentQueue
+        
+        // number of restore count
+//        NSInteger numberOfTransactions = payment.transactions.count;
+        
+        for (SKPaymentTransaction *transaction in payment.transactions)
+        {
+            NSString *purchased = transaction.payment.productIdentifier;
+            if([purchased isEqualToString:MONTHLY_SUBSCRIBTION])
+            {
+                //enable the prodcut here
+                NSLog(@"%@", [NSString stringWithFormat:@"%@ - Purchase restored", purchased]);
+            }
+        }
+        
+    }];
+}
+
 -(void)tryToSubsribe{
-    NSString* purchaceID = @"com.gluu.org.monthly.ad.free";
-    NSString* purchaceBleID = @"com.gluu.org.monthly.ad.free.ble";
+//    NSString* purchaceID = @"com.gluu.org.monthly.ad.free.ble";
     if (/* DISABLES CODE */ (YES)){
         if(![IAPShare sharedHelper].iap) {
-            NSSet* dataSet = [[NSSet alloc] initWithObjects:purchaceID, purchaceBleID, nil];
+            NSSet* dataSet = [[NSSet alloc] initWithObjects:MONTHLY_SUBSCRIBTION, nil];
             
             [IAPShare sharedHelper].iap = [[IAPHelper alloc] initWithProductIdentifiers:dataSet];
         }
@@ -86,20 +114,18 @@
 }
 
 -(void)isSubscriptionExpired{
-    
-    NSString* purchaceID = @"com.gluu.org.monthly.ad.free";
-    NSString* purchaceBleID = @"com.gluu.org.monthly.ad.free.ble";
+//    NSString* purchaceID = @"com.gluu.org.monthly.ad.free.ble";
     
     if(![IAPShare sharedHelper].iap) {
-        NSSet* dataSet = [[NSSet alloc] initWithObjects:purchaceID, purchaceBleID, nil];
+        NSSet* dataSet = [[NSSet alloc] initWithObjects:MONTHLY_SUBSCRIBTION, nil];
         
         [IAPShare sharedHelper].iap = [[IAPHelper alloc] initWithProductIdentifiers:dataSet];
     }
     
-    [IAPShare sharedHelper].iap.production = YES;
+    [IAPShare sharedHelper].iap.production = NO;
     
     //Get receipt with info about subscription
-    [[IAPShare sharedHelper].iap checkReceipt:[NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]] AndSharedSecret:@"ec030e99b38946ce9ac5394382379b72" onCompletion:^(NSString *response, NSError *error) {
+    [[IAPShare sharedHelper].iap checkReceipt:[NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]] AndSharedSecret:SHARED_SECRET_KEY onCompletion:^(NSString *response, NSError *error) {
         
         if (response == nil){
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_NOT_FREE object:nil];

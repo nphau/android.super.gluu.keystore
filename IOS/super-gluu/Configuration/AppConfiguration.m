@@ -11,6 +11,8 @@
 #define SYSTEM_TITLE @"systemTitle"
 #define SYSTEM_ICON @"systemIcon"
 #define SYSTEM_ALERT_ICON @"systemAlertIcon"
+#define SYSTEM_LOG_ICON @"systemLogIcon"
+#define SYSTEM_LOG_RED_ICON @"systemLogRedIcon"
 #define SYSTEM_COLOR @"systemColor"
 
 @implementation AppConfiguration{
@@ -64,8 +66,31 @@
     
     return [UIImage imageNamed:icon];
 }
+
+-(UIImage*)systemLogIcon{
+    
+    NSString* icon = [configDict valueForKey:SYSTEM_LOG_ICON];
+    
+    if (configDict == nil || [icon isEqualToString:@""]){
+        return [UIImage imageNamed:@"gluuIcon.png"];
+    }
+    
+    return [UIImage imageNamed:icon];
+}
+
+-(UIImage*)systemLogRedIcon{
+    
+    NSString* icon = [configDict valueForKey:SYSTEM_LOG_RED_ICON];
+    
+    if (configDict == nil || [icon isEqualToString:@""]){
+        return [UIImage imageNamed:@"gluuIconRed.png"];
+    }
+    
+    return [UIImage imageNamed:icon];
+}
 //----------------------- End Icons -------------
 
+// ---------------------- Colors -----------------
 -(UIColor*)systemColor{
     
     NSDictionary* colorDic = [configDict objectForKey:SYSTEM_COLOR];
@@ -81,5 +106,6 @@
     
     return [UIColor colorWithRed:red/256.0 green:green/256.0 blue:blue/256.0 alpha:alpha];
 }
+//----------------------- End Colors -------------
 
 @end

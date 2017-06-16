@@ -11,6 +11,10 @@
 @interface BLEDevicesViewController : UIViewController{
     
     IBOutlet UIView* topView;
+    IBOutlet UIImageView* topIconView;
+    
+    IBOutlet UILabel* topLabel;
+    IBOutlet UILabel* bottomLabel;
 }
 
 
