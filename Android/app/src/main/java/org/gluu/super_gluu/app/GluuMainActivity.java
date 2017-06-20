@@ -8,9 +8,11 @@ package org.gluu.super_gluu.app;
 
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -20,6 +22,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Vibrator;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
@@ -35,6 +38,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.android.vending.billing.IInAppBillingService;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -84,6 +89,20 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
     private Boolean isADS = true;
     private Boolean isShowClearMenu = false;
+
+    IInAppBillingService inAppBillingService;
+
+    ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            inAppBillingService = IInAppBillingService.Stub.asInterface(service);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            inAppBillingService = null;
+        }
+    };
 
     private BroadcastReceiver mPushMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -145,6 +164,9 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
         //Init GoogleMobile AD
         initGoogleADS();
+
+        //Init IA-Purchase service
+        initIAPurchaseService();
     }
 
     private void initGoogleADS(){
@@ -158,6 +180,13 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             params.height = 0;
             mAdView.setLayoutParams(params);
         }
+    }
+
+    private void initIAPurchaseService(){
+        Intent serviceIntent =
+                new Intent("com.android.vending.billing.InAppBillingService.BIND");
+        serviceIntent.setPackage("com.android.vending");
+        bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
 
     private void initMainTabView(){
@@ -430,6 +459,9 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (serviceConnection != null) {
+            unbindService(serviceConnection);
+        }
         SharedPreferences preferences = getApplicationContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("isMainActivityDestroyed", true);
