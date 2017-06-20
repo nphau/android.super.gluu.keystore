@@ -10,7 +10,11 @@
 #import "JTMaterialSwitch.h"
 #import "SCLAlertView.h"
 #import <CoreBluetooth/CoreBluetooth.h>
-#import "Super_Gluu-Swift.h"
+#ifdef ADFREE
+    #import "Super_Gluu___Ad_Free-Swift.h"
+#else
+    #import "Super_Gluu-Swift.h"
+#endif
 
 @interface BLEDevicesViewController () <CBCentralManagerDelegate> {
 

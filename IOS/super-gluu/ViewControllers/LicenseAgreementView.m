@@ -32,7 +32,11 @@
     [super viewDidLoad];
     [self initWiget];
     [self initLocalization];
+#ifdef ADFREE
+    //skip here
+#else
     [self checkPurchaces];
+#endif
     [self performSelector:@selector(checkLicenseAgreement) withObject:nil afterDelay:0.1];
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkLicenseAgreement) name:UIApplicationDidBecomeActiveNotification object:nil];
 }

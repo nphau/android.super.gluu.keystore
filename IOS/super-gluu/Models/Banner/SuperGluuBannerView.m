@@ -8,10 +8,9 @@
 
 #import "SuperGluuBannerView.h"
 
-@implementation SuperGluuBannerView{
+@implementation SuperGluuBannerView {
 
     GADBannerView *bannerView;
-    GADInterstitial *interstitial;
 }
 
 /*
@@ -39,23 +38,28 @@
             [bannerView loadRequest:[GADRequest request]];
             NSLog(@"Banner loaded successfully");
         }
-    } else {
-        //interstitial
-        [self showInterstitial:rootView];
     }
+//    else {
+//        //interstitial
+//        [self showInterstitial:rootView];
+//    }
     return self;
 }
 
-- (void)createInterstitial:(UIViewController*)rootView {
-    interstitial = [[GADInterstitial alloc] initWithAdUnitID:@"ca-app-pub-3326465223655655/1731023230"];
+- (void)createAndLoadInterstitial {
+    _interstitial = nil;
+    _interstitial.delegate = nil;
+    GADInterstitial* newInterstitial = [[GADInterstitial alloc] initWithAdUnitID:@"ca-app-pub-3326465223655655/1731023230"];
     GADRequest *request = [GADRequest request];
     request.testDevices = @[kGADSimulatorID];
-    [interstitial loadRequest:request];
+    [newInterstitial loadRequest:request];
+    _interstitial = newInterstitial;
+    _interstitial.delegate = self;
 }
 
 - (void)showInterstitial:(UIViewController*)rootView{
-    if (interstitial.isReady) {
-        [interstitial presentFromRootViewController:rootView];
+    if (_interstitial.isReady) {
+        [_interstitial presentFromRootViewController:rootView];
     } else {
         NSLog(@"Ad wasn't ready");
     }
@@ -63,7 +67,10 @@
 
 -(void)closeAD{
     bannerView.hidden = YES;
-    //bannerView.center = CGPointMake(bannerView.center.x, [UIScreen mainScreen].bounds.size.height + 75);
+}
+
+- (void)interstitialDidDismissScreen:(GADInterstitial *)interstitial {
+    [self createAndLoadInterstitial];
 }
 
 @end

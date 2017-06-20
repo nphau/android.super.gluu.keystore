@@ -33,7 +33,6 @@
     topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
     topIconView.image = [[AppConfiguration sharedInstance] systemIcon];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initPushView) name:NOTIFICATION_PUSH_ONLINE object:nil];
 }
 
@@ -45,16 +44,6 @@
     [super viewWillAppear:animated];
     [self loadKeyHandlesFromDatabase];
     [keyHandleTableView reloadData];
-    [self checkDeviceOrientation];
-}
-
--(void)checkDeviceOrientation{
-    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
-    {
-        // code for landscape orientation
-                [self adjustViewsForOrientation:UIInterfaceOrientationLandscapeLeft];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:UIDeviceOrientationDidChangeNotification object:nil];
-    }
 }
 
 -(void)onLongPress:(UILongPressGestureRecognizer*)pGesture
@@ -83,7 +72,6 @@
 
 -(void)showEditNameAlert{
     KeyHandleCell *cell = (KeyHandleCell*)[keyHandleTableView cellForRowAtIndexPath:selectedRow];
-//    UILabel* keyTextLabel = [cell keyHandleNameLabel];
     
     SCLAlertView *alert = [[SCLAlertView alloc] init];
     UITextField *textField = [alert addTextField:@"Enter key's name"];
@@ -171,15 +159,21 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     rowToDelete = (int)indexPath.row;
-    SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-    [alert addButton:NSLocalizedString(@"YES", @"YES") actionBlock:^(void) {
-        NSLog(@"YES clicked");
-        [self deleteRow];
-    }];
-    [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
-        NSLog(@"NO clicked");
-    }];
-    [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Delete", @"Delete") subTitle:NSLocalizedString(@"DeleteKeyHandle", @"Delete KeyHandle") closeButtonTitle:nil duration:0.0f];
+    TokenEntity* tokenEntity = [keyHandleArray objectAtIndex:rowToDelete];
+    if (![tokenEntity isExternalKey]){
+        SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+        [alert addButton:NSLocalizedString(@"YES", @"YES") actionBlock:^(void) {
+            NSLog(@"YES clicked");
+            [self deleteRow];
+        }];
+        [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
+            NSLog(@"NO clicked");
+        }];
+        [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Delete", @"Delete") subTitle:NSLocalizedString(@"DeleteKeyHandle", @"Delete KeyHandle") closeButtonTitle:nil duration:0.0f];
+    } else {
+        SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+        [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:@"" subTitle:@"You can't delete key stored on external BLE device" closeButtonTitle:@"Close" duration:3.0f];
+    }
 }
 
 -(void)deleteRow{
@@ -187,42 +181,5 @@
     [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:tokenEntity->application userName:tokenEntity->userName];
     [self loadKeyHandlesFromDatabase];
 }
-
-- (void)orientationChanged:(NSNotification *)notification{
-    [self adjustViewsForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
-}
-
-- (void) adjustViewsForOrientation:(UIInterfaceOrientation) orientation {
-
-    switch (orientation)
-    {
-        case UIInterfaceOrientationPortrait:
-        case UIInterfaceOrientationPortraitUpsideDown:
-        {
-            //load the portrait view
-            if (isLandScape){
-                [keyRenameInfoLabel setCenter:CGPointMake(keyRenameInfoLabel.center.x, [UIScreen mainScreen].bounds.size.height - 135)];
-                isLandScape = NO;
-            }
-        }
-            
-            break;
-        case UIInterfaceOrientationLandscapeLeft:
-        case UIInterfaceOrientationLandscapeRight:
-        {
-            //load the landscape view
-            if (!isLandScape){
-                [keyRenameInfoLabel setCenter:CGPointMake(keyRenameInfoLabel.center.x, [UIScreen mainScreen].bounds.size.height - 125)];
-                isLandScape = YES;
-            } else {
-                [keyRenameInfoLabel setCenter:CGPointMake(keyRenameInfoLabel.center.x, [UIScreen mainScreen].bounds.size.height - 125)];
-            }
-            
-        }
-            break;
-        case UIInterfaceOrientationUnknown:break;
-    }
-}
-
 
 @end

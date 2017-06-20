@@ -10,11 +10,13 @@
 
 @import GoogleMobileAds;
 
-@interface SuperGluuBannerView : UIView
+@interface SuperGluuBannerView : UIView <GADInterstitialDelegate>
+
+@property (nonatomic, strong) GADInterstitial *interstitial;
 
 -(id)initWithAdSize:(GADAdSize)adSize andRootView:(UIViewController*)rootView;
 
-- (void)createInterstitial:(UIViewController*)rootView;
+- (void)createAndLoadInterstitial;
 
 - (void)showInterstitial:(UIViewController*)rootView;
 

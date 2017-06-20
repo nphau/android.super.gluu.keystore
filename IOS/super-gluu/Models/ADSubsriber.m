@@ -77,24 +77,26 @@
                                                 }
                                                 else if(trans.transactionState == SKPaymentTransactionStatePurchased) {
                                                     
-                                                    [[IAPShare sharedHelper].iap checkReceipt:[NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]] AndSharedSecret:@"ec030e99b38946ce9ac5394382379b72" onCompletion:^(NSString *response, NSError *error) {
+                                                    [[IAPShare sharedHelper].iap checkReceipt:[NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]] AndSharedSecret:SHARED_SECRET_KEY onCompletion:^(NSString *response, NSError *error) {
                                                         
-                                                        //Convert JSON String to NSDictionary
-                                                        NSDictionary* rec = [IAPShare toJSON:response];
-                                                        
-                                                        if([rec[@"status"] integerValue]==0)
-                                                        {
+                                                        if (response != nil) {
+                                                            //Convert JSON String to NSDictionary
+                                                            NSDictionary* rec = [IAPShare toJSON:response];
                                                             
-                                                            [[IAPShare sharedHelper].iap provideContentWithTransaction:trans];
-                                                            NSLog(@"SUCCESS %@",response);
-                                                            NSLog(@"Pruchases %@",[IAPShare sharedHelper].iap.purchasedProducts);
-                                                            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_FREE object:nil];
-                                                            _isSubscribed = YES;
-                                                        }
-                                                        else {
-                                                            NSLog(@"Fail");
-                                                            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_NOT_FREE object:nil];
-                                                            _isSubscribed = NO;
+                                                            if([rec[@"status"] integerValue]==0)
+                                                            {
+                                                                
+                                                                [[IAPShare sharedHelper].iap provideContentWithTransaction:trans];
+                                                                NSLog(@"SUCCESS %@",response);
+                                                                NSLog(@"Pruchases %@",[IAPShare sharedHelper].iap.purchasedProducts);
+                                                                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_FREE object:nil];
+                                                                _isSubscribed = YES;
+                                                            }
+                                                            else {
+                                                                NSLog(@"Fail");
+                                                                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_NOT_FREE object:nil];
+                                                                _isSubscribed = NO;
+                                                            }
                                                         }
                                                     }];
                                                 }

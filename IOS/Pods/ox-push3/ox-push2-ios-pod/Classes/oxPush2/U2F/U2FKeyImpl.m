@@ -28,6 +28,7 @@ int keyHandleLength = 64;
 @implementation U2FKeyImpl {
     SecureClickCompletionHandler secureClickHandler;
     SecureClickAuthCompletionHandler secureClickAuthHandler;
+    TokenEntity* secureClickToken;
     GMEllipticCurveCrypto *secureClickCrypto;
     NSData* secureClickUserPublicKey;
     NSMutableData* secureClickKeyHandle;
@@ -56,7 +57,7 @@ int keyHandleLength = 64;
         int randomByte = arc4random() % 256;
         [keyHandle appendBytes:&randomByte length:1];
     }
-    if (!isDecline && !isSecureClick){
+    if (!isDecline){
         //Save new key into database
         TokenEntity* newTokenEntity = [[TokenEntity alloc] init];
         NSString* keyID = application;
@@ -64,15 +65,21 @@ int keyHandleLength = 64;
         newTokenEntity->application = application;
         newTokenEntity->issuer = [enrollmentRequest issuer];
         newTokenEntity->keyHandle = [keyHandle base64EncodedString];
-        newTokenEntity->publicKey = crypto.publicKeyBase64;
-        newTokenEntity->privateKey = crypto.privateKeyBase64;
         newTokenEntity->userName = [UserLoginInfo sharedInstance]->userName;
         newTokenEntity->pairingTime = [UserLoginInfo sharedInstance]->created;
         newTokenEntity->authenticationMode = [UserLoginInfo sharedInstance]->authenticationMode;
         newTokenEntity->authenticationType = [UserLoginInfo sharedInstance]->authenticationType;
-        [[DataStoreManager sharedInstance] saveTokenEntity:newTokenEntity];
+        if (!isSecureClick){
+            newTokenEntity->publicKey = crypto.publicKeyBase64;
+            newTokenEntity->privateKey = crypto.privateKeyBase64;
+            [[DataStoreManager sharedInstance] saveTokenEntity:newTokenEntity];
+        } else {
+            newTokenEntity->publicKey = @"";
+            newTokenEntity->privateKey = @"";
+            secureClickToken = newTokenEntity;
+        }
+        
     }
-    
     NSData* applicationSha256 = [[application SHA256] dataUsingEncoding:NSUTF8StringEncoding];
     NSData* challengeSha256 = [[challenge SHA256] dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -192,6 +199,10 @@ int keyHandleLength = 64;
                 if (secureClickHandler == nil){
                     
                 } else {
+                    //Save token for ble device
+                    if (secureClickToken != nil) {
+                        [[DataStoreManager sharedInstance] saveTokenEntity:secureClickToken];
+                    }
                     secureClickHandler(response, nil);
                 }
             } else {

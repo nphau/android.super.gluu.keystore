@@ -24,10 +24,10 @@
     
     settingsTopics = [[NSArray alloc] initWithObjects:@"Pin code", @"TouchID (fingerprint)", @"U2F BLE device(s)", @"Trust all (SSL)", nil];//@"U2F BLE device(s)",
     settingsKeys = [[NSArray alloc] initWithObjects:PIN_PROTECTION_ID, TOUCH_ID_ENABLED, SECURE_CLICK_ENABLED, SSL_ENABLED, nil];// SECURE_CLICK_ENABLED,
-    if (![[ADSubsriber sharedInstance] isSubscribed]){
-        settingsTopics = [[NSArray alloc] initWithObjects:@"Pin code", @"TouchID (fingerprint)", @"U2F BLE device(s)", @"Trust all (SSL)", nil];//, @"AD Free", @"U2F BLE device(s)",
-        settingsKeys = [[NSArray alloc] initWithObjects:PIN_PROTECTION_ID, TOUCH_ID_ENABLED, SECURE_CLICK_ENABLED, SSL_ENABLED, NOTIFICATION_AD_FREE, nil];// SECURE_CLICK_ENABLED,
-    }
+//    if (![[ADSubsriber sharedInstance] isSubscribed]){
+//        settingsTopics = [[NSArray alloc] initWithObjects:@"Pin code", @"TouchID (fingerprint)", @"U2F BLE device(s)", @"Trust all (SSL)", nil];//, @"AD Free", @"U2F BLE device(s)",
+//        settingsKeys = [[NSArray alloc] initWithObjects:PIN_PROTECTION_ID, TOUCH_ID_ENABLED, SECURE_CLICK_ENABLED, SSL_ENABLED, NOTIFICATION_AD_FREE, nil];// SECURE_CLICK_ENABLED,
+//    }
     _settingsTable.tableFooterView = [UIView new];
     [_settingsTable setSeparatorColor:[[AppConfiguration sharedInstance] systemColor]];
 }

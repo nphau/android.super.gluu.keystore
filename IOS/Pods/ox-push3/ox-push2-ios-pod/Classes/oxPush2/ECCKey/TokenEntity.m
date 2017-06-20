@@ -60,4 +60,8 @@
         return self;
     }
 
+-(BOOL)isExternalKey{
+    return [privateKey isEqualToString:@""] || [publicKey isEqualToString:@""];
+}
+
 @end

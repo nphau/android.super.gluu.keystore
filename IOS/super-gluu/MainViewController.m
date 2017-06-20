@@ -18,7 +18,11 @@
 #import "DataStoreManager.h"
 #import "NetworkChecker.h"
 #import "IAPShare.h"
-#import "Super_Gluu-Swift.h"
+#ifdef ADFREE
+    #import "Super_Gluu___Ad_Free-Swift.h"
+#else
+    #import "Super_Gluu-Swift.h"
+#endif
 
 @interface MainViewController () {
     PeripheralScanner* scanner;

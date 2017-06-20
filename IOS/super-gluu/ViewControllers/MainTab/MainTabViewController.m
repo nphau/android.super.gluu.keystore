@@ -10,7 +10,7 @@
 #import "SuperGluuBannerView.h"
 #import "ADSubsriber.h"
 
-@interface MainTabViewController (){
+@interface MainTabViewController () {
     
     SuperGluuBannerView* smallBannerView;
     SuperGluuBannerView* bannerView;
@@ -37,7 +37,7 @@
     [[ADSubsriber sharedInstance] isSubscriptionExpired];
 #endif
     bannerView = [[SuperGluuBannerView alloc] init];
-    [bannerView createInterstitial:self];
+    [bannerView createAndLoadInterstitial];
 }
 
 -(void)initADView:(NSNotification*)notification{
@@ -52,12 +52,18 @@
 }
 
 -(void)reloadInterstial:(NSNotification*)notification{
-    bannerView = [[SuperGluuBannerView alloc] init];
-    [bannerView createInterstitial:self];
+    if (bannerView == nil){
+        bannerView = [[SuperGluuBannerView alloc] init];
+    }
+    [bannerView createAndLoadInterstitial];
 }
 
 -(void)initFullPageBanner:(NSNotification*)notification{
     [bannerView showInterstitial:self];
+}
+
+-(void)reloadFullPageBanner:(NSNotification*)notification{
+    [bannerView createAndLoadInterstitial];
 }
 
 -(void)closeAD{

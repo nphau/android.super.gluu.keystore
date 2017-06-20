@@ -8,6 +8,7 @@
 
 #import "ADViewSubscriber.h"
 #import "ADSubsriber.h"
+#import "AppConfiguration.h"
 
 @implementation ADViewSubscriber
 
