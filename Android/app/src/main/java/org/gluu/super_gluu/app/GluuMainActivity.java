@@ -87,7 +87,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     private AndroidKeyDataStore dataStore;
     private static Context context;
 
-    private Boolean isADS = true;
     private Boolean isShowClearMenu = false;
 
     IInAppBillingService inAppBillingService;
@@ -171,7 +170,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
     private void initGoogleADS(){
         AdView mAdView = (AdView) findViewById(R.id.adView);
-        if (isADS) {
+        if (BuildConfig.IS_AD) {
             MobileAds.initialize(getApplicationContext(), "ca-app-pub-3932761366188106~2301594871");
             AdRequest adRequest = new AdRequest.Builder().build();
             mAdView.loadAd(adRequest);

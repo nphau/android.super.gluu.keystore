@@ -19,6 +19,23 @@ android {
         javaMaxHeapSize "4g"
     }
 
+    productFlavors {
+
+        adfree{
+            applicationIdSuffix ".adfree"
+            versionNameSuffix "-adfree"
+            flavorDimension "ad_access"
+            buildConfigField 'boolean', 'IS_AD', 'false'
+        }
+
+        ad {
+            applicationIdSuffix ".ad"
+            versionNameSuffix "-ad"
+            flavorDimension "ad_access"
+            buildConfigField 'boolean', 'IS_AD', 'true'
+        }
+    }
+
     buildTypes {
         debug {
             buildConfigField "String", "VENDOR_CERTIFICATE_CERT",
