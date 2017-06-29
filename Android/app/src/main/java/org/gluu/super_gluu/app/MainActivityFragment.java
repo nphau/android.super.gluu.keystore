@@ -14,6 +14,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -26,15 +28,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import org.gluu.super_gluu.app.gluuToast.GluuToast;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
+import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.model.OxPush2Request;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import SuperGluu.app.BuildConfig;
 import SuperGluu.app.R;
@@ -55,6 +66,9 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
     private Context context;
 
     private LinearLayout adView;
+    private InterstitialAd mInterstitialAd;
+
+    private Button scanButton;
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -63,6 +77,10 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
             String message = intent.getStringExtra("message");
             if (context != null) {
                 showToastWithText(message);
+            }
+            Boolean isAdFree = Settings.getPurchase(context);
+            if (mInterstitialAd.isLoaded() && !isAdFree) {
+                mInterstitialAd.show();
             }
         }
     };
@@ -108,7 +126,12 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         this.inflater = inflater;
+        context = view.getContext();
         adView = (LinearLayout)view.findViewById(R.id.view_ad_free);
+        Boolean isAdFree = Settings.getPurchase(context);
+        if (isAdFree){
+            adView.setVisibility(View.GONE);
+        }
         view.findViewById(R.id.button_scan).setOnClickListener(this);
         view.findViewById(R.id.button_ad_free).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,6 +141,9 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
                 }
             }
         });
+        scanButton = (Button) view.findViewById(R.id.button_scan);
+        scanButton.setOnClickListener(this);
+
         //Setup message receiver
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
                 new IntentFilter("ox_request-precess-event"));
@@ -125,13 +151,20 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
                 new IntentFilter("on-ad-free-event"));
 //        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mPushMessageReceiver,
 //                new IntentFilter(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION));
-        context = view.getContext();
+        //Init GoogleMobile AD
+        initGoogleInterstitialAd();
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        if (!isConnected(context)) {
+            showToastWithText("Your device is currently unable to establish a network connection. You will need a connection to approve or deny authentication requests with Super Gluu.");
+            scanButton.setEnabled(false);
+        } else {
+            scanButton.setEnabled(true);
+        }
     }
 
     @Override
@@ -201,6 +234,28 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         return false;
     }
 
+    private void initGoogleInterstitialAd(){
+        mInterstitialAd = new InterstitialAd(context);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3326465223655655/1731023230");
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                // Load the next interstitial.
+                mInterstitialAd.loadAd(new AdRequest.Builder().build());
+            }
+        });
+        requestNewInterstitial();
+    }
+
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+
+        mInterstitialAd.loadAd(adRequest);
+    }
+
     private void onQrRequest(OxPush2Request oxPush2Request){
         if (oxPush2Request == null){
             showToastWithText("You scanned wrong QR code");
@@ -231,6 +286,16 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
             integrator.setPrompt(getString(R.string.scan_oxpush2_prompt));
             integrator.initiateScan();
         }
+    }
+
+    private static boolean isConnected(final Context context) {
+        ConnectivityManager cm =
+                (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        return isConnected;
     }
 
 }

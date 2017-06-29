@@ -16,6 +16,7 @@
 
 @property (strong, nonatomic) NSString* key;
 @property (strong, nonatomic) IBOutlet UILabel* keyHandleNameLabel;
+@property (strong, nonatomic) IBOutlet UILabel* bleLabel;
 
 -(void)setData:(TokenEntity*)tokenEntity;
 

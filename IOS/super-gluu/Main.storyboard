@@ -1,0 +1,1540 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="1PX-C3-Uj4">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Logs-->
+        <scene sceneID="LOg-3C-TRA">
+            <objects>
+                <viewController id="9lV-D3-rAo" customClass="LogsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="W8P-71-i32">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="sQD-Wd-VtZ" userLabel="NavigationView">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="66"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mPP-Np-Kae">
+                                        <rect key="frame" x="332" y="28" width="35" height="35"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="clearLogsImages"/>
+                                        <connections>
+                                            <action selector="cleanLogs:" destination="9lV-D3-rAo" eventType="touchUpInside" id="bSz-am-laV"/>
+                                        </connections>
+                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gluu.png" id="SHU-Ck-FhL">
+                                        <rect key="frame" x="136" y="20" width="102" height="45"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="9gX-87-vc5" userLabel="Background View">
+                                <rect key="frame" x="0.0" y="68" width="375" height="548"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NO LOGS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="V0H-np-GNp">
+                                        <rect key="frame" x="120" y="111" width="133" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="131" sectionHeaderHeight="28" sectionFooterHeight="28" id="rek-sC-UUS">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="548"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
+                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="separatorColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="sectionIndexBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="sectionIndexTrackingBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LogsTableCellID" rowHeight="131" id="1lt-Wr-UNb" customClass="LogsTableCell">
+                                                <rect key="frame" x="0.0" y="28" width="375" height="131"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1lt-Wr-UNb" id="J8g-Lv-5NH">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="131"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" id="gbl-CT-0e2" userLabel="cellBackgroundView">
+                                                            <rect key="frame" x="22" y="15" width="325" height="86"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logged in to CE Release" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0WW-ao-SFN">
+                                                                    <rect key="frame" x="48" y="8" width="235" height="50"/>
+                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gluuIcon.png" id="2VM-h2-jpK">
+                                                                    <rect key="frame" x="10" y="27" width="32" height="32"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                </imageView>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kFY-F0-vAU">
+                                                                    <rect key="frame" x="288" y="28" width="30" height="30"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                                                    <state key="normal" image="logArrowImages"/>
+                                                                    <connections>
+                                                                        <action selector="showUserInfo:" destination="9lV-D3-rAo" eventType="touchUpInside" id="ANa-yp-pT7"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11 seconds ago" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Lji-VJ-XKA">
+                                                                    <rect key="frame" x="48" y="55" width="261" height="23"/>
+                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                    <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </view>
+                                                    </subviews>
+                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </tableViewCellContentView>
+                                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <connections>
+                                                    <outlet property="cellBackground" destination="gbl-CT-0e2" id="qJ8-KX-IfD"/>
+                                                    <outlet property="infoButton" destination="kFY-F0-vAU" id="KP6-Wa-0Xf"/>
+                                                    <outlet property="logLabel" destination="0WW-ao-SFN" id="w1x-yx-Nbz"/>
+                                                    <outlet property="logTime" destination="Lji-VJ-XKA" id="Sks-uh-MYO"/>
+                                                    <outlet property="logo" destination="2VM-h2-jpK" id="zxd-aw-0pY"/>
+                                                </connections>
+                                            </tableViewCell>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LogsFailedTableCellID" rowHeight="75" id="bQO-HN-Zml" customClass="LogsTableCell">
+                                                <rect key="frame" x="0.0" y="159" width="375" height="75"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bQO-HN-Zml" id="2s3-7S-Dvh">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" id="3Y5-jp-uqa" userLabel="cellBackgroundView">
+                                                            <rect key="frame" x="22" y="5" width="325" height="63"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11 seconds ago" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wCP-vg-fKp">
+                                                                    <rect key="frame" x="52" y="38" width="262" height="25"/>
+                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                    <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gluuIconRed.png" id="hdQ-SM-r5d">
+                                                                    <rect key="frame" x="13" y="16" width="32" height="32"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                </imageView>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="EsF-rr-N5T">
+                                                                    <rect key="frame" x="288" y="17" width="30" height="30"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                                                    <accessibility key="accessibilityConfiguration" label="1"/>
+                                                                    <state key="normal" image="infoIcon.png"/>
+                                                                    <connections>
+                                                                        <action selector="showUserInfo:" destination="9lV-D3-rAo" eventType="touchUpInside" id="MDr-30-YHy"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logged in to CE Release" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fNE-3S-iaE">
+                                                                    <rect key="frame" x="52" y="0.0" width="226" height="42"/>
+                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                                    <color key="textColor" red="0.98431372549999996" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </view>
+                                                    </subviews>
+                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </tableViewCellContentView>
+                                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <connections>
+                                                    <outlet property="cellBackground" destination="3Y5-jp-uqa" id="ERw-uD-SZm"/>
+                                                    <outlet property="infoButton" destination="EsF-rr-N5T" id="0dO-SF-eja"/>
+                                                    <outlet property="logLabel" destination="fNE-3S-iaE" id="6H4-Qv-vpH"/>
+                                                    <outlet property="logTime" destination="wCP-vg-fKp" id="HT1-l2-7q7"/>
+                                                    <outlet property="logo" destination="hdQ-SM-r5d" id="FNN-wr-rma"/>
+                                                </connections>
+                                            </tableViewCell>
+                                        </prototypes>
+                                        <connections>
+                                            <outlet property="dataSource" destination="9lV-D3-rAo" id="Wqp-p4-Yd1"/>
+                                            <outlet property="delegate" destination="9lV-D3-rAo" id="BML-mb-nyY"/>
+                                        </connections>
+                                    </tableView>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Logs" image="menuIconImages" selectedImage="menuIconSelectedImages" id="2FH-Te-dZB">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="0.0039215686274509803" green="0.63137254901960782" blue="0.38039215686274508" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
+                    <connections>
+                        <outlet property="cleanLogs" destination="mPP-Np-Kae" id="UQu-4w-3bt"/>
+                        <outlet property="contentView" destination="9gX-87-vc5" id="teW-X7-t1d"/>
+                        <outlet property="logsTableView" destination="rek-sC-UUS" id="Mg5-Pi-aAT"/>
+                        <outlet property="noLogsLabel" destination="V0H-np-GNp" id="hL2-JC-V9G"/>
+                        <segue destination="Mge-71-NJN" kind="modal" identifier="LogInfo" id="nbb-Ne-tyY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nGx-c4-kc4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1841" y="538"/>
+        </scene>
+        <!--Information View Controller-->
+        <scene sceneID="IfX-os-H52">
+            <objects>
+                <viewController storyboardIdentifier="InformationViewControllerID" id="Oeu-8W-g4d" customClass="InformationViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="clh-VC-Ds5">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="zEg-yg-XS2" userLabel="ContentView">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" id="FFl-1E-9h4">
+                                        <rect key="frame" x="0.0" y="143" width="375" height="192"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" id="v2S-Bp-jaL" userLabel="BottomBlackView">
+                                                <rect key="frame" x="0.0" y="190" width="375" height="2"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.95627003209999994" green="0.95627003209999994" blue="0.95627003209999994" alpha="0.89302262929999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Information" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KCV-01-XJj">
+                                        <rect key="frame" x="23" y="108" width="326" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Ykg-pV-4Gb">
+                                        <rect key="frame" x="8" y="41" width="62" height="37"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Close">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="back:" destination="Oeu-8W-g4d" eventType="touchUpInside" id="Jbv-zy-huH"/>
+                                        </connections>
+                                    </button>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="utU-Fo-FbI">
+                                        <rect key="frame" x="0.0" y="143" width="375" height="190"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DMx-h3-IoA">
+                                                <rect key="frame" x="8" y="20" width="163" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Created" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jKc-1C-0cl">
+                                                <rect key="frame" x="10" y="65" width="162" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Application" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="TiD-XX-Sao">
+                                                <rect key="frame" x="8" y="109" width="163" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Issuer" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yDp-b2-0Xm">
+                                                <rect key="frame" x="8" y="148" width="163" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Authentication mode" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8KZ-zB-b9F">
+                                                <rect key="frame" x="8" y="194" width="163" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Authentication type" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZAc-RT-ZY6">
+                                                <rect key="frame" x="8" y="229" width="163" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="created" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="u0M-1Z-HPe">
+                                                <rect key="frame" x="183" y="65" width="184" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="application" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3x3-d5-Eag">
+                                                <rect key="frame" x="183" y="100" width="184" height="41"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="issuer" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="R3p-R8-6Q5">
+                                                <rect key="frame" x="183" y="141" width="184" height="42"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="authentication mode" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="SBT-dv-7bE">
+                                                <rect key="frame" x="183" y="191" width="184" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="authentication type" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="F6P-0i-O7Q">
+                                                <rect key="frame" x="183" y="230" width="184" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="user name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="uoC-Qk-F7t">
+                                                <rect key="frame" x="183" y="18" width="184" height="26"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Key handle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="btw-nn-sHH">
+                                                <rect key="frame" x="8" y="148" width="162" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="keyHandle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="k9P-Q3-5dK">
+                                                <rect key="frame" x="181" y="149" width="184" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <connections>
+                                            <outlet property="delegate" destination="Oeu-8W-g4d" id="eUP-D1-ton"/>
+                                        </connections>
+                                    </scrollView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="hj8-3R-Akt">
+                                        <rect key="frame" x="305" y="41" width="62" height="37"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Delete">
+                                            <color key="titleColor" red="0.98431372549999996" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="delete:" destination="Oeu-8W-g4d" eventType="touchUpInside" id="yoo-pc-VGK"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <connections>
+                        <outlet property="applicationLabel" destination="TiD-XX-Sao" id="B91-BC-x9Y"/>
+                        <outlet property="applicationValueLabel" destination="3x3-d5-Eag" id="91w-MU-b7x"/>
+                        <outlet property="authenticationModeLabel" destination="8KZ-zB-b9F" id="yKf-bB-HDR"/>
+                        <outlet property="authenticationTypeLabel" destination="ZAc-RT-ZY6" id="j8x-Sp-LrG"/>
+                        <outlet property="authenticationValueModeLabel" destination="SBT-dv-7bE" id="clt-c2-7hN"/>
+                        <outlet property="authenticationValueTypeLabel" destination="F6P-0i-O7Q" id="bWc-9j-z5D"/>
+                        <outlet property="closeButton" destination="Ykg-pV-4Gb" id="6R6-r7-1lM"/>
+                        <outlet property="createdLabel" destination="jKc-1C-0cl" id="qg5-ze-mCB"/>
+                        <outlet property="createdValueLabel" destination="u0M-1Z-HPe" id="yex-vO-LKz"/>
+                        <outlet property="deleteButton" destination="hj8-3R-Akt" id="riY-3J-YUZ"/>
+                        <outlet property="issuerLabel" destination="yDp-b2-0Xm" id="de8-Ly-MT0"/>
+                        <outlet property="issuerValueLabel" destination="R3p-R8-6Q5" id="pmO-wj-Wkx"/>
+                        <outlet property="keyHandleLabel" destination="btw-nn-sHH" id="N0x-ei-vru"/>
+                        <outlet property="keyHandleValueLabel" destination="k9P-Q3-5dK" id="dsh-8K-JMS"/>
+                        <outlet property="scrollView" destination="utU-Fo-FbI" id="XuU-qa-viF"/>
+                        <outlet property="userNameLabel" destination="DMx-h3-IoA" id="9c2-7a-mnI"/>
+                        <outlet property="userNameValueLabel" destination="uoC-Qk-F7t" id="AnW-cd-rGQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tus-rQ-Wsl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1301" y="1744"/>
+        </scene>
+        <!--Settings-->
+        <scene sceneID="RSh-h3-g7h">
+            <objects>
+                <viewController id="HZ7-Ii-nGF" customClass="SettingsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="L9O-Hx-Sd3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="Li8-mb-COO" userLabel="NavigationView">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="66"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gluu.png" id="Dxn-JC-7e2">
+                                        <rect key="frame" x="136" y="20" width="102" height="45"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="Mc3-7f-C4j" userLabel="SettingsView">
+                                <rect key="frame" x="0.0" y="68" width="375" height="548"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="nM3-af-uXd">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="548"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" id="Z6v-Pe-PjH" userLabel="SettingsView">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="549"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" id="xp7-qT-uLZ" userLabel="PinCodeSettingsView">
+                                                        <rect key="frame" x="13" y="19" width="348" height="522"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pin code settings:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oBY-EL-Bp3">
+                                                                <rect key="frame" x="8" y="8" width="330" height="21"/>
+                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <view contentMode="scaleToFill" misplaced="YES" id="kAV-08-WMi" userLabel="TrustView">
+                                                                <rect key="frame" x="8" y="305" width="332" height="127"/>
+                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Trust All" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="TP4-LG-FyW">
+                                                                        <rect key="frame" x="6" y="25" width="90" height="21"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fkD-ku-Kh7">
+                                                                        <rect key="frame" x="4" y="59" width="316" height="68"/>
+                                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                                        <string key="text">WARNING: Use only for testing! It's critically important to validate the SSL certificate for communication between SuperGluu and the Gluu Server.</string>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                        <color key="textColor" red="0.98431372549999996" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="aSD-Au-jmH">
+                                                                        <rect key="frame" x="140" y="20" width="52" height="31"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    </switch>
+                                                                </subviews>
+                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" misplaced="YES" id="7CL-mB-H9c" userLabel="PinCodeTurnOnView">
+                                                                <rect key="frame" x="0.0" y="31" width="340" height="58"/>
+                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Turn-off" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sz7-rI-WZF">
+                                                                        <rect key="frame" x="0.0" y="8" width="115" height="42"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Turn-on" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="W79-M3-RMK">
+                                                                        <rect key="frame" x="217" y="8" width="115" height="42"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="pOW-Ri-4nm">
+                                                                        <rect key="frame" x="146" y="14" width="51" height="31"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    </switch>
+                                                                </subviews>
+                                                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </view>
+                                                            <view hidden="YES" contentMode="scaleToFill" id="buR-oe-EBA" userLabel="PinCodeTypeView">
+                                                                <rect key="frame" x="0.0" y="132" width="293" height="54"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Simple pin code 4-digit" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zJO-av-Wrv">
+                                                                        <rect key="frame" x="0.0" y="8" width="115" height="42"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Custom pin code" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Nfv-Kj-3M2">
+                                                                        <rect key="frame" x="179" y="13" width="120" height="21"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="5GO-p0-6WQ">
+                                                                        <rect key="frame" x="122" y="8" width="51" height="31"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    </switch>
+                                                                </subviews>
+                                                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" misplaced="YES" id="x8S-QX-qm5" userLabel="PinCodeResetView">
+                                                                <rect key="frame" x="0.0" y="75" width="348" height="54"/>
+                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                                <subviews>
+                                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Cq9-yF-JLc">
+                                                                        <rect key="frame" x="103" y="16" width="142" height="30"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                        <state key="normal" title="Change Pin code">
+                                                                            <color key="titleColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </state>
+                                                                        <connections>
+                                                                            <action selector="changePasscode:" destination="HZ7-Ii-nGF" eventType="touchUpInside" id="YMI-tY-dpi"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                </subviews>
+                                                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" misplaced="YES" id="N81-D2-Te4" userLabel="AttemptsView">
+                                                                <rect key="frame" x="0.0" y="122" width="340" height="110"/>
+                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                                <subviews>
+                                                                    <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minimumValue="5" maximumValue="10" id="ypF-NP-SaC">
+                                                                        <rect key="frame" x="199" y="22" width="94" height="29"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                        <color key="tintColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        <connections>
+                                                                            <action selector="attemptsValueChanged:" destination="HZ7-Ii-nGF" eventType="valueChanged" id="Ytj-rR-s7B"/>
+                                                                        </connections>
+                                                                    </stepper>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of attempts:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tnR-YZ-r84">
+                                                                        <rect key="frame" x="8" y="26" width="144" height="21"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9dz-hh-xIa">
+                                                                        <rect key="frame" x="160" y="26" width="29" height="21"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App will be locked for X minutes after this many failed attempts" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="c2u-0K-Y5H">
+                                                                        <rect key="frame" x="8" y="55" width="330" height="55"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                                <color key="backgroundColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" misplaced="YES" id="0JH-ov-kQQ" userLabel="touchIDView">
+                                                                <rect key="frame" x="8" y="240" width="330" height="57"/>
+                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Use TouchID (finferprint)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sQK-ea-Lbg">
+                                                                        <rect key="frame" x="0.0" y="18" width="220" height="21"/>
+                                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="5eb-kE-KTH">
+                                                                        <rect key="frame" x="273" y="13" width="51" height="31"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                                    </switch>
+                                                                </subviews>
+                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </view>
+                                                        </subviews>
+                                                        <color key="backgroundColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </view>
+                                                </subviews>
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </view>
+                                        </subviews>
+                                        <connections>
+                                            <outlet property="delegate" destination="HZ7-Ii-nGF" id="zBM-7B-YoQ"/>
+                                        </connections>
+                                    </scrollView>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Settings" image="settingsImages" selectedImage="settingsSelectedImages" id="XfX-Yw-c3a">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="0.0039215686274509803" green="0.63137254901960782" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
+                    <connections>
+                        <outlet property="attemptsLabel" destination="9dz-hh-xIa" id="AER-Fh-pVI"/>
+                        <outlet property="attemptsStepper" destination="ypF-NP-SaC" id="K0P-VK-KaH"/>
+                        <outlet property="attemptsTextLabel" destination="c2u-0K-Y5H" id="BXe-yq-PLn"/>
+                        <outlet property="attemptsView" destination="N81-D2-Te4" id="ZSu-5O-iTQ"/>
+                        <outlet property="pinCodeButtonView" destination="x8S-QX-qm5" id="OWC-wh-jp8"/>
+                        <outlet property="pinCodeTurnOnOff" destination="pOW-Ri-4nm" id="aQp-Z5-hhU"/>
+                        <outlet property="pinCodeTurnOnOffView" destination="7CL-mB-H9c" id="61j-ec-gMl"/>
+                        <outlet property="scrollView" destination="nM3-af-uXd" id="c3W-Uj-m0c"/>
+                        <outlet property="setChangePinCode" destination="Cq9-yF-JLc" id="Xyo-lQ-p30"/>
+                        <outlet property="touchIDSwitch" destination="5eb-kE-KTH" id="2rq-Dt-HRZ"/>
+                        <outlet property="touchIDView" destination="0JH-ov-kQQ" id="Du8-4B-qSO"/>
+                        <outlet property="trustOnOff" destination="aSD-Au-jmH" id="67x-E4-zM4"/>
+                        <outlet property="trustOnOffView" destination="kAV-08-WMi" id="55s-Gv-guk"/>
+                        <outlet property="trustTextLabel" destination="fkD-ku-Kh7" id="osk-ge-eZw"/>
+                        <segue destination="Gfe-Ja-dd4" kind="modal" identifier="pinViewSegue" id="HKO-CF-hFe"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="G7W-n9-4mL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="746.5" y="935.5"/>
+        </scene>
+        <!--Keys-->
+        <scene sceneID="hnK-d7-J9C">
+            <objects>
+                <viewController id="4BD-0S-BgN" customClass="KeysViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="s8h-Zc-YRB">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="yrK-Cx-NZ1" userLabel="NavigationView">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="66"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gluu.png" id="zoX-Ve-eFF">
+                                        <rect key="frame" x="136" y="20" width="102" height="45"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="ost-Ec-s9v">
+                                <rect key="frame" x="0.0" y="68" width="375" height="548"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="keys" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="APd-9B-abm">
+                                        <rect key="frame" x="8" y="8" width="303" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No keyHandles" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lGe-IW-Igg">
+                                        <rect key="frame" x="90" y="114" width="192" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="RP3-gx-BOp">
+                                        <rect key="frame" x="8" y="73" width="359" height="437"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="separatorColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="KeyHandleCellID" id="fEM-pi-ogh" customClass="KeyHandleCell">
+                                                <rect key="frame" x="0.0" y="28" width="359" height="44"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fEM-pi-ogh" id="tJO-iy-ulk">
+                                                    <rect key="frame" x="0.0" y="0.0" width="359" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="key's name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Q80-Mo-HG3">
+                                                            <rect key="frame" x="43" y="0.0" width="447" height="32"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="keysIconImages" id="9y5-Kt-JHj">
+                                                            <rect key="frame" x="8" y="7" width="27" height="28"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                        <view contentMode="scaleToFill" id="pUu-lR-jea" userLabel="separatorView">
+                                                            <rect key="frame" x="36" y="40" width="429" height="1"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </view>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gIT-cN-5cw">
+                                                            <rect key="frame" x="40" y="22" width="239" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                            <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </tableViewCellContentView>
+                                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <connections>
+                                                    <outlet property="keyHandleNameLabel" destination="Q80-Mo-HG3" id="q1O-79-lxe"/>
+                                                    <outlet property="keyHandleTime" destination="gIT-cN-5cw" id="ZPP-rP-s8j"/>
+                                                </connections>
+                                            </tableViewCell>
+                                        </prototypes>
+                                        <connections>
+                                            <outlet property="dataSource" destination="4BD-0S-BgN" id="8Q9-bo-VNP"/>
+                                            <outlet property="delegate" destination="4BD-0S-BgN" id="Js7-l1-8f9"/>
+                                        </connections>
+                                    </tableView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A unique key is generated for each Gluu Server  you log into with Super Gluu. You can manage keys here:" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="N4Y-mm-Y7d">
+                                        <rect key="frame" x="8" y="32" width="357" height="41"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="rename" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="g63-4O-uuc">
+                                        <rect key="frame" x="8" y="513" width="359" height="35"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Keys" image="keysIconImages" selectedImage="keysIconSelectedImages" id="3FA-zV-5Af">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="0.0039215686274509803" green="0.63137254901960782" blue="0.38039215686274508" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
+                    <connections>
+                        <outlet property="keyHandleLabel" destination="APd-9B-abm" id="4kV-Fu-uBq"/>
+                        <outlet property="keyHandleTableView" destination="RP3-gx-BOp" id="igc-Tt-rVl"/>
+                        <outlet property="keyRenameInfoLabel" destination="g63-4O-uuc" id="DgQ-b7-Q10"/>
+                        <outlet property="uniqueKeyLabel" destination="N4Y-mm-Y7d" id="pXn-4a-6lG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MK6-Wj-ShE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1301" y="936"/>
+        </scene>
+        <!--Home-->
+        <scene sceneID="ACe-Ye-UZW">
+            <objects>
+                <viewController id="OWT-hQ-veb" customClass="MainViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="LXd-tc-c8Q">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HOME" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="re7-r7-1Wv">
+                                <rect key="frame" x="62" y="273" width="197" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" id="ogb-Jc-RlP" userLabel="MainContentView">
+                                <rect key="frame" x="0.0" y="68" width="375" height="548"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <view alpha="0.0" contentMode="scaleToFill" id="G0I-DM-Z4P">
+                                        <rect key="frame" x="30" y="-40" width="319" height="38"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To continue, press + button" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0s9-Pu-KnT">
+                                                <rect key="frame" x="8" y="4" width="299" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" id="WkL-NJ-ypG" userLabel="WelcomeView">
+                                        <rect key="frame" x="30" y="162" width="319" height="212"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FDP-Hk-qh3">
+                                                <rect key="frame" x="37" y="0.0" width="240" height="49"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You may be presented with a QR code for enrollment or authentication. Click the button to open your QR scanner." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mMq-pl-qUw">
+                                                <rect key="frame" x="0.0" y="128" width="316" height="76"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ffN-SG-7rx">
+                                                <rect key="frame" x="84" y="66" width="148" height="46"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <state key="normal" title="Scan QR Code">
+                                                    <color key="titleColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="scanAction:" destination="OWT-hQ-veb" eventType="touchUpInside" id="1eX-9l-bzY"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="xUw-eN-IGT" userLabel="NavigationView">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="66"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gluu.png" id="5IA-gr-62u">
+                                        <rect key="frame" x="136" y="20" width="102" height="45"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" tag="1" title="Home" image="homeIconImages" selectedImage="homeIconSelectedImages" id="tcB-HC-Tjm">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="0.0039215686274509803" green="0.63137254901960782" blue="0.38039215686274508" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
+                    <connections>
+                        <outlet property="contentView" destination="ogb-Jc-RlP" id="xNJ-B6-Czf"/>
+                        <outlet property="scanButton" destination="ffN-SG-7rx" id="l5O-kn-9tP"/>
+                        <outlet property="scanTextLabel" destination="mMq-pl-qUw" id="NAd-Qa-KT4"/>
+                        <outlet property="statusLabel" destination="0s9-Pu-KnT" id="gkP-5Z-QdY"/>
+                        <outlet property="statusView" destination="G0I-DM-Z4P" id="kF8-0R-Ey7"/>
+                        <outlet property="welcomeLabel" destination="FDP-Hk-qh3" id="nxG-dp-AZT"/>
+                        <outlet property="welcomeView" destination="WkL-NJ-ypG" id="2OA-7W-pLN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6bS-RT-Ozd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1841" y="-233"/>
+        </scene>
+        <!--Approve Deny View Controller-->
+        <scene sceneID="Scx-e9-HhI">
+            <objects>
+                <viewController storyboardIdentifier="ApproveDenyView" id="qPA-Ry-Ghp" customClass="ApproveDenyViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fsT-UK-oLr" userLabel="Main View">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To continue, press Approve" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="djE-nb-tL9">
+                                <rect key="frame" x="23" y="50" width="328" height="67"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="bYN-qN-Plc">
+                                <rect key="frame" x="0.0" y="116" width="375" height="441"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" id="h8U-Nq-TLU" userLabel="InfoView">
+                                        <rect key="frame" x="23" y="6" width="328" height="49"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gluu Server CE Release" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fch-j5-bfM">
+                                                <rect key="frame" x="41" y="8" width="287" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="https://ce-release.gluu.org" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qzz-5M-0lP">
+                                                <rect key="frame" x="43" y="28" width="280" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <color key="textColor" red="0.22164822919999999" green="0.4973365132" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gluuIcon.png" id="OzQ-Jw-iTA">
+                                                <rect key="frame" x="0.0" y="11" width="30" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" id="g54-fa-ibW" userLabel="personView">
+                                        <rect key="frame" x="23" y="56" width="328" height="70"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="personIcon.png" id="jSe-Pu-zoF">
+                                                <rect key="frame" x="0.0" y="20" width="30" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Person Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eiQ-aW-3Gu">
+                                                <rect key="frame" x="44" y="24" width="284" height="26"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" id="4jC-k4-8EK" userLabel="locationView">
+                                        <rect key="frame" x="23" y="127" width="328" height="62"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="62.65.120.22" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EEY-Ss-Dan">
+                                                <rect key="frame" x="45" y="14" width="273" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="getting location..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fth-Iq-onf">
+                                                <rect key="frame" x="45" y="33" width="273" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="locationIconImages" id="OrZ-he-FZP">
+                                                <rect key="frame" x="-3" y="14" width="35" height="38"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" id="rAy-IJ-a7M" userLabel="timeView">
+                                        <rect key="frame" x="23" y="190" width="328" height="63"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timeIconImages" id="8lI-rU-Mc9">
+                                                <rect key="frame" x="0.0" y="13" width="30" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00 PM CST" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PJH-Fq-Iwi">
+                                                <rect key="frame" x="45" y="8" width="261" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="March 1, 2016" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="z9N-LG-bjv">
+                                                <rect key="frame" x="45" y="34" width="261" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" id="284-An-1vo" userLabel="typeView">
+                                        <rect key="frame" x="23" y="254" width="328" height="63"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enrol/Authentication" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3fI-vH-NUp">
+                                                <rect key="frame" x="45" y="17" width="261" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="type_icon.png" id="0cc-Jm-hrG">
+                                                <rect key="frame" x="3" y="13" width="30" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <outlet property="delegate" destination="qPA-Ry-Ghp" id="74g-nc-3fu"/>
+                                </connections>
+                            </scrollView>
+                            <view contentMode="scaleToFill" id="Jmo-5i-sWD" userLabel="ButtonView">
+                                <rect key="frame" x="0.0" y="557" width="375" height="110"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" id="NZS-hn-11L">
+                                        <rect key="frame" x="0.0" y="1" width="187" height="109"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <state key="normal" title="Approve">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onApprove:" destination="qPA-Ry-Ghp" eventType="touchUpInside" id="wDN-nC-vNk"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5y3-pI-8Jg">
+                                        <rect key="frame" x="187" y="1" width="188" height="109"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES"/>
+                                        <color key="backgroundColor" red="0.98431372549999996" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <state key="normal" title="Deny">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onDeny:" destination="qPA-Ry-Ghp" eventType="touchUpInside" id="NpY-WX-utL"/>
+                                        </connections>
+                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="denyIcon.png" id="TCK-0a-MsC">
+                                        <rect key="frame" x="254" y="20" width="60" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="approveIcon.png" id="xXF-w0-eE6">
+                                        <rect key="frame" x="52" y="20" width="70" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="3Ib-ba-3Ec">
+                                <rect key="frame" x="15" y="28" width="72" height="41"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="&lt; Back">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="back:" destination="qPA-Ry-Ghp" eventType="touchUpInside" id="rah-O4-WSs"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" id="C5I-jf-WpB" userLabel="TimerView">
+                                <rect key="frame" x="275" y="25" width="81" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="seconds left" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vcn-Ze-cHr">
+                                        <rect key="frame" x="0.0" y="25" width="81" height="16"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="60" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DVP-P8-RGn">
+                                        <rect key="frame" x="8" y="0.0" width="65" height="33"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="cLB-Xw-sxD"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <connections>
+                        <outlet property="approveImage" destination="xXF-w0-eE6" id="RPW-Bb-OUx"/>
+                        <outlet property="approveRequest" destination="NZS-hn-11L" id="YzR-Of-iqh"/>
+                        <outlet property="backButton" destination="3Ib-ba-3Ec" id="PLH-fF-Khz"/>
+                        <outlet property="buttonView" destination="Jmo-5i-sWD" id="1lf-FU-eox"/>
+                        <outlet property="cityNameLabel" destination="fth-Iq-onf" id="F2Q-p2-3cx"/>
+                        <outlet property="createdDateLabel" destination="z9N-LG-bjv" id="CPZ-jj-5mc"/>
+                        <outlet property="createdTimeLabel" destination="PJH-Fq-Iwi" id="vE0-XX-sfT"/>
+                        <outlet property="denyImage" destination="TCK-0a-MsC" id="eTg-Bj-ZU5"/>
+                        <outlet property="denyRequest" destination="5y3-pI-8Jg" id="fVY-WB-EK1"/>
+                        <outlet property="locationLabel" destination="EEY-Ss-Dan" id="8JJ-tX-QKr"/>
+                        <outlet property="locationView" destination="4jC-k4-8EK" id="Oon-pk-i4M"/>
+                        <outlet property="scrollView" destination="bYN-qN-Plc" id="4GB-xM-fEE"/>
+                        <outlet property="serverNameLabel" destination="fch-j5-bfM" id="NA3-Jo-T6J"/>
+                        <outlet property="serverUrlLabel" destination="qzz-5M-0lP" id="mVo-dn-dvP"/>
+                        <outlet property="serverView" destination="h8U-Nq-TLU" id="J7o-1J-4dL"/>
+                        <outlet property="timeView" destination="rAy-IJ-a7M" id="FEH-4h-HlN"/>
+                        <outlet property="timerLabel" destination="DVP-P8-RGn" id="23w-oa-6x0"/>
+                        <outlet property="timerLabelTitle" destination="vcn-Ze-cHr" id="6fq-iZ-8PC"/>
+                        <outlet property="timerView" destination="C5I-jf-WpB" id="E78-W7-IdB"/>
+                        <outlet property="titleLabel" destination="djE-nb-tL9" id="Cj2-lL-iNF"/>
+                        <outlet property="typeLabel" destination="3fI-vH-NUp" id="eCw-BG-hVc"/>
+                        <outlet property="typeView" destination="284-An-1vo" id="W1Y-QW-eRW"/>
+                        <outlet property="userNameLabel" destination="eiQ-aW-3Gu" id="skX-9k-bR7"/>
+                        <outlet property="userNameView" destination="g54-fa-ibW" id="oSh-eb-6Fz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AuI-IY-ZmS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2856" y="-234"/>
+        </scene>
+        <!--License Agreement View-->
+        <scene sceneID="GeG-Nf-qba">
+            <objects>
+                <viewController id="1PX-C3-Uj4" customClass="LicenseAgreementView" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7Wi-k6-vOT">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="Qln-E8-waL" userLabel="NavigationView">
+                                <rect key="frame" x="2" y="2" width="316" height="58"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="License Agreement" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UpH-ae-WJf">
+                                        <rect key="frame" x="8" y="24" width="300" height="34"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="23"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0039215686274509803" green="0.63137254901960782" blue="0.38039215686274508" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" id="UEW-oJ-SWQ">
+                                <rect key="frame" x="2" y="62" width="316" height="437"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <string key="text">Short Version
+You may only use the SUPER GLUU mobile application in connection with GLUU’s services and in full compliance with the terms and conditions of the full End User License Agreement, set forth below. In order to provide and improve our services, we collect certain information about you, your use of SUPER GLUU and your devices. To learn more about your rights and our obligations regarding this information, please read the full End User License Agreement, below, as well as our Privacy Policy, which is available on our website at https://www.gluu.org/privacy-policy/.
+Long Version
+GLUU, INC. 
+END USER LICENSE AGREEMENT 
+
+EFFECTIVE AS OF March 10, 2015 
+
+PLEASE READ CAREFULLY THE TERMS AND CONDITIONS OF THIS END USER LICENSE AGREEMENT (THIS "EULA") BEFORE DOWNLOADING, INSTALLING OR USING ANY SERVICES (AS DEFINED BELOW) OR SOFTWARE (AS DEFINED BELOW) PROVIDED BY GLUU, INC. ("GLUU") OR ENABLING ANY SUCH SERVICES AND/OR OR SOFTWARE.
+
+THE SOFTWARE IS TO BE USED EXCLUSIVELY IN CONNECTION WITH GLUU'S SERVICES. GLUU OFFERS THE SERVICES ONLY TO CUSTOMERS (AS DEFINED BELOW) THAT HAVE ORDERED THE SERVICES SUBJECT TO OUR ORDER FORM(S) (DEFINED BELOW) AND SERVICE TERMS AND CONDITIONS. YOU MAY ONLY USE THE SERVICES, INCLUDING SOFTWARE, IF YOU ARE A CUSTOMER OR A USER (AS DEFINED BELOW). 
+
+IF YOU RECEIVE THE SERVICES AND/OR SOFTWARE AS A USER (AS DEFINED BELOW) THROUGH AN ENTITY (SUCH AS IN YOUR CAPACITY AS AN EMPLOYEE OR CUSTOMER OF SUCH ENTITY), THEN THE WRITTEN AGREEMENT OR GLUU SERVICE TERMS AND CONDITIONS AVAILABLE ON GLUU’S WEBSITE THAT HAVE BEEN AGREED TO BETWEEN GLUU, INC. AND THAT ENTITY (AS APPLICABLE, THE “SERVICE TERMS AND CONDITIONS”) WILL ALSO GOVERN YOUR USE OF THE SERVICES AND/OR SOFTWARE. IF THERE IS A CONFLICT BETWEEN ANY TERM IN THIS EULA AND ANY TERM IN THE SERVICE TERMS AND CONDITIONS, THEN THE TERM IN THE SERVICE TERMS AND CONDITIONS WILL APPLY, UNLESS EXPLICITLY STATED OTHERWISE IN THIS EULA. 
+
+TERMS AND CONDITIONS
+1. DEFINITIONS
+
+1.1 “Customer” means the customer that has signed up for the Services and agreed to the terms of this Agreement.
+
+1.2 “Customer Data” means any information or data about Customer or Users (and its and their staff, customers or suppliers, as applicable), that is supplied to GLUU by or on behalf of Customer or any User in connection with the Services, or which GLUU is required to access, generate, process, store or transmit pursuant to this Agreement, including (but without limitation) information about Customer’s and Users’ respective devices, computers and use of the Services. 
+
+1.3 “Customer Personal Data” means any Customer Data that is personal data (as defined under the DPA). 
+
+1.4 “Data Protection Laws” means the DPA, EC Directive 95/46/EEC, EC Directive 2002/58/EC, the UK Privacy and Electronic Communications (EC Directive) Regulations 2003 and any other applicable data protection laws, regulations and legally binding codes of practice from time to time in force applicable to the performance of a party's obligations under this Agreement.
+
+1.5 “Documentation” means guides, instructions, policies and reference materials provided to Customer by GLUU in connection with the Services, including the documentation located at https://www.gluu.org/docs, which may be amended from time to time.
+
+1.6 “DPA” means the UK Data Protection Act of 1998.
+
+1.7 “SUPER GLUU Software” means all GLUU proprietary mobile applications (available on iPhone, Android, Palm, Blackberry, Windows Mobile and other supported mobile devices) used in providing the Services, and any updates, fixes and/or patches developed from time to time.
+
+1.8 “Fees” means the applicable fees as set forth on the Order Form.
+
+1.9 “Hardware Tokens” mean hardware security tokens purchased by Customer under an Order Form.
+
+1.10 “Integration Software” means (a) GLUU proprietary software and (b) open source software used in providing the Services which integrates with Customer’s network or application, including SSL or other VPN, Unix operating system, and/or web application, as provided in the Documentation and any updates, fixes and/or patches developed from time to time. 
+
+1.11 “Intellectual Property Rights” means all patents, registered designs, unregistered designs, design rights, utility models, database rights, copyright and other similar statutory rights, trademark, service mark and any know how relating to algorithms, drawings, tests, reports and procedures, models, manuals, formulae, methods, processes and the like (including applications for any of the preceding rights) or any other intellectual or industrial property rights of whatever nature in each case in any part of the world and whether or not registered or registerable, for the full period and all extensions and renewals where applicable.
+
+1.12 “Order Form(s)” means the invoice or other forms from GLUU for the initial order for the Service, and any subsequent invoice or other forms from GLUU (submitted in written form or online), specifying, among other things, the maximum number of Users, the initial Term, the purchase of any Hardware Tokens, the Fees, telephony credits (if any), and such other charges and terms as agreed between the parties. 
+
+1.13 “Payment Schedule” means the schedule selected by Customer for payment of Fees (on either an order webpage or an attached Order Form), which may be either monthly by credit card or annually or multi-year and invoiced in advance, with payment due within thirty days of receipt of invoice.
+
+1.14 “Performance Data” means data with respect to usage and other aggregate measures of the Services’ performance that GLUU may collect from time to time.
+
+1.15 “Services” means the products and services that are ordered by and/or made available to Customer under a free trial or an Order Form (including, where applicable, the Software, Hardware Tokens and services using only the SUPER GLUU Software) and made available online by GLUU, including associated offline components, as described in the Documentation. The term “Services” does not include the Third Party Services.
+
+1.16 “Service Level Agreement” or “SLA” means the description of support provided to Customers and its Users and of the availability of the Services, which descriptions may be found at: https://www.gluu.org/entitlements.
+
+1.17 “Software” means the Integration Software and SUPER GLUU Software. 
+
+1.18 “Telephony Credits” mean credits for Customer’s Users to provide authentication by telephone or SMS. 
+
+1.19 “Term” means the subscription term indicated on the Order Form and any subsequent renewal terms. 
+
+1.20 “User” means any user of the Services who Customer may authorize to enroll to use the Services under the terms of this Agreement.
+
+2. SERVICES FOR CUSTOMER; GLUU OBLIGATIONS
+
+2.1 Subject to and conditioned on Customer's payment of the Fees and full compliance with all other terms and conditions of this Agreement, GLUU grants Customer and Users a non-exclusive, non-sublicensable, non-transferable license to access and use the Services, along with such Documentation as GLUU may make available during the Term. 
+
+2.2 The Services and SLA are subject to modification from time to time at GLUU’s sole discretion, provided the modifications do not materially diminish the functionality of the Services provided by GLUU and the Services continue to perform according to the description of the Services specified in Section 2.3 in all material aspects. Customer shall have the right to terminate the Agreement pursuant to Section 10.2 without any penalty if (i) a material modification to the Services or the SLA is made which materially diminishes the functionality of the Services or materially diminishes the SLA, (ii) GLUU has not obtained Customer’s consent for such modifications and (iii) Gluu, Inc. does not provide a remedy in the cure period stated in Section 10.2.
+
+2.3 GLUU will make the Services available and the Services will perform substantially in accordance with the description of the services found at http://super.gluu.org. Notwithstanding the foregoing, GLUU reserves the right to suspend Customer’s (or any of its Users’) access to the Services: (i) for scheduled or emergency maintenance, (ii) in the event Customer is in breach of this Agreement, including failure to pay any amounts due to GLUU, and fails to correct that breach within the applicable cure period; (iii) in the event that Customer breaches Section 4 or Section 7 of this Agreement, (iv) as it deems reasonably necessary to respond to any actual or potential security concerns or (v) based on GLUU’s reasonable belief that Customer and/or the Users use of the Services are excessive, interfering with use by other customers and users or are violating applicable laws, rules or regulations.
+
+2.4 For Customers enrolled in one of the editions of Services requiring purchase, subject to full compliance with the terms and conditions of this Agreement, GLUU will use commercially reasonable efforts to provide support to Customer as described in the Service Level Agreement. The SLA shall apply only with respect to Customers who have enrolled in one of the editions of Services requiring purchase. Certain parts of the Services or types of Services provided by GLUU are free to use and do not require payment (“Free Services”). The SLA shall not apply with respect to Customers who use only Free Services and, without limitation, such Customers will not receive any support from GLUU.
+
+2.5 GLUU collects certain information about Customer and its Users as well as their respective devices, computers and use of the Services. GLUU uses, discloses and protects this information as described in this Agreement and GLUU’s privacy policy, which is incorporated herein by reference and the current version of which is available at https://www.gluu.org/privacy-policy/ (the “Privacy Policy”). 
+
+2.6 Use of the Services by Customer and its Users is also governed by GLUU’s Service Terms and Conditions which is available at https://www.gluu.org/terms-and-conditions, which is incorporated herein by reference.
+
+2.7 Users will be required to review and agree to the terms of an end user license agreement (“EULA”) on their device(s) prior to accessing the Services. With respect to the relationship between GLUU, Customer and the Users, the EULA will generally provide that the terms of any agreements between GLUU and its Customers will govern instead of the EULA with respect to use by Users with access to the Services through such Customers. 
+
+3. CUSTOMER RESPONSIBILITIES 
+
+3.1 Customer may only use the Services in accordance with the Documentation and as explicitly set forth in this Agreement. Customer will cooperate with GLUU in connection with the performance of this Agreement as may be necessary, which may include making available such personnel and information as may be reasonably required to provide the Services or support. Customer is solely responsible for determining whether the Services are sufficient for its purposes, including but not limited to, whether the Services satisfy Customer’s legal and/or regulatory requirements.
+
+3.2 Use of the Services may require Users to install SUPER GLUU Software on their mobile devices. Such use shall be subject to the terms of the EULA. Notwithstanding a conflict with any of the terms of this Agreement or the Service Terms and Conditions, the terms found at Exhibit A, and as updated from time to time at store.apple.com, apply to Customer’s and Customer’s Users’ use of the Services on any platform, including iPhone and iPad applications, available via the Apple, Inc. (“Apple”) App Store. Other terms may apply with respect to other third party products and software accessible via the Services and with respect to devices using other third party operating systems or software or in the event that SUPER GLUU Software is downloaded from other third party sites (collectively, along with the Apple App Store, “Third Party Services”). Customer’s access and use of Third Party Services is governed solely by the terms and conditions of such Third Party Services. GLUU does not endorse, is not responsible or liable for, makes no representations or warranties and provides no indemnification with respect to any aspect of the Third Party Services, notwithstanding anything in this Agreement to the contrary. Customer agrees to waive any claim against GLUU with respect to the Third Party Services. GLUU is not liable for any damage or loss caused or alleged to be caused by or in connection with enablement, access or use of any such Third Party Services, or Customer’s reliance on the privacy practices, data security processes or other policies of such Third Party Services.  Gluu, Inc. does not provide customer support or assistance with respect to the Third Party Services. Users may be required to register for or log into such Third Party Services on their respective websites or apps.  
+
+3.3 Customer acknowledges that the Services will require the Users to share with GLUU certain information for the purposes of providing the Services, such as user names, password and other login information. This information may include personal information (such as email address, and/or phone number) regarding the Users, and GLUU will use such information for the purposes of providing the Services to Customer and Users. Prior to authorizing an individual to become a User, Customer is fully responsible for obtaining the consent of that individual, in accordance with all applicable laws, to the use of his/her information by GLUU for purposes of providing the Services, which use shall be governed by the terms of the Privacy Policy. Customer represents and warrants that all such consents have been or will be obtained prior to authorizing any individual to become a User.
+
+3.4 Users will be required to review and agree to GLUU’s Privacy Policy, Service Terms and Conditions, and EULA. Notwithstanding the foregoing, Customer will be fully responsible for Users’ compliance with this Agreement, the Privacy Policy, the Service Terms and Conditions, and the EULA. Any breach of this Agreement or such other terms by a User shall be deemed to be a breach by Customer. Customer is solely responsible for determining whether the Services are sufficient for Customer’s purposes. 
+
+3.5 There will be no force or effect given to any different or additional terms contained in any purchase order or similar form issued by either party, even if signed by the parties after the date hereof unless such terms are included in an amendment in accordance with the terms of Section 14.3 of this Agreement. Each party’s acceptance of this Agreement was and is expressly conditional upon the other’s acceptance of the terms contained in the Agreement to the exclusion of all other terms.
+
+4. RESTRICTIONS
+Customer will not, and will not permit any of its Users nor any third party to: reverse engineer, decompile, disassemble or otherwise attempt to discover the source code, object code or underlying structure, ideas or algorithms of the Services, Software, Hardware Tokens or any data related to the Services (except to the extent such prohibition is contrary to applicable law that cannot be excluded by the agreement of the parties); modify, translate, or create derivative works based on the Services or Software; share, rent, lease, loan, resell, sublicense, distribute, use or otherwise transfer the Services or Software for timesharing or service bureau purposes or for any purpose other than its own use; or use the Services or Software other than in accordance with this Agreement and in compliance with all applicable laws and regulations (including but not limited to any European privacy laws and intellectual property laws).
+
+5. PAYMENT OF FEES
+
+5.1 Customer will pay GLUU the Fees plus all applicable sales, use and other purchase related taxes (or provide GLUU with a valid certificate of exemption from the requirement of paying sales, use or other purchase related taxes) in accordance with the payment terms set forth on the Order Form. Except as otherwise indicated in the applicable Order Form, all fees and expenses shall be in U.S. dollars. Unpaid Fees are subject to a finance charge of one percent (1.0%) per month, or the maximum permitted by law, whichever is lower, plus all expenses of collection, including reasonable attorneys’ fees. In the case of any withholding requirements, Customer will pay any required withholding itself and will not reduce the amount paid to GLUU on account thereof. If the method of payment is by credit card, Customer agrees to (a) keep Customer’s credit card information updated and (b) authorize Gluu, Inc. to charge Customer’s credit card the Fees as and when due. GLUU will not charge users any fees for their use of the Services or SUPER GLUU Software without Customer’s authorization. Users’ carriers or service providers may charge fees for data usage, messaging, phone calls or other services that are required for them to use the Services. All payments will be made in accordance with the Payment Schedule.
+
+5.2 Customer’s Order Form will indicate an initial allotment of Telephony Credits, if applicable. Customer may purchase additional Telephony Credits separately via the billing section of Customer’s administrative interface or by contacting a sales representative. 
+
+5.3 If a Customer uses only Free Services, GLUU will not charge such Customer any Fees for use of such Free Services or download, installation or use of the Software associated with Free Services. Such Customer may discontinue using the Free Services at any time, but must immediately remove any Software from its devices.
+
+5.4 At any time during the Term, and unless otherwise agreed to in writing by the parties, any increase or overage in the maximum number of Users specified in the Order Form will be treated in accordance with this Section 5.4 (a “Subscription Upgrade”). The maximum number of Users shall be increased as follows: 
+For Subscription Upgrades (i) for Customers where the maximum number of Users on the Order Form is fewer than 500 Users, the maximum number of Users will be increased automatically in increments equal to 50 Users, (ii) for Customers where the maximum number of Users on the Order Form is 500 - 1000 Users, the maximum number of Users will be increased automatically in increments equal to 100 Users, and (ii) for Customers where the maximum number of Users on the Order Form is 1001 or greater, the maximum number of Users will be increased automatically in increments equal to 250 Users. 
+GLUU shall invoice Customer for the increase in the maximum number of Users at the subscription rate and payment terms specified in the most recent Order Form, which will be prorated for the remainder of the then applicable subscription Term. For any future subscription Term, the number of Users and applicable Fees will reflect any Subscription Upgrades. 
+
+6. CONFIDENTIALITY
+
+6.1 Each party (the “Receiving Party”) understands that the other party (the “Disclosing Party”) has disclosed or may disclose information relating to the Disclosing Party’s technology, Users or business, including without limitation the pricing and other terms of this Agreement (hereinafter referred to as “Confidential Information” of the Disclosing Party). 
+
+6.2 The Receiving Party agrees: (i) not to disclose the Confidential Information to any third person other than those of its employees, investors and potential acquirers with a need to have access thereto and who have entered into non-disclosure and non-use agreements applicable to the Disclosing Party’s Confidential Information, and (ii) to use such Confidential Information solely as reasonably required in connection with the Services and/or this Agreement. The Receiving Party further agrees to take the same security precautions to protect against unauthorized disclosure or unauthorized use of such Confidential Information of the Disclosing Party that the party takes with its own confidential or proprietary information, but in no event will a party apply less than reasonable precautions to protect such Confidential Information. Each party acknowledges that the use of such precautions is not a guarantee against unauthorized disclosure or use. The Disclosing Party agrees that the foregoing will not apply with respect to any information that the Receiving Party can document (a) is or becomes generally available to the public without any action by, or involvement of, the Receiving Party, or (b) was in its possession or known by it prior to receipt from the Disclosing Party, or (c) was rightfully disclosed to it without restriction by a third party, or (d) was independently developed without use of any Confidential Information of the Disclosing Party. Nothing in this Agreement will prevent the Receiving Party from disclosing the Confidential Information pursuant to any judicial or governmental order, provided that, to the extent permitted by law, the Receiving Party gives the Disclosing Party reasonable prior notice of such disclosure to contest such order. For the avoidance of doubt, Customer acknowledges that GLUU utilizes the services of certain third parties in connection with the provision of the Services (such as data hosting and telephony service providers) and the provision of the Third Party Services and such third parties will have access to Customer’s Confidential Information, subject to compliance with this Section 6. The parties agree that Performance Data and any other de-identified information in any form or format is not Confidential Information and will not be subject to any confidentiality restrictions or obligations. 
+
+6.3 Customer acknowledges that GLUU does not wish to receive any Confidential Information from Customer that is not necessary for GLUU to perform its obligations under this Agreement, and, unless the parties specifically agree otherwise, GLUU may reasonably presume that any unrelated information received from Customer is not confidential or Confidential Information, unless such information is marked as “Confidential”.
+
+7. INTELLECTUAL PROPERTY RIGHTS; OWNERSHIP
+
+Except as expressly set forth herein, GLUU alone (and its licensors, where applicable) will retain all Intellectual Property Rights relating to the Services or the Software or any suggestions, ideas, enhancement requests, feedback, recommendations or other information provided by Customer or any third party relating to the Services and/or the Software, which are hereby assigned to GLUU. Customer will not copy, distribute, reproduce or use any of the foregoing except as expressly permitted under this Agreement. As between the parties, GLUU will own all Performance Data, all other forms of aggregated information, and all de-identified data relating to any User and/or the Services. This Agreement is not a sale and does not convey to Customer any rights of ownership in or related to the Services or Software, or any Intellectual Property Rights. 
+
+8. DATA PROTECTION
+
+8.1 In this Section 8, the terms “personal data”, “data processor”, “data subject”, “process and processing” and “data controller” shall be as defined in the DPA. 
+
+8.2 For the purposes of the Data Protection Laws, as between Customer and GLUU, the parties agree that Customer shall at all times be the data controller and GLUU shall be the data processor with respect to the processing of Customer Personal Data in connection with this Agreement. 
+
+8.3 By entering into this Agreement, Customer agrees that GLUU may collect, retain and use certain Customer Personal Data (which may include, without limitation, names, mobile telephone numbers, IP addresses and email addresses of Users) in connection with the Services. As the data controller of such Customer Personal Data, Customer shall be responsible for ensuring that, and warrants and represents to GLUU that it shall ensure that any processing of Customer Personal Data in connection with the Services shall comply with the Data Protection Laws. This shall include (without limitation) ensuring that Customer: (a) has given adequate notice and made all appropriate disclosures to the data subjects regarding Customer's and/or GLUU's use and disclosure of Customer Personal Data, including (but without limitation) for the provision of the Services; and (b) has and/or obtains all necessary rights, and where applicable, all appropriate and valid consents from the data subjects to share such personal data with GLUU and to permit use of Customer Personal Data by GLUU for the purposes of the provision of the Services and performing its obligations under this Agreement or as may be required by applicable law (“Purpose”), including (but without limitation) notifying the data subject of the transfer of Customer Data outside of the European Economic Area to countries whose laws they have acknowledged may provide a lower standard of data protection than exists in the European Economic Area (“EEA"). 
+
+8.4 As a data processor in relation to all Customer Personal Data, GLUU agrees:
+
+(a) it shall implement appropriate technical and organizational measures to protect against unauthorized or unlawful processing (including disclosure or access) of such Customer Personal Data and against accidental loss or destruction of, or damage to, such data, having regard to the state of technological developments and the cost of implementing those measures and the nature of personal data to be protected; 
+
+(b) it shall only process Customer Personal Data on behalf of Customer to the extent and in such a manner, as is necessary for the Purpose and shall not use Customer Personal Data for any other purpose without the prior written consent of Customer; and
+
+(c) it shall process Customer Personal Data only on, and in accordance with, Customer's instructions contained in this Agreement or any other reasonable instructions received from Customer from time to time. 
+
+8.5 Customer acknowledges that Customer Personal Data will be collected, transferred and stored by GLUU outside the EEA in the United States of America, whose laws may provide a lower standard of data protection than exists in the EEA. 
+
+8.6 Customer acknowledges that GLUU is reliant on Customer for direction as to the extent to which GLUU is entitled to use and process Customer Data. Consequently, GLUU will not be liable for any claim brought by a data subject to the extent that such action or omission resulted directly from Customer's instructions. Customer undertakes to comply in all respects with any applicable laws, regulations, standards and guidelines applicable to personal data and shall use all reasonable endeavors to where possible anonymise personal data sent to GLUU.
+
+9. INDEMNIFICATION.
+For Customers enrolled in one of the editions of Services requiring purchase, GLUU shall indemnify and hold Customer harmless from liability to third parties resulting from infringement by the Services of any United States or United Kingdom patent or any copyright or misappropriation of any trade secret, provided GLUU is promptly notified of any and all threats, claims and proceedings related thereto and given reasonable assistance and the opportunity to assume sole control over defense and settlement; GLUU will not be responsible for any settlement it does not approve. The foregoing obligations do not apply with respect to portions or components of the Services (i) not created by GLUU, (ii) resulting in whole or in part from Customer specifications, (iii) that are modified after delivery by GLUU, (iv) combined with other products, processes or materials where the alleged infringement relates to such combination, (v) where Customer continues allegedly infringing activity after being notified thereof or after being informed of modifications that would have avoided the alleged infringement, or (vi) where Customer’s use of Services is not strictly in accordance with this Agreement and all related Documentation. If GLUU receives information about an actual or alleged infringement or misappropriation claim that would be subject to indemnification rights set forth in this Section 9, GLUU shall have the option, at its expense, to (i) modify the Software to be non-infringing; or (ii) obtain for Customer a license to continue using the Software. If GLUU determines it is not commercially reasonable to perform either of the above options, then GLUU may at its option elect to terminate the license for the Services and refund the unearned portion of any pre-paid subscription Fees, pro-rated on a monthly basis. THIS SECTION STATES CUSTOMER’S SOLE AND EXCLUSIVE REMEDY FOR INFRINGEMENT, MISAPPROPRIATION AND/OR CLAIMS ALLEGING INFRINGEMENT OR MISAPPROPRIATION. Customer will indemnify GLUU from all damages, costs, settlements, attorneys’ fees and expenses related to any claim related to (i) infringement or misappropriation not otherwise subject to GLUU's indemnification obligation set forth in this Section 9 and (ii) Customer’s breach of Section 3.3 relating to obtaining User consent, Section 4 “Restrictions,” Section 7 “Intellectual Property Rights; Ownership” or Section 8 “Data Protection”. GLUU shall not provide any indemnification or other protections under this Section 9 to Customers who use only Free Services.
+
+10. TERM; TERMINATION
+
+10.1 Subject to earlier termination as expressly provided for in this Agreement, the initial Term of this Agreement shall be for the Term specified in the Order Form, or in the event of multiple Order Forms, until the Term of all Order Forms has expired. Each Order Form and this Agreement shall automatically renew after the initial Term and any renewal Term for a renewal Term equal to the expiring subscription Term, unless either party provides to the other at least forty-five (45) days prior written notice that it will not renew. The Fees per User for each renewal Term will be equal to the Fees per User for the immediately prior Term plus a price increase. Any pricing increase will not exceed seven percent (7%) per year, unless the pricing was designated in the applicable Order Form as promotional or one-time; provided, however, the Fees for each renewal Term shall not exceed the list price as of the start date of such renewal Term.
+
+10.2 In the event of any material breach of this Agreement by either party (other than Customer’s payment obligations), the non-breaching party may terminate this Agreement prior to the end of the Term by giving thirty (30) days prior written notice to the breaching party; provided, however, that this Agreement will not terminate if the breaching party has cured the breach prior to the expiration of such thirty-day period. If Customer fails to pay any Fees or other amounts in the applicable Order Form, GLUU may terminate this Agreement prior to the end of the Term by giving five (5) business days prior written notice to Customer; provided, however, that this Agreement will not terminate if Customer has paid all Fees and other amounts in the applicable Order Form prior to the expiration of such five business-day period. 
+
+10.3 Either party may terminate this Agreement, without notice, (i) upon the institution or if a petition is filed, notice is given, a resolution is passed or an order is made, in each case by or against the other party under any applicable laws relating to insolvency, administration, liquidation, receivership, bankruptcy or any other winding up proceedings, (ii) upon the other party's making an assignment for the benefit of creditors or making a voluntary arrangement with its creditors, (iii) upon the other party's dissolution or ceasing, or threatening to cease to do business or (iv) if any event occurs, or proceeding is instituted, with respect to the other party that has the equivalent or similar effect to any of the events mentioned in Sections 10.3 (i) to (iii) inclusive. For Customers using Free Services, GLUU may terminate this Agreement at any time with or without notice and GLUU reserves the right to disable such Customers’ access to or use of the Services at any time with or without notice for any reason or no reason.
+
+10.4 The Sections of this Agreement which by their nature should survive termination or expiration of this Agreement, including but not limited to Sections 3.1 and 4 through 14 (inclusive), will survive termination or expiration of this Agreement. No refund of Fees shall be due in any amount on account of termination by GLUU pursuant to this Section 10. In the event of termination by Customer pursuant to this Section 10, Customer shall be entitled as its sole and exclusive remedy, to receive a refund of any pre-paid subscription Fees paid by Customer to GLUU for Services not rendered as of the termination date. When this Agreement expires or terminates, GLUU shall cease providing the Service to Customer.
+
+11. WARRANTIES AND DISCLAIMER OF ADDITIONAL WARRANTIES
+
+11.1 For Customers enrolled in one of the editions of Services requiring purchase, GLUU represents and warrants that it will not knowingly include, in any GLUU software released to Users and provided to Customer hereunder, any computer code or other computer instructions, devices or techniques, including without limitation those known as disabling devices, trojans, or time bombs, that intentionally disrupt, disable, harm, infect, defraud, damage, or otherwise impede in any manner, the operation of a network, computer program or computer system or any component thereof, including its security or User data. If, at any time, GLUU fails to comply with the warranty in this Section 11.1, Customer may promptly notify GLUU in writing of any such noncompliance. GLUU will, within thirty (30) days of receipt of such written notification, either correct the noncompliance or provide Customer with a plan for correcting the noncompliance. If the noncompliance is not corrected or if a reasonably acceptable plan for correcting them is not established during such period, Customer may terminate this Agreement and receive a refund of any pre-paid but unearned subscription Fees, pro-rated on a monthly basis, as its sole and exclusive remedy for such noncompliance. This provision does not apply to Customers who use only Free Services.
+
+11.2 For Customers that have purchased Hardware Tokens as part of the Services, GLUU warrants to Customer only that Hardware Tokens will be free of defects in material and workmanship at the time of sale and for a period of six (6) months thereafter. This limited warranty is limited to replacement of defective Hardware Tokens. This limited Hardware Token warranty is Customer’s exclusive remedy for defective Hardware Tokens. This provision does not apply to Customers who use only Free Services.
+
+11.3 EXCEPT AS EXPLICITLY PROVIDED IN THIS SECTION 11, THE SERVICES AND GLUU CONFIDENTIAL INFORMATION AND ANYTHING PROVIDED IN CONNECTION WITH THIS AGREEMENT ARE PROVIDED “AS-IS,” WITHOUT ANY WARRANTIES OF ANY KIND. GLUU HEREBY DISCLAIMS FOR ITSELF AND ITS SUPPLIERS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING, WITHOUT LIMITATION, ALL IMPLIED WARRANTIES, TERMS OR CONDITIONS OF MERCHANTABILITY, FITNESS FOR A PURPOSE OR A PARTICULAR PURPOSE, SATISFACTORY QUALITY, TITLE, AND NON-INFRINGEMENT.
+
+12. LIMITATION OF LIABILITY
+
+12.1 NOTHING IN THIS AGREEMENT (OR ANY ORDER FORM) SHALL LIMIT OR EXCLUDE EITHER PARTY'S LIABILITY FOR (A) DEATH OR PERSONAL INJURY CAUSED BY ITS NEGLIGENCE, OR THE NEGLIGENCE OF ITS EMPLOYEES, AGENTS OR SUBCONTRACTORS; (B) FRAUD OR FRAUDULENT MISREPRESENTATION; OR (C) ANY OTHER LIABILITY THAT CANNOT BE EXCLUDED OR LIMITED BY LAW.
+
+12.2 SUBJECT TO SECTION 12.1, IN NO EVENT WILL GLUU OR ITS SUPPLIERS BE LIABLE TO CUSTOMER (OR ANY PERSON CLAIMING UNDER OR THROUGH CUSTOMER) FOR ANY INDIRECT, PUNITIVE, INCIDENTAL, SPECIAL, OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR IN ANY WAY CONNECTED WITH THE USE OF THE SERVICES OR ANYTHING PROVIDED IN CONNECTION WITH THIS AGREEMENT, THE DELAY OR INABILITY TO USE THE SERVICES OR ANYTHING PROVIDED IN CONNECTION WITH THIS AGREEMENT OR OTHERWISE ARISING FROM THIS AGREEMENT, INCLUDING WITHOUT LIMITATION, (I) LOSS OF REVENUE OR ANTICIPATED PROFITS (WHETHER DIRECT OR INDIRECT) OR (II) LOST BUSINESS OR (III) LOST SALES, WHETHER BASED IN CONTRACT, TORT (INCLUDING ACTIVE AND PASSIVE NEGLIGENCE AND STRICT LIABILITY) BREACH OF STATUTORY DUTY OR OTHERWISE, EVEN IF GLUU HAS BEEN ADVISED OF THE POSSIBILITY OF DAMAGES. 
+
+12.3 SUBJECT TO SECTION 12.1, THE TOTAL LIABILITY OF GLUU FOR ANY CLAIM, WHETHER BASED IN CONTRACT, TORT (INCLUDING ACTIVE AND PASSIVE NEGLIGENCE AND STRICT LIABILITY) OR OTHERWISE, WILL NOT EXCEED, IN THE AGGREGATE, THE FEES PAID OR TO BE PAID TO GLUU HEREUNDER IN THE TWELVE MONTH PERIOD ENDING ON THE DATE THAT SUCH CLAIM IS FIRST ASSERTED, PROVIDED, HOWEVER THAT THE MAXIMUM LIABILITY OF GLUU FOR ALL CLAIMS SHALL BE THE THEN CURRENT ANNUALIZED VALUE OF THE APPLICABLE ORDER FORM. THE FOREGOING LIMITATIONS WILL APPLY NOTWITHSTANDING ANY FAILURE OF ESSENTIAL PURPOSE OF ANY LIMITED REMEDY.
+
+13. U.S. GOVERNMENT MATTERS
+Notwithstanding anything else, Customer may not provide to any person or export or re-export or allow the export or re-export of the Services or any software or anything related thereto or any direct product thereof, in violation of any restrictions, laws or regulations of the United States Department of Commerce, the United States Department of Treasury Office of Foreign Assets Control, or any other United States or foreign agency or authority. 
+
+14. MISCELLANEOUS
+
+14.1 Severability. If any provision of this Agreement is found to be unenforceable or invalid, that provision will be limited or eliminated to the minimum extent necessary so that this Agreement will otherwise remain in full force and effect and enforceable. 
+
+14.2 Assignment. This Agreement is not assignable, transferable or sublicensable by Customer except with GLUU’s prior written consent, which shall not be unreasonably withheld. GLUU may transfer and assign any of its rights and obligations under this Agreement with written notice to Customer. This Agreement shall be binding upon and shall inure to the benefit of the parties hereto and their respective permitted successors and permitted assigns.
+
+14.3 Entire Agreement; Amendment. Both parties agree that this Agreement is the complete and exclusive statement of the mutual understanding of the parties and supersedes and cancels all previous written and oral agreements, communications and other understandings relating to the subject matter of this Agreement, and that all waivers, amendments and modifications must be in a writing signed by both parties and specifically reference the provision of this Agreement being waived, amended or modified, except as otherwise provided herein. No agency, partnership, joint venture, or employment is created as a result of this Agreement and Customer does not have any authority of any kind to bind GLUU in any respect whatsoever. 
+
+14.4 Notices. All notices under this Agreement will be in writing and will be deemed to have been duly given when received, if personally delivered; when receipt is electronically confirmed, if transmitted by facsimile or e-mail; and upon receipt, if sent by certified or registered mail (return receipt requested), postage prepaid. GLUU may provide notice using the information provided in the most recent Order Form and Customer may provide notice using the contact information provided on Gluu, Inc.
+
+14.5 Force Majeure. Any delay or failure in the performance of any duties or obligations of either party (except the payment of money owed) will not be considered a breach of this Agreement if such delay or failure is due to a labor dispute, fire, earthquake, flood or any other event beyond the reasonable control of a party, provided that such party promptly notifies the other party thereof and uses reasonable efforts to resume performance as soon as possible.
+
+14.6 Governing Law; Arbitration. This Agreement will be governed by the laws of the State of Texas, U.S.A. without regard to its conflict of laws provisions. Any dispute arising from or relating to the subject matter of this Agreement shall be finally settled by arbitration in Travis County, Texas, in accordance with the Streamlined Arbitration Rules and Procedures of Judicial Arbitration and Mediation Services, Inc. (“JAMS”) then in effect, by one commercial arbitrator with substantial experience in resolving intellectual property and commercial contract disputes, who shall be selected from the appropriate list of JAMS arbitrators in accordance with the Streamlined Arbitration Rules and Procedures of JAMS. Judgment upon the award so rendered may be entered in a court having jurisdiction, or application may be made to such court for judicial acceptance of any award and an order of enforcement, as the case may be. Notwithstanding the foregoing, each party shall have the right to institute an action in a court of proper jurisdiction for injunctive or other equitable relief pending a final decision by the arbitrator. 
+
+14.7 Venue; Prevailing Party. The federal and state courts sitting in Travis County, Texas, U.S.A. will have proper and exclusive jurisdiction and venue with respect to any disputes arising from or related to the subject matter of this Agreement. Notwithstanding the foregoing, each party shall have the right to commence and prosecute any action for injunctive relief before any court of competent jurisdiction. In any arbitration, action or proceeding to enforce rights under this Agreement, the prevailing party will be entitled to recover costs and attorneys’ fees.
+
+14.8 Publicity. Customer agrees to participate in press announcements, case studies, trade shows, or other marketing reasonably requested by GLUU. During the Term and for thirty (30) days thereafter, Customer grants Gluu, Inc. the right to use Customer’s name and/or logo to identify Customer as such on GLUU’s website or other marketing or advertising materials.
+
+EXHIBIT A
+
+APPLE DEVICE AND APPLICATION TERMS. 
+In the event you are using the Services in connection with a device provided by Apple, Inc. (“Apple”) or a GLUU application obtained through the Apple App Store (collectively, such uses are henceforth the “Application”), the following shall apply:
+
+1. Both you and GLUU acknowledge that this Agreement is concluded between you and GLUU only, and not with Apple, and that Apple is not responsible for the Application or the Content;
+
+2. The Application is licensed to you on a limited, non-exclusive, non-transferrable, non-sublicensable basis, solely to be used in connection with the Service for your private, personal, non-commercial use, subject to all the terms and conditions of this Agreement as they are applicable to the Service;
+
+3. You will only use the Application in connection with an Apple device that you own or control;
+
+4. You acknowledge and agree that Apple has no obligation whatsoever to furnish any maintenance and support services with respect to the Application;
+
+5. In the event of any failure of the Application to conform to any applicable warranty, including those implied by law, you may notify Apple of such failure; upon notification, Apple’s sole warranty obligation to you will be to refund to you the purchase price, if any, of the Application;
+
+6. You acknowledge and agree that GLUU, and not Apple, is responsible for addressing any claims you or any third party may have in relation to the Application;
+
+7. You acknowledge and agree that, in the event of any third party claim that the Application or your possession and use of the Application infringes that third party's intellectual property rights, GLUU, and not Apple, will be responsible for the investigation, defense, settlement and discharge of any such infringement claim;
+
+8. You represent and warrant that you are not located in a country subject to a U.S. Government embargo, or that has been designated by the U.S. Government as a “terrorist supporting” country, and that you are not listed on any U.S. Government list of prohibited or restricted parties;
+
+9. Both you and GLUU acknowledge and agree that, in your use of the Application, you will comply with any applicable third party terms of agreement which may affect or be affected by such use; and
+
+10. Both you and GLUU acknowledge and agree that Apple and Apple’s subsidiaries are third party beneficiaries of this Agreement, and that upon your acceptance of this Agreement, Apple will have the right (and will be deemed to have accepted the right) to enforce this Agreement against you as the third party beneficiary hereof.
+</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <view contentMode="scaleToFill" id="Gxd-l6-QDT" userLabel="AgreementView">
+                                <rect key="frame" x="2" y="500" width="316" height="68"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="QGX-4W-DOt">
+                                        <rect key="frame" x="85" y="7" width="147" height="41"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="17"/>
+                                        <state key="normal" title="Accept">
+                                            <color key="titleColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onLicenseAgreement:" destination="1PX-C3-Uj4" eventType="touchUpInside" id="XBV-JW-bbh"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="568"/>
+                    <connections>
+                        <outlet property="acceptButton" destination="QGX-4W-DOt" id="Ss9-eb-ofG"/>
+                        <outlet property="acceptButtonView" destination="Gxd-l6-QDT" id="Rq0-zV-Pot"/>
+                        <outlet property="licenseTextField" destination="UEW-oJ-SWQ" id="1g8-jc-PdA"/>
+                        <outlet property="titleLabel" destination="UpH-ae-WJf" id="ndb-hA-xZh"/>
+                        <segue destination="EoK-Gf-BRf" kind="modal" identifier="mainViewSegue" id="mPM-80-Qwo"/>
+                        <segue destination="Gfe-Ja-dd4" kind="modal" identifier="pinViewSegue" id="8WU-5C-hkf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kjD-UQ-Sab" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="326" y="144"/>
+        </scene>
+        <!--Pin Code View Controller-->
+        <scene sceneID="BIF-4m-wP5">
+            <objects>
+                <viewController id="Gfe-Ja-dd4" customClass="PinCodeViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="eF3-u8-lHJ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="9u8-dh-r8F" userLabel="NavigationView">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="66"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gluu.png" id="3bN-Bh-Yoz">
+                                        <rect key="frame" x="136" y="20" width="102" height="45"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="P7j-Zc-veo">
+                                <rect key="frame" x="0.0" y="68" width="375" height="599"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Do you want to protect your app using PIN code?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="i5t-fi-tKb">
+                                        <rect key="frame" x="17" y="0.0" width="334" height="105"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="7WO-t3-2Ec">
+                                        <rect key="frame" x="205" y="154" width="125" height="55"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.98431372549999996" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <state key="normal" title="NO">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="skip:" destination="Gfe-Ja-dd4" eventType="touchUpInside" id="UlJ-Hj-rbb"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6vf-q7-wtD">
+                                        <rect key="frame" x="31" y="154" width="129" height="55"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="YES">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="next:" destination="Gfe-Ja-dd4" eventType="touchUpInside" id="smO-E9-RAa"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5wL-rr-AsK">
+                                        <rect key="frame" x="31" y="125" width="299" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Enter Pin code"/>
+                                        <connections>
+                                            <action selector="reEnterPinCode:" destination="Gfe-Ja-dd4" eventType="touchUpInside" id="8Yv-ls-cgh"/>
+                                        </connections>
+                                    </button>
+                                    <view hidden="YES" contentMode="scaleToFill" id="Tca-yU-khN" userLabel="TimerView">
+                                        <rect key="frame" x="122" y="113" width="130" height="48"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=":00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eTL-d8-0RC">
+                                                <rect key="frame" x="61" y="0.0" width="69" height="48"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RiJ-A5-Ofb">
+                                                <rect key="frame" x="-7" y="0.0" width="69" height="48"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <connections>
+                        <outlet property="enterPinButton" destination="5wL-rr-AsK" id="ATg-hr-8E5"/>
+                        <outlet property="minutesLabel" destination="RiJ-A5-Ofb" id="fxW-Ac-pL5"/>
+                        <outlet property="nextButton" destination="6vf-q7-wtD" id="ydh-Zd-MaL"/>
+                        <outlet property="secondsLabel" destination="eTL-d8-0RC" id="2Uw-bh-vaF"/>
+                        <outlet property="skipButton" destination="7WO-t3-2Ec" id="o0Y-UV-Pra"/>
+                        <outlet property="timerView" destination="Tca-yU-khN" id="xCE-9G-kRs"/>
+                        <outlet property="titleLabel" destination="i5t-fi-tKb" id="dbp-wj-tKB"/>
+                        <segue destination="EoK-Gf-BRf" kind="modal" identifier="mainViewSegue" id="Rgr-ya-ssd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WBn-ct-btt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="807" y="82"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="UCM-2a-iBq">
+            <objects>
+                <tabBarController id="EoK-Gf-BRf" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="zQH-Nt-kuH"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="QTx-Se-In1">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="OWT-hQ-veb" kind="relationship" relationship="viewControllers" id="Wyi-GM-QIK"/>
+                        <segue destination="9lV-D3-rAo" kind="relationship" relationship="viewControllers" id="AT0-pe-OOr"/>
+                        <segue destination="4BD-0S-BgN" kind="relationship" relationship="viewControllers" id="thy-Y9-zYB"/>
+                        <segue destination="HZ7-Ii-nGF" kind="relationship" relationship="viewControllers" id="T1Y-Q4-IAy"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Sjg-1w-8IT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1301" y="82"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="rbj-rx-KJG">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="Mge-71-NJN" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="tVH-Nn-jAJ"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="WlA-Ba-tzQ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="qPA-Ry-Ghp" kind="relationship" relationship="rootViewController" id="c4n-7m-haQ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8Kz-Ou-PcS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2397" y="-234"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="approveIcon.png" width="108" height="99"/>
+        <image name="clearLogsImages" width="32" height="32"/>
+        <image name="denyIcon.png" width="300" height="300"/>
+        <image name="gluu.png" width="192" height="89"/>
+        <image name="gluuIcon.png" width="87" height="87"/>
+        <image name="gluuIconRed.png" width="87" height="87"/>
+        <image name="homeIconImages" width="29" height="29"/>
+        <image name="homeIconSelectedImages" width="32" height="32"/>
+        <image name="infoIcon.png" width="60" height="60"/>
+        <image name="keysIconImages" width="29" height="29"/>
+        <image name="keysIconSelectedImages" width="32" height="32"/>
+        <image name="locationIconImages" width="29" height="29"/>
+        <image name="logArrowImages" width="29" height="29"/>
+        <image name="menuIconImages" width="29" height="29"/>
+        <image name="menuIconSelectedImages" width="32" height="32"/>
+        <image name="personIcon.png" width="30" height="30"/>
+        <image name="settingsImages" width="29" height="29"/>
+        <image name="settingsSelectedImages" width="32" height="32"/>
+        <image name="timeIconImages" width="29" height="29"/>
+        <image name="type_icon.png" width="87" height="87"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
+    </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="Rgr-ya-ssd"/>
+        <segue reference="HKO-CF-hFe"/>
+    </inferredMetricsTieBreakers>
+</document>

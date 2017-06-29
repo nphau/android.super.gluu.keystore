@@ -98,7 +98,7 @@
 
 "SecondsLeft" = "секунд залишилося";
 
-"UniqueKeyLabel" = "A unique key is generated for each Gluu Server  you log into with Super Gluu. You can manage keys here:";
+"UniqueKeyLabel" = "A unique key is generated for each Gluu Server  you log into with %@. You can manage keys here:";
 
 "SetPinCode" = "Створити пін код";
 "ChangePinCode" = "Змінити пін код";

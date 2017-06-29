@@ -46,6 +46,7 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openURL:)];
     serverUrlLabel.userInteractionEnabled = YES;
     [serverUrlLabel addGestureRecognizer:tap];
+    [timerView setBackgroundColor:[[AppConfiguration sharedInstance] systemColor]];
 }
 
 - (void)openURL:(UITapGestureRecognizer *)tap
@@ -197,19 +198,20 @@
 
 -(IBAction)onApprove:(id)sender{
     [delegate approveRequest];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self back];
     [timer invalidate];
     timer = nil;
 }
 
 -(IBAction)onDeny:(id)sender{
     [delegate denyRequest];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self back];
     [timer invalidate];
     timer = nil;
 }
 
--(IBAction)back:(id)sender{
+-(IBAction)back{
+    [self.navigationController popViewControllerAnimated:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -223,8 +225,6 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     NSDate* dateTime = [self getNSDate:date];
     [formatter setTimeStyle:NSDateFormatterMediumStyle];
-//    [formatter setDateFormat:@"hh:mm:ss  aa"];
-//    [formatter setTimeZone:[NSTimeZone localTimeZone]];
     NSString* times = [formatter stringFromDate:dateTime];
     
     return times;
@@ -235,7 +235,6 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     NSDate* dateT = [self getNSDate:date];
     [formatter setDateStyle:NSDateFormatterMediumStyle];
-//    [formatter setDateFormat:@"MMMM dd, yyyy"];
     NSString* dateTime = [formatter stringFromDate:dateT];
     
     return dateTime;
@@ -243,8 +242,7 @@
 
 -(NSDate*)getNSDate:(NSString*)dateTime{
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-//    [formatter setTimeZone:[NSTimeZone localTimeZone]];//timeZoneWithAbbreviation:@"GMT"]];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZZZ"];//.SSSSSS//:mm:ss
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZZZ"];
     NSDate* date = [formatter dateFromString:dateTime];
     
     return date;

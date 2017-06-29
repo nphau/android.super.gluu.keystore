@@ -12,6 +12,8 @@
 #import "NSMutableAttributedString+Color.h"
 #import <LocalAuthentication/LocalAuthentication.h>
 #import "SCLAlertView.h"
+#import "AppConfiguration.h"
+#import "ADSubsriber.h"
 
 #define LICENSE_AGREEMENT @"LicenseAgreement"
 #define MAIN_VIEW @"MainTabView"
@@ -30,8 +32,13 @@
     [super viewDidLoad];
     [self initWiget];
     [self initLocalization];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkLicenseAgreement) name:UIApplicationDidBecomeActiveNotification object:nil];
+#ifdef ADFREE
+    //skip here
+#else
+    [self checkPurchaces];
+#endif
+    [self performSelector:@selector(checkLicenseAgreement) withObject:nil afterDelay:0.1];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkLicenseAgreement) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -44,6 +51,10 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+-(void)checkPurchaces{
+    [[ADSubsriber sharedInstance] restorePurchase];
+}
+
 -(void)initWiget{
     [_titleLabel setHidden:YES];
     [_licenseTextField setHidden:YES];
@@ -52,8 +63,10 @@
     [[_acceptButton layer] setMasksToBounds:YES];
     [[_acceptButton layer] setCornerRadius:CORNER_RADIUS];
     [[_acceptButton layer] setBorderWidth:2.0f];
-    [[_acceptButton layer] setBorderColor:[UIColor colorWithRed:1/255.0 green:161/255.0 blue:97/255.0 alpha:1.0].CGColor];
+    [[_acceptButton layer] setBorderColor:[[AppConfiguration sharedInstance] systemColor].CGColor];
+    [_acceptButton setTitleColor:[[AppConfiguration sharedInstance] systemColor] forState:UIControlStateNormal];
     [self colorHashtag];
+    topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
 }
 
 -(void)initLocalization{
@@ -175,11 +188,17 @@
 }
 
 -(void)loadPinView{
-    [self performSegueWithIdentifier:@"pinViewSegue" sender:self];
+//    [self performSegueWithIdentifier:@"pinViewSegue" sender:self];
+    UIStoryboard *storyboardobj=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    PinCodeViewController* pinView = (PinCodeViewController*)[storyboardobj instantiateViewControllerWithIdentifier:@"pinViewController"];
+    [self presentViewController:pinView animated:YES completion:nil];
 }
 
 -(void)loadMainView{
-    [self performSegueWithIdentifier:@"mainViewSegue" sender:self];
+//    [self performSegueWithIdentifier:@"mainViewSegue" sender:self];
+    UIStoryboard *storyboardobj=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UITabBarController* mainTabView = (UITabBarController*)[storyboardobj instantiateViewControllerWithIdentifier:@"mainTabView"];
+    [self presentViewController:mainTabView animated:NO completion:nil];
 }
 
 @end

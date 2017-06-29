@@ -168,6 +168,10 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
 
     private void setFinalStatus(int statusId) {
         String message = activity.getApplicationContext().getString(statusId);
+        setFinalStatus(message);
+    }
+
+    private void setFinalStatus(String message) {
         Intent intent = new Intent("ox_request-precess-event");
         // You can also include some extra data.
         intent.putExtra("message", message);
@@ -264,11 +268,11 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
                         });
                     }
                 } catch (final Exception ex) {
-                    Log.e(TAG, "Failed to get Fido U2F metadata", ex);
+                    Log.e(TAG, ex.getLocalizedMessage(), ex);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            setFinalStatus(R.string.wrong_u2f_metadata);
+                            setFinalStatus(ex.getLocalizedMessage());//R.string.wrong_u2f_metadata);
                             if (BuildConfig.DEBUG) setErrorStatus(ex);
                         }
                     });

@@ -11,8 +11,11 @@
 #import "Constants.h"
 #import "OXPushManager.h"
 #import "NHNetworkTime.h"
+#import "AppConfiguration.h"
 
 //#import <UbertestersSDK/Ubertesters.h>
+
+@import GoogleMobileAds;
 
 @interface AppDelegate ()
 
@@ -48,7 +51,9 @@
     //Ubertersters SDK initialization
 //    [[Ubertesters shared] initialize];
     
-    [[UITabBar appearance] setTintColor:[UIColor colorWithRed:1/256.0 green:161/256.0 blue:97/256.0 alpha:1.0]];
+    [[UITabBar appearance] setTintColor:[[AppConfiguration sharedInstance] systemColor]];
+    
+    [GADMobileAds configureWithApplicationID:@"ca-app-pub-3326465223655655~8301521230"];
     
     return YES;
 }
@@ -292,6 +297,8 @@
     [self saveContext];
     [[NHNetworkClock sharedNetworkClock] synchronize];
 }
+
+
 
 #pragma mark - Core Data stack
 

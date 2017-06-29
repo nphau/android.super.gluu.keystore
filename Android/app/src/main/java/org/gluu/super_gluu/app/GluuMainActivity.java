@@ -93,21 +93,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
     private Boolean isShowClearMenu = false;
 
-    Bundle querySkus;
-    IInAppBillingService inAppBillingService;
-
-    ServiceConnection serviceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            inAppBillingService = IInAppBillingService.Stub.asInterface(service);
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            inAppBillingService = null;
-        }
-    };
-
     private BroadcastReceiver mPushMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -215,6 +200,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                 //Init GoogleMobile AD
                 //isSubscribed &&
                 initGoogleADS(productId.equalsIgnoreCase(SUBSCRIPTION_ID_TEST));
+                Settings.setPurchase(context, isSubscribed);
             }
             @Override
             public void onBillingError(int errorCode, Throwable error) {
@@ -234,6 +220,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                 }
                 //Init GoogleMobile AD
                 initGoogleADS(isSubscribed);
+                Settings.setPurchase(context, isSubscribed);
             }
             @Override
             public void onPurchaseHistoryRestored() {
@@ -604,6 +591,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         Intent intent = new Intent("ox_request-precess-event");
         // You can also include some extra data.
         intent.putExtra("message", message);
+        intent.putExtra("isAdFree", isSubscribed);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 

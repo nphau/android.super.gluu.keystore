@@ -31,7 +31,7 @@
 }
 
 -(void)setupInformation{
-    if (_token != nil){
+    if ([_token isKindOfClass:[TokenEntity class]]){
         NSURL* url = [NSURL URLWithString:_token->application];
         applicationValueLabel.text = url.host;
         issuerValueLabel.text = _token->issuer;
@@ -83,11 +83,11 @@
     [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
         NSLog(@"NO clicked");
     }];
-    [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Delete", @"Delete") subTitle:NSLocalizedString(@"DeleteKeyHandle", @"Delete KeyHandle") closeButtonTitle:nil duration:0.0f];
+    [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Delete", @"Delete") subTitle:NSLocalizedString(@"DeleteKeyHandle", @"Delete KeyHandle") closeButtonTitle:nil duration:0.0f];
 }
 
 -(void)deleteKey{
-    [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:_token->application];
+    [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:_token->application userName:_token->userName];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

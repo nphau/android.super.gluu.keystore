@@ -1,5 +1,6 @@
 package org.gluu.super_gluu.app.services;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -36,8 +37,8 @@ public class SuperGluuFirebaseInstanceIDService extends FirebaseInstanceIdServic
         editor.commit();
     }
 
-    public String getPushRegistrationId(){
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+    public String getPushRegistrationId(Context context){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return preferences.getString("pushNotificationToken", "");
     }
 

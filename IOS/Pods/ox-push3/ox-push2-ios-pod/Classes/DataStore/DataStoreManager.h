@@ -17,15 +17,15 @@
 
 -(void)saveTokenEntity:(TokenEntity*)tokenEntity;
 -(int)incrementCountForToken:(TokenEntity*)tokenEntity;
--(NSArray*)getTokenEntitiesByID:(NSString*)keyID;
+-(NSArray*)getTokenEntitiesByID:(NSString*)keyID userName:(NSString*)userName;
 -(NSArray*)getTokenEntities;
 -(TokenEntity*)getTokenEntityByKeyHandle:(NSString*)keyHandle;
--(BOOL)deleteTokenEntitiesByID:(NSString*)keyID;
+-(BOOL)deleteTokenEntitiesByID:(NSString*)keyID userName:(NSString*) userName;
 
 -(void)saveUserLoginInfo:(UserLoginInfo*)userLoginInfo;
 -(NSArray*)getUserLoginInfo;
 -(BOOL)deleteAllLogs;
 
--(void)setTokenEntitiesNameByID:(NSString*)keyID newName:(NSString*)newName;
+-(void)setTokenEntitiesNameByID:(NSString*)keyID userName:(NSString*)userName newName:(NSString*)newName;
 
 @end

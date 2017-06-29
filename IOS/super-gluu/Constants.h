@@ -19,9 +19,9 @@
 
 #define IS_IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 #define IS_IPHONE   ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
-#define IS_IPHONE_4 (IS_IPHONE && [[UIScreen mainScreen] bounds].size.height == 480.0 )
-#define IS_IPHONE_5 (IS_IPHONE && [[UIScreen mainScreen] bounds].size.height == 568.0)
-#define IS_IPHONE_6 (IS_IPHONE && [[UIScreen mainScreen] bounds].size.height == 667.0)
+#define IS_IPHONE_5 (IS_IPHONE && [[UIScreen mainScreen] bounds].size.height == 480.0 )
+#define IS_IPHONE_6 (IS_IPHONE && [[UIScreen mainScreen] bounds].size.height == 568.0)
+#define IS_IPHONE_7 (IS_IPHONE && [[UIScreen mainScreen] bounds].size.height == 667.0)
 #define IS_IPHONE_6_PLUS (IS_IPHONE && [[UIScreen mainScreen] bounds].size.height == 736.0)
 #define IS_RETINA ([[UIScreen mainScreen] scale] == 2.0)
 
@@ -55,6 +55,16 @@
 #define NOTIFICATION_PUSH_TIMEOVER @"NOTIFICATION_PUSH_TIMEOVER"
 #define NOTIFICATION_PUSH_ONLINE @"NOTIFICATION_PUSH_ONLINE"
 
+#define NOTIFICATION_INTERSTIAL @"NOTIFICATION_INTERSTIAL"
+
+#define NOTIFICATION_AD_FREE @"NOTIFICATION_AD_FREE"
+#define NOTIFICATION_AD_NOT_FREE @"NOTIFICATION_AD_NOT_FREE"
+
+#define DID_DISCONNECT_PERIPHERAL @"didDisconnectPeripheral"
+#define DID_UPDATE_VALUE_FOR_PAIRING @"didUpdateValueForPairing"
+
+#define INIT_SECURE_CLICK_NOTIFICATION @"INIT_SECURE_CLICK_NOTIFICATION"
+
 #define DEVICE_TYPE @"iPhone"
 #define OS_NAME @"ios"
 
@@ -68,7 +78,7 @@
 #define CORNER_RADIUS 8.0
 #define BUTTON_CORNER_RADIUS 5.0
 
-#define CUSTOM_GREEN_COLOR [UIColor colorWithRed:1/255.0 green:161/255.0 blue:97/255.0 alpha:1.0]
+//#define CUSTOM_GREEN_COLOR [UIColor colorWithRed:1/255.0 green:161/255.0 blue:97/255.0 alpha:1.0]
 
 #define PIN_PROTECTION_ID @"enabledPinCode"
 #define PIN_SIMPLE_ID @"simplePinCode"
@@ -77,11 +87,20 @@
 #define PIN_TYPE_IS_4_DIGIT @"is_4_digit"
 #define SSL_ENABLED @"is_ssl_enabled"
 #define TOUCH_ID_ENABLED @"is_touchID_enabled"
+#define SECURE_CLICK_ENABLED @"secure_click_enabled"
 
 #define LOCKED_DATE @"locked_app_date"
 #define LOCKED_ATTEMPTS_COUNT @"locked_attempts_count"
 #define IS_APP_LOCKED @"app_locked"
 
 #define PUSH_CAME_DATE @"push_recieved_time"
+
+#define BLE_TOP_LABEL_TEXT(value) [NSString stringWithFormat:@"You can pair a U2F bluetooth enabled device with %@ to add an additional layer of security to authentications. When enabled, you will be prompted to tap your U2F device after approving the authentication request on %@.", value, value]
+#define BLE_BOTTOM_LABEL_TEXT(value) [NSString stringWithFormat:@"Hold the button on your SecureClick device for 3 seconds to pair it with %@. When prompted for a password, enter: 000000", value]
+#define TOUCH_ID_TEXT(value) [NSString stringWithFormat:@"When enabled, access to your %@ app will be protected by your TouchID fingerprint.", value]
+#define SSL_ENABLED_TEXT(value) [NSString stringWithFormat:@"Enable this option only during development. When enabled, %@ will trust self-signed certificates. If the certificate is signed by a certificate authority (CA) trust all should be disabled.", value]
+#define PIN_PROTECTION_TEXT(value) [NSString stringWithFormat:@"When enabled, access to your %@ app will be protected by a pin code of your choice.", value]
+
+#define NETWORK_UNREACHABLE_TEXT(value) [NSString stringWithFormat:@"Your device is currently unable to establish a network connection. You will need a connection to approve or deny authentication requests with %@.", value]
 
 #endif /* Constants_h */

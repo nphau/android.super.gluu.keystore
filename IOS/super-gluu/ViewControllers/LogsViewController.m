@@ -13,6 +13,7 @@
 #import "DataStoreManager.h"
 #import "UserLoginInfo.h"
 #import "SCLAlertView.h"
+#import "AppConfiguration.h"
 
 @implementation LogsViewController
 
@@ -21,6 +22,8 @@
     [super viewDidLoad];
     [self getLogs];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initPushView) name:NOTIFICATION_PUSH_ONLINE object:nil];
+    topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
+    topIconView.image = [[AppConfiguration sharedInstance] systemIcon];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -54,7 +57,7 @@
     [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
         NSLog(@"NO clicked");
     }];
-    [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"AlertTitle", @"Into") subTitle:NSLocalizedString(@"ClearLogs", @"Clear Logs") closeButtonTitle:nil duration:0.0f];
+    [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"AlertTitle", @"Into") subTitle:NSLocalizedString(@"ClearLogs", @"Clear Logs") closeButtonTitle:nil duration:0.0f];
 }
 
 #pragma mark UITableview Delegate
@@ -68,7 +71,7 @@
     UserLoginInfo* userInfo = (UserLoginInfo*)[logsArray objectAtIndex:indexPath.row];
     CGFloat height = 130.0;
     if (userInfo->logState == LOGIN_FAILED || userInfo->logState == ENROLL_FAILED || userInfo->logState == ENROLL_DECLINED || userInfo->logState == LOGIN_DECLINED){
-        height = 80.0;
+        height = 85.0;
     }
     return height;
 }
@@ -113,7 +116,7 @@
             }
         }
         SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-        [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:message closeButtonTitle:@"Close" duration:0.0f];
+        [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Info", @"Info") subTitle:message closeButtonTitle:@"Close" duration:0.0f];
     } else {
         [self loadApproveDenyView:sender];
     }
@@ -126,7 +129,8 @@
     [approveDenyView setIsLogInfo:YES];
     UserLoginInfo* userInfo = [logsArray objectAtIndex:[sender tag]];
     [approveDenyView setUserInfo:userInfo];
-    [self presentViewController:approveDenyView animated:YES completion:nil];
+    [self.navigationController pushViewController:approveDenyView animated:YES];
+//    [self presentViewController:approveDenyView animated:YES completion:nil];
 }
 
 -(void)initAnimationFromRigthToLeft{

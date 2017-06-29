@@ -75,7 +75,8 @@
     <string name="scan_text">You may be presented with a QR code for enrollment or authentication. Click the button to open your QR scanner.</string>
 
     <string name="settings_title">Settings</string>
-    <string name="pin_code_settings">Pin code Settings</string>
+    <string name="pin_code_settings">Pin code</string>
+    <string name="pin_code_text">When enabled, access to your Super Gluu app will be protected by a pin code of your choice.</string>
 
     <string name="set_new_pin_code">Set new Pin code</string>
     <string name="enter_pin_code">Enter Pin code</string>
@@ -83,6 +84,7 @@
     <string name="tur_on_pin_code">Turn on</string>
     <string name="tur_off_pin_code">Turn off</string>
     <string name="close">Close</string>
+    <string name="back">Back</string>
     <string name="pin_code_enable_question">Do you want to protect your app using PIN code?</string>
 
     <string name="available_keys">Available Keys(%s)</string>
@@ -104,10 +106,10 @@
     <string name="enter_new_key_name">Enter new key name</string>
 
     <string name="ssl_connection_settings">SSL Connection Settings</string>
-    <string name="trust_all_certificate">Trust All Certificates</string>
+    <string name="trust_all_certificate">Trust All (SSL)</string>
     <string name="warning_trust_all_certificate">WARNING: Use only for testing! It\'s critically important to validate the SSL certificate for communication between SuperGluu and the Gluu Server.</string>
 
-    <string name="fingerprint_title">Fingerprint</string>
+    <string name="fingerprint_title">TouchID (fingerprint)</string>
 
     <string name="ad_free_text">Tired of ads? Upgrade to ad free for $0.99/month!</string>
     <string name="ad_free_title">AD Free</string>

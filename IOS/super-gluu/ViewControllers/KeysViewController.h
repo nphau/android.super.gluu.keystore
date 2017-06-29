@@ -11,12 +11,12 @@
 @interface KeysViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>{
 
     NSMutableArray* keyHandleArray;
+    IBOutlet UIView* topView;
+    IBOutlet UIImageView* topIconView;
     IBOutlet UITableView* keyHandleTableView;
     IBOutlet UILabel* keyHandleLabel;
     IBOutlet UILabel* keyRenameInfoLabel;
     IBOutlet UILabel* uniqueKeyLabel;
-    IBOutlet UIButton* logsButton;
-    IBOutlet UIButton* infoButton;
     int rowToDelete;
     NSIndexPath* selectedRow;
     

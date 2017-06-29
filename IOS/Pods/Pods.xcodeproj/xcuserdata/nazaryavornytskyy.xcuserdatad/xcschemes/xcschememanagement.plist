@@ -14,6 +14,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>GoogleToolboxForMac.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>IAPHelper.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>JTMaterialSwitch-JTMaterialSwitch.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -30,6 +40,11 @@
 			<false/>
 		</dict>
 		<key>NSHash.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Super Gluu (ad free).xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -72,7 +87,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7258B6DC6CFAFA97A1561392E2782EE0</key>
+		<key>60AA9BE8C25CFBDF12DA8DB234483D3B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>92BB131FA876445E027D20AE23EA7B5F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -87,22 +107,32 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>D803197D09829C56C1A665AC6DCB8D18</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>E2E98B9CD754B4954C3FBD110D724837</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E324786C77AED74ED2D229DE0F3AE459</key>
+		<key>E82F1EB948F73E5BE21E0059CA46A15C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F594BCB45651E67DCB666E7A2278057A</key>
+		<key>F3C9AC3FD6ABF561C713B9DB63164688</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>F79089F4FF30C0031D264214DF325090</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FDCDD5B77407E27BFD144557E23044B1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
