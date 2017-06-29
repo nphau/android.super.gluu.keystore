@@ -109,6 +109,9 @@
 
     <string name="fingerprint_title">Fingerprint</string>
 
+    <string name="ad_free_text">Tired of ads? Upgrade to ad free for $0.99/month!</string>
+    <string name="ad_free_title">AD Free</string>
+
     <string name="banner_ad_unit_id">ca-app-pub-3932761366188106/5255061278</string>
 
 </resources>

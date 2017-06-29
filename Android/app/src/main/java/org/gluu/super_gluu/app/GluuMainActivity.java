@@ -7,6 +7,7 @@
 package org.gluu.super_gluu.app;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -40,6 +41,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.android.vending.billing.IInAppBillingService;
+import com.anjlab.android.iab.v3.BillingProcessor;
+import com.anjlab.android.iab.v3.PurchaseState;
+import com.anjlab.android.iab.v3.TransactionDetails;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -60,8 +64,8 @@ import org.gluu.super_gluu.u2f.v2.store.DataStore;
 import org.gluu.super_gluu.device.DeviceUuidManager;
 import org.gluu.super_gluu.util.Utils;
 import org.json.JSONException;
-import java.io.IOException;
 
+import java.io.IOException;
 import SuperGluu.app.BuildConfig;
 import SuperGluu.app.R;
 
@@ -89,6 +93,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
     private Boolean isShowClearMenu = false;
 
+    Bundle querySkus;
     IInAppBillingService inAppBillingService;
 
     ServiceConnection serviceConnection = new ServiceConnection() {
@@ -124,6 +129,18 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             ((Vibrator)getApplication().getSystemService(Context.VIBRATOR_SERVICE)).vibrate(800);
         }
     };
+
+    //For purchases
+    // PRODUCT & SUBSCRIPTION IDS
+    private static final String SUBSCRIPTION_ID = "org.gluu.monthly.ad.free";
+    private static final String SUBSCRIPTION_ID_TEST = "android.test.purchased";
+    private static final String LICENSE_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyYw9xTiyhyjQ6mnWOwEWduDkOM84BkqHfN+jrAu82M0xBwg3RAorPwT/38sMcOZMAwcWudN0vjQo7uXAl2j4+N7BiMI2qlO2x33wY8fDvlN4ue54BBdZExZhTpkVEAmIm9cLCI3i+nOlUZgiwX6+sQOb5K+7q9WiNuSBDWRR2WDNOY7QmQdI1VzbHBPQoM00N9/0UDSFCw4LCRngm7ZeuW8AQMyYo6r5K3dy8m+Ys0JWGKA+xuQY4ZutSb47IYX4m7lzxbN0mqH9TLeA3V6audrhs5i0OYYKwbCd68NikB7Wco6L/HOzh1y6LoxIFXZ6M+vnZ6OLfTJuVmEfTOOhIwIDAQAB";//"Your public key, don't forget abput encryption"; // PUT YOUR MERCHANT KEY HERE;
+    // put your Google merchant id here (as stated in public profile of your Payments Merchant Center)
+    // if filled library will provide protection against Freedom alike Play Market simulators
+    private static final String MERCHANT_ID=null;
+    private BillingProcessor bp;
+    private boolean readyToPurchase = false;
+    private boolean isSubscribed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,15 +179,15 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
         //Init GoogleMobile AD
-        initGoogleADS();
+        initGoogleADS(isSubscribed);
 
-        //Init IA-Purchase service
+        //Init InAPP-Purchase service
         initIAPurchaseService();
     }
 
-    private void initGoogleADS(){
+    private void initGoogleADS(Boolean isShow){
         AdView mAdView = (AdView) findViewById(R.id.adView);
-        if (BuildConfig.IS_AD) {
+        if (!isShow) {
             MobileAds.initialize(getApplicationContext(), "ca-app-pub-3932761366188106~2301594871");
             AdRequest adRequest = new AdRequest.Builder().build();
             mAdView.loadAd(adRequest);
@@ -179,13 +196,54 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             params.height = 0;
             mAdView.setLayoutParams(params);
         }
+        Intent intent = new Intent("on-ad-free-event");
+        // You can also include some extra data.
+        intent.putExtra("isAdFree", isShow);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
     private void initIAPurchaseService(){
-        Intent serviceIntent =
-                new Intent("com.android.vending.billing.InAppBillingService.BIND");
-        serviceIntent.setPackage("com.android.vending");
-        bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE);
+        if(!BillingProcessor.isIabServiceAvailable(this)) {
+            Log.e(TAG, "In-app billing service is unavailable, please upgrade Android Market/Play to version >= 3.9.16");
+        }
+
+        bp = new BillingProcessor(this, LICENSE_KEY, MERCHANT_ID, new BillingProcessor.IBillingHandler() {
+            @Override
+            public void onProductPurchased(String productId, TransactionDetails details) {
+                Log.e(TAG, "onProductPurchased: " + productId);
+                isSubscribed = details.purchaseInfo.purchaseData.autoRenewing;
+                //Init GoogleMobile AD
+                //isSubscribed &&
+                initGoogleADS(productId.equalsIgnoreCase(SUBSCRIPTION_ID_TEST));
+            }
+            @Override
+            public void onBillingError(int errorCode, Throwable error) {
+                Log.e(TAG, "onBillingError: " + Integer.toString(errorCode));
+            }
+            @Override
+            public void onBillingInitialized() {
+                Log.e(TAG, "onBillingInitialized");
+                readyToPurchase = true;
+                TransactionDetails transactionDetails = bp.getSubscriptionTransactionDetails(SUBSCRIPTION_ID_TEST);
+                if (transactionDetails != null) {
+                    isSubscribed = transactionDetails.purchaseInfo.purchaseData.autoRenewing;
+                }
+                TransactionDetails transactionDetails2 = bp.getPurchaseTransactionDetails(SUBSCRIPTION_ID_TEST);
+                if (transactionDetails2 != null) {
+                    isSubscribed = transactionDetails2.purchaseInfo.purchaseData.purchaseState == PurchaseState.PurchasedSuccessfully;
+                }
+                //Init GoogleMobile AD
+                initGoogleADS(isSubscribed);
+            }
+            @Override
+            public void onPurchaseHistoryRestored() {
+                Log.e(TAG, "onPurchaseHistoryRestored");
+                for(String sku : bp.listOwnedProducts())
+                    Log.e(TAG, "Owned Managed Product: " + sku);
+                for(String sku : bp.listOwnedSubscriptions())
+                    Log.e(TAG, "Owned Subscription: " + sku);
+            }
+        });
     }
 
     private void initMainTabView(){
@@ -314,6 +372,27 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         }
     }
 
+    @Override
+    public void onAdFreeButtonClick(){
+        if (readyToPurchase) {
+            TransactionDetails transactionDetails = bp.getSubscriptionTransactionDetails(SUBSCRIPTION_ID_TEST);
+            if (transactionDetails != null) {
+                isSubscribed = transactionDetails.purchaseInfo.purchaseData.autoRenewing;
+            }
+
+            //Automatically try make subscription - only for test
+            if (!isSubscribed) {
+                //only for testing
+                    bp.purchase(GluuMainActivity.this, SUBSCRIPTION_ID_TEST);
+                //For production
+//                bp.subscribe(GluuMainActivity.this, SUBSCRIPTION_ID);
+            } else {
+                //Init GoogleMobile AD
+                initGoogleADS(true);
+            }
+        }
+    }
+
     private ProcessManager createProcessManager(OxPush2Request oxPush2Request){
         ProcessManager processManager = new ProcessManager();
         processManager.setOxPush2Request(oxPush2Request);
@@ -339,6 +418,9 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             public DataStore onGetDataStore() {
                 return dataStore;
             }
+
+            @Override
+            public void onAdFreeButtonClick(){}
         });
 
         return processManager;
@@ -451,21 +533,29 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
     @Override
     protected void onResume() {
+        if (bp != null){
+            bp.loadOwnedPurchasesFromGoogle();
+        }
         GluuApplication.applicationResumed();
         super.onResume();
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
-        if (serviceConnection != null) {
-            unbindService(serviceConnection);
-        }
         SharedPreferences preferences = getApplicationContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("isMainActivityDestroyed", true);
         editor.commit();
         Log.d(String.valueOf(GluuApplication.class), "APP DESTROYED");
+        if (bp != null)
+            bp.release();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (!bp.handleActivityResult(requestCode, resultCode, data))
+            super.onActivityResult(requestCode, resultCode, data);
     }
 
     public void checkIsPush(){

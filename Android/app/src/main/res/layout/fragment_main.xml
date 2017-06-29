@@ -51,4 +51,44 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp" />
 
+    <LinearLayout
+        android:id="@+id/view_ad_free"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="0.06"
+        android:orientation="vertical"
+        android:background="@drawable/black_border">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/ad_free_text"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/button_ad_free"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/greenColor"
+            android:text="@string/ad_free_title"
+            android:textColor="@android:color/white"
+            />
+
+
+    </LinearLayout>
+
+
 </LinearLayout>

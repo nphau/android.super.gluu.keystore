@@ -25,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -53,6 +54,8 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
 
     private Context context;
 
+    private LinearLayout adView;
+
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -60,6 +63,19 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
             String message = intent.getStringExtra("message");
             if (context != null) {
                 showToastWithText(message);
+            }
+        }
+    };
+
+    private BroadcastReceiver mAdFreeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            Boolean isAdFree = intent.getBooleanExtra("isAdFree", false);
+            if (context != null && adView != null) {
+                if (isAdFree) {
+                    adView.setVisibility(View.GONE);
+                }
             }
         }
     };
@@ -92,10 +108,21 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         this.inflater = inflater;
+        adView = (LinearLayout)view.findViewById(R.id.view_ad_free);
         view.findViewById(R.id.button_scan).setOnClickListener(this);
+        view.findViewById(R.id.button_ad_free).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (oxPush2RequestListener != null) {
+                    oxPush2RequestListener.onAdFreeButtonClick();
+                }
+            }
+        });
         //Setup message receiver
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
                 new IntentFilter("ox_request-precess-event"));
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mAdFreeReceiver,
+                new IntentFilter("on-ad-free-event"));
 //        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mPushMessageReceiver,
 //                new IntentFilter(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION));
         context = view.getContext();
