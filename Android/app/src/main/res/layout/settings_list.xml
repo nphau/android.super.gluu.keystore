@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grayColorLight"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/settings_title"
+        android:textSize="17dp" />
 
     <ListView
+        android:id="@+id/settingsListView"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/settingsListView"/>
+        android:background="@android:color/white" />
 
 </LinearLayout>

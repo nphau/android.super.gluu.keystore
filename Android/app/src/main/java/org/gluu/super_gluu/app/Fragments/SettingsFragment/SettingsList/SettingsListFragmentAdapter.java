@@ -2,23 +2,23 @@ package org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.google.gson.Gson;
-
-import org.gluu.super_gluu.app.KeyHandleInfoFragment;
 import org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsFragment;
 import org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsPinCode;
+import org.gluu.super_gluu.app.purchase.InAppPurchaseService;
 import org.gluu.super_gluu.app.settings.Settings;
 
 import java.util.List;
 
+import SuperGluu.app.BuildConfig;
 import SuperGluu.app.R;
 
 /**
@@ -32,6 +32,8 @@ public class SettingsListFragmentAdapter extends BaseAdapter {
     private Context context;
     private Activity activity;
     private SettingsListFragment.SettingsListListener mListener;
+    //For purchases
+    private InAppPurchaseService inAppPurchaseService = new InAppPurchaseService();
 
     public SettingsListFragmentAdapter(Activity activity, List<String> listContact, SettingsListFragment.SettingsListListener settingsListListener) {
         list = listContact;
@@ -39,6 +41,21 @@ public class SettingsListFragmentAdapter extends BaseAdapter {
         this.context = activity.getApplicationContext();
         mInflater = LayoutInflater.from(activity);
         mListener = settingsListListener;
+        initIAPurchaseService();
+    }
+
+    private void initIAPurchaseService(){
+        inAppPurchaseService.initInAppService(context);
+        inAppPurchaseService.setCustomEventListener(new InAppPurchaseService.OnInAppServiceListener() {
+            @Override
+            public void onSubscribed(Boolean isSubscribed) {
+                if (list.size() == 4 && isSubscribed){
+                    list.remove(3);
+                    notifyDataSetChanged();
+                }
+//                initGoogleADS(isSubscribed);
+            }
+        });
     }
 
     Fragment getFragment(int position){
@@ -91,30 +108,56 @@ public class SettingsListFragmentAdapter extends BaseAdapter {
         if (settingName != null) {
             settingName.setText(list.get(position));
         }
-        TextView status = (TextView) view.findViewById(R.id.settings_status);
-        if (status != null) {
-            Boolean value;
-            if (position > 0) {
-                value = Settings.getSettingsValueEnabled(this.context, position == 1 ? "FingerprintSettings" : "SSLConnectionSettings");
-            } else {
-                value = Settings.getPinCodeEnabled(this.context);
+        ImageView settingArrow = (ImageView) view.findViewById(R.id.settingArrow);
+        TextView info = (TextView) view.findViewById(R.id.textInfo);
+        if (position > 2) {
+            settingArrow.setVisibility(View.VISIBLE);
+            if (position == 3 || position == 7 || position == 8) {
+                settingArrow.setVisibility(View.GONE);
+                if (settingName.getText().equals("Version")) {
+                    int versionCode = BuildConfig.VERSION_CODE;
+                    String versionName = BuildConfig.VERSION_NAME;
+                    info.setText(versionName + " - " + String.valueOf(versionCode));
+                    view.setBackgroundColor(Color.WHITE);
+                    info.setVisibility(View.VISIBLE);
+                } else {
+                    info.setVisibility(View.GONE);
+                    view.setBackgroundColor(Color.parseColor("#efeff4"));
+                }
             }
-            if (position == 3) {
-                status.setText("Tired of ads? Upgrade to ad free for $0.99/month!");
-            } else {
-                String valueString = value ? "On" : "Off";
-                status.setText("Status: " + valueString);
-            }
+        } else {
+            view.setBackgroundColor(Color.WHITE);
+            settingArrow.setVisibility(View.VISIBLE);
+            info.setVisibility(View.GONE);
         }
+//        TextView status = (TextView) view.findViewById(R.id.settings_status);
+//        if (status != null) {
+//            status.setVisibility(View.GONE);
+//            Boolean value;
+//            if (position > 0) {
+//                value = Settings.getSettingsValueEnabled(this.context, position == 1 ? "FingerprintSettings" : "SSLConnectionSettings");
+//            } else {
+//                value = Settings.getPinCodeEnabled(this.context);
+//            }
+//            if (position < 2) {
+////                status.setText("Tired of ads? Upgrade to ad free for $0.99/month!");
+////            } else {
+//                String valueString = value ? "On" : "Off";
+//                status.setText("Status: " + valueString);
+//            } else {
+//                status.setVisibility(View.GONE);
+//            }
+//        }
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int position = (int) v.getTag();
-                if (position == 3){
-                    return;
-                }
-                if (mListener != null) {
+//                if (position == 3){
+//                    inAppPurchaseService.purchase(activity);
+//                    return;
+//                }
+                if (mListener != null && position < 3) {
                     mListener.onSettingsList(getFragment(position));
                 }
             }

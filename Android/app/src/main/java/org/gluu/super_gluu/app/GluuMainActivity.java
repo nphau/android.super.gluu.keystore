@@ -7,13 +7,10 @@
 package org.gluu.super_gluu.app;
 
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -23,7 +20,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.Vibrator;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
@@ -40,14 +36,12 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.android.vending.billing.IInAppBillingService;
-import com.anjlab.android.iab.v3.BillingProcessor;
-import com.anjlab.android.iab.v3.PurchaseState;
-import com.anjlab.android.iab.v3.TransactionDetails;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.gson.Gson;
+
+import org.gluu.super_gluu.app.purchase.InAppPurchaseService;
 import org.gluu.super_gluu.app.activities.GluuApplication;
 import org.gluu.super_gluu.app.activities.MainActivity;
 import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
@@ -116,16 +110,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     };
 
     //For purchases
-    // PRODUCT & SUBSCRIPTION IDS
-    private static final String SUBSCRIPTION_ID = "org.gluu.monthly.ad.free";
-    private static final String SUBSCRIPTION_ID_TEST = "android.test.purchased";
-    private static final String LICENSE_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyYw9xTiyhyjQ6mnWOwEWduDkOM84BkqHfN+jrAu82M0xBwg3RAorPwT/38sMcOZMAwcWudN0vjQo7uXAl2j4+N7BiMI2qlO2x33wY8fDvlN4ue54BBdZExZhTpkVEAmIm9cLCI3i+nOlUZgiwX6+sQOb5K+7q9WiNuSBDWRR2WDNOY7QmQdI1VzbHBPQoM00N9/0UDSFCw4LCRngm7ZeuW8AQMyYo6r5K3dy8m+Ys0JWGKA+xuQY4ZutSb47IYX4m7lzxbN0mqH9TLeA3V6audrhs5i0OYYKwbCd68NikB7Wco6L/HOzh1y6LoxIFXZ6M+vnZ6OLfTJuVmEfTOOhIwIDAQAB";//"Your public key, don't forget abput encryption"; // PUT YOUR MERCHANT KEY HERE;
-    // put your Google merchant id here (as stated in public profile of your Payments Merchant Center)
-    // if filled library will provide protection against Freedom alike Play Market simulators
-    private static final String MERCHANT_ID=null;
-    private BillingProcessor bp;
-    private boolean readyToPurchase = false;
-    private boolean isSubscribed = false;
+    private InAppPurchaseService inAppPurchaseService = new InAppPurchaseService();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,9 +148,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         //temporary turn off rotation
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
-        //Init GoogleMobile AD
-        initGoogleADS(isSubscribed);
-
         //Init InAPP-Purchase service
         initIAPurchaseService();
     }
@@ -188,47 +170,12 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     }
 
     private void initIAPurchaseService(){
-        if(!BillingProcessor.isIabServiceAvailable(this)) {
-            Log.e(TAG, "In-app billing service is unavailable, please upgrade Android Market/Play to version >= 3.9.16");
-        }
-
-        bp = new BillingProcessor(this, LICENSE_KEY, MERCHANT_ID, new BillingProcessor.IBillingHandler() {
+        inAppPurchaseService.initInAppService(context);
+        inAppPurchaseService.setCustomEventListener(new InAppPurchaseService.OnInAppServiceListener() {
             @Override
-            public void onProductPurchased(String productId, TransactionDetails details) {
-                Log.e(TAG, "onProductPurchased: " + productId);
-                isSubscribed = details.purchaseInfo.purchaseData.autoRenewing;
-                //Init GoogleMobile AD
-                //isSubscribed &&
-                initGoogleADS(productId.equalsIgnoreCase(SUBSCRIPTION_ID_TEST));
-                Settings.setPurchase(context, isSubscribed);
-            }
-            @Override
-            public void onBillingError(int errorCode, Throwable error) {
-                Log.e(TAG, "onBillingError: " + Integer.toString(errorCode));
-            }
-            @Override
-            public void onBillingInitialized() {
-                Log.e(TAG, "onBillingInitialized");
-                readyToPurchase = true;
-                TransactionDetails transactionDetails = bp.getSubscriptionTransactionDetails(SUBSCRIPTION_ID_TEST);
-                if (transactionDetails != null) {
-                    isSubscribed = transactionDetails.purchaseInfo.purchaseData.autoRenewing;
-                }
-                TransactionDetails transactionDetails2 = bp.getPurchaseTransactionDetails(SUBSCRIPTION_ID_TEST);
-                if (transactionDetails2 != null) {
-                    isSubscribed = transactionDetails2.purchaseInfo.purchaseData.purchaseState == PurchaseState.PurchasedSuccessfully;
-                }
+            public void onSubscribed(Boolean isSubscribed) {
                 //Init GoogleMobile AD
                 initGoogleADS(isSubscribed);
-                Settings.setPurchase(context, isSubscribed);
-            }
-            @Override
-            public void onPurchaseHistoryRestored() {
-                Log.e(TAG, "onPurchaseHistoryRestored");
-                for(String sku : bp.listOwnedProducts())
-                    Log.e(TAG, "Owned Managed Product: " + sku);
-                for(String sku : bp.listOwnedSubscriptions())
-                    Log.e(TAG, "Owned Subscription: " + sku);
             }
         });
     }
@@ -361,18 +308,9 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
     @Override
     public void onAdFreeButtonClick(){
-        if (readyToPurchase) {
-            TransactionDetails transactionDetails = bp.getSubscriptionTransactionDetails(SUBSCRIPTION_ID_TEST);
-            if (transactionDetails != null) {
-                isSubscribed = transactionDetails.purchaseInfo.purchaseData.autoRenewing;
-            }
-
-            //Automatically try make subscription - only for test
-            if (!isSubscribed) {
-                //only for testing
-                    bp.purchase(GluuMainActivity.this, SUBSCRIPTION_ID_TEST);
-                //For production
-//                bp.subscribe(GluuMainActivity.this, SUBSCRIPTION_ID);
+        if (inAppPurchaseService.readyToPurchase) {
+            if (!inAppPurchaseService.isSubscribed) {
+                inAppPurchaseService.purchase(GluuMainActivity.this);
             } else {
                 //Init GoogleMobile AD
                 initGoogleADS(true);
@@ -520,9 +458,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
     @Override
     protected void onResume() {
-        if (bp != null){
-            bp.loadOwnedPurchasesFromGoogle();
-        }
+        inAppPurchaseService.reloadPurchaseService();
         GluuApplication.applicationResumed();
         super.onResume();
     }
@@ -534,14 +470,13 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         editor.putBoolean("isMainActivityDestroyed", true);
         editor.commit();
         Log.d(String.valueOf(GluuApplication.class), "APP DESTROYED");
-        if (bp != null)
-            bp.release();
+        inAppPurchaseService.deInitPurchaseService();
         super.onDestroy();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (!bp.handleActivityResult(requestCode, resultCode, data))
+        if (inAppPurchaseService.isHandleResult(requestCode, resultCode, data))
             super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -591,7 +526,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         Intent intent = new Intent("ox_request-precess-event");
         // You can also include some extra data.
         intent.putExtra("message", message);
-        intent.putExtra("isAdFree", isSubscribed);
+        intent.putExtra("isAdFree", inAppPurchaseService.isSubscribed);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 

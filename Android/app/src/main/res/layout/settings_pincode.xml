@@ -42,7 +42,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:layout_marginEnd="18dp" />
+            android:layout_marginEnd="18dp"
+            android:thumbTint="@color/greenColor"
+            android:trackTint="@color/greenColor" />
 
     </RelativeLayout>
 

@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import org.gluu.super_gluu.app.settings.Settings;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +50,16 @@ public class SettingsListFragment extends Fragment {
         listSettings.add("TouchID (fingerprint)");
 //        listSettings.add("U2F BLE device(s)");
         listSettings.add("Trust all (SSL)");
-        listSettings.add("Ad Free");
+        listSettings.add("");
+        listSettings.add("User guide");
+        listSettings.add("Feedback");
+        listSettings.add("Privacy policy");
+        listSettings.add("");
+        listSettings.add("Version");
+//        Boolean isAdFree = Settings.getPurchase(context);
+//        if (!isAdFree){
+//            listSettings.add("Ad Free");
+//        }
 
         mListener = new SettingsListListener() {
             @Override

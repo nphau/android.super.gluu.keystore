@@ -66,7 +66,8 @@ public class SettingsFragment extends Fragment {
                 if (settingsId.equalsIgnoreCase("SSLConnectionSettings")) {
                     GluuApplication.isTrustAllCertificates = switchSettings.isChecked();
                     if (switchSettings.isChecked()) {
-                        showWarning(R.string.warning_trust_all_certificate);
+                        String message = context.getString(R.string.warning_trust_all_certificate);
+                        showToastWithText(message);
                     }
                 } else {
                     if (switchSettings.isChecked() && fingerprint.startFingerprintService()) {

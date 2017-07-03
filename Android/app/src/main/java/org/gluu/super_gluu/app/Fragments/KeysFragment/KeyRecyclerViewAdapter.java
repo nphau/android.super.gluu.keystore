@@ -4,7 +4,7 @@
  *  Copyright (c) 2014, Gluu
  */
 
-package org.gluu.super_gluu.app.fragments;
+package org.gluu.super_gluu.app.fragments.KeysFragment;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;

@@ -4,28 +4,41 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
 
         <TextView
             android:id="@+id/settings_name"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
             android:text="Setting Name"
-            android:textSize="15dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="10dp" />
+            android:textSize="20dp" />
 
         <TextView
-            android:id="@+id/settings_status"
+            android:id="@+id/textInfo"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="status"
-            android:textSize="10dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginBottom="5dp" />
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:layout_marginRight="15dp"
+            android:alpha="0.8"
+            android:gravity="center_vertical"
+            android:text=""
+            android:textSize="18dp" />
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/settingArrow"
+            android:src="@drawable/settings_back_arrow"
+            android:layout_marginRight="15dp"
+            android:layout_gravity="center_vertical" />
+
+    </LinearLayout>
 
 </LinearLayout>
