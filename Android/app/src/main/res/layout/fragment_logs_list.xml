@@ -6,21 +6,19 @@
     android:background="#dcd9d9">
 
     <ListView
+        android:id="@+id/logs_listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/logs_listView"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.44"
-        android:scrollbars="none"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="10.0sp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@android:color/transparent"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="0.44"
+        android:background="@android:color/white"
+        android:divider="@color/grayColorLight"
+        android:dividerHeight="2.0sp"
+        android:scrollbars="none" />
 
     <TextView
         android:layout_width="wrap_content"

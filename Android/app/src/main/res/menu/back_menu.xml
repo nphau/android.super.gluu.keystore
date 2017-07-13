@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/back_action_menu"
+        app:showAsAction="always"
+        android:title="@string/back"
+        android:orderInCategory="0"/>
+
+</menu>

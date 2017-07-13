@@ -52,6 +52,11 @@ public class SettingsPinCode extends Fragment implements HorizontalNumberPickerL
                         Settings.saveIsReset(context);
                         loadPinCodeView(true);
                     }
+
+                    @Override
+                    public void onNegativeButton() {
+                        //Skip here
+                    }
                 };
                 CustomGluuAlert gluuAlert = new CustomGluuAlert(getActivity());
                 gluuAlert.setMessage(getContext().getString(R.string.change_pin));

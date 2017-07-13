@@ -15,11 +15,14 @@ import com.google.gson.Gson;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.StringUtils;
 import org.gluu.super_gluu.app.model.LogInfo;
+import org.gluu.super_gluu.model.OxPush2Request;
 import org.gluu.super_gluu.u2f.v2.model.TokenEntry;
 import org.gluu.super_gluu.u2f.v2.store.DataStore;
 import org.gluu.super_gluu.util.Utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -203,6 +206,46 @@ public class AndroidKeyDataStore implements DataStore {
     public void deleteLogs() {
         final SharedPreferences logSettings = context.getSharedPreferences(LOGS_STORE, Context.MODE_PRIVATE);
         logSettings.edit().clear().commit();
+    }
+
+    @Override
+    public void deleteLogs(OxPush2Request... logInfo) {
+        List<LogInfo> logsFromDB = this.getLogs();
+        Iterator<LogInfo> iter = logsFromDB.iterator();
+        for (OxPush2Request oxPush2Request : logInfo){
+            while (iter.hasNext()) {
+                LogInfo logInf = iter.next();
+//            for (LogInfo logInf : logsFromDB) {
+                if (oxPush2Request.getCreated().equalsIgnoreCase(logInf.getCreatedDate())) {
+                    iter.remove();
+//                    logsFromDB.remove(logInf);
+                }
+            }
+        }
+        logsFromDB.removeAll(Arrays.asList(logInfo));
+        this.deleteLogs();
+        for (LogInfo logInf : logsFromDB){
+            this.saveLog(logInf);
+        }
+    }
+
+    @Override
+    public void deleteLogs(List<LogInfo> logInfo) {
+        List<LogInfo> logsFromDB = this.getLogs();
+        for (LogInfo oxPush2Request : logInfo){
+            Iterator<LogInfo> iter = logsFromDB.iterator();
+            while (iter.hasNext()) {
+                LogInfo logInf = iter.next();
+                if (oxPush2Request.getCreatedDate().equalsIgnoreCase(logInf.getCreatedDate())) {
+                    iter.remove();
+                }
+            }
+        }
+        logsFromDB.removeAll(Arrays.asList(logInfo));
+        this.deleteLogs();
+        for (LogInfo logInf : logsFromDB){
+            this.saveLog(logInf);
+        }
     }
 
     @Override

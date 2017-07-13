@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/greenColor">
+
+    <Button
+        android:id="@+id/action_left_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@android:color/transparent"
+        android:text="@string/back"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/actionbar_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:clickable="false"
+        android:focusable="false"
+        android:longClickable="false"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/actionbar_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_title_icon"
+        android:layout_centerInParent="true" />
+
+    <Button
+        android:id="@+id/action_right_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@android:color/transparent"
+        android:paddingLeft="10dp"
+        android:textAllCaps="false"
+        android:text="@string/button_delete"
+        android:textColor="@android:color/white"
+        android:layout_alignTop="@+id/actionbar_icon"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

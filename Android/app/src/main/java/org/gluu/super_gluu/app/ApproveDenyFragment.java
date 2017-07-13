@@ -1,23 +1,34 @@
 package org.gluu.super_gluu.app;
 
+import android.app.ActionBar;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.dinuscxj.progressbar.CircleProgressBar;
+
 import org.apache.commons.codec.binary.StringUtils;
+import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.app.model.LogInfo;
+import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.model.OxPush2Request;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
 import org.gluu.super_gluu.util.Utils;
@@ -34,6 +45,8 @@ import java.util.TimerTask;
 
 import SuperGluu.app.R;
 
+import static org.bouncycastle.asn1.ua.DSTU4145NamedCurves.params;
+
 public class ApproveDenyFragment extends Fragment implements View.OnClickListener{
 
     SimpleDateFormat isoDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
@@ -42,51 +55,56 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
     private LogInfo logInfo;
     private OxPush2Request push2Request;
     private GluuMainActivity.RequestProcessListener listener;
+    public OnDeleteLogInfoListener deleteLogListener;
 
-    private RelativeLayout relativeLayout;
+    private CircleProgressBar mLineProgressBar;
 
     private Timer clock;
     private Handler handler;
 
     int sec = 40;
 
+    private BroadcastReceiver mDeleteReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            showAlertView();
+        }
+    };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         final View rootView = inflater.inflate(R.layout.fragment_approve_deny, container, false);
         handler = initHandler(rootView);
+        mLineProgressBar = (CircleProgressBar) rootView.findViewById(R.id.line_progress);
+        mLineProgressBar.setMax(sec);
         Button approveButton = (Button) rootView.findViewById(R.id.button_approve);
         Button denyButton = (Button) rootView.findViewById(R.id.button_deny);
+
         if (isUserInfo){
             View timerView = (View) rootView.findViewById(R.id.timer_view);
             TextView titleTextView = (TextView) rootView.findViewById(R.id.title_textView);
+            TextView timerTextView = (TextView) rootView.findViewById(R.id.timer_textView);
+            Button closeButton = (Button) rootView.findViewById(R.id.approve_deny_close_button);
             timerView.setVisibility(View.GONE);
-            titleTextView.setText(R.string.info);
+            timerTextView.setVisibility(View.GONE);
+            titleTextView.setVisibility(View.GONE);//setText(R.string.info);
             approveButton.setVisibility(View.GONE);
             denyButton.setVisibility(View.GONE);
+            closeButton.setVisibility(View.GONE);
+            mLineProgressBar.setVisibility(View.GONE);
         } else {
             rootView.findViewById(R.id.approve_deny_close_button).setVisibility(View.GONE);
             startClockTick(rootView);
         }
 
-        relativeLayout = (RelativeLayout)rootView.findViewById(R.id.mainRelativeLayout);
-        final RelativeLayout topRelativeLayout = (RelativeLayout)rootView.findViewById(R.id.topRelativeLayout);
-        final LinearLayout buttonsLayout = (LinearLayout)rootView.findViewById(R.id.action_button_group);
-        final DisplayMetrics metrics = new DisplayMetrics();
-        WindowManager wm = (WindowManager) rootView.getContext().getSystemService(Context.WINDOW_SERVICE);
-        wm.getDefaultDisplay().getMetrics(metrics);
-        topRelativeLayout.post(new Runnable() {
-                                   public void run() {
-                                       int h = topRelativeLayout.getHeight();
-                                       int h2 = buttonsLayout.getHeight();
-                                       relativeLayout.setMinimumHeight(metrics.heightPixels - h*2 - h2 - 50);
-                                   }
-                               }
-        );
         updateLogInfo(rootView);
         rootView.findViewById(R.id.approve_deny_close_button).setOnClickListener(this);
         approveButton.setOnClickListener(this);
         denyButton.setOnClickListener(this);
+
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mDeleteReceiver,
+                new IntentFilter("on-delete-log-event"));
 
         return rootView;
     }
@@ -97,6 +115,23 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
         if (sec == 0){
             listener.onDeny();
             closeView();
+        }
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mDeleteReceiver);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnDeleteLogInfoListener) {
+            deleteLogListener = (OnDeleteLogInfoListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnDeleteKeyHandleListener");
         }
     }
 
@@ -187,6 +222,30 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
         return createdString;
     }
 
+    void showAlertView(){
+        GluuMainActivity.GluuAlertCallback listener = new GluuMainActivity.GluuAlertCallback(){
+            @Override
+            public void onPositiveButton() {
+                if (deleteLogListener != null){
+                    deleteLogListener.onDeleteLogInfo(push2Request);
+                }
+//                android.support.v4.app.FragmentManager fm = getFragmentManager();
+//                fm.popBackStack();
+            }
+
+            @Override
+            public void onNegativeButton() {
+                //Skip here
+            }
+        };
+        CustomGluuAlert gluuAlert = new CustomGluuAlert(getActivity());
+        gluuAlert.setMessage(getActivity().getApplicationContext().getString(R.string.clear_log_title));
+        gluuAlert.setYesTitle(getActivity().getApplicationContext().getString(R.string.yes));
+        gluuAlert.setNoTitle(getActivity().getApplicationContext().getString(R.string.no));
+        gluuAlert.setmListener(listener);
+        gluuAlert.show();
+    }
+
     public Boolean getIsUserInfo() {
         return isUserInfo;
     }
@@ -241,6 +300,7 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
     }
 
     private void closeView(){
+        setIsBackButtonVisible(false);
         if (isUserInfo) {
             setIsButtonVisible(true);
             getActivity().invalidateOptionsMenu();
@@ -260,6 +320,13 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
         editor.commit();
     }
 
+    public void setIsBackButtonVisible(Boolean isVsible){
+        SharedPreferences preferences = getContext().getSharedPreferences("CleanLogsSettings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("isBackButtonVisible", isVsible);
+        editor.commit();
+    }
+
     private Handler initHandler(final View rootView){
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -270,6 +337,7 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
                             stopClocking();
                             closeView();
                         }
+                        mLineProgressBar.setProgress(sec);
                         TextView seconds = (TextView) rootView.findViewById(R.id.timer_textView);
                         String secStr = sec < 10 ? "0" + sec : String.valueOf(sec);
                         seconds.setText(secStr);
@@ -294,5 +362,10 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
 
     public void setListener(GluuMainActivity.RequestProcessListener listener) {
         this.listener = listener;
+    }
+
+    public interface OnDeleteLogInfoListener {
+        void onDeleteLogInfo(OxPush2Request oxPush2Request);
+        void onDeleteLogInfo(List<LogInfo> logInfos);
     }
 }

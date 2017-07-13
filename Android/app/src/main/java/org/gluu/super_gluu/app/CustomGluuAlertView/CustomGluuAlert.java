@@ -56,6 +56,8 @@ public class CustomGluuAlert extends Dialog implements android.view.View.OnClick
         no = (Button) findViewById(R.id.no_button);
         if (this.noTitle != null && !this.noTitle.isEmpty()){
             no.setText(this.noTitle);
+        } else {
+            no.setVisibility(View.GONE);
         }
         final EditText textField = (EditText) findViewById(R.id.alert_textField);
         if (isTextView){
@@ -96,6 +98,9 @@ public class CustomGluuAlert extends Dialog implements android.view.View.OnClick
                 break;
 
             case R.id.no_button:
+                if (mListener != null){
+                    mListener.onNegativeButton();
+                }
                 dismiss();
                 break;
 

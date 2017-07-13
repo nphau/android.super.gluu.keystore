@@ -1,10 +1,14 @@
 package org.gluu.super_gluu.app.fragments.KeysFragment;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,8 +50,8 @@ public class KeyFragmentListFragment extends Fragment {
         mListener = new KeyHandleInfo() {
             @Override
             public void onKeyHandleInfo(KeyHandleInfoFragment infoFragment) {
+                getActivity().invalidateOptionsMenu();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-
                 transaction.replace(R.id.keys_root_frame, infoFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();

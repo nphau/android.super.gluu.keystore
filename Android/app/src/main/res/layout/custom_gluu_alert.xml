@@ -77,7 +77,8 @@
             android:id="@+id/yes_button"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp" />
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"/>
 
         <Button
             android:layout_width="match_parent"
@@ -87,7 +88,6 @@
             android:id="@+id/no_button"
             android:background="@drawable/rounded_red_shape"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp" />

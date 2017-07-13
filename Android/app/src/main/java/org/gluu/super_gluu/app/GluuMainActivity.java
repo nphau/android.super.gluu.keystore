@@ -27,13 +27,19 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
@@ -41,6 +47,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.gson.Gson;
 
+import org.gluu.super_gluu.app.model.LogInfo;
 import org.gluu.super_gluu.app.purchase.InAppPurchaseService;
 import org.gluu.super_gluu.app.activities.GluuApplication;
 import org.gluu.super_gluu.app.activities.MainActivity;
@@ -60,6 +67,8 @@ import org.gluu.super_gluu.util.Utils;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.List;
+
 import SuperGluu.app.BuildConfig;
 import SuperGluu.app.R;
 
@@ -68,7 +77,7 @@ import SuperGluu.app.R;
  *
  * Created by Yuriy Movchan on 12/28/2015.
  */
-public class GluuMainActivity extends AppCompatActivity implements OxPush2RequestListener, KeyHandleInfoFragment.OnDeleteKeyHandleListener, PinCodeFragment.PinCodeViewListener {
+public class GluuMainActivity extends AppCompatActivity implements OxPush2RequestListener, KeyHandleInfoFragment.OnDeleteKeyHandleListener, PinCodeFragment.PinCodeViewListener, ApproveDenyFragment.OnDeleteLogInfoListener {
 
     private static final String TAG = "main-activity";
 
@@ -81,16 +90,20 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     public static final String QR_CODE_PUSH_NOTIFICATION = "QR_CODE_PUSH_NOTIFICATION";
     public static final int MESSAGE_NOTIFICATION_ID = 444555;
 
+    private TabLayout tabLayout;
+
     private SoftwareDevice u2f;
     private AndroidKeyDataStore dataStore;
     private static Context context;
 
     private Boolean isShowClearMenu = false;
 
+    private Settings settings = new Settings();
+
     private BroadcastReceiver mPushMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+            tabLayout = (TabLayout) findViewById(R.id.tab_layout);
             tabLayout.getTabAt(0).select();
 
             // Get extra data included in the Intent
@@ -135,10 +148,31 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
         this.dataStore = new AndroidKeyDataStore(context);
         this.u2f = new SoftwareDevice(this, dataStore);
-        setIsButtonVisible(dataStore.getLogs().size() != 0);
+        Settings.setIsButtonVisible(context, dataStore.getLogs().size() != 0);
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_title_icon);
+        //Customize the ActionBar
+        final ActionBar abar = getSupportActionBar();
+//        abar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_background));//line under the action bar
+        View viewActionBar = getLayoutInflater().inflate(R.layout.custom_action_bar, null);
+        ActionBar.LayoutParams params = new ActionBar.LayoutParams(//Center the textview in the ActionBar !
+                ActionBar.LayoutParams.WRAP_CONTENT,
+                ActionBar.LayoutParams.MATCH_PARENT,
+                Gravity.CENTER);
+//        ImageView actionbar_icon = (ImageView) viewActionBar.findViewById(R.id.actionbar_icon);
+        TextView textviewTitle = (TextView) viewActionBar.findViewById(R.id.actionbar_textview);
+        Button leftButton  = (Button) viewActionBar.findViewById(R.id.action_left_button);
+        Button rightButton  = (Button) viewActionBar.findViewById(R.id.action_right_button);
+        textviewTitle.setText("Test");
+        textviewTitle.setVisibility(View.GONE);
+        leftButton.setVisibility(View.GONE);
+        rightButton.setVisibility(View.GONE);
+        abar.setCustomView(viewActionBar, params);
+        abar.setDisplayShowCustomEnabled(true);
+        abar.setDisplayShowTitleEnabled(false);
+        abar.setDisplayHomeAsUpEnabled(false);
+        abar.setDisplayShowHomeEnabled(true);
+//        abar.setIcon(R.color.transparent);
+        abar.setHomeButtonEnabled(true);
 
         // Check if we get push notification
         checkIsPush();
@@ -184,11 +218,11 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("Home").setIcon(R.drawable.home_action));
         tabLayout.addTab(tabLayout.newTab().setText("Logs").setIcon(R.drawable.logs_action));
         tabLayout.addTab(tabLayout.newTab().setText("Keys").setIcon(R.drawable.keys_action));
-        tabLayout.addTab(tabLayout.newTab().setText("Settings").setIcon(R.drawable.settings_action));
+        tabLayout.addTab(tabLayout.newTab().setText("Menu").setIcon(R.drawable.settings_action));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         // Locate the viewpager in gluu_activity_main.xmln.xml
@@ -209,10 +243,44 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
                 isShowClearMenu = position == 1 ? true : false;
+                settings.setForLogs(position == 1 ? true : false);
+                settings.setForKeys(position == 2 ? true : false);
                 reloadLogs();
-                invalidateOptionsMenu();
                 viewPager.setCurrentItem(position);
                 tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+
+                //Customize the ActionBar
+                final ActionBar abar = getSupportActionBar();
+//        abar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_background));//line under the action bar
+                View viewActionBar = getLayoutInflater().inflate(R.layout.custom_action_bar, null);
+                ActionBar.LayoutParams params = new ActionBar.LayoutParams(//Center the textview in the ActionBar !
+                        ActionBar.LayoutParams.WRAP_CONTENT,
+                        ActionBar.LayoutParams.MATCH_PARENT,
+                        Gravity.CENTER);
+        ImageView actionbar_icon = (ImageView) viewActionBar.findViewById(R.id.actionbar_icon);
+                TextView textviewTitle = (TextView) viewActionBar.findViewById(R.id.actionbar_textview);
+                Button leftButton  = (Button) viewActionBar.findViewById(R.id.action_left_button);
+                Button rightButton  = (Button) viewActionBar.findViewById(R.id.action_right_button);
+                textviewTitle.setText("Menu");
+                actionbar_icon.setVisibility(View.GONE);
+                leftButton.setVisibility(View.GONE);
+                rightButton.setVisibility(View.GONE);
+
+                if (position == 3){
+                    actionbar_icon.setVisibility(View.GONE);
+                    textviewTitle.setVisibility(View.VISIBLE);
+                } else {
+                    invalidateOptionsMenu();
+                    textviewTitle.setVisibility(View.GONE);
+                    actionbar_icon.setVisibility(View.VISIBLE);
+                }
+                abar.setCustomView(viewActionBar, params);
+                abar.setDisplayShowCustomEnabled(true);
+                abar.setDisplayShowTitleEnabled(false);
+                abar.setDisplayHomeAsUpEnabled(false);
+                abar.setDisplayShowHomeEnabled(true);
+//        abar.setIcon(R.color.transparent);
+                abar.setHomeButtonEnabled(true);
             }
 
             @Override
@@ -225,6 +293,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
             }
         });
+        Settings.setIsButtonVisible(getApplicationContext(), false);
     }
 
     @Override
@@ -239,17 +308,134 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (isShowClearMenu && getIsButtonVisible()) {//&& dataStore.getLogs().size() > 0
-            MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.clear_logs_menu, menu);
+        //Customize the ActionBar
+        final ActionBar abar = getSupportActionBar();
+        View viewActionBar = getLayoutInflater().inflate(R.layout.custom_action_bar, null);
+        ActionBar.LayoutParams params = new ActionBar.LayoutParams(//Center the textview in the ActionBar !
+                ActionBar.LayoutParams.WRAP_CONTENT,
+                ActionBar.LayoutParams.MATCH_PARENT,
+                Gravity.CENTER);
+        ImageView actionbar_icon = (ImageView) viewActionBar.findViewById(R.id.actionbar_icon);
+        final TextView textviewTitle = (TextView) viewActionBar.findViewById(R.id.actionbar_textview);
+        Button leftButton  = (Button) viewActionBar.findViewById(R.id.action_left_button);
+        leftButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (settings.getForLogs()) {
+                    onBackButtonClicked();
+                } else if (settings.getForKeys()) {
+                    Settings.setIsBackButtonVisibleForKey(getApplicationContext(), false);
+                    settings.setEditingModeLogs(false);
+                    Settings.setIsButtonVisible(getApplicationContext(), true);
+                    invalidateOptionsMenu();
+                    onBackPressed();
+                }
+            }
+        });
+        Button rightButton  = (Button) viewActionBar.findViewById(R.id.action_right_button);
+        rightButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (settings.getForLogs()) {
+                    Intent intent = new Intent("editing-mode-logs");
+                    if (settings.getEditingModeLogs()) {
+                        settings.setEditingModeLogs(false);
+                        intent.putExtra("isEditingMode", false);
+                    } else {
+                        intent.putExtra("isEditingMode", true);
+                        settings.setEditingModeLogs(true);
+                    }
+                    LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+                }
+                invalidateOptionsMenu();
+                String tag = textviewTitle.getText().toString().equalsIgnoreCase("KEY DETAILS") ? "on-delete-key-event" : "on-delete-log-event";
+                Intent intent = new Intent(tag);
+                // You can also include some extra data.
+                // intent.putExtra("isAdFree", isShow);
+                LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+            }
+        });
+        leftButton.setVisibility(View.GONE);
+        rightButton.setVisibility(View.GONE);
+        textviewTitle.setVisibility(View.GONE);
+        actionbar_icon.setVisibility(View.VISIBLE);
+//        if (isShowClearMenu && Settings.getIsButtonVisible(getApplicationContext())) {//&& dataStore.getLogs().size() > 0
+//            inflater.inflate(R.menu.clear_logs_menu, menu);
+        if (settings.getForLogs()){
+            if (Settings.getIsBackButtonVisibleForLog(getApplicationContext())){
+                textviewTitle.setText("LOGS");
+                leftButton.setText("<Back");
+                rightButton.setText("Delete");
+                actionbar_icon.setVisibility(View.GONE);
+                leftButton.setVisibility(View.VISIBLE);
+                rightButton.setVisibility(View.VISIBLE);
+                textviewTitle.setVisibility(View.VISIBLE);
+                settings.setEditingModeLogs(false);
+            } else if (settings.getEditingModeLogs()){
+                leftButton.setText("Delete");
+                rightButton.setText("Cancel");
+                leftButton.setVisibility(View.VISIBLE);
+                rightButton.setVisibility(View.VISIBLE);
+            } else {
+                leftButton.setText("Edit");
+                rightButton.setText("");
+                leftButton.setVisibility(View.VISIBLE);
+                rightButton.setVisibility(View.VISIBLE);
+            }
         }
+        if (settings.getForKeys()) {
+            if (Settings.getIsBackButtonVisibleForKey(getApplicationContext())) {
+                textviewTitle.setText("KEY DETAILS");
+                leftButton.setText("<Back");
+                rightButton.setText("Delete");
+                actionbar_icon.setVisibility(View.GONE);
+                leftButton.setVisibility(View.VISIBLE);
+                rightButton.setVisibility(View.VISIBLE);
+                textviewTitle.setVisibility(View.VISIBLE);
+            }
+        }
+//        if (Settings.getIsBackButtonVisible(getApplicationContext())){
+//            if (Settings.getIsBackButtonVisibleForKey(getApplicationContext())){
+//                textviewTitle.setText("KEY DETAILS");
+//            } else {
+//                textviewTitle.setText("LOGS");
+//            }
+//            actionbar_icon.setVisibility(View.GONE);
+//        }
+        abar.setCustomView(viewActionBar, params);
+        abar.setDisplayShowCustomEnabled(true);
+        abar.setDisplayShowTitleEnabled(false);
+        abar.setDisplayHomeAsUpEnabled(false);
+        abar.setDisplayShowHomeEnabled(true);
+        abar.setHomeButtonEnabled(true);
         return true;
     }
 
     private void reloadLogs(){
         Intent intent = new Intent("reload-logs");
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-        setIsButtonVisible(dataStore.getLogs().size() != 0);
+//        Settings.setIsButtonVisible(context, dataStore.getLogs().size() != 0);
+    }
+
+    private void onBackButtonClicked(){
+        if (Settings.getIsBackButtonVisibleForLog(getApplicationContext())) {
+            Settings.setIsBackButtonVisibleForLog(getApplicationContext(), false);
+            invalidateOptionsMenu();
+            onBackPressed();
+        } else {
+            Settings.setIsBackButtonVisibleForLog(getApplicationContext(), false);
+            if (settings.getEditingModeLogs()) {
+                Intent intent = new Intent("on-delete-logs");
+                LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+                settings.setEditingModeLogs(false);
+            } else {
+                settings.setEditingModeLogs(true);
+            }
+            Intent intent = new Intent("editing-mode-logs");
+            intent.putExtra("isEditingMode", settings.getEditingModeLogs());
+            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+            invalidateOptionsMenu();
+        }
     }
 
     @Override
@@ -261,6 +447,12 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                 reloadLogs();
                 invalidateOptionsMenu();
             }
+
+            @Override
+            public void onNegativeButton() {
+                //Skip here
+            }
+
         };
         CustomGluuAlert gluuAlert = new CustomGluuAlert(GluuMainActivity.this);
         gluuAlert.setMessage(getApplicationContext().getString(R.string.clear_logs));
@@ -428,21 +620,26 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         gluuAlert.show();
     }
 
-    public Boolean getIsButtonVisible(){
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("CleanLogsSettings", Context.MODE_PRIVATE);
-        Boolean isVisible = preferences.getBoolean("isCleanButtonVisible", true);
-        return isVisible;
+    @Override
+    public void onDeleteLogInfo(OxPush2Request oxPush2Request) {
+        dataStore.deleteLogs(oxPush2Request);
+        onBackButtonClicked();
     }
 
-    public void setIsButtonVisible(Boolean isVisible){
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("CleanLogsSettings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isCleanButtonVisible", isVisible);
-        editor.commit();
+    @Override
+    public void onDeleteLogInfo(List<LogInfo> logInfo) {
+        dataStore.deleteLogs(logInfo);
+//        onBackButtonClicked();
+        settings.setEditingModeLogs(false);
+        reloadLogs();
+//        Intent intent = new Intent("editing-mode-logs");
+//        intent.putExtra("isEditingMode", false);
+//        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
     }
 
     public interface GluuAlertCallback{
         void onPositiveButton();
+        void onNegativeButton();
     }
 
     public interface RequestProcessListener{

@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
@@ -66,11 +67,14 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
 
                     fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                     fragmentTransaction.replace(R.id.fragment_container, licenseFragment);
-//            fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
                 }
             }
         }
+        Settings.setIsBackButtonVisibleForKey(getBaseContext(), false);
+        Settings.setIsBackButtonVisible(getBaseContext(), false);
+        Settings.setIsBackButtonVisibleForLog(getBaseContext(), false);
+        Settings.setIsBackButtonVisibleForKey(getBaseContext(), false);
     }
 
     private void userChossed(String answer, Intent intent){

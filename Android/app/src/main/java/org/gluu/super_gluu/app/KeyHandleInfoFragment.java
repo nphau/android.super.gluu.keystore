@@ -1,11 +1,16 @@
 package org.gluu.super_gluu.app;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +19,13 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
+import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.u2f.v2.model.TokenEntry;
 import org.gluu.super_gluu.util.Utils;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,11 +38,22 @@ import SuperGluu.app.R;
 public class KeyHandleInfoFragment extends Fragment implements View.OnClickListener{
 
     final SimpleDateFormat isoDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
-    final SimpleDateFormat userDateTimeFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
+    final SimpleDateFormat userDateTimeFormat = new SimpleDateFormat("MMM d, yyyy HH:mm:ss");
 
     private static final String ARG_PARAM1 = "tokenEntry";
     private TokenEntry tokenEntry;
     private OnDeleteKeyHandleListener mDeleteListener;
+
+    private Activity mActivity;
+
+    private BroadcastReceiver mDeleteReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+//            Boolean isAdFree = intent.getBooleanExtra("isAdFree", false);
+            showAlertView();
+        }
+    };
 
     public static KeyHandleInfoFragment newInstance(String tokenEntity) {
         KeyHandleInfoFragment fragment = new KeyHandleInfoFragment();
@@ -52,6 +72,12 @@ public class KeyHandleInfoFragment extends Fragment implements View.OnClickListe
             String tokenString = getArguments().getString(ARG_PARAM1);
             tokenEntry = new Gson().fromJson(tokenString, TokenEntry.class);
         }
+        //Setup message receiver\
+        if (mActivity == null){
+            mActivity = getActivity();
+        }
+        LocalBroadcastManager.getInstance(mActivity).registerReceiver(mDeleteReceiver,
+                new IntentFilter("on-delete-key-event"));
     }
 
     @Nullable
@@ -60,8 +86,8 @@ public class KeyHandleInfoFragment extends Fragment implements View.OnClickListe
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_keyhandle_info, container, false);
         updateKeyHandleDetails(rootView);
-        rootView.findViewById(R.id.delete_button).setOnClickListener(this);
-        rootView.findViewById(R.id.close_button).setOnClickListener(this);
+//        rootView.findViewById(R.id.delete_button).setOnClickListener(this);
+//        rootView.findViewById(R.id.close_button).setOnClickListener(this);
         return rootView;
     }
 
@@ -76,13 +102,24 @@ public class KeyHandleInfoFragment extends Fragment implements View.OnClickListe
         }
     }
 
+    @Override
+    public void onPause(){
+        super.onPause();
+        LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(mDeleteReceiver);
+    }
+
     private void updateKeyHandleDetails(View view) {
-        ((TextView) view.findViewById(R.id.keyHandle_application_value)).setText(tokenEntry.getApplication());
-        ((TextView) view.findViewById(R.id.keyHandle_issuer_value)).setText(tokenEntry.getIssuer());
-        setupPairingDateByFormat((TextView) view.findViewById(R.id.keyHandle_created_value));
-        ((TextView) view.findViewById(R.id.keyHandle_authentication_type_value)).setText(tokenEntry.getAuthenticationType());
-        ((TextView) view.findViewById(R.id.keyHandle_authentication_method_value)).setText(tokenEntry.getAuthenticationMode());
         ((TextView) view.findViewById(R.id.keyHandle_user_name_label_value)).setText(tokenEntry.getUserName());
+        setupPairingDateByFormat((TextView) view.findViewById(R.id.keyHandle_created_value));
+        try {
+            URI uri = new URI(tokenEntry.getIssuer());
+            String path = uri.getHost();
+            ((TextView) view.findViewById(R.id.keyHandle_issuer_value)).setText(path);
+        } catch (URISyntaxException e) {
+            ((TextView) view.findViewById(R.id.keyHandle_issuer_value)).setText(tokenEntry.getIssuer());
+            e.printStackTrace();
+        }
+
         String keyStr = Utils.encodeHexString(tokenEntry.getKeyHandle());
         String keyHandleString = keyStr.substring(0, 6) + "..." + keyStr.substring(keyStr.length()-6);
         ((TextView) view.findViewById(R.id.keyHandle_id)).setText(keyHandleString);
@@ -90,33 +127,33 @@ public class KeyHandleInfoFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.delete_button){
-            showAlertView();
-        } else {
-            getFragmentManager().popBackStack();
-        }
+//        if(v.getId() == R.id.delete_button){
+//            showAlertView();
+//        } else {
+//            getFragmentManager().popBackStack();
+//        }
     }
 
     void showAlertView(){
-        final Context context = getContext();
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
-        alertDialog.setTitle(R.string.confirm_delete);
-        alertDialog.setMessage(R.string.approve_delete);
-        alertDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+        GluuMainActivity.GluuAlertCallback listener = new GluuMainActivity.GluuAlertCallback(){
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onPositiveButton() {
                 mDeleteListener.onDeleteKeyHandle(tokenEntry.getKeyHandle());
                 android.support.v4.app.FragmentManager fm = getFragmentManager();
                 fm.popBackStack();
             }
-        });
-        alertDialog.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //Ignore event
+            public void onNegativeButton() {
+                //Skip here
             }
-        });
-        alertDialog.show();
+        };
+        CustomGluuAlert gluuAlert = new CustomGluuAlert(mActivity);
+        gluuAlert.setMessage(mActivity.getApplicationContext().getString(R.string.approve_delete));
+        gluuAlert.setYesTitle(mActivity.getApplicationContext().getString(R.string.yes));
+        gluuAlert.setNoTitle(mActivity.getApplicationContext().getString(R.string.no));
+        gluuAlert.setmListener(listener);
+        gluuAlert.show();
     }
 
     void setupPairingDateByFormat(TextView textView){

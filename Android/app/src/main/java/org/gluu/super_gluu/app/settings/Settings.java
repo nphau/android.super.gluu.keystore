@@ -10,6 +10,10 @@ public class Settings {
 
     private static final String PIN_CODE_SETTINGS = "PinCodeSettings";
 
+    private Boolean isEditingModeLogs = false;
+    private Boolean isForLogs = false;
+    private Boolean isForKeys = false;
+
     //Pin code Settings
 
     public static void setPinCodeEnabled(Context context, Boolean isEnabled) {
@@ -184,4 +188,81 @@ public class Settings {
         return isFingerprintEnabled;
     }
 
+    //For actions bar menu
+    public static Boolean getIsButtonVisible(Context context){
+        SharedPreferences preferences = context.getSharedPreferences("CleanLogsSettings", Context.MODE_PRIVATE);
+        Boolean isVisible = preferences.getBoolean("isCleanButtonVisible", false);
+        return isVisible;
+    }
+
+    public static void setIsButtonVisible(Context context, Boolean isVisible){
+        SharedPreferences preferences = context.getSharedPreferences("CleanLogsSettings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("isCleanButtonVisible", isVisible);
+        editor.apply();
+        editor.commit();
+    }
+
+    public static Boolean getIsBackButtonVisible(Context context){
+        SharedPreferences preferences = context.getSharedPreferences("CleanLogsSettings", Context.MODE_PRIVATE);
+        Boolean isVisible = preferences.getBoolean("isBackButtonVisible", false);
+        return isVisible;
+    }
+
+    public static void setIsBackButtonVisible(Context context, Boolean isVsible){
+        SharedPreferences preferences = context.getSharedPreferences("CleanLogsSettings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("isBackButtonVisible", isVsible);
+        editor.apply();
+    }
+
+    public static Boolean getIsBackButtonVisibleForKey(Context context){
+        SharedPreferences preferences = context.getSharedPreferences("CleanLogsSettings", Context.MODE_PRIVATE);
+        Boolean isVisible = preferences.getBoolean("isBackButtonVisibleForKey", false);
+        return isVisible;
+    }
+
+    public static void setIsBackButtonVisibleForKey(Context context, Boolean isVsible){
+        SharedPreferences preferences = context.getSharedPreferences("CleanLogsSettings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("isBackButtonVisibleForKey", isVsible);
+        editor.apply();
+    }
+
+    public static Boolean getIsBackButtonVisibleForLog(Context context){
+        SharedPreferences preferences = context.getSharedPreferences("CleanLogsSettings", Context.MODE_PRIVATE);
+        Boolean isVisible = preferences.getBoolean("isBackButtonVisibleForLog", false);
+        return isVisible;
+    }
+
+    public static void setIsBackButtonVisibleForLog(Context context, Boolean isVsible){
+        SharedPreferences preferences = context.getSharedPreferences("CleanLogsSettings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("isBackButtonVisibleForLog", isVsible);
+        editor.apply();
+    }
+
+    public Boolean getEditingModeLogs() {
+        return isEditingModeLogs;
+    }
+
+    public void setEditingModeLogs(Boolean editingModeLogs) {
+        isEditingModeLogs = editingModeLogs;
+    }
+
+    public Boolean getForLogs() {
+        return isForLogs;
+    }
+
+    public void setForLogs(Boolean forLogs) {
+        isForLogs = forLogs;
+    }
+
+    public Boolean getForKeys() {
+        return isForKeys;
+    }
+
+    public void setForKeys(Boolean forKeys) {
+        isForKeys = forKeys;
+    }
 }

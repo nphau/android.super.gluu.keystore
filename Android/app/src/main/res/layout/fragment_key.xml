@@ -1,40 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/white"
+    android:orientation="horizontal"
     android:weightSum="1">
 
     <ImageView
+        android:id="@+id/key_imageView"
         android:layout_width="25dp"
         android:layout_height="30dp"
-        android:id="@+id/key_imageView"
-        android:src="@drawable/keys_action"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="15dp"
+        android:src="@drawable/keys_action" />
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/content"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="keyhandleName"
-            android:textSize="15dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:text="keyhandleName"
+            android:textColor="@color/blackColor"
+            android:textSize="15dp" />
 
         <TextView
             android:id="@+id/created_date"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="createdDate"
-            android:textSize="10dp"
+            android:layout_marginBottom="5dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginBottom="5dp" />
+            android:text="createdDate"
+            android:textSize="10dp" />
     </LinearLayout>
 
 </LinearLayout>

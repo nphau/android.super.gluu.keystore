@@ -50,10 +50,10 @@
     <string name="keyHandleCell">Key for </string>
     <string name="confirm_delete">Confirm delete</string>
     <string name="approve_delete">Are you sure you want to delete this keyHandle?</string>
-    <string name="info">Information</string>
+    <string name="info">Key Information</string>
     <string name="no_keyhandles">No keyHandles found</string>
-    <string name="yes">YES</string>
-    <string name="no">NO</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
@@ -70,37 +70,40 @@
     <string name="noLogs">No Logs</string>
     <string name="noKeys">No Keys</string>
 
-    <string name="accept">Accept</string>
-    <string name="welcome">Welcome</string>
+    <string name="accept">Accept and Continue</string>
+    <string name="welcome">Welcome to Super Gluu!</string>
     <string name="scan_text">You may be presented with a QR code for enrollment or authentication. Click the button to open your QR scanner.</string>
 
     <string name="settings_title">Settings</string>
     <string name="pin_code_settings">Pin code</string>
     <string name="pin_code_text">When enabled, access to your Super Gluu app will be protected by a pin code of your choice.</string>
 
-    <string name="set_new_pin_code">Set new Pin code</string>
+    <string name="set_new_pin_code">Set pin code</string>
     <string name="enter_pin_code">Enter Pin code</string>
     <string name="reset_pin_code">Change Pin code</string>
     <string name="tur_on_pin_code">Turn on</string>
     <string name="tur_off_pin_code">Turn off</string>
     <string name="close">Close</string>
     <string name="back">Back</string>
-    <string name="pin_code_enable_question">Do you want to protect your app using PIN code?</string>
+    <string name="pin_code_enable_title">Add a Pin Code?</string>
+    <string name="pin_code_enable_question">Protect access to Super Gluu by adding a pin code.</string>
 
     <string name="available_keys">Available Keys(%s)</string>
-    <string name="text_keys">A unique key is generated for each Gluu Server you log into with Super Gluu. You can manage keys here:</string>
+    <string name="text_keys">When you login with Super Gluu, a private key is generated and stored on your phone.</string>
     <string name="rename_keys">To change a name of Key, hold down on it for few seconds</string>
 
-    <string name="to_continue">To continue, press Approve</string>
+    <string name="to_continue">To continue, Press Approve</string>
     <string name="seconds_left">seconds left</string>
-    <string name="timer">40:00</string>
+    <string name="timer">40</string>
 
     <string name="clear_logs">Do you want to clear the logs?</string>
+    <string name="clear_log_title">Are you sure you want to delete this log record?</string>
+    <string name="clear_log_empty_title">No selected log record(s).</string>
     <string name="change_pin">Do you want to change current Pin?</string>
 
     <string name="app_locked">Application is locked, please wait...</string>
     <string name="number_attempts">Number of attempts:</string>
-    <string name="text_attempts">App will be locked for 10 minutes after this many failed attempts</string>
+    <string name="text_attempts">Super Gluu will be locked for 10 minutes after this many failed attempts</string>
 
     <string name="rename_key_name">Do you want to change key name?</string>
     <string name="enter_new_key_name">Enter new key name</string>
@@ -111,8 +114,8 @@
 
     <string name="fingerprint_title">TouchID (fingerprint)</string>
 
-    <string name="ad_free_text">Tired of ads? Upgrade to ad free for $0.99/month!</string>
-    <string name="ad_free_title">AD Free</string>
+    <string name="ad_free_text">Upgrade to ad free for $0.99/month!</string>
+    <string name="ad_free_title">Upgrade Now!</string>
 
     <string name="banner_ad_unit_id">ca-app-pub-3932761366188106/5255061278</string>
 

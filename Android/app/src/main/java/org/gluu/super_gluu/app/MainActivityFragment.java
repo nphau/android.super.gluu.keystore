@@ -128,6 +128,7 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         this.inflater = inflater;
         context = view.getContext();
         adView = (LinearLayout)view.findViewById(R.id.view_ad_free);
+//        adView.setVisibility(View.GONE);
         Boolean isAdFree = Settings.getPurchase(context);
         if (isAdFree){
             adView.setVisibility(View.GONE);

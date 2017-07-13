@@ -40,7 +40,8 @@
             android:resource="@drawable/app_icon_push" />
 
         <activity
-            android:name="org.gluu.super_gluu.app.activities.MainActivity">
+            android:name="org.gluu.super_gluu.app.activities.MainActivity"
+            android:theme="@style/splashScreenTheme">
             <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
             <!--android:theme="@style/AppTheme.NoActionBar">-->
             <intent-filter>
@@ -53,10 +54,10 @@
             android:launchMode="singleTask"
             android:label="">
         </activity>
-        <activity
-            android:name="org.gluu.super_gluu.app.activities.GluuApplication"
-            android:label="">
-        </activity>
+        <!--<activity-->
+            <!--android:name="org.gluu.super_gluu.app.activities.GluuApplication"-->
+            <!--android:label="">-->
+        <!--</activity>-->
         <!--For FCM instead of GMS-->
         <service
             android:name="org.gluu.super_gluu.app.services.SuperGluuFirebaseInstanceIDService">

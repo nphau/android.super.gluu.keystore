@@ -15,6 +15,8 @@ import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.app.GluuMainActivity;
 import org.gluu.super_gluu.app.KeyHandleInfoFragment;
 import SuperGluu.app.R;
+
+import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
 import org.gluu.super_gluu.u2f.v2.model.TokenEntry;
 import org.gluu.super_gluu.util.Utils;
@@ -104,6 +106,8 @@ public class KeyFragmentListAdapter extends BaseAdapter {
                 String tokenString = new Gson().toJson(list.get(position));
                 KeyHandleInfoFragment infoFragment = new KeyHandleInfoFragment().newInstance(tokenString);
                 if (mListener != null) {
+//                    Settings.setIsBackButtonVisible(activity.getApplicationContext(), true);
+                    Settings.setIsBackButtonVisibleForKey(activity.getApplicationContext(), true);
                     mListener.onKeyHandleInfo(infoFragment);
                 }
             }
@@ -123,6 +127,11 @@ public class KeyFragmentListAdapter extends BaseAdapter {
                     @Override
                     public void onPositiveButton() {
                         showRenameDialog(tokenEntry.getIssuer());
+                    }
+
+                    @Override
+                    public void onNegativeButton() {
+                        //Skip here
                     }
                 });
                 gluuAlert.show();
@@ -146,6 +155,11 @@ public class KeyFragmentListAdapter extends BaseAdapter {
                 AndroidKeyDataStore dataStore = new AndroidKeyDataStore(context);
                 dataStore.changeKeyHandleName(keyHandleID, gluuAlert.getText());
                 updateResults(dataStore);
+            }
+
+            @Override
+            public void onNegativeButton() {
+                //Skip here
             }
         });
         gluuAlert.show();

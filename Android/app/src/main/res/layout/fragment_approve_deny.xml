@@ -1,14 +1,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
+    android:background="@color/grayColorLight"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ProcessManager">
+    android:paddingTop="@dimen/activity_vertical_margin">
 
     <RelativeLayout
         android:id="@+id/topRelativeLayout"
@@ -26,16 +27,31 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="0dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:id="@+id/linearLayout">
 
             <Button
-                android:id="@+id/approve_deny_close_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_button_black"
-                android:text="@string/close" />
+            android:id="@+id/approve_deny_close_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:background="@drawable/rounded_button_black"
+            android:text="@string/close" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/timer_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignStart="@+id/timer_view"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="@string/timer"
+            android:textAlignment="center"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/greenColor" />
 
         <LinearLayout
             android:id="@+id/timer_view"
@@ -44,29 +60,43 @@
             android:layout_alignParentLeft="false"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:background="@drawable/rounded_green_shape"
+            android:background="@android:color/transparent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/timer_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
-                android:text="@string/timer"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#FFFFFF" />
+            <!--<TextView-->
+            <!--android:id="@+id/timer_textView"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:text="@string/timer"-->
+            <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+            <!--android:textColor="#FFFFFF" />-->
 
-            <TextView
-                android:id="@+id/secondsLeftTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:text="@string/seconds_left"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#FFFFFF" />
+            <!--<TextView-->
+            <!--android:id="@+id/secondsLeftTextView"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="5dp"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:text="@string/seconds_left"-->
+            <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+            <!--android:textColor="#FFFFFF" />-->
+            <com.dinuscxj.progressbar.CircleProgressBar
+                android:id="@+id/line_progress"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:draw_progress_text="false"
+                app:line_count="30"
+                app:line_width="4dp"
+                app:progress_end_color="@color/greenColor"
+                app:progress_shader="sweep"
+                app:progress_start_color="@color/greenColor"
+                app:progress_stroke_cap="round"
+                app:progress_stroke_width="4dp"
+                app:progress_text_color="@color/greenColor"
+                app:style="solid_line" />
         </LinearLayout>
 
     </RelativeLayout>
@@ -75,24 +105,26 @@
         android:id="@+id/title_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/topRelativeLayout"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
         android:text="@string/to_continue"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_below="@+id/topRelativeLayout"
-        android:layout_marginTop="10dp" />
+        android:textStyle="bold" />
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/ScrollView01"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/title_textView"
-        android:layout_above="@+id/action_button_group">
+        android:background="@drawable/rounded_row">
 
         <RelativeLayout
             android:id="@+id/mainRelativeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_gravity="center_horizontal"
             android:orientation="horizontal">
 
@@ -102,11 +134,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="false"
                 android:layout_alignParentTop="false"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="30dp">
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:padding="@dimen/table_cell_text">
 
                     <ImageView
@@ -136,13 +168,13 @@
                             android:layout_height="wrap_content"
                             android:layout_column="2"
                             android:text="http://ce-release.gluu.com"
-                            android:textColor="@color/colorPrimaryDark" />
+                            android:textColor="@color/greenColor" />
                     </LinearLayout>
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:padding="@dimen/table_cell_text">
 
                     <ImageView
@@ -165,7 +197,7 @@
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:padding="@dimen/table_cell_text">
 
                     <ImageView
@@ -195,14 +227,14 @@
                             android:layout_height="wrap_content"
                             android:layout_column="2"
                             android:text="Texas, AX"
-                            android:textColor="@color/blackColor" />
+                            android:textColor="@android:color/darker_gray" />
                     </LinearLayout>
 
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:padding="@dimen/table_cell_text">
 
                     <ImageView
@@ -231,8 +263,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_column="2"
-                            android:text="Jan, 1 2016"
-                            android:textColor="@color/blackColor" />
+                            android:text="Jan 1, 2016"
+                            android:textColor="@android:color/darker_gray" />
                     </LinearLayout>
 
                 </TableRow>
@@ -241,6 +273,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
+                    android:layout_marginBottom="30dp"
                     android:padding="@dimen/table_cell_text">
 
                     <ImageView
@@ -272,8 +305,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:layout_alignParentTop="false">
+        android:layout_alignParentTop="false"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/button_approve"
@@ -287,6 +320,7 @@
             android:paddingLeft="20dp"
             android:paddingTop="15dp"
             android:text="@string/button_approve"
+            android:textAllCaps="false"
             android:textColor="#FFFFFF" />
 
         <Button
@@ -301,6 +335,7 @@
             android:paddingLeft="20dp"
             android:paddingTop="15dp"
             android:text="@string/button_decline"
+            android:textAllCaps="false"
             android:textColor="#FFFFFF" />
 
     </LinearLayout>
