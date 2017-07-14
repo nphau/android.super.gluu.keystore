@@ -1,9 +1,11 @@
 package org.gluu.super_gluu.app.fragments.SettingsFragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,11 +95,11 @@ public class SettingsPinCode extends Fragment implements HorizontalNumberPickerL
         numberPicker.setListener(this);
         checkPinCode();
 
-        Button backButton = (Button) view.findViewById(R.id.settings_back);
-        backButton.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.button_ad_free).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().popBackStack();
+                Intent intent = new Intent("on-ad-free-flow");
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
             }
         });
 

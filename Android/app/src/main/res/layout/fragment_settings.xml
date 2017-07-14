@@ -1,25 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/settings_parent_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/grayColorLight"
         android:orientation="vertical">
-
-        <Button
-            android:id="@+id/backButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/rounded_button_black"
-            android:text="@string/back" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -55,6 +40,45 @@
 
         </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/view_ad_free"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="5dp"
+        android:layout_weight="0.06"
+        android:background="@drawable/black_border"
+        android:elevation="20dp"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/ad_free_text"
+            android:textSize="15dp" />
+
+        <Button
+            android:id="@+id/button_ad_free"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/rounded_fio_shape"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:textAllCaps="false"
+            android:text="@string/ad_free_title"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
-</LinearLayout>
+    </RelativeLayout>

@@ -189,31 +189,18 @@ public class Settings {
     }
 
     //For actions bar menu
-    public static Boolean getIsButtonVisible(Context context){
+    public static Boolean getIsSettingsMenuVisible(Context context){
         SharedPreferences preferences = context.getSharedPreferences("CleanLogsSettings", Context.MODE_PRIVATE);
         Boolean isVisible = preferences.getBoolean("isCleanButtonVisible", false);
         return isVisible;
     }
 
-    public static void setIsButtonVisible(Context context, Boolean isVisible){
+    public static void setIsSettingsMenuVisible(Context context, Boolean isVisible){
         SharedPreferences preferences = context.getSharedPreferences("CleanLogsSettings", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("isCleanButtonVisible", isVisible);
         editor.apply();
         editor.commit();
-    }
-
-    public static Boolean getIsBackButtonVisible(Context context){
-        SharedPreferences preferences = context.getSharedPreferences("CleanLogsSettings", Context.MODE_PRIVATE);
-        Boolean isVisible = preferences.getBoolean("isBackButtonVisible", false);
-        return isVisible;
-    }
-
-    public static void setIsBackButtonVisible(Context context, Boolean isVsible){
-        SharedPreferences preferences = context.getSharedPreferences("CleanLogsSettings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isBackButtonVisible", isVsible);
-        editor.apply();
     }
 
     public static Boolean getIsBackButtonVisibleForKey(Context context){

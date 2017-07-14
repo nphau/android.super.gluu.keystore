@@ -143,16 +143,15 @@
 
                     <ImageView
                         android:id="@+id/imageView2"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="left"
+                        android:layout_width="20dp"
+                        android:layout_height="25dp"
+                        android:layout_marginTop="5dp"
                         android:layout_marginRight="10dp"
                         android:src="@drawable/gluu_icon" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -160,7 +159,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/label_application"
-                            android:textColor="@color/blackColor" />
+                            android:textColor="@color/blackColor"
+                            android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/text_application_value"
@@ -168,7 +168,8 @@
                             android:layout_height="wrap_content"
                             android:layout_column="2"
                             android:text="http://ce-release.gluu.com"
-                            android:textColor="@color/greenColor" />
+                            android:textColor="@color/greenColor"
+                            android:textSize="15sp" />
                     </LinearLayout>
                 </TableRow>
 
@@ -179,9 +180,9 @@
 
                     <ImageView
                         android:id="@+id/imageView3"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="left"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginTop="5dp"
                         android:layout_marginRight="10dp"
                         android:src="@drawable/user_icon" />
 
@@ -189,10 +190,11 @@
                         android:id="@+id/text_user_name_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="5dp"
                         android:enabled="true"
                         android:text="@string/label_user_name"
-                        android:textColor="@color/blackColor" />
+                        android:textColor="@color/blackColor"
+                        android:textSize="15sp" />
                 </TableRow>
 
                 <TableRow
@@ -202,9 +204,9 @@
 
                     <ImageView
                         android:id="@+id/imageView5"
-                        android:layout_width="30dp"
+                        android:layout_width="25dp"
                         android:layout_height="30dp"
-                        android:layout_gravity="left"
+                        android:layout_marginTop="5dp"
                         android:layout_marginRight="10dp"
                         android:src="@drawable/location_icon" />
 
@@ -219,7 +221,8 @@
                             android:layout_height="wrap_content"
                             android:enabled="true"
                             android:text="10.106.128.3"
-                            android:textColor="@color/blackColor" />
+                            android:textColor="@color/blackColor"
+                            android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/location_address"
@@ -227,7 +230,8 @@
                             android:layout_height="wrap_content"
                             android:layout_column="2"
                             android:text="Texas, AX"
-                            android:textColor="@android:color/darker_gray" />
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="15sp" />
                     </LinearLayout>
 
                 </TableRow>
@@ -240,15 +244,14 @@
                     <ImageView
                         android:id="@+id/imageView4"
                         android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="left"
-                        android:layout_marginRight="1dp"
+                        android:layout_height="25dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="10dp"
                         android:src="@drawable/time_icon" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -256,7 +259,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="12:00:01 AM"
-                            android:textColor="@color/blackColor" />
+                            android:textColor="@color/blackColor"
+                            android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/text_created_value"
@@ -264,7 +268,8 @@
                             android:layout_height="wrap_content"
                             android:layout_column="2"
                             android:text="Jan 1, 2016"
-                            android:textColor="@android:color/darker_gray" />
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="15sp" />
                     </LinearLayout>
 
                 </TableRow>
@@ -278,9 +283,9 @@
 
                     <ImageView
                         android:id="@+id/imageView7"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="left"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginTop="5dp"
                         android:layout_marginRight="10dp"
                         android:src="@drawable/type_icon" />
 
@@ -288,10 +293,11 @@
                         android:id="@+id/text_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="5dp"
                         android:enabled="true"
                         android:text="type"
-                        android:textColor="@color/blackColor" />
+                        android:textColor="@color/blackColor"
+                        android:textSize="15sp" />
                 </TableRow>
 
             </TableLayout>

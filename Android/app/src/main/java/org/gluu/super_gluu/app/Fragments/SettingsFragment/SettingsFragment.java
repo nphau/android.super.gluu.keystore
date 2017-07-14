@@ -83,11 +83,11 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        Button closeButton = (Button) view.findViewById(R.id.backButton);
-        closeButton.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.button_ad_free).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().onBackPressed();
+                Intent intent = new Intent("on-ad-free-flow");
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
             }
         });
 

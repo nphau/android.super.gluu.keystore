@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
             }
         }
         Settings.setIsBackButtonVisibleForKey(getBaseContext(), false);
-        Settings.setIsBackButtonVisible(getBaseContext(), false);
         Settings.setIsBackButtonVisibleForLog(getBaseContext(), false);
         Settings.setIsBackButtonVisibleForKey(getBaseContext(), false);
     }

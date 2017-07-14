@@ -2,9 +2,12 @@ package org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -159,6 +162,13 @@ public class SettingsListFragmentAdapter extends BaseAdapter {
 //                }
                 if (mListener != null && position < 3) {
                     mListener.onSettingsList(getFragment(position));
+                } else if (position == 4){
+                    Uri uri = Uri.parse("https://gluu.org/docs/supergluu/3.0.0/user-guide/");
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    activity.startActivity(intent);
+                } else if (position == 6 && !Settings.getPurchase(context)){
+                    Intent intent = new Intent("on-ad-free-flow");
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                 }
             }
         });

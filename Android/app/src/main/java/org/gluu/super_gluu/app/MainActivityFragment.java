@@ -120,6 +120,13 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         }
     };
 
+    private BroadcastReceiver onAdFree = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            runSubscribeFlow();
+        }
+    };
+
     public MainActivityFragment() {}
 
     @Override
@@ -137,9 +144,7 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         view.findViewById(R.id.button_ad_free).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (oxPush2RequestListener != null) {
-                    oxPush2RequestListener.onAdFreeButtonClick();
-                }
+                runSubscribeFlow();
             }
         });
         scanButton = (Button) view.findViewById(R.id.button_scan);
@@ -150,8 +155,8 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
                 new IntentFilter("ox_request-precess-event"));
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mAdFreeReceiver,
                 new IntentFilter("on-ad-free-event"));
-//        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mPushMessageReceiver,
-//                new IntentFilter(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION));
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(onAdFree,
+                new IntentFilter("on-ad-free-flow"));
         //Init GoogleMobile AD
         initGoogleInterstitialAd();
         return view;
@@ -233,6 +238,12 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         }
 
         return false;
+    }
+
+    private  void runSubscribeFlow(){
+        if (oxPush2RequestListener != null) {
+            oxPush2RequestListener.onAdFreeButtonClick();
+        }
     }
 
     private void initGoogleInterstitialAd(){

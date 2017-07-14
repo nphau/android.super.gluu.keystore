@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import org.gluu.super_gluu.app.settings.Settings;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,23 +56,23 @@ public class SettingsListFragment extends Fragment {
         listSettings.add("Trust all (SSL)");
         listSettings.add("");
         listSettings.add("User guide");
-        listSettings.add("Feedback");
         listSettings.add("Privacy policy");
+        Boolean isAdFree = Settings.getPurchase(context);
+        if (!isAdFree){
+            listSettings.add("Upgrade to Ad-Free");
+        }
         listSettings.add("");
         listSettings.add("Version");
-//        Boolean isAdFree = Settings.getPurchase(context);
-//        if (!isAdFree){
-//            listSettings.add("Ad Free");
-//        }
 
         mListener = new SettingsListListener() {
             @Override
             public void onSettingsList(Fragment settingsFragment) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-
+                Settings.setIsSettingsMenuVisible(context, true);
                 transaction.replace(R.id.root_frame, settingsFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
+                getActivity().invalidateOptionsMenu();
             }
         };
 

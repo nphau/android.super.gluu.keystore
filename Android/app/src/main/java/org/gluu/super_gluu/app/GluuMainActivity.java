@@ -90,13 +90,16 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     public static final String QR_CODE_PUSH_NOTIFICATION = "QR_CODE_PUSH_NOTIFICATION";
     public static final int MESSAGE_NOTIFICATION_ID = 444555;
 
+    public static final String BACK = "< Back";
+    public static final String MENU = "Menu";
+
     private TabLayout tabLayout;
 
     private SoftwareDevice u2f;
     private AndroidKeyDataStore dataStore;
     private static Context context;
 
-    private Boolean isShowClearMenu = false;
+    private Boolean isShowMenu = false;
 
     private Settings settings = new Settings();
 
@@ -148,7 +151,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
         this.dataStore = new AndroidKeyDataStore(context);
         this.u2f = new SoftwareDevice(this, dataStore);
-        Settings.setIsButtonVisible(context, dataStore.getLogs().size() != 0);
+//        Settings.setIsButtonVisible(context, dataStore.getLogs().size() != 0);
 
         //Customize the ActionBar
         final ActionBar abar = getSupportActionBar();
@@ -162,7 +165,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         TextView textviewTitle = (TextView) viewActionBar.findViewById(R.id.actionbar_textview);
         Button leftButton  = (Button) viewActionBar.findViewById(R.id.action_left_button);
         Button rightButton  = (Button) viewActionBar.findViewById(R.id.action_right_button);
-        textviewTitle.setText("Test");
         textviewTitle.setVisibility(View.GONE);
         leftButton.setVisibility(View.GONE);
         rightButton.setVisibility(View.GONE);
@@ -242,7 +244,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
-                isShowClearMenu = position == 1 ? true : false;
+                isShowMenu = position == 3 ? true : false;
                 settings.setForLogs(position == 1 ? true : false);
                 settings.setForKeys(position == 2 ? true : false);
                 reloadLogs();
@@ -261,7 +263,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                 TextView textviewTitle = (TextView) viewActionBar.findViewById(R.id.actionbar_textview);
                 Button leftButton  = (Button) viewActionBar.findViewById(R.id.action_left_button);
                 Button rightButton  = (Button) viewActionBar.findViewById(R.id.action_right_button);
-                textviewTitle.setText("Menu");
+                textviewTitle.setText(MENU);
                 actionbar_icon.setVisibility(View.GONE);
                 leftButton.setVisibility(View.GONE);
                 rightButton.setVisibility(View.GONE);
@@ -293,7 +295,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
             }
         });
-        Settings.setIsButtonVisible(getApplicationContext(), false);
+//        Settings.setIsButtonVisible(getApplicationContext(), false);
     }
 
     @Override
@@ -321,12 +323,16 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         leftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (Settings.getIsSettingsMenuVisible(context)){
+                    Settings.setIsSettingsMenuVisible(context, false);
+                    invalidateOptionsMenu();
+                    onBackPressed();
+                } else
                 if (settings.getForLogs()) {
                     onBackButtonClicked();
                 } else if (settings.getForKeys()) {
                     Settings.setIsBackButtonVisibleForKey(getApplicationContext(), false);
                     settings.setEditingModeLogs(false);
-                    Settings.setIsButtonVisible(getApplicationContext(), true);
                     invalidateOptionsMenu();
                     onBackPressed();
                 }
@@ -361,10 +367,23 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         actionbar_icon.setVisibility(View.VISIBLE);
 //        if (isShowClearMenu && Settings.getIsButtonVisible(getApplicationContext())) {//&& dataStore.getLogs().size() > 0
 //            inflater.inflate(R.menu.clear_logs_menu, menu);
+        if (Settings.getIsSettingsMenuVisible(context)){
+            leftButton.setText(BACK);
+            leftButton.setVisibility(View.VISIBLE);
+            textviewTitle.setVisibility(View.VISIBLE);
+            textviewTitle.setText(MENU);
+            rightButton.setText("");
+            rightButton.setVisibility(View.VISIBLE);
+            actionbar_icon.setVisibility(View.GONE);
+        } else if (isShowMenu){
+            textviewTitle.setText(MENU);
+            actionbar_icon.setVisibility(View.GONE);
+            textviewTitle.setVisibility(View.VISIBLE);
+        } else
         if (settings.getForLogs()){
             if (Settings.getIsBackButtonVisibleForLog(getApplicationContext())){
                 textviewTitle.setText("LOGS");
-                leftButton.setText("<Back");
+                leftButton.setText(BACK);
                 rightButton.setText("Delete");
                 actionbar_icon.setVisibility(View.GONE);
                 leftButton.setVisibility(View.VISIBLE);
@@ -386,7 +405,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         if (settings.getForKeys()) {
             if (Settings.getIsBackButtonVisibleForKey(getApplicationContext())) {
                 textviewTitle.setText("KEY DETAILS");
-                leftButton.setText("<Back");
+                leftButton.setText(BACK);
                 rightButton.setText("Delete");
                 actionbar_icon.setVisibility(View.GONE);
                 leftButton.setVisibility(View.VISIBLE);
