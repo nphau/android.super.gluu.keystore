@@ -22,8 +22,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    settingsTopics = [[NSArray alloc] initWithObjects:@"Pin code", @"TouchID (fingerprint)", @"U2F BLE device(s)", @"Trust all (SSL)", nil];//@"U2F BLE device(s)",
-    settingsKeys = [[NSArray alloc] initWithObjects:PIN_PROTECTION_ID, TOUCH_ID_ENABLED, SECURE_CLICK_ENABLED, SSL_ENABLED, nil];// SECURE_CLICK_ENABLED,
+    settingsTopics = [[NSArray alloc] initWithObjects:@"Pin code", @"TouchID (fingerprint)", @"Trust all (SSL)", nil];//@"U2F BLE device(s)",
+    settingsKeys = [[NSArray alloc] initWithObjects:PIN_PROTECTION_ID, TOUCH_ID_ENABLED, SSL_ENABLED, nil];// SECURE_CLICK_ENABLED,
 //    if (![[ADSubsriber sharedInstance] isSubscribed]){
 //        settingsTopics = [[NSArray alloc] initWithObjects:@"Pin code", @"TouchID (fingerprint)", @"U2F BLE device(s)", @"Trust all (SSL)", nil];//, @"AD Free", @"U2F BLE device(s)",
 //        settingsKeys = [[NSArray alloc] initWithObjects:PIN_PROTECTION_ID, TOUCH_ID_ENABLED, SECURE_CLICK_ENABLED, SSL_ENABLED, NOTIFICATION_AD_FREE, nil];// SECURE_CLICK_ENABLED,
@@ -46,10 +46,10 @@
         case 1:
             subTitle = [self checkSettingsFor:TOUCH_ID_ENABLED];
             break;
+//        case 2:
+//            subTitle = [self checkSettingsFor:SECURE_CLICK_ENABLED];
+//            break;
         case 2:
-            subTitle = [self checkSettingsFor:SECURE_CLICK_ENABLED];
-            break;
-        case 3:
             subTitle = [self checkSettingsFor:SSL_ENABLED];
             break;
             
@@ -93,14 +93,14 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     selectedSettingIndex = (int)indexPath.row;
-    if (selectedSettingIndex == 2){
-        [self performSegueWithIdentifier:@"settingsBLESegue" sender:self];
-    } else if (selectedSettingIndex == settingsKeys.count-1 && [[NSUserDefaults standardUserDefaults] boolForKey:NOTIFICATION_AD_FREE]){
-    
-    } else {
+//    if (selectedSettingIndex == 2){
+//        [self performSegueWithIdentifier:@"settingsBLESegue" sender:self];
+//    } else if (selectedSettingIndex == settingsKeys.count-1 && [[NSUserDefaults standardUserDefaults] boolForKey:NOTIFICATION_AD_FREE]){
+//    
+//    } else {
         [self performSegueWithIdentifier:@"settingsDetailsSegue" sender:self];
 
-    }
+//    }
 }
 
 @end

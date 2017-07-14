@@ -1338,7 +1338,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MACH_O_TYPE = mh_execute;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ios.super.gluu.ble;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ios.gluu;
 				PRODUCT_NAME = "Super Gluu";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1372,7 +1372,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MACH_O_TYPE = mh_execute;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ios.super.gluu.ble;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ios.gluu;
 				PRODUCT_NAME = "Super Gluu";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
