@@ -15,6 +15,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -91,7 +92,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     public static final int MESSAGE_NOTIFICATION_ID = 444555;
 
     public static final String BACK = "< Back";
-    public static final String MENU = "Menu";
+    public static final String MENU = "MENU";
 
     private TabLayout tabLayout;
 
@@ -231,6 +232,16 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);//GluuPagerView
 //        viewPager.setSwipeLocked(true);
 
+        final ActionBar abar = getSupportActionBar();
+        final View viewActionBar = getLayoutInflater().inflate(R.layout.custom_action_bar, null);
+        final TextView textviewTitle = (TextView) viewActionBar.findViewById(R.id.actionbar_textview);
+        Button leftButton  = (Button) viewActionBar.findViewById(R.id.action_left_button);
+        Button rightButton  = (Button) viewActionBar.findViewById(R.id.action_right_button);
+        Typeface face = Typeface.createFromAsset(getAssets(), "ProximaNova-Semibold.otf");
+        textviewTitle.setTypeface(face);
+        leftButton.setTypeface(face);
+        rightButton.setTypeface(face);
+
         // Set the ViewPagerAdapter into ViewPager
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));//, tabLayout.getTabCount()
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -252,9 +263,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                 tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
 
                 //Customize the ActionBar
-                final ActionBar abar = getSupportActionBar();
 //        abar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_background));//line under the action bar
-                View viewActionBar = getLayoutInflater().inflate(R.layout.custom_action_bar, null);
                 ActionBar.LayoutParams params = new ActionBar.LayoutParams(//Center the textview in the ActionBar !
                         ActionBar.LayoutParams.WRAP_CONTENT,
                         ActionBar.LayoutParams.MATCH_PARENT,
@@ -399,6 +408,9 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                 leftButton.setText("Edit");
                 rightButton.setText("");
                 leftButton.setVisibility(View.VISIBLE);
+                if (dataStore.getLogs().size() == 0){
+                    leftButton.setVisibility(View.GONE);
+                }
                 rightButton.setVisibility(View.VISIBLE);
             }
         }
@@ -413,20 +425,18 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                 textviewTitle.setVisibility(View.VISIBLE);
             }
         }
-//        if (Settings.getIsBackButtonVisible(getApplicationContext())){
-//            if (Settings.getIsBackButtonVisibleForKey(getApplicationContext())){
-//                textviewTitle.setText("KEY DETAILS");
-//            } else {
-//                textviewTitle.setText("LOGS");
-//            }
-//            actionbar_icon.setVisibility(View.GONE);
-//        }
         abar.setCustomView(viewActionBar, params);
         abar.setDisplayShowCustomEnabled(true);
         abar.setDisplayShowTitleEnabled(false);
         abar.setDisplayHomeAsUpEnabled(false);
         abar.setDisplayShowHomeEnabled(true);
         abar.setHomeButtonEnabled(true);
+
+        Typeface face = Typeface.createFromAsset(getAssets(), "ProximaNova-Semibold.otf");
+        textviewTitle.setTypeface(face);
+        leftButton.setTypeface(face);
+        rightButton.setTypeface(face);
+
         return true;
     }
 

@@ -4,7 +4,7 @@
 
     <string name="oxpush2_into_text">Open Source Mobile Authentication from Gluu</string>
 
-    <string name="label_user_name">User Name</string>
+    <string name="label_user_name">Username</string>
     <string name="label_authentication_method">Authentication Mode</string>
     <string name="label_authentication_type">Authentication Type</string>
     <string name="keyHandle">Key handle</string>
@@ -88,7 +88,8 @@
     <string name="pin_code_enable_title">Add a Pin Code?</string>
     <string name="pin_code_enable_question">Protect access to Super Gluu by adding a pin code.</string>
 
-    <string name="available_keys">Available Keys(%s)</string>
+    <!--<string name="available_keys">Available keys(%s)</string>-->
+    <string name="available_keys">Available keys</string>
     <string name="text_keys">When you login with Super Gluu, a private key is generated and stored on your phone.</string>
     <string name="rename_keys">To change a name of Key, hold down on it for few seconds</string>
 
@@ -110,7 +111,7 @@
 
     <string name="ssl_connection_settings">SSL Connection Settings</string>
     <string name="trust_all_certificate">Trust All (SSL)</string>
-    <string name="warning_trust_all_certificate">WARNING: Use only for testing! It\'s critically important to validate the SSL certificate for communication between SuperGluu and the Gluu Server.</string>
+    <string name="warning_trust_all_certificate">WARNING: Only enable Trust all (SSL) for testing purposes! It is critically important to validate the SSL certificate for communication between Super Gluu and the identity provider.</string>
 
     <string name="fingerprint_title">TouchID (fingerprint)</string>
 

@@ -16,18 +16,17 @@
             android:orientation="vertical"
             android:layout_centerInParent="true">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="50dp"
-        android:gravity="center"
-        android:text="@string/welcome"
-        android:textColor="@color/blackColor"
-        android:textSize="26dp" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:text="@string/welcome"
+                android:textColor="?attr/colorControlNormal"
+                android:textSize="24dp" />
 
     <TextView
         android:id="@+id/textView2"
@@ -36,28 +35,28 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="@string/scan_text"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@android:color/darker_gray" />
 
-    <Button
-        android:id="@+id/button_scan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_column="0"
-        android:layout_gravity="center"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_row="1"
-        android:textAllCaps="false"
-        android:background="@drawable/rounded_button"
-        android:text="@string/button_scan_oxpush2"
-        android:textColor="@android:color/white" />
+            <Button
+                android:id="@+id/button_scan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="100dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rounded_button"
+                android:text="@string/button_scan_oxpush2"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -96,8 +95,10 @@
             android:background="@drawable/rounded_fio_shape"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:layout_marginBottom="20dp"
+            android:paddingBottom="5dp"
+            android:layout_marginBottom="15dp"
             android:textAllCaps="false"
+            android:textSize="15dp"
             android:text="@string/ad_free_title"
             android:textColor="@android:color/white" />
     </LinearLayout>

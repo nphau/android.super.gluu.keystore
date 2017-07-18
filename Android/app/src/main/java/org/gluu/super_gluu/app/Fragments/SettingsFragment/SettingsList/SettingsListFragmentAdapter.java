@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -35,6 +36,7 @@ public class SettingsListFragmentAdapter extends BaseAdapter {
     private Context context;
     private Activity activity;
     private SettingsListFragment.SettingsListListener mListener;
+    private Typeface face;
     //For purchases
     private InAppPurchaseService inAppPurchaseService = new InAppPurchaseService();
 
@@ -44,6 +46,7 @@ public class SettingsListFragmentAdapter extends BaseAdapter {
         this.context = activity.getApplicationContext();
         mInflater = LayoutInflater.from(activity);
         mListener = settingsListListener;
+        face = Typeface.createFromAsset(activity.getAssets(), "ProximaNova-Regular.otf");
         initIAPurchaseService();
     }
 
@@ -110,6 +113,7 @@ public class SettingsListFragmentAdapter extends BaseAdapter {
 
         if (settingName != null) {
             settingName.setText(list.get(position));
+            settingName.setTypeface(face);
         }
         ImageView settingArrow = (ImageView) view.findViewById(R.id.settingArrow);
         TextView info = (TextView) view.findViewById(R.id.textInfo);
@@ -123,6 +127,7 @@ public class SettingsListFragmentAdapter extends BaseAdapter {
                     info.setText(versionName + " - " + String.valueOf(versionCode));
                     view.setBackgroundColor(Color.WHITE);
                     info.setVisibility(View.VISIBLE);
+                    info.setTypeface(face);
                 } else {
                     info.setVisibility(View.GONE);
                     view.setBackgroundColor(Color.parseColor("#efeff4"));

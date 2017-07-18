@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -74,7 +75,15 @@ public class KeyFragmentListFragment extends Fragment {
         lv.setEmptyView(rootView.findViewById(R.id.empty_keyList));
 
         TextView availableKeys = (TextView) rootView.findViewById(R.id.availableKeys_textView);
-        availableKeys.setText(rootView.getContext().getString(R.string.available_keys, String.valueOf(listAdapter.getCount())));
+        TextView keys_textView = (TextView) rootView.findViewById(R.id.keys_textView);
+        TextView rename_textView = (TextView) rootView.findViewById(R.id.rename_textView);
+
+        availableKeys.setText(rootView.getContext().getString(R.string.available_keys));
+        Typeface faceLight = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Regular.otf");
+        availableKeys.setTypeface(faceLight);
+        keys_textView.setTypeface(faceLight);
+        rename_textView.setTypeface(faceLight);
+//        availableKeys.setText(rootView.getContext().getString(R.string.available_keys, String.valueOf(listAdapter.getCount())));
         renameText = (TextView) rootView.findViewById(R.id.rename_textView);
 
         return rootView;

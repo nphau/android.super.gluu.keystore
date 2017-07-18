@@ -2,6 +2,7 @@ package org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsList;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -79,6 +80,10 @@ public class SettingsListFragment extends Fragment {
         listAdapter = new SettingsListFragmentAdapter(getActivity(), listSettings, mListener);
         ListView lv = (ListView) rootView.findViewById(R.id.settingsListView);
         lv.setAdapter(listAdapter);
+
+        TextView info = (TextView) rootView.findViewById(R.id.textView3);
+        Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Regular.otf");
+        info.setTypeface(face);
 
         return rootView;
     }

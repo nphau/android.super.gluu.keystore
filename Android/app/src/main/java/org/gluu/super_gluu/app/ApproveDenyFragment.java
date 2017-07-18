@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -40,6 +41,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -167,12 +169,22 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
             if (isEnroll){
                 type.setText("enroll");
             } else {
-                type.setText(push2Request.getMethod());
+                type.setText(capitalize(push2Request.getMethod()));
             }
             TextView time = (TextView) rootView.findViewById(R.id.text_application_created_label);
             time.setText(getTimeFromString(push2Request.getCreated()));
             TextView date = (TextView) rootView.findViewById(R.id.text_created_value);
             date.setText(getDateFromString(push2Request.getCreated()));
+            //Setup fonts
+            Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Regular.otf");
+            application.setTypeface(face);
+            applicationUrl.setTypeface(face);
+            userName.setTypeface(face);
+            locationIP.setTypeface(face);
+            locationAddress.setTypeface(face);
+            type.setTypeface(face);
+            time.setTypeface(face);
+            date.setTypeface(face);
         }
     }
 
@@ -220,6 +232,16 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
             createdString = userDateTimeFormat.format(createdDate);
         }
         return createdString;
+    }
+
+    public static String capitalize(String text){
+        String c = (text != null)? text.trim() : "";
+        String[] words = c.split(" ");
+        String result = "";
+        for(String w : words){
+            result += (w.length() > 1? w.substring(0, 1).toUpperCase(Locale.US) + w.substring(1, w.length()).toLowerCase(Locale.US) : w) + " ";
+        }
+        return result.trim();
     }
 
     void showAlertView(){

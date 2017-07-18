@@ -12,6 +12,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Typeface;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
@@ -42,6 +43,7 @@ import org.gluu.super_gluu.app.gluuToast.GluuToast;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
 import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.model.OxPush2Request;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -141,7 +143,8 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
             adView.setVisibility(View.GONE);
         }
         view.findViewById(R.id.button_scan).setOnClickListener(this);
-        view.findViewById(R.id.button_ad_free).setOnClickListener(new View.OnClickListener() {
+        Button adFreeButton = (Button) view.findViewById(R.id.button_ad_free);
+        adFreeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 runSubscribeFlow();
@@ -159,6 +162,18 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
                 new IntentFilter("on-ad-free-flow"));
         //Init GoogleMobile AD
         initGoogleInterstitialAd();
+
+        //Setup fonts
+        TextView welcomeTextView = (TextView) view.findViewById(R.id.textView);
+        TextView subTextView = (TextView) view.findViewById(R.id.textView2);
+
+        Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Semibold.otf");
+        Typeface faceLight = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Regular.otf");
+        scanButton.setTypeface(face);
+        adFreeButton.setTypeface(face);
+        welcomeTextView.setTypeface(face);
+        subTextView.setTypeface(faceLight);
+
         return view;
     }
 

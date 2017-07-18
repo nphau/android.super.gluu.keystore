@@ -56,19 +56,22 @@ public class SettingsFragment extends Fragment {
         final String settingsId = this.getArguments().getString("settingsId");
 
         TextView textSettings = (TextView)view.findViewById(R.id.textViewSettings);
+        final TextView textSettingsSubTitle = (TextView)view.findViewById(R.id.textViewSubTitle);
 
         switchSettings = (Switch) view.findViewById(R.id.switch_setting);
         textSettings.setText(settingsId.equalsIgnoreCase("SSLConnectionSettings") ? getString(R.string.trust_all_certificate) : getString(R.string.fingerprint_title));
+        textSettingsSubTitle.setText(settingsId.equalsIgnoreCase("SSLConnectionSettings") ? getString(R.string.warning_trust_all_certificate) : getString(R.string.pin_code_text));
         switchSettings.setChecked(Settings.getSettingsValueEnabled(context, settingsId));
+        textSettingsSubTitle.setVisibility(switchSettings.isChecked() ? View.VISIBLE : View.GONE);
         switchSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (settingsId.equalsIgnoreCase("SSLConnectionSettings")) {
                     GluuApplication.isTrustAllCertificates = switchSettings.isChecked();
-                    if (switchSettings.isChecked()) {
-                        String message = context.getString(R.string.warning_trust_all_certificate);
-                        showToastWithText(message);
-                    }
+//                    if (switchSettings.isChecked()) {
+//                        String message = context.getString(R.string.warning_trust_all_certificate);
+//                        showToastWithText(message);
+//                    }
                 } else {
                     if (switchSettings.isChecked() && fingerprint.startFingerprintService()) {
                         Log.v("TAG", "Fingerprint Settings enable: " + switchSettings.isChecked());
@@ -77,6 +80,7 @@ public class SettingsFragment extends Fragment {
                         showToastWithText("Fingerprint is not available for this device");
                     }
                 }
+                textSettingsSubTitle.setVisibility(switchSettings.isChecked() ? View.VISIBLE : View.GONE);
                 Settings.setSettingsValueEnabled(context, settingsId, switchSettings.isChecked());
                 // Init network layer
                 CommunicationService.init();

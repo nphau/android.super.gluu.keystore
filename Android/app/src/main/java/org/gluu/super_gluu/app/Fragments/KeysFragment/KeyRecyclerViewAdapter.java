@@ -7,6 +7,7 @@
 package org.gluu.super_gluu.app.fragments.KeysFragment;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,6 +80,9 @@ public class KeyRecyclerViewAdapter extends ArrayAdapter {
             } else {
                 createdDate.setText(R.string.no_date);
             }
+            Typeface faceLight = Typeface.createFromAsset(mActivity.getAssets(), "ProximaNova-Regular.otf");
+            contentView.setTypeface(faceLight);
+            createdDate.setTypeface(faceLight);
         }
 
         return view;

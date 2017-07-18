@@ -9,9 +9,10 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:background="@android:color/white"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:id="@+id/relativeLayout">
 
             <TextView
                 android:id="@+id/textViewSettings"
@@ -39,6 +40,16 @@
                 android:trackTint="@color/greenColor" />
 
         </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textViewSubTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="20dp"
+        android:text="@string/warning_trust_all_certificate"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@+id/relativeLayout" />
 
     <LinearLayout
         android:id="@+id/view_ad_free"

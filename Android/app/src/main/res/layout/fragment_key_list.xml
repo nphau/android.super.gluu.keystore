@@ -35,15 +35,15 @@
         android:id="@+id/keyHandleListView"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="35dp"
         android:layout_marginTop="10dp"
         android:background="@android:color/white" />
 
     <TextView
         android:id="@+id/rename_textView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="-18dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-30dp"
         android:text="@string/rename_keys"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="13dp" />

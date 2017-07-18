@@ -3,8 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#ff4081</color>
-    <color name="greenColor">#01a161</color>
+    <color name="greenColor">#1ab26b</color>
     <color name="grayColorLight">#efeff4</color>
     <color name="redColor">#FF0000</color>
     <color name="blackColor">#000000</color>
+    <color name="navyBlueColor">#143642</color>
 </resources>

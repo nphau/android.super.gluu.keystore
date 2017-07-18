@@ -1,6 +1,7 @@
 package org.gluu.super_gluu.app.fragments.LogsFragment;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -137,6 +138,12 @@ public class LogsFragmentListAdapter extends BaseAdapter {
                 break;
         }
         contentView.setText(title);
+
+        //Setup fonts
+        Typeface face = Typeface.createFromAsset(activity.getAssets(), "ProximaNova-Regular.otf");
+        Typeface faceTitle = Typeface.createFromAsset(activity.getAssets(), "ProximaNova-Semibold.otf");
+        contentView.setTypeface(faceTitle);
+        createdTime.setTypeface(face);
 
         //Show hide checkboxes depends on editing mode
         final CheckBox check = (CheckBox) view.findViewById(R.id.logCheckBox);
