@@ -183,6 +183,7 @@ public class PinCodeFragment extends Fragment implements View.OnClickListener {
     private void showAlertView(String message){
         CustomGluuAlert gluuAlert = new CustomGluuAlert(getActivity());
         gluuAlert.setMessage(message);
+        gluuAlert.setYesTitle(getActivity().getApplicationContext().getString(R.string.ok));
         gluuAlert.show();
     }
 

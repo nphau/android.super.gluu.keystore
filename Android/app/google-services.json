@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "475312050819",
-    "firebase_url": "https://super-gluu-5122b.firebaseio.com",
-    "project_id": "super-gluu-5122b",
-    "storage_bucket": "super-gluu-5122b.appspot.com"
+    "project_number": "892865883615",
+    "firebase_url": "https://super-gluu-3dffc.firebaseio.com",
+    "project_id": "super-gluu-3dffc",
+    "storage_bucket": "super-gluu-3dffc.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:475312050819:android:1f0910ace3877ac1",
+        "mobilesdk_app_id": "1:892865883615:android:34972a7ae0c262ea",
         "android_client_info": {
           "package_name": "gluu.org.super.gluu"
         }
       },
       "oauth_client": [
         {
-          "client_id": "475312050819-c44m0sck3h1h12aufcafcdf3oig5iknu.apps.googleusercontent.com",
+          "client_id": "892865883615-37puvll8grgugdrrr0l1lekq42q3are5.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDXUylAD41oQsgFchsY8El20qxpTwovhAA"
+          "current_key": "AIzaSyD778M960NHm_X7lOyi3psf5-0BI_r3Yxk"
         }
       ],
       "services": {

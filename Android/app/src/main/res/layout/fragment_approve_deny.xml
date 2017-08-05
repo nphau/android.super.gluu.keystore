@@ -5,40 +5,23 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:background="@color/grayColorLight"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin">
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/actionBarView"
+        android:layout_width="fill_parent"
+        android:layout_height="65dp"
+        layout="@layout/custom_action_bar" />
 
     <RelativeLayout
         android:id="@+id/topRelativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_gravity="center_horizontal"
         android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="0dp"
-            android:orientation="vertical"
-            android:id="@+id/linearLayout">
-
-            <Button
-            android:id="@+id/approve_deny_close_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:background="@drawable/rounded_button_black"
-            android:text="@string/close" />
-
-        </LinearLayout>
 
         <TextView
             android:id="@+id/timer_textView"
@@ -46,9 +29,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignStart="@+id/timer_view"
-            android:layout_centerVertical="true"
             android:gravity="center"
             android:text="@string/timer"
+            android:textSize="15sp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="27dp"
             android:textAlignment="center"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/greenColor" />
@@ -85,16 +70,18 @@
             <!--android:textColor="#FFFFFF" />-->
             <com.dinuscxj.progressbar.CircleProgressBar
                 android:id="@+id/line_progress"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 app:draw_progress_text="false"
                 app:line_count="30"
-                app:line_width="4dp"
+                app:line_width="3dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
                 app:progress_end_color="@color/greenColor"
                 app:progress_shader="sweep"
                 app:progress_start_color="@color/greenColor"
                 app:progress_stroke_cap="round"
-                app:progress_stroke_width="4dp"
+                app:progress_stroke_width="3dp"
                 app:progress_text_color="@color/greenColor"
                 app:style="solid_line" />
         </LinearLayout>
@@ -106,19 +93,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/topRelativeLayout"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
         android:text="@string/to_continue"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="bold" />
+        android:textColor="@color/blackColor"
+        android:textSize="22dp"/>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/ScrollView01"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title_textView"
-        android:background="@drawable/rounded_row">
+        android:background="@drawable/rounded_row"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:fillViewport="true">
+
+        <!--android:layout_above="@+id/action_button_group"-->
 
         <RelativeLayout
             android:id="@+id/mainRelativeLayout"
@@ -134,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="false"
                 android:layout_alignParentTop="false"
-                android:layout_marginTop="30dp">
+                android:layout_marginTop="10dp">
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -142,7 +135,7 @@
                     android:padding="@dimen/table_cell_text">
 
                     <ImageView
-                        android:id="@+id/imageView2"
+                        android:id="@+id/logo_imageView"
                         android:layout_width="20dp"
                         android:layout_height="25dp"
                         android:layout_marginTop="5dp"
@@ -181,7 +174,7 @@
                     <ImageView
                         android:id="@+id/imageView3"
                         android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_height="22dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="10dp"
                         android:src="@drawable/user_icon" />
@@ -204,8 +197,8 @@
 
                     <ImageView
                         android:id="@+id/imageView5"
-                        android:layout_width="25dp"
-                        android:layout_height="30dp"
+                        android:layout_width="20dp"
+                        android:layout_height="25dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="10dp"
                         android:src="@drawable/location_icon" />
@@ -243,7 +236,7 @@
 
                     <ImageView
                         android:id="@+id/imageView4"
-                        android:layout_width="30dp"
+                        android:layout_width="20dp"
                         android:layout_height="25dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="10dp"
@@ -308,7 +301,7 @@
 
     <LinearLayout
         android:id="@+id/action_button_group"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="false"
@@ -320,12 +313,13 @@
             android:layout_height="match_parent"
             android:layout_weight="1.15"
             android:background="@color/greenColor"
-            android:drawableLeft="@drawable/approve_icon"
-            android:gravity="center_vertical"
+            android:drawableTop="@drawable/approve_icon"
+            android:gravity="center"
             android:paddingBottom="15dp"
             android:paddingLeft="20dp"
             android:paddingTop="15dp"
             android:text="@string/button_approve"
+            android:textSize="22dp"
             android:textAllCaps="false"
             android:textColor="#FFFFFF" />
 
@@ -335,12 +329,13 @@
             android:layout_height="match_parent"
             android:layout_weight="1.24"
             android:background="#ff0000"
-            android:drawableLeft="@drawable/deny_icon"
-            android:gravity="center_vertical"
+            android:drawableTop="@drawable/deny_icon"
+            android:gravity="center"
             android:paddingBottom="15dp"
             android:paddingLeft="20dp"
             android:paddingTop="15dp"
             android:text="@string/button_decline"
+            android:textSize="22dp"
             android:textAllCaps="false"
             android:textColor="#FFFFFF" />
 

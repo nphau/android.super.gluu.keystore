@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -53,6 +55,21 @@ public class SettingsFragment extends Fragment {
         this.inflater = inflater;
         fingerprint = new Fingerprint(context);
 
+        View actionBarView = (View) view.findViewById(R.id.actionBarView);
+        actionBarView.findViewById(R.id.action_right_button).setVisibility(View.GONE);
+        actionBarView.findViewById(R.id.actionbar_icon).setVisibility(View.GONE);
+        TextView title = (TextView) actionBarView.findViewById(R.id.actionbar_textview);
+        title.setVisibility(View.VISIBLE);
+        title.setText("MENU");
+        LinearLayout leftButton = (LinearLayout) actionBarView.findViewById(R.id.action_left_button);
+        leftButton.setVisibility(View.VISIBLE);
+        leftButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+
         final String settingsId = this.getArguments().getString("settingsId");
 
         TextView textSettings = (TextView)view.findViewById(R.id.textViewSettings);
@@ -62,7 +79,7 @@ public class SettingsFragment extends Fragment {
         textSettings.setText(settingsId.equalsIgnoreCase("SSLConnectionSettings") ? getString(R.string.trust_all_certificate) : getString(R.string.fingerprint_title));
         textSettingsSubTitle.setText(settingsId.equalsIgnoreCase("SSLConnectionSettings") ? getString(R.string.warning_trust_all_certificate) : getString(R.string.pin_code_text));
         switchSettings.setChecked(Settings.getSettingsValueEnabled(context, settingsId));
-        textSettingsSubTitle.setVisibility(switchSettings.isChecked() ? View.VISIBLE : View.GONE);
+//        textSettingsSubTitle.setVisibility(switchSettings.isChecked() ? View.VISIBLE : View.GONE);
         switchSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,10 +94,10 @@ public class SettingsFragment extends Fragment {
                         Log.v("TAG", "Fingerprint Settings enable: " + switchSettings.isChecked());
                     } else {
                         switchSettings.setChecked(false);
-                        showToastWithText("Fingerprint is not available for this device");
+                        showToastWithText("Fingerprint is turned off for this device");
                     }
                 }
-                textSettingsSubTitle.setVisibility(switchSettings.isChecked() ? View.VISIBLE : View.GONE);
+//                textSettingsSubTitle.setVisibility(switchSettings.isChecked() ? View.VISIBLE : View.GONE);
                 Settings.setSettingsValueEnabled(context, settingsId, switchSettings.isChecked());
                 // Init network layer
                 CommunicationService.init();
@@ -98,6 +115,11 @@ public class SettingsFragment extends Fragment {
         //Setup message receiver
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
                 new IntentFilter("fingerprint_authentication_result"));
+
+        //Setup fonts
+        Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Regular.otf");
+        textSettings.setTypeface(face);
+        textSettingsSubTitle.setTypeface(face);
 
         return view;
     }

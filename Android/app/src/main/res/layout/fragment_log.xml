@@ -1,10 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.chauthai.swipereveallayout.SwipeRevealLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipe_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="100dp"
+    android:padding="10dp"
+    app:dragEdge="right"
+    app:mode="normal">
+
+    <FrameLayout
+        android:id="@+id/delete_layout"
+        android:layout_width="140dp"
+        android:layout_height="80dp"
+        android:background="@color/whiteColor"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:id="@+id/swipe_show_button"
+            android:layout_width="70dp"
+            android:layout_height="80dp"
+            android:background="#c0c0c0">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/view_action"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/swipe_delete_button"
+            android:layout_width="70dp"
+            android:layout_height="80dp"
+            android:background="#f6000c"
+            android:layout_marginLeft="70dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/delete_action"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<LinearLayout
+    android:id="@+id/log_main_view"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
     android:orientation="horizontal"
-    android:background="@drawable/rounded_row"
+    android:background="@color/whiteColor"
     android:weightSum="1">
 
     <CheckBox
@@ -52,3 +102,6 @@
     </LinearLayout>
 
 </LinearLayout>
+</FrameLayout>
+
+</com.chauthai.swipereveallayout.SwipeRevealLayout>

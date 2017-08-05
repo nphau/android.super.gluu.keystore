@@ -60,13 +60,15 @@
         <!--</activity>-->
         <!--For FCM instead of GMS-->
         <service
-            android:name="org.gluu.super_gluu.app.services.SuperGluuFirebaseInstanceIDService">
+            android:name="org.gluu.super_gluu.app.services.SuperGluuFirebaseInstanceIDService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
         <service
-            android:name="org.gluu.super_gluu.app.services.SuperGluuFirebaseMessagingService">
+            android:name="org.gluu.super_gluu.app.services.SuperGluuFirebaseMessagingService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>

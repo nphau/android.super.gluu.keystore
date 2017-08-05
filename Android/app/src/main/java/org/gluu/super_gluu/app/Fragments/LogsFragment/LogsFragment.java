@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,7 +24,6 @@ import SuperGluu.app.R;
 
 import org.gluu.super_gluu.app.GluuMainActivity;
 import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
-import org.gluu.super_gluu.app.fragments.LogsFragment.SwipeListener.SwipeDismissListViewTouchListener;
 import org.gluu.super_gluu.app.model.LogInfo;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
 
@@ -49,7 +50,7 @@ public class LogsFragment extends Fragment {
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
 //            String message = intent.getStringExtra("message");
-            logs = dataStore.getLogs();
+            reloadLogs();
             // fire the event
             listAdapter.updateResults(logs);
         }
@@ -80,6 +81,7 @@ public class LogsFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
 
         View rootView = inflater.inflate(R.layout.fragment_logs_list, container, false);
+        dataStore = new AndroidKeyDataStore(getActivity().getApplicationContext());
         reloadLogs();
         listView = (ListView) rootView.findViewById(R.id.logs_listView);
         mListener = new LogInfoListener() {
@@ -92,31 +94,49 @@ public class LogsFragment extends Fragment {
                 transaction.addToBackStack(null);
                 transaction.commit();
             }
-        };
-        // Create a ListView-specific touch listener. ListViews are given special treatment because
-        // by default they handle touches for their list items... i.e. they're in charge of drawing
-        // the pressed state (the list selector), handling list item clicks, etc.
-        SwipeDismissListViewTouchListener touchListener =
-                new SwipeDismissListViewTouchListener(
-                        listView,
-                        new SwipeDismissListViewTouchListener.DismissCallbacks() {
-                            @Override
-                            public boolean canDismiss(int position) {
-                                return true;
-                            }
 
-                            @Override
-                            public void onDismiss(ListView listView, int[] reverseSortedPositions) {
-                                for (int position : reverseSortedPositions) {
-//                                    mAdapter.remove(mAdapter.getItem(position));
-                                }
-                                listAdapter.notifyDataSetChanged();
-                            }
-                        });
-        listView.setOnTouchListener(touchListener);
-        // Setting this scroll listener is required to ensure that during ListView scrolling,
-        // we don't look for swipes.
-        listView.setOnScrollListener(touchListener.makeScrollListener());
+            @Override
+            public void onDeleteLogEvent() {
+                showAlertView();
+            }
+        };
+        View actionBarView = (View) rootView.findViewById(R.id.actionBarSettings);
+        actionBarView.findViewById(R.id.action_right_button).setVisibility(View.GONE);
+        actionBarView.findViewById(R.id.actionbar_icon).setVisibility(View.VISIBLE);
+        actionBarView.findViewById(R.id.actionbar_textview).setVisibility(View.GONE);
+        LinearLayout leftButton = (LinearLayout) actionBarView.findViewById(R.id.action_left_button);
+        final Button rightButton = (Button) actionBarView.findViewById(R.id.action_right_button);
+        rightButton.setVisibility(View.GONE);
+        int visible = logs.size() > 0 ? View.VISIBLE : View.GONE;
+        leftButton.setVisibility(visible);
+        leftButton.findViewById(R.id.actionBarBackArrow).setVisibility(View.GONE);
+        final Button backButton = (Button) leftButton.findViewById(R.id.actionBarBackButton);
+        backButton.setText("Edit");
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) backButton.getLayoutParams();
+        params.leftMargin = 25;
+        backButton.requestLayout();
+        leftButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listAdapter.isEditingMode){
+                    backButton.setText("Edit");
+                    listAdapter.isEditingMode = false;
+                    listAdapter.notifyDataSetChanged();
+                    rightButton.setVisibility(View.GONE);
+                } else {
+                    backButton.setText("Cancel");
+                    listAdapter.isEditingMode = true;
+                    listAdapter.notifyDataSetChanged();
+                    rightButton.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        rightButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlertView();
+            }
+        });
 
         listAdapter = new LogsFragmentListAdapter(getActivity(), logs, mListener);
         listView.setAdapter(listAdapter);
@@ -124,7 +144,7 @@ public class LogsFragment extends Fragment {
             @Override
             public void run() {
                 // Select the last row so it will scroll into view...
-                listView.setSelection(logs.size() - 1);
+                listView.setSelection(0);//logs.size() - 1);
             }
         });
         TextView noLogs = (TextView) rootView.findViewById(R.id.noLogs_textView);
@@ -164,7 +184,6 @@ public class LogsFragment extends Fragment {
     }
 
     private void reloadLogs(){
-        dataStore = new AndroidKeyDataStore(getActivity().getApplicationContext());
         List<LogInfo> logsFromDB = new ArrayList<LogInfo>(dataStore.getLogs());
         Collections.sort(logsFromDB, new Comparator<LogInfo>(){
             public int compare(LogInfo log1, LogInfo log2) {
@@ -178,11 +197,14 @@ public class LogsFragment extends Fragment {
     }
 
     void showAlertView(){
+        final Fragment frg = this;
         GluuMainActivity.GluuAlertCallback listener = new GluuMainActivity.GluuAlertCallback(){
             @Override
             public void onPositiveButton() {
                 if (!listAdapter.getSelectedLogList().isEmpty() && deleteLogListener != null){
                     deleteLogListener.onDeleteLogInfo(listAdapter.getSelectedLogList());
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.detach(frg).attach(frg).commit();
                 }
 //                android.support.v4.app.FragmentManager fm = getFragmentManager();
 //                fm.popBackStack();
@@ -195,10 +217,12 @@ public class LogsFragment extends Fragment {
         };
         CustomGluuAlert gluuAlert = new CustomGluuAlert(getActivity());
         if (listAdapter.getSelectedLogList().isEmpty()){
-            gluuAlert.setMessage(getActivity().getApplicationContext().getString(R.string.clear_log_empty_title));
+//            gluuAlert.setMessage(getActivity().getApplicationContext().getString(R.string.clear_log_empty_title));
+            gluuAlert.setSub_title(getActivity().getApplicationContext().getString(R.string.clear_log_empty_title));
             gluuAlert.setYesTitle(getActivity().getApplicationContext().getString(R.string.ok));
         } else {
-            gluuAlert.setMessage(getActivity().getApplicationContext().getString(R.string.clear_log_title));
+//            gluuAlert.setMessage(getActivity().getApplicationContext().getString(R.string.clear_log_title));
+            gluuAlert.setSub_title(getActivity().getApplicationContext().getString(R.string.clear_log_title));
             gluuAlert.setYesTitle(getActivity().getApplicationContext().getString(R.string.yes));
             gluuAlert.setNoTitle(getActivity().getApplicationContext().getString(R.string.no));
         }
@@ -215,6 +239,7 @@ public class LogsFragment extends Fragment {
 
     public interface LogInfoListener {
         void onKeyHandleInfo(ApproveDenyFragment approveDenyFragment);
+        void onDeleteLogEvent();
     }
 
 }

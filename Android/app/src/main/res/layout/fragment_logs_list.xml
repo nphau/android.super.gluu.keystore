@@ -5,6 +5,12 @@
     android:weightSum="1"
     android:background="#dcd9d9">
 
+    <include
+        android:id="@+id/actionBarSettings"
+        android:layout_width="fill_parent"
+        android:layout_height="65dp"
+        layout="@layout/custom_action_bar" />
+
     <ListView
         android:id="@+id/logs_listView"
         android:layout_width="match_parent"
@@ -13,11 +19,10 @@
         android:layout_alignParentTop="true"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_weight="0.44"
+        android:layout_marginTop="75dp"
         android:background="@android:color/white"
         android:divider="@color/grayColorLight"
-        android:dividerHeight="2.0sp"
+        android:dividerHeight="3px"
         android:scrollbars="none" />
 
     <TextView

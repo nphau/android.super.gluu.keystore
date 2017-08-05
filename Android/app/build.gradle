@@ -14,9 +14,9 @@ android {
     buildToolsVersion '25.0.0'
     defaultConfig {
         applicationId "gluu.org.super.gluu"
-        minSdkVersion 23
+        minSdkVersion 22
         targetSdkVersion 23
-        versionCode 17
+        versionCode 31
         versionName "3.1"
         multiDexEnabled true
         signingConfig signingConfigs.config
@@ -151,6 +151,8 @@ dependencies {
     compile 'com.anjlab.android.iab.v3:library:1.0.+'
     //Circle progressBar
     compile 'com.dinuscxj:circleprogressbar:1.1.1'
+    //For swipe gesture for table
+    compile 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

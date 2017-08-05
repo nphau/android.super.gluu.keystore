@@ -1,15 +1,18 @@
 package org.gluu.super_gluu.app.fragments.LicenseFragment;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.gluu.super_gluu.app.KeyHandleInfoFragment;
+import org.gluu.super_gluu.app.fragments.KeysFragment.KeyHandleInfoFragment;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,6 +26,16 @@ public class LicenseFragment extends Fragment implements View.OnClickListener {
 
     OnMainActivityListener mainActivityListener;
 
+    public Boolean getForFirstLoading() {
+        return isForFirstLoading;
+    }
+
+    public void setForFirstLoading(Boolean forFirstLoading) {
+        isForFirstLoading = forFirstLoading;
+    }
+
+    private Boolean isForFirstLoading = true;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -32,7 +45,28 @@ public class LicenseFragment extends Fragment implements View.OnClickListener {
         licenseTextView.setText(readLicenseTxt());
         licenseTextView.setMovementMethod(new ScrollingMovementMethod());
 
-        view.findViewById(R.id.accept_button).setOnClickListener(this);
+        Button aceptButton = (Button) view.findViewById(R.id.accept_button);
+        LinearLayout action_left_button = (LinearLayout) view.findViewById(R.id.action_left_button);
+        action_left_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+        aceptButton.setOnClickListener(this);
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) licenseTextView.getLayoutParams();
+        if (!isForFirstLoading){
+            aceptButton.setVisibility(View.GONE);
+            action_left_button.setVisibility(View.VISIBLE);
+            params.weight = 0.25f;
+        } else {
+            action_left_button.setVisibility(View.GONE);
+            params.weight = 0.98f;
+        }
+        licenseTextView.setLayoutParams(params);
+        //Setup fonts
+        Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Regular.otf");
+        aceptButton.setTypeface(face);
 
         return view;
     }

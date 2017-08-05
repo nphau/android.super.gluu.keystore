@@ -6,10 +6,16 @@
         android:background="@color/grayColorLight"
         android:orientation="vertical">
 
+    <include
+        android:id="@+id/actionBarView"
+        android:layout_width="fill_parent"
+        android:layout_height="65dp"
+        layout="@layout/custom_action_bar" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="80dp"
             android:background="@android:color/white"
             android:orientation="horizontal"
             android:id="@+id/relativeLayout">
@@ -23,8 +29,8 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="21dp"
+                android:textSize="19dp"
                 android:text="@string/trust_all_certificate"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/blackColor" />
 
             <Switch
@@ -45,10 +51,11 @@
         android:id="@+id/textViewSubTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
+        android:textSize="19dp"
         android:text="@string/warning_trust_all_certificate"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/grayColor"
         android:layout_below="@+id/relativeLayout" />
 
     <LinearLayout

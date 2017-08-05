@@ -39,10 +39,12 @@ import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.app.gluuToast.GluuToast;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
 import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.model.OxPush2Request;
+import org.gluu.super_gluu.store.AndroidKeyDataStore;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
@@ -77,8 +79,9 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
             String message = intent.getStringExtra("message");
-            if (context != null) {
-                showToastWithText(message);
+            if (context != null && !message.isEmpty()) {
+//                showToastWithText(message);
+                showDialog(message);
             }
             Boolean isAdFree = Settings.getPurchase(context);
             if (mInterstitialAd.isLoaded() && !isAdFree) {
@@ -138,6 +141,11 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         context = view.getContext();
         adView = (LinearLayout)view.findViewById(R.id.view_ad_free);
 //        adView.setVisibility(View.GONE);
+        View actionBarView = (View) view.findViewById(R.id.actionBarView);
+        actionBarView.findViewById(R.id.action_left_button).setVisibility(View.GONE);
+        actionBarView.findViewById(R.id.action_right_button).setVisibility(View.GONE);
+        actionBarView.findViewById(R.id.actionbar_icon).setVisibility(View.VISIBLE);
+        actionBarView.findViewById(R.id.actionbar_textview).setVisibility(View.GONE);
         Boolean isAdFree = Settings.getPurchase(context);
         if (isAdFree){
             adView.setVisibility(View.GONE);
@@ -266,6 +274,13 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         mInterstitialAd.setAdUnitId("ca-app-pub-3326465223655655/1731023230");
 
         mInterstitialAd.setAdListener(new AdListener() {
+
+            @Override
+            public void onAdOpened() {
+                // Code to be executed when the ad is displayed.
+                Log.i("Ads", "onAdOpened");
+            }
+
             @Override
             public void onAdClosed() {
                 // Load the next interstitial.
@@ -298,8 +313,9 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
     }
 
     private void submit() {
-        if (oxPush2RequestListener != null) {
-//            String message = "{\"req_ip\":\"178.136.126.205\",\"app\":\"https://ce-release.gluu.org/identity/authentication/authcode\",\"username\":\"nazar2017\",\"method\":\"authenticate\",\"req_loc\":\"Ukraine%2C%20L%27vivs%27ka%20Oblast%27%2C%20Lviv\",\"state\":\"cd98df91-3b71-4911-9a15-84253c326c7c\",\"created\":\"2016-05-10T09:19:46.260000\",\"issuer\":\"https://ce-release.gluu.org\"}";
+//        if (oxPush2RequestListener != null) {
+
+//        String message = "{\"app\":\"https://ce-release.gluu.org/identity/authentication/authcode\",\"method\":\"authenticate\",\"req_ip\":\"77.123.160.182\",\"created\":\"2017-07-30T20:19:27.307000\",\"issuer\":\"https://ce-release.gluu.org\",\"req_loc\":\"Ukraine%2C%20L%27vivs%27ka%20Oblast%27%2C%20Lviv\",\"state\":\"9e8fe200-5bab-4be1-857f-cc9a805a4738\",\"username\":\"qwerty2\"}";
 //            OxPush2Request oxPush2Request = null;
 //            try {
 //                oxPush2Request = new Gson().fromJson(message, OxPush2Request.class);
@@ -312,7 +328,39 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
             integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
             integrator.setPrompt(getString(R.string.scan_oxpush2_prompt));
             integrator.initiateScan();
+//        }
+    }
+
+    private void showDialog(String message){
+        Activity activity = getActivity();
+        String textSuccess = getActivity().getApplicationContext().getString(R.string.auth_result_success);
+        String textDeny = getActivity().getApplicationContext().getString(R.string.deny_result_success);
+        String finalMessage = message;
+        String finalTitle = "";
+        if (message.equalsIgnoreCase(textSuccess)){
+            finalMessage = activity.getApplicationContext().getString(R.string.auth_result_success);
+            finalTitle = activity.getApplicationContext().getString(R.string.success);
+        } else if (message.equalsIgnoreCase(textDeny)){
+            finalMessage = activity.getApplicationContext().getString(R.string.deny_result_success);
+            finalTitle = activity.getApplicationContext().getString(R.string.failed);
         }
+        final CustomGluuAlert gluuAlert = new CustomGluuAlert(activity);
+        gluuAlert.setMessage(finalTitle);
+        gluuAlert.setSub_title(finalMessage);
+        gluuAlert.setYesTitle(activity.getApplicationContext().getString(R.string.ok));
+        gluuAlert.type = NotificationType.DEFAULT;
+        gluuAlert.setmListener(new GluuMainActivity.GluuAlertCallback() {
+            @Override
+            public void onPositiveButton() {
+                //Skip here
+            }
+
+            @Override
+            public void onNegativeButton() {
+                //Skip here
+            }
+        });
+        gluuAlert.show();
     }
 
     private static boolean isConnected(final Context context) {

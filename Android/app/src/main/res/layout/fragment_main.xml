@@ -6,6 +6,12 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
+    <include
+        android:id="@+id/actionBarView"
+        android:layout_width="fill_parent"
+        android:layout_height="65dp"
+        layout="@layout/custom_action_bar" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -84,8 +90,9 @@
             android:layout_marginRight="1dp"
             android:layout_marginTop="10dp"
             android:gravity="center"
+            android:textColor="@color/grayColor"
             android:text="@string/ad_free_text"
-            android:textSize="15dp" />
+            android:textSize="14dp" />
 
         <Button
             android:id="@+id/button_ad_free"
@@ -95,7 +102,6 @@
             android:background="@drawable/rounded_fio_shape"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:paddingBottom="5dp"
             android:layout_marginBottom="15dp"
             android:textAllCaps="false"
             android:textSize="15dp"

@@ -5,6 +5,12 @@
     android:background="@color/grayColorLight"
     android:orientation="vertical">
 
+    <include
+        android:id="@+id/actionBarSettings"
+        android:layout_width="fill_parent"
+        android:layout_height="65dp"
+        layout="@layout/custom_action_bar" />
+
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"

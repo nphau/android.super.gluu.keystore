@@ -1,15 +1,11 @@
 package org.gluu.super_gluu.app.fragments.KeysFragment;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +15,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 
 import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
-import org.gluu.super_gluu.app.KeyHandleInfoFragment;
+
 import SuperGluu.app.R;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
 import org.gluu.super_gluu.u2f.v2.model.TokenEntry;
@@ -45,6 +41,11 @@ public class KeyFragmentListFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
 
         View rootView = inflater.inflate(R.layout.fragment_key_list, container, false);
+        View actionBarView = (View) rootView.findViewById(R.id.actionBarSettings);
+        actionBarView.findViewById(R.id.action_left_button).setVisibility(View.GONE);
+        actionBarView.findViewById(R.id.action_right_button).setVisibility(View.GONE);
+        actionBarView.findViewById(R.id.actionbar_icon).setVisibility(View.VISIBLE);
+        actionBarView.findViewById(R.id.actionbar_textview).setVisibility(View.GONE);
 
         listToken = getListToken(rootView);
         ListView lv = (ListView) rootView.findViewById(R.id.keyHandleListView);
@@ -76,15 +77,14 @@ public class KeyFragmentListFragment extends Fragment {
 
         TextView availableKeys = (TextView) rootView.findViewById(R.id.availableKeys_textView);
         TextView keys_textView = (TextView) rootView.findViewById(R.id.keys_textView);
-        TextView rename_textView = (TextView) rootView.findViewById(R.id.rename_textView);
-
-        availableKeys.setText(rootView.getContext().getString(R.string.available_keys));
+//        TextView rename_textView = (TextView) rootView.findViewById(R.id.rename_textView);
+        Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Semibold.otf");
         Typeface faceLight = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Regular.otf");
-        availableKeys.setTypeface(faceLight);
+        availableKeys.setTypeface(face);
         keys_textView.setTypeface(faceLight);
-        rename_textView.setTypeface(faceLight);
+//        rename_textView.setTypeface(faceLight);
 //        availableKeys.setText(rootView.getContext().getString(R.string.available_keys, String.valueOf(listAdapter.getCount())));
-        renameText = (TextView) rootView.findViewById(R.id.rename_textView);
+//        renameText = (TextView) rootView.findViewById(R.id.rename_textView);
 
         return rootView;
     }
@@ -96,9 +96,9 @@ public class KeyFragmentListFragment extends Fragment {
     }
 
     void checkTokenList(){
-        if (listToken.size() == 0) {
-            renameText.setVisibility(View.GONE);
-        }
+//        if (listToken.size() == 0) {
+//            renameText.setVisibility(View.GONE);
+//        }
     }
 
     List<TokenEntry> getListToken(View view){

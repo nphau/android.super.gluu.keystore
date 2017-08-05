@@ -38,8 +38,8 @@ public class GluuToast extends Toast {
 
         // Toast...
         Toast toast = new Toast(context);
-        toast.setGravity(Gravity.TOP, 0, 100);
-        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.BOTTOM, 0, 200);
+        toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
         toast.show();
     }

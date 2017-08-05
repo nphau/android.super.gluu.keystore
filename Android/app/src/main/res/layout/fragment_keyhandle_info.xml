@@ -4,53 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@color/grayColorLight"
+    android:background="@color/backgroundColor"
     android:orientation="vertical">
 
-    <!--<RelativeLayout-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--android:orientation="horizontal">-->
-
-        <!--<Button-->
-            <!--android:id="@+id/close_button"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentLeft="true"-->
-            <!--android:layout_alignParentTop="true"-->
-            <!--android:layout_marginLeft="0dp"-->
-            <!--android:layout_marginTop="0dp"-->
-            <!--android:textAllCaps="false"-->
-            <!--android:background="@drawable/rounded_button_black"-->
-            <!--android:text="@string/back" />-->
-
-        <!--&lt;!&ndash;<Space&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_width="181dp"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:minWidth="16dp"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_column="1" />&ndash;&gt;-->
-
-        <!--<Button-->
-            <!--android:id="@+id/delete_button"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentLeft="false"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_alignParentTop="true"-->
-            <!--android:background="@drawable/rounded_button_red"-->
-            <!--android:text="@string/button_delete"-->
-            <!--android:textAllCaps="false"-->
-            <!--android:textColor="@color/redColor" />-->
-
-    <!--</RelativeLayout>-->
+    <include
+        android:id="@+id/actionBarView"
+        android:layout_width="fill_parent"
+        android:layout_height="65dp"
+        layout="@layout/custom_action_bar" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="85dp"
         android:background="@android:color/white"
         android:orientation="vertical">
 
@@ -61,14 +29,14 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:text="@string/info"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textStyle="bold" />
+            android:textColor="@color/blackColor"
+            android:textSize="20dp" />
 
         <ScrollView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_weight="1"
             android:layout_marginLeft="15dp"
+            android:layout_weight="1"
             android:scrollbars="none">
 
             <LinearLayout
@@ -88,16 +56,16 @@
                         android:layout_height="wrap_content"
                         android:text="@string/label_user_name"
                         android:textColor="@color/blackColor"
-                        android:textSize="16dp" />
+                        android:textSize="17dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
                         android:text=":"
-                        android:textSize="16dp"
-                        android:textColor="@color/greenColor" />
+                        android:textColor="@color/greenColor"
+                        android:textSize="17dp" />
 
                     <TextView
                         android:id="@+id/keyHandle_user_name_label_value"
@@ -105,8 +73,8 @@
                         android:layout_height="wrap_content"
                         android:layout_column="2"
                         android:text=""
-                        android:textSize="16dp"
-                        android:textColor="@color/common_google_signin_btn_text_light_default" />
+                        android:textColor="@color/grayColor"
+                        android:textSize="17dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -120,17 +88,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_created"
-                        android:textSize="16dp"
-                        android:textColor="@color/blackColor" />
+                        android:textColor="@color/blackColor"
+                        android:textSize="17dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
                         android:text=":"
-                        android:textSize="16dp"
-                        android:textColor="@color/greenColor" />
+                        android:textColor="@color/greenColor"
+                        android:textSize="17dp" />
 
                     <TextView
                         android:id="@+id/keyHandle_created_value"
@@ -138,8 +106,8 @@
                         android:layout_height="wrap_content"
                         android:layout_column="2"
                         android:text=""
-                        android:textSize="16dp"
-                        android:textColor="@color/common_google_signin_btn_text_light_default" />
+                        android:textSize="17dp"
+                        android:textColor="@color/grayColor"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -153,17 +121,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_issuer"
-                        android:textSize="16dp"
-                        android:textColor="@color/blackColor" />
+                        android:textColor="@color/blackColor"
+                        android:textSize="17dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
                         android:text=":"
-                        android:textSize="16dp"
-                        android:textColor="@color/greenColor" />
+                        android:textColor="@color/greenColor"
+                        android:textSize="17dp" />
 
                     <TextView
                         android:id="@+id/keyHandle_issuer_value"
@@ -171,15 +139,15 @@
                         android:layout_height="wrap_content"
                         android:layout_column="2"
                         android:text=""
-                        android:textSize="16dp"
-                        android:textColor="@color/common_google_signin_btn_text_light_default" />
+                        android:textSize="17dp"
+                        android:textColor="@color/grayColor"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
                     android:layout_marginBottom="30dp"
+                    android:layout_marginTop="15dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -188,17 +156,17 @@
                         android:layout_height="wrap_content"
                         android:enabled="true"
                         android:text="@string/keyHandle"
-                        android:textSize="16dp"
-                        android:textColor="@color/blackColor" />
+                        android:textColor="@color/blackColor"
+                        android:textSize="17dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
                         android:text=":"
-                        android:textSize="16dp"
-                        android:textColor="@color/greenColor" />
+                        android:textColor="@color/greenColor"
+                        android:textSize="17dp" />
 
                     <TextView
                         android:id="@+id/keyHandle_id"
@@ -206,53 +174,53 @@
                         android:layout_height="wrap_content"
                         android:layout_column="2"
                         android:text=""
-                        android:textSize="16dp"
-                        android:textColor="@color/common_google_signin_btn_text_light_default" />
+                        android:textSize="17dp"
+                        android:textColor="@color/grayColor"/>
                 </LinearLayout>
 
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/view_ad_free"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center_vertical"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_weight="0.06"
-        android:background="@drawable/black_border"
-        android:elevation="20dp"
-        android:orientation="vertical">
+    <!--<LinearLayout-->
+        <!--android:id="@+id/view_ad_free"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:layout_marginBottom="5dp"-->
+        <!--android:layout_marginLeft="30dp"-->
+        <!--android:layout_marginRight="30dp"-->
+        <!--android:layout_weight="0.06"-->
+        <!--android:background="@drawable/black_border"-->
+        <!--android:elevation="20dp"-->
+        <!--android:orientation="vertical">-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="1dp"
-            android:layout_marginRight="1dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="@string/ad_free_text"
-            android:textSize="15dp" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:layout_marginLeft="1dp"-->
+            <!--android:layout_marginRight="1dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/ad_free_text"-->
+            <!--android:textSize="15dp" />-->
 
-        <Button
-            android:id="@+id/button_ad_free"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/rounded_fio_shape"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:text="@string/ad_free_title"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
+        <!--<Button-->
+            <!--android:id="@+id/button_ad_free"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_marginBottom="20dp"-->
+            <!--android:background="@drawable/rounded_fio_shape"-->
+            <!--android:paddingLeft="20dp"-->
+            <!--android:paddingRight="20dp"-->
+            <!--android:text="@string/ad_free_title"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:textColor="@android:color/white" />-->
+    <!--</LinearLayout>-->
 
 </RelativeLayout>

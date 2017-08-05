@@ -64,7 +64,7 @@ public class KeyRecyclerViewAdapter extends ArrayAdapter {
                 String keyHandleTitle = prefixKeyHandle + " ("+ position + ") " + deviceName;
                 contentView.setText(keyHandleTitle);
             }
-            TextView createdDate = (TextView) view.findViewById(R.id.created_date);
+            TextView createdDate = (TextView) view.findViewById(R.id.created_dateKey);
 
             if (createdDate != null && token.getCreatedDate() != null) {
                 Date date = null;

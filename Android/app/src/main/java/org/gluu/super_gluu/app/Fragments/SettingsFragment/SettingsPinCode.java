@@ -2,6 +2,7 @@ package org.gluu.super_gluu.app.fragments.SettingsFragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -18,6 +19,7 @@ import com.hrules.horizontalnumberpicker.HorizontalNumberPicker;
 import com.hrules.horizontalnumberpicker.HorizontalNumberPickerListener;
 
 import org.gluu.super_gluu.app.GluuMainActivity;
+import org.gluu.super_gluu.app.NotificationType;
 import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.app.fingerprint.Fingerprint;
 import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
@@ -44,6 +46,20 @@ public class SettingsPinCode extends Fragment implements HorizontalNumberPickerL
         View view = inflater.inflate(R.layout.settings_pincode, container, false);
         context = getContext();
         this.inflater = inflater;
+        View actionBarView = (View) view.findViewById(R.id.actionBarSettings);
+        actionBarView.findViewById(R.id.action_right_button).setVisibility(View.GONE);
+        actionBarView.findViewById(R.id.actionbar_icon).setVisibility(View.GONE);
+        TextView title = (TextView) actionBarView.findViewById(R.id.actionbar_textview);
+        title.setVisibility(View.VISIBLE);
+        title.setText("MENU");
+        LinearLayout leftButton = (LinearLayout) actionBarView.findViewById(R.id.action_left_button);
+        leftButton.setVisibility(View.VISIBLE);
+        leftButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
         setResetPinButton = (Button) view.findViewById(R.id.set_reset_pin_button);
         setResetPinButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,10 +77,12 @@ public class SettingsPinCode extends Fragment implements HorizontalNumberPickerL
                     }
                 };
                 CustomGluuAlert gluuAlert = new CustomGluuAlert(getActivity());
-                gluuAlert.setMessage(getContext().getString(R.string.change_pin));
+//                gluuAlert.setMessage(getContext().getString(R.string.change_pin));
+                gluuAlert.setSub_title(getContext().getString(R.string.change_pin));
                 gluuAlert.setYesTitle(getContext().getString(R.string.yes));
                 gluuAlert.setNoTitle(getContext().getString(R.string.no));
                 gluuAlert.setmListener(listener);
+                gluuAlert.type = NotificationType.RENAME_KEY;
                 gluuAlert.show();
             }
         });
@@ -102,6 +120,22 @@ public class SettingsPinCode extends Fragment implements HorizontalNumberPickerL
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
             }
         });
+
+        //Setup fonts
+        TextView settings_textView1 = (TextView) view.findViewById(R.id.settings_textView1);
+        TextView settings_textView2 = (TextView) view.findViewById(R.id.settings_textView2);
+        TextView textView7 = (TextView) view.findViewById(R.id.textView7);
+        TextView numbers_attempts_label = (TextView) view.findViewById(R.id.numbers_attempts_label);
+
+
+        Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Regular.otf");
+        Typeface faceBold = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Semibold.otf");
+        settings_textView1.setTypeface(face);
+        settings_textView2.setTypeface(face);
+        textView7.setTypeface(face);
+        numbers_attempts_label.setTypeface(face);
+        attemptsLabel.setTypeface(face);
+        setResetPinButton.setTypeface(faceBold);
 
         return view;
     }

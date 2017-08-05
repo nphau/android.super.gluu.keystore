@@ -6,7 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -34,7 +37,10 @@ import org.gluu.super_gluu.model.OxPush2Request;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
 import org.gluu.super_gluu.util.Utils;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
@@ -64,6 +70,8 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
     private Timer clock;
     private Handler handler;
 
+    private ImageView logo_imageView;
+
     int sec = 40;
 
     private BroadcastReceiver mDeleteReceiver = new BroadcastReceiver() {
@@ -83,25 +91,53 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
         Button approveButton = (Button) rootView.findViewById(R.id.button_approve);
         Button denyButton = (Button) rootView.findViewById(R.id.button_deny);
 
+        View actionBarView = (View) rootView.findViewById(R.id.actionBarView);
+        actionBarView.findViewById(R.id.action_right_button).setVisibility(View.GONE);
+        ImageView titleIcon = (ImageView) actionBarView.findViewById(R.id.actionbar_icon);
+        TextView title = (TextView) actionBarView.findViewById(R.id.actionbar_textview);
+        LinearLayout leftButton = (LinearLayout) actionBarView.findViewById(R.id.action_left_button);
+        leftButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+
+        TextView titleTextView = (TextView) rootView.findViewById(R.id.title_textView);
+        //Setup fonts
+        Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Semibold.otf");
+        titleTextView.setTypeface(face);
         if (isUserInfo){
             View timerView = (View) rootView.findViewById(R.id.timer_view);
-            TextView titleTextView = (TextView) rootView.findViewById(R.id.title_textView);
+
             TextView timerTextView = (TextView) rootView.findViewById(R.id.timer_textView);
-            Button closeButton = (Button) rootView.findViewById(R.id.approve_deny_close_button);
+//            Button closeButton = (Button) rootView.findViewById(R.id.approve_deny_close_button);
             timerView.setVisibility(View.GONE);
             timerTextView.setVisibility(View.GONE);
             titleTextView.setVisibility(View.GONE);//setText(R.string.info);
             approveButton.setVisibility(View.GONE);
             denyButton.setVisibility(View.GONE);
-            closeButton.setVisibility(View.GONE);
+//            closeButton.setVisibility(View.GONE);
             mLineProgressBar.setVisibility(View.GONE);
+            leftButton.setVisibility(View.VISIBLE);
+            title.setVisibility(View.VISIBLE);
+            title.setText("LOG");
+            titleIcon.setVisibility(View.GONE);
         } else {
-            rootView.findViewById(R.id.approve_deny_close_button).setVisibility(View.GONE);
+            actionBarView.setVisibility(View.GONE);
+            RelativeLayout topRelativeLayout = (RelativeLayout) rootView.findViewById(R.id.topRelativeLayout);
+            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) topRelativeLayout.getLayoutParams();
+            params.topMargin = 10;
+            topRelativeLayout.requestLayout();
+//            rootView.findViewById(R.id.approve_deny_close_button).setVisibility(View.GONE);
             startClockTick(rootView);
+            leftButton.setVisibility(View.GONE);
+            title.setVisibility(View.GONE);
+            titleIcon.setVisibility(View.VISIBLE);
         }
 
         updateLogInfo(rootView);
-        rootView.findViewById(R.id.approve_deny_close_button).setOnClickListener(this);
+//        rootView.findViewById(R.id.approve_deny_close_button).setOnClickListener(this);
         approveButton.setOnClickListener(this);
         denyButton.setOnClickListener(this);
 
@@ -109,6 +145,38 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
                 new IntentFilter("on-delete-log-event"));
 
         return rootView;
+    }
+
+    public void getBitmapFromURL(final String src) {
+        final ApproveDenyFragment mainFragmentObj = this;
+        Thread thread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try  {
+                    try {
+                        URL url = new URL(src);
+                        String host = url.getHost();
+                        URL mainUrl = new URL("https://www.google.com/s2/favicons?domain=" + host);
+                        HttpURLConnection connection = (HttpURLConnection) mainUrl.openConnection();
+                        connection.setDoInput(true);
+                        connection.connect();
+                        InputStream input = connection.getInputStream();
+                        Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                        mainFragmentObj.updateLogo(myBitmap);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+//                        return null;
+
+//                        https://www.google.com/s2/favicons?domain=football.ua
+//                        https://www.google.com/s2/favicons?domain=ce-release.gluu.org
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
     }
 
     @Override
@@ -139,6 +207,7 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
 
     private void updateLogInfo(View rootView){
         if (push2Request != null){
+            logo_imageView = (ImageView)rootView.findViewById(R.id.logo_imageView);
             TextView application = (TextView) rootView.findViewById(R.id.text_application_label);
             URL url = null;
             try {
@@ -166,11 +235,7 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
             AndroidKeyDataStore dataStore = new AndroidKeyDataStore(getContext());
             final List<byte[]> keyHandles = dataStore.getKeyHandlesByIssuerAndAppId(push2Request.getIssuer(), push2Request.getApp());
             final boolean isEnroll = (keyHandles.size() == 0) || StringUtils.equals(push2Request.getMethod(), "enroll");
-            if (isEnroll){
-                type.setText("enroll");
-            } else {
-                type.setText(capitalize(push2Request.getMethod()));
-            }
+            type.setText(capitalize(push2Request.getMethod()));
             TextView time = (TextView) rootView.findViewById(R.id.text_application_created_label);
             time.setText(getTimeFromString(push2Request.getCreated()));
             TextView date = (TextView) rootView.findViewById(R.id.text_created_value);
@@ -185,7 +250,21 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
             type.setTypeface(face);
             time.setTypeface(face);
             date.setTypeface(face);
+
+            //Load favicon by url
+//            getBitmapFromURL(push2Request.getIssuer());
         }
+    }
+
+    private void updateLogo(final Bitmap logo){
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                //stuff that updates ui
+                logo_imageView.setImageBitmap(logo);
+            }
+        });
+
     }
 
     private String getDateFromString(String dateString){

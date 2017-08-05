@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.gluu.super_gluu.app.fragments.LicenseFragment.LicenseFragment;
 import org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsFragment;
 import org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsPinCode;
 import org.gluu.super_gluu.app.purchase.InAppPurchaseService;
@@ -171,6 +173,10 @@ public class SettingsListFragmentAdapter extends BaseAdapter {
                     Uri uri = Uri.parse("https://gluu.org/docs/supergluu/3.0.0/user-guide/");
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     activity.startActivity(intent);
+                } else if (position == 5) {
+                    LicenseFragment licenseFragment = new LicenseFragment();
+                    licenseFragment.setForFirstLoading(false);
+                    mListener.onSettingsList(licenseFragment);
                 } else if (position == 6 && !Settings.getPurchase(context)){
                     Intent intent = new Intent("on-ad-free-flow");
                     LocalBroadcastManager.getInstance(context).sendBroadcast(intent);

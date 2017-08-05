@@ -2,16 +2,24 @@ package org.gluu.super_gluu.app.fragments.LogsFragment;
 
 import android.app.Activity;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.chauthai.swipereveallayout.SwipeRevealLayout;
+import com.chauthai.swipereveallayout.ViewBinderHelper;
 
 import org.gluu.super_gluu.app.ApproveDenyFragment;
 import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
@@ -39,6 +47,8 @@ public class LogsFragmentListAdapter extends BaseAdapter {
     private LogsFragment.LogInfoListener mListener;
     private Activity activity;
 
+    private final ViewBinderHelper binderHelper;
+
     public Boolean isEditingMode = false;
 
     public LogsFragmentListAdapter(Activity activity, List<LogInfo> logs, LogsFragment.LogInfoListener listener){
@@ -46,6 +56,7 @@ public class LogsFragmentListAdapter extends BaseAdapter {
         this.activity = activity;
         mInflater = LayoutInflater.from(activity);
         mListener = listener;
+        binderHelper = new ViewBinderHelper();
     }
 
     @Override
@@ -66,55 +77,92 @@ public class LogsFragmentListAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         View view = convertView;
-
+        ViewHolder holder;
+//        final LogInfo current_log = list.get(position);
         if (view == null) {
-            LayoutInflater inflater = mInflater;
-            view = inflater.inflate(R.layout.fragment_log, null);
+            view = mInflater.inflate(R.layout.fragment_log, parent, false);
+            holder = new ViewHolder();
+//            holder.textView = (TextView) convertView.findViewById(R.id.text);
+            View swipeView = view.findViewById(R.id.delete_layout);
+            swipeView.setTag(position);
+            holder.deleteButton = (RelativeLayout) swipeView.findViewById(R.id.swipe_delete_button);
+            holder.showButton = (RelativeLayout) swipeView.findViewById(R.id.swipe_show_button);
+            holder.deleteButton.setTag(position);
+            holder.showButton.setTag(position);
+//            holder.showView = view.findViewById(R.id.show_layout);
+            holder.swipeLayout = (SwipeRevealLayout) view.findViewById(R.id.swipe_layout);
+            holder.index = position;
+            final View finalView = view;
+            holder.swipeLayout.setSwipeListener(new SwipeRevealLayout.SwipeListener() {
+                @Override
+                public void onClosed(SwipeRevealLayout view) {
+                    ViewHolder tag = (ViewHolder) finalView.getTag();
+                    int position = tag.index;
+                    LogInfo checkedLogInfo = list.get(position);
+                    Iterator<LogInfo> iter = selectedLogList.iterator();
+                    while (iter.hasNext()) {
+                        LogInfo logInf = iter.next();
+                        if (checkedLogInfo.getCreatedDate().equalsIgnoreCase(logInf.getCreatedDate())){
+                            iter.remove();
+                        }
+                    }
+                }
+
+                @Override
+                public void onOpened(SwipeRevealLayout view) {
+                    ViewHolder tag = (ViewHolder) finalView.getTag();
+                    int position = tag.index;
+                    selectedLogList.add(list.get(position));
+                }
+
+                @Override
+                public void onSlide(SwipeRevealLayout view, float slideOffset) {
+
+                }
+            });
+            view.setTag(holder);
+        } else {
+            holder = (ViewHolder) view.getTag();
         }
-        view.setTag(position);
+        LogInfo log = list.get(position);
+//        view.setTag(position);
         TextView contentView = (TextView) view.findViewById(R.id.content);
-        List<LogInfo> logsFromDB = new ArrayList<LogInfo>(list);
-        Collections.sort(logsFromDB, new Comparator<LogInfo>(){
-            public int compare(LogInfo log1, LogInfo log2) {
-                Date date1 = new Date(Long.valueOf(log1.getCreatedDate()));
-                Date date2 = new Date(Long.valueOf(log2.getCreatedDate()));
-                return date1.compareTo(date2);
-            }
-        });
-        Collections.reverse(logsFromDB);
-        list = logsFromDB;
-        final LogInfo log = list.get(position);
         if (log.getLogState() == LogState.ENROL_FAILED || log.getLogState() == LogState.LOGIN_FAILED
-                || log.getLogState() == LogState.UNKNOWN_ERROR || log.getLogState() == LogState.LOGIN_DECLINED){
+                || log.getLogState() == LogState.UNKNOWN_ERROR || log.getLogState() == LogState.LOGIN_DECLINED || log.getLogState() == LogState.ENROL_DECLINED){
             ImageView logo = (ImageView) view.findViewById(R.id.logLogo);
             contentView.setTextColor(ContextCompat.getColor(view.getContext(), R.color.redColor));
             logo.setImageResource(R.drawable.gluu_icon_red);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CustomGluuAlert gluuAlert = new CustomGluuAlert(activity);
-                    String message = log.getMessage() != null ? log.getMessage() : "Unknown error";
-                    gluuAlert.setMessage(message);
-                    gluuAlert.show();
-                }
-            });
+//            view.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    CustomGluuAlert gluuAlert = new CustomGluuAlert(activity);
+//                    String message = log.getMessage() != null ? log.getMessage() : "Unknown error";
+//                    gluuAlert.setMessage(message);
+//                    gluuAlert.show();
+//                }
+//            });
         } else {
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = (int) v.getTag();
-                    ApproveDenyFragment approveDenyFragment = new ApproveDenyFragment();
-                    approveDenyFragment.setIsUserInfo(true);
-                    OxPush2Request request = oxPush2Adapter(list.get(position));
-                    approveDenyFragment.setPush2Request(request);
-                    if (mListener != null) {
-//                        Settings.setIsBackButtonVisible(activity.getApplicationContext(), true);
-                        Settings.setIsBackButtonVisibleForLog(activity.getApplicationContext(), true);
-                        mListener.onKeyHandleInfo(approveDenyFragment);
-                    }
-                }
-            });
+            ImageView logo = (ImageView) view.findViewById(R.id.logLogo);
+            contentView.setTextColor(ContextCompat.getColor(view.getContext(), R.color.blackColor));
+            logo.setImageResource(R.drawable.gluu_icon);
         }
+        LinearLayout log_main_view = (LinearLayout) view.findViewById(R.id.log_main_view);
+        log_main_view.setTag(position);
+        log_main_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = (int) v.getTag();
+                ApproveDenyFragment approveDenyFragment = new ApproveDenyFragment();
+                approveDenyFragment.setIsUserInfo(true);
+                OxPush2Request request = oxPush2Adapter(list.get(position));
+                approveDenyFragment.setPush2Request(request);
+                if (mListener != null) {
+//                        Settings.setIsBackButtonVisible(activity.getApplicationContext(), true);
+                    Settings.setIsBackButtonVisibleForLog(activity.getApplicationContext(), true);
+                    mListener.onKeyHandleInfo(approveDenyFragment);
+                }
+            }
+        });
         String title = log.getIssuer();
             String timeAgo = (String) DateUtils.getRelativeTimeSpanString(Long.valueOf(log.getCreatedDate()), System.currentTimeMillis(),
                     DateUtils.MINUTE_IN_MILLIS);
@@ -139,6 +187,38 @@ public class LogsFragmentListAdapter extends BaseAdapter {
         }
         contentView.setText(title);
 
+        final String item = log.getUserName();
+        if (item != null) {
+            binderHelper.bind(holder.swipeLayout, item);
+
+//            holder.textView.setText(item);
+            holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        mListener.onDeleteLogEvent();
+                    }
+                }
+            });
+            final View finalView = view;
+            holder.showButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ViewHolder tag = (ViewHolder) finalView.getTag();
+                    int position = (int) tag.deleteButton.getTag();
+                    ApproveDenyFragment approveDenyFragment = new ApproveDenyFragment();
+                    approveDenyFragment.setIsUserInfo(true);
+                    OxPush2Request request = oxPush2Adapter(list.get(position));
+                    approveDenyFragment.setPush2Request(request);
+                    if (mListener != null) {
+//                        Settings.setIsBackButtonVisible(activity.getApplicationContext(), true);
+                        Settings.setIsBackButtonVisibleForLog(activity.getApplicationContext(), true);
+                        mListener.onKeyHandleInfo(approveDenyFragment);
+                    }
+                }
+            });
+        }
+
         //Setup fonts
         Typeface face = Typeface.createFromAsset(activity.getAssets(), "ProximaNova-Regular.otf");
         Typeface faceTitle = Typeface.createFromAsset(activity.getAssets(), "ProximaNova-Semibold.otf");
@@ -148,6 +228,10 @@ public class LogsFragmentListAdapter extends BaseAdapter {
         //Show hide checkboxes depends on editing mode
         final CheckBox check = (CheckBox) view.findViewById(R.id.logCheckBox);
         check.setTag(position);
+        LogInfo checkedLogInfo = list.get((Integer) check.getTag());
+        for (LogInfo logInf : new ArrayList<>(selectedLogList)){
+            check.setChecked(checkedLogInfo.getCreatedDate().equalsIgnoreCase(logInf.getCreatedDate()));
+        }
         check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -194,5 +278,29 @@ public class LogsFragmentListAdapter extends BaseAdapter {
 
     public List<LogInfo> getSelectedLogList(){
         return selectedLogList;
+    }
+
+    /**
+     * Only if you need to restore open/close state when the orientation is changed.
+     * Call this method in {@link android.app.Activity#onSaveInstanceState(Bundle)}
+     */
+    public void saveStates(Bundle outState) {
+        binderHelper.saveStates(outState);
+    }
+
+    /**
+     * Only if you need to restore open/close state when the orientation is changed.
+     * Call this method in {@link android.app.Activity#onRestoreInstanceState(Bundle)}
+     */
+    public void restoreStates(Bundle inState) {
+        binderHelper.restoreStates(inState);
+    }
+
+    private class ViewHolder {
+        int index;
+        TextView textView;
+        RelativeLayout deleteButton;
+        RelativeLayout showButton;
+        SwipeRevealLayout swipeLayout;
     }
 }

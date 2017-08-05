@@ -50,9 +50,17 @@ public class SettingsListFragment extends Fragment {
         this.inflater = inflater;
         View rootView = inflater.inflate(R.layout.settings_list, container, false);
 
+        View actionBarView = (View) rootView.findViewById(R.id.actionBarSettings);
+        actionBarView.findViewById(R.id.action_left_button).setVisibility(View.GONE);
+        actionBarView.findViewById(R.id.action_right_button).setVisibility(View.GONE);
+        actionBarView.findViewById(R.id.actionbar_icon).setVisibility(View.GONE);
+        TextView title = (TextView) actionBarView.findViewById(R.id.actionbar_textview);
+        title.setVisibility(View.VISIBLE);
+        title.setText("MENU");
+
         listSettings = new ArrayList<String>();
         listSettings.add("Pin code");
-        listSettings.add("TouchID (fingerprint)");
+        listSettings.add("Fingerprint");
 //        listSettings.add("U2F BLE device(s)");
         listSettings.add("Trust all (SSL)");
         listSettings.add("");

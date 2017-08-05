@@ -6,12 +6,17 @@
     android:background="@color/grayColorLight"
     android:orientation="vertical">
 
-
+    <include
+        android:id="@+id/actionBarSettings"
+        android:layout_width="fill_parent"
+        android:layout_height="65dp"
+        layout="@layout/custom_action_bar" />
 
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grayColorLight"
+    android:layout_marginTop="70dp"
     android:paddingBottom="20dp">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -34,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/switch_pin_code"
                 android:layout_alignParentStart="true"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="25dp"
                 android:text="@string/pin_code_settings"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/blackColor"
@@ -62,8 +67,9 @@
             android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
+            android:textSize="19dp"
             android:text="@string/pin_code_text"
-            android:textColor="@color/common_google_signin_btn_text_light_default" />
+            android:textColor="@color/grayColor" />
 
         <LinearLayout
             android:id="@+id/numbers_attempts_view"
@@ -140,8 +146,8 @@
             android:layout_marginTop="20dp"
             android:text="@string/text_attempts"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/common_google_signin_btn_text_light_default"
-            android:textSize="14sp" />
+            android:textColor="@color/grayColor"
+            android:textSize="19dp"/>
 
     </LinearLayout>
 </ScrollView>

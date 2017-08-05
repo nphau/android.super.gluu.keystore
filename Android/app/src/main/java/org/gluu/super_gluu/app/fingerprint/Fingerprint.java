@@ -43,9 +43,9 @@ public class Fingerprint {
         this.context = context;
 
         // Initializing both Android Keyguard Manager and Fingerprint Manager
-        keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
-        fingerprintManager = (FingerprintManager) context.getSystemService(Context.FINGERPRINT_SERVICE);
-        helper = new FingerprintHandler(context);
+//        keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+//        fingerprintManager = (FingerprintManager) context.getSystemService(Context.FINGERPRINT_SERVICE);
+//        helper = new FingerprintHandler(context);
 
         if (ActivityCompat.checkSelfPermission(this.context, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -104,8 +104,8 @@ public class Fingerprint {
                         generateKey();
                         if (cipherInit()) {
                             FingerprintManager.CryptoObject cryptoObject = new FingerprintManager.CryptoObject(cipher);
-
-                            helper.startAuth(fingerprintManager, cryptoObject);
+                            helper.showToast("Fingerprint is turned on for this device");
+//                            helper.startAuth(fingerprintManager, cryptoObject);
                         }
                     }
                     return true;

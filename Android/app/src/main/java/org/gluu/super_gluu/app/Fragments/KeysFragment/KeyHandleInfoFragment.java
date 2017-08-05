@@ -1,12 +1,11 @@
-package org.gluu.super_gluu.app;
+package org.gluu.super_gluu.app.fragments.KeysFragment;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,13 +13,14 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import org.gluu.super_gluu.app.GluuMainActivity;
 import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
-import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.u2f.v2.model.TokenEntry;
 import org.gluu.super_gluu.util.Utils;
 
@@ -86,8 +86,29 @@ public class KeyHandleInfoFragment extends Fragment implements View.OnClickListe
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_keyhandle_info, container, false);
         updateKeyHandleDetails(rootView);
-//        rootView.findViewById(R.id.delete_button).setOnClickListener(this);
-//        rootView.findViewById(R.id.close_button).setOnClickListener(this);
+
+        View actionBarView = (View) rootView.findViewById(R.id.actionBarView);
+        actionBarView.findViewById(R.id.actionbar_icon).setVisibility(View.GONE);
+        TextView title = (TextView) actionBarView.findViewById(R.id.actionbar_textview);
+        title.setVisibility(View.VISIBLE);
+        title.setText("KEY INFORMATION");
+        LinearLayout leftButton = (LinearLayout) actionBarView.findViewById(R.id.action_left_button);
+        leftButton.setVisibility(View.VISIBLE);
+        leftButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+        Button rightButton = (Button) actionBarView.findViewById(R.id.action_right_button);
+        rightButton.setVisibility(View.VISIBLE);
+        rightButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlertView();
+            }
+        });
+
         return rootView;
     }
 
@@ -109,20 +130,41 @@ public class KeyHandleInfoFragment extends Fragment implements View.OnClickListe
     }
 
     private void updateKeyHandleDetails(View view) {
-        ((TextView) view.findViewById(R.id.keyHandle_user_name_label_value)).setText(tokenEntry.getUserName());
-        setupPairingDateByFormat((TextView) view.findViewById(R.id.keyHandle_created_value));
+        TextView keyHandle_Title = ((TextView) view.findViewById(R.id.textView5));
+        TextView keyHandle_user_nameTitle = ((TextView) view.findViewById(R.id.keyHandle_user_name_label));
+        TextView keyHandle_user_name = ((TextView) view.findViewById(R.id.keyHandle_user_name_label_value));
+        keyHandle_user_name.setText(tokenEntry.getUserName());
+        TextView keyHandle_created = (TextView) view.findViewById(R.id.keyHandle_created_value);
+        TextView keyHandle_createdTitle = (TextView) view.findViewById(R.id.keyHandle_created);
+        setupPairingDateByFormat(keyHandle_created);
+        TextView keyHandle_issuer = ((TextView) view.findViewById(R.id.keyHandle_issuer_value));
+        TextView keyHandle_issuerTitle = ((TextView) view.findViewById(R.id.keyHandle_issuer_label));
         try {
             URI uri = new URI(tokenEntry.getIssuer());
             String path = uri.getHost();
-            ((TextView) view.findViewById(R.id.keyHandle_issuer_value)).setText(path);
+            keyHandle_issuer.setText(path);
         } catch (URISyntaxException e) {
-            ((TextView) view.findViewById(R.id.keyHandle_issuer_value)).setText(tokenEntry.getIssuer());
+            keyHandle_issuer.setText(tokenEntry.getIssuer());
             e.printStackTrace();
         }
 
         String keyStr = Utils.encodeHexString(tokenEntry.getKeyHandle());
         String keyHandleString = keyStr.substring(0, 6) + "..." + keyStr.substring(keyStr.length()-6);
-        ((TextView) view.findViewById(R.id.keyHandle_id)).setText(keyHandleString);
+        TextView keyHandle_id = ((TextView) view.findViewById(R.id.keyHandle_id));
+        TextView keyHandle_idTitle = ((TextView) view.findViewById(R.id.keyHandle_label));
+        keyHandle_id.setText(keyHandleString);
+        //Setup fonts
+        Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Semibold.otf");
+        Typeface faceLight = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Regular.otf");
+        keyHandle_Title.setTypeface(face);
+        keyHandle_user_name.setTypeface(faceLight);
+        keyHandle_user_nameTitle.setTypeface(faceLight);
+        keyHandle_created.setTypeface(faceLight);
+        keyHandle_createdTitle.setTypeface(faceLight);
+        keyHandle_issuer.setTypeface(faceLight);
+        keyHandle_issuerTitle.setTypeface(faceLight);
+        keyHandle_id.setTypeface(faceLight);
+        keyHandle_idTitle.setTypeface(faceLight);
     }
 
     @Override
@@ -138,7 +180,7 @@ public class KeyHandleInfoFragment extends Fragment implements View.OnClickListe
         GluuMainActivity.GluuAlertCallback listener = new GluuMainActivity.GluuAlertCallback(){
             @Override
             public void onPositiveButton() {
-                mDeleteListener.onDeleteKeyHandle(tokenEntry.getKeyHandle());
+                mDeleteListener.onDeleteKeyHandle(tokenEntry);
                 android.support.v4.app.FragmentManager fm = getFragmentManager();
                 fm.popBackStack();
             }
@@ -150,6 +192,7 @@ public class KeyHandleInfoFragment extends Fragment implements View.OnClickListe
         };
         CustomGluuAlert gluuAlert = new CustomGluuAlert(mActivity);
         gluuAlert.setMessage(mActivity.getApplicationContext().getString(R.string.approve_delete));
+        gluuAlert.setSub_title(mActivity.getApplicationContext().getString(R.string.delete_key_sub_title));
         gluuAlert.setYesTitle(mActivity.getApplicationContext().getString(R.string.yes));
         gluuAlert.setNoTitle(mActivity.getApplicationContext().getString(R.string.no));
         gluuAlert.setmListener(listener);
@@ -175,6 +218,6 @@ public class KeyHandleInfoFragment extends Fragment implements View.OnClickListe
     }
 
     public interface OnDeleteKeyHandleListener {
-        void onDeleteKeyHandle(byte[] keyHandle);
+        void onDeleteKeyHandle(TokenEntry key);
     }
 }

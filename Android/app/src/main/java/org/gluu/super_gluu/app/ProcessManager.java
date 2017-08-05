@@ -213,7 +213,7 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
 //                    dataStore = oxPush2RequestListener.onGetDataStore();
                     final List<byte[]> keyHandles = dataStore.getKeyHandlesByIssuerAndAppId(oxPush2Request.getIssuer(), oxPush2Request.getApp());
 
-                    final boolean isEnroll = (keyHandles.size() == 0) || StringUtils.equals(oxPush2Request.getMethod(), "enroll");
+                    final boolean isEnroll = StringUtils.equals(oxPush2Request.getMethod(), "enroll");//(keyHandles.size() == 0) ||
                     final String u2fEndpoint;
                     if (isEnroll) {
                         u2fEndpoint = u2fMetaData.getRegistrationEndpoint();
@@ -242,6 +242,7 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
                         if (BuildConfig.DEBUG) Log.d(TAG, "Get U2F JSON response: " + challengeJsonResponse);
 
                     } else {
+                        //https://ce-release.gluu.org/oxauth/seam/resource/restv1/fido/u2f/authentication
                         challengeJsonResponse = CommunicationService.get(u2fEndpoint, parameters);
                         if (BuildConfig.DEBUG) Log.d(TAG, "Get U2F JSON response: " + challengeJsonResponse);
                     }
@@ -372,12 +373,15 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
             log.setLocationAddress(oxPush2Request.getLocationCity());
             log.setCreatedDate(String.valueOf(System.currentTimeMillis()));//oxPush2Request.getCreated());
             log.setMethod(oxPush2Request.getMethod());
+            Boolean isEnroll = oxPush2Request.getMethod().equalsIgnoreCase("enroll");
             if (isDeny){
                 setFinalStatus(R.string.deny_result_success);
-                log.setLogState(LogState.LOGIN_DECLINED);
+                LogState state = isEnroll ? LogState.ENROL_DECLINED : LogState.LOGIN_DECLINED;
+                log.setLogState(state);
             } else {
                 setFinalStatus(R.string.auth_result_success);
-                log.setLogState(LogState.LOGIN_SUCCESS);
+                LogState state = isEnroll ? LogState.ENROL_SUCCESS : LogState.LOGIN_SUCCESS;
+                log.setLogState(state);
             }
             dataStore.saveLog(log);
 //            ((TextView) getView().findViewById(R.id.status_text)).setText(getString(R.string.auth_result_success) + ". Server: " + u2fMetaData.getIssuer());
@@ -389,12 +393,15 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
             log.setLocationAddress(oxPush2Request.getLocationCity());
             log.setCreatedDate(String.valueOf(System.currentTimeMillis()));//oxPush2Request.getCreated());
             log.setMethod(oxPush2Request.getMethod());
+            Boolean isEnroll = oxPush2Request.getMethod().equalsIgnoreCase("enroll");
             if (isDeny){
                 setFinalStatus(R.string.deny_result_failed);
-                log.setLogState(LogState.LOGIN_DECLINED);
+                LogState state = isEnroll ? LogState.ENROL_DECLINED : LogState.LOGIN_DECLINED;
+                log.setLogState(state);
             } else {
                 setFinalStatus(R.string.auth_result_failed);
-                log.setLogState(LogState.LOGIN_FAILED);
+                LogState state = isEnroll ? LogState.ENROL_FAILED : LogState.LOGIN_FAILED;
+                log.setLogState(state);
             }
 
             dataStore.saveLog(log);
