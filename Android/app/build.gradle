@@ -14,9 +14,9 @@ android {
     buildToolsVersion '25.0.0'
     defaultConfig {
         applicationId "gluu.org.super.gluu"
-        minSdkVersion 22
+        minSdkVersion 23
         targetSdkVersion 23
-        versionCode 31
+        versionCode 32
         versionName "3.1"
         multiDexEnabled true
         signingConfig signingConfigs.config
