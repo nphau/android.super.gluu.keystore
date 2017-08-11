@@ -34,13 +34,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initLocalization];
-    [self initBackButtonUI];
     [self updateInfo];
     if (!_isLogInfo){
         [self initAndStartTimer];
     }
     timerView.layer.cornerRadius = CORNER_RADIUS;
-    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
     [approveImage setCenter:approveRequest.center];
     [denyImage setCenter:denyRequest.center];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openURL:)];
@@ -58,7 +56,6 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self checkDeviceOrientation];
 }
 
 -(void)initAndStartTimer{
@@ -86,57 +83,6 @@
         [self onDeny:nil];
     }
 
-}
-
--(void)checkDeviceOrientation{
-    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
-    {
-        // code for landscape orientation
-        [[NSNotificationCenter defaultCenter] postNotificationName:UIDeviceOrientationDidChangeNotification object:nil];
-    }
-}
-
-- (void)orientationChanged:(NSNotification *)notification{
-    [approveImage setCenter:approveRequest.center];
-    [denyImage setCenter:denyRequest.center];
-    [self adjustViewsForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
-}
-
-- (void) adjustViewsForOrientation:(UIInterfaceOrientation) orientation {
-    
-    switch (orientation)
-    {
-        case UIInterfaceOrientationPortrait:
-        case UIInterfaceOrientationPortraitUpsideDown:
-        {
-            //load the portrait view
-            if (isLandScape){
-                [scrollView setContentSize:CGSizeMake(scrollView.contentSize.width, scrollView.contentSize.width/2)];
-                scrollView.delegate = nil;
-                scrollView.scrollEnabled = NO;
-                isLandScape = NO;
-            }
-        }
-            
-            break;
-        case UIInterfaceOrientationLandscapeLeft:
-        case UIInterfaceOrientationLandscapeRight:
-        {
-            //load the landscape view
-            if (!isLandScape){
-                if (_isLogInfo){
-                    [scrollView setFrame:CGRectMake(scrollView.frame.origin.x, scrollView.frame.origin.y, scrollView.frame.size.width, scrollView.frame.size.height+100)];
-                }
-                [scrollView setContentSize:CGSizeMake(scrollView.contentSize.width, 300)];
-                scrollView.delegate = self;
-                scrollView.scrollEnabled = YES;
-                isLandScape = YES;
-            }
-            
-        }
-            break;
-        case UIInterfaceOrientationUnknown:break;
-    }
 }
 
 -(void)initLocalization{
@@ -181,19 +127,14 @@
         [timerView setHidden:YES];
         [buttonView setHidden:YES];
         titleLabel.text = NSLocalizedString(@"Information", @"Information");
+        titleLabel.center = CGPointMake(titleLabel.center.x, navigationView.frame.origin.y + navigationView.frame.size.height + 50);
+        scrollView.frame = CGRectMake(scrollView.frame.origin.x, titleLabel.center.y + 20, scrollView.frame.size.width, scrollView.frame.size.height + 50);
     }
 }
 
 -(void)moveUpViews{
     [locationView setCenter:CGPointMake(locationView.center.x, locationView.center.y - moveUpY)];
     [timeView setCenter:CGPointMake(timeView.center.x, timeView.center.y - moveUpY)];
-}
-
--(void)initBackButtonUI{
-    [[backButton layer] setMasksToBounds:YES];
-    [[backButton layer] setCornerRadius:CORNER_RADIUS];
-    [[backButton layer] setBorderWidth:2.0f];
-    [[backButton layer] setBorderColor:[UIColor blackColor].CGColor];
 }
 
 -(IBAction)onApprove:(id)sender{

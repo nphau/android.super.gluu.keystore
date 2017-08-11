@@ -24,6 +24,8 @@
 
 -(void)saveUserLoginInfo:(UserLoginInfo*)userLoginInfo;
 -(NSArray*)getUserLoginInfo;
+-(void)deleteLogs:(NSArray*)logs;
+-(void)deleteLog:(UserLoginInfo*) log;
 -(BOOL)deleteAllLogs;
 
 -(void)setTokenEntitiesNameByID:(NSString*)keyID userName:(NSString*)userName newName:(NSString*)newName;

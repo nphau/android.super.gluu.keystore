@@ -28,7 +28,6 @@
     keyHandleTableView.layer.borderWidth = 2.0;
     [keyHandleTableView.layer setMasksToBounds:YES];
     keyCells = [[NSMutableDictionary alloc] init];
-    keyRenameInfoLabel.text = [NSString stringWithFormat:NSLocalizedString(@"RenameKeyNameInfo", @"Rename Key's Name"), [[AppConfiguration sharedInstance] systemTitle]];
     uniqueKeyLabel.text = [NSString stringWithFormat: NSLocalizedString(@"UniqueKeyLabel", @"UniqueKeyLabel"), [[AppConfiguration sharedInstance] systemTitle]];
     topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
     topIconView.image = [[AppConfiguration sharedInstance] systemIcon];
@@ -53,7 +52,7 @@
         //Do something to tell the user!
         CGPoint touchPoint = [pGesture locationInView:keyHandleTableView];
         NSIndexPath* row = [keyHandleTableView indexPathForRowAtPoint:touchPoint];
-        selectedRow = row;
+        rowToDelete = row.row;
         if (row != nil) {
             //Handle the long press on row
             NSLog(@"Cell title will be changed");
@@ -71,7 +70,7 @@
 }
 
 -(void)showEditNameAlert{
-    KeyHandleCell *cell = (KeyHandleCell*)[keyHandleTableView cellForRowAtIndexPath:selectedRow];
+    KeyHandleCell *cell = (KeyHandleCell*)[keyHandleArray objectAtIndex:rowToDelete];
     
     SCLAlertView *alert = [[SCLAlertView alloc] init];
     UITextField *textField = [alert addTextField:@"Enter key's name"];
@@ -99,16 +98,15 @@
     } else {
         [keyHandleTableView setHidden:YES];
     }
+    keyHandleTableView.tableFooterView = [[UIView alloc] init];
     [self initLabel:(int)[keyHandleArray count]];
 }
 
 -(void)initLabel:(int)keyCount{
     if (keyCount > 0){
         [keyHandleLabel setText:[NSString stringWithFormat:@"%@ (%i):", NSLocalizedString(@"AvailableKeyHandles", @"Available KeyHandles"), keyCount]];
-        [keyRenameInfoLabel setHidden:NO];
     } else {
         [keyHandleLabel setText:[NSString stringWithFormat:@"%@:", NSLocalizedString(@"AvailableKeyHandles", @"Available KeyHandles")]];
-        [keyRenameInfoLabel setHidden:YES];
     }
 }
 
@@ -142,44 +140,110 @@
         NSString* keyName = tokenEntity->keyName == nil ? [NSString stringWithFormat:@"key for %@", tokenEntity->application] : tokenEntity->keyName;
         [keyCells setObject:keyName forKey:tokenEntity->application];
     }
+    [cell setTag:indexPath.row];
+    cell.rightUtilityButtons = [self rightButtons];
+    cell.delegate = self;
     
     return cell;
 }
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    TokenEntity* tokenEntity = [keyHandleArray objectAtIndex:indexPath.row];
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    InformationViewController* info = [storyboard instantiateViewControllerWithIdentifier:@"InformationViewControllerID"];
-    [info setModalPresentationStyle:UIModalPresentationFullScreen];
-    [info setToken:tokenEntity];
-    [self presentViewController:info animated:YES completion:nil];
-//    KeyHandleCell *cell = (KeyHandleCell*)[tableView cellForRowAtIndexPath:indexPath];
+    [self showKeyInfo:indexPath.row];
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-    rowToDelete = (int)indexPath.row;
-    TokenEntity* tokenEntity = [keyHandleArray objectAtIndex:rowToDelete];
-    if (![tokenEntity isExternalKey]){
-        SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-        [alert addButton:NSLocalizedString(@"YES", @"YES") actionBlock:^(void) {
-            NSLog(@"YES clicked");
-            [self deleteRow];
-        }];
-        [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
-            NSLog(@"NO clicked");
-        }];
-        [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Delete", @"Delete") subTitle:NSLocalizedString(@"DeleteKeyHandle", @"Delete KeyHandle") closeButtonTitle:nil duration:0.0f];
-    } else {
-        SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-        [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:@"" subTitle:@"You can't delete key stored on external BLE device" closeButtonTitle:@"Close" duration:3.0f];
-    }
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+//    rowToDelete = (int)indexPath.row;
+//    TokenEntity* tokenEntity = [keyHandleArray objectAtIndex:rowToDelete];
+//    if (![tokenEntity isExternalKey]){
+//        
+//    } else {
+//        SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+//        [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:@"" subTitle:@"You can't delete key stored on external BLE device" closeButtonTitle:@"Close" duration:3.0f];
+//    }
+//}
+
+-(void)showKeyInfo:(NSInteger)index{
+    TokenEntity* tokenEntity = [keyHandleArray objectAtIndex:index];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    InformationViewController* info = [storyboard instantiateViewControllerWithIdentifier:@"InformationViewControllerID"];
+    [info setToken:tokenEntity];
+    [self.navigationController pushViewController:info animated:YES];
+}
+
+-(void)showDeleteAlert{
+    SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert addButton:NSLocalizedString(@"YES", @"YES") actionBlock:^(void) {
+        NSLog(@"YES clicked");
+        [self deleteRow];
+    }];
+    [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
+        NSLog(@"NO clicked");
+    }];
+    [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Delete", @"Delete") subTitle:NSLocalizedString(@"DeleteKeyHandle", @"Delete KeyHandle") closeButtonTitle:nil duration:0.0f];
 }
 
 -(void)deleteRow{
     TokenEntity* tokenEntity = [keyHandleArray objectAtIndex:rowToDelete];
     [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:tokenEntity->application userName:tokenEntity->userName];
     [self loadKeyHandlesFromDatabase];
+}
+
+- (NSArray *)rightButtons
+{
+    NSMutableArray *rightUtilityButtons = [NSMutableArray new];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor colorWithRed:0.78f green:0.78f blue:0.8f alpha:1.0] normalIcon:[UIImage imageNamed:@"view_action"] selectedIcon:nil];
+    UIColor* green = [UIColor colorWithRed:1/256.0 green:161/256.0 blue:97/256.0 alpha:1.0];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:green normalIcon:[UIImage imageNamed:@"rename_action"] selectedIcon:nil];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor colorWithRed:1.0f green:0.231f blue:0.188 alpha:1.0f] normalIcon:[UIImage imageNamed:@"delete_action"] selectedIcon:nil];
+    
+    return rightUtilityButtons;
+}
+
+
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index {
+    switch (index) {
+        case 0:
+            NSLog(@"check button was pressed");
+            break;
+        case 1:
+            NSLog(@"clock button was pressed");
+            break;
+        case 2:
+            NSLog(@"cross button was pressed");
+            break;
+        case 3:
+            NSLog(@"list button was pressed");
+        default:
+            break;
+    }
+}
+
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
+    switch (index) {
+        case 0:
+            NSLog(@"More button was pressed");
+            [self showKeyInfo:cell.tag];
+            break;
+        case 1:
+        {
+            // Delete button was pressed
+            NSLog(@"Rename button was pressed");
+            rowToDelete = (int)cell.tag;
+            [self showEditNameAlert];
+            break;
+        }
+        case 2:
+        {
+            // Delete button was pressed
+            NSLog(@"Delete button was pressed");
+            rowToDelete = (int)cell.tag;
+            [self showDeleteAlert];
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 @end

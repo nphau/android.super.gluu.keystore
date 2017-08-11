@@ -10,7 +10,7 @@
 
 //Strings for License Agreement View
 "LicenseAgreementTitle" = "Ліцензійна угода";
-"AcceptButtonTitle" = "Підтвердити";
+"AcceptButtonTitle" = "Підтвердити та продовжити";
 
 "Home" = "Дім";
 "Logs" = "Журнал";

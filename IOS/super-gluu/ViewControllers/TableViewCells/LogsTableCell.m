@@ -15,6 +15,15 @@
 
 @implementation LogsTableCell
 
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        // Initialisation code here
+    }
+    return self;
+}
+
 -(void)setData:(UserLoginInfo*)userLoginInfo{
     NSString* server = userLoginInfo->issuer;
     if (server != nil){
@@ -68,6 +77,18 @@
         default:
             break;
     }
+}
+
+- (NSArray *)rightButtons {
+    NSMutableArray *rightUtilityButtons = [NSMutableArray new];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1.0]
+                                                title:@"View"];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:246/255.0 green:0.0 blue:0.188 alpha:12/255.0]
+                                                title:@"Delete"];
+    
+    return rightUtilityButtons;
 }
 
 @end

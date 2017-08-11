@@ -31,6 +31,7 @@
     
     IBOutlet UILabel* typeLabel;
     
+    IBOutlet UIView* navigationView;
     IBOutlet UIView* serverView;
     IBOutlet UIView* userNameView;
     IBOutlet UIView* locationView;

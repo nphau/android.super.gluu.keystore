@@ -20,16 +20,19 @@
 -(void)viewDidLoad{
 
     [super viewDidLoad];
-    [self getLogs];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initPushView) name:NOTIFICATION_PUSH_ONLINE object:nil];
     topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
     topIconView.image = [[AppConfiguration sharedInstance] systemIcon];
+    [cancelButton setHidden: YES];
+    [editLogsButton setTag:1];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self getLogs];
-    [logsTableView reloadData];
+    self.tabBarController.tabBar.hidden = NO;
+    [self updateLogs];
+    logsTableView.tableFooterView = [[UIView alloc] init];
+    logsTableView.allowsMultipleSelectionDuringEditing = YES;
 }
 
 -(void)initPushView{
@@ -40,24 +43,80 @@
     logsArray = [[NSMutableArray alloc] init];
     logsArray = [[NSMutableArray alloc] initWithArray:[[DataStoreManager sharedInstance] getUserLoginInfo]];
     [logsArray count] == 0 ? [logsTableView setHidden:YES] : [logsTableView setHidden:NO];
-    [logsArray count] == 0 ? [cleanLogs setHidden:YES] : [cleanLogs setHidden:NO];
-    if ([logsArray count] > 0){
-        [cleanLogs setHidden:NO];
-        [cleanLogs setEnabled:YES];
+    [editLogsButton setHidden: [logsArray count] == 0];
+}
+
+-(void)deleteLog:(UserLoginInfo*)log {
+    [[DataStoreManager sharedInstance] deleteLog:log];
+    [self updateLogs];
+}
+
+-(void)deleteLogs:(NSArray*)logs {
+    [[DataStoreManager sharedInstance] deleteLogs:logs];
+    [self updateLogs];
+}
+
+-(void)updateLogs{
+    [self getLogs];
+    [logsTableView setEditing:NO animated:YES];
+    [logsTableView reloadData];
+}
+
+-(IBAction)editCleanLogs:(id)sender{
+    if (editLogsButton.tag == 1){
+        //Editing table
+        [logsTableView setEditing:YES animated:YES];
+        [cancelButton setHidden:FALSE];
+        [editLogsButton setTag: 2];
+        [editLogsButton setTitle:@"Delete" forState:UIControlStateNormal];
+    } else {
+        //Deleting logs
+        NSMutableArray* logsForDeleteArray = [self getLogsForDelete];
+        if (logsForDeleteArray.count == 0){
+            [self showNoLogsToDeleteAlert];
+        } else {
+            [self deleteLogsAlert:nil array:logsForDeleteArray];
+        }
+        [editLogsButton setTag: 1];
     }
 }
 
--(IBAction)cleanLogs:(id)sender{
+-(IBAction)cancelEditLogs:(id)sender{
+    [cancelButton setHidden:YES];
+    [logsTableView setEditing:NO animated:YES];
+    [editLogsButton setTag: 1];
+    [self updateButtons];
+}
+
+-(void)updateButtons{
+    NSString* title = editLogsButton.tag == 2 ? @"Delete" : @"Edit";
+    [editLogsButton setTitle:title forState:UIControlStateNormal];
+}
+
+-(void)deleteLogsAlert:(UserLoginInfo*)log array:(NSArray*)logs{
     SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
     [alert addButton:NSLocalizedString(@"YES", @"YES") actionBlock:^(void) {
         NSLog(@"YES clicked");
-        [[DataStoreManager sharedInstance] deleteAllLogs];
-        [self getLogs];
+        if (log != nil){
+            [self deleteLog:log];
+        } else if (logs != nil || logs.count > 0){
+            [self deleteLogs:logs];
+        } else {
+            [self showNoLogsToDeleteAlert];
+        }
     }];
     [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
         NSLog(@"NO clicked");
     }];
     [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"AlertTitle", @"Into") subTitle:NSLocalizedString(@"ClearLogs", @"Clear Logs") closeButtonTitle:nil duration:0.0f];
+}
+
+-(void)showNoLogsToDeleteAlert{
+    SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert addButton:NSLocalizedString(@"OK", @"OK") actionBlock:^(void) {
+        NSLog(@"NO clicked");
+    }];
+    [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"AlertTitle", @"Into") subTitle:@"No selected log(s)" closeButtonTitle:nil duration:0.0f];
 }
 
 #pragma mark UITableview Delegate
@@ -67,15 +126,6 @@
     return logsArray.count;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UserLoginInfo* userInfo = (UserLoginInfo*)[logsArray objectAtIndex:indexPath.row];
-    CGFloat height = 130.0;
-    if (userInfo->logState == LOGIN_FAILED || userInfo->logState == ENROLL_FAILED || userInfo->logState == ENROLL_DECLINED || userInfo->logState == LOGIN_DECLINED){
-        height = 85.0;
-    }
-    return height;
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UserLoginInfo* userInfo = (UserLoginInfo*)[logsArray objectAtIndex:indexPath.row];
     NSString *CellIdentifier= @"LogsTableCellID";//LogsFailedTableCellID
@@ -83,63 +133,90 @@
         CellIdentifier= @"LogsFailedTableCellID";
     }
     LogsTableCell *cell = (LogsTableCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    cell.cellBackground.layer.cornerRadius = CORNER_RADIUS;
     [cell setData:userInfo];
-    [cell.infoButton setTag:indexPath.row];
+    [cell setTag:indexPath.row];
+    
+    cell.rightUtilityButtons = [self rightButtons];
+    cell.delegate = self;
     
     return cell;
 }
 
--(IBAction)showUserInfo:(id)sender{
-    if ([[sender accessibilityLabel] isEqualToString:@"1"]){
-        //Show message about failed enroll/authentication
-        UserLoginInfo* userInfo = [logsArray objectAtIndex:[sender tag]];
-        NSString* message = userInfo->errorMessage;
-        if (message != nil){
-            NSDictionary* jsonError = [NSJSONSerialization JSONObjectWithData:[message dataUsingEncoding:NSUTF8StringEncoding]
-                                                                      options:kNilOptions
-                                                                        error:nil];
-            if (jsonError != nil){
-                message = [jsonError valueForKey:@"errorDescription"];
-            }
-        } else {
-            switch (userInfo->logState) {
-                case LOGIN_DECLINED:
-                    message = @"Login declined!";
-                    break;
-                    
-                case ENROLL_DECLINED:
-                    message = @"ENROL declined!";
-                    
-                default:
-                    break;
-            }
-        }
-        SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-        [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Info", @"Info") subTitle:message closeButtonTitle:@"Close" duration:0.0f];
-    } else {
-        [self loadApproveDenyView:sender];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (![logsTableView isEditing]){
+        [self loadApproveDenyView:(int)indexPath.row];
     }
 }
 
--(void)loadApproveDenyView:(id)sender{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    ApproveDenyViewController* approveDenyView = [storyboard instantiateViewControllerWithIdentifier:@"ApproveDenyView"];
-//    approveDenyView.delegate = self;
-    [approveDenyView setIsLogInfo:YES];
-    UserLoginInfo* userInfo = [logsArray objectAtIndex:[sender tag]];
-    [approveDenyView setUserInfo:userInfo];
-    [self.navigationController pushViewController:approveDenyView animated:YES];
-//    [self presentViewController:approveDenyView animated:YES completion:nil];
+- (NSArray *)rightButtons
+{
+    NSMutableArray *rightUtilityButtons = [NSMutableArray new];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor colorWithRed:0.78f green:0.78f blue:0.8f alpha:1.0] normalIcon:[UIImage imageNamed:@"view_action"] selectedIcon:nil];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor colorWithRed:1.0f green:0.231f blue:0.188 alpha:1.0f] normalIcon:[UIImage imageNamed:@"delete_action"] selectedIcon:nil];
+    
+    return rightUtilityButtons;
 }
 
--(void)initAnimationFromRigthToLeft{
-    CATransition *transition = [CATransition animation];
-    transition.duration = 0.5;
-    transition.type = kCATransitionPush;
-    transition.subtype = kCATransitionFromLeft;
-    [transition setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-    [contentView.layer addAnimation:transition forKey:nil];
+
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index {
+    switch (index) {
+        case 0:
+            NSLog(@"check button was pressed");
+            break;
+        case 1:
+            NSLog(@"clock button was pressed");
+            break;
+        case 2:
+            NSLog(@"cross button was pressed");
+            break;
+        case 3:
+            NSLog(@"list button was pressed");
+        default:
+            break;
+    }
 }
+
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
+    switch (index) {
+        case 0:
+            NSLog(@"More button was pressed");
+            [self loadApproveDenyView:(int)cell.tag];
+            break;
+        case 1:
+        {
+            // Delete button was pressed
+            NSLog(@"Delete button was pressed");
+            UserLoginInfo* log = [logsArray objectAtIndex:cell.tag];
+            [self deleteLogsAlert:log array:nil];
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+//------------------ END --------------------------------
+
+-(void)loadApproveDenyView:(int)index{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    ApproveDenyViewController* approveDenyView = [storyboard instantiateViewControllerWithIdentifier:@"ApproveDenyView"];
+    [approveDenyView setIsLogInfo:YES];
+    UserLoginInfo* userInfo = [logsArray objectAtIndex:index];
+    [approveDenyView setUserInfo:userInfo];
+    self.tabBarController.tabBar.hidden = YES;
+    [self.navigationController pushViewController:approveDenyView animated:YES];
+}
+
+-(NSMutableArray*) getLogsForDelete{
+    NSArray* selectedCells = [logsTableView indexPathsForSelectedRows];
+    NSMutableArray* updatedLogsArray = [[NSMutableArray alloc] init];
+    for (NSIndexPath* indexParh in selectedCells) {
+        UserLoginInfo* log = [logsArray objectAtIndex:indexParh.row];
+        [updatedLogsArray addObject:log];
+    }
+    
+    return updatedLogsArray;
+}
+
 
 @end

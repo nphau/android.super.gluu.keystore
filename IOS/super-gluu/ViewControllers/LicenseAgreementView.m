@@ -44,7 +44,11 @@
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     
-//    [self performSelector:@selector(checkLicenseAgreement) withObject:nil afterDelay:0.1];
+    [self.licenseTextField setContentOffset:CGPointZero animated:NO];
+}
+
+- (void)viewDidLayoutSubviews {
+    [self.licenseTextField setContentOffset:CGPointZero animated:NO];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -56,21 +60,15 @@
 }
 
 -(void)initWiget{
-    [_titleLabel setHidden:YES];
     [_licenseTextField setHidden:YES];
-    [_acceptButtonView setHidden:YES];
+    [_acceptButton setHidden:YES];
+    [topView setHidden:YES];
     
-    [[_acceptButton layer] setMasksToBounds:YES];
-    [[_acceptButton layer] setCornerRadius:CORNER_RADIUS];
-    [[_acceptButton layer] setBorderWidth:2.0f];
-    [[_acceptButton layer] setBorderColor:[[AppConfiguration sharedInstance] systemColor].CGColor];
-    [_acceptButton setTitleColor:[[AppConfiguration sharedInstance] systemColor] forState:UIControlStateNormal];
     [self colorHashtag];
     topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
 }
 
 -(void)initLocalization{
-    [_titleLabel setText:NSLocalizedString(@"LicenseAgreementTitle", @"License Agreement")];
     [_acceptButton setTitle:NSLocalizedString(@"AcceptButtonTitle", @"Accept") forState:UIControlStateNormal];
 }
 
@@ -93,9 +91,9 @@
     if (isLicenseAgreement){
         [self checkPinProtection];
     } else {
-        [_titleLabel setHidden:NO];
         [_licenseTextField setHidden:NO];
-        [_acceptButtonView setHidden:NO];
+        [_acceptButton setHidden:NO];
+        [topView setHidden:NO];
     }
 }
 

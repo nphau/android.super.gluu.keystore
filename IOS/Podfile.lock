@@ -49,6 +49,7 @@ PODS:
     - NSHash
   - QRCodeReaderViewController (4.0.1)
   - SCLAlertView-Objective-C (1.0.2)
+  - SWTableViewCell (0.3.7)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.5)
@@ -61,6 +62,7 @@ DEPENDENCIES:
   - ox-push3 (~> 0.1.8)
   - QRCodeReaderViewController (~> 4.0.1)
   - SCLAlertView-Objective-C
+  - SWTableViewCell (~> 0.3.7)
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
@@ -78,7 +80,8 @@ SPEC CHECKSUMS:
   ox-push3: fde946952258f23f96ea4c0a856787a613cee509
   QRCodeReaderViewController: 6538745c8f4ffa9407a26bd7f9489ea01739e7b0
   SCLAlertView-Objective-C: 25f7ea3a3526dde177d8b8056a0b88fe4187651e
+  SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
 
-PODFILE CHECKSUM: 3df8c010469544d13ff02ba9aff07b0723a930fe
+PODFILE CHECKSUM: 031285596a51f115ba363f6dd60f7c1cd95cf740
 
 COCOAPODS: 1.0.0

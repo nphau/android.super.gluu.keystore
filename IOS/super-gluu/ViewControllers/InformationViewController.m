@@ -16,31 +16,18 @@
 -(void)viewDidLoad{
     [super viewDidLoad];
     [self setupInformation];
-    [self initWidget];
     [self initLocalization];
-    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
-}
-
--(void)checkDeviceOrientation{
-    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
-    {
-        // code for landscape orientation
-        //        [self adjustViewsForOrientation:UIInterfaceOrientationLandscapeLeft];
-        [[NSNotificationCenter defaultCenter] postNotificationName:UIDeviceOrientationDidChangeNotification object:nil];
-    }
 }
 
 -(void)setupInformation{
     if ([_token isKindOfClass:[TokenEntity class]]){
         NSURL* url = [NSURL URLWithString:_token->application];
-        applicationValueLabel.text = url.host;
-        issuerValueLabel.text = _token->issuer;
-        userNameValueLabel.text = _token->userName;
-        createdValueLabel.text = [self convertPairingTime:_token->pairingTime];
-        authenticationValueModeLabel.text = _token->authenticationMode;
-        authenticationValueTypeLabel.text = _token->authenticationType;
         NSString* keyHandleString = [NSString stringWithFormat:@"%@...%@", [_token->keyHandle substringToIndex:6], [_token->keyHandle substringFromIndex:_token->keyHandle.length - 6]];
-        keyHandleValueLabel.text = keyHandleString;
+        NSString* time = [self convertPairingTime:_token->pairingTime];
+        userNameValueLabel.attributedText = [self generateAttrStrings:@"Username" value:_token->userName];
+        createdValueLabel.attributedText = [self generateAttrStrings:@"Created" value:time];
+        applicationValueLabel.attributedText = [self generateAttrStrings:@"Username" value:url.host];
+        keyHandleValueLabel.attributedText = [self generateAttrStrings:@"Key handle" value:keyHandleString];
     }
 }
 
@@ -54,24 +41,12 @@
 
 -(void)initLocalization{
     informationLabel.text = NSLocalizedString(@"Information", @"Information");
-    userNameLabel.text = NSLocalizedString(@"UserName", @"UserName");
-    createdLabel.text = NSLocalizedString(@"Created", @"Created");
-    applicationLabel.text = NSLocalizedString(@"Application", @"Application");
-    issuerLabel.text = NSLocalizedString(@"Issuer", @"Issuer");
-    authenticationModeLabel.text = NSLocalizedString(@"AuthenticationMode", @"AuthenticationMode");
-    authenticationTypeLabel.text = NSLocalizedString(@"AuthenticationType", @"AuthenticationType");
+//    userNameLabel.text = NSLocalizedString(@"UserName", @"UserName");
+//    createdLabel.text = NSLocalizedString(@"Created", @"Created");
+//    applicationLabel.text = NSLocalizedString(@"Application", @"Application");
+//    issuerLabel.text = NSLocalizedString(@"Issuer", @"Issuer");
     closeButton.titleLabel.text = NSLocalizedString(@"CloseButton", @"CloseButton");
-    keyHandleLabel.text = NSLocalizedString(@"keyHandle", @"Key handle");
-}
-
--(void)initWidget{
-    closeButton.layer.cornerRadius = CORNER_RADIUS;
-    closeButton.layer.borderColor = [UIColor blackColor].CGColor;
-    closeButton.layer.borderWidth = 2.0;
-    
-    deleteButton.layer.cornerRadius = CORNER_RADIUS;
-    deleteButton.layer.borderColor = [UIColor redColor].CGColor;
-    deleteButton.layer.borderWidth = 2.0;
+//    keyHandleLabel.text = NSLocalizedString(@"keyHandle", @"Key handle");
 }
 
 -(IBAction)delete:(id)sender{
@@ -91,51 +66,36 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+-(NSAttributedString*)generateAttrStrings:(NSString*)name value:(NSString*)value {
+    
+    NSString* wholeString = [NSString stringWithFormat:@"%@ : %@", name, value];
+    NSMutableAttributedString* attrString = [[NSMutableAttributedString alloc] initWithString:wholeString];
+    
+    NSRange rangeName = [wholeString rangeOfString:name];
+    NSRange rangeDots = [wholeString rangeOfString:@":"];
+    NSRange rangeValue = [wholeString rangeOfString:value];
+    
+    UIColor* green = [UIColor colorWithRed:1/256.0 green:161/256.0 blue:97/256.0 alpha:1.0];
+    
+    [attrString addAttribute:NSForegroundColorAttributeName
+                   value:[UIColor blackColor]
+                   range:rangeName];
+    [attrString addAttribute:NSForegroundColorAttributeName
+                       value:green
+                       range:rangeDots];
+    [attrString addAttribute:NSForegroundColorAttributeName
+                       value:[UIColor grayColor]
+                       range:rangeValue];
+    
+    return attrString;
+}
+
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self checkDeviceOrientation];
-}
-
-- (void)orientationChanged:(NSNotification *)notification{
-    [self adjustViewsForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
-}
-
-- (void) adjustViewsForOrientation:(UIInterfaceOrientation) orientation {
-    
-    switch (orientation)
-    {
-        case UIInterfaceOrientationPortrait:
-        case UIInterfaceOrientationPortraitUpsideDown:
-        {
-            //load the portrait view
-            if (isLandScape){
-                [scrollView setContentSize:CGSizeMake(scrollView.contentSize.width, scrollView.contentSize.width/2)];
-                scrollView.delegate = nil;
-                scrollView.scrollEnabled = NO;
-                isLandScape = NO;
-            }
-        }
-            
-            break;
-        case UIInterfaceOrientationLandscapeLeft:
-        case UIInterfaceOrientationLandscapeRight:
-        {
-            //load the landscape view
-            if (!isLandScape){
-                [scrollView setContentSize:CGSizeMake(scrollView.contentSize.width, 250)];
-                scrollView.delegate = self;
-                scrollView.scrollEnabled = YES;
-                isLandScape = YES;
-            }
-            
-        }
-            break;
-        case UIInterfaceOrientationUnknown:break;
-    }
 }
 
 -(IBAction)back:(id)sender{
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

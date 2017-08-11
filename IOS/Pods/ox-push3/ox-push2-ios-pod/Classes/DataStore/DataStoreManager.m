@@ -217,6 +217,30 @@
     return logs;
 }
 
+-(void)deleteLogs:(NSArray*)logs{
+    for (UserLoginInfo* info in logs){
+        [[DataStoreManager sharedInstance] deleteLog:info];
+    }
+}
+
+-(void)deleteLog:(UserLoginInfo*) log{
+    NSMutableArray* logs = [[NSUserDefaults standardUserDefaults] valueForKey:USER_INFO_ENTITIES];
+    NSMutableArray* newlogs = [[NSMutableArray alloc] init];
+    for (NSData* logsData in logs){
+        UserLoginInfo* info = (UserLoginInfo*)[NSKeyedUnarchiver unarchiveObjectWithData:logsData];
+        if (![info->created isEqualToString:log->created]){
+            [newlogs addObject:info];
+        }
+    }
+    NSMutableArray *archiveArray = [NSMutableArray arrayWithCapacity:newlogs.count];
+    for (UserLoginInfo *userLoginEntity in newlogs) {
+        NSData *personEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:userLoginEntity];
+        [archiveArray addObject:personEncodedObject];
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setObject:archiveArray forKey:USER_INFO_ENTITIES];
+}
+
 -(BOOL)deleteAllLogs{
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:USER_INFO_ENTITIES];
     return YES;

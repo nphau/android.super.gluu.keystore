@@ -37,10 +37,14 @@
 }
 
 -(void)initUI{
-    self.layer.borderColor = [UIColor blackColor].CGColor;
-    self.layer.borderWidth = 2.0;
+//    self.layer.borderColor = [UIColor blackColor].CGColor;
+//    self.layer.borderWidth = 2.0;
+    self.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.layer.shadowRadius = 10;
+    self.layer.shadowOffset = CGSizeMake(0, 3);
+    self.layer.shadowOpacity = 1.0;
     self.adFreeButton.layer.cornerRadius = CORNER_RADIUS;
-    [self.adFreeButton setBackgroundColor:[[AppConfiguration sharedInstance] systemColor]];
+//    [self.adFreeButton setBackgroundColor:[[AppConfiguration sharedInstance] systemColor]];
 }
 
 - (IBAction)adFreeAction:(id)sender{

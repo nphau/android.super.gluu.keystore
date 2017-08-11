@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6A858E7909FD7D0E999EE1BC /* Pods_Super_Gluu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA0B4AB7F1B002A0FF2049D /* Pods_Super_Gluu.framework */; };
+		6E84DA101B88BBA743C31E97 /* Pods_Super_Gluu___Ad_Free.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F48E163E0B27CBECE9164F /* Pods_Super_Gluu___Ad_Free.framework */; };
 		BB05D1C61EB08B34007E0B72 /* NetworkChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = BB05D1C51EB08B34007E0B72 /* NetworkChecker.m */; };
 		BB128D821E8002890041BD21 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB128D811E8002890041BD21 /* SettingsTableViewController.m */; };
 		BB128D861E8006A40041BD21 /* SettingsTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB128D851E8006A40041BD21 /* SettingsTableCell.m */; };
@@ -26,7 +27,6 @@
 		BB37DE7D1C7E08320016D422 /* super_gluuUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE7C1C7E08320016D422 /* super_gluuUITests.m */; };
 		BB37DF241C7E0B8E0016D422 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEDB1C7E0B8E0016D422 /* Localizable.strings */; };
 		BB37DF251C7E0B8E0016D422 /* Oatmeal.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEE01C7E0B8E0016D422 /* Oatmeal.ttf */; };
-		BB37DF261C7E0B8E0016D422 /* clearLogIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEE41C7E0B8E0016D422 /* clearLogIcon.png */; };
 		BB37DF281C7E0B8E0016D422 /* gluuIcon29.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEE61C7E0B8E0016D422 /* gluuIcon29.png */; };
 		BB37DF291C7E0B8E0016D422 /* gluuIcon29x2.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEE71C7E0B8E0016D422 /* gluuIcon29x2.png */; };
 		BB37DF2A1C7E0B8E0016D422 /* gluuIcon29x3.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEE81C7E0B8E0016D422 /* gluuIcon29x3.png */; };
@@ -116,7 +116,6 @@
 		BB58C1A11EDDB32800FEEC78 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB37DE631C7E08320016D422 /* Assets.xcassets */; };
 		BB58C1A21EDDB32800FEEC78 /* gluuIcon60x2.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEEE1C7E0B8E0016D422 /* gluuIcon60x2.png */; };
 		BB58C1A31EDDB32800FEEC78 /* infoIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEF01C7E0B8E0016D422 /* infoIcon.png */; };
-		BB58C1A51EDDB32800FEEC78 /* clearLogIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEE41C7E0B8E0016D422 /* clearLogIcon.png */; };
 		BB58C1A61EDDB32800FEEC78 /* gluuIconRed.png in Resources */ = {isa = PBXBuildFile; fileRef = BB8703051CA3E5D400EEF9A6 /* gluuIconRed.png */; };
 		BB58C1A71EDDB32800FEEC78 /* type_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BB3A22681CB39B1700EBD799 /* type_icon.png */; };
 		BB58C1A81EDDB32800FEEC78 /* personIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0EA1C88569400833B12 /* personIcon.png */; };
@@ -131,6 +130,16 @@
 		BB79FA381E7A8B6400AEAE58 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB79FA371E7A8B6400AEAE58 /* Data+Extension.swift */; };
 		BB8703061CA3E5D400EEF9A6 /* gluuIconRed.png in Resources */ = {isa = PBXBuildFile; fileRef = BB8703051CA3E5D400EEF9A6 /* gluuIconRed.png */; };
 		BB87A2811EA0DAD8007F70E9 /* MainTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB87A2801EA0DAD8007F70E9 /* MainTabViewController.m */; };
+		BB97CDE41F1E4FB90033C2A5 /* ProximaNova-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = BB97CDDF1F1E4FB90033C2A5 /* ProximaNova-Bold.otf */; };
+		BB97CDE51F1E4FB90033C2A5 /* ProximaNova-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = BB97CDDF1F1E4FB90033C2A5 /* ProximaNova-Bold.otf */; };
+		BB97CDE61F1E4FB90033C2A5 /* ProximaNova-Extrabold.otf in Resources */ = {isa = PBXBuildFile; fileRef = BB97CDE01F1E4FB90033C2A5 /* ProximaNova-Extrabold.otf */; };
+		BB97CDE71F1E4FB90033C2A5 /* ProximaNova-Extrabold.otf in Resources */ = {isa = PBXBuildFile; fileRef = BB97CDE01F1E4FB90033C2A5 /* ProximaNova-Extrabold.otf */; };
+		BB97CDE81F1E4FB90033C2A5 /* ProximaNova-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = BB97CDE11F1E4FB90033C2A5 /* ProximaNova-Light.otf */; };
+		BB97CDE91F1E4FB90033C2A5 /* ProximaNova-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = BB97CDE11F1E4FB90033C2A5 /* ProximaNova-Light.otf */; };
+		BB97CDEA1F1E4FB90033C2A5 /* ProximaNova-Reg.otf in Resources */ = {isa = PBXBuildFile; fileRef = BB97CDE21F1E4FB90033C2A5 /* ProximaNova-Reg.otf */; };
+		BB97CDEB1F1E4FB90033C2A5 /* ProximaNova-Reg.otf in Resources */ = {isa = PBXBuildFile; fileRef = BB97CDE21F1E4FB90033C2A5 /* ProximaNova-Reg.otf */; };
+		BB97CDEC1F1E4FB90033C2A5 /* ProximaNova-Sbold.otf in Resources */ = {isa = PBXBuildFile; fileRef = BB97CDE31F1E4FB90033C2A5 /* ProximaNova-Sbold.otf */; };
+		BB97CDED1F1E4FB90033C2A5 /* ProximaNova-Sbold.otf in Resources */ = {isa = PBXBuildFile; fileRef = BB97CDE31F1E4FB90033C2A5 /* ProximaNova-Sbold.otf */; };
 		BB9B65A11CB7C5A300784AEF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65A01CB7C5A300784AEF /* QuartzCore.framework */; };
 		BBB511481EF2E5B600E19D8E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB37DE681C7E08320016D422 /* Info.plist */; };
 		BBB511491EF2E5B700E19D8E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB37DE681C7E08320016D422 /* Info.plist */; };
@@ -190,6 +199,8 @@
 
 /* Begin PBXFileReference section */
 		21C62C7E2E6093747FE1D418 /* Pods-Super Gluu (ad free).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Super Gluu (ad free).debug.xcconfig"; path = "Pods/Target Support Files/Pods-Super Gluu (ad free)/Pods-Super Gluu (ad free).debug.xcconfig"; sourceTree = "<group>"; };
+		244ED1E8112E194E698C753B /* Pods-Super Gluu - Ad Free.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Super Gluu - Ad Free.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Super Gluu - Ad Free/Pods-Super Gluu - Ad Free.debug.xcconfig"; sourceTree = "<group>"; };
+		4516151003C18420B94BE1ED /* Pods-Super Gluu - Ad Free.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Super Gluu - Ad Free.release.xcconfig"; path = "Pods/Target Support Files/Pods-Super Gluu - Ad Free/Pods-Super Gluu - Ad Free.release.xcconfig"; sourceTree = "<group>"; };
 		58B47C39617C4CC79EB94B57 /* Pods_Super_Gluu__ad_free_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Super_Gluu__ad_free_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BA0B4AB7F1B002A0FF2049D /* Pods_Super_Gluu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Super_Gluu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EB98658935DC37AA97BA494 /* Pods-Super Gluu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Super Gluu.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Super Gluu/Pods-Super Gluu.debug.xcconfig"; sourceTree = "<group>"; };
@@ -231,7 +242,6 @@
 		BB37DEDE1C7E0B8E0016D422 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BB37DEE01C7E0B8E0016D422 /* Oatmeal.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Oatmeal.ttf; sourceTree = "<group>"; };
 		BB37DEE11C7E0B8E0016D422 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		BB37DEE41C7E0B8E0016D422 /* clearLogIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clearLogIcon.png; sourceTree = "<group>"; };
 		BB37DEE61C7E0B8E0016D422 /* gluuIcon29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gluuIcon29.png; sourceTree = "<group>"; };
 		BB37DEE71C7E0B8E0016D422 /* gluuIcon29x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gluuIcon29x2.png; sourceTree = "<group>"; };
 		BB37DEE81C7E0B8E0016D422 /* gluuIcon29x3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gluuIcon29x3.png; sourceTree = "<group>"; };
@@ -277,6 +287,11 @@
 		BB8703051CA3E5D400EEF9A6 /* gluuIconRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gluuIconRed.png; sourceTree = "<group>"; };
 		BB87A27F1EA0DAD8007F70E9 /* MainTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainTabViewController.h; path = MainTab/MainTabViewController.h; sourceTree = "<group>"; };
 		BB87A2801EA0DAD8007F70E9 /* MainTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainTabViewController.m; path = MainTab/MainTabViewController.m; sourceTree = "<group>"; };
+		BB97CDDF1F1E4FB90033C2A5 /* ProximaNova-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ProximaNova-Bold.otf"; path = "Fonts/ProximaNova-Bold.otf"; sourceTree = "<group>"; };
+		BB97CDE01F1E4FB90033C2A5 /* ProximaNova-Extrabold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ProximaNova-Extrabold.otf"; path = "Fonts/ProximaNova-Extrabold.otf"; sourceTree = "<group>"; };
+		BB97CDE11F1E4FB90033C2A5 /* ProximaNova-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ProximaNova-Light.otf"; path = "Fonts/ProximaNova-Light.otf"; sourceTree = "<group>"; };
+		BB97CDE21F1E4FB90033C2A5 /* ProximaNova-Reg.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ProximaNova-Reg.otf"; path = "Fonts/ProximaNova-Reg.otf"; sourceTree = "<group>"; };
+		BB97CDE31F1E4FB90033C2A5 /* ProximaNova-Sbold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ProximaNova-Sbold.otf"; path = "Fonts/ProximaNova-Sbold.otf"; sourceTree = "<group>"; };
 		BB9B659C1CB7C57800784AEF /* UbertestersSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UbertestersSDK.framework; sourceTree = "<group>"; };
 		BB9B659E1CB7C59800784AEF /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		BB9B65A01CB7C5A300784AEF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -319,6 +334,7 @@
 		BBF7603A1EB462D2005B9793 /* NotificationNetworkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationNetworkView.m; path = Notifications/NotificationNetworkView.m; sourceTree = "<group>"; };
 		BBFCB3091C98164F00F66417 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		BBFCC6D81E5D98CB0015A256 /* LecenseAgreementDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LecenseAgreementDelegate.h; sourceTree = "<group>"; };
+		F9F48E163E0B27CBECE9164F /* Pods_Super_Gluu___Ad_Free.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods_Super_Gluu___Ad_Free.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -388,6 +404,7 @@
 				BB58C18F1EDDB32800FEEC78 /* CoreData.framework in Frameworks */,
 				BB58C1901EDDB32800FEEC78 /* Pods_Super_Gluu.framework in Frameworks */,
 				C3F0A0B51B9FA04756D6CF64 /* Pods_Super_Gluu__ad_free_.framework in Frameworks */,
+				6E84DA101B88BBA743C31E97 /* Pods_Super_Gluu___Ad_Free.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,6 +436,7 @@
 				BB37DF411C7E0CBC0016D422 /* CoreData.framework */,
 				5BA0B4AB7F1B002A0FF2049D /* Pods_Super_Gluu.framework */,
 				58B47C39617C4CC79EB94B57 /* Pods_Super_Gluu__ad_free_.framework */,
+				F9F48E163E0B27CBECE9164F /* Pods_Super_Gluu___Ad_Free.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -430,6 +448,8 @@
 				B84F8928A16117787C96522F /* Pods-Super Gluu.release.xcconfig */,
 				21C62C7E2E6093747FE1D418 /* Pods-Super Gluu (ad free).debug.xcconfig */,
 				A2C1F7760B8ADC2A6085B78A /* Pods-Super Gluu (ad free).release.xcconfig */,
+				244ED1E8112E194E698C753B /* Pods-Super Gluu - Ad Free.debug.xcconfig */,
+				4516151003C18420B94BE1ED /* Pods-Super Gluu - Ad Free.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -539,6 +559,7 @@
 				BB37DE631C7E08320016D422 /* Assets.xcassets */,
 				BB37DE681C7E08320016D422 /* Info.plist */,
 				BB58C1B21EDDB32E00FEEC78 /* Super Gluu (ad free)-Info.plist */,
+				BB97CDDE1F1E4E530033C2A5 /* Fonts */,
 				BB37DE541C7E08320016D422 /* Supporting Files */,
 			);
 			path = "super-gluu";
@@ -607,7 +628,6 @@
 				BB78BFB61C99C6C600558042 /* gluu.png */,
 				BBB7C0FB1C89FE3100833B12 /* gluuIcon.png */,
 				BB8703051CA3E5D400EEF9A6 /* gluuIconRed.png */,
-				BB37DEE41C7E0B8E0016D422 /* clearLogIcon.png */,
 				BB37DEE61C7E0B8E0016D422 /* gluuIcon29.png */,
 				BB37DEE71C7E0B8E0016D422 /* gluuIcon29x2.png */,
 				BB37DEE81C7E0B8E0016D422 /* gluuIcon29x3.png */,
@@ -715,6 +735,18 @@
 				BB87A2801EA0DAD8007F70E9 /* MainTabViewController.m */,
 			);
 			name = MainTab;
+			sourceTree = "<group>";
+		};
+		BB97CDDE1F1E4E530033C2A5 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				BB97CDDF1F1E4FB90033C2A5 /* ProximaNova-Bold.otf */,
+				BB97CDE01F1E4FB90033C2A5 /* ProximaNova-Extrabold.otf */,
+				BB97CDE11F1E4FB90033C2A5 /* ProximaNova-Light.otf */,
+				BB97CDE21F1E4FB90033C2A5 /* ProximaNova-Reg.otf */,
+				BB97CDE31F1E4FB90033C2A5 /* ProximaNova-Sbold.otf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 		BB9B65AF1CBCDA8400784AEF /* Configuration */ = {
@@ -942,6 +974,7 @@
 				BB37DF2D1C7E0B8E0016D422 /* gluuIcon57.png in Resources */,
 				BBB5114B1EF2EF9500E19D8E /* Main.storyboard in Resources */,
 				BB37DF351C7E0B8E0016D422 /* gl.png in Resources */,
+				BB97CDEA1F1E4FB90033C2A5 /* ProximaNova-Reg.otf in Resources */,
 				BB37DF2A1C7E0B8E0016D422 /* gluuIcon29x3.png in Resources */,
 				BB37DF281C7E0B8E0016D422 /* gluuIcon29.png in Resources */,
 				BB37DF241C7E0B8E0016D422 /* Localizable.strings in Resources */,
@@ -949,15 +982,18 @@
 				BBC643C51EF14DEA009FEDD1 /* appConfiguration.plist in Resources */,
 				BB37DF311C7E0B8E0016D422 /* gluuIcon60x3.png in Resources */,
 				BBB7C0E71C884E2600833B12 /* approveIcon.png in Resources */,
+				BB97CDE61F1E4FB90033C2A5 /* ProximaNova-Extrabold.otf in Resources */,
 				BBB7C0E91C8851B900833B12 /* denyIcon.png in Resources */,
+				BB97CDE81F1E4FB90033C2A5 /* ProximaNova-Light.otf in Resources */,
 				BB37DE641C7E08320016D422 /* Assets.xcassets in Resources */,
 				BB37DF301C7E0B8E0016D422 /* gluuIcon60x2.png in Resources */,
 				BB37DF321C7E0B8E0016D422 /* infoIcon.png in Resources */,
 				BBB511481EF2E5B600E19D8E /* Info.plist in Resources */,
-				BB37DF261C7E0B8E0016D422 /* clearLogIcon.png in Resources */,
+				BB97CDE41F1E4FB90033C2A5 /* ProximaNova-Bold.otf in Resources */,
 				BB8703061CA3E5D400EEF9A6 /* gluuIconRed.png in Resources */,
 				BB3A22691CB39B1700EBD799 /* type_icon.png in Resources */,
 				BBB7C0EB1C88569400833B12 /* personIcon.png in Resources */,
+				BB97CDEC1F1E4FB90033C2A5 /* ProximaNova-Sbold.otf in Resources */,
 				BBE787271C99954600E9E0D7 /* Settings.bundle in Resources */,
 				BB37DF291C7E0B8E0016D422 /* gluuIcon29x2.png in Resources */,
 				BB37DF2B1C7E0B8E0016D422 /* gluuIcon40x2.png in Resources */,
@@ -991,6 +1027,7 @@
 				BB58C1981EDDB32800FEEC78 /* gluuIcon57.png in Resources */,
 				BBB5114C1EF2EF9500E19D8E /* Main.storyboard in Resources */,
 				BB58C1991EDDB32800FEEC78 /* gl.png in Resources */,
+				BB97CDEB1F1E4FB90033C2A5 /* ProximaNova-Reg.otf in Resources */,
 				BB58C19A1EDDB32800FEEC78 /* gluuIcon29x3.png in Resources */,
 				BB58C19B1EDDB32800FEEC78 /* gluuIcon29.png in Resources */,
 				BB58C19C1EDDB32800FEEC78 /* Localizable.strings in Resources */,
@@ -998,15 +1035,18 @@
 				BBC643C61EF14DEA009FEDD1 /* appConfiguration.plist in Resources */,
 				BB58C19E1EDDB32800FEEC78 /* gluuIcon60x3.png in Resources */,
 				BB58C19F1EDDB32800FEEC78 /* approveIcon.png in Resources */,
+				BB97CDE71F1E4FB90033C2A5 /* ProximaNova-Extrabold.otf in Resources */,
 				BB58C1A01EDDB32800FEEC78 /* denyIcon.png in Resources */,
+				BB97CDE91F1E4FB90033C2A5 /* ProximaNova-Light.otf in Resources */,
 				BB58C1A11EDDB32800FEEC78 /* Assets.xcassets in Resources */,
 				BB58C1A21EDDB32800FEEC78 /* gluuIcon60x2.png in Resources */,
 				BB58C1A31EDDB32800FEEC78 /* infoIcon.png in Resources */,
 				BBB511491EF2E5B700E19D8E /* Info.plist in Resources */,
-				BB58C1A51EDDB32800FEEC78 /* clearLogIcon.png in Resources */,
+				BB97CDE51F1E4FB90033C2A5 /* ProximaNova-Bold.otf in Resources */,
 				BB58C1A61EDDB32800FEEC78 /* gluuIconRed.png in Resources */,
 				BB58C1A71EDDB32800FEEC78 /* type_icon.png in Resources */,
 				BB58C1A81EDDB32800FEEC78 /* personIcon.png in Resources */,
+				BB97CDED1F1E4FB90033C2A5 /* ProximaNova-Sbold.otf in Resources */,
 				BB58C1A91EDDB32800FEEC78 /* Settings.bundle in Resources */,
 				BB58C1AA1EDDB32800FEEC78 /* gluuIcon29x2.png in Resources */,
 				BB58C1AB1EDDB32800FEEC78 /* gluuIcon40x2.png in Resources */,
@@ -1088,7 +1128,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Super Gluu (ad free)/Pods-Super Gluu (ad free)-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Super Gluu - Ad Free/Pods-Super Gluu - Ad Free-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BB58C1AD1EDDB32800FEEC78 /* 📦 Copy Pods Resources */ = {
@@ -1103,7 +1143,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Super Gluu (ad free)/Pods-Super Gluu (ad free)-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Super Gluu - Ad Free/Pods-Super Gluu - Ad Free-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1436,7 +1476,7 @@
 		};
 		BB58C1AF1EDDB32800FEEC78 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 21C62C7E2E6093747FE1D418 /* Pods-Super Gluu (ad free).debug.xcconfig */;
+			baseConfigurationReference = 244ED1E8112E194E698C753B /* Pods-Super Gluu - Ad Free.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1476,7 +1516,7 @@
 		};
 		BB58C1B01EDDB32800FEEC78 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A2C1F7760B8ADC2A6085B78A /* Pods-Super Gluu (ad free).release.xcconfig */;
+			baseConfigurationReference = 4516151003C18420B94BE1ED /* Pods-Super Gluu - Ad Free.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "TokenEntity.h"
+#import "SWTableViewCell.h"
 
-@interface KeyHandleCell : UITableViewCell {
+@interface KeyHandleCell : SWTableViewCell {
 
     IBOutlet UILabel* keyHandleTime;
 }

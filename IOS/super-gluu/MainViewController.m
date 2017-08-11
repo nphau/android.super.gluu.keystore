@@ -153,7 +153,7 @@
     scanButton.layer.cornerRadius = CORNER_RADIUS;
     scanButton.layer.borderWidth = 2.0;
     scanButton.layer.borderColor = [[AppConfiguration sharedInstance] systemColor].CGColor;
-    [scanButton setTitleColor:[[AppConfiguration sharedInstance] systemColor] forState:UIControlStateNormal];
+//    [scanButton setTitleColor:[[AppConfiguration sharedInstance] systemColor] forState:UIControlStateNormal];
     topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
     statusView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
     topIconView.image = [[AppConfiguration sharedInstance] systemIcon];
