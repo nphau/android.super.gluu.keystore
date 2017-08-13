@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Super Gluu</string>
+    <string name="app_name">Tesla 2FA</string>
     <!--<string name="app_header">Gluu oxPush2</string>-->
 
     <string name="oxpush2_into_text">Open Source Mobile Authentication from Gluu</string>
@@ -74,12 +74,12 @@
     <string name="noKeys">No Keys</string>
 
     <string name="accept">Accept and Continue</string>
-    <string name="welcome">Welcome to Super Gluu!</string>
+    <string name="welcome">Welcome to Tesla 2FA!</string>
     <string name="scan_text">You may be presented with a QR code for enrollment or authentication. Click the button to open your QR scanner.</string>
 
     <string name="settings_title">Settings</string>
     <string name="pin_code_settings">Pin code</string>
-    <string name="pin_code_text">When enabled, access to your Super Gluu app will be protected by a pin code of your choice.</string>
+    <string name="pin_code_text">When enabled, access to your Tesla 2FA app will be protected by a pin code of your choice.</string>
 
     <string name="set_new_pin_code">Set pin code</string>
     <string name="enter_pin_code">Enter Pin code</string>
@@ -89,11 +89,11 @@
     <string name="close">Close</string>
     <string name="back">Back</string>
     <string name="pin_code_enable_title">Add a Pin Code?</string>
-    <string name="pin_code_enable_question">Protect access to Super Gluu by adding a pin code.</string>
+    <string name="pin_code_enable_question">Protect access to Tesla 2FA by adding a pin code.</string>
 
     <!--<string name="available_keys">Available keys(%s)</string>-->
     <string name="available_keys">Available keys</string>
-    <string name="text_keys">When you login with Super Gluu, a private key is generated and stored on your phone.</string>
+    <string name="text_keys">When you login with Tesla 2FA, a private key is generated and stored on your phone.</string>
     <string name="rename_keys">To change a name of Key, hold down on it for few seconds</string>
 
     <string name="to_continue">To continue, press Approve</string>
@@ -107,7 +107,7 @@
 
     <string name="app_locked">Application is locked, please wait...</string>
     <string name="number_attempts">Number of attempts:</string>
-    <string name="text_attempts">Super Gluu will be locked for 10 minutes after this many failed attempts</string>
+    <string name="text_attempts">Tesla 2FA will be locked for 10 minutes after this many failed attempts</string>
 
     <string name="rename_key_name">Do you want to change key name?</string>
     <string name="new_key_name_title">Change key name</string>
@@ -115,7 +115,7 @@
 
     <string name="ssl_connection_settings">SSL Connection Settings</string>
     <string name="trust_all_certificate">Trust all (SSL)</string>
-    <string name="warning_trust_all_certificate">WARNING: Only enable Trust all (SSL) for testing purposes! It is critically important to validate the SSL certificate for communication between Super Gluu and the identity provider.</string>
+    <string name="warning_trust_all_certificate">WARNING: Only enable Trust all (SSL) for testing purposes! It is critically important to validate the SSL certificate for communication between Tesla 2FA and the identity provider.</string>
 
     <string name="fingerprint_title">Fingerprint</string>
 

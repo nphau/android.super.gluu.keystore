@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
-    android:background="@drawable/rounded_green_shape"
+    android:background="@drawable/tesla_rounded_button"
     android:orientation="horizontal"
     android:padding="5dp">
 
@@ -22,7 +22,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:textColor="#FFFFFF" />
+            android:textColor="@color/whiteColor" />
     </LinearLayout>
 
 </LinearLayout>

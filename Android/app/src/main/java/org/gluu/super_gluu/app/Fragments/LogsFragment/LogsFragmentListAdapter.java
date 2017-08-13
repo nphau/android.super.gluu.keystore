@@ -131,7 +131,7 @@ public class LogsFragmentListAdapter extends BaseAdapter {
                 || log.getLogState() == LogState.UNKNOWN_ERROR || log.getLogState() == LogState.LOGIN_DECLINED || log.getLogState() == LogState.ENROL_DECLINED){
             ImageView logo = (ImageView) view.findViewById(R.id.logLogo);
             contentView.setTextColor(ContextCompat.getColor(view.getContext(), R.color.redColor));
-            logo.setImageResource(R.drawable.gluu_icon_red);
+            logo.setImageResource(R.drawable.tesla_icon);
 //            view.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
@@ -144,7 +144,7 @@ public class LogsFragmentListAdapter extends BaseAdapter {
         } else {
             ImageView logo = (ImageView) view.findViewById(R.id.logLogo);
             contentView.setTextColor(ContextCompat.getColor(view.getContext(), R.color.blackColor));
-            logo.setImageResource(R.drawable.gluu_icon);
+            logo.setImageResource(R.drawable.tesla_icon);
         }
         LinearLayout log_main_view = (LinearLayout) view.findViewById(R.id.log_main_view);
         log_main_view.setTag(position);

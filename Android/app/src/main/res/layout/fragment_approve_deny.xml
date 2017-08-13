@@ -33,10 +33,10 @@
             android:text="@string/timer"
             android:textSize="15sp"
             android:layout_marginRight="16dp"
-            android:layout_marginTop="27dp"
+            android:layout_marginTop="25dp"
             android:textAlignment="center"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/greenColor" />
+            android:textColor="@color/tesla_red_color" />
 
         <LinearLayout
             android:id="@+id/timer_view"
@@ -77,12 +77,12 @@
                 app:line_width="3dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="15dp"
-                app:progress_end_color="@color/greenColor"
+                app:progress_end_color="@color/tesla_red_color"
                 app:progress_shader="sweep"
-                app:progress_start_color="@color/greenColor"
+                app:progress_start_color="@color/tesla_red_color"
                 app:progress_stroke_cap="round"
                 app:progress_stroke_width="3dp"
-                app:progress_text_color="@color/greenColor"
+                app:progress_text_color="@color/tesla_red_color"
                 app:style="solid_line" />
         </LinearLayout>
 

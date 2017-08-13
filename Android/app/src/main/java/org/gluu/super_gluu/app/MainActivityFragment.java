@@ -44,12 +44,6 @@ import org.gluu.super_gluu.app.gluuToast.GluuToast;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
 import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.model.OxPush2Request;
-import org.gluu.super_gluu.store.AndroidKeyDataStore;
-import org.w3c.dom.Text;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import SuperGluu.app.BuildConfig;
 import SuperGluu.app.R;
@@ -189,7 +183,7 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
     public void onResume() {
         super.onResume();
         if (!isConnected(context)) {
-            showToastWithText("Your device is currently unable to establish a network connection. You will need a connection to approve or deny authentication requests with Super Gluu.");
+            showToastWithText("Your device is currently unable to establish a network connection. You will need a connection to approve or deny authentication requests with Tesla 2FA.");
             scanButton.setEnabled(false);
         } else {
             scanButton.setEnabled(true);

@@ -58,7 +58,7 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/rounded_button"
+                android:background="@drawable/tesla_rounded_button"
                 android:text="@string/button_scan_oxpush2"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"

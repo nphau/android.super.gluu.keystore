@@ -249,8 +249,8 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         // Set the ViewPagerAdapter into ViewPager
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));//, tabLayout.getTabCount()
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        final int tabIconColor = ContextCompat.getColor(context, R.color.greenColor);
-        final int tabIconColorBlack = ContextCompat.getColor(context, R.color.blackColor);
+        final int tabIconColor = ContextCompat.getColor(context, R.color.tesla_red_color);
+        final int tabIconColorBlack = ContextCompat.getColor(context, R.color.tesla_gray_color);
         tabLayout.getTabAt(0).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
         tabLayout.getTabAt(1).getIcon().setColorFilter(tabIconColorBlack, PorterDuff.Mode.SRC_IN);
         tabLayout.getTabAt(2).getIcon().setColorFilter(tabIconColorBlack, PorterDuff.Mode.SRC_IN);

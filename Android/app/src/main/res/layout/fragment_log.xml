@@ -65,13 +65,13 @@
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="10dp"
         android:text=""
-        app:buttonTint="@color/greenColor" />
+        android:buttonTint="@color/tesla_red_color" />
 
     <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:id="@+id/logLogo"
-        android:src="@drawable/gluu_icon"
+        android:src="@drawable/tesla_icon"
         android:layout_marginLeft="10dp"
         android:layout_gravity="center_vertical" />
 

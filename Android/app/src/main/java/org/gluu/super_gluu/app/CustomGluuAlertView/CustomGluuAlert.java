@@ -122,7 +122,7 @@ public class CustomGluuAlert extends Dialog implements android.view.View.OnClick
         if (type == NotificationType.RENAME_KEY){
             actionbar_icon.setImageResource(R.drawable.edit_key_icon);
         } else if (type == NotificationType.DEFAULT){
-            actionbar_icon.setImageResource(R.drawable.default_alert_icon);
+            actionbar_icon.setImageResource(R.drawable.tesla_default_alert_icon);
         }
 
         super.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

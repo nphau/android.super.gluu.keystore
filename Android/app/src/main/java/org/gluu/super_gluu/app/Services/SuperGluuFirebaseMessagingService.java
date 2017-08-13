@@ -53,7 +53,7 @@ public class SuperGluuFirebaseMessagingService extends FirebaseMessagingService 
                 intent.putExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, requestMessage);
                 LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
             } else {
-                sendNotification("Super Gluu", requestMessage);
+                sendNotification("Tesla 2FA", requestMessage);
             }
 
         }
