@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'ABC893FD7C09AB146A02130DF6B0DC59'
-               BlueprintName = 'QRCodeReaderViewController'
+               BlueprintIdentifier = '1D8C3CA8F4EFE1E95DCDF3330412DD94'
+               BlueprintName = 'CATCurveProgressView'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'QRCodeReaderViewController.framework'>
+               BuildableName = 'CATCurveProgressView.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

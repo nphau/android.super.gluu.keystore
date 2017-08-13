@@ -20,6 +20,7 @@ PODS:
   - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - CATCurveProgressView (1.0.1)
   - CocoaAsyncSocket (7.4.1)
   - Firebase/AdMob (3.13.0):
     - Firebase/Core
@@ -53,6 +54,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 2.5)
+  - CATCurveProgressView
   - Firebase/AdMob
   - Firebase/Core
   - IAPHelper
@@ -66,6 +68,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
+  CATCurveProgressView: d6f21d89ad8b328597336ecb220080a435fbb3aa
   CocoaAsyncSocket: 7cbf214b27f8e7f7574db6a3fd96352ffaed433d
   Firebase: 5bc34d7b5ff5792e3386c8b28dc6265deeab0da4
   FirebaseAnalytics: 0d1b7d81d5021155be37702a94ba1ec16d45365d
@@ -82,6 +85,6 @@ SPEC CHECKSUMS:
   SCLAlertView-Objective-C: 25f7ea3a3526dde177d8b8056a0b88fe4187651e
   SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
 
-PODFILE CHECKSUM: 031285596a51f115ba363f6dd60f7c1cd95cf740
+PODFILE CHECKSUM: c2de08790fb989eb5d7c992cb85bfe734d9700f8
 
 COCOAPODS: 1.0.0

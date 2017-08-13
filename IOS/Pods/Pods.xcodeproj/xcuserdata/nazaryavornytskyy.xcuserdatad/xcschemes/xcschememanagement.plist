@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>CATCurveProgressView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>CocoaAsyncSocket.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -77,12 +82,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>00D4103CCBC24A6BA73A9669981A1E31</key>
+		<key>09A39DB9505E9B0CBCBD7AA670434C45</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>09A39DB9505E9B0CBCBD7AA670434C45</key>
+		<key>0BBB32EB8EF739B1CA3B03828E642341</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1D8C3CA8F4EFE1E95DCDF3330412DD94</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -92,12 +102,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>41F2A4C6FB45E66D9E0DCD1139857624</key>
+		<key>4878C70B21CA37D7CB8A476BF986741B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4878C70B21CA37D7CB8A476BF986741B</key>
+		<key>55E3A9E72BCD32504C8A6F2E33E78DF8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -107,7 +117,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7FDA049EDE2FCB7B4969F71D86E5E675</key>
+		<key>7E2EB41C0DD4B6053AE9BF4E23CE0D04</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>88B5A86CE2029F4908BBB8DD157FE726</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -117,17 +132,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9438488DD9E9087CC4B0AEED268B2C5E</key>
+		<key>ABC893FD7C09AB146A02130DF6B0DC59</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>B1D17BA74BEACBD28F897F231B5907A4</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>BFC6A1F7DA2255BAFEBA6F2208DD1D43</key>
 		<dict>
 			<key>primary</key>
 			<true/>

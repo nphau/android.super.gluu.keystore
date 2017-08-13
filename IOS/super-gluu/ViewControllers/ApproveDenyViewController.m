@@ -38,7 +38,6 @@
     if (!_isLogInfo){
         [self initAndStartTimer];
     }
-    timerView.layer.cornerRadius = CORNER_RADIUS;
     [approveImage setCenter:approveRequest.center];
     [denyImage setCenter:denyRequest.center];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openURL:)];
@@ -72,12 +71,10 @@
     if (time == 20){
         [timerView setBackgroundColor:[UIColor yellowColor]];
         [timerLabel setTextColor:[UIColor blackColor]];
-        [timerLabelTitle setTextColor:[UIColor blackColor]];
     }
     if (time == 10){
         [timerView setBackgroundColor:[UIColor redColor]];
         [timerLabel setTextColor:[UIColor whiteColor]];
-        [timerLabelTitle setTextColor:[UIColor whiteColor]];
     }
     if (time == 0){
         [self onDeny:nil];
@@ -89,7 +86,6 @@
     [approveRequest setTitle:NSLocalizedString(@"Approve", @"Approve") forState:UIControlStateNormal];
     [denyRequest setTitle:NSLocalizedString(@"Deny", @"Deny") forState:UIControlStateNormal];
     titleLabel.text = NSLocalizedString(@"PressApprove", @"To continue, press Approve");
-    timerLabelTitle.text = NSLocalizedString(@"SecondsLeft", @"seconds left");
 }
 
 -(void)updateInfo{
@@ -127,8 +123,8 @@
         [timerView setHidden:YES];
         [buttonView setHidden:YES];
         titleLabel.text = NSLocalizedString(@"Information", @"Information");
-        titleLabel.center = CGPointMake(titleLabel.center.x, navigationView.frame.origin.y + navigationView.frame.size.height + 50);
-        scrollView.frame = CGRectMake(scrollView.frame.origin.x, titleLabel.center.y + 20, scrollView.frame.size.width, scrollView.frame.size.height + 50);
+//        titleLabel.center = CGPointMake(titleLabel.center.x, navigationView.frame.origin.y + navigationView.frame.size.height + 50);
+//        scrollView.frame = CGRectMake(scrollView.frame.origin.x, titleLabel.center.y + 20, scrollView.frame.size.width, scrollView.frame.size.height + 50);
     }
 }
 

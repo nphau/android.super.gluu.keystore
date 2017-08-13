@@ -18,6 +18,7 @@ def project_pods
  pod 'Firebase/AdMob'
  pod 'IAPHelper'
  pod 'SWTableViewCell', '~> 0.3.7'
+ pod 'CATCurveProgressView'
 
 # use ox-push2 lib instead of local copy
  pod 'ox-push3', '~> 0.1.8'

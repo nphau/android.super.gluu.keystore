@@ -51,7 +51,6 @@
     NSTimer* timer;
     int time;
     IBOutlet UILabel* timerLabel;
-    IBOutlet UILabel* timerLabelTitle;
     
     IBOutlet UIImageView* approveImage;
     IBOutlet UIImageView* denyImage;
