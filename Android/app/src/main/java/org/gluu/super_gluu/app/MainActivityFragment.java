@@ -79,7 +79,7 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
             }
             Boolean isAdFree = Settings.getPurchase(context);
             if (mInterstitialAd.isLoaded() && !isAdFree) {
-                mInterstitialAd.show();
+//                mInterstitialAd.show();
             }
         }
     };
@@ -140,7 +140,7 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         actionBarView.findViewById(R.id.action_right_button).setVisibility(View.GONE);
         actionBarView.findViewById(R.id.actionbar_icon).setVisibility(View.VISIBLE);
         actionBarView.findViewById(R.id.actionbar_textview).setVisibility(View.GONE);
-        Boolean isAdFree = Settings.getPurchase(context);
+        Boolean isAdFree = true;//Settings.getPurchase(context);
         if (isAdFree){
             adView.setVisibility(View.GONE);
         }

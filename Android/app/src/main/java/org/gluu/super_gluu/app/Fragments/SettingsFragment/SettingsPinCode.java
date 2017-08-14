@@ -44,6 +44,8 @@ public class SettingsPinCode extends Fragment implements HorizontalNumberPickerL
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.settings_pincode, container, false);
+        //Hide ads temporary
+        view.findViewById(R.id.view_ad_free).setVisibility(View.GONE);
         context = getContext();
         this.inflater = inflater;
         View actionBarView = (View) view.findViewById(R.id.actionBarSettings);

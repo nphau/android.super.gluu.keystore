@@ -29,7 +29,7 @@
     </style>
     <!-- Style for splash page -->
     <style name="splashScreenTheme" parent="@android:style/Theme.DeviceDefault.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/splash_page</item>
+        <item name="android:windowBackground">@drawable/tesla_splash_page</item>
     </style>
 
 </resources>

@@ -156,30 +156,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
         this.dataStore = new AndroidKeyDataStore(context);
         this.u2f = new SoftwareDevice(this, dataStore);
-//        Settings.setIsButtonVisible(context, dataStore.getLogs().size() != 0);
-
-        //Customize the ActionBar
-//        final ActionBar abar = getSupportActionBar();
-//        abar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_background));//line under the action bar
-//        View viewActionBar = getLayoutInflater().inflate(R.layout.custom_action_bar, null);
-//        ActionBar.LayoutParams params = new ActionBar.LayoutParams(//Center the textview in the ActionBar !
-//                ActionBar.LayoutParams.WRAP_CONTENT,
-//                ActionBar.LayoutParams.MATCH_PARENT,
-//                Gravity.CENTER);
-//        ImageView actionbar_icon = (ImageView) viewActionBar.findViewById(R.id.actionbar_icon);
-//        TextView textviewTitle = (TextView) viewActionBar.findViewById(R.id.actionbar_textview);
-//        LinearLayout leftButton  = (LinearLayout) viewActionBar.findViewById(R.id.action_left_button);
-//        Button rightButton  = (Button) viewActionBar.findViewById(R.id.action_right_button);
-//        textviewTitle.setVisibility(View.GONE);
-//        leftButton.setVisibility(View.GONE);
-//        rightButton.setVisibility(View.GONE);
-//        abar.setCustomView(viewActionBar, params);
-//        abar.setDisplayShowCustomEnabled(true);
-//        abar.setDisplayShowTitleEnabled(false);
-//        abar.setDisplayHomeAsUpEnabled(false);
-//        abar.setDisplayShowHomeEnabled(true);
-//        abar.setIcon(R.color.transparent);
-//        abar.setHomeButtonEnabled(true);
 
         // Check if we get push notification
         checkIsPush();
@@ -195,7 +171,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
     private void initGoogleADS(Boolean isShow){
         AdView mAdView = (AdView) findViewById(R.id.adView);
-        if (!isShow) {
+        if (false) {// if (!isShow) {
             MobileAds.initialize(getApplicationContext(), "ca-app-pub-3932761366188106~2301594871");
             AdRequest adRequest = new AdRequest.Builder().build();
             mAdView.loadAd(adRequest);

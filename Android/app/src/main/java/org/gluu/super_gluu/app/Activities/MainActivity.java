@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
             return;
         }
         //Check is fingerprint secure enabled in settings
-//        initFingerprintService();
+        initFingerprintService();
         Boolean isFingerprint = Settings.getFingerprintEnabled(getApplicationContext());
         if (isFingerprint){//fingerprint != null && // && fingerprint.startFingerprintService()){
             onFingerprint();

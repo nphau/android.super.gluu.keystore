@@ -51,6 +51,8 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        //Hide ads temporary
+        view.findViewById(R.id.view_ad_free).setVisibility(View.GONE);
         context = getContext();
         this.inflater = inflater;
         fingerprint = new Fingerprint(context);
