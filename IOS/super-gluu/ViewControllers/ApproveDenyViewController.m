@@ -16,6 +16,8 @@
 #import "NSString+URLEncode.h"
 
 #import "AFHTTPRequestOperationManager.h"
+#import "DataStoreManager.h"
+#import "SCLAlertView.h"
 
 #define moveUpY 70
 #define LANDSCAPE_Y 290
@@ -55,6 +57,16 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    if (!_isLogInfo){
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_FREE object:nil];
+    }
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    if (!_isLogInfo){
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_NOT_FREE object:nil];
+    }
 }
 
 -(void)initAndStartTimer{
@@ -69,12 +81,12 @@
     time--;
     timerLabel.text = [NSString stringWithFormat:@"%i", time];
     if (time == 20){
-        [timerView setBackgroundColor:[UIColor yellowColor]];
-        [timerLabel setTextColor:[UIColor blackColor]];
+        [timerView setProgressColor:[UIColor yellowColor]];
+        [timerLabel setTextColor:[UIColor yellowColor]];
     }
     if (time == 10){
-        [timerView setBackgroundColor:[UIColor redColor]];
-        [timerLabel setTextColor:[UIColor whiteColor]];
+        [timerView setProgressColor:[UIColor redColor]];
+        [timerLabel setTextColor:[UIColor redColor]];
     }
     if (time == 0){
         [self onDeny:nil];
@@ -93,13 +105,13 @@
     if (info == nil){
         info = [UserLoginInfo sharedInstance];
     }
-    if (info->userName == nil){
-        [userNameView setHidden:YES];
-        [self moveUpViews];
-    } else {
-        [userNameView setHidden:NO];
+//    if (info->userName == nil){
+//        [userNameView setHidden:YES];
+////        [self moveUpViews];
+//    } else {
+//        [userNameView setHidden:NO];
         userNameLabel.text = info->userName;
-    }
+//    }
     NSString* server = info->issuer;
     serverUrlLabel.text = server;
     if (server != nil){
@@ -123,14 +135,19 @@
         [timerView setHidden:YES];
         [buttonView setHidden:YES];
         titleLabel.text = NSLocalizedString(@"Information", @"Information");
-//        titleLabel.center = CGPointMake(titleLabel.center.x, navigationView.frame.origin.y + navigationView.frame.size.height + 50);
-//        scrollView.frame = CGRectMake(scrollView.frame.origin.x, titleLabel.center.y + 20, scrollView.frame.size.width, scrollView.frame.size.height + 50);
+    } else {
+        [navigationView setHidden:YES];
     }
+    [self moveUpViews];
 }
 
 -(void)moveUpViews{
-    [locationView setCenter:CGPointMake(locationView.center.x, locationView.center.y - moveUpY)];
-    [timeView setCenter:CGPointMake(timeView.center.x, timeView.center.y - moveUpY)];
+    int moveUpPosition = titleLabel.center.y - timerView.center.y;
+    [titleLabel setCenter:CGPointMake(titleLabel.center.x, titleLabel.center.y - moveUpPosition)];
+    [mainInfoView setCenter:CGPointMake(mainInfoView.center.x, mainInfoView.center.y - moveUpPosition)];
+    if (!_isLogInfo){
+        [timerView setCenter:CGPointMake(timerView.center.x, timerView.center.y - moveUpPosition)];
+    }
 }
 
 -(IBAction)onApprove:(id)sender{
@@ -150,6 +167,10 @@
 -(IBAction)back{
     [self.navigationController popViewControllerAnimated:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(IBAction)onDeleteClick{
+    [self deleteLogsAlert];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -183,6 +204,25 @@
     NSDate* date = [formatter dateFromString:dateTime];
     
     return date;
+}
+
+-(void)deleteLogsAlert{
+    SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert addButton:NSLocalizedString(@"YES", @"YES") actionBlock:^(void) {
+        NSLog(@"YES clicked");
+        if (_userInfo != nil){
+            [self deleteLog:_userInfo];
+        }
+    }];
+    [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
+        NSLog(@"NO clicked");
+    }];
+    [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"AlertTitle", @"Into") subTitle:NSLocalizedString(@"ClearLogs", @"Clear Logs") closeButtonTitle:nil duration:0.0f];
+}
+
+-(void)deleteLog:(UserLoginInfo*)log {
+    [[DataStoreManager sharedInstance] deleteLog:log];
+    [self back];
 }
 
 /*

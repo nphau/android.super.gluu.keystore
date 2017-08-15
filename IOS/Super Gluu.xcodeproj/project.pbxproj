@@ -43,7 +43,6 @@
 		BB37DF3E1C7E0B8E0016D422 /* KeyHandleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DF0E1C7E0B8E0016D422 /* KeyHandleCell.m */; };
 		BB37DF3F1C7E0B8E0016D422 /* LogsTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DF101C7E0B8E0016D422 /* LogsTableCell.m */; };
 		BB37DF421C7E0CBC0016D422 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB37DF411C7E0CBC0016D422 /* CoreData.framework */; };
-		BB3A22691CB39B1700EBD799 /* type_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BB3A22681CB39B1700EBD799 /* type_icon.png */; };
 		BB3BE1641C87022C00817A46 /* LicenseAgreementView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB3BE1631C87022C00817A46 /* LicenseAgreementView.m */; };
 		BB3BE1721C882D0600817A46 /* ApproveDenyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB3BE1711C882D0600817A46 /* ApproveDenyViewController.m */; };
 		BB4732BF1EEADDCE007B8173 /* ADSubsriber.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4732BE1EEADDCE007B8173 /* ADSubsriber.m */; };
@@ -117,8 +116,6 @@
 		BB58C1A21EDDB32800FEEC78 /* gluuIcon60x2.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEEE1C7E0B8E0016D422 /* gluuIcon60x2.png */; };
 		BB58C1A31EDDB32800FEEC78 /* infoIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEF01C7E0B8E0016D422 /* infoIcon.png */; };
 		BB58C1A61EDDB32800FEEC78 /* gluuIconRed.png in Resources */ = {isa = PBXBuildFile; fileRef = BB8703051CA3E5D400EEF9A6 /* gluuIconRed.png */; };
-		BB58C1A71EDDB32800FEEC78 /* type_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BB3A22681CB39B1700EBD799 /* type_icon.png */; };
-		BB58C1A81EDDB32800FEEC78 /* personIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0EA1C88569400833B12 /* personIcon.png */; };
 		BB58C1A91EDDB32800FEEC78 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BBE787261C99954600E9E0D7 /* Settings.bundle */; };
 		BB58C1AA1EDDB32800FEEC78 /* gluuIcon29x2.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEE71C7E0B8E0016D422 /* gluuIcon29x2.png */; };
 		BB58C1AB1EDDB32800FEEC78 /* gluuIcon40x2.png in Resources */ = {isa = PBXBuildFile; fileRef = BB37DEE91C7E0B8E0016D422 /* gluuIcon40x2.png */; };
@@ -147,7 +144,6 @@
 		BBB5114C1EF2EF9500E19D8E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBB5114A1EF2EF9500E19D8E /* Main.storyboard */; };
 		BBB7C0E71C884E2600833B12 /* approveIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0E61C884E2600833B12 /* approveIcon.png */; };
 		BBB7C0E91C8851B900833B12 /* denyIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0E81C8851B900833B12 /* denyIcon.png */; };
-		BBB7C0EB1C88569400833B12 /* personIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0EA1C88569400833B12 /* personIcon.png */; };
 		BBB7C0FC1C89FE3100833B12 /* gluuIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB7C0FB1C89FE3100833B12 /* gluuIcon.png */; };
 		BBB7C1021C9042AF00833B12 /* NSDate+NVTimeAgo.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB7C1011C9042AF00833B12 /* NSDate+NVTimeAgo.m */; };
 		BBB7C1051C90723300833B12 /* InformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB7C1041C90723300833B12 /* InformationViewController.m */; };
@@ -264,7 +260,6 @@
 		BB37DF101C7E0B8E0016D422 /* LogsTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogsTableCell.m; sourceTree = "<group>"; };
 		BB37DF401C7E0BD20016D422 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		BB37DF411C7E0CBC0016D422 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		BB3A22681CB39B1700EBD799 /* type_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = type_icon.png; sourceTree = "<group>"; };
 		BB3BE1621C87022C00817A46 /* LicenseAgreementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LicenseAgreementView.h; sourceTree = "<group>"; };
 		BB3BE1631C87022C00817A46 /* LicenseAgreementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LicenseAgreementView.m; sourceTree = "<group>"; };
 		BB3BE1671C88165800817A46 /* Super-gluu_PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Super-gluu_PrefixHeader.pch"; sourceTree = "<group>"; };
@@ -303,7 +298,6 @@
 		BBB5114A1EF2EF9500E19D8E /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		BBB7C0E61C884E2600833B12 /* approveIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = approveIcon.png; sourceTree = "<group>"; };
 		BBB7C0E81C8851B900833B12 /* denyIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = denyIcon.png; sourceTree = "<group>"; };
-		BBB7C0EA1C88569400833B12 /* personIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = personIcon.png; sourceTree = "<group>"; };
 		BBB7C0F71C88933100833B12 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		BBB7C0FB1C89FE3100833B12 /* gluuIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gluuIcon.png; sourceTree = "<group>"; };
 		BBB7C1001C9042AF00833B12 /* NSDate+NVTimeAgo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+NVTimeAgo.h"; path = "NSDate-Time-Ago/NSDate+NVTimeAgo.h"; sourceTree = "<group>"; };
@@ -624,7 +618,6 @@
 			isa = PBXGroup;
 			children = (
 				BB2458FD1CBD59D600035B5B /* gluuIconAlert.png */,
-				BB3A22681CB39B1700EBD799 /* type_icon.png */,
 				BB78BFB61C99C6C600558042 /* gluu.png */,
 				BBB7C0FB1C89FE3100833B12 /* gluuIcon.png */,
 				BB8703051CA3E5D400EEF9A6 /* gluuIconRed.png */,
@@ -640,7 +633,6 @@
 				BBB7C0E81C8851B900833B12 /* denyIcon.png */,
 				BB37DEF01C7E0B8E0016D422 /* infoIcon.png */,
 				BBB7C0E61C884E2600833B12 /* approveIcon.png */,
-				BBB7C0EA1C88569400833B12 /* personIcon.png */,
 			);
 			path = Icons;
 			sourceTree = "<group>";
@@ -991,8 +983,6 @@
 				BBB511481EF2E5B600E19D8E /* Info.plist in Resources */,
 				BB97CDE41F1E4FB90033C2A5 /* ProximaNova-Bold.otf in Resources */,
 				BB8703061CA3E5D400EEF9A6 /* gluuIconRed.png in Resources */,
-				BB3A22691CB39B1700EBD799 /* type_icon.png in Resources */,
-				BBB7C0EB1C88569400833B12 /* personIcon.png in Resources */,
 				BB97CDEC1F1E4FB90033C2A5 /* ProximaNova-Sbold.otf in Resources */,
 				BBE787271C99954600E9E0D7 /* Settings.bundle in Resources */,
 				BB37DF291C7E0B8E0016D422 /* gluuIcon29x2.png in Resources */,
@@ -1044,8 +1034,6 @@
 				BBB511491EF2E5B700E19D8E /* Info.plist in Resources */,
 				BB97CDE51F1E4FB90033C2A5 /* ProximaNova-Bold.otf in Resources */,
 				BB58C1A61EDDB32800FEEC78 /* gluuIconRed.png in Resources */,
-				BB58C1A71EDDB32800FEEC78 /* type_icon.png in Resources */,
-				BB58C1A81EDDB32800FEEC78 /* personIcon.png in Resources */,
 				BB97CDED1F1E4FB90033C2A5 /* ProximaNova-Sbold.otf in Resources */,
 				BB58C1A91EDDB32800FEEC78 /* Settings.bundle in Resources */,
 				BB58C1AA1EDDB32800FEEC78 /* gluuIcon29x2.png in Resources */,

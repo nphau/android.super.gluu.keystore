@@ -10,6 +10,7 @@
 #import "MainViewController.h"
 #import "LecenseAgreementDelegate.h"
 #import "UserLoginInfo.h"
+#import "CATCurveProgressView.h"
 
 @interface ApproveDenyViewController : UIViewController <UIScrollViewDelegate> {
  
@@ -28,23 +29,16 @@
     
     IBOutlet UILabel* createdTimeLabel;
     IBOutlet UILabel* createdDateLabel;
-    
+
     IBOutlet UILabel* typeLabel;
     
     IBOutlet UIView* navigationView;
-    IBOutlet UIView* serverView;
-    IBOutlet UIView* userNameView;
-    IBOutlet UIView* locationView;
-    IBOutlet UIView* timeView;
-    IBOutlet UIView* typeView;
-    
     IBOutlet UIButton* backButton;
-    
     IBOutlet UIView* buttonView;
     
-    IBOutlet UIView* timerView;
+    IBOutlet CATCurveProgressView* timerView;
     
-    IBOutlet UIScrollView* scrollView;
+    IBOutlet UIView* mainInfoView;
     
     BOOL isLandScape;
     
