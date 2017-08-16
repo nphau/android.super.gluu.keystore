@@ -144,7 +144,7 @@
 -(void)moveUpViews{
     int moveUpPosition = titleLabel.center.y - timerView.center.y;
     [titleLabel setCenter:CGPointMake(titleLabel.center.x, titleLabel.center.y - moveUpPosition)];
-    [mainInfoView setCenter:CGPointMake(mainInfoView.center.x, mainInfoView.center.y - moveUpPosition)];
+    [mainInfoView setCenter:CGPointMake(mainInfoView.center.x, timerView.center.y + timerView.frame.size.height)];
     if (!_isLogInfo){
         [timerView setCenter:CGPointMake(timerView.center.x, timerView.center.y - moveUpPosition)];
     }
@@ -214,9 +214,10 @@
             [self deleteLog:_userInfo];
         }
     }];
-    [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
+    SCLButton* noButton = [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
         NSLog(@"NO clicked");
     }];
+    [noButton setDefaultBackgroundColor:[UIColor redColor]];
     [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"AlertTitle", @"Into") subTitle:NSLocalizedString(@"ClearLogs", @"Clear Logs") closeButtonTitle:nil duration:0.0f];
 }
 
