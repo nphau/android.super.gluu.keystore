@@ -24,11 +24,11 @@
     [longPressRecognizer setMinimumPressDuration:3.0];
     [keyHandleTableView addGestureRecognizer:longPressRecognizer];
     
-    keyHandleTableView.layer.borderColor = [UIColor blackColor].CGColor;
-    keyHandleTableView.layer.borderWidth = 2.0;
+    keyHandleTableView.layer.borderColor = [UIColor grayColor].CGColor;
+    keyHandleTableView.layer.borderWidth = 1.0;
     [keyHandleTableView.layer setMasksToBounds:YES];
     keyCells = [[NSMutableDictionary alloc] init];
-    uniqueKeyLabel.text = [NSString stringWithFormat: NSLocalizedString(@"UniqueKeyLabel", @"UniqueKeyLabel"), [[AppConfiguration sharedInstance] systemTitle]];
+    //uniqueKeyLabel.text = [NSString stringWithFormat: NSLocalizedString(@"UniqueKeyLabel", @"UniqueKeyLabel"), [[AppConfiguration sharedInstance] systemTitle]];
     topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
     topIconView.image = [[AppConfiguration sharedInstance] systemIcon];
     
@@ -43,30 +43,6 @@
     [super viewWillAppear:animated];
     [self loadKeyHandlesFromDatabase];
     [keyHandleTableView reloadData];
-}
-
--(void)onLongPress:(UILongPressGestureRecognizer*)pGesture
-{
-    if (pGesture.state == UIGestureRecognizerStateBegan)
-    {
-        //Do something to tell the user!
-        CGPoint touchPoint = [pGesture locationInView:keyHandleTableView];
-        NSIndexPath* row = [keyHandleTableView indexPathForRowAtPoint:touchPoint];
-        rowToDelete = row.row;
-        if (row != nil) {
-            //Handle the long press on row
-            NSLog(@"Cell title will be changed");
-            SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-            [alert addButton:NSLocalizedString(@"YES", @"YES") actionBlock:^(void) {
-                NSLog(@"YES clicked");
-                [self showEditNameAlert];
-            }];
-            [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
-                NSLog(@"NO clicked");
-            }];
-            [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"AlertTitle", @"Into") subTitle:NSLocalizedString(@"ChangeKeyHandleName", @"Change KeyHandle Name") closeButtonTitle:nil duration:0.0f];
-        }
-    }
 }
 
 -(void)showEditNameAlert{
@@ -99,7 +75,7 @@
         [keyHandleTableView setHidden:YES];
     }
     keyHandleTableView.tableFooterView = [[UIView alloc] init];
-    [self initLabel:(int)[keyHandleArray count]];
+//    [self initLabel:(int)[keyHandleArray count]];
 }
 
 -(void)initLabel:(int)keyCount{
@@ -137,8 +113,8 @@
     TokenEntity* tokenEntity = (TokenEntity*)[keyHandleArray objectAtIndex:indexPath.row];
     [cell setData:tokenEntity];
     if ([tokenEntity isKindOfClass:[TokenEntity class]]){
-        NSString* keyName = tokenEntity->keyName == nil ? [NSString stringWithFormat:@"key for %@", tokenEntity->application] : tokenEntity->keyName;
-        [keyCells setObject:keyName forKey:tokenEntity->application];
+//        NSString* keyName = tokenEntity->keyName == nil ? [NSString stringWithFormat:@"key for %@", tokenEntity->application] : tokenEntity->keyName;
+        [keyCells setObject:tokenEntity->application forKey:tokenEntity->application];
     }
     [cell setTag:indexPath.row];
     cell.rightUtilityButtons = [self rightButtons];
@@ -151,17 +127,6 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [self showKeyInfo:indexPath.row];
 }
-
-//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-//    rowToDelete = (int)indexPath.row;
-//    TokenEntity* tokenEntity = [keyHandleArray objectAtIndex:rowToDelete];
-//    if (![tokenEntity isExternalKey]){
-//        
-//    } else {
-//        SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-//        [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:@"" subTitle:@"You can't delete key stored on external BLE device" closeButtonTitle:@"Close" duration:3.0f];
-//    }
-//}
 
 -(void)showKeyInfo:(NSInteger)index{
     TokenEntity* tokenEntity = [keyHandleArray objectAtIndex:index];
@@ -177,9 +142,10 @@
         NSLog(@"YES clicked");
         [self deleteRow];
     }];
-    [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
+    SCLButton* noButton = [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
         NSLog(@"NO clicked");
     }];
+    [noButton setBackgroundColor:[UIColor redColor]];
     [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Delete", @"Delete") subTitle:NSLocalizedString(@"DeleteKeyHandle", @"Delete KeyHandle") closeButtonTitle:nil duration:0.0f];
 }
 

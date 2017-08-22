@@ -16,5 +16,8 @@
 
 @property (strong, nonatomic) IBOutlet UITextView* licenseTextField;
 @property (strong, nonatomic) IBOutlet UIButton* acceptButton;
+@property (strong, nonatomic) IBOutlet UIButton* backButton;
+
+@property (assign) BOOL isFromSettings;
 
 @end

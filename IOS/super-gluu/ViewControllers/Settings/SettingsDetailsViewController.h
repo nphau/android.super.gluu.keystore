@@ -27,6 +27,7 @@
 @property (nonatomic, retain) IBOutlet UILabel *infoLabel;
 
 //Pin code additional views
+@property (nonatomic, retain) IBOutlet UIView* pinCodeMainView;
 @property (nonatomic, retain) IBOutlet UIView* pinCodeView;
 @property (nonatomic, retain) IBOutlet UIButton* setChangePinCode;
 @property (nonatomic, retain) IBOutlet UILabel* attemptsLabel;

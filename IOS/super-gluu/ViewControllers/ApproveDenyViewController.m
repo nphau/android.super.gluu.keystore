@@ -45,7 +45,8 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openURL:)];
     serverUrlLabel.userInteractionEnabled = YES;
     [serverUrlLabel addGestureRecognizer:tap];
-    [timerView setBackgroundColor:[[AppConfiguration sharedInstance] systemColor]];
+    [timerView setProgressColor:[[AppConfiguration sharedInstance] systemColor]];
+    [timerLabel setTextColor:[[AppConfiguration sharedInstance] systemColor]];
 }
 
 - (void)openURL:(UITapGestureRecognizer *)tap
@@ -147,6 +148,7 @@
     [mainInfoView setCenter:CGPointMake(mainInfoView.center.x, timerView.center.y + timerView.frame.size.height)];
     if (!_isLogInfo){
         [timerView setCenter:CGPointMake(timerView.center.x, timerView.center.y - moveUpPosition)];
+        [mainInfoView setFrame:CGRectMake(mainInfoView.frame.origin.x, titleLabel.center.y + titleLabel.frame.size.height/2, mainInfoView.frame.size.width, mainInfoView.frame.size.height)];
     }
 }
 

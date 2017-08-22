@@ -38,7 +38,6 @@
     [self checkPurchaces];
 #endif
     [self performSelector:@selector(checkLicenseAgreement) withObject:nil afterDelay:0.1];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkLicenseAgreement) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -56,7 +55,9 @@
 }
 
 -(void)checkPurchaces{
-    [[ADSubsriber sharedInstance] restorePurchase];
+    if (!_isFromSettings){
+        [[ADSubsriber sharedInstance] restorePurchase];
+    }
 }
 
 -(void)initWiget{
@@ -86,14 +87,22 @@
     [self checkPinProtection];
 }
 
+-(IBAction)onBack:(id)sender{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 -(void)checkLicenseAgreement{
     BOOL isLicenseAgreement = [[NSUserDefaults standardUserDefaults] boolForKey:LICENSE_AGREEMENT];
-    if (isLicenseAgreement){
+    if (isLicenseAgreement && !_isFromSettings){
         [self checkPinProtection];
     } else {
         [_licenseTextField setHidden:NO];
         [_acceptButton setHidden:NO];
         [topView setHidden:NO];
+        if (_isFromSettings){
+            [_backButton setHidden:!_isFromSettings];
+            [_acceptButton setHidden:_isFromSettings];
+        }
     }
 }
 

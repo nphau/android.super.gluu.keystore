@@ -11,6 +11,7 @@
 #import "SettingsDetailsViewController.h"
 #import "BLEDevicesViewController.h"
 #import "ADSubsriber.h"
+#import "LicenseAgreementView.h"
 
 @implementation SettingsTableViewController{
 
@@ -22,7 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    settingsTopics = [[NSArray alloc] initWithObjects:@"Pin code", @"TouchID (fingerprint)", @"Trust all (SSL)", nil];//@"U2F BLE device(s)",
+    settingsTopics = [[NSArray alloc] initWithObjects:@"Pin code", @"TouchID (fingerprint)", @"Trust all (SSL)", @"", @"User guide", @"Privacy policy", @"Upgrate to Ad-Free", @"", @"Version", @"", nil];//@"U2F BLE device(s)",
     settingsKeys = [[NSArray alloc] initWithObjects:PIN_PROTECTION_ID, TOUCH_ID_ENABLED, SSL_ENABLED, nil];// SECURE_CLICK_ENABLED,
 //    if (![[ADSubsriber sharedInstance] isSubscribed]){
 //        settingsTopics = [[NSArray alloc] initWithObjects:@"Pin code", @"TouchID (fingerprint)", @"U2F BLE device(s)", @"Trust all (SSL)", nil];//, @"AD Free", @"U2F BLE device(s)",
@@ -73,6 +74,12 @@
     }
 }
 
+-(void) openLicenseView{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    LicenseAgreementView* info = [storyboard instantiateViewControllerWithIdentifier:@"LicenseAgreementView"];
+    info.isFromSettings = YES;
+    [self.navigationController pushViewController:info animated:YES];
+}
 
 #pragma mark UITableview Delegate
 
@@ -87,20 +94,39 @@
     cell.titleLabel.text = [settingsTopics objectAtIndex:indexPath.row];
     cell.subTitleLabel.text = [self getSubTitleForSettings:(int)indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+    cell.backgroundColor = [cell.titleLabel.text isEqualToString:@""] ? [UIColor groupTableViewBackgroundColor] : [UIColor whiteColor];
+    
+    [cell.backArrowImage setHidden:!(indexPath.row <= 2 || (indexPath.row >= 4 && indexPath.row <= 6))];
+    [cell.versionLabel setHidden:!(indexPath.row == settingsTopics.count-2)];
+    
+    //Extract app and build versions
+    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
+    NSString *appVersion = [infoDict objectForKey:@"CFBundleShortVersionString"]; // example: 1.0.0
+    NSString *buildNumber = [infoDict objectForKey:@"CFBundleVersion"];
+    
+    [cell.versionLabel setText:[NSString stringWithFormat:@"%@ - %@", appVersion, buildNumber]];
     
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    selectedSettingIndex = (int)indexPath.row;
-//    if (selectedSettingIndex == 2){
-//        [self performSegueWithIdentifier:@"settingsBLESegue" sender:self];
-//    } else if (selectedSettingIndex == settingsKeys.count-1 && [[NSUserDefaults standardUserDefaults] boolForKey:NOTIFICATION_AD_FREE]){
-//    
-//    } else {
+    if (indexPath.row <= 2){
+        selectedSettingIndex = (int)indexPath.row;
         [self performSegueWithIdentifier:@"settingsDetailsSegue" sender:self];
-
-//    }
+    }
+    if (indexPath.row == 4){
+        //Open user guide url
+        if( [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:USER_GUIDE_URL]])
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:USER_GUIDE_URL]];
+    }
+    if (indexPath.row == 5){
+        //Open Privacy policy
+        [self openLicenseView];
+    }
+    if (indexPath.row == 6){
+        //Open Ad-Free functionality
+    }
 }
 
 @end

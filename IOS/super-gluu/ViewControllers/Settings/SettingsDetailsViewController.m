@@ -87,6 +87,7 @@
     }
     if ([_settingKey isEqualToString:PIN_PROTECTION_ID]){
         _pinCodeView.hidden = ![[NSUserDefaults standardUserDefaults] boolForKey:_settingKey];
+        _pinCodeMainView.hidden = ![[NSUserDefaults standardUserDefaults] boolForKey:_settingKey];
         code = [[NSUserDefaults standardUserDefaults] stringForKey:PIN_CODE];
         if (code == nil || [code isEqualToString:@""]){
             [_setChangePinCode setTitle:NSLocalizedString(@"SetPinCode", @"SetPinCode") forState:UIControlStateNormal];
@@ -95,6 +96,7 @@
         }
     } else {
         _pinCodeView.hidden = YES;
+        _pinCodeMainView.hidden = YES;
     }
 }
 
