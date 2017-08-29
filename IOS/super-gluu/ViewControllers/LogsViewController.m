@@ -95,6 +95,7 @@
 
 -(void)deleteLogsAlert:(UserLoginInfo*)log array:(NSArray*)logs{
     SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert setHorizontalButtons:YES];
     [alert addButton:NSLocalizedString(@"YES", @"YES") actionBlock:^(void) {
         NSLog(@"YES clicked");
         if (log != nil){
@@ -105,18 +106,21 @@
             [self showNoLogsToDeleteAlert];
         }
     }];
-    [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
+    SCLButton * noButton = [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
         NSLog(@"NO clicked");
     }];
-    [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"AlertTitle", @"Into") subTitle:NSLocalizedString(@"ClearLogs", @"Clear Logs") closeButtonTitle:nil duration:0.0f];
+    [noButton setDefaultBackgroundColor:[UIColor redColor]];
+    NSString* subText = logs != nil || logs.count > 0 ? NSLocalizedString(@"ClearLogs", @"Clear Logs") : NSLocalizedString(@"ClearLog", @"Clear Log");
+    [alert showCustom:[UIImage imageNamed:@"delete_action_titleIcon"] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"AlertTitle", @"Into") subTitle: subText closeButtonTitle:nil duration:0.0f];
 }
 
 -(void)showNoLogsToDeleteAlert{
     SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert setHorizontalButtons:YES];
     [alert addButton:NSLocalizedString(@"OK", @"OK") actionBlock:^(void) {
         NSLog(@"NO clicked");
     }];
-    [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"AlertTitle", @"Into") subTitle:@"No selected log(s)" closeButtonTitle:nil duration:0.0f];
+    [alert showCustom:[UIImage imageNamed:@"delete_action_titleIcon"] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"AlertTitle", @"Into") subTitle:@"No selected log(s)" closeButtonTitle:nil duration:0.0f];
 }
 
 #pragma mark UITableview Delegate

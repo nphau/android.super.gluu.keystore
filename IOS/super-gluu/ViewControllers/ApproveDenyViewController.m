@@ -144,8 +144,8 @@
 
 -(void)moveUpViews{
     int moveUpPosition = titleLabel.center.y - timerView.center.y;
-    [titleLabel setCenter:CGPointMake(titleLabel.center.x, titleLabel.center.y - moveUpPosition)];
-    [mainInfoView setCenter:CGPointMake(mainInfoView.center.x, timerView.center.y + timerView.frame.size.height)];
+//    [titleLabel setCenter:CGPointMake(titleLabel.center.x, titleLabel.center.y - moveUpPosition)];
+    [mainInfoView setCenter:CGPointMake(mainInfoView.center.x, titleLabel.center.y + titleLabel.frame.size.height/1.5)];
     if (!_isLogInfo){
         [timerView setCenter:CGPointMake(timerView.center.x, timerView.center.y - moveUpPosition)];
         [mainInfoView setFrame:CGRectMake(mainInfoView.frame.origin.x, titleLabel.center.y + titleLabel.frame.size.height/2, mainInfoView.frame.size.width, mainInfoView.frame.size.height)];
@@ -210,6 +210,7 @@
 
 -(void)deleteLogsAlert{
     SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert setHorizontalButtons:YES];
     [alert addButton:NSLocalizedString(@"YES", @"YES") actionBlock:^(void) {
         NSLog(@"YES clicked");
         if (_userInfo != nil){
@@ -220,7 +221,7 @@
         NSLog(@"NO clicked");
     }];
     [noButton setDefaultBackgroundColor:[UIColor redColor]];
-    [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"AlertTitle", @"Into") subTitle:NSLocalizedString(@"ClearLogs", @"Clear Logs") closeButtonTitle:nil duration:0.0f];
+    [alert showCustom:[UIImage imageNamed:@"delete_action_titleIcon"] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"AlertTitle", @"Into") subTitle:NSLocalizedString(@"ClearLog", @"Clear Log") closeButtonTitle:nil duration:0.0f];
 }
 
 -(void)deleteLog:(UserLoginInfo*)log {

@@ -64,11 +64,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>SCLAlertView-Objective-C.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>SWTableViewCell.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -87,12 +82,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>0BBB32EB8EF739B1CA3B03828E642341</key>
+		<key>0BC0E50485DEAA0D4A8B1C88205A2B1E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>1D8C3CA8F4EFE1E95DCDF3330412DD94</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>32638269FCBFDA8B8F2A9DCF7C1B21B1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -107,22 +107,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>55E3A9E72BCD32504C8A6F2E33E78DF8</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>60AA9BE8C25CFBDF12DA8DB234483D3B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7E2EB41C0DD4B6053AE9BF4E23CE0D04</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>88B5A86CE2029F4908BBB8DD157FE726</key>
+		<key>65D959B421E6E8EE786F7AFDE8634C40</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -132,7 +122,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>ABC893FD7C09AB146A02130DF6B0DC59</key>
+		<key>A126D10FD869611718F7976A7413A0E4</key>
 		<dict>
 			<key>primary</key>
 			<true/>

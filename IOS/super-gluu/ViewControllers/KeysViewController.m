@@ -46,9 +46,10 @@
 }
 
 -(void)showEditNameAlert{
-    KeyHandleCell *cell = (KeyHandleCell*)[keyHandleArray objectAtIndex:rowToDelete];
+    /*KeyHandleCell *cell = (KeyHandleCell*)[keyHandleArray objectAtIndex:rowToDelete];
     
     SCLAlertView *alert = [[SCLAlertView alloc] init];
+    [alert setHorizontalButtons:YES];
     UITextField *textField = [alert addTextField:@"Enter key's name"];
     
     [alert addButton:@"Save" actionBlock:^(void) {
@@ -62,8 +63,74 @@
         }
     }];
     
-    [alert showEdit:self title:@"New key's name" subTitle:@"Enter new key's name" closeButtonTitle:@"Close" duration:0.0f];
+    [alert showEdit:self title:@"Change key name" subTitle:@"Enter a new name for your key:" closeButtonTitle:@"Close" duration:0.0f];
+    */
+    [self ShowAdvancedWithHorizontalButtons];
 }
+
+- (void)ShowAdvancedWithHorizontalButtons {
+    KeyHandleCell *cell = (KeyHandleCell*)[keyHandleArray objectAtIndex:rowToDelete];
+    TokenEntity* tokenEntity = (TokenEntity*)[keyHandleArray objectAtIndex:rowToDelete];
+    SCLAlertView *alert = [[SCLAlertView alloc] init];
+    [alert setHorizontalButtons:YES];
+    
+    alert.backgroundViewColor = [UIColor whiteColor];
+    
+    [alert setTitleFontFamily:@"ProximaNova-Semibold" withSize:20.0f withColor:[[AppConfiguration sharedInstance] systemColor]];
+    [alert setBodyTextFontFamily:@"ProximaNova-Regular" withSize:15.0f];
+    [alert setButtonsTextFontFamily:@"ProximaNova-Regular" withSize:15.0f];
+    
+    SCLTextView *textField = [alert addTextField:@"Enter your name"];
+    
+    SCLButton* saveButton = [alert addButton:@"Save" actionBlock:^(void) {
+        NSLog(@"Text value: %@", textField.text);
+        if ([self checkUniqueName:textField.text andID:cell.accessibilityLabel]){
+            [[DataStoreManager sharedInstance] setTokenEntitiesNameByID:tokenEntity->ID userName:tokenEntity->userName newName:textField.text];
+            [self loadKeyHandlesFromDatabase];
+        } else {
+            SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+            [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Info", @"Info") subTitle:@"Name is exist or empty, please enter another one" closeButtonTitle:@"Close" duration:0.0f];
+        }
+    }];
+    
+    [saveButton setDefaultBackgroundColor:[[AppConfiguration sharedInstance] systemColor]];
+    
+    alert.completeButtonFormatBlock = ^NSDictionary* (void)
+    {
+        NSMutableDictionary *buttonConfig = [[NSMutableDictionary alloc] init];
+        
+        buttonConfig[@"backgroundColor"] = [UIColor redColor];
+        buttonConfig[@"textColor"] = [UIColor whiteColor];
+        
+        return buttonConfig;
+    };
+    
+//    alert.attributedFormatBlock = ^NSAttributedString* (NSString *value)
+//    {
+//        NSMutableAttributedString *subTitle = [[NSMutableAttributedString alloc]initWithString:value];
+//        
+//        NSRange redRange = [value rangeOfString:@"Attributed" options:NSCaseInsensitiveSearch];
+//        [subTitle addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:redRange];
+//        
+//        NSRange greenRange = [value rangeOfString:@"successfully" options:NSCaseInsensitiveSearch];
+//        [subTitle addAttribute:NSForegroundColorAttributeName value:[UIColor brownColor] range:greenRange];
+//        
+//        NSRange underline = [value rangeOfString:@"completed" options:NSCaseInsensitiveSearch];
+//        [subTitle addAttributes:@{NSUnderlineStyleAttributeName:@(NSUnderlineStyleSingle)} range:underline];
+//        
+//        return subTitle;
+//    };
+//    [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:@"Change key name" subTitle:@"Enter a new name for your key:" closeButtonTitle:@"Cancel" duration:0.0f];
+//    alert tit
+    [alert showTitle:self image:[UIImage imageNamed:@"rename_action_title_icon"] color:[[AppConfiguration sharedInstance] systemColor] title:@"Change key name" subTitle:@"Enter a new name for your key:" style:SCLAlertViewStyleCustom closeButtonTitle:@"Cancel" duration:0.0f];
+//    [alert showTitle:self title:@"Change key name" subTitle:@"Enter a new name for your key:" style:SCLAlertViewStyleCustom closeButtonTitle:@"Cancel" duration:0.0f];
+}
+
+- (void)firstButton
+{
+    NSLog(@"First button tapped");
+}
+
 
 -(void)loadKeyHandlesFromDatabase{
     NSArray* keyHandles = [[DataStoreManager sharedInstance] getTokenEntities];
@@ -113,8 +180,8 @@
     TokenEntity* tokenEntity = (TokenEntity*)[keyHandleArray objectAtIndex:indexPath.row];
     [cell setData:tokenEntity];
     if ([tokenEntity isKindOfClass:[TokenEntity class]]){
-//        NSString* keyName = tokenEntity->keyName == nil ? [NSString stringWithFormat:@"key for %@", tokenEntity->application] : tokenEntity->keyName;
-        [keyCells setObject:tokenEntity->application forKey:tokenEntity->application];
+        NSString* keyName = tokenEntity->keyName == nil ? tokenEntity->application : tokenEntity->keyName;
+        [keyCells setObject:keyName forKey:tokenEntity->application];
     }
     [cell setTag:indexPath.row];
     cell.rightUtilityButtons = [self rightButtons];
@@ -138,6 +205,7 @@
 
 -(void)showDeleteAlert{
     SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert setHorizontalButtons:YES];
     [alert addButton:NSLocalizedString(@"YES", @"YES") actionBlock:^(void) {
         NSLog(@"YES clicked");
         [self deleteRow];
@@ -145,8 +213,8 @@
     SCLButton* noButton = [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
         NSLog(@"NO clicked");
     }];
-    [noButton setBackgroundColor:[UIColor redColor]];
-    [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Delete", @"Delete") subTitle:NSLocalizedString(@"DeleteKeyHandle", @"Delete KeyHandle") closeButtonTitle:nil duration:0.0f];
+    [noButton setDefaultBackgroundColor:[UIColor redColor]];
+    [alert showCustom:[UIImage imageNamed:@"delete_action_titleIcon"] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Delete", @"Delete") subTitle:NSLocalizedString(@"DeleteKeyHandle", @"Delete KeyHandle") closeButtonTitle:nil duration:0.0f];
 }
 
 -(void)deleteRow{

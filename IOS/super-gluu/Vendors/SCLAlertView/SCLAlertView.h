@@ -17,6 +17,8 @@
 
 typedef NSAttributedString* (^SCLAttributedFormatBlock)(NSString *value);
 typedef void (^SCLDismissBlock)(void);
+typedef void (^SCLDismissAnimationCompletionBlock)(void);
+typedef void (^SCLShowAnimationCompletionBlock)(void);
 typedef void (^SCLForceHideBlock)(void);
 
 @interface SCLAlertView : UIViewController 
@@ -27,15 +29,15 @@ typedef void (^SCLForceHideBlock)(void);
  */
 typedef NS_ENUM(NSInteger, SCLAlertViewStyle)
 {
-    Success,
-    Error,
-    Notice,
-    Warning,
-    Info,
-    Edit,
-    Waiting,
-    Question,
-    Custom
+    SCLAlertViewStyleSuccess,
+    SCLAlertViewStyleError,
+    SCLAlertViewStyleNotice,
+    SCLAlertViewStyleWarning,
+    SCLAlertViewStyleInfo,
+    SCLAlertViewStyleEdit,
+    SCLAlertViewStyleWaiting,
+    SCLAlertViewStyleQuestion,
+    SCLAlertViewStyleCustom
 };
 
 /** Alert hide animation styles
@@ -44,13 +46,14 @@ typedef NS_ENUM(NSInteger, SCLAlertViewStyle)
  */
 typedef NS_ENUM(NSInteger, SCLAlertViewHideAnimation)
 {
-    FadeOut,
-    SlideOutToBottom,
-    SlideOutToTop,
-    SlideOutToLeft,
-    SlideOutToRight,
-    SlideOutToCenter,
-    SlideOutFromCenter
+    SCLAlertViewHideAnimationFadeOut,
+    SCLAlertViewHideAnimationSlideOutToBottom,
+    SCLAlertViewHideAnimationSlideOutToTop,
+    SCLAlertViewHideAnimationSlideOutToLeft,
+    SCLAlertViewHideAnimationSlideOutToRight,
+    SCLAlertViewHideAnimationSlideOutToCenter,
+    SCLAlertViewHideAnimationSlideOutFromCenter,
+    SCLAlertViewHideAnimationSimplyDisappear
 };
 
 /** Alert show animation styles
@@ -59,13 +62,14 @@ typedef NS_ENUM(NSInteger, SCLAlertViewHideAnimation)
  */
 typedef NS_ENUM(NSInteger, SCLAlertViewShowAnimation)
 {
-    FadeIn,
-    SlideInFromBottom,
-    SlideInFromTop,
-    SlideInFromLeft,
-    SlideInFromRight,
-    SlideInFromCenter,
-    SlideInToCenter
+    SCLAlertViewShowAnimationFadeIn,
+    SCLAlertViewShowAnimationSlideInFromBottom,
+    SCLAlertViewShowAnimationSlideInFromTop,
+    SCLAlertViewShowAnimationSlideInFromLeft,
+    SCLAlertViewShowAnimationSlideInFromRight,
+    SCLAlertViewShowAnimationSlideInFromCenter,
+    SCLAlertViewShowAnimationSlideInToCenter,
+    SCLAlertViewShowAnimationSimplyAppear
 };
 
 /** Alert background styles
@@ -74,9 +78,9 @@ typedef NS_ENUM(NSInteger, SCLAlertViewShowAnimation)
  */
 typedef NS_ENUM(NSInteger, SCLAlertViewBackground)
 {
-    Shadow,
-    Blur,
-    Transparent
+    SCLAlertViewBackgroundShadow,
+    SCLAlertViewBackgroundBlur,
+    SCLAlertViewBackgroundTransparent
 };
 
 /** Content view corner radius
@@ -220,6 +224,12 @@ typedef NS_ENUM(NSInteger, SCLAlertViewBackground)
  */
 @property (nonatomic) UIStatusBarStyle statusBarStyle;
 
+/** Set horizontal alignment for buttons
+ *
+ * Horizontal aligment instead of vertically if YES
+ */
+@property (nonatomic) BOOL horizontalButtons;
+
 /** Initialize SCLAlertView using a new window.
  *
  * Init with new window
@@ -238,10 +248,23 @@ typedef NS_ENUM(NSInteger, SCLAlertViewBackground)
  */
 - (void)alertIsDismissed:(SCLDismissBlock)dismissBlock;
 
+/** Warns that alerts dismiss animation is completed
+ *
+ * Warns that alerts dismiss animation is completed
+ */
+- (void)alertDismissAnimationIsCompleted:(SCLDismissAnimationCompletionBlock)dismissAnimationCompletionBlock;
+
+/** Warns that alerts show animation is completed
+ *
+ * Warns that alerts show animation is completed
+ */
+- (void)alertShowAnimationIsCompleted:(SCLShowAnimationCompletionBlock)showAnimationCompletionBlock;
+
 /** Hide SCLAlertView
  *
  * Hide SCLAlertView using animation and removing from super view.
  */
+
 - (void)hideView;
 
 /** SCLAlertView visibility
@@ -291,8 +314,9 @@ typedef NS_ENUM(NSInteger, SCLAlertViewBackground)
  *
  * @param titleFontFamily The family name used to displayed the title.
  * @param size Font size.
+ * @param color.
  */
-- (void)setTitleFontFamily:(NSString *)titleFontFamily withSize:(CGFloat)size;
+- (void)setTitleFontFamily:(NSString *)titleFontFamily withSize:(CGFloat)size withColor:(UIColor*)color;
 
 /** Set Text field font family and size
  *
@@ -408,6 +432,8 @@ typedef NS_ENUM(NSInteger, SCLAlertViewBackground)
  */
 - (void)showTitle:(UIViewController *)vc title:(NSString *)title subTitle:(NSString *)subTitle style:(SCLAlertViewStyle)style closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration;
 - (void)showTitle:(NSString *)title subTitle:(NSString *)subTitle style:(SCLAlertViewStyle)style closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration;
+
+- (void)showTitle:(UIViewController *)vc image:(UIImage *)image color:(UIColor *)color title:(NSString *)title subTitle:(NSString *)subTitle style:(SCLAlertViewStyle)style closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration;
 
 /** Shows a custom SCLAlertView without using a predefined type, allowing for a custom image and color to be specified.
  *
@@ -534,13 +560,17 @@ typedef NS_ENUM(NSInteger, SCLAlertViewBackground)
 
 #pragma mark - Custom Setters
 @property(copy, nonatomic) SCLAlertViewBuilder *(^alertIsDismissed) (SCLDismissBlock dismissBlock);
+@property(copy, nonatomic) SCLAlertViewBuilder *(^alertDismissAnimationIsCompleted) (SCLDismissAnimationCompletionBlock dismissAnimationCompletionBlock);
+@property(copy, nonatomic) SCLAlertViewBuilder *(^alertShowAnimationIsCompleted) (SCLShowAnimationCompletionBlock showAnimationCompletionBlock);
 @property(copy, nonatomic) SCLAlertViewBuilder *(^removeTopCircle)(void);
 @property(copy, nonatomic) SCLAlertViewBuilder *(^addCustomView)(UIView *view);
 @property(copy, nonatomic) SCLAlertViewBuilder *(^addTextField)(NSString *title);
 @property(copy, nonatomic) SCLAlertViewBuilder *(^addCustomTextField)(UITextField *textField);
 @property(copy, nonatomic) SCLAlertViewBuilder *(^addSwitchViewWithLabelTitle)(NSString *title);
 @property(copy, nonatomic) SCLAlertViewBuilder *(^addTimerToButtonIndex)(NSInteger buttonIndex, BOOL reverse);
-@property(copy, nonatomic) SCLAlertViewBuilder *(^setTitleFontFamily)(NSString *titleFontFamily, CGFloat size);
+@property(copy, nonatomic) SCLAlertViewBuilder *(^setTitleFontFamily)(NSString *titleFontFamily, CGFloat size, UIColor* color);
+@property(copy, nonatomic) SCLAlertViewBuilder *(^setTitleColor)(UIColor *color);
+@property(copy, nonatomic) SCLAlertViewBuilder *(^setSubTitleColor)(UIColor *color);
 @property(copy, nonatomic) SCLAlertViewBuilder *(^setBodyTextFontFamily)(NSString *bodyTextFontFamily, CGFloat size);
 @property(copy, nonatomic) SCLAlertViewBuilder *(^setButtonsTextFontFamily)(NSString *buttonsFontFamily, CGFloat size);
 @property(copy, nonatomic) SCLAlertViewBuilder *(^addButtonWithActionBlock)(NSString *title, SCLActionBlock action);

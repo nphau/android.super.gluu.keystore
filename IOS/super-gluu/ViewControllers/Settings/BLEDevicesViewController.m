@@ -109,6 +109,7 @@
 
 -(void)showAlertViewWithTitle:(NSString*)title andText:(NSString*)text{
     SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert setHorizontalButtons:YES];
     [alert addButton:@"Close" actionBlock:^(void) {
         NSLog(@"Closed alert");
     }];

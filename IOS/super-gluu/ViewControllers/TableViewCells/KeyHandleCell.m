@@ -15,8 +15,8 @@
     if ([tokenEntity isKindOfClass:[TokenEntity class]]){
         _key = [tokenEntity->keyHandle base64EncodedString];
         NSURL* urlIssuer = [NSURL URLWithString:tokenEntity->issuer];
-        //NSString* keyName = tokenEntity->keyName == nil ? [NSString stringWithFormat:@"%@'s key for %@", tokenEntity->userName, urlIssuer.host] : tokenEntity->keyName;
-        _keyHandleNameLabel.text = [NSString stringWithFormat:@"https://%@", urlIssuer.host];
+        NSString* keyName = tokenEntity->keyName == nil ? [NSString stringWithFormat:@"https://%@", urlIssuer.host] : tokenEntity->keyName;
+        _keyHandleNameLabel.text = keyName;
         keyHandleTime.text = [self getTime:tokenEntity->pairingTime];
         self.accessibilityLabel = tokenEntity->application;
         self.accessibilityValue = tokenEntity->userName;
@@ -33,7 +33,7 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZZZ"];
     NSDate* date = [formatter dateFromString:createdTime];
-    [formatter setDateFormat:@" MMM dd, yyyy hh:mm:ss"];
+    [formatter setDateFormat:@"MMM dd, yyyy hh:mm:ss"];
     return [formatter stringFromDate:date];
 }
 

@@ -40,7 +40,7 @@
 //    self.layer.borderColor = [UIColor blackColor].CGColor;
 //    self.layer.borderWidth = 2.0;
     self.layer.shadowColor = [UIColor blackColor].CGColor;
-    self.layer.shadowRadius = 10;
+    self.layer.shadowRadius = 5;
     self.layer.shadowOffset = CGSizeMake(0, 3);
     self.layer.shadowOpacity = 1.0;
     self.adFreeButton.layer.cornerRadius = CORNER_RADIUS;

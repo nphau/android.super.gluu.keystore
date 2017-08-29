@@ -221,6 +221,7 @@
         isPinCode = YES;
     }
     SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert setHorizontalButtons:YES];
     [alert addButton:NSLocalizedString(@"YES", @"YES") actionBlock:^(void) {
         NSLog(@"YES clicked");
         if ([[NSUserDefaults standardUserDefaults] stringForKey:PIN_CODE] != nil){
@@ -229,9 +230,10 @@
             [self setPinCode];
         }
     }];
-    [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
+    SCLButton * noButton = [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
         NSLog(@"NO clicked");
     }];
+    [noButton setDefaultBackgroundColor:[UIColor redColor]];
     [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:title subTitle:message closeButtonTitle:nil duration:0.0f];
 }
 

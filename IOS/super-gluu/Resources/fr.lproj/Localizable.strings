@@ -81,6 +81,7 @@
 
 "PushTimeOver" = "Timeover for push notification authentication";
 
+"ClearLog" = "Do you want to clear log?";
 "ClearLogs" = "Do you want to clear logs?";
 
 "ApproveDeclineTitle" = "To continue press %@, to stop %@";

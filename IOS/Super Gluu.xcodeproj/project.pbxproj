@@ -49,6 +49,14 @@
 		BB4732C01EEADDCE007B8173 /* ADSubsriber.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4732BE1EEADDCE007B8173 /* ADSubsriber.m */; };
 		BB4732C41EEAEE20007B8173 /* ADViewSubscriber.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4732C31EEAEE20007B8173 /* ADViewSubscriber.m */; };
 		BB4732C51EEAEE20007B8173 /* ADViewSubscriber.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4732C31EEAEE20007B8173 /* ADViewSubscriber.m */; };
+		BB4EDA421F4EC52700EA807B /* SCLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDA321F4EC52700EA807B /* SCLAlertView.m */; };
+		BB4EDA431F4EC52700EA807B /* SCLAlertViewResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDA341F4EC52700EA807B /* SCLAlertViewResponder.m */; };
+		BB4EDA441F4EC52700EA807B /* SCLAlertViewStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDA361F4EC52700EA807B /* SCLAlertViewStyleKit.m */; };
+		BB4EDA451F4EC52700EA807B /* SCLButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDA381F4EC52700EA807B /* SCLButton.m */; };
+		BB4EDA461F4EC52700EA807B /* SCLSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDA3B1F4EC52700EA807B /* SCLSwitchView.m */; };
+		BB4EDA471F4EC52700EA807B /* SCLTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDA3D1F4EC52700EA807B /* SCLTextView.m */; };
+		BB4EDA481F4EC52700EA807B /* SCLTimerDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDA3F1F4EC52700EA807B /* SCLTimerDisplay.m */; };
+		BB4EDA491F4EC52700EA807B /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDA411F4EC52700EA807B /* UIImage+ImageEffects.m */; };
 		BB50AE1C1E5F0978003AEC78 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB50AE1B1E5F0978003AEC78 /* LocalAuthentication.framework */; };
 		BB58C1611EDDB32800FEEC78 /* NSDate+NVTimeAgo.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB7C1011C9042AF00833B12 /* NSDate+NVTimeAgo.m */; };
 		BB58C1621EDDB32800FEEC78 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE5B1C7E08320016D422 /* MainViewController.m */; };
@@ -269,6 +277,23 @@
 		BB4732BE1EEADDCE007B8173 /* ADSubsriber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADSubsriber.m; path = Models/ADSubsriber.m; sourceTree = "<group>"; };
 		BB4732C21EEAEE20007B8173 /* ADViewSubscriber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADViewSubscriber.h; path = Models/ADViewSubscriber/ADViewSubscriber.h; sourceTree = "<group>"; };
 		BB4732C31EEAEE20007B8173 /* ADViewSubscriber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADViewSubscriber.m; path = Models/ADViewSubscriber/ADViewSubscriber.m; sourceTree = "<group>"; };
+		BB4EDA311F4EC52700EA807B /* SCLAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertView.h; sourceTree = "<group>"; };
+		BB4EDA321F4EC52700EA807B /* SCLAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLAlertView.m; sourceTree = "<group>"; };
+		BB4EDA331F4EC52700EA807B /* SCLAlertViewResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertViewResponder.h; sourceTree = "<group>"; };
+		BB4EDA341F4EC52700EA807B /* SCLAlertViewResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLAlertViewResponder.m; sourceTree = "<group>"; };
+		BB4EDA351F4EC52700EA807B /* SCLAlertViewStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertViewStyleKit.h; sourceTree = "<group>"; };
+		BB4EDA361F4EC52700EA807B /* SCLAlertViewStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLAlertViewStyleKit.m; sourceTree = "<group>"; };
+		BB4EDA371F4EC52700EA807B /* SCLButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLButton.h; sourceTree = "<group>"; };
+		BB4EDA381F4EC52700EA807B /* SCLButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLButton.m; sourceTree = "<group>"; };
+		BB4EDA391F4EC52700EA807B /* SCLMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLMacros.h; sourceTree = "<group>"; };
+		BB4EDA3A1F4EC52700EA807B /* SCLSwitchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLSwitchView.h; sourceTree = "<group>"; };
+		BB4EDA3B1F4EC52700EA807B /* SCLSwitchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLSwitchView.m; sourceTree = "<group>"; };
+		BB4EDA3C1F4EC52700EA807B /* SCLTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLTextView.h; sourceTree = "<group>"; };
+		BB4EDA3D1F4EC52700EA807B /* SCLTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLTextView.m; sourceTree = "<group>"; };
+		BB4EDA3E1F4EC52700EA807B /* SCLTimerDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLTimerDisplay.h; sourceTree = "<group>"; };
+		BB4EDA3F1F4EC52700EA807B /* SCLTimerDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLTimerDisplay.m; sourceTree = "<group>"; };
+		BB4EDA401F4EC52700EA807B /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		BB4EDA411F4EC52700EA807B /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		BB50AE1B1E5F0978003AEC78 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		BB58C1B11EDDB32800FEEC78 /* Super Gluu - Ad Free.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Super Gluu - Ad Free.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB58C1B21EDDB32E00FEEC78 /* Super Gluu (ad free)-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Super Gluu (ad free)-Info.plist"; path = "/Users/nazaryavornytskyy/super-gluu/IOS/Super Gluu (ad free)-Info.plist"; sourceTree = "<absolute>"; };
@@ -648,6 +673,7 @@
 		BB37DEF61C7E0B8E0016D422 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				BB4EDA301F4EC52700EA807B /* SCLAlertView */,
 				BB05D1C31EB08B22007E0B72 /* NetworkChecker */,
 				BB2458FF1CBE7B4F00035B5B /* NSMutableAttributedString+Color */,
 				BB18D0591CBCFF9600A73733 /* PAPasscode */,
@@ -697,6 +723,30 @@
 				BB4732C31EEAEE20007B8173 /* ADViewSubscriber.m */,
 			);
 			name = ADViewSubscriber;
+			sourceTree = "<group>";
+		};
+		BB4EDA301F4EC52700EA807B /* SCLAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				BB4EDA311F4EC52700EA807B /* SCLAlertView.h */,
+				BB4EDA321F4EC52700EA807B /* SCLAlertView.m */,
+				BB4EDA331F4EC52700EA807B /* SCLAlertViewResponder.h */,
+				BB4EDA341F4EC52700EA807B /* SCLAlertViewResponder.m */,
+				BB4EDA351F4EC52700EA807B /* SCLAlertViewStyleKit.h */,
+				BB4EDA361F4EC52700EA807B /* SCLAlertViewStyleKit.m */,
+				BB4EDA371F4EC52700EA807B /* SCLButton.h */,
+				BB4EDA381F4EC52700EA807B /* SCLButton.m */,
+				BB4EDA391F4EC52700EA807B /* SCLMacros.h */,
+				BB4EDA3A1F4EC52700EA807B /* SCLSwitchView.h */,
+				BB4EDA3B1F4EC52700EA807B /* SCLSwitchView.m */,
+				BB4EDA3C1F4EC52700EA807B /* SCLTextView.h */,
+				BB4EDA3D1F4EC52700EA807B /* SCLTextView.m */,
+				BB4EDA3E1F4EC52700EA807B /* SCLTimerDisplay.h */,
+				BB4EDA3F1F4EC52700EA807B /* SCLTimerDisplay.m */,
+				BB4EDA401F4EC52700EA807B /* UIImage+ImageEffects.h */,
+				BB4EDA411F4EC52700EA807B /* UIImage+ImageEffects.m */,
+			);
+			path = SCLAlertView;
 			sourceTree = "<group>";
 		};
 		BB79FA291E78309000AEAE58 /* BLEManager */ = {
@@ -1152,10 +1202,12 @@
 				BB3BE1641C87022C00817A46 /* LicenseAgreementView.m in Sources */,
 				BB13D8121EE8413A00F3C41F /* String+Extension.swift in Sources */,
 				BB128D861E8006A40041BD21 /* SettingsTableCell.m in Sources */,
+				BB4EDA421F4EC52700EA807B /* SCLAlertView.m in Sources */,
 				BB79FA2A1E78309000AEAE58 /* PeripheralScanner.swift in Sources */,
 				BB37DE591C7E08320016D422 /* AppDelegate.m in Sources */,
 				BBDFCCCC1EB86C740028D8C0 /* SuperGluuBannerView.m in Sources */,
 				BBB7C1051C90723300833B12 /* InformationViewController.m in Sources */,
+				BB4EDA491F4EC52700EA807B /* UIImage+ImageEffects.m in Sources */,
 				BB37DF3D1C7E0B8E0016D422 /* KeysViewController.m in Sources */,
 				BB87A2811EA0DAD8007F70E9 /* MainTabViewController.m in Sources */,
 				BB128D821E8002890041BD21 /* SettingsTableViewController.m in Sources */,
@@ -1163,12 +1215,18 @@
 				BBF7603B1EB462D2005B9793 /* NotificationNetworkView.m in Sources */,
 				BB37DE561C7E08320016D422 /* main.m in Sources */,
 				BB79FA2C1E78309000AEAE58 /* CharacteristicScanner.swift in Sources */,
+				BB4EDA461F4EC52700EA807B /* SCLSwitchView.m in Sources */,
 				BBC643C91EF14E6F009FEDD1 /* AppConfiguration.m in Sources */,
 				BB128D8E1E8266470041BD21 /* BLEDevicesViewController.m in Sources */,
 				BB4732BF1EEADDCE007B8173 /* ADSubsriber.m in Sources */,
 				BB3BE1721C882D0600817A46 /* ApproveDenyViewController.m in Sources */,
+				BB4EDA481F4EC52700EA807B /* SCLTimerDisplay.m in Sources */,
 				BB37DF3E1C7E0B8E0016D422 /* KeyHandleCell.m in Sources */,
+				BB4EDA451F4EC52700EA807B /* SCLButton.m in Sources */,
 				BB128D931E8903DA0041BD21 /* U2FMessageCoder.swift in Sources */,
+				BB4EDA431F4EC52700EA807B /* SCLAlertViewResponder.m in Sources */,
+				BB4EDA471F4EC52700EA807B /* SCLTextView.m in Sources */,
+				BB4EDA441F4EC52700EA807B /* SCLAlertViewStyleKit.m in Sources */,
 				BB05D1C61EB08B34007E0B72 /* NetworkChecker.m in Sources */,
 				BB18D05C1CBCFFAE00A73733 /* PAPasscodeViewController.m in Sources */,
 				BB79FA2B1E78309000AEAE58 /* ServiceScanner.swift in Sources */,

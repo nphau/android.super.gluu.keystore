@@ -51,6 +51,7 @@
 
 -(IBAction)delete:(id)sender{
     SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert setHorizontalButtons:YES];
     [alert addButton:NSLocalizedString(@"YES", @"YES") actionBlock:^(void) {
         NSLog(@"YES clicked");
         [self deleteKey];
@@ -59,7 +60,7 @@
         NSLog(@"NO clicked");
     }];
     [noButton setDefaultBackgroundColor:[UIColor redColor]];
-    [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Delete", @"Delete") subTitle:NSLocalizedString(@"DeleteKeyHandle", @"Delete KeyHandle") closeButtonTitle:nil duration:0.0f];
+    [alert showCustom:[UIImage imageNamed:@"delete_action_titleIcon"] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Delete", @"Delete") subTitle:NSLocalizedString(@"DeleteKeyHandle", @"Delete KeyHandle") closeButtonTitle:nil duration:0.0f];
 }
 
 -(void)deleteKey{

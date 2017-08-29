@@ -25,16 +25,21 @@
     
     settingsTopics = [[NSArray alloc] initWithObjects:@"Pin code", @"TouchID (fingerprint)", @"Trust all (SSL)", @"", @"User guide", @"Privacy policy", @"Upgrate to Ad-Free", @"", @"Version", @"", nil];//@"U2F BLE device(s)",
     settingsKeys = [[NSArray alloc] initWithObjects:PIN_PROTECTION_ID, TOUCH_ID_ENABLED, SSL_ENABLED, nil];// SECURE_CLICK_ENABLED,
-//    if (![[ADSubsriber sharedInstance] isSubscribed]){
-//        settingsTopics = [[NSArray alloc] initWithObjects:@"Pin code", @"TouchID (fingerprint)", @"U2F BLE device(s)", @"Trust all (SSL)", nil];//, @"AD Free", @"U2F BLE device(s)",
-//        settingsKeys = [[NSArray alloc] initWithObjects:PIN_PROTECTION_ID, TOUCH_ID_ENABLED, SECURE_CLICK_ENABLED, SSL_ENABLED, NOTIFICATION_AD_FREE, nil];// SECURE_CLICK_ENABLED,
-//    }
+    if ([[ADSubsriber sharedInstance] isSubscribed]){
+        settingsTopics = [[NSArray alloc] initWithObjects:@"Pin code", @"TouchID (fingerprint)", @"Trust all (SSL)", @"", @"User guide", @"Privacy policy", @"", @"Version", @"", nil];
+    }
     _settingsTable.tableFooterView = [UIView new];
     [_settingsTable setSeparatorColor:[[AppConfiguration sharedInstance] systemColor]];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [_settingsTable reloadData];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(adViewHide:) name:NOTIFICATION_AD_FREE object:nil];
+}
+
+-(void)adViewHide:(NSNotification*)notification{
+    settingsTopics = [[NSArray alloc] initWithObjects:@"Pin code", @"TouchID (fingerprint)", @"Trust all (SSL)", @"", @"User guide", @"Privacy policy", @"", @"Version", @"", nil];
     [_settingsTable reloadData];
 }
 
@@ -96,8 +101,11 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     cell.backgroundColor = [cell.titleLabel.text isEqualToString:@""] ? [UIColor groupTableViewBackgroundColor] : [UIColor whiteColor];
-    
-    [cell.backArrowImage setHidden:!(indexPath.row <= 2 || (indexPath.row >= 4 && indexPath.row <= 6))];
+    if ([[ADSubsriber sharedInstance] isSubscribed]){
+        [cell.backArrowImage setHidden:!(indexPath.row <= 2 || (indexPath.row >= 3 && indexPath.row <= 5))];
+    } else {
+        [cell.backArrowImage setHidden:!(indexPath.row <= 2 || (indexPath.row >= 4 && indexPath.row <= 6))];
+    }
     [cell.versionLabel setHidden:!(indexPath.row == settingsTopics.count-2)];
     
     //Extract app and build versions
@@ -124,8 +132,9 @@
         //Open Privacy policy
         [self openLicenseView];
     }
-    if (indexPath.row == 6){
+    if (indexPath.row == 6 && ![[ADSubsriber sharedInstance] isSubscribed]){
         //Open Ad-Free functionality
+        [[ADSubsriber sharedInstance] tryToSubsribe];
     }
 }
 

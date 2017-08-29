@@ -83,6 +83,7 @@
 
 "PushTimeOver" = "Your push notification has been expired";
 
+"ClearLog" = "Do you want to clear log?";
 "ClearLogs" = "Do you want to clear logs?";
 
 "ApproveDeclineTitle" = "To continue press %@, to stop %@";

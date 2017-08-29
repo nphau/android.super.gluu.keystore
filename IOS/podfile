@@ -13,7 +13,6 @@ def project_pods
  pod 'NSHash', '~> 1.1.0'
  pod 'JTMaterialSwitch'
  pod 'NHNetworkTime'
- pod 'SCLAlertView-Objective-C'
  pod 'Firebase/Core'
  pod 'Firebase/AdMob'
  pod 'IAPHelper'
