@@ -20,9 +20,9 @@
     [super viewDidLoad];
     [self loadKeyHandlesFromDatabase];
     
-    UILongPressGestureRecognizer* longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(onLongPress:)];
-    [longPressRecognizer setMinimumPressDuration:3.0];
-    [keyHandleTableView addGestureRecognizer:longPressRecognizer];
+//    UILongPressGestureRecognizer* longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(onLongPress:)];
+//    [longPressRecognizer setMinimumPressDuration:3.0];
+//    [keyHandleTableView addGestureRecognizer:longPressRecognizer];
     
     keyHandleTableView.layer.borderColor = [UIColor grayColor].CGColor;
     keyHandleTableView.layer.borderWidth = 1.0;

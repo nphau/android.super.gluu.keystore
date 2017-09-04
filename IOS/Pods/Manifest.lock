@@ -48,7 +48,7 @@ PODS:
     - AFNetworking
     - NHNetworkTime
     - NSHash
-  - QRCodeReaderViewController (4.0.1)
+  - QRCodeReaderViewController (4.0.2)
   - SWTableViewCell (0.3.7)
 
 DEPENDENCIES:
@@ -79,7 +79,7 @@ SPEC CHECKSUMS:
   NHNetworkTime: 945d229cb2c3f43013a17bc717328a5045125f8b
   NSHash: 61d598c6d48957c5557f1eef0aeafd6ef5ec5fb7
   ox-push3: fde946952258f23f96ea4c0a856787a613cee509
-  QRCodeReaderViewController: 6538745c8f4ffa9407a26bd7f9489ea01739e7b0
+  QRCodeReaderViewController: e8f27d035b3e72b1d4b1c61ff66458287e3be0ff
   SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
 
 PODFILE CHECKSUM: d32f30fe65472c3ba9933ac42a3581ec9bae2d72

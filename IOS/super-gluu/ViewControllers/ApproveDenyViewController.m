@@ -144,10 +144,10 @@
 
 -(void)moveUpViews{
     int moveUpPosition = titleLabel.center.y - timerView.center.y;
-//    [titleLabel setCenter:CGPointMake(titleLabel.center.x, titleLabel.center.y - moveUpPosition)];
     [mainInfoView setCenter:CGPointMake(mainInfoView.center.x, titleLabel.center.y + titleLabel.frame.size.height/1.5)];
     if (!_isLogInfo){
         [timerView setCenter:CGPointMake(timerView.center.x, timerView.center.y - moveUpPosition)];
+        [titleLabel setCenter:CGPointMake(titleLabel.center.x, titleLabel.center.y - moveUpPosition)];
         [mainInfoView setFrame:CGRectMake(mainInfoView.frame.origin.x, titleLabel.center.y + titleLabel.frame.size.height/2, mainInfoView.frame.size.width, mainInfoView.frame.size.height)];
     }
 }

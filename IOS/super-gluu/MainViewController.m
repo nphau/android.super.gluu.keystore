@@ -354,20 +354,7 @@
     // Define the delegate receiver
     qrScanerVC.delegate = self;
     
-    // Or use blocks
-    [reader setCompletionWithBlock:^(NSString *resultAsString) {
-        if(resultAsString && !isResultFromScan){
-            [qrScanerVC dismissViewControllerAnimated:YES completion:^(){
-                isResultFromScan = YES;
-                NSLog(@"%@", resultAsString);
-                NSData *data = [resultAsString dataUsingEncoding:NSUTF8StringEncoding];
-                NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-                [self sendQRCodeRequest:jsonDictionary];
-            }];
-        }
-    }];
-    
-    isResultFromScan = NO;
+//    isResultFromScan = NO;
 }
 
 -(void)sendQRCodeRequest:(NSDictionary*)jsonDictionary{
@@ -399,7 +386,7 @@
 - (IBAction)scanAction:(id)sender
 {
     if (_notificationNetworkView.isNetworkAvailable){
-        [self initQRScanner];
+//        [self initQRScanner];
         if ([QRCodeReader isAvailable]){
             [self updateStatus:NSLocalizedString(@"QRCodeScanning", @"QR Code Scanning")];
             [self presentViewController:qrScanerVC animated:YES completion:NULL];
@@ -442,17 +429,24 @@
 - (void)reader:(QRCodeReaderViewController *)reader didScanResult:(NSString *)result
 {
     [self dismissViewControllerAnimated:YES completion:^{
-        NSLog(@"%@", result);
+        if(result){// && !isResultFromScan){
+            [qrScanerVC dismissViewControllerAnimated:YES completion:nil];
+//            isResultFromScan = YES;
+            NSLog(@"%@", result);
+            NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
+            NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            [self sendQRCodeRequest:jsonDictionary];
+        }
     }];
 }
 
 - (void)readerDidCancel:(QRCodeReaderViewController *)reader
 {
     [self dismissViewControllerAnimated:YES completion:NULL];
-    if (!isResultFromScan){
+//    if (!isResultFromScan){
         [self updateStatus:NSLocalizedString(@"QRCodeCalceled", @"QR Code Calceled")];
         [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
-    }
+//    }
 }
 
 -(void)updateStatus:(NSString*)status{

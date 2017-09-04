@@ -43,7 +43,7 @@
     } else {
         [customSwitch addTarget:self action:@selector(onSwitchSelected:) forControlEvents:UIControlEventValueChanged];
     }
-    [_setChangePinCode setTitleColor:[[AppConfiguration sharedInstance] systemColor] forState:UIControlStateNormal];
+//    [_setChangePinCode setTitleColor:[[AppConfiguration sharedInstance] systemColor] forState:UIControlStateNormal];
     [_attemptsStepper setTintColor:[[AppConfiguration sharedInstance] systemColor]];
     topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
     topIconView.image = [[AppConfiguration sharedInstance] systemIcon];

@@ -36,7 +36,6 @@
         OxPush2Request* oxRequest = [[OxPush2Request alloc] initWithName:username app:app issuer:issuer state:state method:@"GET" created:created];
         NSMutableDictionary* parameters = [[NSMutableDictionary alloc] init];
         [parameters setObject:[oxRequest app] forKey:@"application"];
-        [parameters setObject:[oxRequest state] forKey:@"session_state"];
         if (!oneStep){
             [parameters setObject:[oxRequest userName] forKey:@"username"];
         }
@@ -52,6 +51,11 @@
                 NSString* issuer = [result objectForKey:@"issuer"];
                 NSString* authenticationEndpoint = [result objectForKey:@"authentication_endpoint"];
                 NSString* registrationEndpoint = [result objectForKey:@"registration_endpoint"];
+                
+                //Check is old or new version of server
+                NSString* state_key = [authenticationEndpoint containsString:@"seam"] ? @"session_state" : @"session_id";
+                [parameters setObject:[oxRequest state] forKey:state_key];
+                
                 U2fMetaData* u2fMetaData = [[U2fMetaData alloc] initWithVersion:version issuer:issuer authenticationEndpoint:authenticationEndpoint registrationEndpoint:registrationEndpoint];
                 // Next step - get exist keys from database
 //                NSString* keyID = [NSString stringWithFormat:@"%@%@", [oxRequest issuer], [oxRequest app]];
