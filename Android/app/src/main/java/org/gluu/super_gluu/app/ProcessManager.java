@@ -199,7 +199,6 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
 
         final Map<String, String> parameters = new HashMap<String, String>();
         parameters.put("application", oxPush2Request.getApp());
-        parameters.put("session_state", oxPush2Request.getState());
         if (!oneStep) {
             parameters.put("username", oxPush2Request.getUserName());
         }
@@ -222,6 +221,10 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
                         u2fEndpoint = u2fMetaData.getAuthenticationEndpoint();
                         if (BuildConfig.DEBUG) Log.i(TAG, "Authentication method: authenticate");
                     }
+
+                    //Check is old or new version of server
+                    String state_key = u2fEndpoint.contains("seam") ? "session_state" : "session_id";
+                    parameters.put(state_key, oxPush2Request.getState());
 
                     final String challengeJsonResponse;
                     if (oneStep && (keyHandles.size() > 0)) {
