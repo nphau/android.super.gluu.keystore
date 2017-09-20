@@ -187,102 +187,106 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (isDeny){
+                if (isDeny) {
                     setFinalStatus(R.string.process_deny_start);
                 } else {
                     setFinalStatus(R.string.process_authentication_start);
                 }
             }
         });
+        if (oxPush2Request != null) {
+            final boolean oneStep = Utils.isEmpty(oxPush2Request.getUserName());
 
-        final boolean oneStep = Utils.isEmpty(oxPush2Request.getUserName());
+            final Map<String, String> parameters = new HashMap<String, String>();
+            parameters.put("application", oxPush2Request.getApp());
+            if (!oneStep) {
+                parameters.put("username", oxPush2Request.getUserName());
+            }
 
-        final Map<String, String> parameters = new HashMap<String, String>();
-        parameters.put("application", oxPush2Request.getApp());
-        if (!oneStep) {
-            parameters.put("username", oxPush2Request.getUserName());
-        }
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    final U2fMetaData u2fMetaData = getU2fMetaData();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        final U2fMetaData u2fMetaData = getU2fMetaData();
 
 //                    dataStore = oxPush2RequestListener.onGetDataStore();
-                    final List<byte[]> keyHandles = dataStore.getKeyHandlesByIssuerAndAppId(oxPush2Request.getIssuer(), oxPush2Request.getApp());
+                        final List<byte[]> keyHandles = dataStore.getKeyHandlesByIssuerAndAppId(oxPush2Request.getIssuer(), oxPush2Request.getApp());
 
-                    final boolean isEnroll = StringUtils.equals(oxPush2Request.getMethod(), "enroll");//(keyHandles.size() == 0) ||
-                    final String u2fEndpoint;
-                    if (isEnroll) {
-                        u2fEndpoint = u2fMetaData.getRegistrationEndpoint();
-                        if (BuildConfig.DEBUG) Log.i(TAG, "Authentication method: enroll");
-                    } else {
-                        u2fEndpoint = u2fMetaData.getAuthenticationEndpoint();
-                        if (BuildConfig.DEBUG) Log.i(TAG, "Authentication method: authenticate");
-                    }
-
-                    //Check is old or new version of server
-                    String state_key = u2fEndpoint.contains("seam") ? "session_state" : "session_id";
-                    parameters.put(state_key, oxPush2Request.getState());
-
-                    final String challengeJsonResponse;
-                    if (oneStep && (keyHandles.size() > 0)) {
-                        // Try to get challenge using all keyHandles associated with issuer and application
-
-                        String validChallengeJsonResponse = null;
-                        for (byte[] keyHandle : keyHandles) {
-                            parameters.put("keyhandle", Utils.base64UrlEncode(keyHandle));
-                            try {
-                                validChallengeJsonResponse = CommunicationService.get(u2fEndpoint, parameters);
-                                break;
-                            } catch (FileNotFoundException ex) {
-                                Log.i(TAG, "Found invalid keyHandle: " + Utils.base64UrlEncode(keyHandle));
-                            }
+                        final boolean isEnroll = StringUtils.equals(oxPush2Request.getMethod(), "enroll");//(keyHandles.size() == 0) ||
+                        final String u2fEndpoint;
+                        if (isEnroll) {
+                            u2fEndpoint = u2fMetaData.getRegistrationEndpoint();
+                            if (BuildConfig.DEBUG) Log.i(TAG, "Authentication method: enroll");
+                        } else {
+                            u2fEndpoint = u2fMetaData.getAuthenticationEndpoint();
+                            if (BuildConfig.DEBUG)
+                                Log.i(TAG, "Authentication method: authenticate");
                         }
 
-                        challengeJsonResponse = validChallengeJsonResponse;
-                        if (BuildConfig.DEBUG) Log.d(TAG, "Get U2F JSON response: " + challengeJsonResponse);
+                        //Check is old or new version of server
+                        String state_key = u2fEndpoint.contains("seam") ? "session_state" : "session_id";
+                        parameters.put(state_key, oxPush2Request.getState());
 
-                    } else {
-                        //https://ce-release.gluu.org/oxauth/seam/resource/restv1/fido/u2f/authentication
-                        challengeJsonResponse = CommunicationService.get(u2fEndpoint, parameters);
-                        if (BuildConfig.DEBUG) Log.d(TAG, "Get U2F JSON response: " + challengeJsonResponse);
-                    }
+                        final String challengeJsonResponse;
+                        if (oneStep && (keyHandles.size() > 0)) {
+                            // Try to get challenge using all keyHandles associated with issuer and application
 
-                    if (Utils.isEmpty(challengeJsonResponse)) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                setFinalStatus(R.string.no_valid_key_handles);
-                            }
-                        });
-                    } else {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
+                            String validChallengeJsonResponse = null;
+                            for (byte[] keyHandle : keyHandles) {
+                                parameters.put("keyhandle", Utils.base64UrlEncode(keyHandle));
                                 try {
-                                    onChallengeReceived(isEnroll, u2fMetaData, u2fEndpoint, challengeJsonResponse, isDeny);
-                                } catch (Exception ex) {
-                                    Log.e(TAG, "Failed to process challengeJsonResponse: " + challengeJsonResponse, ex);
-                                    setFinalStatus(R.string.failed_process_challenge);
-                                    if (BuildConfig.DEBUG) setErrorStatus(ex);
+                                    validChallengeJsonResponse = CommunicationService.get(u2fEndpoint, parameters);
+                                    break;
+                                } catch (FileNotFoundException ex) {
+                                    Log.i(TAG, "Found invalid keyHandle: " + Utils.base64UrlEncode(keyHandle));
                                 }
                             }
+
+                            challengeJsonResponse = validChallengeJsonResponse;
+                            if (BuildConfig.DEBUG)
+                                Log.d(TAG, "Get U2F JSON response: " + challengeJsonResponse);
+
+                        } else {
+                            //https://ce-release.gluu.org/oxauth/seam/resource/restv1/fido/u2f/authentication
+                            challengeJsonResponse = CommunicationService.get(u2fEndpoint, parameters);
+                            if (BuildConfig.DEBUG)
+                                Log.d(TAG, "Get U2F JSON response: " + challengeJsonResponse);
+                        }
+
+                        if (Utils.isEmpty(challengeJsonResponse)) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    setFinalStatus(R.string.no_valid_key_handles);
+                                }
+                            });
+                        } else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        onChallengeReceived(isEnroll, u2fMetaData, u2fEndpoint, challengeJsonResponse, isDeny);
+                                    } catch (Exception ex) {
+                                        Log.e(TAG, "Failed to process challengeJsonResponse: " + challengeJsonResponse, ex);
+                                        setFinalStatus(R.string.failed_process_challenge);
+                                        if (BuildConfig.DEBUG) setErrorStatus(ex);
+                                    }
+                                }
+                            });
+                        }
+                    } catch (final Exception ex) {
+                        Log.e(TAG, ex.getLocalizedMessage(), ex);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                setFinalStatus(ex.getLocalizedMessage());//R.string.wrong_u2f_metadata);
+                                if (BuildConfig.DEBUG) setErrorStatus(ex);
+                            }
                         });
                     }
-                } catch (final Exception ex) {
-                    Log.e(TAG, ex.getLocalizedMessage(), ex);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            setFinalStatus(ex.getLocalizedMessage());//R.string.wrong_u2f_metadata);
-                            if (BuildConfig.DEBUG) setErrorStatus(ex);
-                        }
-                    });
                 }
-            }
-        }).start();
+            }).start();
+        }
     }
 
     private U2fMetaData getU2fMetaData() throws IOException {

@@ -5,6 +5,7 @@ import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
+import android.os.Build;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
@@ -43,30 +44,34 @@ public class Fingerprint {
         this.context = context;
 
         // Initializing both Android Keyguard Manager and Fingerprint Manager
-        keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
-        fingerprintManager = (FingerprintManager) context.getSystemService(Context.FINGERPRINT_SERVICE);
-        helper = new FingerprintHandler(context);
+        //Check is device api version supports Fingerprint functionality
+        int version_api = Build.VERSION.SDK_INT;
+        if (version_api > 22) {
+            keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+            fingerprintManager = (FingerprintManager) context.getSystemService(Context.FINGERPRINT_SERVICE);
+            helper = new FingerprintHandler(context);
 
-        if (ActivityCompat.checkSelfPermission(this.context, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        if (!fingerprintManager.isHardwareDetected()) {
-            /**
-             * An error message will be displayed if the device does not contain the fingerprint hardware.
-             * However if you plan to implement a default authentication method,
-             * you can redirect the user to a default authentication activity from here.
-             * Example:
-             * Intent intent = new Intent(this, DefaultAuthenticationActivity.class);
-             * startActivity(intent);
-             */
-            helper.showToast("Your Device does not have a Fingerprint Sensor");
+            if (ActivityCompat.checkSelfPermission(this.context, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            if (!fingerprintManager.isHardwareDetected()) {
+                /**
+                 * An error message will be displayed if the device does not contain the fingerprint hardware.
+                 * However if you plan to implement a default authentication method,
+                 * you can redirect the user to a default authentication activity from here.
+                 * Example:
+                 * Intent intent = new Intent(this, DefaultAuthenticationActivity.class);
+                 * startActivity(intent);
+                 */
+                helper.showToast("Your Device does not have a Fingerprint Sensor");
+            }
         }
     }
 

@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.gluu.super_gluu.app.FragmentType;
 import org.gluu.super_gluu.app.fragments.LicenseFragment.LicenseFragment;
 import org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsFragment;
 import org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsPinCode;
@@ -23,6 +26,7 @@ import org.gluu.super_gluu.app.purchase.InAppPurchaseService;
 import org.gluu.super_gluu.app.settings.Settings;
 
 import java.util.List;
+import java.util.Map;
 
 import SuperGluu.app.BuildConfig;
 import SuperGluu.app.R;
@@ -33,7 +37,7 @@ import SuperGluu.app.R;
 
 public class SettingsListFragmentAdapter extends BaseAdapter {
 
-    private List<String> list;
+    private List<Map<String, Integer>> list;
     private LayoutInflater mInflater;
     private Context context;
     private Activity activity;
@@ -41,8 +45,10 @@ public class SettingsListFragmentAdapter extends BaseAdapter {
     private Typeface face;
     //For purchases
     private InAppPurchaseService inAppPurchaseService = new InAppPurchaseService();
+    private Boolean isFingerprintAvailable = Build.VERSION.SDK_INT > 22;
+    private int index = isFingerprintAvailable ? 3 : 2;
 
-    public SettingsListFragmentAdapter(Activity activity, List<String> listContact, SettingsListFragment.SettingsListListener settingsListListener) {
+    public SettingsListFragmentAdapter(Activity activity, List<Map<String, Integer>> listContact, SettingsListFragment.SettingsListListener settingsListListener) {
         list = listContact;
         this.activity = activity;
         this.context = activity.getApplicationContext();
@@ -57,25 +63,13 @@ public class SettingsListFragmentAdapter extends BaseAdapter {
         inAppPurchaseService.setCustomEventListener(new InAppPurchaseService.OnInAppServiceListener() {
             @Override
             public void onSubscribed(Boolean isSubscribed) {
-                if (list.size() == 4 && isSubscribed){
-                    list.remove(3);
+                if (isSubscribed){
+//                    list.removeAt(0);
+//                    list.remove(3);
                     notifyDataSetChanged();
                 }
-//                initGoogleADS(isSubscribed);
             }
         });
-    }
-
-    Fragment getFragment(int position){
-        switch (position){
-            case 0:
-                return new SettingsPinCode();
-            case 1:
-                return createSettingsFragment("FingerprintSettings");
-            case 2:
-                return createSettingsFragment("SSLConnectionSettings");
-        }
-        return null;
     }
 
     SettingsFragment createSettingsFragment(String settingsId){
@@ -109,75 +103,53 @@ public class SettingsListFragmentAdapter extends BaseAdapter {
             LayoutInflater inflater = mInflater;
             view = inflater.inflate(R.layout.fragment_setting_list, null);
         }
-        view.setTag(position);
-
+        Map<String, Integer> item = list.get(position);
+        Map.Entry<String, Integer> entry = item.entrySet().iterator().next();
+        view.setTag(entry);
         TextView settingName = (TextView) view.findViewById(R.id.settings_name);
 
         if (settingName != null) {
-            settingName.setText(list.get(position));
+            settingName.setText(entry.getKey());
             settingName.setTypeface(face);
         }
         ImageView settingArrow = (ImageView) view.findViewById(R.id.settingArrow);
         TextView info = (TextView) view.findViewById(R.id.textInfo);
-        if (position > 2) {
-            settingArrow.setVisibility(View.VISIBLE);
-            if (position == 3 || position == 7 || position == 8) {
-                settingArrow.setVisibility(View.GONE);
-                if (settingName.getText().equals("Version")) {
-                    int versionCode = BuildConfig.VERSION_CODE;
-                    String versionName = BuildConfig.VERSION_NAME;
-                    info.setText(versionName + " - " + String.valueOf(versionCode));
-                    view.setBackgroundColor(Color.WHITE);
-                    info.setVisibility(View.VISIBLE);
-                    info.setTypeface(face);
-                } else {
-                    info.setVisibility(View.GONE);
-                    view.setBackgroundColor(Color.parseColor("#efeff4"));
-                }
-            }
-        } else {
+        settingArrow.setVisibility(View.VISIBLE);
+        settingArrow.setVisibility(View.GONE);
+        if (entry.getValue() == FragmentType.SETTINGS_FRAGMENT_TYPE.VERSION_FRAGMENT.ordinal()) {
+            int versionCode = BuildConfig.VERSION_CODE;
+            String versionName = BuildConfig.VERSION_NAME;
+            info.setText(versionName + " - " + String.valueOf(versionCode));
             view.setBackgroundColor(Color.WHITE);
-            settingArrow.setVisibility(View.VISIBLE);
+            info.setVisibility(View.VISIBLE);
+            info.setTypeface(face);
+        } else if (entry.getValue() != FragmentType.SETTINGS_FRAGMENT_TYPE.EMPTY_FRAGMENT.ordinal()) {
             info.setVisibility(View.GONE);
+            settingArrow.setVisibility(View.VISIBLE);
+            view.setBackgroundColor(Color.WHITE);
+        } else {
+            view.setBackgroundColor(Color.parseColor("#efeff4"));
         }
-//        TextView status = (TextView) view.findViewById(R.id.settings_status);
-//        if (status != null) {
-//            status.setVisibility(View.GONE);
-//            Boolean value;
-//            if (position > 0) {
-//                value = Settings.getSettingsValueEnabled(this.context, position == 1 ? "FingerprintSettings" : "SSLConnectionSettings");
-//            } else {
-//                value = Settings.getPinCodeEnabled(this.context);
-//            }
-//            if (position < 2) {
-////                status.setText("Tired of ads? Upgrade to ad free for $0.99/month!");
-////            } else {
-//                String valueString = value ? "On" : "Off";
-//                status.setText("Status: " + valueString);
-//            } else {
-//                status.setVisibility(View.GONE);
-//            }
-//        }
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int position = (int) v.getTag();
-//                if (position == 3){
-//                    inAppPurchaseService.purchase(activity);
-//                    return;
-//                }
-                if (mListener != null && position < 3) {
-                    mListener.onSettingsList(getFragment(position));
-                } else if (position == 4){
+                Map.Entry<String, Integer> entry = (Map.Entry<String, Integer>) v.getTag();
+                if (mListener != null && entry.getValue() == FragmentType.SETTINGS_FRAGMENT_TYPE.PIN_CODE_FRAGMENT.ordinal()) {
+                    mListener.onSettingsList(new SettingsPinCode());
+                } else if (mListener != null && entry.getValue() == FragmentType.SETTINGS_FRAGMENT_TYPE.FINGERPRINT_FRAGMENT.ordinal()) {
+                    mListener.onSettingsList(createSettingsFragment("FingerprintSettings"));
+                } else if (mListener != null && entry.getValue() == FragmentType.SETTINGS_FRAGMENT_TYPE.SSL_FRAGMENT.ordinal()) {
+                    mListener.onSettingsList(createSettingsFragment("SSLConnectionSettings"));
+                } else if (entry.getValue() == FragmentType.SETTINGS_FRAGMENT_TYPE.USER_GUIDE_FRAGMENT.ordinal()){
                     Uri uri = Uri.parse("https://gluu.org/docs/supergluu/3.0.0/user-guide/");
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     activity.startActivity(intent);
-                } else if (position == 5) {
+                } else if (entry.getValue() == FragmentType.SETTINGS_FRAGMENT_TYPE.PRIVACY_POLICY_FRAGMENT.ordinal()) {
                     LicenseFragment licenseFragment = new LicenseFragment();
                     licenseFragment.setForFirstLoading(false);
                     mListener.onSettingsList(licenseFragment);
-                } else if (position == 6 && !Settings.getPurchase(context)){
+                } else if (entry.getValue() == FragmentType.SETTINGS_FRAGMENT_TYPE.AD_FREE_FRAGMENT.ordinal()){
                     Intent intent = new Intent("on-ad-free-flow");
                     LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                 }

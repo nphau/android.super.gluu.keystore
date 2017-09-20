@@ -608,13 +608,12 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
     public void checkIsPush(){
         SharedPreferences preferences = getApplicationContext().getSharedPreferences("oxPushSettings", Context.MODE_PRIVATE);
+        String requestString = preferences.getString("oxRequest", "null");
         if (preferences.getString("userChoose", "null").equalsIgnoreCase("deny")){
-            String requestString = preferences.getString("oxRequest", "null");
             doOxRequest(requestString, true);
             return;
         }
         if (preferences.getString("userChoose", "null").equalsIgnoreCase("approve")){
-            String requestString = preferences.getString("oxRequest", "null");
             doOxRequest(requestString, false);
             return;
         }

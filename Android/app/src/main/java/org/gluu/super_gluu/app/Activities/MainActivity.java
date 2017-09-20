@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.fingerprint.FingerprintManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.security.keystore.KeyGenParameterSpec;
@@ -92,8 +93,11 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
             userChossed("deny", intent);
             return;
         }
-        //Check is fingerprint secure enabled in settings
-        initFingerprintService();
+        //Check is fingerprint secure enabled in settings and device api version supports fingerprint functionality
+        int version_api = Build.VERSION.SDK_INT;
+        if (version_api > 22) {
+            initFingerprintService();
+        }
         Boolean isFingerprint = Settings.getFingerprintEnabled(getApplicationContext());
         if (isFingerprint){//fingerprint != null && // && fingerprint.startFingerprintService()){
             onFingerprint();

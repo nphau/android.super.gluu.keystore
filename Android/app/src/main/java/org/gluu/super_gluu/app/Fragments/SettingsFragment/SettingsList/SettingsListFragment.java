@@ -3,9 +3,11 @@ package org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsList;
 import android.app.ActionBar;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.util.ArrayMap;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +16,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.gluu.super_gluu.app.FragmentType;
 import org.gluu.super_gluu.app.settings.Settings;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import SuperGluu.app.R;
 
@@ -31,7 +36,7 @@ public class SettingsListFragment extends Fragment {
 
     private SettingsListFragmentAdapter listAdapter;
     private SettingsListListener mListener;
-    private List<String> listSettings = new ArrayList<String>();
+    private List<Map<String, Integer>> listSettings = new ArrayList<>();
 
     @Override
     public void onDestroy() {
@@ -58,20 +63,42 @@ public class SettingsListFragment extends Fragment {
         title.setVisibility(View.VISIBLE);
         title.setText("MENU");
 
-        listSettings = new ArrayList<String>();
-        listSettings.add("Pin code");
-        listSettings.add("Fingerprint");
+        listSettings = new ArrayList<>();
+        Map<String, Integer> item = new HashMap<>();
+        item.put("Pin code", FragmentType.SETTINGS_FRAGMENT_TYPE.PIN_CODE_FRAGMENT.ordinal());
+        listSettings.add(item);
+        //Check if device api version supports fingerprint functionality
+        int version_api = Build.VERSION.SDK_INT;
+        if (version_api > 22){
+            Map<String, Integer> item2 = new HashMap<>();
+            item2.put("Fingerprint", FragmentType.SETTINGS_FRAGMENT_TYPE.FINGERPRINT_FRAGMENT.ordinal());
+            listSettings.add(item2);
+        }
 //        listSettings.add("U2F BLE device(s)");
-        listSettings.add("Trust all (SSL)");
-        listSettings.add("");
-        listSettings.add("User guide");
-        listSettings.add("Privacy policy");
+        Map<String, Integer> item3 = new HashMap<>();
+        item3.put("Trust all (SSL)", FragmentType.SETTINGS_FRAGMENT_TYPE.SSL_FRAGMENT.ordinal());
+        listSettings.add(item3);
+        Map<String, Integer> item4 = new HashMap<>();
+        item4.put("", FragmentType.SETTINGS_FRAGMENT_TYPE.EMPTY_FRAGMENT.ordinal());
+        listSettings.add(item4);
+        Map<String, Integer> item5 = new HashMap<>();
+        item5.put("User guide", FragmentType.SETTINGS_FRAGMENT_TYPE.USER_GUIDE_FRAGMENT.ordinal());
+        listSettings.add(item5);
+        Map<String, Integer> item6 = new HashMap<>();
+        item6.put("Privacy policy", FragmentType.SETTINGS_FRAGMENT_TYPE.PRIVACY_POLICY_FRAGMENT.ordinal());
+        listSettings.add(item6);
         Boolean isAdFree = Settings.getPurchase(context);
         if (!isAdFree){
-            listSettings.add("Upgrade to Ad-Free");
+            Map<String, Integer> item7 = new HashMap<>();
+            item7.put("Upgrade to Ad-Free", FragmentType.SETTINGS_FRAGMENT_TYPE.AD_FREE_FRAGMENT.ordinal());
+            listSettings.add(item7);
         }
-        listSettings.add("");
-        listSettings.add("Version");
+        Map<String, Integer> item8 = new HashMap<>();
+        item8.put("", FragmentType.SETTINGS_FRAGMENT_TYPE.EMPTY_FRAGMENT.ordinal());
+        listSettings.add(item8);
+        Map<String, Integer> item9 = new HashMap<>();
+        item9.put("Version", FragmentType.SETTINGS_FRAGMENT_TYPE.VERSION_FRAGMENT.ordinal());
+        listSettings.add(item9);
 
         mListener = new SettingsListListener() {
             @Override

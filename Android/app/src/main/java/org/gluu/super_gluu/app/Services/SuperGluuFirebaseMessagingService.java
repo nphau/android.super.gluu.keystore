@@ -42,7 +42,7 @@ public class SuperGluuFirebaseMessagingService extends FirebaseMessagingService 
 
             String title = remoteMessage.getData().get("title");
             String message = remoteMessage.getData().get("message");
-            String requestMessage = remoteMessage.getData().get("request");
+//            String requestMessage = remoteMessage.getData().get("request");
             if (Utils.isEmpty(title) || Utils.isEmpty(message)) {
                 Log.e(TAG, "Get unknown push notification message: " + remoteMessage.getData().toString());
                 return;
@@ -50,10 +50,10 @@ public class SuperGluuFirebaseMessagingService extends FirebaseMessagingService 
 
             if (GluuApplication.isIsAppInForeground()) {
                 Intent intent = new Intent(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION);
-                intent.putExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, requestMessage);
+                intent.putExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
                 LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
             } else {
-                sendNotification("Super Gluu", requestMessage);
+                sendNotification("Super Gluu", message);
             }
 
         }
