@@ -84,7 +84,7 @@ public class KeyFragmentListAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.fragment_key, null);
             holder = new ViewHolder();
 //            holder.textView = (TextView) convertView.findViewById(R.id.text);
-            View swipeView = view.findViewById(R.id.delete_layout);
+            View swipeView = view.findViewById(R.id.swipe_menu_layout);
             swipeView.setTag(position);
             holder.deleteButton = (RelativeLayout) swipeView.findViewById(R.id.swipe_delete_button);
             holder.showButton = (RelativeLayout) swipeView.findViewById(R.id.swipe_show_button);

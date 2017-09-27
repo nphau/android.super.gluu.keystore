@@ -46,7 +46,7 @@ public class SettingsListFragmentAdapter extends BaseAdapter {
     //For purchases
     private InAppPurchaseService inAppPurchaseService = new InAppPurchaseService();
     private Boolean isFingerprintAvailable = Build.VERSION.SDK_INT > 22;
-    private int index = isFingerprintAvailable ? 3 : 2;
+    private int indexAdFree = isFingerprintAvailable ? 6 : 5;
 
     public SettingsListFragmentAdapter(Activity activity, List<Map<String, Integer>> listContact, SettingsListFragment.SettingsListListener settingsListListener) {
         list = listContact;
@@ -64,8 +64,7 @@ public class SettingsListFragmentAdapter extends BaseAdapter {
             @Override
             public void onSubscribed(Boolean isSubscribed) {
                 if (isSubscribed){
-//                    list.removeAt(0);
-//                    list.remove(3);
+                    list.remove(indexAdFree);
                     notifyDataSetChanged();
                 }
             }

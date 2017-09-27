@@ -181,9 +181,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 //        abar.setIcon(R.color.transparent);
 //        abar.setHomeButtonEnabled(true);
 
-        // Check if we get push notification
-        checkIsPush();
-
         checkUserCameraPermission();
 
         //temporary turn off rotation
@@ -587,6 +584,8 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         inAppPurchaseService.reloadPurchaseService();
         GluuApplication.applicationResumed();
         super.onResume();
+        // Check if we get push notification
+        checkIsPush();
     }
 
     @Override

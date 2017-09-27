@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.chauthai.swipereveallayout.SwipeRevealLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.chauthai.swipereveallayout.SwipeRevealLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/swipe_layout"
     android:layout_width="match_parent"
@@ -25,8 +24,8 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/view_action"
-                android:layout_centerInParent="true"/>
+                android:layout_centerInParent="true"
+                android:src="@drawable/view_action" />
 
         </RelativeLayout>
 
@@ -34,14 +33,14 @@
             android:id="@+id/swipe_delete_button"
             android:layout_width="70dp"
             android:layout_height="80dp"
-            android:background="#f6000c"
-            android:layout_marginLeft="70dp">
+            android:layout_marginLeft="70dp"
+            android:background="#f6000c">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/delete_action"
-                android:layout_centerInParent="true"/>
+                android:layout_centerInParent="true"
+                android:src="@drawable/delete_action" />
 
         </RelativeLayout>
     </FrameLayout>
@@ -49,59 +48,60 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-<LinearLayout
-    android:id="@+id/log_main_view"
-    android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:orientation="horizontal"
-    android:background="@color/whiteColor"
-    android:weightSum="1">
 
-    <CheckBox
-        android:id="@+id/logCheckBox"
-        style="@android:style/Widget.DeviceDefault.CompoundButton.RadioButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="10dp"
-        android:text=""
-        app:buttonTint="@color/greenColor" />
+        <LinearLayout
+            android:id="@+id/log_main_view"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/whiteColor"
+            android:orientation="horizontal"
+            android:weightSum="1">
 
-    <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:id="@+id/logLogo"
-        android:src="@drawable/gluu_icon"
-        android:layout_marginLeft="10dp"
-        android:layout_gravity="center_vertical" />
+            <CheckBox
+                android:id="@+id/logCheckBox"
+                style="@android:style/Widget.DeviceDefault.CompoundButton.RadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:text=""
+                app:buttonTint="@color/greenColor" />
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/logLogo"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/gluu_icon" />
 
-        <TextView
-            android:id="@+id/content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:text="log text"
-            android:textColor="@color/blackColor"
-            android:textSize="17dp"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/created_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="createdDate"
-            android:textSize="17dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="20dp" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:text="log text"
+                    android:textColor="@color/blackColor"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
 
-</LinearLayout>
-</FrameLayout>
+                <TextView
+                    android:id="@+id/created_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="createdDate"
+                    android:textSize="17dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </FrameLayout>
 
 </com.chauthai.swipereveallayout.SwipeRevealLayout>

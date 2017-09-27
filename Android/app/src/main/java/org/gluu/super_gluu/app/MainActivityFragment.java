@@ -188,12 +188,12 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
     @Override
     public void onResume() {
         super.onResume();
-        if (!isConnected(context)) {
-            showToastWithText("Your device is currently unable to establish a network connection. You will need a connection to approve or deny authentication requests with Super Gluu.");
-            scanButton.setEnabled(false);
-        } else {
-            scanButton.setEnabled(true);
-        }
+//        if (!isConnected(context)) {
+//            showToastWithText("Your device is currently unable to establish a network connection. You will need a connection to approve or deny authentication requests with Super Gluu.");
+//            scanButton.setEnabled(false);
+//        } else {
+//            scanButton.setEnabled(true);
+//        }
     }
 
     @Override
