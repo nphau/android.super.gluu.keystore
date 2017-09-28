@@ -85,6 +85,10 @@ public class CustomGluuAlert extends Dialog implements android.view.View.OnClick
         } else {
             no.setVisibility(View.GONE);
         }
+        if (yes.getVisibility() == View.GONE && no.getVisibility() == View.GONE){
+            yes.setVisibility(View.VISIBLE);
+            yes.setText("OK");
+        }
         if (isTextView){
             textField.setVisibility(View.VISIBLE);
             textField.setFilters(new InputFilter[]{new InputFilter.LengthFilter(50)});

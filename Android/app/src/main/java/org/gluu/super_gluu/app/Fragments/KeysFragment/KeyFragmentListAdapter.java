@@ -283,6 +283,9 @@ public class KeyFragmentListAdapter extends BaseAdapter {
         list = tokens;
         //Triggers the list update
         notifyDataSetChanged();
+        if (mListener != null){
+            mListener.onUpdateList(list.size() == 0);
+        }
     }
 
     private class ViewHolder {

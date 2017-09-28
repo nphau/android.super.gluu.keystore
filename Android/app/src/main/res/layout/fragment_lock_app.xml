@@ -8,9 +8,12 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/app_locked"
+        android:textSize="20dp"
         android:id="@+id/textView6"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
 
     <LinearLayout
         android:orientation="horizontal"

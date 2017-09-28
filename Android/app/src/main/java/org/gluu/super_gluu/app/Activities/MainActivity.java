@@ -17,7 +17,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
-
 import org.gluu.super_gluu.app.fingerprint.FingerprintAuthenticationDialogFragment;
 import org.gluu.super_gluu.app.fragments.LicenseFragment.LicenseFragment;
 import org.gluu.super_gluu.app.fragments.LockFragment.LockFragment;
@@ -27,9 +26,6 @@ import org.gluu.super_gluu.app.GluuMainActivity;
 import org.gluu.super_gluu.app.fragments.KeysFragment.KeyHandleInfoFragment;
 import org.gluu.super_gluu.app.fingerprint.Fingerprint;
 import org.gluu.super_gluu.app.settings.Settings;
-import com.github.simonpercic.rxtime.RxTime;
-import com.google.firebase.iid.FirebaseInstanceId;
-
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -235,7 +231,7 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
             /**
              * entered pin code is INCORRECT. DO something here.
              * */
-            setCurrentNetworkTime();
+//            setCurrentNetworkTime();
             loadLockedFragment(false);
 
             setTitle("Application is locked");
@@ -243,19 +239,19 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
         }
     }
 
-    private void setCurrentNetworkTime() {
-        // a singleton
-        RxTime rxTime = new RxTime();
-        rxTime.currentTime()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Long>() {
-                    @Override
-                    public void call(Long time) {
-                        // use time
-                        setAppLockedTime(String.valueOf(time));
-                    }
-                });
-    }
+//    private void setCurrentNetworkTime() {
+//        // a singleton
+//        RxTime rxTime = new RxTime();
+//        rxTime.currentTime()
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Action1<Long>() {
+//                    @Override
+//                    public void call(Long time) {
+//                        // use time
+//                        setAppLockedTime(String.valueOf(time));
+//                    }
+//                });
+//    }
 
     private void loadLockedFragment(Boolean isRecover) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();

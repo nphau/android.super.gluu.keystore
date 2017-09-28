@@ -12,10 +12,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.github.simonpercic.rxtime.RxTime;
+//import com.github.simonpercic.rxtime.RxTime;
 import com.mhk.android.passcodeview.PasscodeView;
 
 import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
+import org.gluu.super_gluu.app.services.GlobalNetworkTime;
 import org.gluu.super_gluu.app.settings.Settings;
 
 import SuperGluu.app.R;
@@ -168,16 +169,22 @@ public class PinCodeFragment extends Fragment implements View.OnClickListener {
 
     private void setCurrentNetworkTime() {
         // a singleton
-        RxTime rxTime = new RxTime();
-        rxTime.currentTime()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Long>() {
-                    @Override
-                    public void call(Long time) {
-                        // use time
-                        Settings.setAppLockedTime(getContext(), String.valueOf(time));
-                    }
-                });
+//        RxTime rxTime = new RxTime();
+//        rxTime.currentTime()
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Action1<Long>() {
+//                    @Override
+//                    public void call(Long time) {
+//                        // use time
+//                        Settings.setAppLockedTime(getContext(), String.valueOf(time));
+//                    }
+//                });
+        new GlobalNetworkTime().getCurrentNetworkTime(context, new GlobalNetworkTime.GetGlobalTimeCallback() {
+            @Override
+            public void onGlobalTime(Long time) {
+                Settings.setAppLockedTime(getContext(), String.valueOf(time));
+            }
+        });
     }
 
     private void showAlertView(String message){

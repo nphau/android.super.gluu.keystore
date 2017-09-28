@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -33,7 +34,7 @@ public class KeyFragmentListFragment extends Fragment {
     private KeyHandleChangeName cListener;
     private AndroidKeyDataStore dataStore;
     private List<TokenEntry> listToken;
-    private TextView renameText;
+    private RelativeLayout keyMainView;
 
     @Nullable
     @Override
@@ -48,6 +49,8 @@ public class KeyFragmentListFragment extends Fragment {
         actionBarView.findViewById(R.id.actionbar_textview).setVisibility(View.GONE);
 
         listToken = getListToken(rootView);
+        keyMainView = (RelativeLayout) rootView.findViewById(R.id.keyMainView);
+        keyMainView.setVisibility(listToken.size() > 0 ? View.VISIBLE : View.GONE);
         ListView lv = (ListView) rootView.findViewById(R.id.keyHandleListView);
         mListener = new KeyHandleInfo() {
             @Override
@@ -57,6 +60,11 @@ public class KeyFragmentListFragment extends Fragment {
                 transaction.replace(R.id.keys_root_frame, infoFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
+            }
+
+            @Override
+            public void onUpdateList(Boolean isEmtryList) {
+                keyMainView.setVisibility(isEmtryList ? View.GONE : View.VISIBLE);
             }
         };
 
@@ -116,6 +124,7 @@ public class KeyFragmentListFragment extends Fragment {
 
     public interface KeyHandleInfo {
         void onKeyHandleInfo(KeyHandleInfoFragment infoFragment);
+        void onUpdateList(Boolean isEmtryList);
     }
 
     public interface KeyHandleChangeName {
