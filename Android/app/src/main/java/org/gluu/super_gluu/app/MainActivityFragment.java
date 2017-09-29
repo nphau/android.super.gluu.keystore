@@ -150,7 +150,6 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         if (isAdFree){
             adView.setVisibility(View.GONE);
         }
-        view.findViewById(R.id.button_scan).setOnClickListener(this);
         Button adFreeButton = (Button) view.findViewById(R.id.button_ad_free);
         adFreeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,12 +187,12 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
     @Override
     public void onResume() {
         super.onResume();
-//        if (!isConnected(context)) {
+        if (!isConnected(context)) {
 //            showToastWithText("Your device is currently unable to establish a network connection. You will need a connection to approve or deny authentication requests with Super Gluu.");
-//            scanButton.setEnabled(false);
-//        } else {
-//            scanButton.setEnabled(true);
-//        }
+            scanButton.setEnabled(false);
+        } else {
+            scanButton.setEnabled(true);
+        }
     }
 
     @Override

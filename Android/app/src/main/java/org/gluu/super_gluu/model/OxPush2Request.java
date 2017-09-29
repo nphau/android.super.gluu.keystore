@@ -28,6 +28,8 @@ public class OxPush2Request {
 
     private String created;
 
+    private String enrollment;
+
     @SerializedName("req_ip")
     private String locationIP;
 
@@ -37,13 +39,14 @@ public class OxPush2Request {
     public OxPush2Request() {
     }
 
-    public OxPush2Request(String userName, String issuer, String app, String state, String method, String created) {
+    public OxPush2Request(String userName, String issuer, String app, String state, String method, String created, String enrollment) {
         this.userName = userName;
         this.issuer = issuer;
         this.app = app;
         this.state = state;
         this.method = method;
         this.created = created;
+        this.enrollment = enrollment;
     }
 
     public String getUserName() {
@@ -94,5 +97,13 @@ public class OxPush2Request {
 
     public void setLocationCity(String locationCity) {
         this.locationCity = locationCity;
+    }
+
+    public String getEnrollment() {
+        return enrollment;
+    }
+
+    public void setEnrollment(String enrollment) {
+        this.enrollment = enrollment;
     }
 }

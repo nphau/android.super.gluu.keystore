@@ -14,7 +14,7 @@ android {
     buildToolsVersion '26.0.1'
     defaultConfig {
         applicationId "gluu.org.super.gluu"
-        minSdkVersion 22
+        minSdkVersion 21
         targetSdkVersion 23
         versionCode 39
         versionName "3.1"

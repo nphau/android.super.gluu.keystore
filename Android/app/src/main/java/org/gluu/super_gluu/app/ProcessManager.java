@@ -223,9 +223,14 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
                                 Log.i(TAG, "Authentication method: authenticate");
                         }
 
-                        //Check is old or new version of server
-                        String state_key = u2fEndpoint.contains("seam") ? "session_state" : "session_id";
-                        parameters.put(state_key, oxPush2Request.getState());
+                        //Check if we're using cred manager - in that case "state"== null and we should use "enrollment" parameter
+                        if (oxPush2Request.getState() == null){//using cred-manager
+                            parameters.put("enrollment_code", oxPush2Request.getEnrollment());
+                        } else {//using standard workflow
+                            //Check is old or new version of server
+                            String state_key = u2fEndpoint.contains("seam") ? "session_state" : "session_id";
+                            parameters.put(state_key, oxPush2Request.getState());
+                        }
 
                         final String challengeJsonResponse;
                         if (oneStep && (keyHandles.size() > 0)) {

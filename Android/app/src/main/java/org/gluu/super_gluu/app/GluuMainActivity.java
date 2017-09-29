@@ -468,6 +468,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             boolean isOneStep = Utils.isEmpty(oxPush2Request.getUserName());
             boolean isTwoStep = Utils.areAllNotEmpty(oxPush2Request.getUserName(), oxPush2Request.getIssuer(), oxPush2Request.getApp(),
                     oxPush2Request.getState(), oxPush2Request.getMethod());
+            boolean isCredManager = Utils.areAllNotEmpty(oxPush2Request.getUserName(), oxPush2Request.getIssuer(), oxPush2Request.getApp(), oxPush2Request.getMethod());
 
             if (BuildConfig.DEBUG) Log.d(TAG, "isOneStep: " + isOneStep + " isTwoStep: " + isTwoStep);
 
@@ -478,7 +479,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                 }
             } else {
                 // All fields must be not empty
-                result = false;
+                result = isCredManager ? isCredManager : false;
             }
         } catch (Exception ex) {
             Log.e(TAG, "Failed to parse QR code");
