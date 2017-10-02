@@ -42,6 +42,8 @@ public class LogsFragment extends Fragment {
     private AndroidKeyDataStore dataStore;
     private LogInfoListener mListener;
     public ApproveDenyFragment.OnDeleteLogInfoListener deleteLogListener;
+    private LinearLayout selectAllView;
+    private Button selectAllButton;
     private ListView listView;
     private List<LogInfo> logs;
 
@@ -104,8 +106,12 @@ public class LogsFragment extends Fragment {
         actionBarView.findViewById(R.id.action_right_button).setVisibility(View.GONE);
         actionBarView.findViewById(R.id.actionbar_icon).setVisibility(View.VISIBLE);
         actionBarView.findViewById(R.id.actionbar_textview).setVisibility(View.GONE);
+        selectAllView = (LinearLayout) rootView.findViewById(R.id.selectAllView);
+        selectAllView.setVisibility(View.GONE);
         LinearLayout leftButton = (LinearLayout) actionBarView.findViewById(R.id.action_left_button);
         final Button rightButton = (Button) actionBarView.findViewById(R.id.action_right_button);
+        selectAllButton = (Button) selectAllView.findViewById(R.id.selectAllButton);
+        selectAllButton.setTag(1);// 1- no selected all, 2- selected all
         rightButton.setVisibility(View.GONE);
         int visible = logs.size() > 0 ? View.VISIBLE : View.GONE;
         leftButton.setVisibility(visible);
@@ -123,11 +129,15 @@ public class LogsFragment extends Fragment {
                     listAdapter.isEditingMode = false;
                     listAdapter.notifyDataSetChanged();
                     rightButton.setVisibility(View.GONE);
+                    selectAllView.setVisibility(View.GONE);
                 } else {
                     backButton.setText("Cancel");
+                    selectAllButton.setText("Select All");
+                    deselectAll();
                     listAdapter.isEditingMode = true;
                     listAdapter.notifyDataSetChanged();
                     rightButton.setVisibility(View.VISIBLE);
+                    selectAllView.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -135,6 +145,17 @@ public class LogsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 showAlertView();
+            }
+        });
+        selectAllButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int tag = (int)v.getTag();
+                if (tag == 1) {
+                    selectAll();
+                } else {
+                    deselectAll();
+                }
             }
         });
 
@@ -162,6 +183,24 @@ public class LogsFragment extends Fragment {
                 new IntentFilter("on-delete-logs"));
 
         return rootView;
+    }
+
+    private void deselectAll() {
+        //Deselect all records
+        selectAllButton.setTag(1);// 1- no selected all, 2- selected all
+        listAdapter.isSelectAllMode = false;
+        selectAllButton.setText("Select All");
+        listAdapter.notifyDataSetChanged();
+        listAdapter.deSelectAllLogs();
+    }
+
+    private void selectAll() {
+        //Select all records
+        selectAllButton.setTag(2);// 1- no selected all, 2- selected all
+        selectAllButton.setText("Deselect All");
+        listAdapter.isSelectAllMode = true;
+        listAdapter.selectAllLogs();
+        listAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -206,8 +245,6 @@ public class LogsFragment extends Fragment {
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     ft.detach(frg).attach(frg).commit();
                 }
-//                android.support.v4.app.FragmentManager fm = getFragmentManager();
-//                fm.popBackStack();
             }
 
             @Override

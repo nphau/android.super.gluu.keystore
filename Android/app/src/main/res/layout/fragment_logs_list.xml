@@ -32,4 +32,22 @@
         android:text="@string/noLogs"
         android:id="@+id/noLogs_textView"
         android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:id="@+id/selectAllView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/backgroundColor">
+    <Button
+        android:id="@+id/selectAllButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:textAllCaps="false"
+        android:textSize="18dp"
+        android:background="@android:color/transparent"
+        android:text="Select All"/>
+    </LinearLayout>
+
 </RelativeLayout>

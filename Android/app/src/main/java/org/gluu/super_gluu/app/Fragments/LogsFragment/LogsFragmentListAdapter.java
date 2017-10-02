@@ -50,6 +50,7 @@ public class LogsFragmentListAdapter extends BaseAdapter {
     private final ViewBinderHelper binderHelper;
 
     public Boolean isEditingMode = false;
+    public Boolean isSelectAllMode = false;
 
     public LogsFragmentListAdapter(Activity activity, List<LogInfo> logs, LogsFragment.LogInfoListener listener){
         this.list = logs;
@@ -132,15 +133,6 @@ public class LogsFragmentListAdapter extends BaseAdapter {
             ImageView logo = (ImageView) view.findViewById(R.id.logLogo);
             contentView.setTextColor(ContextCompat.getColor(view.getContext(), R.color.redColor));
             logo.setImageResource(R.drawable.gluu_icon_red);
-//            view.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    CustomGluuAlert gluuAlert = new CustomGluuAlert(activity);
-//                    String message = log.getMessage() != null ? log.getMessage() : "Unknown error";
-//                    gluuAlert.setMessage(message);
-//                    gluuAlert.show();
-//                }
-//            });
         } else {
             ImageView logo = (ImageView) view.findViewById(R.id.logLogo);
             contentView.setTextColor(ContextCompat.getColor(view.getContext(), R.color.blackColor));
@@ -228,9 +220,14 @@ public class LogsFragmentListAdapter extends BaseAdapter {
         //Show hide checkboxes depends on editing mode
         final CheckBox check = (CheckBox) view.findViewById(R.id.logCheckBox);
         check.setTag(position);
+        check.setChecked(selectedLogList.size() > 0);
         LogInfo checkedLogInfo = list.get((Integer) check.getTag());
         for (LogInfo logInf : new ArrayList<>(selectedLogList)){
-            check.setChecked(checkedLogInfo.getCreatedDate().equalsIgnoreCase(logInf.getCreatedDate()));
+            if (isSelectAllMode){
+                check.setChecked(isSelectAllMode);
+            } else {
+                check.setChecked(checkedLogInfo.getCreatedDate().equalsIgnoreCase(logInf.getCreatedDate()));
+            }
         }
         check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -278,6 +275,15 @@ public class LogsFragmentListAdapter extends BaseAdapter {
 
     public List<LogInfo> getSelectedLogList(){
         return selectedLogList;
+    }
+
+    public void selectAllLogs(){
+        selectedLogList.clear();
+        selectedLogList.addAll(list);
+    }
+
+    public void deSelectAllLogs(){
+        selectedLogList.clear();
     }
 
     /**

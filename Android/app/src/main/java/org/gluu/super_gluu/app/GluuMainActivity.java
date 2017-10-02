@@ -233,16 +233,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         final GluuPagerView viewPager = (GluuPagerView) findViewById(R.id.pager);
         viewPager.setSwipeLocked(true);
 
-//        final ActionBar abar = getSupportActionBar();
-//        final View viewActionBar = getLayoutInflater().inflate(R.layout.custom_action_bar, null);
-//        final TextView textviewTitle = (TextView) viewActionBar.findViewById(R.id.actionbar_textview);
-//        Button leftButton  = (Button) viewActionBar.findViewById(R.id.action_left_button);
-//        Button rightButton  = (Button) viewActionBar.findViewById(R.id.action_right_button);
-//        Typeface face = Typeface.createFromAsset(getAssets(), "ProximaNova-Regular.otf");
-//        textviewTitle.setTypeface(face);
-//        leftButton.setTypeface(face);
-//        rightButton.setTypeface(face);
-
         // Set the ViewPagerAdapter into ViewPager
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));//, tabLayout.getTabCount()
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -262,17 +252,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                 reloadLogs();
                 viewPager.setCurrentItem(position);
                 tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
-
-//                ActionBar.LayoutParams params = new ActionBar.LayoutParams(//Center the textview in the ActionBar !
-//                        ActionBar.LayoutParams.WRAP_CONTENT,
-//                        ActionBar.LayoutParams.MATCH_PARENT,
-//                        Gravity.CENTER);
-//                ActionBar abar = getSupportActionBar();
-//                if (position == 0){
-//                    abar.show();
-//                } else {
-//                    abar.hide();
-//                }
             }
 
             @Override
@@ -646,7 +625,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         if (isDeny){
             message = this.getApplicationContext().getString(R.string.process_deny_start);
         } else {
-            message = this.getApplicationContext().getString(R.string.process_authentication_start);
+            message = oxPush2Request.getMethod().equalsIgnoreCase("enroll") ? this.getApplicationContext().getString(R.string.process_enrol_start) : this.getApplicationContext().getString(R.string.process_authentication_start);
         }
         Intent intent = new Intent("ox_request-precess-event");
         // You can also include some extra data.
