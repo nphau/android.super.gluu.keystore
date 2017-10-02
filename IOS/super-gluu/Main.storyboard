@@ -121,7 +121,7 @@
                                                 <rect key="frame" x="0.0" y="128" width="375" height="85"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bQO-HN-Zml" id="2s3-7S-Dvh">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="84.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="85"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Logged in to CE Release" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fNE-3S-iaE">
@@ -140,7 +140,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="gluuIconRed.png" id="hdQ-SM-r5d">
-                                                            <rect key="frame" x="17" y="23" width="32" height="36"/>
+                                                            <rect key="frame" x="17" y="22" width="32" height="36"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                     </subviews>
@@ -163,6 +163,21 @@
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" misplaced="YES" id="H1f-kn-OQC">
+                                <rect key="frame" x="0.0" y="514" width="375" height="42"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="b2P-o1-Ias">
+                                        <rect key="frame" x="0.0" y="6" width="115" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Select All"/>
+                                        <connections>
+                                            <action selector="selectAllClick:" destination="9lV-D3-rAo" eventType="touchUpInside" id="CiO-98-EVc"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     </view>
@@ -173,6 +188,8 @@
                         <outlet property="editLogsButton" destination="qTU-6E-vMO" id="NHp-mB-bKy"/>
                         <outlet property="logsTableView" destination="rek-sC-UUS" id="Mg5-Pi-aAT"/>
                         <outlet property="noLogsLabel" destination="V0H-np-GNp" id="hL2-JC-V9G"/>
+                        <outlet property="selectAllButton" destination="b2P-o1-Ias" id="0M5-wT-2Vj"/>
+                        <outlet property="selectAllView" destination="H1f-kn-OQC" id="8XH-Xk-Ndx"/>
                         <outlet property="topIconView" destination="SHU-Ck-FhL" id="Bjf-Tg-x3j"/>
                         <outlet property="topView" destination="sQD-Wd-VtZ" id="Fky-RB-GHR"/>
                         <segue destination="Mge-71-NJN" kind="modal" identifier="LogInfo" id="nbb-Ne-tyY"/>

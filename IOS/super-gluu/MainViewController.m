@@ -494,8 +494,7 @@
 
 -(void)initUserInfo:(NSDictionary*)parameters{
     NSString* app = [parameters objectForKey:@"app"];
-//    NSString* state = [parameters objectForKey:@"state"];
-    NSString* created = [NSString stringWithFormat:@"%@", [NSDate date]];//[parameters objectForKey:@"created"];
+    NSString* created = [NSString stringWithFormat:@"%@", [NSDate date]];
     NSString* issuer = [parameters objectForKey:@"issuer"];
     NSString* username = [parameters objectForKey:@"username"];
     NSString* method = [parameters objectForKey:@"method"];

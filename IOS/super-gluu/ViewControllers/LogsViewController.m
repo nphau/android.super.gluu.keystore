@@ -14,6 +14,7 @@
 #import "UserLoginInfo.h"
 #import "SCLAlertView.h"
 #import "AppConfiguration.h"
+#import "ADSubsriber.h"
 
 @implementation LogsViewController
 
@@ -25,6 +26,9 @@
     topIconView.image = [[AppConfiguration sharedInstance] systemIcon];
     [cancelButton setHidden: YES];
     [editLogsButton setTag:1];
+    if ([[ADSubsriber sharedInstance] isSubscribed]){
+        [selectAllView setCenter:CGPointMake(selectAllView.center.x, selectAllView.center.y+50)];
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -69,6 +73,7 @@
         [cancelButton setHidden:FALSE];
         [editLogsButton setTag: 2];
         [editLogsButton setTitle:@"Delete" forState:UIControlStateNormal];
+        [selectAllView setHidden:NO];
     } else {
         //Deleting logs
         NSMutableArray* logsForDeleteArray = [self getLogsForDelete];
@@ -86,6 +91,43 @@
     [logsTableView setEditing:NO animated:YES];
     [editLogsButton setTag: 1];
     [self updateButtons];
+    [selectAllView setHidden:YES];
+    [self deselectAllLogs];
+}
+
+-(IBAction)selectAllClick:(id)sender{
+    int tag = (int)((UIButton*)sender).tag;
+    if (tag == 1){//select all
+        [self selectAllLogs:YES];
+        [selectAllButton setTag:2];
+        [selectAllButton setTitle:@"Deselect All" forState:UIControlStateNormal];
+    } else {//deselect all
+        [self deselectAllLogs];
+    }
+}
+
+-(void)deselectAllLogs{
+    [self selectAllLogs:NO];
+    [selectAllButton setTag:1];
+    [selectAllButton setTitle:@"Select All" forState:UIControlStateNormal];
+}
+
+-(void)selectAllLogs:(Boolean)isSelect{
+    for (int i = 0; i < [logsTableView numberOfSections]; i++) {
+        for (int j = 0; j < [logsTableView numberOfRowsInSection:i]; j++) {
+            NSUInteger ints[2] = {i,j};
+            NSIndexPath *indexPath = [NSIndexPath indexPathWithIndexes:ints length:2];
+            if (isSelect){
+                [logsTableView selectRowAtIndexPath:indexPath
+                                        animated:YES
+                                  scrollPosition:UITableViewScrollPositionNone];
+            } else {
+                [logsTableView deselectRowAtIndexPath:indexPath animated:YES];
+            }
+            //Here is your code
+            
+        }
+    }
 }
 
 -(void)updateButtons{

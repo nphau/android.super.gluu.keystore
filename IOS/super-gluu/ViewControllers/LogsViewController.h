@@ -19,6 +19,8 @@
     IBOutlet UIButton* cancelButton;
     IBOutlet UILabel* noLogsLabel;
     IBOutlet UIView* contentView;
+    IBOutlet UIButton* selectAllButton;
+    IBOutlet UIView* selectAllView;
 }
 
 @end
