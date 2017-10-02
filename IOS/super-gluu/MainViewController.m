@@ -87,7 +87,6 @@
     }
     NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
     if (jsonDictionary != nil){
-        [scanButton setEnabled:NO];
         NSString* message = NSLocalizedString(@"StartAuthentication", @"Authentication...");
         [self updateStatus:message];
         //            [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
@@ -200,7 +199,6 @@
 }
 
 -(void)notificationDidDisconnecPeritheralRecieved:(NSNotification*)notification{
-    [scanButton setEnabled:YES];
     [scanner setScanning:NO];
 }
 
@@ -209,13 +207,11 @@
     BOOL oneStep = [step boolValue];
     NSString* message = @"";
     if ([[notification name] isEqualToString:NOTIFICATION_REGISTRATION_SUCCESS]){
-        [scanButton setEnabled:YES];
         message = NSLocalizedString(@"SuccessEnrollment", @"Success Authentication");
         [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitleSuccess", @"Success") andMessage:message];
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_INTERSTIAL object:nil];
     } else
     if ([[notification name] isEqualToString:NOTIFICATION_REGISTRATION_FAILED]){
-        [scanButton setEnabled:YES];
         message = NSLocalizedString(@"FailedEnrollment", @"Failed Authentication");
         if (oneStep){
             message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"OneStep", @"OneStep Authentication"), NSLocalizedString(@"FailedEnrollment", @"Failed Authentication")];
@@ -235,13 +231,11 @@
     } else
     if ([[notification name] isEqualToString:NOTIFICATION_AUTENTIFICATION_SUCCESS]){
         isUserInfo = YES;
-        [scanButton setEnabled:YES];
         message = NSLocalizedString(@"SuccessAuthentication", @"Success Authentication");
         [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitleSuccess", @"Success") andMessage:message];
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_INTERSTIAL object:nil];
     } else
     if ([[notification name] isEqualToString:NOTIFICATION_AUTENTIFICATION_FAILED]){
-        [scanButton setEnabled:YES];
         message = NSLocalizedString(@"FailedAuthentication", @"Failed Authentication");
         if (oneStep){
             message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"OneStep", @"OneStep Authentication"), NSLocalizedString(@"FailedAuthentication", @"Failed Authentication")];
@@ -263,14 +257,11 @@
 //        [UserLoginInfo sharedInstance]->logState = UNKNOWN_ERROR;
         [UserLoginInfo sharedInstance]->errorMessage = message;
         [[DataStoreManager sharedInstance] saveUserLoginInfo:[UserLoginInfo sharedInstance]];
-        [scanButton setEnabled:YES];
     } else 
     if ([[notification name] isEqualToString:NOTIFICATION_UNSUPPORTED_VERSION]){
-        [scanButton setEnabled:YES];
         message = NSLocalizedString(@"UnsupportedU2FV2Version", @"Unsupported U2F_V2 version...");
     } else
     if ([[notification name] isEqualToString:NOTIFICATION_PUSH_RECEIVED]){
-        [scanButton setEnabled:NO];
         if (oneStep){
             message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"OneStep", @"OneStep Authentication"), NSLocalizedString(@"StartAuthentication", @"Authentication...")];
         } else {
@@ -296,15 +287,12 @@
         return;
     }
     if ([[notification name] isEqualToString:NOTIFICATION_DECLINE_SUCCESS]){
-        [scanButton setEnabled:YES];
         message = NSLocalizedString(@"DenySuccess", @"Deny Success");
     }
     if ([[notification name] isEqualToString:NOTIFICATION_DECLINE_FAILED]){
-        [scanButton setEnabled:YES];
         message = NSLocalizedString(@"DenyFailed", @"Deny Failed");
     }
     if ([[notification name] isEqualToString:NOTIFICATION_FAILED_KEYHANDLE]){
-        [scanButton setEnabled:YES];
         message = NSLocalizedString(@"FailedKeyHandle", @"Failed KeyHandles");
         [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:message];
     }
@@ -371,7 +359,6 @@
 
 -(void)provideScanRequest{
     isUserInfo = NO;
-    [scanButton setEnabled:NO];
     [self loadApproveDenyView];
 //    [self performSegueWithIdentifier:@"InfoView" sender:nil];
 }
@@ -402,7 +389,6 @@
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
     
     [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:NO isSecureClick:isSecureClick callback:^(NSDictionary *result,NSError *error){
-        [scanButton setEnabled:YES];
         if (error){
             [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:error.localizedDescription];
         }
@@ -410,12 +396,10 @@
 }
 
 -(void)onDecline{
-    [scanButton setEnabled:YES];
     NSString* message = @"Decline starting";
     [self updateStatus:message];
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
     [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:YES isSecureClick:isSecureClick callback:^(NSDictionary *result,NSError *error){
-        [scanButton setEnabled:YES];
     }];
 }
 
