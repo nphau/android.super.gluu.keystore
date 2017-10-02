@@ -32,6 +32,7 @@ public class PinCodeFragment extends Fragment implements View.OnClickListener {
     private boolean isSettings;
     private boolean newPin;
     private boolean isWrongPin;
+    private int setNewPinAttempts;
     public PinCodeViewListener pinCodeViewListener;
     private boolean isSetNewPinCode;
     private TextView pinCodeTitle;
@@ -51,6 +52,7 @@ public class PinCodeFragment extends Fragment implements View.OnClickListener {
         pinCodeTitle = (TextView) view.findViewById(R.id.pin_code_title);
         attemptsLabel = (TextView) view.findViewById(R.id.attemptsLabel);
         updatePinCodeView();
+        setNewPinAttempts = 0;
         return view;
     }
 
@@ -76,7 +78,16 @@ public class PinCodeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onPasscodeEntered(String passcode) {
                 if (pinCode.equalsIgnoreCase("null")) {
-                    setNewPin(passcode);
+                    if (setNewPinAttempts == 0){
+                        setNewPinAttempts++;
+                        pinCodeTitle.setText("Re-enter your pin code.");
+                        pcView.clearText();
+                        return;
+                    } else {
+                        attemptsLabel.setVisibility(View.VISIBLE);
+                        attemptsLabel.setText("Set new pin success!");
+                        setNewPin(passcode);
+                    }
                 } else if (newPin) {
                     if (passcode.equalsIgnoreCase(pinCode)) {
                         showAlertView("New pin code is the same as old, choose new one.");

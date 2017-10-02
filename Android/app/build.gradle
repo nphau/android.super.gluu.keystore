@@ -16,7 +16,7 @@ android {
         applicationId "gluu.org.super.gluu"
         minSdkVersion 21
         targetSdkVersion 23
-        versionCode 39
+        versionCode 41
         versionName "3.1"
         multiDexEnabled true
         signingConfig signingConfigs.config
