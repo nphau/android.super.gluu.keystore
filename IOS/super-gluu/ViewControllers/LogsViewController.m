@@ -58,6 +58,7 @@
 -(void)deleteLogs:(NSArray*)logs {
     [[DataStoreManager sharedInstance] deleteLogs:logs];
     [self updateLogs];
+    [selectAllView setHidden:YES];
 }
 
 -(void)updateLogs{

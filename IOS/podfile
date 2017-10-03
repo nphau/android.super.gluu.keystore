@@ -20,7 +20,8 @@ def project_pods
  pod 'CATCurveProgressView'
 
 # use ox-push2 lib instead of local copy
- pod 'ox-push3', '~> 0.1.8'
+ pod  'ox-push3', :path => '/Users/nazaryavornytskyy/ox-push2-ios-pod'
+# pod 'ox-push3', '~> 0.2.0'
 
 end
 
