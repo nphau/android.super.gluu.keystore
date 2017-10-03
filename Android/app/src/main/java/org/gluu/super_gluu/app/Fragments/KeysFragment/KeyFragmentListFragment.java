@@ -21,7 +21,12 @@ import SuperGluu.app.R;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
 import org.gluu.super_gluu.u2f.v2.model.TokenEntry;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -118,8 +123,24 @@ public class KeyFragmentListFragment extends Fragment {
             TokenEntry token = new Gson().fromJson(tokenString, TokenEntry.class);
             tokens.add(token);
         }
+        //Sort keys by created date
+        List<TokenEntry> tokensFromDB = new ArrayList<TokenEntry>(tokens);
+        Collections.sort(tokensFromDB, new Comparator<TokenEntry>(){
+            public int compare(TokenEntry key1, TokenEntry key2) {
+                SimpleDateFormat isoDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+                try {
+                    Date date1 = isoDateTimeFormat.parse(key1.getCreatedDate());
+                    Date date2 = isoDateTimeFormat.parse(key2.getCreatedDate());
+                    return date1.compareTo(date2);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return 0;
+            }
+        });
+        Collections.reverse(tokensFromDB);
 
-        return tokens;
+        return tokensFromDB;
     }
 
     public interface KeyHandleInfo {

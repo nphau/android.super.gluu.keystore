@@ -252,7 +252,6 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
                                 Log.d(TAG, "Get U2F JSON response: " + challengeJsonResponse);
 
                         } else {
-                            //https://ce-release.gluu.org/oxauth/seam/resource/restv1/fido/u2f/authentication
                             challengeJsonResponse = CommunicationService.get(u2fEndpoint, parameters);
                             if (BuildConfig.DEBUG)
                                 Log.d(TAG, "Get U2F JSON response: " + challengeJsonResponse);
