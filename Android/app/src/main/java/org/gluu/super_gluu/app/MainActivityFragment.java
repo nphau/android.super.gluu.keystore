@@ -12,6 +12,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -19,6 +20,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -42,9 +44,15 @@ import com.google.zxing.integration.android.IntentResult;
 import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.app.gluuToast.GluuToast;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
+import org.gluu.super_gluu.app.services.FingerPrintManager;
 import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.model.OxPush2Request;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
+import org.gluu.super_gluu.u2f.v2.SoftwareDevice;
+import org.gluu.super_gluu.u2f.v2.exception.U2FException;
+import org.gluu.super_gluu.u2f.v2.model.TokenResponse;
+import org.gluu.super_gluu.u2f.v2.store.DataStore;
+import org.json.JSONException;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
@@ -74,6 +82,9 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
 
     private Button scanButton;
 
+    private SoftwareDevice u2f;
+    private AndroidKeyDataStore dataStore;
+
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -85,6 +96,9 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
             }
             Boolean isAdFree = Settings.getPurchase(context);
             if (mInterstitialAd.isLoaded() && !isAdFree) {
+                if (mInterstitialAd == null){
+                    initGoogleInterstitialAd();
+                }
                 mInterstitialAd.show();
             }
         }
@@ -139,6 +153,8 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         this.inflater = inflater;
         context = view.getContext();
+        this.dataStore = new AndroidKeyDataStore(context);
+        this.u2f = new SoftwareDevice(getActivity(), dataStore);
         adView = (LinearLayout)view.findViewById(R.id.view_ad_free);
 //        adView.setVisibility(View.GONE);
         View actionBarView = (View) view.findViewById(R.id.actionBarView);
@@ -161,8 +177,8 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         scanButton.setOnClickListener(this);
 
         //Setup message receiver
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
-                new IntentFilter("ox_request-precess-event"));
+//        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
+//                new IntentFilter("ox_request-precess-event"));
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mAdFreeReceiver,
                 new IntentFilter("on-ad-free-event"));
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(onAdFree,
@@ -193,6 +209,10 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         } else {
             scanButton.setEnabled(true);
         }
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
+                new IntentFilter("ox_request-precess-event"));
+        //Check push data
+        checkIsPush();
     }
 
     @Override
@@ -360,6 +380,78 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
             }
         });
         gluuAlert.show();
+    }
+
+    public void checkIsPush(){
+        final SharedPreferences preferences = context.getSharedPreferences("oxPushSettings", Context.MODE_PRIVATE);
+        final String requestString = preferences.getString("oxRequest", "null");
+        if (!requestString.equalsIgnoreCase("null")) {
+            //First need to check is app protected by Fingerprint
+            Boolean isFingerprint = Settings.getFingerprintEnabled(context);
+            if (isFingerprint){
+                FingerPrintManager fingerPrintManager = new FingerPrintManager(getActivity());
+                fingerPrintManager.onFingerPrint(new FingerPrintManager.FingerPrintManagerCallback() {
+                    @Override
+                    public void fingerprintResult(Boolean isSuccess) {
+                        makeOxRequest(preferences, requestString);
+                    }
+                });
+            } else {
+                makeOxRequest(preferences, requestString);
+            }
+        }
+    }
+
+    private void makeOxRequest(SharedPreferences preferences, String requestString){
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("oxRequest", null);
+        editor.apply();
+        Settings.setPushDataEmpty(getContext());
+        final OxPush2Request oxPush2Request = new Gson().fromJson(requestString, OxPush2Request.class);
+        final ProcessManager processManager = createProcessManager(oxPush2Request);
+        if (preferences.getString("userChoose", "null").equalsIgnoreCase("deny")) {
+            showToastWithText(context.getString(R.string.process_deny_start));
+            processManager.onOxPushRequest(true);
+            return;
+        }
+        if (preferences.getString("userChoose", "null").equalsIgnoreCase("approve")) {
+            showToastWithText(context.getString(R.string.process_authentication_start));
+            processManager.onOxPushRequest(false);
+            return;
+        }
+    }
+
+    private ProcessManager createProcessManager(OxPush2Request oxPush2Request){
+        ProcessManager processManager = new ProcessManager();
+        processManager.setOxPush2Request(oxPush2Request);
+        processManager.setDataStore(dataStore);
+        processManager.setActivity(getActivity());
+        processManager.setOxPush2RequestListener(new OxPush2RequestListener() {
+            @Override
+            public void onQrRequest(OxPush2Request oxPush2Request) {
+                //skip code there
+            }
+
+            @Override
+            public TokenResponse onSign(String jsonRequest, String origin, Boolean isDeny) throws JSONException, IOException, U2FException {
+                return u2f.sign(jsonRequest, origin, isDeny);
+            }
+
+            @Override
+            public TokenResponse onEnroll(String jsonRequest, OxPush2Request oxPush2Request, Boolean isDeny) throws JSONException, IOException, U2FException {
+                return u2f.enroll(jsonRequest, oxPush2Request, isDeny);
+            }
+
+            @Override
+            public DataStore onGetDataStore() {
+                return dataStore;
+            }
+
+            @Override
+            public void onAdFreeButtonClick(){}
+        });
+
+        return processManager;
     }
 
     private static boolean isConnected(final Context context) {

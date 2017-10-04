@@ -16,6 +16,7 @@
 
 package org.gluu.super_gluu.app.fingerprint;
 
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -36,6 +37,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.gluu.super_gluu.app.activities.MainActivity;
+import org.gluu.super_gluu.app.services.FingerPrintManager;
 
 import SuperGluu.app.R;
 
@@ -59,7 +61,8 @@ public class FingerprintAuthenticationDialogFragment extends DialogFragment
 
     private FingerprintManager.CryptoObject mCryptoObject;
     private FingerprintUiHelper mFingerprintUiHelper;
-    private MainActivity mActivity;
+    private Activity mActivity;
+    private FingerPrintManager mManager;
 
     private TextView mStatusLabel;
 
@@ -148,7 +151,7 @@ public class FingerprintAuthenticationDialogFragment extends DialogFragment
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (MainActivity) getActivity();
+        mActivity = getActivity();
         mInputMethodManager = context.getSystemService(InputMethodManager.class);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
@@ -195,12 +198,13 @@ public class FingerprintAuthenticationDialogFragment extends DialogFragment
 
             if (mUseFingerprintFutureCheckBox.isChecked()) {
                 // Re-create the key so that fingerprints including new ones are validated.
-                mActivity.createKey(MainActivity.DEFAULT_KEY_NAME, true);
+//                mActivity.createKey(MainActivity.DEFAULT_KEY_NAME, true);
                 mStage = Stage.FINGERPRINT;
             }
         }
         mPassword.setText("");
-        mActivity.onPurchased(false /* without Fingerprint */, null);
+        mManager.onPurchased(false /* without Fingerprint */, null);
+//        mActivity.onPurchased(false /* without Fingerprint */, null);
         dismiss();
     }
 
@@ -257,13 +261,18 @@ public class FingerprintAuthenticationDialogFragment extends DialogFragment
     public void onAuthenticated() {
         // Callback from FingerprintUiHelper. Let the activity know that authentication was
         // successful.
-        mActivity.onPurchased(true /* withFingerprint */, mCryptoObject);
+        mManager.onPurchased(true /* withFingerprint */, mCryptoObject);
+//        mActivity.onPurchased(true /* withFingerprint */, mCryptoObject);
         dismiss();
     }
 
     @Override
     public void onError() {
         goToBackup();
+    }
+
+    public void setmManager(FingerPrintManager mManager) {
+        this.mManager = mManager;
     }
 
     /**

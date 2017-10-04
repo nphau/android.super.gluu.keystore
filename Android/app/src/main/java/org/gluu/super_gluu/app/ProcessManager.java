@@ -184,16 +184,16 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
     }
 
     public void onOxPushRequest(final Boolean isDeny) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (isDeny) {
-                    setFinalStatus(R.string.process_deny_start);
-                } else {
-                    setFinalStatus(R.string.process_authentication_start);
-                }
-            }
-        });
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                if (isDeny) {
+//                    setFinalStatus(R.string.process_deny_start);
+//                } else {
+//                    setFinalStatus(R.string.process_authentication_start);
+//                }
+//            }
+//        });
         if (oxPush2Request != null) {
             final boolean oneStep = Utils.isEmpty(oxPush2Request.getUserName());
 
@@ -283,7 +283,7 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                setFinalStatus(ex.getLocalizedMessage());//R.string.wrong_u2f_metadata);
+                                setFinalStatus(R.string.wrong_u2f_metadata);
                                 if (BuildConfig.DEBUG) setErrorStatus(ex);
                             }
                         });

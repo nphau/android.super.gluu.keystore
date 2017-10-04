@@ -19,7 +19,7 @@ public class SuperGluuFirebaseInstanceIDService extends FirebaseInstanceIdServic
     @Override
     public void onTokenRefresh() {
         // Get updated InstanceID token.
-        //current one - dOK_b8uLrGU:APA91bHYetC63cTA618ThHEOGZA22iW8j69MyJzEL26PJ4-3d7_AaPRuwnGcoodsokjo2DdQR4cWTNFeX0-jARj7YlXaKmDTdl-ZrfYEl65qQlqSFEwz1mRwtw2SKLLiGRFw204cY09p
+        //current one - dr3_ZGrvyQ8:APA91bGp0SloR735q4q9chrjslWSTxBWi2HlJFqxBi7OJWNzL5yxTX4uwrIyv7Ghjs0UpLCl5f0a6Rsk7AF4aLUo-FOcnTgvBafya4pQdrXuGkG2PyFlCLjr04nsh3GJ7ACNmb-7VGa4
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.d(TAG, "Refreshed token: " + refreshedToken);
         savePushRegistrationId(refreshedToken);

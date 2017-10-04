@@ -81,7 +81,7 @@ public class SuperGluuFirebaseMessagingService extends FirebaseMessagingService 
                 .setTicker("Authentication request")
                 .setAutoCancel(true)
                 .setVibrate(new long[]{ 100, 250, 100, 250, 100, 250})
-                .setPriority(Notification.PRIORITY_HIGH)
+                .setPriority(Notification.PRIORITY_MAX)
                 .addAction(R.drawable.deny_icon_push, "Deny", denyIntent)
                 .addAction(R.drawable.approve_icon_push, "Approve", approveIntent);
 

@@ -28,22 +28,13 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
@@ -156,30 +147,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
         this.dataStore = new AndroidKeyDataStore(context);
         this.u2f = new SoftwareDevice(this, dataStore);
-//        Settings.setIsButtonVisible(context, dataStore.getLogs().size() != 0);
-
-        //Customize the ActionBar
-//        final ActionBar abar = getSupportActionBar();
-//        abar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_background));//line under the action bar
-//        View viewActionBar = getLayoutInflater().inflate(R.layout.custom_action_bar, null);
-//        ActionBar.LayoutParams params = new ActionBar.LayoutParams(//Center the textview in the ActionBar !
-//                ActionBar.LayoutParams.WRAP_CONTENT,
-//                ActionBar.LayoutParams.MATCH_PARENT,
-//                Gravity.CENTER);
-//        ImageView actionbar_icon = (ImageView) viewActionBar.findViewById(R.id.actionbar_icon);
-//        TextView textviewTitle = (TextView) viewActionBar.findViewById(R.id.actionbar_textview);
-//        LinearLayout leftButton  = (LinearLayout) viewActionBar.findViewById(R.id.action_left_button);
-//        Button rightButton  = (Button) viewActionBar.findViewById(R.id.action_right_button);
-//        textviewTitle.setVisibility(View.GONE);
-//        leftButton.setVisibility(View.GONE);
-//        rightButton.setVisibility(View.GONE);
-//        abar.setCustomView(viewActionBar, params);
-//        abar.setDisplayShowCustomEnabled(true);
-//        abar.setDisplayShowTitleEnabled(false);
-//        abar.setDisplayHomeAsUpEnabled(false);
-//        abar.setDisplayShowHomeEnabled(true);
-//        abar.setIcon(R.color.transparent);
-//        abar.setHomeButtonEnabled(true);
 
         checkUserCameraPermission();
 
@@ -564,8 +531,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         inAppPurchaseService.reloadPurchaseService();
         GluuApplication.applicationResumed();
         super.onResume();
-        // Check if we get push notification
-        checkIsPush();
     }
 
     @Override
@@ -583,55 +548,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (inAppPurchaseService.isHandleResult(requestCode, resultCode, data))
             super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    public void checkIsPush(){
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("oxPushSettings", Context.MODE_PRIVATE);
-        String requestString = preferences.getString("oxRequest", "null");
-        if (preferences.getString("userChoose", "null").equalsIgnoreCase("deny")){
-            doOxRequest(requestString, true);
-            return;
-        }
-        if (preferences.getString("userChoose", "null").equalsIgnoreCase("approve")){
-            doOxRequest(requestString, false);
-            return;
-        }
-        SharedPreferences pushPreferences = getApplicationContext().getSharedPreferences("PushNotification", Context.MODE_PRIVATE);
-        String message = pushPreferences.getString("PushData", null);
-        if (message != null){
-            Settings.setPushDataEmpty(getApplicationContext());
-            final OxPush2Request oxPush2Request = new Gson().fromJson(message, OxPush2Request.class);
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    doQrRequest(oxPush2Request);
-                }
-            }, 1000);
-        }
-    }
-
-    private void doOxRequest(String oxRequest, Boolean isDeny){
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("oxPushSettings", Context.MODE_PRIVATE);
-        OxPush2Request oxPush2Request = new Gson().fromJson(oxRequest, OxPush2Request.class);
-        final ProcessManager processManager = createProcessManager(oxPush2Request);
-        processManager.onOxPushRequest(isDeny);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("userChoose", "null");
-        editor.putString("oxRequest", "null");
-        Settings.setPushDataEmpty(getApplicationContext());
-        editor.commit();
-        String message = "";
-        if (isDeny){
-            message = this.getApplicationContext().getString(R.string.process_deny_start);
-        } else {
-            message = oxPush2Request.getMethod().equalsIgnoreCase("enroll") ? this.getApplicationContext().getString(R.string.process_enrol_start) : this.getApplicationContext().getString(R.string.process_authentication_start);
-        }
-        Intent intent = new Intent("ox_request-precess-event");
-        // You can also include some extra data.
-        intent.putExtra("message", message);
-        intent.putExtra("isAdFree", inAppPurchaseService.isSubscribed);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
     private void checkUserCameraPermission(){
