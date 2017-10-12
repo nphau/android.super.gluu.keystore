@@ -35,19 +35,13 @@
 #ifdef ADFREE
     //skip here
 #else
-    [self checkPurchaces];
+//    [self checkPurchaces];
 #endif
     [self performSelector:@selector(checkLicenseAgreement) withObject:nil afterDelay:0.1];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    
-    [self.licenseTextField setContentOffset:CGPointZero animated:NO];
-}
-
-- (void)viewDidLayoutSubviews {
-    [self.licenseTextField setContentOffset:CGPointZero animated:NO];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -61,25 +55,16 @@
 }
 
 -(void)initWiget{
-    [_licenseTextField setHidden:YES];
+    [_licenseWebView setHidden:YES];
     [_acceptButton setHidden:YES];
     [topView setHidden:YES];
     
-    [self colorHashtag];
+    [_licenseWebView loadHTMLString:EULA_TEXT baseURL:nil];
     topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
 }
 
 -(void)initLocalization{
     [_acceptButton setTitle:NSLocalizedString(@"AcceptButtonTitle", @"Accept") forState:UIControlStateNormal];
-}
-
--(void)colorHashtag
-{
-    NSString *licenceText = _licenseTextField.text;
-    if (licenceText == nil) return;
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:licenceText];
-    [string setColorForText:@"https://www.gluu.org/privacy-policy/" withColor:[UIColor blueColor]];
-    _licenseTextField.attributedText = string;
 }
 
 -(IBAction)onLicenseAgreement:(id)sender{
@@ -96,7 +81,7 @@
     if (isLicenseAgreement && !_isFromSettings){
         [self checkPinProtection];
     } else {
-        [_licenseTextField setHidden:NO];
+        [_licenseWebView setHidden:NO];
         [_acceptButton setHidden:NO];
         [topView setHidden:NO];
         if (_isFromSettings){

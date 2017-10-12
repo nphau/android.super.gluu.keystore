@@ -161,6 +161,7 @@
 		BBC643CA1EF14E6F009FEDD1 /* AppConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC643C81EF14E6F009FEDD1 /* AppConfiguration.m */; };
 		BBC643CE1EF16C13009FEDD1 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC643CD1EF16C13009FEDD1 /* SettingsViewController.m */; };
 		BBC643CF1EF16C13009FEDD1 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC643CD1EF16C13009FEDD1 /* SettingsViewController.m */; };
+		BBD738E81F8770450051FF3F /* AdFreeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD738E71F8770450051FF3F /* AdFreeViewController.m */; };
 		BBDE9B801DA78835003B6673 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B659E1CB7C59800784AEF /* AdSupport.framework */; };
 		BBDE9B811DA78847003B6673 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65A21CB7C5AE00784AEF /* CoreImage.framework */; };
 		BBDE9B821DA78851003B6673 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65A41CB7C5B900784AEF /* SystemConfiguration.framework */; };
@@ -335,6 +336,8 @@
 		BBC643CB1EF16176009FEDD1 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		BBC643CC1EF16C13009FEDD1 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = Settings/SettingsViewController.h; sourceTree = "<group>"; };
 		BBC643CD1EF16C13009FEDD1 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = Settings/SettingsViewController.m; sourceTree = "<group>"; };
+		BBD738E61F8770450051FF3F /* AdFreeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AdFreeViewController.h; path = Settings/AdFreeViewController.h; sourceTree = "<group>"; };
+		BBD738E71F8770450051FF3F /* AdFreeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AdFreeViewController.m; path = Settings/AdFreeViewController.m; sourceTree = "<group>"; };
 		BBDE9B881DA7888A003B6673 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		BBDE9B8A1DA78895003B6673 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		BBDE9B8C1DA788A3003B6673 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -494,6 +497,8 @@
 				BB128D8D1E8266470041BD21 /* BLEDevicesViewController.m */,
 				BBC643CC1EF16C13009FEDD1 /* SettingsViewController.h */,
 				BBC643CD1EF16C13009FEDD1 /* SettingsViewController.m */,
+				BBD738E61F8770450051FF3F /* AdFreeViewController.h */,
+				BBD738E71F8770450051FF3F /* AdFreeViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -1209,6 +1214,7 @@
 				BB79FA2A1E78309000AEAE58 /* PeripheralScanner.swift in Sources */,
 				BB37DE591C7E08320016D422 /* AppDelegate.m in Sources */,
 				BBDFCCCC1EB86C740028D8C0 /* SuperGluuBannerView.m in Sources */,
+				BBD738E81F8770450051FF3F /* AdFreeViewController.m in Sources */,
 				BBB7C1051C90723300833B12 /* InformationViewController.m in Sources */,
 				BB4EDA491F4EC52700EA807B /* UIImage+ImageEffects.m in Sources */,
 				BB37DF3D1C7E0B8E0016D422 /* KeysViewController.m in Sources */,
@@ -1415,7 +1421,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = FLRS8NH8Y9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1449,7 +1455,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = FLRS8NH8Y9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

@@ -134,7 +134,8 @@
     }
     if (indexPath.row == 6 && ![[ADSubsriber sharedInstance] isSubscribed]){
         //Open Ad-Free functionality
-        [[ADSubsriber sharedInstance] tryToSubsribe];
+        selectedSettingIndex = (int)indexPath.row;
+        [self performSegueWithIdentifier:@"purchaseSegue" sender:self];
     }
 }
 

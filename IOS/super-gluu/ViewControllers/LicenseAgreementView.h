@@ -14,7 +14,7 @@
     IBOutlet UIView* topView;
 }
 
-@property (strong, nonatomic) IBOutlet UITextView* licenseTextField;
+@property (strong, nonatomic) IBOutlet UIWebView* licenseWebView;
 @property (strong, nonatomic) IBOutlet UIButton* acceptButton;
 @property (strong, nonatomic) IBOutlet UIButton* backButton;
 

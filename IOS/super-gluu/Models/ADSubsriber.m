@@ -58,7 +58,7 @@
             [IAPShare sharedHelper].iap = [[IAPHelper alloc] initWithProductIdentifiers:dataSet];
         }
         
-        [IAPShare sharedHelper].iap.production = NO;
+        [IAPShare sharedHelper].iap.production = YES;
         
         [[IAPShare sharedHelper].iap requestProductsWithCompletion:^(SKProductsRequest* request,SKProductsResponse* response)
          {
@@ -124,7 +124,7 @@
         [IAPShare sharedHelper].iap = [[IAPHelper alloc] initWithProductIdentifiers:dataSet];
     }
     
-    [IAPShare sharedHelper].iap.production = NO;
+    [IAPShare sharedHelper].iap.production = YES;
     
     //Get receipt with info about subscription
     [[IAPShare sharedHelper].iap checkReceipt:[NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]] AndSharedSecret:SHARED_SECRET_KEY onCompletion:^(NSString *response, NSError *error) {
