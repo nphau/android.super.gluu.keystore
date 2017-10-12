@@ -8,6 +8,8 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebBackForwardList;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -41,9 +43,9 @@ public class LicenseFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.license_fragment, container, false);
-        TextView licenseTextView = (TextView) view.findViewById(R.id.license_textView);
-        licenseTextView.setText(readLicenseTxt());
-        licenseTextView.setMovementMethod(new ScrollingMovementMethod());
+        WebView licenseWebView = (WebView) view.findViewById(R.id.license_webView);
+        licenseWebView.loadDataWithBaseURL(null, readLicenseTxt(), "text/html", "UTF-8", null);
+//        licenseTextView.setMovementMethod(new ScrollingMovementMethod());
 
         Button aceptButton = (Button) view.findViewById(R.id.accept_button);
         LinearLayout action_left_button = (LinearLayout) view.findViewById(R.id.action_left_button);
@@ -54,7 +56,7 @@ public class LicenseFragment extends Fragment implements View.OnClickListener {
             }
         });
         aceptButton.setOnClickListener(this);
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) licenseTextView.getLayoutParams();
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) licenseWebView.getLayoutParams();
         if (!isForFirstLoading){
             aceptButton.setVisibility(View.GONE);
             action_left_button.setVisibility(View.VISIBLE);
@@ -63,7 +65,7 @@ public class LicenseFragment extends Fragment implements View.OnClickListener {
             action_left_button.setVisibility(View.GONE);
             params.weight = 0.98f;
         }
-        licenseTextView.setLayoutParams(params);
+        licenseWebView.setLayoutParams(params);
         //Setup fonts
         Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Regular.otf");
         aceptButton.setTypeface(face);

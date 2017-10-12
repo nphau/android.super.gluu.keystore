@@ -28,7 +28,7 @@
     <string name="wrong_token_response">Fido U2F token response is invalid</string>
     <string name="failed_process_response">Fido U2F response was rejected</string>
     <string name="failed_process_status">Get unexpected Fido U2F status</string>
-    <string name="invalid_qr_code">QR code contains invalid oxPush2 request</string>
+    <string name="invalid_qr_code">QR code contains invalid request</string>
     <string name="no_valid_key_handles">The aren\'t valid devices associated with specified application. Can you try again and remove expired key(s) associated this application</string>
 
     <string name="process_authentication_start">Authentication...</string>
