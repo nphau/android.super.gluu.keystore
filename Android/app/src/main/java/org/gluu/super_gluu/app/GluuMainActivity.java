@@ -6,6 +6,7 @@
 
 package org.gluu.super_gluu.app;
 
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -21,7 +22,6 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Vibrator;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
@@ -33,6 +33,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -52,6 +53,7 @@ import org.gluu.super_gluu.app.activities.MainActivity;
 import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
+import org.gluu.super_gluu.app.services.FingerPrintManager;
 import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.model.OxPush2Request;
 import org.gluu.super_gluu.net.CommunicationService;
@@ -95,7 +97,8 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     private AndroidKeyDataStore dataStore;
     private static Context context;
 
-    private Boolean isShowMenu = false;
+    private Boolean isOXRequestProtected = false;
+    private OxPush2Request oxPush2RequestProtected;
 
     private Settings settings = new Settings();
 
@@ -183,6 +186,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                 initGoogleADS(isSubscribed);
             }
         });
+        inAppPurchaseService.reloadPurchaseService();
     }
 
     private void initMainTabView(){
@@ -213,7 +217,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
-                isShowMenu = position == 3 ? true : false;
+//                isShowMenu = position == 3 ? true : false;
                 settings.setForLogs(position == 1 ? true : false);
                 settings.setForKeys(position == 2 ? true : false);
                 reloadLogs();
@@ -344,7 +348,22 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     @Override
     public void onQrRequest(final OxPush2Request oxPush2Request) {
         if (!this.isDestroyed()) {
-            doQrRequest(oxPush2Request);
+            Boolean isFingerprint = Settings.getFingerprintEnabled(context);
+            if (isFingerprint){
+                FingerPrintManager fingerPrintManager = new FingerPrintManager(this);
+                fingerPrintManager.onFingerPrint(new FingerPrintManager.FingerPrintManagerCallback() {
+                    @Override
+                    public void fingerprintResult(Boolean isSuccess) {
+                        doQrRequest(oxPush2Request);
+                    }
+                });
+            } else if (Settings.getPinCodeEnabled(getApplicationContext())) {
+                isOXRequestProtected = true;
+                oxPush2RequestProtected = oxPush2Request;
+                loadPinCodeFragment();
+            } else {
+                doQrRequest(oxPush2Request);
+            }
         }
     }
 
@@ -358,6 +377,32 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                 initGoogleADS(true);
             }
         }
+    }
+
+    @Override
+    public void onPurchaseRestored() {
+        if (inAppPurchaseService.readyToPurchase) {
+            if (!inAppPurchaseService.isSubscribed) {
+                inAppPurchaseService.restorePurchase();
+            } else {
+                //Init GoogleMobile AD
+                initGoogleADS(true);
+            }
+        }
+    }
+
+    public void loadPinCodeFragment() {
+        PinCodeFragment pinCodeFragment = new PinCodeFragment();
+        pinCodeFragment.setIsSettings(false);
+        pinCodeFragment.setIsSetNewPinCode(false);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_root_frame, pinCodeFragment);
+//            if (isBackStack) {
+                transaction.addToBackStack(null);
+//            }
+        transaction.commit();
+        //To hide tabs
+        tabLayout.getLayoutParams().height = 0;
     }
 
     private ProcessManager createProcessManager(OxPush2Request oxPush2Request){
@@ -388,6 +433,9 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
             @Override
             public void onAdFreeButtonClick(){}
+
+            @Override
+            public void onPurchaseRestored() {}
         });
 
         return processManager;
@@ -456,7 +504,16 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     @Override
     public void onCorrectPinCode(boolean isPinCodeCorrect) {
         if (isPinCodeCorrect){
-            showAlertView("New Pin Added!");
+            if (isOXRequestProtected){
+                //Hide keyboard
+                ((InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE))
+                        .toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+                this.onBackPressed();
+                doQrRequest(oxPush2RequestProtected);
+                isOXRequestProtected = false;
+            } else {
+                showAlertView("New Pin Added!");
+            }
         } else {
             //to change pin code, first need check if user knows current one
             Intent intent = new Intent(GluuMainActivity.this, MainActivity.class);

@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import org.gluu.super_gluu.app.FragmentType;
 import org.gluu.super_gluu.app.fragments.LicenseFragment.LicenseFragment;
+import org.gluu.super_gluu.app.fragments.Purchase.PurchaseFragment;
 import org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsFragment;
 import org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsPinCode;
 import org.gluu.super_gluu.app.purchase.InAppPurchaseService;
@@ -149,8 +150,8 @@ public class SettingsListFragmentAdapter extends BaseAdapter {
                     licenseFragment.setForFirstLoading(false);
                     mListener.onSettingsList(licenseFragment);
                 } else if (entry.getValue() == FragmentType.SETTINGS_FRAGMENT_TYPE.AD_FREE_FRAGMENT.ordinal()){
-                    Intent intent = new Intent("on-ad-free-flow");
-                    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                    PurchaseFragment purchaseFragment = new PurchaseFragment();
+                    mListener.onSettingsList(purchaseFragment);
                 }
             }
         });

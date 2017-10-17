@@ -121,6 +121,8 @@
 
     <string name="ad_free_text">Upgrade to ad free for $0.99/month</string>
     <string name="ad_free_title">Upgrade Now!</string>
+    <string name="upgrate_ad_free">Upgrade to AD-Free</string>
+    <string name="restore_subsc">Restore Purchase</string>
 
     <string name="banner_ad_unit_id">ca-app-pub-3932761366188106/5255061278</string>
 

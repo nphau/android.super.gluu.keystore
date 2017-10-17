@@ -146,6 +146,13 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         }
     };
 
+    private BroadcastReceiver onRestorePurchase = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            runRestorePurchaseFlow();
+        }
+    };
+
     public MainActivityFragment() {}
 
     @Override
@@ -183,6 +190,8 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
                 new IntentFilter("on-ad-free-event"));
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(onAdFree,
                 new IntentFilter("on-ad-free-flow"));
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(onRestorePurchase,
+                new IntentFilter("on-restore-purchase-flow"));
         //Init GoogleMobile AD
         initGoogleInterstitialAd();
 
@@ -285,6 +294,12 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
     private  void runSubscribeFlow(){
         if (oxPush2RequestListener != null) {
             oxPush2RequestListener.onAdFreeButtonClick();
+        }
+    }
+
+    private  void runRestorePurchaseFlow(){
+        if (oxPush2RequestListener != null) {
+            oxPush2RequestListener.onPurchaseRestored();
         }
     }
 
@@ -449,6 +464,9 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
 
             @Override
             public void onAdFreeButtonClick(){}
+
+            @Override
+            public void onPurchaseRestored() {}
         });
 
         return processManager;

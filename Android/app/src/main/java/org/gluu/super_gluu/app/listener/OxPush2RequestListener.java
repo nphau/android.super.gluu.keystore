@@ -32,4 +32,6 @@ public interface OxPush2RequestListener {
 
     void onAdFreeButtonClick();
 
+    void onPurchaseRestored();
+
 }

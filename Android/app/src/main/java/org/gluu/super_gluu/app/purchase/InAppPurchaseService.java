@@ -22,7 +22,7 @@ public class InAppPurchaseService {
 
     // PRODUCT & SUBSCRIPTION IDS
     private static final String SUBSCRIPTION_ID = "org.gluu.monthly.ad.free";
-    private static final String SUBSCRIPTION_ID_TEST = "android.test.purchased";
+//    private static final String SUBSCRIPTION_ID_TEST = "android.test.purchased";
     private static final String LICENSE_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyYw9xTiyhyjQ6mnWOwEWduDkOM84BkqHfN+jrAu82M0xBwg3RAorPwT/38sMcOZMAwcWudN0vjQo7uXAl2j4+N7BiMI2qlO2x33wY8fDvlN4ue54BBdZExZhTpkVEAmIm9cLCI3i+nOlUZgiwX6+sQOb5K+7q9WiNuSBDWRR2WDNOY7QmQdI1VzbHBPQoM00N9/0UDSFCw4LCRngm7ZeuW8AQMyYo6r5K3dy8m+Ys0JWGKA+xuQY4ZutSb47IYX4m7lzxbN0mqH9TLeA3V6audrhs5i0OYYKwbCd68NikB7Wco6L/HOzh1y6LoxIFXZ6M+vnZ6OLfTJuVmEfTOOhIwIDAQAB";
     private static final String MERCHANT_ID=null;
 
@@ -57,7 +57,6 @@ public class InAppPurchaseService {
                 if (inAppListener != null){
                     inAppListener.onSubscribed(isSubscribed);
                 }
-//                initGoogleADS(productId.equalsIgnoreCase(SUBSCRIPTION_ID_TEST));
                 Settings.setPurchase(context, isSubscribed);
             }
             @Override
@@ -68,11 +67,11 @@ public class InAppPurchaseService {
             public void onBillingInitialized() {
                 Log.e(TAG, "onBillingInitialized");
                 readyToPurchase = true;
-                TransactionDetails transactionDetails = bp.getSubscriptionTransactionDetails(SUBSCRIPTION_ID_TEST);
+                TransactionDetails transactionDetails = bp.getSubscriptionTransactionDetails(SUBSCRIPTION_ID);
                 if (transactionDetails != null) {
                     isSubscribed = transactionDetails.purchaseInfo.purchaseData.autoRenewing;
                 }
-                TransactionDetails transactionDetails2 = bp.getPurchaseTransactionDetails(SUBSCRIPTION_ID_TEST);
+                TransactionDetails transactionDetails2 = bp.getPurchaseTransactionDetails(SUBSCRIPTION_ID);
                 if (transactionDetails2 != null) {
                     isSubscribed = transactionDetails2.purchaseInfo.purchaseData.purchaseState == PurchaseState.PurchasedSuccessfully;
                 }
@@ -95,10 +94,13 @@ public class InAppPurchaseService {
     }
 
     public void purchase(final Activity activity){
-        //bp.purchase(activity, SUBSCRIPTION_ID);
-        //For test only
-        bp.purchase(activity, SUBSCRIPTION_ID_TEST);
+        bp.subscribe(activity, SUBSCRIPTION_ID);
     }
+
+    public void restorePurchase(){
+        bp.loadOwnedPurchasesFromGoogle();
+    }
+
 
     public void reloadPurchaseService(){
         if (bp != null){

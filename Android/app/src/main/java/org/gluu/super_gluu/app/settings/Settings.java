@@ -50,9 +50,12 @@ public class Settings {
     }
 
     public static int getPinCodeAttempts(Context context){
-        SharedPreferences preferences = context.getSharedPreferences(PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
-        String pinCode = preferences.getString("pinCodeAttempts", "5");
-        return Integer.parseInt(pinCode);
+        if (context != null) {
+            SharedPreferences preferences = context.getSharedPreferences(PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
+            String pinCode = preferences.getString("pinCodeAttempts", "5");
+            return Integer.parseInt(pinCode);
+        }
+        return 5;
     }
 
     public static int getCurrentPinCodeAttempts(Context context){
@@ -69,10 +72,12 @@ public class Settings {
     }
 
     public static void saveIsReset(Context context){
-        SharedPreferences preferences = context.getSharedPreferences(PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isReset", true);
-        editor.commit();
+        if (context != null) {
+            SharedPreferences preferences = context.getSharedPreferences(PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("isReset", true);
+            editor.commit();
+        }
     }
 
     public static void setAppLockedTime(Context context, String lockedTime){
