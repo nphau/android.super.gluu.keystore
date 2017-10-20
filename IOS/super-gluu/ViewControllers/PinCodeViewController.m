@@ -38,6 +38,9 @@
 //-(void) networkTimeSyncCompleteNotification:(NSNotification*)notification{
 //    [self checkIsAppLocked];
 //}
+- (void) setDelegate:(id)newDelegate{
+    delegate = newDelegate;
+}
 
 -(void)initWiget{
     [[nextButton layer] setMasksToBounds:YES];
@@ -215,7 +218,11 @@
 // -----------------------------------------------------------------------------------------
 
 -(void)loadMainView{
-    [self performSegueWithIdentifier:@"mainViewSegue" sender:self];
+    if (self.isCallback){
+        [delegate onResult:YES];
+    } else {
+        [self performSegueWithIdentifier:@"mainViewSegue" sender:self];
+    }
 }
 
 -(void)startTimer{

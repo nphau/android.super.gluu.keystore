@@ -180,7 +180,6 @@
 }
 
 -(void)loadPinView{
-//    [self performSegueWithIdentifier:@"pinViewSegue" sender:self];
     UIStoryboard *storyboardobj=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
     PinCodeViewController* pinView = (PinCodeViewController*)[storyboardobj instantiateViewControllerWithIdentifier:@"pinViewController"];
     [self presentViewController:pinView animated:YES completion:nil];

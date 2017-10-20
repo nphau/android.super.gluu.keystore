@@ -18,18 +18,23 @@
 #import "DataStoreManager.h"
 #import "NetworkChecker.h"
 #import "IAPShare.h"
+#import <LocalAuthentication/LocalAuthentication.h>
+#import "PinCodeViewController.h"
+#import "PinCodeDelegate.h"
 #ifdef ADFREE
     #import "Super_Gluu___Ad_Free-Swift.h"
 #else
     #import "Super_Gluu-Swift.h"
 #endif
 
-@interface MainViewController () {
+@interface MainViewController () <PAPasscodeViewControllerDelegate, PinCodeDelegate> {
     PeripheralScanner* scanner;
     BOOL isSecureClick;
     BOOL isEnroll;
     
     OXPushManager* oxPushManager;
+    PinCodeViewController* pinView;
+    UIAlertController * alert;
 }
 
 @end
@@ -349,8 +354,7 @@
     if (jsonDictionary != nil){
         scanJsonDictionary = jsonDictionary;
         [self initUserInfo:jsonDictionary];
-//        [self performSelector:@selector(provideScanRequest) withObject:nil afterDelay:0.5];
-        [self provideScanRequest];
+        [self checkTouchIDProtection];
     } else {
         [self updateStatus:NSLocalizedString(@"WrongQRImage", @"Wrong QR Code image")];
         [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
@@ -373,7 +377,6 @@
 - (IBAction)scanAction:(id)sender
 {
     if (_notificationNetworkView.isNetworkAvailable){
-//        [self initQRScanner];
         if ([QRCodeReader isAvailable]){
             [self updateStatus:NSLocalizedString(@"QRCodeScanning", @"QR Code Scanning")];
             [self presentViewController:qrScanerVC animated:YES completion:NULL];
@@ -549,5 +552,98 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
+-(void)checkTouchIDProtection{
+    BOOL isTouchID = [[NSUserDefaults standardUserDefaults] boolForKey:TOUCH_ID_ENABLED];
+    if (isTouchID){
+        LAContext *myContext = [[LAContext alloc] init];
+        NSError *authError = nil;
+        NSString *myLocalizedReasonString = @"Please authenticate with your fingerprint to continue.";
+        [alert dismissViewControllerAnimated:YES completion:nil];
+        if ([myContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&authError]) {
+            [myContext evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
+                      localizedReason:myLocalizedReasonString
+                                reply:^(BOOL success, NSError *error) {
+                                    if (success) {
+                                        // User authenticated successfully, take appropriate action
+                                        NSLog(@"User authenticated successfully, take appropriate action");
+                                        [alert dismissViewControllerAnimated:YES completion:nil];
+                                        dispatch_async(dispatch_get_main_queue(), ^{
+                                            [self provideScanRequest];
+                                        });
+                                    } else {
+                                        // User did not authenticate successfully, look at error and take appropriate action
+                                        [self showTouchIDErrorMessage];
+                                    }
+                                }];
+        } else {
+            // Could not evaluate policy; look at authError and present an appropriate message to user
+            [self showTouchIDResultError:authError];
+        }
+    } else {
+        BOOL isPin = [[NSUserDefaults standardUserDefaults] boolForKey:PIN_PROTECTION_ID];
+        if (isPin){
+            [self loadPinView];
+        } else {
+            //Skip, continue normal flow
+            [self provideScanRequest];
+        }
+    }
+}
+
+-(void)loadPinView{
+    UIStoryboard *storyboardobj=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    pinView = (PinCodeViewController*)[storyboardobj instantiateViewControllerWithIdentifier:@"pinViewController"];
+    pinView.isCallback = YES;
+    [pinView setDelegate:self];
+    [self presentViewController:pinView animated:YES completion:nil];
+}
+
+-(void)showTouchIDErrorMessage{
+    alert = [UIAlertController
+             alertControllerWithTitle:@"TouchID Failed"
+             message:@"Wrong fingerprint, if biometric locked go to TouchID&Passcode settings and reactive it"
+             preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* okButton = [UIAlertAction
+                               actionWithTitle:@"Ok"
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action) {
+                                   //Handle no, thanks button
+                                   [alert dismissViewControllerAnimated:YES completion:nil];
+//                                   [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                               }];
+    
+    [alert addAction:okButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+-(void)showTouchIDResultError:(NSError*) authError{
+    NSString* message  = [NSString stringWithFormat:@"%@ Please add fingerprint in TouchID&Passcode settings", [authError.userInfo valueForKey:@"NSLocalizedDescription"]];
+    alert = [UIAlertController
+             alertControllerWithTitle:@"TouchID Failed"
+             message:message
+             preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* okButton = [UIAlertAction
+                               actionWithTitle:@"Ok, thanks"
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action) {
+                                   //Handle no, thanks button
+                                   [alert dismissViewControllerAnimated:YES completion:nil];
+//                                   [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                               }];
+    
+    [alert addAction:okButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)onResult:(Boolean)result{
+    if (result){
+        [pinView dismissViewControllerAnimated:YES completion:nil];
+        [self provideScanRequest];
+    }
+}
 
 @end
