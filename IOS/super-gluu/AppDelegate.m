@@ -37,10 +37,8 @@
     NSDictionary *remoteNotif = [launchOptions objectForKey: UIApplicationLaunchOptionsRemoteNotificationKey];
     
     //Accept push notification when app is not open
-    if (remoteNotif) {
-        [self parsePushAndNotify:remoteNotif];
-//        AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
-//        [[NSUserDefaults standardUserDefaults] setObject:remoteNotif forKey:NotificationRequest];
+    if (remoteNotif != nil) {
+        [[NSUserDefaults standardUserDefaults] setObject:remoteNotif forKey:NotificationRequest];
     }
     
     //Setup Basic
@@ -161,14 +159,15 @@
         _pushNotificationRequest = userInfo;
         [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:NotificationRequest];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:NotificationRequestActionsApprove];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:NotificationRequestActionsDeny];
     }
     else if ([identifier isEqualToString:NotificationActionTwoIdent]) {
-        
         NSLog(@"You chose action Deny.");
         isDecline = YES;
         _pushNotificationRequest = userInfo;
         [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:NotificationRequest];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:NotificationRequestActionsDeny];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:NotificationRequestActionsApprove];
     }
     if (completionHandler) {
         
