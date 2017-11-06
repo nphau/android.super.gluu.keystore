@@ -113,7 +113,7 @@
     NSString *appVersion = [infoDict objectForKey:@"CFBundleShortVersionString"]; // example: 1.0.0
     NSString *buildNumber = [infoDict objectForKey:@"CFBundleVersion"];
     
-    [cell.versionLabel setText:[NSString stringWithFormat:@"3.3.1 - %@ - %@", appVersion, buildNumber]];
+    [cell.versionLabel setText:[NSString stringWithFormat:@"3.1.2 - %@ - %@", appVersion, buildNumber]];
     
     return cell;
 }

@@ -12,6 +12,7 @@
 #import "OXPushManager.h"
 #import "NHNetworkTime.h"
 #import "AppConfiguration.h"
+#import <AudioToolbox/AudioServices.h>
 
 //#import <UbertestersSDK/Ubertesters.h>
 
@@ -37,7 +38,9 @@
     
     //Accept push notification when app is not open
     if (remoteNotif) {
-        [[NSUserDefaults standardUserDefaults] setObject:remoteNotif forKey:NotificationRequest];
+        [self parsePushAndNotify:remoteNotif];
+//        AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+//        [[NSUserDefaults standardUserDefaults] setObject:remoteNotif forKey:NotificationRequest];
     }
     
     //Setup Basic
@@ -122,19 +125,7 @@
     }
     if ( application.applicationState == UIApplicationStateActive ){
         // app was already in the foreground and we show custom push notifications view
-        if (userInfo != nil) {
-            NSData *data;
-            NSString* requestString = [userInfo objectForKey:@"request"];
-            if ([requestString isKindOfClass:[NSDictionary class]]){
-                data = [NSJSONSerialization dataWithJSONObject:requestString options:NSJSONWritingPrettyPrinted error:nil];
-            } else {
-                data = [requestString dataUsingEncoding:NSUTF8StringEncoding];
-            }
-            NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            if (jsonDictionary != nil){
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_ONLINE object:jsonDictionary];
-            }
-        }
+        [self parsePushAndNotify:userInfo];
     } else {
         // app was just brought from background to foreground and we wait when user click or slide on push notification
         _pushNotificationRequest = userInfo;
@@ -143,6 +134,22 @@
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:NotificationRequestActionsApprove];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:NotificationRequestActionsDeny];
     NSLog(@"Received notification: %@", userInfo);
+}
+
+-(void)parsePushAndNotify:(NSDictionary*)pushInfo{
+    if (pushInfo != nil) {
+        NSData *data;
+        NSString* requestString = [pushInfo objectForKey:@"request"];
+        if ([requestString isKindOfClass:[NSDictionary class]]){
+            data = [NSJSONSerialization dataWithJSONObject:requestString options:NSJSONWritingPrettyPrinted error:nil];
+        } else {
+            data = [requestString dataUsingEncoding:NSUTF8StringEncoding];
+        }
+        NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        if (jsonDictionary != nil){
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_ONLINE object:jsonDictionary];
+        }
+    }
 }
 
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler {
