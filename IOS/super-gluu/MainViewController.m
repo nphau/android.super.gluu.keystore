@@ -559,6 +559,9 @@
 }
 
 -(void)checkTouchIDProtection{
+    //Skip all security levels
+    [self provideScanRequest];
+    /*
     BOOL isTouchID = [[NSUserDefaults standardUserDefaults] boolForKey:TOUCH_ID_ENABLED];
     if (isTouchID){
         LAContext *myContext = [[LAContext alloc] init];
@@ -594,6 +597,7 @@
             [self provideScanRequest];
         }
     }
+    */
 }
 
 -(void)loadPinView{
