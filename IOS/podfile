@@ -5,16 +5,32 @@ platform :ios, ‘8.0’
 source ‘https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
-target “Super Gluu” do
+#target “Super Gluu”, “Super Gluu - Ad Free” do
 
-pod 'AFNetworking', '~> 2.5’
-pod 'QRCodeReaderViewController', '~> 4.0.1'
-pod 'NSHash', '~> 1.1.0'
-pod 'JTMaterialSwitch'
-pod 'NHNetworkTime'
-pod 'SCLAlertView-Objective-C'
+def project_pods
+ pod 'AFNetworking', '~> 2.5’
+ pod 'QRCodeReaderViewController', '~> 4.0.1'
+ pod 'NSHash', '~> 1.1.0'
+ pod 'JTMaterialSwitch'
+ pod 'NHNetworkTime'
+ pod 'Firebase/Core'
+ pod 'Firebase/AdMob'
+ pod 'IAPHelper'
+ pod 'SWTableViewCell', '~> 0.3.7'
+ pod 'CATCurveProgressView'
 
 # use ox-push2 lib instead of local copy
-pod 'ox-push3', '~> 0.1.8'
+ pod  'ox-push3', :path => '/Users/nazaryavornytskyy/ox-push2-ios-pod'
+# pod 'ox-push3', '~> 0.2.0'
 
 end
+
+target 'Super Gluu' do
+    project_pods
+end
+ 
+target 'Super Gluu - Ad Free' do
+    project_pods
+end
+
+#end

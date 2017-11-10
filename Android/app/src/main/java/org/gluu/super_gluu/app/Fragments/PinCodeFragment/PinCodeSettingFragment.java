@@ -1,20 +1,23 @@
-package org.gluu.super_gluu.app.Fragments.PinCodeFragment;
+package org.gluu.super_gluu.app.fragments.PinCodeFragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
-import org.gluu.super_gluu.app.Fragments.LicenseFragment.LicenseFragment;
+import org.gluu.super_gluu.app.fragments.LicenseFragment.LicenseFragment;
 import SuperGluu.app.R;
 
 /**
  * Created by nazaryavornytskyy on 3/24/16.
  */
-public class PinCodeSettingFragment extends Fragment implements View.OnClickListener {
+public class PinCodeSettingFragment extends Fragment {
 
     LicenseFragment.OnMainActivityListener mainActivityListener;
 
@@ -23,12 +26,35 @@ public class PinCodeSettingFragment extends Fragment implements View.OnClickList
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_pin_code_setting, container, false);
-        view.findViewById(R.id.yes_button).setOnClickListener(this);
-        view.findViewById(R.id.no_button).setOnClickListener(this);
 
         if (!isPin()){
             mainActivityListener.onShowPinFragment();
         }
+
+        TextView textSettingsTitle = (TextView)view.findViewById(R.id.pinCodeTitle);
+        TextView textSettingsSubTitle = (TextView)view.findViewById(R.id.pinSubCodeTitle);
+        Button yesButton = (Button)view.findViewById(R.id.yes_button_pin);
+        yesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainActivityListener.onShowPinFragment();
+                setPincodeEnabled(true);
+            }
+        });
+        Button noButton = (Button)view.findViewById(R.id.no_button_pin);
+        noButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainActivityListener.onMainActivity();
+                setPincodeEnabled(false);
+            }
+        });
+
+        Typeface faceLight = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Regular.otf");
+        textSettingsTitle.setTypeface(faceLight);
+        textSettingsSubTitle.setTypeface(faceLight);
+        yesButton.setTypeface(faceLight);
+        noButton.setTypeface(faceLight);
 
         return view;
     }
@@ -42,31 +68,6 @@ public class PinCodeSettingFragment extends Fragment implements View.OnClickList
             throw new RuntimeException(context.toString()
                     + " must implement OnMainActivityListener");
         }
-    }
-
-    @Override
-    public void onClick(View v) {
-
-        switch (v.getId()){
-            case R.id.yes_button:
-                mainActivityListener.onShowPinFragment();
-                setPincodeEnabled(true);
-                break;
-            case R.id.no_button:
-                mainActivityListener.onMainActivity();
-                setPincodeEnabled(false);
-                break;
-            default:
-                break;
-        }
-
-    }
-
-
-    public Boolean getPincodeEnabled(){
-        SharedPreferences preferences = getContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        Boolean isPinEnabled = preferences.getBoolean("isPinEnabled", false);
-        return isPinEnabled;
     }
 
     public void setPincodeEnabled(Boolean isEnabled){

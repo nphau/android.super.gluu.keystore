@@ -16,6 +16,8 @@
 #import "NSString+URLEncode.h"
 
 #import "AFHTTPRequestOperationManager.h"
+#import "DataStoreManager.h"
+#import "SCLAlertView.h"
 
 #define moveUpY 70
 #define LANDSCAPE_Y 290
@@ -34,18 +36,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initLocalization];
-    [self initBackButtonUI];
     [self updateInfo];
     if (!_isLogInfo){
         [self initAndStartTimer];
     }
-    timerView.layer.cornerRadius = CORNER_RADIUS;
-    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
     [approveImage setCenter:approveRequest.center];
     [denyImage setCenter:denyRequest.center];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openURL:)];
     serverUrlLabel.userInteractionEnabled = YES;
     [serverUrlLabel addGestureRecognizer:tap];
+    [timerView setProgressColor:[[AppConfiguration sharedInstance] systemColor]];
+    [timerLabel setTextColor:[[AppConfiguration sharedInstance] systemColor]];
 }
 
 - (void)openURL:(UITapGestureRecognizer *)tap
@@ -57,7 +58,16 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self checkDeviceOrientation];
+    if (!_isLogInfo){
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_FREE object:nil];
+    }
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    if (!_isLogInfo){
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_NOT_FREE object:nil];
+    }
 }
 
 -(void)initAndStartTimer{
@@ -72,14 +82,12 @@
     time--;
     timerLabel.text = [NSString stringWithFormat:@"%i", time];
     if (time == 20){
-        [timerView setBackgroundColor:[UIColor yellowColor]];
-        [timerLabel setTextColor:[UIColor blackColor]];
-        [timerLabelTitle setTextColor:[UIColor blackColor]];
+        [timerView setProgressColor:[UIColor yellowColor]];
+        [timerLabel setTextColor:[UIColor yellowColor]];
     }
     if (time == 10){
-        [timerView setBackgroundColor:[UIColor redColor]];
-        [timerLabel setTextColor:[UIColor whiteColor]];
-        [timerLabelTitle setTextColor:[UIColor whiteColor]];
+        [timerView setProgressColor:[UIColor redColor]];
+        [timerLabel setTextColor:[UIColor redColor]];
     }
     if (time == 0){
         [self onDeny:nil];
@@ -87,62 +95,10 @@
 
 }
 
--(void)checkDeviceOrientation{
-    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
-    {
-        // code for landscape orientation
-        [[NSNotificationCenter defaultCenter] postNotificationName:UIDeviceOrientationDidChangeNotification object:nil];
-    }
-}
-
-- (void)orientationChanged:(NSNotification *)notification{
-    [approveImage setCenter:approveRequest.center];
-    [denyImage setCenter:denyRequest.center];
-    [self adjustViewsForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
-}
-
-- (void) adjustViewsForOrientation:(UIInterfaceOrientation) orientation {
-    
-    switch (orientation)
-    {
-        case UIInterfaceOrientationPortrait:
-        case UIInterfaceOrientationPortraitUpsideDown:
-        {
-            //load the portrait view
-            if (isLandScape){
-                [scrollView setContentSize:CGSizeMake(scrollView.contentSize.width, scrollView.contentSize.width/2)];
-                scrollView.delegate = nil;
-                scrollView.scrollEnabled = NO;
-                isLandScape = NO;
-            }
-        }
-            
-            break;
-        case UIInterfaceOrientationLandscapeLeft:
-        case UIInterfaceOrientationLandscapeRight:
-        {
-            //load the landscape view
-            if (!isLandScape){
-                if (_isLogInfo){
-                    [scrollView setFrame:CGRectMake(scrollView.frame.origin.x, scrollView.frame.origin.y, scrollView.frame.size.width, scrollView.frame.size.height+100)];
-                }
-                [scrollView setContentSize:CGSizeMake(scrollView.contentSize.width, 300)];
-                scrollView.delegate = self;
-                scrollView.scrollEnabled = YES;
-                isLandScape = YES;
-            }
-            
-        }
-            break;
-        case UIInterfaceOrientationUnknown:break;
-    }
-}
-
 -(void)initLocalization{
     [approveRequest setTitle:NSLocalizedString(@"Approve", @"Approve") forState:UIControlStateNormal];
     [denyRequest setTitle:NSLocalizedString(@"Deny", @"Deny") forState:UIControlStateNormal];
     titleLabel.text = NSLocalizedString(@"PressApprove", @"To continue, press Approve");
-    timerLabelTitle.text = NSLocalizedString(@"SecondsLeft", @"seconds left");
 }
 
 -(void)updateInfo{
@@ -150,13 +106,13 @@
     if (info == nil){
         info = [UserLoginInfo sharedInstance];
     }
-    if (info->userName == nil){
-        [userNameView setHidden:YES];
-        [self moveUpViews];
-    } else {
-        [userNameView setHidden:NO];
+//    if (info->userName == nil){
+//        [userNameView setHidden:YES];
+////        [self moveUpViews];
+//    } else {
+//        [userNameView setHidden:NO];
         userNameLabel.text = info->userName;
-    }
+//    }
     NSString* server = info->issuer;
     serverUrlLabel.text = server;
     if (server != nil){
@@ -180,37 +136,43 @@
         [timerView setHidden:YES];
         [buttonView setHidden:YES];
         titleLabel.text = NSLocalizedString(@"Information", @"Information");
+    } else {
+        [navigationView setHidden:YES];
     }
+    [self moveUpViews];
 }
 
 -(void)moveUpViews{
-    [locationView setCenter:CGPointMake(locationView.center.x, locationView.center.y - moveUpY)];
-    [timeView setCenter:CGPointMake(timeView.center.x, timeView.center.y - moveUpY)];
-}
-
--(void)initBackButtonUI{
-    [[backButton layer] setMasksToBounds:YES];
-    [[backButton layer] setCornerRadius:CORNER_RADIUS];
-    [[backButton layer] setBorderWidth:2.0f];
-    [[backButton layer] setBorderColor:[UIColor blackColor].CGColor];
+    int moveUpPosition = titleLabel.center.y - timerView.center.y;
+    [mainInfoView setCenter:CGPointMake(mainInfoView.center.x, titleLabel.center.y + titleLabel.frame.size.height/1.5)];
+    if (!_isLogInfo){
+        [timerView setCenter:CGPointMake(timerView.center.x, timerView.center.y - moveUpPosition)];
+        [titleLabel setCenter:CGPointMake(titleLabel.center.x, titleLabel.center.y - moveUpPosition)];
+        [mainInfoView setFrame:CGRectMake(mainInfoView.frame.origin.x, titleLabel.center.y + titleLabel.frame.size.height/2, mainInfoView.frame.size.width, mainInfoView.frame.size.height)];
+    }
 }
 
 -(IBAction)onApprove:(id)sender{
     [delegate approveRequest];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self back];
     [timer invalidate];
     timer = nil;
 }
 
 -(IBAction)onDeny:(id)sender{
     [delegate denyRequest];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self back];
     [timer invalidate];
     timer = nil;
 }
 
--(IBAction)back:(id)sender{
+-(IBAction)back{
+    [self.navigationController popViewControllerAnimated:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(IBAction)onDeleteClick{
+    [self deleteLogsAlert];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -223,8 +185,6 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     NSDate* dateTime = [self getNSDate:date];
     [formatter setTimeStyle:NSDateFormatterMediumStyle];
-//    [formatter setDateFormat:@"hh:mm:ss  aa"];
-//    [formatter setTimeZone:[NSTimeZone localTimeZone]];
     NSString* times = [formatter stringFromDate:dateTime];
     
     return times;
@@ -235,7 +195,6 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     NSDate* dateT = [self getNSDate:date];
     [formatter setDateStyle:NSDateFormatterMediumStyle];
-//    [formatter setDateFormat:@"MMMM dd, yyyy"];
     NSString* dateTime = [formatter stringFromDate:dateT];
     
     return dateTime;
@@ -243,11 +202,31 @@
 
 -(NSDate*)getNSDate:(NSString*)dateTime{
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-//    [formatter setTimeZone:[NSTimeZone localTimeZone]];//timeZoneWithAbbreviation:@"GMT"]];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZZZ"];//.SSSSSS//:mm:ss
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZZZ"];
     NSDate* date = [formatter dateFromString:dateTime];
     
     return date;
+}
+
+-(void)deleteLogsAlert{
+    SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert setHorizontalButtons:YES];
+    [alert addButton:NSLocalizedString(@"YES", @"YES") actionBlock:^(void) {
+        NSLog(@"YES clicked");
+        if (_userInfo != nil){
+            [self deleteLog:_userInfo];
+        }
+    }];
+    SCLButton* noButton = [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
+        NSLog(@"NO clicked");
+    }];
+    [noButton setDefaultBackgroundColor:[UIColor redColor]];
+    [alert showCustom:[UIImage imageNamed:@"delete_action_titleIcon"] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"AlertTitle", @"Into") subTitle:NSLocalizedString(@"ClearLog", @"Clear Log") closeButtonTitle:nil duration:0.0f];
+}
+
+-(void)deleteLog:(UserLoginInfo*)log {
+    [[DataStoreManager sharedInstance] deleteLog:log];
+    [self back];
 }
 
 /*

@@ -11,13 +11,17 @@
 #import "ApproveDenyViewController.h"
 #import "UserLoginInfo.h"
 #import "LecenseAgreementDelegate.h"
+#import "NotificationNetworkView.h"
+#import "ADViewSubscriber.h"
 
 @interface MainViewController : UIViewController <QRCodeReaderDelegate, ApproveDenyDelegate>{
     
     IBOutlet UIButton* scanButton;
-    IBOutlet UIButton* infoButton;
     IBOutlet UILabel* statusLabel;
     IBOutlet UIView* statusView;
+    
+    IBOutlet UIView* topView;
+    IBOutlet UIImageView* topIconView;
     
     IBOutlet UILabel* welcomeLabel;
     IBOutlet UILabel* scanTextLabel;
@@ -37,8 +41,10 @@
 
 }
 
+@property (nonatomic, weak) IBOutlet NotificationNetworkView* notificationNetworkView;
+@property (nonatomic, weak) IBOutlet ADViewSubscriber* adFreeView;
+
 - (IBAction)scanAction:(id)sender;
-- (IBAction)infoAction:(id)sender;
 
 @end
 

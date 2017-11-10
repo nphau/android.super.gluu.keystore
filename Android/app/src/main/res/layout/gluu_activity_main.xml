@@ -2,28 +2,38 @@
     android:id="@+id/main_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="?attr/colorPrimary"
-        android:elevation="6dp"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    <!--<android.support.v7.widget.Toolbar-->
+        <!--android:id="@+id/toolbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:background="?attr/colorPrimary"-->
+        <!--android:elevation="6dp"-->
+        <!--android:minHeight="?attr/actionBarSize"-->
+        <!--android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
+        <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>-->
 
-    <android.support.v4.view.ViewPager
+    <org.gluu.super_gluu.app.fragments.GluuPagerView.GluuPagerView
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/toolbar"
-        android:layout_above="@+id/tab_layout" />
+        android:layout_above="@+id/adView"/>
+
+    <!--android:layout_below="@+id/toolbar"-->
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tab_layout"
+        ads:adUnitId="@string/banner_ad_unit_id"
+        app:adSize="SMART_BANNER"/>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
@@ -31,25 +41,9 @@
         android:layout_height="wrap_content"
         android:background="@color/grayColorLight"
         android:elevation="6dp"
-        android:minHeight="?attr/actionBarSize"
         style="@style/CustomTabLayoutStyle"
         android:layout_alignParentBottom="true"/>
 
+    <!--android:minHeight="?attr/actionBarSize"-->
 
 </RelativeLayout>
-
-<!--<?xml version="1.0" encoding="utf-8"?>-->
-
-<!--<org.gluu.oxpush2.app.Fragments.GluuPagerView.GluuPagerView xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--android:id="@+id/pager"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent" >-->
-
-    <!--<android.support.v4.view.PagerTabStrip-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="bottom"-->
-        <!--android:textColor="@color/greenColor"-->
-        <!--android:background="@color/grayColorLight"/>-->
-
-<!--</org.gluu.oxpush2.app.Fragments.GluuPagerView.GluuPagerView>-->

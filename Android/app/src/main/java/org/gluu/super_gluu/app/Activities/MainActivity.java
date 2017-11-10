@@ -1,27 +1,54 @@
-package org.gluu.super_gluu.app.Activities;
+package org.gluu.super_gluu.app.activities;
 
+import android.app.KeyguardManager;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.fingerprint.FingerprintManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.security.keystore.KeyGenParameterSpec;
+import android.security.keystore.KeyPermanentlyInvalidatedException;
+import android.security.keystore.KeyProperties;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-
-import org.gluu.super_gluu.app.CustomGluuAlertView.CustomGluuAlert;
-import org.gluu.super_gluu.app.Fragments.LicenseFragment.LicenseFragment;
-import org.gluu.super_gluu.app.Fragments.LockFragment.LockFragment;
-import org.gluu.super_gluu.app.Fragments.PinCodeFragment.PinCodeFragment;
-import org.gluu.super_gluu.app.Fragments.PinCodeFragment.PinCodeSettingFragment;
+import android.util.Log;
+import android.widget.Toast;
+import org.gluu.super_gluu.app.fingerprint.FingerprintAuthenticationDialogFragment;
+import org.gluu.super_gluu.app.fragments.LicenseFragment.LicenseFragment;
+import org.gluu.super_gluu.app.fragments.LockFragment.LockFragment;
+import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
+import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeSettingFragment;
 import org.gluu.super_gluu.app.GluuMainActivity;
-import org.gluu.super_gluu.app.KeyHandleInfoFragment;
+import org.gluu.super_gluu.app.fragments.KeysFragment.KeyHandleInfoFragment;
+import org.gluu.super_gluu.app.fingerprint.Fingerprint;
+import org.gluu.super_gluu.app.services.FingerPrintManager;
 import org.gluu.super_gluu.app.settings.Settings;
+import java.io.IOException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 
-import com.github.simonpercic.rxtime.RxTime;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
 
 import SuperGluu.app.R;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by nazaryavornytskyy on 3/22/16.
@@ -30,51 +57,69 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
 
 
     public static final String TIME_SERVER = "time-a.nist.gov";
+    private static final String DENY_ACTION = "DENY_ACTION";
+    private static final String APPROVE_ACTION = "APPROVE_ACTION";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
         GluuApplication.isTrustAllCertificates = Settings.getSSLEnabled(this);
 
         // Check if we get push notification
         Intent intent = getIntent();
         Boolean isAppLocked = Settings.isAppLocked(getApplicationContext());
-        if (intent.hasExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE)) {
-            String requestJson = intent.getStringExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE);
-            Bundle answerBundle = intent.getExtras();
-            int userAnswer = answerBundle.getInt("requestType");
-            if (userAnswer == 10) {//deny action
-                saveUserDecision("deny", requestJson);
-            } else if (userAnswer == 20) {//approve action
-                saveUserDecision("approve", requestJson);
-            }
+        //Check if user tap on Approve/Deny button or just on push body
+        if (intent.getAction() != null && intent.getAction().equalsIgnoreCase(APPROVE_ACTION)){
+            userChossed("approve", intent);
+            return;
+        } else if (intent.getAction() != null && intent.getAction().equalsIgnoreCase(DENY_ACTION)){
+            userChossed("deny", intent);
+            return;
+        }
+        Boolean isFingerprint = Settings.getFingerprintEnabled(getApplicationContext());
+        if (isFingerprint){
+            FingerPrintManager fingerPrintManager = new FingerPrintManager(this);
+            fingerPrintManager.onFingerPrint(new FingerPrintManager.FingerPrintManagerCallback() {
+                @Override
+                public void fingerprintResult(Boolean isSuccess) {
+                    loadGluuMainActivity();
+                }
+            });
+        } else {
             if (isAppLocked) {
                 loadLockedFragment(true);
             } else {
-                checkPinCodeEnabled();
-            }
-            NotificationManager nMgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            nMgr.cancel(GluuMainActivity.MESSAGE_NOTIFICATION_ID);
-        }
+                if (Settings.getAccept(getApplicationContext())) {
+                    checkPinCodeEnabled();
+                } else {
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    LicenseFragment licenseFragment = new LicenseFragment();
 
+                    fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    fragmentTransaction.replace(R.id.fragment_container, licenseFragment);
+                    fragmentTransaction.commit();
+                }
+            }
+        }
+        Settings.setIsBackButtonVisibleForKey(getBaseContext(), false);
+        Settings.setIsBackButtonVisibleForLog(getBaseContext(), false);
+        Settings.setIsBackButtonVisibleForKey(getBaseContext(), false);
+    }
+
+    private void userChossed(String answer, Intent intent){
+        Boolean isAppLocked = Settings.isAppLocked(getApplicationContext());
+        String requestJson = intent.getStringExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE);
+        saveUserDecision(answer, requestJson);
         if (isAppLocked) {
             loadLockedFragment(true);
         } else {
-            if (Settings.getAccept(getApplicationContext())) {
-                checkPinCodeEnabled();
-            } else {
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                LicenseFragment licenseFragment = new LicenseFragment();
-
-                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                fragmentTransaction.replace(R.id.fragment_container, licenseFragment);
-//            fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
+            checkPinCodeEnabled();
         }
+        NotificationManager nMgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        nMgr.cancel(GluuMainActivity.MESSAGE_NOTIFICATION_ID);
     }
 
     @Override
@@ -177,26 +222,12 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
             /**
              * entered pin code is INCORRECT. DO something here.
              * */
-            setCurrentNetworkTime();
+//            setCurrentNetworkTime();
             loadLockedFragment(false);
 
             setTitle("Application is locked");
             Settings.setAppLocked(getApplicationContext(), true);
         }
-    }
-
-    private void setCurrentNetworkTime() {
-        // a singleton
-        RxTime rxTime = new RxTime();
-        rxTime.currentTime()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Long>() {
-                    @Override
-                    public void call(Long time) {
-                        // use time
-                        setAppLockedTime(String.valueOf(time));
-                    }
-                });
     }
 
     private void loadLockedFragment(Boolean isRecover) {
@@ -226,12 +257,6 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
         editor.commit();
     }
 
-    private void showAlertView(String message) {
-        CustomGluuAlert gluuAlert = new CustomGluuAlert(this);
-        gluuAlert.setMessage(message);
-        gluuAlert.show();
-    }
-
     @Override
     protected void onPause() {
         GluuApplication.applicationPaused();
@@ -243,11 +268,6 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
         GluuApplication.applicationResumed();
         super.onResume();
     }
-//
-//    @Override
-//    protected void onDestroy() {1
-//        super.onDestroy();
-//    }
 
     public interface OnLockAppTimerOver {
         void onTimerOver();

@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app.Fragments.GluuPagerView;
+package org.gluu.super_gluu.app.fragments.GluuPagerView;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;

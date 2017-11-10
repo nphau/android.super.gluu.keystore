@@ -1,28 +1,30 @@
-package org.gluu.super_gluu.app.Fragments.LockFragment;
+package org.gluu.super_gluu.app.fragments.LockFragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.github.simonpercic.rxtime.RxTime;
-import org.gluu.super_gluu.app.Activities.MainActivity;
-import org.gluu.super_gluu.app.CustomGluuAlertView.CustomGluuAlert;
+//import com.github.simonpercic.rxtime.RxTime;
+import org.gluu.super_gluu.app.activities.MainActivity;
+import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
+import org.gluu.super_gluu.app.services.GlobalNetworkTime;
 import org.gluu.super_gluu.app.settings.Settings;
-
 import SuperGluu.app.R;
-
 import java.text.SimpleDateFormat;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by nazaryavornytskyy on 4/20/16.
@@ -118,10 +120,13 @@ public class LockFragment extends Fragment {
     }
 
     private void calculateTimeLeft(){
-        getCurrentNetworkTime();
-//        if (min == 0 && sec == 0){
-//            setAppLocked(false);
-//        }
+        new GlobalNetworkTime().getCurrentNetworkTime(context, new GlobalNetworkTime.GetGlobalTimeCallback() {
+            @Override
+            public void onGlobalTime(Long time) {
+                currentNetworkTime(time);
+                startClockTick();
+            }
+        });
     }
 
     private String getAppLockedTime(){
@@ -129,40 +134,29 @@ public class LockFragment extends Fragment {
         return preferences.getString("appLockedTime", "");
     }
 
-    private void getCurrentNetworkTime() {
-        // a singleton
-        RxTime rxTime = new RxTime();
-        txtTime = new TextView(context);
-        rxTime.currentTime()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Long>() {
-                    @Override
-                    public void call(Long time) {
-                        // use time
-                        currentNetworkTime(time);
-                        startClockTick();
-                    }
-                });
-    }
-
     private void currentNetworkTime(Long time){
 //        Date lockedDate;
 //        Date currentDate;
 //        lockedDate = new Date(Long.parseLong(getAppLockedTime()));// isoDateTimeFormat.parse(getAppLockedTime());
 //        currentDate = new Date(time);//isoDateTimeFormat.parse(String.valueOf(time));
-        long lockedTime = Long.parseLong(getAppLockedTime());
-        long diff = time - lockedTime;
-        long secondsInMilli = 1000;
-        long minutesInMilli = secondsInMilli * 60;
-        long elapsedMinutes = diff / minutesInMilli;
-        diff = diff % minutesInMilli;
-        long elapsedSeconds = diff / secondsInMilli;
-        min = (int) (min - elapsedMinutes);
-        sec = (min > 11 || min < 0) ? 0 : (int) elapsedSeconds;
-        min = min < 0 ? 0 : min;
-        min = min > 10 ? 0 : min;
-        if (min == 0 && sec == 0){
+        String lockedTimeStr = getAppLockedTime();
+        if (lockedTimeStr.equalsIgnoreCase("")){
             Settings.setAppLocked(context, false);
+        } else {
+            long lockedTime = Long.parseLong(getAppLockedTime());
+            long diff = time - lockedTime;
+            long secondsInMilli = 1000;
+            long minutesInMilli = secondsInMilli * 60;
+            long elapsedMinutes = diff / minutesInMilli;
+            diff = diff % minutesInMilli;
+            long elapsedSeconds = diff / secondsInMilli;
+            min = (int) (min - elapsedMinutes);
+            sec = (min > 11 || min < 0) ? 0 : (int) elapsedSeconds;
+            min = min < 0 ? 0 : min;
+            min = min > 10 ? 0 : min;
+            if (min == 0 && sec == 0) {
+                Settings.setAppLocked(context, false);
+            }
         }
     }
 

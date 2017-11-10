@@ -13,3 +13,4 @@ public enum LogState{
     LOGIN_DECLINED,
     UNKNOWN_ERROR
 }
+

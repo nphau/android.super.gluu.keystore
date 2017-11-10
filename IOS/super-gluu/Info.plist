@@ -15,11 +15,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>12</string>
+	<string>31</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>0</string>
+	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -27,16 +27,26 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>$(EXECUTABLE_NAME) requires Bluetooth service to work</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Do you want to access to camera?</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This application requires location services to work</string>
+	<string>$(EXECUTABLE_NAME) requires location services to work</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This application requires location services to work</string>
+	<string>$(EXECUTABLE_NAME) requires location services to work</string>
 	<key>NSMotionUsageDescription</key>
 	<string>YES</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Do you want to access to photo library?</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>ProximaNova-Light.otf</string>
+		<string>ProximaNova-Reg.otf</string>
+		<string>ProximaNova-Sbold.otf</string>
+		<string>ProximaNova-Bold.otf</string>
+		<string>ProximaNova-Extrabold.otf</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

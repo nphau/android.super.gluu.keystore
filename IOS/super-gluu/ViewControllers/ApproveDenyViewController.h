@@ -10,6 +10,8 @@
 #import "MainViewController.h"
 #import "LecenseAgreementDelegate.h"
 #import "UserLoginInfo.h"
+#import "CATCurveProgressView.h"
+#import "ADViewSubscriber.h"
 
 @interface ApproveDenyViewController : UIViewController <UIScrollViewDelegate> {
  
@@ -28,29 +30,22 @@
     
     IBOutlet UILabel* createdTimeLabel;
     IBOutlet UILabel* createdDateLabel;
-    
+
     IBOutlet UILabel* typeLabel;
     
-    IBOutlet UIView* serverView;
-    IBOutlet UIView* userNameView;
-    IBOutlet UIView* locationView;
-    IBOutlet UIView* timeView;
-    IBOutlet UIView* typeView;
-    
+    IBOutlet UIView* navigationView;
     IBOutlet UIButton* backButton;
-    
     IBOutlet UIView* buttonView;
     
-    IBOutlet UIView* timerView;
+    IBOutlet CATCurveProgressView* timerView;
     
-    IBOutlet UIScrollView* scrollView;
+    IBOutlet UIView* mainInfoView;
     
     BOOL isLandScape;
     
     NSTimer* timer;
     int time;
     IBOutlet UILabel* timerLabel;
-    IBOutlet UILabel* timerLabelTitle;
     
     IBOutlet UIImageView* approveImage;
     IBOutlet UIImageView* denyImage;
@@ -59,6 +54,7 @@
 @property (nonatomic,assign)  id <ApproveDenyDelegate> delegate;
 @property (assign, nonatomic) BOOL isLogInfo;
 @property (strong, nonatomic) UserLoginInfo* userInfo;
+@property (nonatomic, weak) IBOutlet ADViewSubscriber* adFreeView;
 
 -(void)updateInfo;
 

@@ -4,29 +4,53 @@
     android:layout_height="match_parent"
     android:weightSum="1">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:background="@color/greenColor">
 
-        <TextView
+    <LinearLayout
+        android:id="@+id/action_left_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:id="@+id/actionBarBackArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/back_arrow"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="15dp"/>
+
+        <Button
+            android:id="@+id/actionBarBackButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:background="@android:color/transparent"
+            android:clickable="false"
+            android:gravity="left|center"
+            android:text="@string/back"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="17sp" />
+
+    </LinearLayout>
+        <ImageView
+            android:id="@+id/actionbar_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="License"
-            android:id="@+id/textView9"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:textColor="#ffffff"
-            android:textSize="24dp" />
-    </LinearLayout>
-
-    <TextView
+            android:paddingTop="10dp"
+            android:src="@drawable/ic_title_icon"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+    <WebView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="New Text"
-        android:id="@+id/license_textView"
+        android:id="@+id/license_webView"
         android:layout_weight="0.98"
         android:scrollbars = "vertical"
         android:layout_marginLeft="10dp"
@@ -38,14 +62,15 @@
         android:layout_height="65dp">
 
         <Button
-            android:layout_width="126dp"
-            android:layout_height="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:text="@string/accept"
+            android:textAllCaps="false"
+            android:textSize="17dp"
             android:id="@+id/accept_button"
-            android:background="@drawable/rounded_button"
+            android:background="@color/greenColor"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:textColor="@color/greenColor" />
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
 </LinearLayout>

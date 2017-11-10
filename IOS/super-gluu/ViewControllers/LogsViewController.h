@@ -7,14 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <SWTableViewCell/SWTableViewCell.h>
 
-@interface LogsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>{
+@interface LogsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, SWTableViewCellDelegate>{
 
     NSMutableArray* logsArray;
+    IBOutlet UIView* topView;
+    IBOutlet UIImageView* topIconView;
     IBOutlet UITableView* logsTableView;
-    IBOutlet UIButton* cleanLogs;
+    IBOutlet UIButton* editLogsButton;
+    IBOutlet UIButton* cancelButton;
     IBOutlet UILabel* noLogsLabel;
     IBOutlet UIView* contentView;
+    IBOutlet UIButton* selectAllButton;
+    IBOutlet UIView* selectAllView;
 }
 
 @end

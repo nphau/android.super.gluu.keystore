@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "PAPasscodeViewController.h"
+#import "PinCodeDelegate.h"
 
 @interface PinCodeViewController : UIViewController <PAPasscodeViewControllerDelegate>{
 
+    IBOutlet UIView* topView;
+    IBOutlet UIImageView* topIconView;
     IBOutlet UILabel* titleLabel;
     IBOutlet UIView* timerView;
     IBOutlet UILabel* minutesLabel;
@@ -24,7 +27,12 @@
     NSTimer* timer;
     
     PAPasscodeViewController *passcodeViewController;
+    id delegate;
     
 }
+
+@property (nonatomic, assign) Boolean isCallback;
+
+- (void) setDelegate:(id)newDelegate;
 
 @end

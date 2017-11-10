@@ -1,10 +1,12 @@
-package org.gluu.super_gluu.app.Fragments.SettingsFragment;
+package org.gluu.super_gluu.app.fragments.SettingsFragment;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,157 +16,124 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-import com.hrules.horizontalnumberpicker.HorizontalNumberPicker;
-import com.hrules.horizontalnumberpicker.HorizontalNumberPickerListener;
-import org.gluu.super_gluu.app.Activities.GluuApplication;
-import org.gluu.super_gluu.app.CustomGluuAlertView.CustomGluuAlert;
-import org.gluu.super_gluu.app.Fragments.PinCodeFragment.PinCodeFragment;
-import org.gluu.super_gluu.app.GluuMainActivity;
+
+import org.gluu.super_gluu.app.activities.GluuApplication;
 import org.gluu.super_gluu.app.fingerprint.Fingerprint;
+import org.gluu.super_gluu.app.gluuToast.GluuToast;
 import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.net.CommunicationService;
 
 import SuperGluu.app.R;
 
 /**
- * Created by nazaryavornytskyy on 3/23/16.
+ * Created by nazaryavornytskyy on 5/17/17.
  */
-public class SettingsFragment extends Fragment implements View.OnClickListener, HorizontalNumberPickerListener {
 
-    Button setResetPinButton;
+public class SettingsFragment extends Fragment {
+
     private Context context;
-    private PinCodeFragment pinCodeFragment;
-    private LinearLayout attemptsLayout;
-    private TextView attemptsLabel;
+    private LayoutInflater inflater;
     private Fingerprint fingerprint;
+    private Switch switchSettings;
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            boolean success = intent.getBooleanExtra("message", false);
+            switchSettings.setChecked(success);
+            String message = success ? "You've success authenticated by fingerprint" : "You've failed authenticated by fingerprint";
+            showToast(message);
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         context = getContext();
+        this.inflater = inflater;
         fingerprint = new Fingerprint(context);
-        setResetPinButton = (Button) view.findViewById(R.id.set_reset_pin_button);
-        setResetPinButton.setOnClickListener(this);
-        attemptsLayout = (LinearLayout) view.findViewById(R.id.numbers_attempts_view);
-        attemptsLabel = (TextView) view.findViewById(R.id.numbers_attempts_label);
 
-        final Switch turOn = (Switch) view.findViewById(R.id.switch_pin_code);
-        turOn.setChecked(Settings.getPinCodeEnabled(context));
-        setPinCode(turOn.isChecked());
-        turOn.setOnClickListener(new View.OnClickListener() {
+        View actionBarView = (View) view.findViewById(R.id.actionBarView);
+        actionBarView.findViewById(R.id.action_right_button).setVisibility(View.GONE);
+        actionBarView.findViewById(R.id.actionbar_icon).setVisibility(View.GONE);
+        TextView title = (TextView) actionBarView.findViewById(R.id.actionbar_textview);
+        title.setVisibility(View.VISIBLE);
+        title.setText("MENU");
+        LinearLayout leftButton = (LinearLayout) actionBarView.findViewById(R.id.action_left_button);
+        leftButton.setVisibility(View.VISIBLE);
+        leftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setPinCode(turOn.isChecked());
+                getActivity().onBackPressed();
             }
         });
-        if (Settings.getPinCodeEnabled(context)) {
-            setResetPinButton.setVisibility(View.VISIBLE);
-        } else {
-            setResetPinButton.setVisibility(View.GONE);
-        }
-        HorizontalNumberPicker numberPicker = (HorizontalNumberPicker) view.findViewById(R.id.horizontal_number_picker);
-        numberPicker.setMaxValue(10);
-        numberPicker.setMinValue(5);
-        numberPicker.setValue(Settings.getPinCodeAttempts(context));
-        numberPicker.setListener(this);
-        checkPinCode();
 
-        final Switch switchSSL = (Switch) view.findViewById(R.id.switch_ssl);
-        switchSSL.setChecked(Settings.getSSLEnabled(context));
-        switchSSL.setOnClickListener(new View.OnClickListener() {
+        final String settingsId = this.getArguments().getString("settingsId");
+
+        TextView textSettings = (TextView)view.findViewById(R.id.textViewSettings);
+        final TextView textSettingsSubTitle = (TextView)view.findViewById(R.id.textViewSubTitle);
+
+        switchSettings = (Switch) view.findViewById(R.id.switch_setting);
+        textSettings.setText(settingsId.equalsIgnoreCase("SSLConnectionSettings") ? getString(R.string.trust_all_certificate) : getString(R.string.fingerprint_title));
+        textSettingsSubTitle.setText(settingsId.equalsIgnoreCase("SSLConnectionSettings") ? getString(R.string.warning_trust_all_certificate) : getString(R.string.pin_code_text));
+        switchSettings.setChecked(Settings.getSettingsValueEnabled(context, settingsId));
+//        textSettingsSubTitle.setVisibility(switchSettings.isChecked() ? View.VISIBLE : View.GONE);
+        switchSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (switchSSL.isChecked()) {
-                    showWarning(R.string.warning_trust_all_certificate);
+                if (settingsId.equalsIgnoreCase("SSLConnectionSettings")) {
+                    GluuApplication.isTrustAllCertificates = switchSettings.isChecked();
+//                    if (switchSettings.isChecked()) {
+//                        String message = context.getString(R.string.warning_trust_all_certificate);
+//                        showToastWithText(message);
+//                    }
+                } else {
+                    if (switchSettings.isChecked() && fingerprint.startFingerprintService()) {
+                        Log.v("TAG", "Fingerprint Settings enable: " + switchSettings.isChecked());
+                    } else {
+                        switchSettings.setChecked(false);
+                        showToastWithText("Fingerprint is turned off for this device");
+                    }
                 }
-                GluuApplication.isTrustAllCertificates = switchSSL.isChecked();
-                Settings.setSSLEnabled(context, switchSSL.isChecked());
-                Log.v("TAG", "SSL Settings enable: " + switchSSL.isChecked());
+//                textSettingsSubTitle.setVisibility(switchSettings.isChecked() ? View.VISIBLE : View.GONE);
+                Settings.setSettingsValueEnabled(context, settingsId, switchSettings.isChecked());
                 // Init network layer
                 CommunicationService.init();
             }
         });
 
-        final Switch switchFingerprint = (Switch) view.findViewById(R.id.switch_fingerprint);
-        switchFingerprint.setChecked(Settings.getFingerprintEnabled(context));
-        switchFingerprint.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.button_ad_free).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (switchFingerprint.isChecked() && fingerprint.startFingerprintService()) {
-                    Settings.setFingerprintEnabled(context, switchFingerprint.isChecked());
-                    Log.v("TAG", "Fingerprint Settings enable: " + switchFingerprint.isChecked());
-                } else {
-                    switchFingerprint.setChecked(false);
-                }
-
+                Intent intent = new Intent("on-ad-free-flow");
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
             }
         });
+
+        //Setup message receiver
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
+                new IntentFilter("fingerprint_authentication_result"));
+
+        //Setup fonts
+        Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Regular.otf");
+        textSettings.setTypeface(face);
+        textSettingsSubTitle.setTypeface(face);
 
         return view;
     }
 
-    private void setPinCode(Boolean isTurnOn) {
-        Settings.setPinCodeEnabled(context, isTurnOn);
-        if (isTurnOn) {
-            setResetPinButton.setVisibility(View.VISIBLE);
-            attemptsLayout.setVisibility(View.VISIBLE);
-            attemptsLabel.setVisibility(View.VISIBLE);
-        } else {
-            setResetPinButton.setVisibility(View.GONE);
-            attemptsLayout.setVisibility(View.GONE);
-            attemptsLabel.setVisibility(View.GONE);
-        }
-        checkPinCode();
-    }
-
-    public void checkPinCode() {
-        String pinCode = Settings.getPinCode(context);
-        if (!pinCode.equalsIgnoreCase("null")) {
-            setResetPinButton.setText(R.string.reset_pin_code);
-        } else {
-            setResetPinButton.setText(R.string.set_new_pin_code);
-        }
-    }
-
     @Override
-    public void onClick(View v) {
-        GluuMainActivity.GluuAlertCallback listener = new GluuMainActivity.GluuAlertCallback() {
-            @Override
-            public void onPositiveButton() {
-                Settings.saveIsReset(context);
-                loadPinCodeView(true);
-            }
-        };
-        CustomGluuAlert gluuAlert = new CustomGluuAlert(getActivity());
-        gluuAlert.setMessage(getContext().getString(R.string.change_pin));
-        gluuAlert.setYesTitle(getContext().getString(R.string.yes));
-        gluuAlert.setNoTitle(getContext().getString(R.string.no));
-        gluuAlert.setmListener(listener);
-        gluuAlert.show();
+    public void onStop() {
+        super.onStop();
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mMessageReceiver);
     }
 
-    private void loadPinCodeView(Boolean isBackStack) {
-        pinCodeFragment = new PinCodeFragment();
-        pinCodeFragment.setIsSettings(true);
-        pinCodeFragment.setIsSetNewPinCode(true);
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.root_frame, pinCodeFragment);
-        if (isBackStack) {
-            transaction.addToBackStack(null);
-        }
-        transaction.commit();
-    }
-
-    @Override
-    public void onHorizontalNumberPickerChanged(HorizontalNumberPicker horizontalNumberPicker, int value) {
-
-        Settings.setPinCodeAttempts(context, String.valueOf(value));
+    private void showToastWithText(String text){
+        GluuToast gluuToast = new GluuToast(context);
+        View view = inflater.inflate(R.layout.gluu_toast, null);
+        gluuToast.showGluuToastWithText(view, text);
     }
 
     private void showWarning(int statusId) {
@@ -175,4 +144,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
+    public void showToast(String text){
+        GluuToast gluuToast = new GluuToast(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View view = inflater.inflate(R.layout.gluu_toast, null);
+        gluuToast.showGluuToastWithText(view, text);
+    }
 }

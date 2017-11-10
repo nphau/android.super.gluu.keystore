@@ -13,7 +13,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
 
-import org.gluu.super_gluu.app.Fragments.PageRootFragment;
+import org.gluu.super_gluu.app.fragments.PageRootFragment;
 
 import SuperGluu.app.R;
 
@@ -36,6 +36,16 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         this.context = context;
     }
 
+    void adoptPage(SpannableStringBuilder sb, int image){
+        ColorFilter filter;
+        Drawable drawable = ContextCompat.getDrawable(context, image);
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        filter = new LightingColorFilter( Color.rgb(1, 161, 97), Color.rgb(1, 161, 97));
+        drawable.setColorFilter(filter);
+        ImageSpan span = new ImageSpan(drawable, ImageSpan.ALIGN_BOTTOM);
+        sb.setSpan(span, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+    }
+
     @Override
     public int getCount() {
         return PAGE_COUNT;
@@ -52,7 +62,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             case 2:
                 return rootFragment.newInstance(FragmentType.FRAGMENT_TYPE.KEYS_FRAGMENT);//new KeysRootFragment();//KeyFragmentListFragment();
             case 3:
-                return rootFragment.newInstance(FragmentType.FRAGMENT_TYPE.SETTINGS_FRAGMENT);//new SettingsRootFragment();//SettingsFragment.createInstance();
+                return rootFragment.newInstance(FragmentType.FRAGMENT_TYPE.SETTINGS_FRAGMENT);//new SettingsRootFragment();//SettingsListFragment.createInstance();
         }
         return null;
     }
@@ -61,51 +71,25 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
 //        return tabTitles[position];
         SpannableStringBuilder sb = new SpannableStringBuilder("  " + tabTitles[position]); // space added before text for convenience
-        Drawable drawable = null;
-        ImageSpan span = null;
-        int image = 0;
-        ColorFilter filter;
+
         switch (position){
             case 0 :
-                image = R.drawable.home_action;
-                drawable = ContextCompat.getDrawable(context, image);
-                drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-                filter = new LightingColorFilter( Color.rgb(1, 161, 97), Color.rgb(1, 161, 97));
-                drawable.setColorFilter(filter);
-                span = new ImageSpan(drawable, ImageSpan.ALIGN_BOTTOM);
-                sb.setSpan(span, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
+                int home_image = R.drawable.home_action;
+                this.adoptPage(sb, home_image);
                 return sb;
             case 1 :
-                image = R.drawable.logs_action;
-                drawable = ContextCompat.getDrawable(context, image);
-                drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-                filter = new LightingColorFilter( Color.rgb(1, 161, 97), Color.rgb(1, 161, 97));
-                drawable.setColorFilter(filter);
-                span = new ImageSpan(drawable, ImageSpan.ALIGN_BOTTOM);
-                sb.setSpan(span, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
+                int logs_image = R.drawable.logs_action;
+                this.adoptPage(sb, logs_image);
                 return sb;
             case 2 :
-                image = R.drawable.keys_action;
-                drawable = ContextCompat.getDrawable(context, image);
-                drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-                filter = new LightingColorFilter( Color.rgb(1, 161, 97), Color.rgb(1, 161, 97));
-                drawable.setColorFilter(filter);
-                span = new ImageSpan(drawable, ImageSpan.ALIGN_BOTTOM);
-                sb.setSpan(span, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                int keys_image = R.drawable.keys_action;
+                this.adoptPage(sb, keys_image);
 
                 return sb;
 
             case 3 :
-                image = R.drawable.settings_action;
-                drawable = ContextCompat.getDrawable(context, image);
-                drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-                filter = new LightingColorFilter( Color.rgb(1, 161, 97), Color.rgb(1, 161, 97));
-                drawable.setColorFilter(filter);
-                span = new ImageSpan(drawable, ImageSpan.ALIGN_BOTTOM);
-                sb.setSpan(span, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
+                int set_image = R.drawable.settings_action;
+                this.adoptPage(sb, set_image);
                 return sb;
         }
 

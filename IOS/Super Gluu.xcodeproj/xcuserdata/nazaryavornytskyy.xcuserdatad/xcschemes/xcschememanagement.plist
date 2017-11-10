@@ -4,10 +4,15 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Super Gluu - Ad Free.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>14</integer>
+		</dict>
 		<key>Super Gluu.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>5</integer>
+			<integer>1</integer>
 		</dict>
 		<key>super-gluu.xcscheme</key>
 		<dict>
@@ -28,6 +33,11 @@
 			<true/>
 		</dict>
 		<key>BB37DE771C7E08320016D422</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BB58C15E1EDDB32800FEEC78</key>
 		<dict>
 			<key>primary</key>
 			<true/>

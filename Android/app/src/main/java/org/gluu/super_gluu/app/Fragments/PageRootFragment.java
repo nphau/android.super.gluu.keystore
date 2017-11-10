@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app.Fragments;
+package org.gluu.super_gluu.app.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.gluu.super_gluu.app.FragmentType;
-import org.gluu.super_gluu.app.Fragments.KeysFragment.KeyFragmentListFragment;
-import org.gluu.super_gluu.app.Fragments.LogsFragment.LogsFragment;
-import org.gluu.super_gluu.app.Fragments.SettingsFragment.SettingsFragment;
+import org.gluu.super_gluu.app.fragments.KeysFragment.KeyFragmentListFragment;
+import org.gluu.super_gluu.app.fragments.LogsFragment.LogsFragment;
+import org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsList.SettingsListFragment;
 import org.gluu.super_gluu.app.MainActivityFragment;
 
 import SuperGluu.app.R;
@@ -70,14 +70,14 @@ public class PageRootFragment extends Fragment {
                 break;
             case SETTINGS_FRAGMENT:
                 view = inflater.inflate(R.layout.page_root_fragment, container, false);
-                transaction.replace(R.id.root_frame, new SettingsFragment());
+                transaction.replace(R.id.root_frame, new SettingsListFragment());
                 break;
             default:
                 break;
 
         }
 
-//        transaction.replace(R.id.root_frame, new SettingsFragment());
+//        transaction.replace(R.id.root_frame, new SettingsListFragment());
 
         transaction.commit();
 

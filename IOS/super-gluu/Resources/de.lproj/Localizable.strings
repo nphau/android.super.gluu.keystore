@@ -10,7 +10,7 @@
 
 //Strings for License Agreement View
 "LicenseAgreementTitle" = "License Agreement";
-"AcceptButtonTitle" = "Accept";
+"AcceptButtonTitle" = "Accept and Continue";
 
 "Home" = "Home";
 "Logs" = "Logs";
@@ -27,7 +27,7 @@
 "Authentication" = "Authentication";
 
 "ScanText" = "You may be presented with a QR code for enrollment or authentication. Click the button to open your QR scanner.";
-"Welcome" = "Welcome";
+"Welcome" = "Welcome to Super Gluu!";
 
 "PressApprove" = "To continue, press Approve";
 
@@ -81,6 +81,7 @@
 
 "PushTimeOver" = "Your push notification has been expired";
 
+"ClearLog" = "Do you want to clear log?";
 "ClearLogs" = "Do you want to clear logs?";
 
 "ApproveDeclineTitle" = "To continue press %@, to stop %@";
@@ -98,7 +99,7 @@
 
 "SecondsLeft" = "seconds left";
 
-"UniqueKeyLabel" = "A unique key is generated for each Gluu Server  you log into with Super Gluu. You can manage keys here:";
+"UniqueKeyLabel" = "A unique key is generated for each Gluu Server  you log into with %@. You can manage keys here:";
 
 "SetPinCode" = "Set Pin code";
 "ChangePinCode" = "Change Pin code";

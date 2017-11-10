@@ -11,8 +11,12 @@
 #import "Constants.h"
 #import "OXPushManager.h"
 #import "NHNetworkTime.h"
+#import "AppConfiguration.h"
+#import <AudioToolbox/AudioServices.h>
 
 //#import <UbertestersSDK/Ubertesters.h>
+
+@import GoogleMobileAds;
 
 @interface AppDelegate ()
 
@@ -33,7 +37,7 @@
     NSDictionary *remoteNotif = [launchOptions objectForKey: UIApplicationLaunchOptionsRemoteNotificationKey];
     
     //Accept push notification when app is not open
-    if (remoteNotif) {
+    if (remoteNotif != nil) {
         [[NSUserDefaults standardUserDefaults] setObject:remoteNotif forKey:NotificationRequest];
     }
     
@@ -48,7 +52,9 @@
     //Ubertersters SDK initialization
 //    [[Ubertesters shared] initialize];
     
-    [[UITabBar appearance] setTintColor:[UIColor colorWithRed:1/256.0 green:161/256.0 blue:97/256.0 alpha:1.0]];
+    [[UITabBar appearance] setTintColor:[[AppConfiguration sharedInstance] systemColor]];
+    
+    [GADMobileAds configureWithApplicationID:@"ca-app-pub-3326465223655655~8301521230"];
     
     return YES;
 }
@@ -117,19 +123,7 @@
     }
     if ( application.applicationState == UIApplicationStateActive ){
         // app was already in the foreground and we show custom push notifications view
-        if (userInfo != nil) {
-            NSData *data;
-            NSString* requestString = [userInfo objectForKey:@"request"];
-            if ([requestString isKindOfClass:[NSDictionary class]]){
-                data = [NSJSONSerialization dataWithJSONObject:requestString options:NSJSONWritingPrettyPrinted error:nil];
-            } else {
-                data = [requestString dataUsingEncoding:NSUTF8StringEncoding];
-            }
-            NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            if (jsonDictionary != nil){
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_ONLINE object:jsonDictionary];
-            }
-        }
+        [self parsePushAndNotify:userInfo];
     } else {
         // app was just brought from background to foreground and we wait when user click or slide on push notification
         _pushNotificationRequest = userInfo;
@@ -138,52 +132,23 @@
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:NotificationRequestActionsApprove];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:NotificationRequestActionsDeny];
     NSLog(@"Received notification: %@", userInfo);
-//    else if (application.applicationState == UIApplicationStateBackground) {
-//        
-//        NSLog(@"application Background - notification has arrived when app was in background");
-//        NSString* contentAvailable = [NSString stringWithFormat:@"%@", [[userInfo valueForKey:@"aps"] valueForKey:@"content-available"]];
-//        
-//        if([contentAvailable isEqualToString:@"1"]) {
-//            // do tasks
-//            [self manageRemoteNotification:userInfo];
-//            NSLog(@"content-available is equal to 1");
-//            completionHandler(UIBackgroundFetchResultNewData);
-//        }
-//    }
-//    else {
-//        NSLog(@"application Active - notication has arrived while app was opened");
-//        //Show an in-app banner
-//        //do tasks
-//        [self manageRemoteNotification:userInfo];
-//        completionHandler(UIBackgroundFetchResultNewData);
-//    }
 }
 
-//- (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-//    if ( application.applicationState == UIApplicationStateActive ){
-//        // app was already in the foreground and we show custom push notifications view
-//        if (userInfo != nil) {
-//            NSData *data;
-//            NSString* requestString = [userInfo objectForKey:@"request"];
-//            if ([requestString isKindOfClass:[NSDictionary class]]){
-//                data = [NSJSONSerialization dataWithJSONObject:requestString options:NSJSONWritingPrettyPrinted error:nil];
-//            } else {
-//                data = [requestString dataUsingEncoding:NSUTF8StringEncoding];
-//            }
-//            NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-//            if (jsonDictionary != nil){
-//                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_ONLINE object:jsonDictionary];
-//            }
-//        }
-//    } else {
-//        // app was just brought from background to foreground and we wait when user click or slide on push notification
-//        _pushNotificationRequest = userInfo;
-//        [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:NotificationRequest];
-//    }
-//    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:NotificationRequestActionsApprove];
-//    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:NotificationRequestActionsDeny];
-//    NSLog(@"Received notification: %@", userInfo);
-//}
+-(void)parsePushAndNotify:(NSDictionary*)pushInfo{
+    if (pushInfo != nil) {
+        NSData *data;
+        NSString* requestString = [pushInfo objectForKey:@"request"];
+        if ([requestString isKindOfClass:[NSDictionary class]]){
+            data = [NSJSONSerialization dataWithJSONObject:requestString options:NSJSONWritingPrettyPrinted error:nil];
+        } else {
+            data = [requestString dataUsingEncoding:NSUTF8StringEncoding];
+        }
+        NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        if (jsonDictionary != nil){
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_ONLINE object:jsonDictionary];
+        }
+    }
+}
 
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler {
     
@@ -194,14 +159,15 @@
         _pushNotificationRequest = userInfo;
         [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:NotificationRequest];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:NotificationRequestActionsApprove];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:NotificationRequestActionsDeny];
     }
     else if ([identifier isEqualToString:NotificationActionTwoIdent]) {
-        
         NSLog(@"You chose action Deny.");
         isDecline = YES;
         _pushNotificationRequest = userInfo;
         [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:NotificationRequest];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:NotificationRequestActionsDeny];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:NotificationRequestActionsApprove];
     }
     if (completionHandler) {
         
@@ -292,6 +258,8 @@
     [self saveContext];
     [[NHNetworkClock sharedNetworkClock] synchronize];
 }
+
+
 
 #pragma mark - Core Data stack
 

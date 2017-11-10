@@ -9,7 +9,22 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>CATCurveProgressView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>CocoaAsyncSocket.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>GoogleToolboxForMac.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>IAPHelper.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -34,6 +49,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-Super Gluu - Ad Free.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Super Gluu.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -44,7 +64,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>SCLAlertView-Objective-C.xcscheme</key>
+		<key>SWTableViewCell.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -57,7 +77,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>09A39DB9505E9B0CBCBD7AA670434C45</key>
+		<key>0BC0E50485DEAA0D4A8B1C88205A2B1E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1D8C3CA8F4EFE1E95DCDF3330412DD94</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>32638269FCBFDA8B8F2A9DCF7C1B21B1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -72,7 +102,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7258B6DC6CFAFA97A1561392E2782EE0</key>
+		<key>60AA9BE8C25CFBDF12DA8DB234483D3B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>65D959B421E6E8EE786F7AFDE8634C40</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>730E60E469178A39C2815999D13B3563</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>92BB131FA876445E027D20AE23EA7B5F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A126D10FD869611718F7976A7413A0E4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -88,16 +138,6 @@
 			<true/>
 		</dict>
 		<key>E2E98B9CD754B4954C3FBD110D724837</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E324786C77AED74ED2D229DE0F3AE459</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F594BCB45651E67DCB666E7A2278057A</key>
 		<dict>
 			<key>primary</key>
 			<true/>

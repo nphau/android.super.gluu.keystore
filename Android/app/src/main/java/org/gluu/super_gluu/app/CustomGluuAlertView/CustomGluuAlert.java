@@ -1,20 +1,27 @@
-package org.gluu.super_gluu.app.CustomGluuAlertView;
+package org.gluu.super_gluu.app.customGluuAlertView;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.gluu.super_gluu.app.GluuMainActivity;
+import org.gluu.super_gluu.app.NotificationType;
+
 import SuperGluu.app.R;
 
 /**
@@ -22,16 +29,18 @@ import SuperGluu.app.R;
  */
 public class CustomGluuAlert extends Dialog implements android.view.View.OnClickListener {
 
-    private String title, message, yesTitle, noTitle;
-//    private Activity activity;
+    private String sub_title, message, yesTitle, noTitle;
+    private Activity activity;
     private Button yes, no;
     private GluuMainActivity.GluuAlertCallback mListener;
     private Boolean isTextView = false;
     private String text;
 
+    public NotificationType type;
+
     public CustomGluuAlert(Activity a) {
         super(a);
-//        this.activity = a;
+        this.activity = a;
     }
 
     @Override
@@ -39,13 +48,30 @@ public class CustomGluuAlert extends Dialog implements android.view.View.OnClick
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.custom_gluu_alert);
-        TextView title = (TextView) findViewById(R.id.alert_title_textView);
+        TextView sub_title = (TextView) findViewById(R.id.alert_message_subText);
         TextView message = (TextView) findViewById(R.id.alert_message_textView);
-        if (this.title != null && !this.title.isEmpty()){
-            title.setText(this.title);
+        final EditText textField = (EditText) findViewById(R.id.alert_textField);
+        Typeface faceLight = Typeface.createFromAsset(activity.getAssets(), "ProximaNova-Regular.otf");
+        message.setTypeface(faceLight);
+        sub_title.setTypeface(faceLight);
+        if (this.sub_title != null && !this.sub_title.isEmpty()){
+            sub_title.setText(this.sub_title);
         }
         if (this.message != null && !this.message.isEmpty()){
             message.setText(this.message);
+            if (sub_title.getText().length() > 0){
+                message.setTextColor(Color.parseColor("#1ab26b"));
+                if (type == NotificationType.RENAME_KEY || type == NotificationType.DEFAULT){
+                    Typeface face = Typeface.createFromAsset(activity.getAssets(), "ProximaNova-Semibold.otf");
+                    message.setTypeface(face);
+                    message.setTextSize(24);
+                }
+            } else {
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) sub_title.getLayoutParams();
+                params.topMargin = 0;
+                params.bottomMargin = 0;
+                sub_title.requestLayout();
+            }
         }
         yes = (Button) findViewById(R.id.yes_button);
         if (this.yesTitle != null && !this.yesTitle.isEmpty()){
@@ -56,8 +82,13 @@ public class CustomGluuAlert extends Dialog implements android.view.View.OnClick
         no = (Button) findViewById(R.id.no_button);
         if (this.noTitle != null && !this.noTitle.isEmpty()){
             no.setText(this.noTitle);
+        } else {
+            no.setVisibility(View.GONE);
         }
-        final EditText textField = (EditText) findViewById(R.id.alert_textField);
+        if (yes.getVisibility() == View.GONE && no.getVisibility() == View.GONE){
+            yes.setVisibility(View.VISIBLE);
+            yes.setText("OK");
+        }
         if (isTextView){
             textField.setVisibility(View.VISIBLE);
             textField.setFilters(new InputFilter[]{new InputFilter.LengthFilter(50)});
@@ -79,9 +110,25 @@ public class CustomGluuAlert extends Dialog implements android.view.View.OnClick
             });
         } else {
             textField.setVisibility(View.GONE);
+            LinearLayout alert_buttons_view = (LinearLayout) findViewById(R.id.alert_buttons_view);
+            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) alert_buttons_view.getLayoutParams();
+            params.topMargin = 0;
+            alert_buttons_view.requestLayout();
         }
         yes.setOnClickListener(this);
         no.setOnClickListener(this);
+
+        yes.setTypeface(faceLight);
+        no.setTypeface(faceLight);
+
+        //Setup title icons
+        ImageView actionbar_icon = (ImageView) findViewById(R.id.actionbar_icon);
+        if (type == NotificationType.RENAME_KEY){
+            actionbar_icon.setImageResource(R.drawable.edit_key_icon);
+        } else if (type == NotificationType.DEFAULT){
+            actionbar_icon.setImageResource(R.drawable.default_alert_icon);
+        }
+
         super.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
@@ -96,6 +143,9 @@ public class CustomGluuAlert extends Dialog implements android.view.View.OnClick
                 break;
 
             case R.id.no_button:
+                if (mListener != null){
+                    mListener.onNegativeButton();
+                }
                 dismiss();
                 break;
 
@@ -105,12 +155,12 @@ public class CustomGluuAlert extends Dialog implements android.view.View.OnClick
         dismiss();
     }
 
-    public String getTitle() {
-        return title;
+    public String getSub_title() {
+        return sub_title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setSub_title(String sub_title) {
+        this.sub_title = sub_title;
     }
 
     public String getMessage() {

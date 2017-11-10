@@ -7,6 +7,7 @@
 package org.gluu.super_gluu.u2f.v2.store;
 
 import org.gluu.super_gluu.app.model.LogInfo;
+import org.gluu.super_gluu.model.OxPush2Request;
 import org.gluu.super_gluu.u2f.v2.model.TokenEntry;
 
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
  */
 public interface DataStore {
 
-    void storeTokenEntry(byte[] keyHandle, TokenEntry tokenEntry);
+    void storeTokenEntry(TokenEntry tokenEntry);
 
     TokenEntry getTokenEntry(byte[] keyHandle);
 
@@ -37,6 +38,8 @@ public interface DataStore {
     void saveLog(LogInfo logText);
     List<LogInfo>getLogs();
     void deleteLogs();
-    void changeKeyHandleName(String keyHandleID, String newName);
-
+    void deleteLogs(OxPush2Request... logInfo);
+    void deleteLogs(List<LogInfo> logInfo);
+    void changeKeyHandleName(TokenEntry tokenEntry, String newName);
+    void deleteKeyHandle(TokenEntry tokenEntry);
 }

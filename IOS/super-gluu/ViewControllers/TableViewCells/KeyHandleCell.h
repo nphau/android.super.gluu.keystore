@@ -8,14 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "TokenEntity.h"
+#import "SWTableViewCell.h"
 
-@interface KeyHandleCell : UITableViewCell {
+@interface KeyHandleCell : SWTableViewCell {
 
     IBOutlet UILabel* keyHandleTime;
 }
 
 @property (strong, nonatomic) NSString* key;
 @property (strong, nonatomic) IBOutlet UILabel* keyHandleNameLabel;
+@property (strong, nonatomic) IBOutlet UILabel* bleLabel;
 
 -(void)setData:(TokenEntity*)tokenEntity;
 

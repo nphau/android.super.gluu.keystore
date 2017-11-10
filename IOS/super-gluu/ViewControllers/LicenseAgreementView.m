@@ -12,6 +12,8 @@
 #import "NSMutableAttributedString+Color.h"
 #import <LocalAuthentication/LocalAuthentication.h>
 #import "SCLAlertView.h"
+#import "AppConfiguration.h"
+#import "ADSubsriber.h"
 
 #define LICENSE_AGREEMENT @"LicenseAgreement"
 #define MAIN_VIEW @"MainTabView"
@@ -30,44 +32,39 @@
     [super viewDidLoad];
     [self initWiget];
     [self initLocalization];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkLicenseAgreement) name:UIApplicationDidBecomeActiveNotification object:nil];
+#ifdef ADFREE
+    //skip here
+#else
+//    [self checkPurchaces];
+#endif
+    [self performSelector:@selector(checkLicenseAgreement) withObject:nil afterDelay:0.1];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    
-//    [self performSelector:@selector(checkLicenseAgreement) withObject:nil afterDelay:0.1];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+-(void)checkPurchaces{
+    if (!_isFromSettings){
+        [[ADSubsriber sharedInstance] restorePurchase];
+    }
+}
+
 -(void)initWiget{
-    [_titleLabel setHidden:YES];
-    [_licenseTextField setHidden:YES];
-    [_acceptButtonView setHidden:YES];
+    [_licenseWebView setHidden:YES];
+    [_acceptButton setHidden:YES];
+    [topView setHidden:YES];
     
-    [[_acceptButton layer] setMasksToBounds:YES];
-    [[_acceptButton layer] setCornerRadius:CORNER_RADIUS];
-    [[_acceptButton layer] setBorderWidth:2.0f];
-    [[_acceptButton layer] setBorderColor:[UIColor colorWithRed:1/255.0 green:161/255.0 blue:97/255.0 alpha:1.0].CGColor];
-    [self colorHashtag];
+    [_licenseWebView loadHTMLString:EULA_TEXT baseURL:nil];
+    topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
 }
 
 -(void)initLocalization{
-    [_titleLabel setText:NSLocalizedString(@"LicenseAgreementTitle", @"License Agreement")];
     [_acceptButton setTitle:NSLocalizedString(@"AcceptButtonTitle", @"Accept") forState:UIControlStateNormal];
-}
-
--(void)colorHashtag
-{
-    NSString *licenceText = _licenseTextField.text;
-    if (licenceText == nil) return;
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:licenceText];
-    [string setColorForText:@"https://www.gluu.org/privacy-policy/" withColor:[UIColor blueColor]];
-    _licenseTextField.attributedText = string;
 }
 
 -(IBAction)onLicenseAgreement:(id)sender{
@@ -75,14 +72,22 @@
     [self checkPinProtection];
 }
 
+-(IBAction)onBack:(id)sender{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 -(void)checkLicenseAgreement{
     BOOL isLicenseAgreement = [[NSUserDefaults standardUserDefaults] boolForKey:LICENSE_AGREEMENT];
-    if (isLicenseAgreement){
+    if (isLicenseAgreement && !_isFromSettings){
         [self checkPinProtection];
     } else {
-        [_titleLabel setHidden:NO];
-        [_licenseTextField setHidden:NO];
-        [_acceptButtonView setHidden:NO];
+        [_licenseWebView setHidden:NO];
+        [_acceptButton setHidden:NO];
+        [topView setHidden:NO];
+        if (_isFromSettings){
+            [_backButton setHidden:!_isFromSettings];
+            [_acceptButton setHidden:_isFromSettings];
+        }
     }
 }
 
@@ -175,11 +180,16 @@
 }
 
 -(void)loadPinView{
-    [self performSegueWithIdentifier:@"pinViewSegue" sender:self];
+    UIStoryboard *storyboardobj=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    PinCodeViewController* pinView = (PinCodeViewController*)[storyboardobj instantiateViewControllerWithIdentifier:@"pinViewController"];
+    [self presentViewController:pinView animated:YES completion:nil];
 }
 
 -(void)loadMainView{
-    [self performSegueWithIdentifier:@"mainViewSegue" sender:self];
+//    [self performSegueWithIdentifier:@"mainViewSegue" sender:self];
+    UIStoryboard *storyboardobj=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UITabBarController* mainTabView = (UITabBarController*)[storyboardobj instantiateViewControllerWithIdentifier:@"mainTabView"];
+    [self presentViewController:mainTabView animated:NO completion:nil];
 }
 
 @end

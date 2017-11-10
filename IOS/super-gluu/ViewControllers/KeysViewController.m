@@ -12,6 +12,7 @@
 #import "DataStoreManager.h"
 #import "InformationViewController.h"
 #import "SCLAlertView.h"
+#import "AppConfiguration.h"
 
 @implementation KeysViewController
 
@@ -19,18 +20,18 @@
     [super viewDidLoad];
     [self loadKeyHandlesFromDatabase];
     
-    UILongPressGestureRecognizer* longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(onLongPress:)];
-    [longPressRecognizer setMinimumPressDuration:3.0];
-    [keyHandleTableView addGestureRecognizer:longPressRecognizer];
+//    UILongPressGestureRecognizer* longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(onLongPress:)];
+//    [longPressRecognizer setMinimumPressDuration:3.0];
+//    [keyHandleTableView addGestureRecognizer:longPressRecognizer];
     
-    keyHandleTableView.layer.borderColor = [UIColor blackColor].CGColor;
-    keyHandleTableView.layer.borderWidth = 2.0;
+    keyHandleTableView.layer.borderColor = [UIColor grayColor].CGColor;
+    keyHandleTableView.layer.borderWidth = 1.0;
     [keyHandleTableView.layer setMasksToBounds:YES];
     keyCells = [[NSMutableDictionary alloc] init];
-    keyRenameInfoLabel.text = NSLocalizedString(@"RenameKeyNameInfo", @"Rename Key's Name");
-    uniqueKeyLabel.text = NSLocalizedString(@"UniqueKeyLabel", @"UniqueKeyLabel");
+    //uniqueKeyLabel.text = [NSString stringWithFormat: NSLocalizedString(@"UniqueKeyLabel", @"UniqueKeyLabel"), [[AppConfiguration sharedInstance] systemTitle]];
+    topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
+    topIconView.image = [[AppConfiguration sharedInstance] systemIcon];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initPushView) name:NOTIFICATION_PUSH_ONLINE object:nil];
 }
 
@@ -42,62 +43,94 @@
     [super viewWillAppear:animated];
     [self loadKeyHandlesFromDatabase];
     [keyHandleTableView reloadData];
-    [self checkDeviceOrientation];
-}
-
--(void)checkDeviceOrientation{
-    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
-    {
-        // code for landscape orientation
-                [self adjustViewsForOrientation:UIInterfaceOrientationLandscapeLeft];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:UIDeviceOrientationDidChangeNotification object:nil];
-    }
-}
-
--(void)onLongPress:(UILongPressGestureRecognizer*)pGesture
-{
-    if (pGesture.state == UIGestureRecognizerStateBegan)
-    {
-        //Do something to tell the user!
-        CGPoint touchPoint = [pGesture locationInView:keyHandleTableView];
-        NSIndexPath* row = [keyHandleTableView indexPathForRowAtPoint:touchPoint];
-        selectedRow = row;
-        if (row != nil) {
-            //Handle the long press on row
-            NSLog(@"Cell title will be changed");
-            SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-            [alert addButton:NSLocalizedString(@"YES", @"YES") actionBlock:^(void) {
-                NSLog(@"YES clicked");
-                [self showEditNameAlert];
-            }];
-            [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
-                NSLog(@"NO clicked");
-            }];
-            [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"AlertTitle", @"Into") subTitle:NSLocalizedString(@"ChangeKeyHandleName", @"Change KeyHandle Name") closeButtonTitle:nil duration:0.0f];
-        }
-    }
 }
 
 -(void)showEditNameAlert{
-    KeyHandleCell *cell = (KeyHandleCell*)[keyHandleTableView cellForRowAtIndexPath:selectedRow];
-//    UILabel* keyTextLabel = [cell keyHandleNameLabel];
+    /*KeyHandleCell *cell = (KeyHandleCell*)[keyHandleArray objectAtIndex:rowToDelete];
     
     SCLAlertView *alert = [[SCLAlertView alloc] init];
+    [alert setHorizontalButtons:YES];
     UITextField *textField = [alert addTextField:@"Enter key's name"];
     
     [alert addButton:@"Save" actionBlock:^(void) {
         NSLog(@"Text value: %@", textField.text);
         if ([self checkUniqueName:textField.text andID:cell.accessibilityLabel]){
-            [[DataStoreManager sharedInstance] setTokenEntitiesNameByID:cell.accessibilityLabel newName:textField.text];
+            [[DataStoreManager sharedInstance] setTokenEntitiesNameByID:cell.accessibilityLabel userName:cell.accessibilityValue newName:textField.text];
             [self loadKeyHandlesFromDatabase];
         } else {
             SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-            [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Info", @"Info") subTitle:@"Name is exist or empty, please enter another one" closeButtonTitle:@"Close" duration:0.0f];
+            [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Info", @"Info") subTitle:@"Name is exist or empty, please enter another one" closeButtonTitle:@"Close" duration:0.0f];
         }
     }];
     
-    [alert showEdit:self title:@"New key's name" subTitle:@"Enter new key's name" closeButtonTitle:@"Close" duration:0.0f];
+    [alert showEdit:self title:@"Change key name" subTitle:@"Enter a new name for your key:" closeButtonTitle:@"Close" duration:0.0f];
+    */
+    [self ShowAdvancedWithHorizontalButtons];
 }
+
+- (void)ShowAdvancedWithHorizontalButtons {
+    KeyHandleCell *cell = (KeyHandleCell*)[keyHandleArray objectAtIndex:rowToDelete];
+    TokenEntity* tokenEntity = (TokenEntity*)[keyHandleArray objectAtIndex:rowToDelete];
+    SCLAlertView *alert = [[SCLAlertView alloc] init];
+    [alert setHorizontalButtons:YES];
+    
+    alert.backgroundViewColor = [UIColor whiteColor];
+    
+    [alert setTitleFontFamily:@"ProximaNova-Semibold" withSize:20.0f withColor:[[AppConfiguration sharedInstance] systemColor]];
+    [alert setBodyTextFontFamily:@"ProximaNova-Regular" withSize:15.0f];
+    [alert setButtonsTextFontFamily:@"ProximaNova-Regular" withSize:15.0f];
+    
+    SCLTextView *textField = [alert addTextField:@"Enter your name"];
+    
+    SCLButton* saveButton = [alert addButton:@"Save" actionBlock:^(void) {
+        NSLog(@"Text value: %@", textField.text);
+        if ([self checkUniqueName:textField.text andID:cell.accessibilityLabel]){
+            [[DataStoreManager sharedInstance] setTokenEntitiesNameByID:tokenEntity->ID userName:tokenEntity->userName newName:textField.text];
+            [self loadKeyHandlesFromDatabase];
+        } else {
+            SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+            [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Info", @"Info") subTitle:@"Name is exist or empty, please enter another one" closeButtonTitle:@"Close" duration:0.0f];
+        }
+    }];
+    
+    [saveButton setDefaultBackgroundColor:[[AppConfiguration sharedInstance] systemColor]];
+    
+    alert.completeButtonFormatBlock = ^NSDictionary* (void)
+    {
+        NSMutableDictionary *buttonConfig = [[NSMutableDictionary alloc] init];
+        
+        buttonConfig[@"backgroundColor"] = [UIColor redColor];
+        buttonConfig[@"textColor"] = [UIColor whiteColor];
+        
+        return buttonConfig;
+    };
+    
+//    alert.attributedFormatBlock = ^NSAttributedString* (NSString *value)
+//    {
+//        NSMutableAttributedString *subTitle = [[NSMutableAttributedString alloc]initWithString:value];
+//        
+//        NSRange redRange = [value rangeOfString:@"Attributed" options:NSCaseInsensitiveSearch];
+//        [subTitle addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:redRange];
+//        
+//        NSRange greenRange = [value rangeOfString:@"successfully" options:NSCaseInsensitiveSearch];
+//        [subTitle addAttribute:NSForegroundColorAttributeName value:[UIColor brownColor] range:greenRange];
+//        
+//        NSRange underline = [value rangeOfString:@"completed" options:NSCaseInsensitiveSearch];
+//        [subTitle addAttributes:@{NSUnderlineStyleAttributeName:@(NSUnderlineStyleSingle)} range:underline];
+//        
+//        return subTitle;
+//    };
+//    [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:@"Change key name" subTitle:@"Enter a new name for your key:" closeButtonTitle:@"Cancel" duration:0.0f];
+//    alert tit
+    [alert showTitle:self image:[UIImage imageNamed:@"rename_action_title_icon"] color:[[AppConfiguration sharedInstance] systemColor] title:@"Change key name" subTitle:@"Enter a new name for your key:" style:SCLAlertViewStyleCustom closeButtonTitle:@"Cancel" duration:0.0f];
+//    [alert showTitle:self title:@"Change key name" subTitle:@"Enter a new name for your key:" style:SCLAlertViewStyleCustom closeButtonTitle:@"Cancel" duration:0.0f];
+}
+
+- (void)firstButton
+{
+    NSLog(@"First button tapped");
+}
+
 
 -(void)loadKeyHandlesFromDatabase{
     NSArray* keyHandles = [[DataStoreManager sharedInstance] getTokenEntities];
@@ -108,16 +141,15 @@
     } else {
         [keyHandleTableView setHidden:YES];
     }
-    [self initLabel:(int)[keyHandleArray count]];
+    keyHandleTableView.tableFooterView = [[UIView alloc] init];
+//    [self initLabel:(int)[keyHandleArray count]];
 }
 
 -(void)initLabel:(int)keyCount{
     if (keyCount > 0){
         [keyHandleLabel setText:[NSString stringWithFormat:@"%@ (%i):", NSLocalizedString(@"AvailableKeyHandles", @"Available KeyHandles"), keyCount]];
-        [keyRenameInfoLabel setHidden:NO];
     } else {
         [keyHandleLabel setText:[NSString stringWithFormat:@"%@:", NSLocalizedString(@"AvailableKeyHandles", @"Available KeyHandles")]];
-        [keyRenameInfoLabel setHidden:YES];
     }
 }
 
@@ -145,79 +177,107 @@
     
     NSString *CellIdentifier= @"KeyHandleCellID";
     KeyHandleCell *cell = (KeyHandleCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    TokenEntity* tokenEntity = [keyHandleArray objectAtIndex:indexPath.row];
+    TokenEntity* tokenEntity = (TokenEntity*)[keyHandleArray objectAtIndex:indexPath.row];
     [cell setData:tokenEntity];
-    NSString* keyName = tokenEntity->keyName == nil ? [NSString stringWithFormat:@"key for %@", tokenEntity->application] : tokenEntity->keyName;
-    [keyCells setObject:keyName forKey:tokenEntity->application];
+    if ([tokenEntity isKindOfClass:[TokenEntity class]]){
+        NSString* keyName = tokenEntity->keyName == nil ? tokenEntity->application : tokenEntity->keyName;
+        [keyCells setObject:keyName forKey:tokenEntity->application];
+    }
+    [cell setTag:indexPath.row];
+    cell.rightUtilityButtons = [self rightButtons];
+    cell.delegate = self;
     
     return cell;
 }
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    TokenEntity* tokenEntity = [keyHandleArray objectAtIndex:indexPath.row];
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    InformationViewController* info = [storyboard instantiateViewControllerWithIdentifier:@"InformationViewControllerID"];
-    [info setModalPresentationStyle:UIModalPresentationFullScreen];
-    [info setToken:tokenEntity];
-    [self presentViewController:info animated:YES completion:nil];
-//    KeyHandleCell *cell = (KeyHandleCell*)[tableView cellForRowAtIndexPath:indexPath];
+    [self showKeyInfo:indexPath.row];
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-    rowToDelete = (int)indexPath.row;
+-(void)showKeyInfo:(NSInteger)index{
+    TokenEntity* tokenEntity = [keyHandleArray objectAtIndex:index];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    InformationViewController* info = [storyboard instantiateViewControllerWithIdentifier:@"InformationViewControllerID"];
+    [info setToken:tokenEntity];
+    [self.navigationController pushViewController:info animated:YES];
+}
+
+-(void)showDeleteAlert{
     SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert setHorizontalButtons:YES];
     [alert addButton:NSLocalizedString(@"YES", @"YES") actionBlock:^(void) {
         NSLog(@"YES clicked");
         [self deleteRow];
     }];
-    [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
+    SCLButton* noButton = [alert addButton:NSLocalizedString(@"NO", @"NO") actionBlock:^(void) {
         NSLog(@"NO clicked");
     }];
-    [alert showCustom:[UIImage imageNamed:@"gluuIconAlert.png"] color:CUSTOM_GREEN_COLOR title:NSLocalizedString(@"Delete", @"Delete") subTitle:NSLocalizedString(@"DeleteKeyHandle", @"Delete KeyHandle") closeButtonTitle:nil duration:0.0f];
+    [noButton setDefaultBackgroundColor:[UIColor redColor]];
+    [alert showCustom:[UIImage imageNamed:@"delete_action_titleIcon"] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Delete", @"Delete") subTitle:NSLocalizedString(@"DeleteKeyHandle", @"Delete KeyHandle") closeButtonTitle:nil duration:0.0f];
 }
 
 -(void)deleteRow{
     TokenEntity* tokenEntity = [keyHandleArray objectAtIndex:rowToDelete];
-    [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:tokenEntity->application];
+    [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:tokenEntity->application userName:tokenEntity->userName];
     [self loadKeyHandlesFromDatabase];
 }
 
-- (void)orientationChanged:(NSNotification *)notification{
-    [self adjustViewsForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
+- (NSArray *)rightButtons
+{
+    NSMutableArray *rightUtilityButtons = [NSMutableArray new];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor colorWithRed:0.78f green:0.78f blue:0.8f alpha:1.0] normalIcon:[UIImage imageNamed:@"view_action"] selectedIcon:nil];
+    UIColor* green = [UIColor colorWithRed:1/256.0 green:161/256.0 blue:97/256.0 alpha:1.0];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:green normalIcon:[UIImage imageNamed:@"rename_action"] selectedIcon:nil];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor colorWithRed:1.0f green:0.231f blue:0.188 alpha:1.0f] normalIcon:[UIImage imageNamed:@"delete_action"] selectedIcon:nil];
+    
+    return rightUtilityButtons;
 }
 
-- (void) adjustViewsForOrientation:(UIInterfaceOrientation) orientation {
 
-    switch (orientation)
-    {
-        case UIInterfaceOrientationPortrait:
-        case UIInterfaceOrientationPortraitUpsideDown:
-        {
-            //load the portrait view
-            if (isLandScape){
-                [keyRenameInfoLabel setCenter:CGPointMake(keyRenameInfoLabel.center.x, [UIScreen mainScreen].bounds.size.height - 135)];
-                isLandScape = NO;
-            }
-        }
-            
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index {
+    switch (index) {
+        case 0:
+            NSLog(@"check button was pressed");
             break;
-        case UIInterfaceOrientationLandscapeLeft:
-        case UIInterfaceOrientationLandscapeRight:
-        {
-            //load the landscape view
-            if (!isLandScape){
-                [keyRenameInfoLabel setCenter:CGPointMake(keyRenameInfoLabel.center.x, [UIScreen mainScreen].bounds.size.height - 125)];
-                isLandScape = YES;
-            } else {
-                [keyRenameInfoLabel setCenter:CGPointMake(keyRenameInfoLabel.center.x, [UIScreen mainScreen].bounds.size.height - 125)];
-            }
-            
-        }
+        case 1:
+            NSLog(@"clock button was pressed");
             break;
-        case UIInterfaceOrientationUnknown:break;
+        case 2:
+            NSLog(@"cross button was pressed");
+            break;
+        case 3:
+            NSLog(@"list button was pressed");
+        default:
+            break;
     }
 }
 
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
+    switch (index) {
+        case 0:
+            NSLog(@"More button was pressed");
+            [self showKeyInfo:cell.tag];
+            break;
+        case 1:
+        {
+            // Delete button was pressed
+            NSLog(@"Rename button was pressed");
+            rowToDelete = (int)cell.tag;
+            [self showEditNameAlert];
+            break;
+        }
+        case 2:
+        {
+            // Delete button was pressed
+            NSLog(@"Delete button was pressed");
+            rowToDelete = (int)cell.tag;
+            [self showDeleteAlert];
+            break;
+        }
+        default:
+            break;
+    }
+}
 
 @end

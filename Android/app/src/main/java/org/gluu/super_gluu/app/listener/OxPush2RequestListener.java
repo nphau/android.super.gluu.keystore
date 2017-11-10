@@ -30,4 +30,8 @@ public interface OxPush2RequestListener {
 
     DataStore onGetDataStore();
 
+    void onAdFreeButtonClick();
+
+    void onPurchaseRestored();
+
 }

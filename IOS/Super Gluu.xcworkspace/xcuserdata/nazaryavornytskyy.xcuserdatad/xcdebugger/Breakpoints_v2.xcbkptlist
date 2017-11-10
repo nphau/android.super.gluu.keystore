@@ -41,22 +41,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "super-gluu/ViewControllers/PinCodeViewController.m"
-            timestampString = "482251312.003992"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
-            landmarkName = "-checkIsAppLocked"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "super-gluu/Vendors/CustomAlertView/CustomIOSAlertView.m"
             timestampString = "482166133.682903"
             startingColumnNumber = "9223372036854775807"
@@ -73,29 +57,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "super-gluu/ViewControllers/PinCodeViewController.m"
-            timestampString = "482251312.003992"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
-            landmarkName = "-checkIsAppLocked"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "super-gluu/AppDelegate.m"
-            timestampString = "509534875.279161"
+            timestampString = "531669137.954953"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "276"
-            endingLineNumber = "276"
-            landmarkName = "-isTimeOver"
+            startingLineNumber = "279"
+            endingLineNumber = "279"
+            landmarkName = "-managedObjectModel"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

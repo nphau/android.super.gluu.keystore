@@ -82,13 +82,12 @@ public class U2FKeyImpl implements U2FKey {
         tokenEntry.setAuthenticationMode(enrollmentRequest.getOxPush2Request().getMethod());
         tokenEntry.setKeyHandle(keyHandle);
         String serverName = tokenEntry.getIssuer();
-        String prefixKeyHandle = "Key for ";
-        String keyHandleTitle = prefixKeyHandle + " " + serverName;
+        String keyHandleTitle = serverName;
         tokenEntry.setKeyName(keyHandleTitle);
         final boolean oneStep = Utils.isEmpty(enrollmentRequest.getOxPush2Request().getUserName());
         String authenticationType = GluuMainActivity.getResourceString(oneStep ? R.string.one_step : R.string.two_step);
         tokenEntry.setAuthenticationType(authenticationType);
-        dataStore.storeTokenEntry(keyHandle, tokenEntry);
+        dataStore.storeTokenEntry(tokenEntry);
 
         byte[] userPublicKey = keyPairGenerator.encodePublicKey(keyPair.getPublic());
 

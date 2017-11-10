@@ -20,37 +20,72 @@ PODS:
   - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - CATCurveProgressView (1.0.1)
   - CocoaAsyncSocket (7.4.1)
+  - Firebase/AdMob (3.13.0):
+    - Firebase/Core
+    - Google-Mobile-Ads-SDK (= 7.17.0)
+  - Firebase/Core (3.13.0):
+    - FirebaseAnalytics (= 3.7.0)
+    - FirebaseCore (= 3.5.0)
+  - FirebaseAnalytics (3.7.0):
+    - FirebaseCore (~> 3.5)
+    - FirebaseInstanceID (~> 1.0)
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseCore (3.5.0):
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseInstanceID (1.0.9)
+  - Google-Mobile-Ads-SDK (7.17.0)
+  - GoogleToolboxForMac/Defines (2.1.1)
+  - GoogleToolboxForMac/NSData+zlib (2.1.1):
+    - GoogleToolboxForMac/Defines (= 2.1.1)
+  - IAPHelper (1.1)
   - JTMaterialSwitch (1.1)
   - NHNetworkTime (1.5):
     - CocoaAsyncSocket (<= 7.4.1)
   - NSHash (1.1.0)
-  - ox-push3 (0.1.8):
+  - ox-push3 (0.2.0):
     - AFNetworking
     - NHNetworkTime
     - NSHash
-  - QRCodeReaderViewController (4.0.1)
-  - SCLAlertView-Objective-C (1.0.2)
+  - QRCodeReaderViewController (4.0.2)
+  - SWTableViewCell (0.3.7)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.5)
+  - CATCurveProgressView
+  - Firebase/AdMob
+  - Firebase/Core
+  - IAPHelper
   - JTMaterialSwitch
   - NHNetworkTime
   - NSHash (~> 1.1.0)
-  - ox-push3 (~> 0.1.8)
+  - ox-push3 (from `/Users/nazaryavornytskyy/ox-push2-ios-pod`)
   - QRCodeReaderViewController (~> 4.0.1)
-  - SCLAlertView-Objective-C
+  - SWTableViewCell (~> 0.3.7)
+
+EXTERNAL SOURCES:
+  ox-push3:
+    :path: /Users/nazaryavornytskyy/ox-push2-ios-pod
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
+  CATCurveProgressView: d6f21d89ad8b328597336ecb220080a435fbb3aa
   CocoaAsyncSocket: 7cbf214b27f8e7f7574db6a3fd96352ffaed433d
+  Firebase: 5bc34d7b5ff5792e3386c8b28dc6265deeab0da4
+  FirebaseAnalytics: 0d1b7d81d5021155be37702a94ba1ec16d45365d
+  FirebaseCore: 1c0a13bf59bb95cdd19577252499f0ec6a03e999
+  FirebaseInstanceID: 2d0518b1378fe9d685ef40cbdd63d2fdc1125339
+  Google-Mobile-Ads-SDK: a8bf4211624999b73e4184be516f94770b139525
+  GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
+  IAPHelper: fd74f53b0ac142eed085777b88b86a11746a2dd4
   JTMaterialSwitch: cad8093c3773ff9f6c60005c98d269eb869b5e04
   NHNetworkTime: 945d229cb2c3f43013a17bc717328a5045125f8b
   NSHash: 61d598c6d48957c5557f1eef0aeafd6ef5ec5fb7
-  ox-push3: fde946952258f23f96ea4c0a856787a613cee509
-  QRCodeReaderViewController: 6538745c8f4ffa9407a26bd7f9489ea01739e7b0
-  SCLAlertView-Objective-C: 25f7ea3a3526dde177d8b8056a0b88fe4187651e
+  ox-push3: 045a1edfba4cb3e6d1e12b2039d859d98c31eeac
+  QRCodeReaderViewController: e8f27d035b3e72b1d4b1c61ff66458287e3be0ff
+  SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
 
-PODFILE CHECKSUM: 9572e445e106676b090589a7ac7d5977a59b1984
+PODFILE CHECKSUM: a260f207732bc2de330133feabe42712e9a59244
 
 COCOAPODS: 1.0.0

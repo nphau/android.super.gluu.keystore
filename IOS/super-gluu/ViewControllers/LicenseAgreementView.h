@@ -9,13 +9,15 @@
 #import <UIKit/UIKit.h>
 //#import <CoreLocation/CoreLocation.h>
 
-@interface LicenseAgreementView : UIViewController {//<CLLocationManagerDelegate>{
-//    CLLocationManager *locationManager;
+@interface LicenseAgreementView : UIViewController {
+    
+    IBOutlet UIView* topView;
 }
 
-@property (strong, nonatomic) IBOutlet UILabel* titleLabel;
-@property (strong, nonatomic) IBOutlet UITextView* licenseTextField;
-@property (strong, nonatomic) IBOutlet UIView* acceptButtonView;
+@property (strong, nonatomic) IBOutlet UIWebView* licenseWebView;
 @property (strong, nonatomic) IBOutlet UIButton* acceptButton;
+@property (strong, nonatomic) IBOutlet UIButton* backButton;
+
+@property (assign) BOOL isFromSettings;
 
 @end

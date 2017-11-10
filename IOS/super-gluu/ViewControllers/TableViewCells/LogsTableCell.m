@@ -15,6 +15,15 @@
 
 @implementation LogsTableCell
 
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        // Initialisation code here
+    }
+    return self;
+}
+
 -(void)setData:(UserLoginInfo*)userLoginInfo{
     NSString* server = userLoginInfo->issuer;
     if (server != nil){
@@ -33,6 +42,7 @@
 
 -(void)adoptLogByState:(NSURL*)serverURL andState:(LogState)logState{
     LogState state = logState;
+    [_logo setImage:[[AppConfiguration sharedInstance] systemLogIcon]];
     switch (state) {
         case LOGIN_SUCCESS:
             _logLabel.text = [NSString stringWithFormat:NSLocalizedString(@"LoggedIn", @"Logged in"), [serverURL host]];
@@ -40,7 +50,7 @@
             
         case LOGIN_FAILED:
             _logLabel.text = [NSString stringWithFormat:NSLocalizedString(@"LoggedInFailed", @"Logged in failed"), [serverURL host]];
-            [_logo setImage:[UIImage imageNamed:@"gluuIconRed.png"]];
+            [_logo setImage:[[AppConfiguration sharedInstance] systemLogRedIcon]];
             break;
         
         case ENROLL_SUCCESS:
@@ -49,7 +59,7 @@
             
         case ENROLL_FAILED:
             _logLabel.text = [NSString stringWithFormat:NSLocalizedString(@"EnrollInFailed", @"Enroll in failed"), [serverURL host]];
-            [_logo setImage:[UIImage imageNamed:@"gluuIconRed.png"]];
+            [_logo setImage:[[AppConfiguration sharedInstance] systemLogRedIcon]];
             break;
             
         case ENROLL_DECLINED:
@@ -67,6 +77,18 @@
         default:
             break;
     }
+}
+
+- (NSArray *)rightButtons {
+    NSMutableArray *rightUtilityButtons = [NSMutableArray new];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1.0]
+                                                title:@"View"];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:246/255.0 green:0.0 blue:0.188 alpha:12/255.0]
+                                                title:@"Delete"];
+    
+    return rightUtilityButtons;
 }
 
 @end
