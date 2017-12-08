@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AdFreeViewController : UIViewController
+@interface AdFreeViewController : BaseViewController
 
 @property (nonatomic, weak) IBOutlet UITextView* purchaseTextView;
 

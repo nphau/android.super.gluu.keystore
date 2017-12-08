@@ -13,10 +13,47 @@
 
 @implementation InformationViewController
 
+
+
 -(void)viewDidLoad{
     [super viewDidLoad];
     [self setupInformation];
     [self initLocalization];
+    
+    [self setupView];
+
+}
+
+- (void)setupView {
+    
+    self.view.backgroundColor = [Constant tableBackgroundColor];
+    
+    for (UILabel *label in valueLabels) {
+        label.font = [UIFont systemFontOfSize:16];
+        label.textColor = [Constant appGreenColor];
+    }
+    
+    for (UILabel *label in keyLabels) {
+        label.font = [UIFont systemFontOfSize:16];
+        label.textColor = [UIColor blackColor];
+    }
+    
+    for (UIView *view in separators) {
+        view.backgroundColor = [Constant tableBackgroundColor];
+    }
+    
+    self.navigationItem.rightBarButtonItem = [self deleteBBI];
+    
+}
+
+- (UIBarButtonItem *)deleteBBI {
+    
+    SEL deleteSel = @selector(delete);
+    return [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_nav_trash"]
+                                            style:UIBarButtonItemStylePlain
+                                           target:self
+                                           action:deleteSel];
+    
 }
 
 -(void)setupInformation{
@@ -40,16 +77,16 @@
 }
 
 -(void)initLocalization{
-    informationLabel.text = NSLocalizedString(@"Information", @"Information");
+//    informationLabel.text = NSLocalizedString(@"Information", @"Information");
 //    userNameLabel.text = NSLocalizedString(@"UserName", @"UserName");
 //    createdLabel.text = NSLocalizedString(@"Created", @"Created");
 //    applicationLabel.text = NSLocalizedString(@"Application", @"Application");
 //    issuerLabel.text = NSLocalizedString(@"Issuer", @"Issuer");
-    closeButton.titleLabel.text = NSLocalizedString(@"CloseButton", @"CloseButton");
+//    closeButton.titleLabel.text = NSLocalizedString(@"CloseButton", @"CloseButton");
 //    keyHandleLabel.text = NSLocalizedString(@"keyHandle", @"Key handle");
 }
 
--(IBAction)delete:(id)sender{
+- (void)delete {
     SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
     [alert setHorizontalButtons:YES];
     [alert addButton:NSLocalizedString(@"YES", @"YES") actionBlock:^(void) {
@@ -64,7 +101,9 @@
 }
 
 -(void)deleteKey{
-    [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:_token->application userName:_token->userName];
+    // Eric
+    // [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:_token->application userName:_token->userName];
+    [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:_token->application];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

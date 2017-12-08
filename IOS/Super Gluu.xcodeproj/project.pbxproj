@@ -160,8 +160,6 @@
 		BBC643C61EF14DEA009FEDD1 /* appConfiguration.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBC643C41EF14DEA009FEDD1 /* appConfiguration.plist */; };
 		BBC643C91EF14E6F009FEDD1 /* AppConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC643C81EF14E6F009FEDD1 /* AppConfiguration.m */; };
 		BBC643CA1EF14E6F009FEDD1 /* AppConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC643C81EF14E6F009FEDD1 /* AppConfiguration.m */; };
-		BBC643CE1EF16C13009FEDD1 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC643CD1EF16C13009FEDD1 /* SettingsViewController.m */; };
-		BBC643CF1EF16C13009FEDD1 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC643CD1EF16C13009FEDD1 /* SettingsViewController.m */; };
 		BBD738E81F8770450051FF3F /* AdFreeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD738E71F8770450051FF3F /* AdFreeViewController.m */; };
 		BBDE9B801DA78835003B6673 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B659E1CB7C59800784AEF /* AdSupport.framework */; };
 		BBDE9B811DA78847003B6673 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9B65A21CB7C5AE00784AEF /* CoreImage.framework */; };
@@ -184,6 +182,23 @@
 		BBEC92001E293179000D522F /* www.gluu.org.cer in Resources */ = {isa = PBXBuildFile; fileRef = BBEC91FF1E293179000D522F /* www.gluu.org.cer */; };
 		BBF7603B1EB462D2005B9793 /* NotificationNetworkView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBF7603A1EB462D2005B9793 /* NotificationNetworkView.m */; };
 		C3F0A0B51B9FA04756D6CF64 /* Pods_Super_Gluu__ad_free_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B47C39617C4CC79EB94B57 /* Pods_Super_Gluu__ad_free_.framework */; };
+		C84157061FD9F695008BCF0B /* TouchIdSettingsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84157051FD9F695008BCF0B /* TouchIdSettingsDetailViewController.swift */; };
+		C84157071FD9F695008BCF0B /* TouchIdSettingsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84157051FD9F695008BCF0B /* TouchIdSettingsDetailViewController.swift */; };
+		C84157091FDA0226008BCF0B /* SingleCellSettingsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84157081FDA0226008BCF0B /* SingleCellSettingsDetailViewController.swift */; };
+		C841570A1FDA0226008BCF0B /* SingleCellSettingsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84157081FDA0226008BCF0B /* SingleCellSettingsDetailViewController.swift */; };
+		C8494D0B1FD5E67600CD5FA8 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8494D0A1FD5E67600CD5FA8 /* SettingsTableViewCell.swift */; };
+		C8494D0D1FD5FCB800CD5FA8 /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8494D0C1FD5FCB800CD5FA8 /* Font+Extension.swift */; };
+		C8494D131FD7263F00CD5FA8 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8494D121FD7263F00CD5FA8 /* BaseViewController.m */; };
+		C8494D151FD72A5400CD5FA8 /* LogInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8494D141FD72A5400CD5FA8 /* LogInfoView.swift */; };
+		C8494D161FD72A5400CD5FA8 /* LogInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8494D141FD72A5400CD5FA8 /* LogInfoView.swift */; };
+		C8494D181FD72A6A00CD5FA8 /* LogInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8494D171FD72A6A00CD5FA8 /* LogInfoView.xib */; };
+		C8494D191FD72A6A00CD5FA8 /* LogInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8494D171FD72A6A00CD5FA8 /* LogInfoView.xib */; };
+		C8494D1B1FD72D7200CD5FA8 /* LogDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8494D1A1FD72D7200CD5FA8 /* LogDetailsViewController.swift */; };
+		C8494D1C1FD72D7200CD5FA8 /* LogDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8494D1A1FD72D7200CD5FA8 /* LogDetailsViewController.swift */; };
+		C8F0E2DC1FD21C3800FF9342 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F0E2DB1FD21C3800FF9342 /* Color+Extension.swift */; };
+		C8F0E2DD1FD21C3800FF9342 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F0E2DB1FD21C3800FF9342 /* Color+Extension.swift */; };
+		C8F0E2E21FD227CE00FF9342 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F0E2E11FD227CE00FF9342 /* SettingsViewController.swift */; };
+		C8F0E2E31FD227CE00FF9342 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F0E2E11FD227CE00FF9342 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -336,8 +351,6 @@
 		BBC643C71EF14E6F009FEDD1 /* AppConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppConfiguration.h; path = Configuration/AppConfiguration.h; sourceTree = "<group>"; };
 		BBC643C81EF14E6F009FEDD1 /* AppConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppConfiguration.m; path = Configuration/AppConfiguration.m; sourceTree = "<group>"; };
 		BBC643CB1EF16176009FEDD1 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
-		BBC643CC1EF16C13009FEDD1 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = Settings/SettingsViewController.h; sourceTree = "<group>"; };
-		BBC643CD1EF16C13009FEDD1 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = Settings/SettingsViewController.m; sourceTree = "<group>"; };
 		BBD738E61F8770450051FF3F /* AdFreeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AdFreeViewController.h; path = Settings/AdFreeViewController.h; sourceTree = "<group>"; };
 		BBD738E71F8770450051FF3F /* AdFreeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AdFreeViewController.m; path = Settings/AdFreeViewController.m; sourceTree = "<group>"; };
 		BBDE9B881DA7888A003B6673 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -358,6 +371,17 @@
 		BBF7603A1EB462D2005B9793 /* NotificationNetworkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationNetworkView.m; path = Notifications/NotificationNetworkView.m; sourceTree = "<group>"; };
 		BBFCB3091C98164F00F66417 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		BBFCC6D81E5D98CB0015A256 /* LecenseAgreementDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LecenseAgreementDelegate.h; sourceTree = "<group>"; };
+		C84157051FD9F695008BCF0B /* TouchIdSettingsDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TouchIdSettingsDetailViewController.swift; path = Settings/TouchIdSettingsDetailViewController.swift; sourceTree = "<group>"; };
+		C84157081FDA0226008BCF0B /* SingleCellSettingsDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SingleCellSettingsDetailViewController.swift; path = Settings/SingleCellSettingsDetailViewController.swift; sourceTree = "<group>"; };
+		C8494D0A1FD5E67600CD5FA8 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsTableViewCell.swift; path = Settings/Cells/SettingsTableViewCell.swift; sourceTree = "<group>"; };
+		C8494D0C1FD5FCB800CD5FA8 /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Font+Extension.swift"; path = "Extensions/Font+Extension.swift"; sourceTree = "<group>"; };
+		C8494D111FD7263F00CD5FA8 /* BaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
+		C8494D121FD7263F00CD5FA8 /* BaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
+		C8494D141FD72A5400CD5FA8 /* LogInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LogInfoView.swift; path = Views/LogInfoView.swift; sourceTree = "<group>"; };
+		C8494D171FD72A6A00CD5FA8 /* LogInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = LogInfoView.xib; path = Views/LogInfoView.xib; sourceTree = "<group>"; };
+		C8494D1A1FD72D7200CD5FA8 /* LogDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDetailsViewController.swift; sourceTree = "<group>"; };
+		C8F0E2DB1FD21C3800FF9342 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Color+Extension.swift"; path = "Extensions/Color+Extension.swift"; sourceTree = "<group>"; };
+		C8F0E2E11FD227CE00FF9342 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = Settings/SettingsViewController.swift; sourceTree = "<group>"; };
 		F9F48E163E0B27CBECE9164F /* Pods_Super_Gluu___Ad_Free.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods_Super_Gluu___Ad_Free.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -490,15 +514,16 @@
 		BB128D7F1E8000790041BD21 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				C84157081FDA0226008BCF0B /* SingleCellSettingsDetailViewController.swift */,
+				C84157051FD9F695008BCF0B /* TouchIdSettingsDetailViewController.swift */,
 				BB128D831E8006700041BD21 /* Cells */,
+				C8F0E2E11FD227CE00FF9342 /* SettingsViewController.swift */,
 				BB128D801E8002890041BD21 /* SettingsTableViewController.h */,
 				BB128D811E8002890041BD21 /* SettingsTableViewController.m */,
 				BB128D871E8013D90041BD21 /* SettingsDetailsViewController.h */,
 				BB128D881E8013D90041BD21 /* SettingsDetailsViewController.m */,
 				BB128D8C1E8266470041BD21 /* BLEDevicesViewController.h */,
 				BB128D8D1E8266470041BD21 /* BLEDevicesViewController.m */,
-				BBC643CC1EF16C13009FEDD1 /* SettingsViewController.h */,
-				BBC643CD1EF16C13009FEDD1 /* SettingsViewController.m */,
 				BBD738E61F8770450051FF3F /* AdFreeViewController.h */,
 				BBD738E71F8770450051FF3F /* AdFreeViewController.m */,
 			);
@@ -508,6 +533,7 @@
 		BB128D831E8006700041BD21 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				C8494D0A1FD5E67600CD5FA8 /* SettingsTableViewCell.swift */,
 				BB128D841E8006A40041BD21 /* SettingsTableCell.h */,
 				BB128D851E8006A40041BD21 /* SettingsTableCell.m */,
 			);
@@ -692,6 +718,11 @@
 		BB37DF071C7E0B8E0016D422 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				C8494D141FD72A5400CD5FA8 /* LogInfoView.swift */,
+				C8494D171FD72A6A00CD5FA8 /* LogInfoView.xib */,
+				C8494D1A1FD72D7200CD5FA8 /* LogDetailsViewController.swift */,
+				C8494D111FD7263F00CD5FA8 /* BaseViewController.h */,
+				C8494D121FD7263F00CD5FA8 /* BaseViewController.m */,
 				BBF760381EB46268005B9793 /* Notifications */,
 				BB87A27C1EA0D93B007F70E9 /* MainTab */,
 				BB128D7F1E8000790041BD21 /* Settings */,
@@ -771,6 +802,8 @@
 		BB79FA361E7A8B2C00AEAE58 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				C8494D0C1FD5FCB800CD5FA8 /* Font+Extension.swift */,
+				C8F0E2DB1FD21C3800FF9342 /* Color+Extension.swift */,
 				BB79FA371E7A8B6400AEAE58 /* Data+Extension.swift */,
 				BB13D8111EE8413A00F3C41F /* String+Extension.swift */,
 			);
@@ -864,12 +897,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BB37DE811C7E08320016D422 /* Build configuration list for PBXNativeTarget "Super Gluu" */;
 			buildPhases = (
-				62C9AC37CB2BC89A10FB685F /* 📦 Check Pods Manifest.lock */,
+				62C9AC37CB2BC89A10FB685F /* [CP] Check Pods Manifest.lock */,
 				BB37DE4D1C7E08320016D422 /* Sources */,
 				BB37DE4E1C7E08320016D422 /* Frameworks */,
 				BB37DE4F1C7E08320016D422 /* Resources */,
-				5CBF63D57883072BF50E5181 /* 📦 Embed Pods Frameworks */,
-				2446D02862D853AD77D980FA /* 📦 Copy Pods Resources */,
+				5CBF63D57883072BF50E5181 /* [CP] Embed Pods Frameworks */,
+				2446D02862D853AD77D980FA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -920,12 +953,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BB58C1AE1EDDB32800FEEC78 /* Build configuration list for PBXNativeTarget "Super Gluu - Ad Free" */;
 			buildPhases = (
-				BB58C15F1EDDB32800FEEC78 /* 📦 Check Pods Manifest.lock */,
+				BB58C15F1EDDB32800FEEC78 /* [CP] Check Pods Manifest.lock */,
 				BB58C1601EDDB32800FEEC78 /* Sources */,
 				BB58C17C1EDDB32800FEEC78 /* Frameworks */,
 				BB58C1911EDDB32800FEEC78 /* Resources */,
-				BB58C1AC1EDDB32800FEEC78 /* 📦 Embed Pods Frameworks */,
-				BB58C1AD1EDDB32800FEEC78 /* 📦 Copy Pods Resources */,
+				BB58C1AC1EDDB32800FEEC78 /* [CP] Embed Pods Frameworks */,
+				BB58C1AD1EDDB32800FEEC78 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1035,6 +1068,7 @@
 				BBC643C51EF14DEA009FEDD1 /* appConfiguration.plist in Resources */,
 				BB37DF311C7E0B8E0016D422 /* gluuIcon60x3.png in Resources */,
 				BBB7C0E71C884E2600833B12 /* approveIcon.png in Resources */,
+				C8494D181FD72A6A00CD5FA8 /* LogInfoView.xib in Resources */,
 				BB97CDE61F1E4FB90033C2A5 /* ProximaNova-Extrabold.otf in Resources */,
 				BBB7C0E91C8851B900833B12 /* denyIcon.png in Resources */,
 				BB97CDE81F1E4FB90033C2A5 /* ProximaNova-Light.otf in Resources */,
@@ -1086,6 +1120,7 @@
 				BBC643C61EF14DEA009FEDD1 /* appConfiguration.plist in Resources */,
 				BB58C19E1EDDB32800FEEC78 /* gluuIcon60x3.png in Resources */,
 				BB58C19F1EDDB32800FEEC78 /* approveIcon.png in Resources */,
+				C8494D191FD72A6A00CD5FA8 /* LogInfoView.xib in Resources */,
 				BB97CDE71F1E4FB90033C2A5 /* ProximaNova-Extrabold.otf in Resources */,
 				BB58C1A01EDDB32800FEEC78 /* denyIcon.png in Resources */,
 				BB97CDE91F1E4FB90033C2A5 /* ProximaNova-Light.otf in Resources */,
@@ -1105,14 +1140,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2446D02862D853AD77D980FA /* 📦 Copy Pods Resources */ = {
+		2446D02862D853AD77D980FA /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1120,74 +1155,126 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Super Gluu/Pods-Super Gluu-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5CBF63D57883072BF50E5181 /* 📦 Embed Pods Frameworks */ = {
+		5CBF63D57883072BF50E5181 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Super Gluu/Pods-Super Gluu-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/CATCurveProgressView/CATCurveProgressView.framework",
+				"${BUILT_PRODUCTS_DIR}/CocoaAsyncSocket/CocoaAsyncSocket.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/IAPHelper/IAPHelper.framework",
+				"${BUILT_PRODUCTS_DIR}/JTMaterialSwitch/JTMaterialSwitch.framework",
+				"${BUILT_PRODUCTS_DIR}/NHNetworkTime/NHNetworkTime.framework",
+				"${BUILT_PRODUCTS_DIR}/NSHash/NSHash.framework",
+				"${BUILT_PRODUCTS_DIR}/QRCodeReaderViewController/QRCodeReaderViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/SWTableViewCell/SWTableViewCell.framework",
+				"${BUILT_PRODUCTS_DIR}/ox-push3/ox_push3.framework",
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CATCurveProgressView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaAsyncSocket.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IAPHelper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JTMaterialSwitch.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NHNetworkTime.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NSHash.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QRCodeReaderViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SWTableViewCell.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ox_push3.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Super Gluu/Pods-Super Gluu-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		62C9AC37CB2BC89A10FB685F /* 📦 Check Pods Manifest.lock */ = {
+		62C9AC37CB2BC89A10FB685F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Super Gluu-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BB58C15F1EDDB32800FEEC78 /* 📦 Check Pods Manifest.lock */ = {
+		BB58C15F1EDDB32800FEEC78 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Super Gluu - Ad Free-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BB58C1AC1EDDB32800FEEC78 /* 📦 Embed Pods Frameworks */ = {
+		BB58C1AC1EDDB32800FEEC78 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Super Gluu - Ad Free/Pods-Super Gluu - Ad Free-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/CATCurveProgressView/CATCurveProgressView.framework",
+				"${BUILT_PRODUCTS_DIR}/CocoaAsyncSocket/CocoaAsyncSocket.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/IAPHelper/IAPHelper.framework",
+				"${BUILT_PRODUCTS_DIR}/JTMaterialSwitch/JTMaterialSwitch.framework",
+				"${BUILT_PRODUCTS_DIR}/NHNetworkTime/NHNetworkTime.framework",
+				"${BUILT_PRODUCTS_DIR}/NSHash/NSHash.framework",
+				"${BUILT_PRODUCTS_DIR}/QRCodeReaderViewController/QRCodeReaderViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/SWTableViewCell/SWTableViewCell.framework",
+				"${BUILT_PRODUCTS_DIR}/ox-push3/ox_push3.framework",
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CATCurveProgressView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaAsyncSocket.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IAPHelper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JTMaterialSwitch.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NHNetworkTime.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NSHash.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QRCodeReaderViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SWTableViewCell.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ox_push3.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Super Gluu - Ad Free/Pods-Super Gluu - Ad Free-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BB58C1AD1EDDB32800FEEC78 /* 📦 Copy Pods Resources */ = {
+		BB58C1AD1EDDB32800FEEC78 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1206,9 +1293,10 @@
 				BBB7C1021C9042AF00833B12 /* NSDate+NVTimeAgo.m in Sources */,
 				BB37DE5C1C7E08320016D422 /* MainViewController.m in Sources */,
 				BBE787231C99781B00E9E0D7 /* PinCodeViewController.m in Sources */,
-				BBC643CE1EF16C13009FEDD1 /* SettingsViewController.m in Sources */,
 				BB37DF3F1C7E0B8E0016D422 /* LogsTableCell.m in Sources */,
 				BB128D891E8013D90041BD21 /* SettingsDetailsViewController.m in Sources */,
+				C8494D0B1FD5E67600CD5FA8 /* SettingsTableViewCell.swift in Sources */,
+				C8494D151FD72A5400CD5FA8 /* LogInfoView.swift in Sources */,
 				BB37DF3C1C7E0B8E0016D422 /* LogsViewController.m in Sources */,
 				BB2459021CBE7B6700035B5B /* NSMutableAttributedString+Color.m in Sources */,
 				BB3BE1641C87022C00817A46 /* LicenseAgreementView.m in Sources */,
@@ -1217,6 +1305,7 @@
 				BB4EDA421F4EC52700EA807B /* SCLAlertView.m in Sources */,
 				BB79FA2A1E78309000AEAE58 /* PeripheralScanner.swift in Sources */,
 				BB37DE591C7E08320016D422 /* AppDelegate.m in Sources */,
+				C8494D1B1FD72D7200CD5FA8 /* LogDetailsViewController.swift in Sources */,
 				BBDFCCCC1EB86C740028D8C0 /* SuperGluuBannerView.m in Sources */,
 				BBD738E81F8770450051FF3F /* AdFreeViewController.m in Sources */,
 				BBB7C1051C90723300833B12 /* InformationViewController.m in Sources */,
@@ -1232,18 +1321,24 @@
 				BBC643C91EF14E6F009FEDD1 /* AppConfiguration.m in Sources */,
 				BB128D8E1E8266470041BD21 /* BLEDevicesViewController.m in Sources */,
 				BB4732BF1EEADDCE007B8173 /* ADSubsriber.m in Sources */,
+				C8F0E2DC1FD21C3800FF9342 /* Color+Extension.swift in Sources */,
 				BB3BE1721C882D0600817A46 /* ApproveDenyViewController.m in Sources */,
 				BB4EDA481F4EC52700EA807B /* SCLTimerDisplay.m in Sources */,
 				BB37DF3E1C7E0B8E0016D422 /* KeyHandleCell.m in Sources */,
+				C8F0E2E21FD227CE00FF9342 /* SettingsViewController.swift in Sources */,
 				BB4EDA451F4EC52700EA807B /* SCLButton.m in Sources */,
+				C84157061FD9F695008BCF0B /* TouchIdSettingsDetailViewController.swift in Sources */,
 				BB128D931E8903DA0041BD21 /* U2FMessageCoder.swift in Sources */,
 				BB4EDA431F4EC52700EA807B /* SCLAlertViewResponder.m in Sources */,
 				BB4EDA471F4EC52700EA807B /* SCLTextView.m in Sources */,
 				BB4EDA441F4EC52700EA807B /* SCLAlertViewStyleKit.m in Sources */,
 				BB05D1C61EB08B34007E0B72 /* NetworkChecker.m in Sources */,
+				C8494D0D1FD5FCB800CD5FA8 /* Font+Extension.swift in Sources */,
 				BB18D05C1CBCFFAE00A73733 /* PAPasscodeViewController.m in Sources */,
+				C84157091FDA0226008BCF0B /* SingleCellSettingsDetailViewController.swift in Sources */,
 				BB79FA2B1E78309000AEAE58 /* ServiceScanner.swift in Sources */,
 				BB4732C41EEAEE20007B8173 /* ADViewSubscriber.m in Sources */,
+				C8494D131FD7263F00CD5FA8 /* BaseViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1274,7 +1369,10 @@
 				BB58C1651EDDB32800FEEC78 /* SettingsDetailsViewController.m in Sources */,
 				BB58C1661EDDB32800FEEC78 /* LogsViewController.m in Sources */,
 				BB4732C01EEADDCE007B8173 /* ADSubsriber.m in Sources */,
+				C8F0E2E31FD227CE00FF9342 /* SettingsViewController.swift in Sources */,
+				C8494D161FD72A5400CD5FA8 /* LogInfoView.swift in Sources */,
 				BB58C1671EDDB32800FEEC78 /* NSMutableAttributedString+Color.m in Sources */,
+				C84157071FD9F695008BCF0B /* TouchIdSettingsDetailViewController.swift in Sources */,
 				BB58C1681EDDB32800FEEC78 /* LicenseAgreementView.m in Sources */,
 				BB58C1691EDDB32800FEEC78 /* SettingsTableCell.m in Sources */,
 				BBC643CA1EF14E6F009FEDD1 /* AppConfiguration.m in Sources */,
@@ -1284,17 +1382,19 @@
 				BB58C16D1EDDB32800FEEC78 /* InformationViewController.m in Sources */,
 				BB4732C51EEAEE20007B8173 /* ADViewSubscriber.m in Sources */,
 				BB58C16E1EDDB32800FEEC78 /* KeysViewController.m in Sources */,
+				C841570A1FDA0226008BCF0B /* SingleCellSettingsDetailViewController.swift in Sources */,
 				BB58C16F1EDDB32800FEEC78 /* MainTabViewController.m in Sources */,
 				BB58C1701EDDB32800FEEC78 /* SettingsTableViewController.m in Sources */,
 				BB58C1711EDDB32800FEEC78 /* Data+Extension.swift in Sources */,
 				BB58C1721EDDB32800FEEC78 /* NotificationNetworkView.m in Sources */,
 				BB58C1731EDDB32800FEEC78 /* main.m in Sources */,
 				BB58C1741EDDB32800FEEC78 /* CharacteristicScanner.swift in Sources */,
+				C8F0E2DD1FD21C3800FF9342 /* Color+Extension.swift in Sources */,
 				BB58C1751EDDB32800FEEC78 /* BLEDevicesViewController.m in Sources */,
 				BB58C1761EDDB32800FEEC78 /* ApproveDenyViewController.m in Sources */,
-				BBC643CF1EF16C13009FEDD1 /* SettingsViewController.m in Sources */,
 				BB58C1771EDDB32800FEEC78 /* KeyHandleCell.m in Sources */,
 				BB58C1781EDDB32800FEEC78 /* U2FMessageCoder.swift in Sources */,
+				C8494D1C1FD72D7200CD5FA8 /* LogDetailsViewController.swift in Sources */,
 				BB58C1791EDDB32800FEEC78 /* NetworkChecker.m in Sources */,
 				BB58C17A1EDDB32800FEEC78 /* PAPasscodeViewController.m in Sources */,
 				BB58C17B1EDDB32800FEEC78 /* ServiceScanner.swift in Sources */,
@@ -1432,7 +1532,7 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/nazaryavornytskyy/super-gluu/IOS/super-gluu/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "/Users/soulfoodz/Dropbox/Clients/Super_Gluu/super-gluu/IOS/super-gluu/PrefixHeader.pch";
 				INFOPLIST_FILE = "super-gluu/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1466,7 +1566,7 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/nazaryavornytskyy/super-gluu/IOS/super-gluu/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "/Users/soulfoodz/Dropbox/Clients/Super_Gluu/super-gluu/IOS/super-gluu/PrefixHeader.pch";
 				INFOPLIST_FILE = "super-gluu/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1551,7 +1651,7 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/nazaryavornytskyy/super-gluu/IOS/super-gluu/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "/Users/soulfoodz/Dropbox/Clients/Super_Gluu/super-gluu/IOS/super-gluu/PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
@@ -1591,7 +1691,7 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/nazaryavornytskyy/super-gluu/IOS/super-gluu/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "/Users/soulfoodz/Dropbox/Clients/Super_Gluu/super-gluu/IOS/super-gluu/PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",

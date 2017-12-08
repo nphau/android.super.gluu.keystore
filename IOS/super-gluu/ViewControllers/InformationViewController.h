@@ -9,20 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "TokenEntity.h"
 
-@interface InformationViewController : UIViewController <UIScrollViewDelegate>{
-
-    IBOutlet UILabel* informationLabel;
+@interface InformationViewController : BaseViewController <UIScrollViewDelegate>{
     
     IBOutlet UILabel* userNameValueLabel;
     IBOutlet UILabel* createdValueLabel;
-    IBOutlet UILabel* issuerValueLabel;
     IBOutlet UILabel* applicationValueLabel;
     IBOutlet UILabel* keyHandleValueLabel;
     
-    IBOutlet UIButton* closeButton;
-    IBOutlet UIButton* deleteButton;
-    
-    IBOutlet UIView* infoView;
+    IBOutletCollection(UILabel) NSArray *valueLabels;
+    IBOutletCollection(UIView) NSArray *separators;
+    IBOutletCollection(UILabel) NSArray *keyLabels;
     
 }
 

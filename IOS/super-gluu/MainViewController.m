@@ -21,6 +21,8 @@
 #import <LocalAuthentication/LocalAuthentication.h>
 #import "PinCodeViewController.h"
 #import "PinCodeDelegate.h"
+
+
 #ifdef ADFREE
     #import "Super_Gluu___Ad_Free-Swift.h"
 #else
@@ -31,6 +33,7 @@
     PeripheralScanner* scanner;
     BOOL isSecureClick;
     BOOL isEnroll;
+    BOOL isShowingQRReader;
     
     OXPushManager* oxPushManager;
     PinCodeViewController* pinView;
@@ -42,24 +45,38 @@
 @implementation MainViewController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
+    
     [self initWiget];
     [self initNotifications];
     [self initQRScanner];
     [self initLocalization];
+    
     oxPushManager = [[OXPushManager alloc] init];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(initSecureClickScanner:)    name:INIT_SECURE_CLICK_NOTIFICATION  object:nil];
 
     //For Push Notifications
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] > 7){//for ios 8 and higth
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] > 7) { //for ios 8 and higth
         [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
         [[UIApplication sharedApplication] registerForRemoteNotifications];
         [self registerForNotification];
     }
+    
     [self checkPushNotification];
     [self checkNetworkConnection];
+    
+    SEL sel = @selector(goToSettings);
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_menu"] style:UIBarButtonItemStylePlain target:self action:sel];
+    self.navigationItem.rightBarButtonItem = menuButton;
+    
     //Disable BLE support
 //    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:SECURE_CLICK_ENABLED];
+}
+
+- (UIStatusBarStyle) preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -68,6 +85,15 @@
     isSecureClick = secureClickEnable;
     [_notificationNetworkView checkNetwork];
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_INTERSTIAL object:nil];
+    
+}
+
+- (void)goToSettings {
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    SettingsViewController *settingsVC = [storyboard instantiateViewControllerWithIdentifier:@"SettingsViewController"];
+    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:settingsVC] animated:YES completion:nil];
+    
 }
 
 -(void)initSecureClickScanner:(NSNotification*)notification{
@@ -90,6 +116,7 @@
     } else {
         data = [requestString dataUsingEncoding:NSUTF8StringEncoding];
     }
+    
     NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
     if (jsonDictionary != nil){
         NSString* message = NSLocalizedString(@"StartAuthentication", @"Authentication...");
@@ -111,7 +138,9 @@
                 [self sendQRCodeRequest:jsonDictionary];
             });
         }
-        [self.tabBarController setSelectedIndex:0];
+        
+//        [self.tabBarController setSelectedIndex:0];
+        
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:NotificationRequest];
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:NotificationRequestActionsApprove];
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:NotificationRequestActionsDeny];
@@ -160,22 +189,18 @@
     }
     statusView.layer.cornerRadius = BUTTON_CORNER_RADIUS;
     
-    scanButton.layer.cornerRadius = CORNER_RADIUS;
-    scanButton.layer.borderWidth = 2.0;
-    scanButton.layer.borderColor = [[AppConfiguration sharedInstance] systemColor].CGColor;
-//    [scanButton setTitleColor:[[AppConfiguration sharedInstance] systemColor] forState:UIControlStateNormal];
+    scanButton.layer.cornerRadius = scanButton.bounds.size.height / 2;
+    
     topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
     statusView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
     topIconView.image = [[AppConfiguration sharedInstance] systemIcon];
+    
     isUserInfo = NO;
 }
 
 -(void)initLocalization{
     welcomeLabel.text = NSLocalizedString(@"Welcome", @"Welcome");
     scanTextLabel.text = NSLocalizedString(@"ScanText", @"Scan Text");
-    [[self.tabBarController.tabBar.items objectAtIndex:0] setTitle:NSLocalizedString(@"Home", @"Home")];
-    [[self.tabBarController.tabBar.items objectAtIndex:1] setTitle:NSLocalizedString(@"Logs", @"Logs")];
-    [[self.tabBarController.tabBar.items objectAtIndex:2] setTitle:NSLocalizedString(@"Keys", @"Keys")];
 }
 
 - (void) initPushView:(NSNotification*)notification{
@@ -340,15 +365,26 @@
 
 //# ------------ END -----------------------------
 
--(void)initQRScanner{
+#pragma - mark - QR Code Reader
+
+-(void)initQRScanner {
+    
     // Create the reader object
     QRCodeReader *reader = [QRCodeReader readerWithMetadataObjectTypes:@[AVMetadataObjectTypeQRCode]];
     
     // Instantiate the view controller
-    qrScanerVC = [QRCodeReaderViewController readerWithCancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel") codeReader:reader startScanningAtLoad:YES showSwitchCameraButton:YES showTorchButton:YES];
+    
+    qrScanerVC = [QRCodeReaderViewController readerWithCancelButtonTitle:@""//NSLocalizedString(@"Cancel", @"Cancel")
+                                                              codeReader:reader
+                                                     startScanningAtLoad:YES
+                                                  showSwitchCameraButton:NO
+                                                         showTorchButton:NO];
+    
     
     // Set the presentation style
-    qrScanerVC.modalPresentationStyle = UIModalPresentationFormSheet;
+//    qrScanerVC.modalPresentationStyle = UIModalPresentationFullScreen;
+    
+    
     
     // Define the delegate receiver
     qrScanerVC.delegate = self;
@@ -367,49 +403,164 @@
     }
 }
 
--(void)provideScanRequest{
+- (void)provideScanRequest {
     isUserInfo = NO;
     [self loadApproveDenyView];
 //    [self performSegueWithIdentifier:@"InfoView" sender:nil];
 }
 
--(void)loadApproveDenyView{
+- (void)loadApproveDenyView {
+    
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    ApproveDenyViewController* approveDenyView = [storyboard instantiateViewControllerWithIdentifier:@"ApproveDenyView"];
+    ApproveDenyViewController *approveDenyView = [storyboard instantiateViewControllerWithIdentifier:@"ApproveDenyView"];
     approveDenyView.delegate = self;
-    [self presentViewController:approveDenyView animated:YES completion:nil];
+    approveDenyView.isLogInfo = false;
+    
+    [self.navigationController pushViewController:approveDenyView animated:true];
+    
+//    [self presentViewController:approveDenyView animated:YES completion:nil];
+    
 }
 
-- (IBAction)scanAction:(id)sender
-{
-    if (_notificationNetworkView.isNetworkAvailable){
-        if ([QRCodeReader isAvailable]){
-            [self updateStatus:NSLocalizedString(@"QRCodeScanning", @"QR Code Scanning")];
-            [self presentViewController:qrScanerVC animated:YES completion:NULL];
+- (void)showQRReader {
+    
+    if (_notificationNetworkView.isNetworkAvailable) {
+        
+        if ([QRCodeReader isAvailable]) {
+            
+            [qrScanerVC setTitle:@"Scan Barcode"];
+            
+            [self.navigationController pushViewController:qrScanerVC animated:true];
+            
         } else {
+            
             [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:NSLocalizedString(@"AlertMessageNoQRScanning", @"No QR Scanning available")];
+            
         }
     }
 }
 
--(void)onApprove{
+#pragma mark - Camera Permission Handling
+
+- (IBAction)scanQRTapped {
+    
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    
+    switch (authStatus) {
+        case AVAuthorizationStatusAuthorized:
+            [self showQRReader];
+            break;
+            
+        case AVAuthorizationStatusNotDetermined: {
+            
+            NSLog(@"%@", @"Camera access not determined. Ask for permission.");
+            
+            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+                
+                if (granted) {
+                    
+                    NSLog(@"Granted access to %@", AVMediaTypeVideo);
+                    [self showQRReader];
+                    
+                } else {
+                    
+                    NSLog(@"Not granted access to %@", AVMediaTypeVideo);
+                    [self camDenied];
+                    
+                }
+            }];
+            
+            break;
+        }
+            
+        case AVAuthorizationStatusRestricted:
+            // User is restricted
+            [self camDenied];
+            break;
+            
+        case AVAuthorizationStatusDenied:
+            // User needs to head to settings
+            [self camDenied];
+            break;
+    
+    }
+
+}
+
+- (void)camDenied {
+    
+    NSLog(@"%@", @"Denied camera access");
+    
+    NSString *alertText;
+    NSString *alertButton;
+    
+    BOOL canOpenSettings = (&UIApplicationOpenSettingsURLString != NULL);
+    if (canOpenSettings) {
+        alertText = @"It looks like your privacy settings are preventing us from accessing your camera to do barcode scanning. You can fix this by doing the following:\n\n1. Touch the Go button below to open the Settings app.\n\n2. Touch Privacy.\n\n3. Turn the Camera on.\n\n4. Open this app and try again.";
+        
+        alertButton = @"Go";
+    } else {
+        alertText = @"It looks like your privacy settings are preventing us from accessing your camera to do barcode scanning. You can fix this by doing the following:\n\n1. Close this app.\n\n2. Open the Settings app.\n\n3. Scroll to the bottom and select this app in the list.\n\n4. Touch Privacy.\n\n5. Turn the Camera on.\n\n6. Open this app and try again.";
+        
+        alertButton = @"OK";
+    }
+    
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@"Error"
+                          message:alertText
+                          delegate:self
+                          cancelButtonTitle:alertButton
+                          otherButtonTitles:nil];
+    
+    alert.tag = 3491832;
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 3491832) {
+        BOOL canOpenSettings = (&UIApplicationOpenSettingsURLString != NULL);
+        
+        if (canOpenSettings)
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+        }
+}
+
+#pragma mark - Approve Deny View Delegate
+
+- (void)onApprove{
+    
     NSString* message = [NSString stringWithFormat:@"%@", NSLocalizedString(@"StartAuthentication", @"Authentication...")];
     [self updateStatus:message];
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
     
-    [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:NO isSecureClick:isSecureClick callback:^(NSDictionary *result,NSError *error){
-        if (error){
-            [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:error.localizedDescription];
-        }
-    }];
+    [oxPushManager onOxPushApproveRequest:scanJsonDictionary
+                                isDecline:NO
+                                 callback:^(NSDictionary *result, NSError *error) {
+                                     if (error){
+                                         [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:error.localizedDescription];
+                                     }
+                                 }];
+    
+    // Eric
+//    [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:NO isSecureClick:isSecureClick callback:^(NSDictionary *result,NSError *error){
+//        if (error){
+//            [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:error.localizedDescription];
+//        }
+//    }];
 }
 
 -(void)onDecline{
     NSString* message = @"Decline starting";
     [self updateStatus:message];
     [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
-    [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:YES isSecureClick:isSecureClick callback:^(NSDictionary *result,NSError *error){
-    }];
+    [oxPushManager onOxPushApproveRequest:scanJsonDictionary
+                                isDecline:YES
+                                 callback:^(NSDictionary *result, NSError *error) {}];
+    
+    // Eric
+//    [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:YES isSecureClick:isSecureClick callback:^(NSDictionary *result,NSError *error){
+//    }];
 }
 
 -(void)showAlertViewWithTitle:(NSString*)title andMessage:(NSString*)message{
@@ -421,6 +572,20 @@
 
 - (void)reader:(QRCodeReaderViewController *)reader didScanResult:(NSString *)result
 {
+    
+//    [self.navigationController popViewControllerAnimated:true];
+    
+    if(result){// && !isResultFromScan){
+//        [qrScanerVC dismissViewControllerAnimated:YES completion:nil];
+            //            isResultFromScan = YES;
+        
+        NSLog(@"%@", result);
+        NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        [self sendQRCodeRequest:jsonDictionary];
+    }
+   
+    /*
     [self dismissViewControllerAnimated:YES completion:^{
         if(result){// && !isResultFromScan){
             [qrScanerVC dismissViewControllerAnimated:YES completion:nil];
@@ -431,18 +596,21 @@
             [self sendQRCodeRequest:jsonDictionary];
         }
     }];
+     */
 }
 
 - (void)readerDidCancel:(QRCodeReaderViewController *)reader
 {
+    /*
     [self dismissViewControllerAnimated:YES completion:NULL];
 //    if (!isResultFromScan){
         [self updateStatus:NSLocalizedString(@"QRCodeCalceled", @"QR Code Calceled")];
         [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
 //    }
+     */
 }
 
--(void)updateStatus:(NSString*)status{
+-(void)updateStatus:(NSString*)status {
     if (status != nil){
         statusLabel.text = status;
     }
@@ -600,7 +768,7 @@
     */
 }
 
--(void)loadPinView{
+-(void)loadPinView {
     UIStoryboard *storyboardobj=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
     pinView = (PinCodeViewController*)[storyboardobj instantiateViewControllerWithIdentifier:@"pinViewController"];
     pinView.isCallback = YES;

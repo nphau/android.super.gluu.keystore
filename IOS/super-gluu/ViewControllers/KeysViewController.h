@@ -9,14 +9,16 @@
 #import <UIKit/UIKit.h>
 #import <SWTableViewCell/SWTableViewCell.h>
 
-@interface KeysViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, SWTableViewCellDelegate>{
+@interface KeysViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, SWTableViewCellDelegate>{
 
     NSMutableArray* keyHandleArray;
-    IBOutlet UIView* topView;
-    IBOutlet UIImageView* topIconView;
-    IBOutlet UITableView* keyHandleTableView;
-    IBOutlet UILabel* keyHandleLabel;
-    IBOutlet UILabel* uniqueKeyLabel;
+    
+    IBOutlet UIView *headerView;
+    IBOutlet UITableView *keyHandleTableView;
+    IBOutlet UILabel *uniqueKeyLabel;
+    
+    
+    
     int rowToDelete;
     
     BOOL isLandScape;

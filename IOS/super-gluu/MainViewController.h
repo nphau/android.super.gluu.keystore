@@ -14,7 +14,7 @@
 #import "NotificationNetworkView.h"
 #import "ADViewSubscriber.h"
 
-@interface MainViewController : UIViewController <QRCodeReaderDelegate, ApproveDenyDelegate>{
+@interface MainViewController : BaseViewController <QRCodeReaderDelegate, ApproveDenyDelegate>{
     
     IBOutlet UIButton* scanButton;
     IBOutlet UILabel* statusLabel;

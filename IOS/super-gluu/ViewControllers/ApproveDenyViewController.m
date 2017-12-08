@@ -40,13 +40,35 @@
     if (!_isLogInfo){
         [self initAndStartTimer];
     }
-    [approveImage setCenter:approveRequest.center];
-    [denyImage setCenter:denyRequest.center];
+    
+    [self setupDisplay];
+    
+    
+//    [approveImage setCenter:approveRequest.center];
+//    [denyImage setCenter:denyRequest.center];
+    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openURL:)];
     serverUrlLabel.userInteractionEnabled = YES;
     [serverUrlLabel addGestureRecognizer:tap];
-    [timerView setProgressColor:[[AppConfiguration sharedInstance] systemColor]];
-    [timerLabel setTextColor:[[AppConfiguration sharedInstance] systemColor]];
+    
+//    [timerView setProgressColor:[[AppConfiguration sharedInstance] systemColor]];
+//    [timerLabel setTextColor:[[AppConfiguration sharedInstance] systemColor]];
+}
+
+- (void)setupDisplay {
+    
+    for (UIView *v in separators) {
+        v.backgroundColor = [Constant tableBackgroundColor];
+    }
+    
+    for (UILabel *l in titleLabels) {
+        l.textColor = [UIColor blackColor];
+//        l.font = [Constant regularFont: 16.0];
+    }
+    
+    cityNameLabel.textColor = [Constant lightGreyTextColor];
+    createdDateLabel.textColor = [Constant lightGreyTextColor];
+    
 }
 
 - (void)openURL:(UITapGestureRecognizer *)tap
@@ -96,8 +118,8 @@
 }
 
 -(void)initLocalization{
-    [approveRequest setTitle:NSLocalizedString(@"Approve", @"Approve") forState:UIControlStateNormal];
-    [denyRequest setTitle:NSLocalizedString(@"Deny", @"Deny") forState:UIControlStateNormal];
+//    [approveRequest setTitle:NSLocalizedString(@"Approve", @"Approve") forState:UIControlStateNormal];
+//    [denyRequest setTitle:NSLocalizedString(@"Deny", @"Deny") forState:UIControlStateNormal];
     titleLabel.text = NSLocalizedString(@"PressApprove", @"To continue, press Approve");
 }
 
@@ -132,11 +154,19 @@
     typeLabel.text = info->authenticationType;
     
     if (_isLogInfo){
+        [approveDenyContainerView setHidden:YES];
         [backButton setHidden:NO];
         [timerView setHidden:YES];
         [buttonView setHidden:YES];
         titleLabel.text = NSLocalizedString(@"Information", @"Information");
     } else {
+        self.navigationItem.hidesBackButton = YES;
+        
+        self.title = @"Permission Approval";
+        
+//        let cancelButton
+//        [self.navigationItem setLeftBarButtonItem:[UIBarButtonItem alloc] in
+        
         [navigationView setHidden:YES];
     }
     [self moveUpViews];
@@ -154,21 +184,16 @@
 
 -(IBAction)onApprove:(id)sender{
     [delegate approveRequest];
-    [self back];
+    [self.navigationController popToRootViewControllerAnimated:true];
     [timer invalidate];
     timer = nil;
 }
 
 -(IBAction)onDeny:(id)sender{
     [delegate denyRequest];
-    [self back];
+    [self.navigationController popToRootViewControllerAnimated:true];
     [timer invalidate];
     timer = nil;
-}
-
--(IBAction)back{
-    [self.navigationController popViewControllerAnimated:YES];
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(IBAction)onDeleteClick{
@@ -225,8 +250,13 @@
 }
 
 -(void)deleteLog:(UserLoginInfo*)log {
-    [[DataStoreManager sharedInstance] deleteLog:log];
-    [self back];
+    [[DataStoreManager sharedInstance] deleteAllLogs];
+    
+        // Eric
+//    [[DataStoreManager sharedInstance] deleteLog:log];
+    
+    [self.navigationController popViewControllerAnimated:true];
+//    [self back];
 }
 
 /*

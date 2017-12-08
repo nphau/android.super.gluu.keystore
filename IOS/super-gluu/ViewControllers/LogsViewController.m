@@ -51,12 +51,16 @@
 }
 
 -(void)deleteLog:(UserLoginInfo*)log {
-    [[DataStoreManager sharedInstance] deleteLog:log];
+    // eric
+    [[DataStoreManager sharedInstance] deleteAllLogs];
+//    [[DataStoreManager sharedInstance] deleteLog:log];
     [self updateLogs];
 }
 
 -(void)deleteLogs:(NSArray*)logs {
-    [[DataStoreManager sharedInstance] deleteLogs:logs];
+    // eric
+//    [[DataStoreManager sharedInstance] deleteLogs:logs];
+    [[DataStoreManager sharedInstance] deleteAllLogs];
     [self updateLogs];
     [selectAllView setHidden:YES];
 }

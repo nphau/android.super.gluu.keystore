@@ -16,23 +16,26 @@
 
 @implementation KeysViewController
 
+
+
 -(void)viewDidLoad{
     [super viewDidLoad];
     [self loadKeyHandlesFromDatabase];
+    [self setupDisplay];
     
-//    UILongPressGestureRecognizer* longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(onLongPress:)];
-//    [longPressRecognizer setMinimumPressDuration:3.0];
-//    [keyHandleTableView addGestureRecognizer:longPressRecognizer];
-    
-    keyHandleTableView.layer.borderColor = [UIColor grayColor].CGColor;
-    keyHandleTableView.layer.borderWidth = 1.0;
-    [keyHandleTableView.layer setMasksToBounds:YES];
     keyCells = [[NSMutableDictionary alloc] init];
     //uniqueKeyLabel.text = [NSString stringWithFormat: NSLocalizedString(@"UniqueKeyLabel", @"UniqueKeyLabel"), [[AppConfiguration sharedInstance] systemTitle]];
-    topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
-    topIconView.image = [[AppConfiguration sharedInstance] systemIcon];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initPushView) name:NOTIFICATION_PUSH_ONLINE object:nil];
+}
+
+- (void)setupDisplay {
+    
+    self.view.backgroundColor = [Constant tableBackgroundColor];
+    
+    keyHandleTableView.tableHeaderView.backgroundColor = [Constant tableBackgroundColor];
+    keyHandleTableView.backgroundColor = [Constant tableBackgroundColor];
+    
 }
 
 -(void)initPushView{
@@ -85,7 +88,9 @@
     SCLButton* saveButton = [alert addButton:@"Save" actionBlock:^(void) {
         NSLog(@"Text value: %@", textField.text);
         if ([self checkUniqueName:textField.text andID:cell.accessibilityLabel]){
-            [[DataStoreManager sharedInstance] setTokenEntitiesNameByID:tokenEntity->ID userName:tokenEntity->userName newName:textField.text];
+            [[DataStoreManager sharedInstance] setTokenEntitiesNameByID:tokenEntity->ID newName:textField.text];
+            // Eric
+//            [[DataStoreManager sharedInstance] setTokenEntitiesNameByID:tokenEntity->ID userName:tokenEntity->userName newName:textField.text];
             [self loadKeyHandlesFromDatabase];
         } else {
             SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
@@ -139,18 +144,18 @@
         [keyHandleTableView reloadData];
         [keyHandleTableView setHidden:NO];
     } else {
-        [keyHandleTableView setHidden:YES];
+//        [keyHandleTableView setHidden:YES];
     }
     keyHandleTableView.tableFooterView = [[UIView alloc] init];
 //    [self initLabel:(int)[keyHandleArray count]];
 }
 
 -(void)initLabel:(int)keyCount{
-    if (keyCount > 0){
-        [keyHandleLabel setText:[NSString stringWithFormat:@"%@ (%i):", NSLocalizedString(@"AvailableKeyHandles", @"Available KeyHandles"), keyCount]];
-    } else {
-        [keyHandleLabel setText:[NSString stringWithFormat:@"%@:", NSLocalizedString(@"AvailableKeyHandles", @"Available KeyHandles")]];
-    }
+//    if (keyCount > 0){
+//        [keyHandleLabel setText:[NSString stringWithFormat:@"%@ (%i):", NSLocalizedString(@"AvailableKeyHandles", @"Available KeyHandles"), keyCount]];
+//    } else {
+//        [keyHandleLabel setText:[NSString stringWithFormat:@"%@:", NSLocalizedString(@"AvailableKeyHandles", @"Available KeyHandles")]];
+//    }
 }
 
 -(BOOL)checkUniqueName:(NSString*)name andID:(NSString*)keyID{
@@ -219,7 +224,9 @@
 
 -(void)deleteRow{
     TokenEntity* tokenEntity = [keyHandleArray objectAtIndex:rowToDelete];
-    [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:tokenEntity->application userName:tokenEntity->userName];
+    [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:tokenEntity->application];
+    // Eric
+//    [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:tokenEntity->application userName:tokenEntity->userName];
     [self loadKeyHandlesFromDatabase];
 }
 

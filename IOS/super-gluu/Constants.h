@@ -9,6 +9,8 @@
 #ifndef Constants_h
 #define Constants_h
 
+#define SCREEN_WIDTH = [[UIScreen mainScreen] bounds].size.width
+
 #define NotificationCategoryIdent @"ACTIONABLE"
 #define NotificationActionOneIdent @"ACTION_DENY"
 #define NotificationActionTwoIdent @"ACTION_APPROVE"

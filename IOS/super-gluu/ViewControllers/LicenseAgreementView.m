@@ -77,7 +77,11 @@
 }
 
 -(void)checkLicenseAgreement{
-    BOOL isLicenseAgreement = [[NSUserDefaults standardUserDefaults] boolForKey:LICENSE_AGREEMENT];
+    // eric
+        //    BOOL isLicenseAgreement = [[NSUserDefaults standardUserDefaults] boolForKey:LICENSE_AGREEMENT];
+    
+    BOOL isLicenseAgreement = YES;
+    
     if (isLicenseAgreement && !_isFromSettings){
         [self checkPinProtection];
     } else {
@@ -181,15 +185,25 @@
 
 -(void)loadPinView{
     UIStoryboard *storyboardobj=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
     PinCodeViewController* pinView = (PinCodeViewController*)[storyboardobj instantiateViewControllerWithIdentifier:@"pinViewController"];
     [self presentViewController:pinView animated:YES completion:nil];
 }
 
 -(void)loadMainView{
+    
+    UIStoryboard *storyboardobj=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UINavigationController* mainNavVC = [storyboardobj instantiateViewControllerWithIdentifier:@"mainNavigationController"];
+    [self presentViewController:mainNavVC animated:NO completion:nil];
+    
+    
+    /* eric
 //    [self performSegueWithIdentifier:@"mainViewSegue" sender:self];
+    
     UIStoryboard *storyboardobj=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UITabBarController* mainTabView = (UITabBarController*)[storyboardobj instantiateViewControllerWithIdentifier:@"mainTabView"];
     [self presentViewController:mainTabView animated:NO completion:nil];
+     */
 }
 
 @end

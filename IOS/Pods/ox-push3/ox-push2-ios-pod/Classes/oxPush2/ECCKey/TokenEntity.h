@@ -27,6 +27,5 @@
 }
 
 -(id)initWithID:(NSString*)ID privateKey:(NSData*)privateKey publicKey:(NSData*)publicKey;
--(BOOL)isExternalKey;
 
 @end

@@ -52,7 +52,8 @@
     //Ubertersters SDK initialization
 //    [[Ubertesters shared] initialize];
     
-    [[UITabBar appearance] setTintColor:[[AppConfiguration sharedInstance] systemColor]];
+    
+    [self setupAppearance];
     
     [GADMobileAds configureWithApplicationID:@"ca-app-pub-3326465223655655~8301521230"];
     
@@ -194,9 +195,15 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     NSLog(@"APP STARTING.....");
     [self sendQRReuest:NO];
+    
+    // eric
+/*
     if (_pushNotificationRequest != nil){
         [[NSUserDefaults standardUserDefaults] setObject:_pushNotificationRequest forKey:NotificationRequest];
     }
+ */
+    
+    
     [[NHNetworkClock sharedNetworkClock] synchronize];
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
@@ -340,5 +347,33 @@
         }
     }
 }
+
+#pragma mark - Appearance
+
+- (void)setupAppearance {
+    
+    [[UINavigationBar appearance] setBarTintColor: [Constant appGreenColor]];
+    [[UINavigationBar appearance] setTintColor: UIColor.whiteColor];
+    [[UINavigationBar appearance] setTranslucent:false];
+    [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
+    
+    [[UITableView appearance] setBackgroundColor:[Constant tableBackgroundColor]];
+    
+    [[UISwitch appearance] setOnTintColor:[Constant appGreenColor]];
+    
+    NSDictionary *titleAttributes = @{
+                                 NSForegroundColorAttributeName: [UIColor whiteColor]
+//                                 NSShadowAttributeName: shadow,
+//                                 NSFontAttributeName: [UIFont fontWithName:@"AmericanTypewriter" size:16.0]
+                                 };
+    
+    [[UINavigationBar appearance] setTitleTextAttributes: titleAttributes];
+    
+    UIImage *backImage = [[UIImage imageNamed:@"icon_back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    [[UINavigationBar appearance] setBackIndicatorImage:backImage];
+    [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:backImage];
+
+}
+
 
 @end
