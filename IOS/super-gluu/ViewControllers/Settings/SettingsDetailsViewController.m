@@ -34,20 +34,27 @@
     
     BOOL settingStatus = [[NSUserDefaults standardUserDefaults] boolForKey:_settingKey];
     [_settingSwitch setOn:settingStatus];
+    
     //Init custom uiSwitch
     customSwitch = [[JTMaterialSwitch alloc] init];
     customSwitch.center = CGPointMake(_settingSwitch.center.x, _settingSwitch.center.y + _settingsTitleLabel.center.y + _settingsTitleLabel.center.y/2 - 10);
     [customSwitch setOn:settingStatus animated:YES];
+
     if ([_settingKey isEqualToString:TOUCH_ID_ENABLED]){
         [customSwitch addTarget:self action:@selector(onTouchIDSelected:) forControlEvents:UIControlEventValueChanged];
     } else {
         [customSwitch addTarget:self action:@selector(onSwitchSelected:) forControlEvents:UIControlEventValueChanged];
     }
-//    [_setChangePinCode setTitleColor:[[AppConfiguration sharedInstance] systemColor] forState:UIControlStateNormal];
+    
+    [_setChangePinCode setTitleColor:[[AppConfiguration sharedInstance] systemColor] forState:UIControlStateNormal];
+    
     [_attemptsStepper setTintColor:[[AppConfiguration sharedInstance] systemColor]];
     topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
     topIconView.image = [[AppConfiguration sharedInstance] systemIcon];
     _settingSwitch.hidden = YES;
+    
+    
+    
     if (!settingStatus){
         customSwitch.thumbOnTintColor = [UIColor grayColor];
         customSwitch.thumbOffTintColor = [UIColor grayColor];
@@ -57,8 +64,10 @@
         [self initSwitchTurnOnOff:customSwitch];
     }
     [self.view addSubview:customSwitch];
+    
     [self updateUI];
 }
+
 
 - (void) initSwitchTurnOnOff:(JTMaterialSwitch*) jtSwitch {
     jtSwitch.thumbOnTintColor = [[AppConfiguration sharedInstance] systemColor];
@@ -74,30 +83,45 @@
     
     [self updateUI];
 }
+ 
 
 - (void)updateUI{
+    
     if ([_settingKey isEqualToString:TOUCH_ID_ENABLED]){
        _infoLabel.text = TOUCH_ID_TEXT([[AppConfiguration sharedInstance] systemTitle]);
     }
     if ([_settingKey isEqualToString:SSL_ENABLED]){
         _infoLabel.text = SSL_ENABLED_TEXT([[AppConfiguration sharedInstance] systemTitle]);
     }
-    if ([_settingKey isEqualToString:PIN_PROTECTION_ID]){
+    
+    /*
+    
+     // eric
+     
+    if ([_settingKey isEqualToString: PIN_PROTECTION_ID]){
         _infoLabel.text = PIN_PROTECTION_TEXT([[AppConfiguration sharedInstance] systemTitle]);
     }
-    if ([_settingKey isEqualToString:PIN_PROTECTION_ID]){
+    
+    
+    if ([_settingKey isEqualToString:PIN_PROTECTION_ID]) {
+        
         _pinCodeView.hidden = ![[NSUserDefaults standardUserDefaults] boolForKey:_settingKey];
         _pinCodeMainView.hidden = ![[NSUserDefaults standardUserDefaults] boolForKey:_settingKey];
         code = [[NSUserDefaults standardUserDefaults] stringForKey:PIN_CODE];
+        
         if (code == nil || [code isEqualToString:@""]){
             [_setChangePinCode setTitle:NSLocalizedString(@"SetPinCode", @"SetPinCode") forState:UIControlStateNormal];
         } else {
             [_setChangePinCode setTitle:NSLocalizedString(@"ChangePinCode", @"ChangePinCode") forState:UIControlStateNormal];
         }
+        
     } else {
         _pinCodeView.hidden = YES;
         _pinCodeMainView.hidden = YES;
     }
+     
+     */
+     
 }
 
 -(IBAction)onBack:(id)sender{
@@ -107,6 +131,7 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
+
 
 //For TouchID
 -(void)onTouchIDSelected:(id)sender{
@@ -127,7 +152,8 @@
                                             NSLog(@"User authenticated successfully, take appropriate action");
                                             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:TOUCH_ID_ENABLED];
                                             [sw setOn:YES animated:YES];
-                                            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:PIN_PROTECTION_ID];
+                                            // eric
+//                                            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:PIN_PROTECTION_ID];
                                         } else {
                                             switch (error.code) {
                                                 case LAErrorAuthenticationFailed:
@@ -183,6 +209,7 @@
     SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
     [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Info", @"Info") subTitle:message closeButtonTitle:@"Ok" duration:0.0f];
 }
+ 
 
 
 //#---------------------- END -------------------------------------
@@ -197,13 +224,15 @@
     [self initSwitchTurnOnOff:sw];
 //    [self initAttamptsViews:sw.isOn];
     code = [[NSUserDefaults standardUserDefaults] stringForKey:PIN_CODE];
+    
+    
     if (code == nil || [code isEqualToString:@""]){
         [_setChangePinCode setTitle:NSLocalizedString(@"SetPinCode", @"SetPinCode") forState:UIControlStateNormal];
     } else {
         [_setChangePinCode setTitle:NSLocalizedString(@"ChangePinCode", @"ChangePinCode") forState:UIControlStateNormal];
     }
-    
-    [[NSUserDefaults standardUserDefaults] setBool:sw.isOn forKey:PIN_PROTECTION_ID];
+    // eric
+//    [[NSUserDefaults standardUserDefaults] setBool:sw.isOn forKey:PIN_PROTECTION_ID];
 }
 
 - (IBAction)changePasscode:(id)sender {
@@ -309,12 +338,12 @@
     [[NSUserDefaults standardUserDefaults] setInteger:(int)value forKey:LOCKED_ATTEMPTS_COUNT];
 }
 
--(void)showPinView{
+- (void)showPinView {
     [self dismissViewControllerAnimated:YES completion:nil];
     [self performSegueWithIdentifier:@"pinViewSegue" sender:self];
 }
 
--(void)showAlertView{
+- (void)showAlertView {
     SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
     [alert addButton:@"Close" actionBlock:^(void) {
         NSLog(@"Closed alert");

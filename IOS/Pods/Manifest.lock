@@ -49,6 +49,7 @@ PODS:
     - NHNetworkTime
     - NSHash
   - QRCodeReaderViewController (4.0.2)
+  - SwiftMessages (4.0.0)
   - SWTableViewCell (0.3.7)
 
 DEPENDENCIES:
@@ -62,6 +63,7 @@ DEPENDENCIES:
   - NSHash (~> 1.1.0)
   - ox-push3
   - QRCodeReaderViewController (~> 4.0.1)
+  - SwiftMessages
   - SWTableViewCell (~> 0.3.7)
 
 SPEC CHECKSUMS:
@@ -80,8 +82,9 @@ SPEC CHECKSUMS:
   NSHash: 61d598c6d48957c5557f1eef0aeafd6ef5ec5fb7
   ox-push3: fde946952258f23f96ea4c0a856787a613cee509
   QRCodeReaderViewController: e8f27d035b3e72b1d4b1c61ff66458287e3be0ff
+  SwiftMessages: cd565e0e7d095584be1770c012c6b5be4183b5ee
   SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
 
-PODFILE CHECKSUM: 4582bba7de623af8f9216bdf1ecbe81eafd05390
+PODFILE CHECKSUM: c7e42943866750917ee7a26d663ce9d6524af16d
 
 COCOAPODS: 1.3.1

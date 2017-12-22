@@ -8,6 +8,9 @@
 
 @protocol ApproveDenyDelegate
 
+- (void)approveRequest:(void (^)(BOOL success, NSString *errorMessage))handler;
+
+
 -(void)approveRequest;
 -(void)denyRequest;
 -(void)openRequest;

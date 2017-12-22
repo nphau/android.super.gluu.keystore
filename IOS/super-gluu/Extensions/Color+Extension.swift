@@ -31,6 +31,22 @@ extension UIColor {
     }
 }
 
+struct GluuConstants {
+    
+    static let PIN_PROTECTION_ID = "enabledPinCode"
+    static let PIN_SIMPLE_ID = "simplePinCode"
+    static let PIN_CODE = "PinCode"
+    static let PIN_ENABLED = "PinCodeEnabled"
+    static let PIN_TYPE_IS_4_DIGIT = "is_4_digit"
+    static let SSL_ENABLED = "is_ssl_enabled"
+    static let TOUCH_ID_ENABLED = "is_touchID_enabled"
+    static let SECURE_CLICK_ENABLED = "secure_click_enabled"
+    static let IS_FIRST_LOAD = "firstLoad"
+    static let SECURITY_PROMPT_SHOWN = "securityPromptyShown"
+    static let NOTIFICATION_PROMPT = "notificationPrompt"
+    
+}
+
 
 @objc class Constant: NSObject {
     private override init() {}
@@ -45,5 +61,16 @@ extension UIColor {
     class func lightGreyTextColor()   -> UIColor { return UIColor.Gluu.lightGreyText }
     class func darkGreyTextColor()    -> UIColor { return UIColor.Gluu.darkGreyText }
     
-
+    class func pinProtectionId()      -> String { return GluuConstants.PIN_PROTECTION_ID }
+    class func pinSimpleId()          -> String { return GluuConstants.PIN_SIMPLE_ID }
+    class func pinCode()              -> String { return GluuConstants.PIN_CODE }
+    class func isPinEnabled()         -> String { return GluuConstants.PIN_ENABLED }
+    class func isPinType4Digit()      -> String { return GluuConstants.PIN_TYPE_IS_4_DIGIT }
+    class func isSSLEnabled()         -> String { return GluuConstants.SSL_ENABLED }
+    class func isTouchIdEnabled()     -> String { return GluuConstants.TOUCH_ID_ENABLED }
+    class func isSecureClickEnabled() -> String { return GluuConstants.SECURE_CLICK_ENABLED }
+    class func isFirstLoad()          -> String { return GluuConstants.IS_FIRST_LOAD }
+    class func securityPromptShown()  -> String { return GluuConstants.SECURITY_PROMPT_SHOWN }
+    class func notificationPrompt()   -> String { return GluuConstants.NOTIFICATION_PROMPT }
+    
 }

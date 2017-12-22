@@ -15,9 +15,11 @@
 #import <CFNetwork/CFNetwork.h>
 #import "NSString+URLEncode.h"
 
+#import "OXPushManager.h"
 #import "AFHTTPRequestOperationManager.h"
 #import "DataStoreManager.h"
 #import "SCLAlertView.h"
+
 
 #define moveUpY 70
 #define LANDSCAPE_Y 290
@@ -26,7 +28,11 @@
 
 #define ADDRESS_ERROR @"error"
 
-@interface ApproveDenyViewController ()
+@interface ApproveDenyViewController () {
+
+OXPushManager* oxPushManager;
+
+}
 
 @end
 
@@ -183,15 +189,44 @@
 }
 
 -(IBAction)onApprove:(id)sender{
+    
+//    NSString* message = [NSString stringWithFormat:@"%@", NSLocalizedString(@"StartAuthentication", @"Authentication...")];
+//    [self updateStatus:message];
+    
+//    [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
+    
+        // eric
+        // currently not receiving a call back here.
+        // Put this in Approve/Deny VC
+    
+//    [oxPushManager onOxPushApproveRequest:scanJsonDictionary
+//                                isDecline:NO
+//                                 callback:^(NSDictionary *result, NSError *error) {
+//                                     if (error){
+//                                         [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:error.localizedDescription];
+//                                     }
+//                                 }];
+    
     [delegate approveRequest];
-    [self.navigationController popToRootViewControllerAnimated:true];
+//    [self.navigationController popToRootViewControllerAnimated:true];
     [timer invalidate];
     timer = nil;
 }
 
 -(IBAction)onDeny:(id)sender{
+    
+//    NSString* message = @"Decline starting";
+//    [self updateStatus:message];
+//    [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
+//    [oxPushManager onOxPushApproveRequest:scanJsonDictionary
+//                                isDecline:YES
+//                                 callback:^(NSDictionary *result, NSError *error) {}];
+    
+    
+    
+    
     [delegate denyRequest];
-    [self.navigationController popToRootViewControllerAnimated:true];
+//    [self.navigationController popToRootViewControllerAnimated:true];
     [timer invalidate];
     timer = nil;
 }

@@ -19,9 +19,20 @@ enum SettingsTableSections {
     
     func items() -> [SettingsTableItem] {
         switch self {
-        case .history:  return [.logs, .keys]
-        case .settings: return [.pinCodes, .touchId, .ssl]
-        case .help:     return [.userGuide, .privacyPolicy]
+        case .history:
+            return [.logs, .keys]
+        
+        case .settings:
+            
+            // Don't show touch auth if user's device doesn't have it
+            if TouchIDAuth().canEvaluatePolicy() {
+                return [.pinCodes, .touchId, .ssl]
+            } else {
+                return [.pinCodes, .ssl]
+            }
+            
+        case .help:
+            return [.userGuide, .privacyPolicy]
         }
     }
     
@@ -74,8 +85,8 @@ enum SettingsTableItem {
         case .pinCodes:      return "segueSettingsToPin"
         case .touchId:       return "segueSettingsToSingleCell"
         case .ssl:           return "segueSettingsToSingleCell"
-        case .userGuide:     return "segueSettingsToKeys"
-        case .privacyPolicy: return "segueSettingsToKeys"
+        case .userGuide:     return "segueSettingsToWeb"
+        case .privacyPolicy: return "segueSettingsToWeb"
         }
     }
     
@@ -137,18 +148,38 @@ class SettingsViewController: UIViewController {
     
     // MARK: - Navigation
     
-    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // handle mode setting for SSL/TouchId VC
-        if let sender = sender as? SettingsTableItem, let destVC = segue.destination as? SingleCellSettingsDetailViewController {
-            switch sender {
-            case .touchId: destVC.display = .touchId
-            case .ssl: destVC.display = .ssl
+        
+        if let sender = sender as? SettingsTableItem {
+            
+            switch segue.destination {
                 
+            case is SingleCellSettingsDetailViewController:
+                
+                let destVC = segue.destination as! SingleCellSettingsDetailViewController
+                
+                switch sender {
+                case .touchId: destVC.display = .touchId
+                case .ssl: destVC.display = .ssl
+                    
+                default: break
+            }
+                
+            case is WebViewController:
+                
+                let destVC = segue.destination as! WebViewController
+                
+                switch sender {
+                case .privacyPolicy: destVC.display = .privacy
+                case .userGuide: destVC.display = .tos
+                    
+                default: break
+                }
+
             default: break
             }
         }
-
     }
     
     func dataItem(atIndexPath ip: IndexPath) -> SettingsTableItem {
@@ -178,10 +209,10 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         cell.titleLabel.text = item.title
         
         if let icon = item.icon {
-            cell.iconImageView.isHidden = false
-            cell.iconImageView.image = icon
+            cell.iconImageView?.isHidden = false
+            cell.iconImageView?.image = icon
         } else {
-            cell.iconImageView.isHidden = true
+            cell.iconImageView?.isHidden = true
         }
         
         return cell
@@ -211,7 +242,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         
         let item = dataItem(atIndexPath: indexPath)
         
-        performSegue(withIdentifier: item.segueId, sender: item)
+        self.performSegue(withIdentifier: item.segueId, sender: item)
     }
     
     

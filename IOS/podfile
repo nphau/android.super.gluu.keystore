@@ -18,10 +18,12 @@ def project_pods
  pod 'IAPHelper'
  pod 'SWTableViewCell', '~> 0.3.7'
  pod 'CATCurveProgressView'
+ pod 'SwiftMessages'
 
 # use ox-push2 lib instead of local copy
- pod  'ox-push3', :path => '/Users/nazaryavornytskyy/ox-push2-ios-pod'
+# pod  'ox-push3', :path => '/Users/nazaryavornytskyy/ox-push2-ios-pod'
 # pod 'ox-push3', '~> 0.2.0'
+ pod 'ox-push3'
 
 end
 

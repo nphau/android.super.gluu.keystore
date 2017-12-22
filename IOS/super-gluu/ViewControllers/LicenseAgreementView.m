@@ -19,12 +19,12 @@
 #define MAIN_VIEW @"MainTabView"
 #define PIN_VIEW @"PinCodeID"
 
-#define IS_FIRST_LOAD @"firstLoad"
-
 @implementation LicenseAgreementView{
     UIAlertController * alert;
     
     BOOL isSucess;
+    
+    TouchIDAuth *touchAuth;
 }
 
 -(void)viewDidLoad{
@@ -42,6 +42,8 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
+    
+    [self loadPinView];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -95,9 +97,14 @@
     }
 }
 
--(void)checkPinProtection{
-    BOOL isTouchID = [[NSUserDefaults standardUserDefaults] boolForKey:TOUCH_ID_ENABLED];
-    if (isTouchID && !isSucess){
+- (void)checkPinProtection {
+    
+    BOOL isTouchIDEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:TOUCH_ID_ENABLED];
+   
+    if (isTouchIDEnabled && !isSucess && [touchAuth canEvaluatePolicy] == true) {
+        
+        
+        
         LAContext *myContext = [[LAContext alloc] init];
         NSError *authError = nil;
         NSString *myLocalizedReasonString = @"Please authenticate with your fingerprint to continue.";
@@ -126,15 +133,23 @@
             isSucess = NO;
         }
     } else {
-        BOOL isFirstLoad = [[NSUserDefaults standardUserDefaults] boolForKey:IS_FIRST_LOAD];
+        BOOL isFirstLoad = [GluuUserDefaults isFirstLoad];
         if (!isFirstLoad){
             [self loadPinView];
             //[self performSegueWithIdentifier:PIN_VIEW sender:self];
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:IS_FIRST_LOAD];
+            [GluuUserDefaults setFirstLoad];
         } else {
-            BOOL isPin = [[NSUserDefaults standardUserDefaults] boolForKey:PIN_PROTECTION_ID];
+            
+            
+            BOOL isPin = [[NSUserDefaults standardUserDefaults] boolForKey:PIN_ENABLED];
+            
+                // eric
+//            BOOL isPin = [[NSUserDefaults standardUserDefaults] boolForKey:PIN_PROTECTION_ID];
             if (isPin){
-                [self loadPinView];
+                [self loadMainView];
+                
+                // eric
+                //[self loadPinView];
             } else {
                 [self loadMainView];
             }

@@ -14,7 +14,7 @@
 #import "AppConfiguration.h"
 
 #define MAIN_VIEW @"MainTabView"
-#define PIN_PROTECTION_ID @"enabledPinCode"
+//#define PIN_PROTECTION_ID @"enabledPinCode"
 
 #define FAILED_PIN_COUNT 5
 
@@ -120,13 +120,20 @@
 
 -(IBAction)next:(id)sender{
     [self setPasscode];
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:PIN_PROTECTION_ID];
+    
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:PIN_ENABLED];
+    // eric
+//    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:PIN_PROTECTION_ID];
 }
 
 -(IBAction)skip:(id)sender{
     [self loadMainView];
     //[self performSegueWithIdentifier:MAIN_VIEW sender:self];
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:PIN_PROTECTION_ID];
+    
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:PIN_ENABLED];
+    
+    // eric
+    //[[NSUserDefaults standardUserDefaults] setBool:NO forKey:PIN_PROTECTION_ID];
 }
 
 - (void)setPasscode {

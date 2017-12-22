@@ -28,6 +28,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    
+    // eric
+    /*
     //For Push Notifications
     if ([[[UIDevice currentDevice] systemVersion] floatValue] > 7){//for ios 8 and higth
         [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
@@ -35,11 +38,13 @@
         [self registerForNotification];
     }
     NSDictionary *remoteNotif = [launchOptions objectForKey: UIApplicationLaunchOptionsRemoteNotificationKey];
+     
     
     //Accept push notification when app is not open
     if (remoteNotif != nil) {
         [[NSUserDefaults standardUserDefaults] setObject:remoteNotif forKey:NotificationRequest];
     }
+     */
     
     //Setup Basic
     int count = (int)[[NSUserDefaults standardUserDefaults] integerForKey:LOCKED_ATTEMPTS_COUNT];

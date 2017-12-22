@@ -34,7 +34,7 @@
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>$(EXECUTABLE_NAME) requires Bluetooth service to work</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Do you want to access to camera?</string>
+	<string>Providing camera access allows you to scan QR Codes, an essential part of this app. </string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>$(EXECUTABLE_NAME) requires location services to work</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
