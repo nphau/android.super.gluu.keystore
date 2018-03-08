@@ -16,7 +16,8 @@ import LocalAuthentication
     
     func canEvaluatePolicy() -> Bool {
         
-        if (context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: nil)) {
+        var error: NSError?
+        if (context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: &error)) {
             
             if #available(iOS 11.0, *) {
                 
@@ -29,12 +30,22 @@ import LocalAuthentication
             }
             
         } else {
-            return false
+            
+            // check to see if they need to enter their passcode
+            // due to touchId attempts failing too many times
+            if error?.code == -8 {
+                context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "To enable touch auth", reply: { (success, error) in
+                    return success
+                })
+            } else {
+                return false
+            }
         }
         
         return false
+        
     }
-    
+
     
     func authenticateUser(completion: @escaping (Bool, String?) -> Void) {
         let context = LAContext()

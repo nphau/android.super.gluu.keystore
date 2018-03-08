@@ -26,7 +26,8 @@ enum SettingsTableSections {
             
             // Don't show touch auth if user's device doesn't have it
             // Removing SSL for time being
-            if TouchIDAuth().canEvaluatePolicy() {
+            let touchAuth = TouchIDAuth()
+            if touchAuth.canEvaluatePolicy() {
                 return [.pinCodes, .touchId] //, .ssl]
             } else {
                 return [.pinCodes] //, .ssl]
