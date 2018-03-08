@@ -19,11 +19,11 @@ def project_pods
  pod 'SWTableViewCell', '~> 0.3.7'
  pod 'CATCurveProgressView'
  pod 'SwiftMessages'
+ pod 'SCLAlertView'
 
-# use ox-push2 lib instead of local copy
-# pod  'ox-push3', :path => '/Users/nazaryavornytskyy/ox-push2-ios-pod'
-# pod 'ox-push3', '~> 0.2.0'
- pod 'ox-push3'
+# pod 'ox-push3', :git => 'https://github.com/GluuFederation/ox-push3.git'
+pod 'ox-push3', :git => 'https://github.com/soulfoodz/oxPush3.git'
+
 
 end
 

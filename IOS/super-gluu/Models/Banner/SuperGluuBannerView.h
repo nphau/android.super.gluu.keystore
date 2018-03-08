@@ -14,7 +14,7 @@
 
 @property (nonatomic, strong) GADInterstitial *interstitial;
 
--(id)initWithAdSize:(GADAdSize)adSize andRootView:(UIViewController*)rootView;
+-(id)initWithAdSize:(GADAdSize)adSize andRootViewController:(UIViewController*)rootView;
 
 - (void)createAndLoadInterstitial;
 

@@ -25,7 +25,8 @@ extension UIColor {
         
         static let green           = UIColor(red: 0, green: 161, blue: 97)
         static let darkGreyText    = UIColor(red: 123, green: 123, blue: 123)
-        static let lightGreyText    = UIColor(red: 180, green: 180, blue: 180)
+        static let lightGreyText   = UIColor(red: 180, green: 180, blue: 180)
+        static let separator       = UIColor(red: 210, green: 210, blue: 210)
         static let tableBackground = UIColor(red: 247, green: 247, blue: 247)
 
     }
@@ -58,6 +59,7 @@ struct GluuConstants {
     class func appBlueColor()         -> UIColor { return UIColor.Gluu.green }
     class func appGreenColor()        -> UIColor { return UIColor.Gluu.green }
     class func tableBackgroundColor() -> UIColor { return UIColor.Gluu.tableBackground }
+    class func cellSeparatorColor()   -> UIColor { return UIColor.Gluu.separator }
     class func lightGreyTextColor()   -> UIColor { return UIColor.Gluu.lightGreyText }
     class func darkGreyTextColor()    -> UIColor { return UIColor.Gluu.darkGreyText }
     
@@ -72,5 +74,33 @@ struct GluuConstants {
     class func isFirstLoad()          -> String { return GluuConstants.IS_FIRST_LOAD }
     class func securityPromptShown()  -> String { return GluuConstants.SECURITY_PROMPT_SHOWN }
     class func notificationPrompt()   -> String { return GluuConstants.NOTIFICATION_PROMPT }
+    
+}
+
+@objc class AlertV: NSObject {
+    
+    private override init() {}
+    
+    
+//    class func alertViewWithCloseButton(yesOrNo: Bool) -> SCLAlertView {
+//
+//        let appearance = SCLAlertView.SCLAppearance(
+//            showCloseButton: yesOrNo
+//        )
+//
+//        let alert = SCLAlertView(appearance: appearance)
+//
+//        return alert
+//
+//    }
+    
+//    - (void)showAlertViewWithTitle:(NSString*)title andMessage:(NSString*)message {
+//
+//    SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+//
+//
+//    [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:title subTitle:message closeButtonTitle:@"Close" duration:2.0f];
+//
+//    }
     
 }

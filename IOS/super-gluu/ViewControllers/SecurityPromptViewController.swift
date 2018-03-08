@@ -103,6 +103,8 @@ class SecurityPromptViewController: UIViewController {
 
             GluuUserDefaults.setTouchAuth(isOn: success)
             
+            self.dismissVC()
+            
         }
     }
     
@@ -134,7 +136,9 @@ extension SecurityPromptViewController: PAPasscodeViewControllerDelegate {
         
         GluuUserDefaults.setUserPin(newPin: controller.passcode)
         
-        navigationController?.popToRootViewController(animated: true)
+//        navigationController?.popToRootViewController(animated: true)
+        
+        self.dismissVC()
         
     }
     

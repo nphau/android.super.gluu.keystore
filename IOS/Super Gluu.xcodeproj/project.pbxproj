@@ -184,6 +184,8 @@
 		C829675E1FE9BE1F008FEBE8 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C829675D1FE9BE1F008FEBE8 /* AlertView.swift */; };
 		C82967601FE9BE5F008FEBE8 /* AlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C829675F1FE9BE5F008FEBE8 /* AlertView.xib */; };
 		C82967621FE9C2C1008FEBE8 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82967611FE9C2C1008FEBE8 /* WebViewController.swift */; };
+		C8390619201C145100E4177D /* PushNotificationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C8390618201C145100E4177D /* PushNotificationHelper.m */; };
+		C839061A201C145100E4177D /* PushNotificationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C8390618201C145100E4177D /* PushNotificationHelper.m */; };
 		C83D2B051FE2F18B00F9455E /* SecurityPromptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83D2B041FE2F18B00F9455E /* SecurityPromptViewController.swift */; };
 		C83D2B061FE2F18B00F9455E /* SecurityPromptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83D2B041FE2F18B00F9455E /* SecurityPromptViewController.swift */; };
 		C841030F1FE0720200B3033D /* PinCodeSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C841030E1FE0720200B3033D /* PinCodeSettingsTableViewController.m */; };
@@ -191,6 +193,7 @@
 		C84157071FD9F695008BCF0B /* TouchIdSettingsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84157051FD9F695008BCF0B /* TouchIdSettingsDetailViewController.swift */; };
 		C84157091FDA0226008BCF0B /* SingleCellSettingsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84157081FDA0226008BCF0B /* SingleCellSettingsDetailViewController.swift */; };
 		C841570A1FDA0226008BCF0B /* SingleCellSettingsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84157081FDA0226008BCF0B /* SingleCellSettingsDetailViewController.swift */; };
+		C8419627201A4F05005A4ACC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8419626201A4F05005A4ACC /* LaunchScreen.storyboard */; };
 		C848322C1FE9A90800679640 /* SwiftMessages+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C848322B1FE9A90800679640 /* SwiftMessages+Extension.swift */; };
 		C8494D0B1FD5E67600CD5FA8 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8494D0A1FD5E67600CD5FA8 /* SettingsTableViewCell.swift */; };
 		C8494D0D1FD5FCB800CD5FA8 /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8494D0C1FD5FCB800CD5FA8 /* Font+Extension.swift */; };
@@ -201,8 +204,10 @@
 		C8494D191FD72A6A00CD5FA8 /* LogInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8494D171FD72A6A00CD5FA8 /* LogInfoView.xib */; };
 		C8494D1B1FD72D7200CD5FA8 /* LogDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8494D1A1FD72D7200CD5FA8 /* LogDetailsViewController.swift */; };
 		C8494D1C1FD72D7200CD5FA8 /* LogDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8494D1A1FD72D7200CD5FA8 /* LogDetailsViewController.swift */; };
+		C8735EAD2001D07E00722BD5 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8735EAC2001D07E00722BD5 /* BaseNavigationController.swift */; };
 		C8B402B41FE9E71B00202A4B /* AuthHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B402B31FE9E71B00202A4B /* AuthHelper.swift */; };
 		C8B402B61FE9F28C00202A4B /* LaunchSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B402B51FE9F28C00202A4B /* LaunchSetupViewController.swift */; };
+		C8BB756820519DDB00262FAF /* TouchIDAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BB756720519DDB00262FAF /* TouchIDAuth.swift */; };
 		C8DD92B41FE30C9C000FB9CD /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DE5B1C7E08320016D422 /* MainViewController.m */; };
 		C8F0E2DC1FD21C3800FF9342 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F0E2DB1FD21C3800FF9342 /* Color+Extension.swift */; };
 		C8F0E2DD1FD21C3800FF9342 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F0E2DB1FD21C3800FF9342 /* Color+Extension.swift */; };
@@ -383,11 +388,14 @@
 		C829675D1FE9BE1F008FEBE8 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AlertView.swift; path = "super-gluu/Views/AlertView.swift"; sourceTree = SOURCE_ROOT; };
 		C829675F1FE9BE5F008FEBE8 /* AlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AlertView.xib; path = "super-gluu/Views/AlertView.xib"; sourceTree = SOURCE_ROOT; };
 		C82967611FE9C2C1008FEBE8 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WebViewController.swift; path = Settings/WebViewController.swift; sourceTree = "<group>"; };
+		C8390617201C145100E4177D /* PushNotificationHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PushNotificationHelper.h; path = "super-gluu/Helpers/PushNotificationHelper.h"; sourceTree = SOURCE_ROOT; };
+		C8390618201C145100E4177D /* PushNotificationHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PushNotificationHelper.m; path = "super-gluu/Helpers/PushNotificationHelper.m"; sourceTree = SOURCE_ROOT; };
 		C83D2B041FE2F18B00F9455E /* SecurityPromptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityPromptViewController.swift; sourceTree = "<group>"; };
 		C841030D1FE0720200B3033D /* PinCodeSettingsTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PinCodeSettingsTableViewController.h; path = Settings/PinCodeSettingsTableViewController.h; sourceTree = "<group>"; };
 		C841030E1FE0720200B3033D /* PinCodeSettingsTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PinCodeSettingsTableViewController.m; path = Settings/PinCodeSettingsTableViewController.m; sourceTree = "<group>"; };
 		C84157051FD9F695008BCF0B /* TouchIdSettingsDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TouchIdSettingsDetailViewController.swift; path = Settings/TouchIdSettingsDetailViewController.swift; sourceTree = "<group>"; };
 		C84157081FDA0226008BCF0B /* SingleCellSettingsDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SingleCellSettingsDetailViewController.swift; path = Settings/SingleCellSettingsDetailViewController.swift; sourceTree = "<group>"; };
+		C8419626201A4F05005A4ACC /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = "super-gluu/LaunchScreen.storyboard"; sourceTree = SOURCE_ROOT; };
 		C848322B1FE9A90800679640 /* SwiftMessages+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SwiftMessages+Extension.swift"; path = "Extensions/SwiftMessages+Extension.swift"; sourceTree = "<group>"; };
 		C8494D0A1FD5E67600CD5FA8 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsTableViewCell.swift; path = Settings/Cells/SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		C8494D0C1FD5FCB800CD5FA8 /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Font+Extension.swift"; path = "Extensions/Font+Extension.swift"; sourceTree = "<group>"; };
@@ -396,8 +404,10 @@
 		C8494D141FD72A5400CD5FA8 /* LogInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LogInfoView.swift; path = Views/LogInfoView.swift; sourceTree = "<group>"; };
 		C8494D171FD72A6A00CD5FA8 /* LogInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = LogInfoView.xib; path = Views/LogInfoView.xib; sourceTree = "<group>"; };
 		C8494D1A1FD72D7200CD5FA8 /* LogDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDetailsViewController.swift; sourceTree = "<group>"; };
+		C8735EAC2001D07E00722BD5 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		C8B402B31FE9E71B00202A4B /* AuthHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHelper.swift; sourceTree = "<group>"; };
 		C8B402B51FE9F28C00202A4B /* LaunchSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchSetupViewController.swift; sourceTree = "<group>"; };
+		C8BB756720519DDB00262FAF /* TouchIDAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TouchIDAuth.swift; path = "super-gluu/Helpers/TouchIDAuth.swift"; sourceTree = "<group>"; };
 		C8F0E2DB1FD21C3800FF9342 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Color+Extension.swift"; path = "Extensions/Color+Extension.swift"; sourceTree = "<group>"; };
 		C8F0E2E11FD227CE00FF9342 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = Settings/SettingsViewController.swift; sourceTree = "<group>"; };
 		F9F48E163E0B27CBECE9164F /* Pods_Super_Gluu___Ad_Free.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods_Super_Gluu___Ad_Free.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -590,6 +600,7 @@
 		BB37DE481C7E08320016D422 = {
 			isa = PBXGroup;
 			children = (
+				C8BB756720519DDB00262FAF /* TouchIDAuth.swift */,
 				BB58C1B31EDDB36600FEEC78 /* Super Gluu Ad free.entitlements */,
 				BBEC91F21E28CE25000D522F /* Super Gluu.entitlements */,
 				BB37DE531C7E08320016D422 /* super-gluu */,
@@ -739,6 +750,10 @@
 		BB37DF071C7E0B8E0016D422 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				C8390617201C145100E4177D /* PushNotificationHelper.h */,
+				C8390618201C145100E4177D /* PushNotificationHelper.m */,
+				C8419626201A4F05005A4ACC /* LaunchScreen.storyboard */,
+				C8735EAC2001D07E00722BD5 /* BaseNavigationController.swift */,
 				C8B402B51FE9F28C00202A4B /* LaunchSetupViewController.swift */,
 				C8B402B31FE9E71B00202A4B /* AuthHelper.swift */,
 				C829675D1FE9BE1F008FEBE8 /* AlertView.swift */,
@@ -1087,6 +1102,7 @@
 				BB37DF2D1C7E0B8E0016D422 /* gluuIcon57.png in Resources */,
 				BBB5114B1EF2EF9500E19D8E /* Main.storyboard in Resources */,
 				BB37DF351C7E0B8E0016D422 /* gl.png in Resources */,
+				C8419627201A4F05005A4ACC /* LaunchScreen.storyboard in Resources */,
 				BB97CDEA1F1E4FB90033C2A5 /* ProximaNova-Reg.otf in Resources */,
 				BB37DF2A1C7E0B8E0016D422 /* gluuIcon29x3.png in Resources */,
 				BB37DF281C7E0B8E0016D422 /* gluuIcon29.png in Resources */,
@@ -1199,6 +1215,7 @@
 				"${BUILT_PRODUCTS_DIR}/NHNetworkTime/NHNetworkTime.framework",
 				"${BUILT_PRODUCTS_DIR}/NSHash/NSHash.framework",
 				"${BUILT_PRODUCTS_DIR}/QRCodeReaderViewController/QRCodeReaderViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
 				"${BUILT_PRODUCTS_DIR}/SWTableViewCell/SWTableViewCell.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework",
 				"${BUILT_PRODUCTS_DIR}/ox-push3/ox_push3.framework",
@@ -1214,6 +1231,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NHNetworkTime.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NSHash.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QRCodeReaderViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SWTableViewCell.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftMessages.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ox_push3.framework",
@@ -1275,6 +1293,7 @@
 				"${BUILT_PRODUCTS_DIR}/NHNetworkTime/NHNetworkTime.framework",
 				"${BUILT_PRODUCTS_DIR}/NSHash/NSHash.framework",
 				"${BUILT_PRODUCTS_DIR}/QRCodeReaderViewController/QRCodeReaderViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
 				"${BUILT_PRODUCTS_DIR}/SWTableViewCell/SWTableViewCell.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework",
 				"${BUILT_PRODUCTS_DIR}/ox-push3/ox_push3.framework",
@@ -1290,6 +1309,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NHNetworkTime.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NSHash.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QRCodeReaderViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SWTableViewCell.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftMessages.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ox_push3.framework",
@@ -1336,9 +1356,11 @@
 				BB13D8121EE8413A00F3C41F /* String+Extension.swift in Sources */,
 				BB128D861E8006A40041BD21 /* SettingsTableCell.m in Sources */,
 				BB4EDA421F4EC52700EA807B /* SCLAlertView.m in Sources */,
+				C8390619201C145100E4177D /* PushNotificationHelper.m in Sources */,
 				BB79FA2A1E78309000AEAE58 /* PeripheralScanner.swift in Sources */,
 				BB37DE591C7E08320016D422 /* AppDelegate.m in Sources */,
 				C8494D1B1FD72D7200CD5FA8 /* LogDetailsViewController.swift in Sources */,
+				C8735EAD2001D07E00722BD5 /* BaseNavigationController.swift in Sources */,
 				BBDFCCCC1EB86C740028D8C0 /* SuperGluuBannerView.m in Sources */,
 				BBD738E81F8770450051FF3F /* AdFreeViewController.m in Sources */,
 				C848322C1FE9A90800679640 /* SwiftMessages+Extension.swift in Sources */,
@@ -1349,6 +1371,7 @@
 				BB87A2811EA0DAD8007F70E9 /* MainTabViewController.m in Sources */,
 				BB128D821E8002890041BD21 /* SettingsTableViewController.m in Sources */,
 				C829675E1FE9BE1F008FEBE8 /* AlertView.swift in Sources */,
+				C8BB756820519DDB00262FAF /* TouchIDAuth.swift in Sources */,
 				BB79FA381E7A8B6400AEAE58 /* Data+Extension.swift in Sources */,
 				BBF7603B1EB462D2005B9793 /* NotificationNetworkView.m in Sources */,
 				BB37DE561C7E08320016D422 /* main.m in Sources */,
@@ -1437,6 +1460,7 @@
 				C8494D1C1FD72D7200CD5FA8 /* LogDetailsViewController.swift in Sources */,
 				BB58C1791EDDB32800FEEC78 /* NetworkChecker.m in Sources */,
 				BB58C17A1EDDB32800FEEC78 /* PAPasscodeViewController.m in Sources */,
+				C839061A201C145100E4177D /* PushNotificationHelper.m in Sources */,
 				BB58C17B1EDDB32800FEEC78 /* ServiceScanner.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1559,7 +1583,6 @@
 			baseConfigurationReference = 9EB98658935DC37AA97BA494 /* Pods-Super Gluu.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Super Gluu.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -1593,7 +1616,6 @@
 			baseConfigurationReference = B84F8928A16117787C96522F /* Pods-Super Gluu.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Super Gluu.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";

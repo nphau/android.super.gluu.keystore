@@ -31,12 +31,32 @@ import ox_push3
             return
         }
         
-        oxPushManager.onOxPushApproveRequest(requestDictionary, isDecline: false) { (result, error) in
+        oxPushManager.onOxPushApproveRequest(requestDictionary, isDecline: false, isSecureClick: false){ (result, error) in
+            
             if error == nil {
                 completion(true, "Success!")
             } else {
                 completion(false, error?.localizedDescription)
             }
+            
+        }
+    }
+    
+    func denyRequest(completion: @escaping (Bool, String?) -> Void) {
+        
+        guard let requestDictionary = self.requestDictionary else {
+            completion(false, "Missing request info")
+            return
+        }
+        
+        oxPushManager.onOxPushApproveRequest(requestDictionary, isDecline: true, isSecureClick: false){ (result, error) in
+            
+            if error == nil {
+                completion(true, "Success!")
+            } else {
+                completion(false, error?.localizedDescription)
+            }
+            
         }
     }
 }

@@ -41,11 +41,13 @@
     self.tableView.backgroundColor = [Constant tableBackgroundColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     
-    BOOL isPinEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:PIN_ENABLED];
+    BOOL isPinEnabled = [GluuUserDefaults userPin] != nil;
     [self.pinSwitch setOn:isPinEnabled];
     
     // setup the second section
     [self updateUI];
+    
+    self.navigationItem.title = @"Pin Code";
     
 }
 

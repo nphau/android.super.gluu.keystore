@@ -25,10 +25,11 @@ enum SettingsTableSections {
         case .settings:
             
             // Don't show touch auth if user's device doesn't have it
+            // Removing SSL for time being
             if TouchIDAuth().canEvaluatePolicy() {
-                return [.pinCodes, .touchId, .ssl]
+                return [.pinCodes, .touchId] //, .ssl]
             } else {
-                return [.pinCodes, .ssl]
+                return [.pinCodes] //, .ssl]
             }
             
         case .help:
@@ -99,6 +100,7 @@ class SettingsViewController: UIViewController {
     // MARK: - Variables
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var versionLabel: UILabel!
     
     let tableSections: [SettingsTableSections] = [.history, .settings, .help]
     
@@ -127,11 +129,13 @@ class SettingsViewController: UIViewController {
         self.navigationItem.title = " "
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "icon_x"), style: .plain, target: self, action: #selector(dismissVC))
         
+        view.backgroundColor = UIColor.Gluu.tableBackground
+        
         tableView?.register( UINib(nibName: "SelectablePortraitView", bundle: nil), forCellReuseIdentifier: "SelectablePortraitView")
         
         tableView.showsHorizontalScrollIndicator = false
         tableView.allowsMultipleSelection        = false
-        tableView.backgroundColor    = UIColor.white
+        tableView.backgroundColor    = UIColor.Gluu.tableBackground
         tableView.tableHeaderView    = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0.1))
         tableView.rowHeight          = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 44

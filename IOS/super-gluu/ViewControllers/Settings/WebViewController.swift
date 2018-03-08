@@ -22,7 +22,7 @@ class WebViewController: UIViewController {
                 return "https://docs.google.com/document/d/1E1xWq28_f-tam7PihkTZXhlqaXVGZxJbVt4cfx15kB4/edit#heading=h.ifitnnlwr25"
                 
             case .tos:
-                return "https://docs.google.com/document/d/1E1xWq28_f-tam7PihkTZXhlqaXVGZxJbVt4cfx15kB4/edit#heading=h.ifitnnlwr25"
+                return "https://gluu.org/docs/supergluu/user-guide/"
             }
         }
     }

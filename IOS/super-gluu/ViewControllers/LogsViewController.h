@@ -21,6 +21,9 @@
     IBOutlet UIView* contentView;
     IBOutlet UIButton* selectAllButton;
     IBOutlet UIView* selectAllView;
+    
+    IBOutlet UIView *headerView;
+    IBOutlet UIView *headerImageBackgroundView;
 }
 
 @end

@@ -31,6 +31,7 @@
 @interface ApproveDenyViewController () {
 
 OXPushManager* oxPushManager;
+    SCLAlertView* alertView;
 
 }
 
@@ -43,15 +44,18 @@ OXPushManager* oxPushManager;
     [super viewDidLoad];
     [self initLocalization];
     [self updateInfo];
-    if (!_isLogInfo){
+    
+    
+    if (!_isLogInfo) {
         [self initAndStartTimer];
+    } else {
+        // showing info about a specific log
+        SEL sel = @selector(showDeleteLogAlert);
+        UIBarButtonItem *trashButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_nav_trash"] style:UIBarButtonItemStylePlain target:self action:sel];
+        self.navigationItem.rightBarButtonItem = trashButton;
     }
     
     [self setupDisplay];
-    
-    
-//    [approveImage setCenter:approveRequest.center];
-//    [denyImage setCenter:denyRequest.center];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openURL:)];
     serverUrlLabel.userInteractionEnabled = YES;
@@ -75,6 +79,7 @@ OXPushManager* oxPushManager;
     cityNameLabel.textColor = [Constant lightGreyTextColor];
     createdDateLabel.textColor = [Constant lightGreyTextColor];
     
+    alertView = [[SCLAlertView alloc] initWithNewWindow];
 }
 
 - (void)openURL:(UITapGestureRecognizer *)tap
@@ -99,10 +104,23 @@ OXPushManager* oxPushManager;
 }
 
 -(void)initAndStartTimer{
+    
+    // Add countdown timer label to right side of navbar
+    
+    timerLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 60, 24)];
+//    timerLabel.font = customFont;
+    timerLabel.numberOfLines = 1;
+    timerLabel.backgroundColor = [UIColor clearColor];
+    timerLabel.textColor = [UIColor whiteColor];
+    timerLabel.textAlignment = NSTextAlignmentRight;
+    
+    UIBarButtonItem *timerBBI = [[UIBarButtonItem alloc] initWithCustomView: timerLabel];
+    
+    self.navigationItem.rightBarButtonItem = timerBBI;
+    
     timerLabel.text = [NSString stringWithFormat:@"%i", START_TIME];
     time = START_TIME;
     timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTime) userInfo:nil repeats:YES];
-
 
 }
 
@@ -170,15 +188,12 @@ OXPushManager* oxPushManager;
         
         self.title = @"Permission Approval";
         
-//        let cancelButton
-//        [self.navigationItem setLeftBarButtonItem:[UIBarButtonItem alloc] in
-        
         [navigationView setHidden:YES];
     }
     [self moveUpViews];
 }
 
--(void)moveUpViews{
+- (void)moveUpViews{
     int moveUpPosition = titleLabel.center.y - timerView.center.y;
     [mainInfoView setCenter:CGPointMake(mainInfoView.center.x, titleLabel.center.y + titleLabel.frame.size.height/1.5)];
     if (!_isLogInfo){
@@ -188,56 +203,81 @@ OXPushManager* oxPushManager;
     }
 }
 
--(IBAction)onApprove:(id)sender{
+- (IBAction)onApprove:(id)sender {
     
-//    NSString* message = [NSString stringWithFormat:@"%@", NSLocalizedString(@"StartAuthentication", @"Authentication...")];
-//    [self updateStatus:message];
+    [self.view setUserInteractionEnabled:false];
     
-//    [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
+    [self showAlertViewWithTitle:@"Approving..." andMessage:@"" withCloseButton:false];
     
-        // eric
-        // currently not receiving a call back here.
-        // Put this in Approve/Deny VC
+    [[AuthHelper sharedInstance] approveRequestWithCompletion:^(BOOL success, NSString *errorMessage) {
+        
+        [alertView hideView];
+        
+//        if (success == false) {
+//            [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:errorMessage withCloseButton:true];
+//        } else {
+//            NSString* message = @"";
+//            message = NSLocalizedString(@"SuccessEnrollment", @"Success Authentication");
+//
+//            [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitleSuccess", @"Success") andMessage:message withCloseButton:true];
+//        }
+     
+        [self.view setUserInteractionEnabled:true];
+        [self.navigationController popToRootViewControllerAnimated:true];
+    }];
     
-//    [oxPushManager onOxPushApproveRequest:scanJsonDictionary
-//                                isDecline:NO
-//                                 callback:^(NSDictionary *result, NSError *error) {
-//                                     if (error){
-//                                         [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:error.localizedDescription];
-//                                     }
-//                                 }];
-    
-    [delegate approveRequest];
-//    [self.navigationController popToRootViewControllerAnimated:true];
     [timer invalidate];
     timer = nil;
 }
 
--(IBAction)onDeny:(id)sender{
+- (IBAction)onDeny:(id)sender {
     
-//    NSString* message = @"Decline starting";
-//    [self updateStatus:message];
-//    [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
-//    [oxPushManager onOxPushApproveRequest:scanJsonDictionary
-//                                isDecline:YES
-//                                 callback:^(NSDictionary *result, NSError *error) {}];
+    [self.view setUserInteractionEnabled:false];
     
+    [self showAlertViewWithTitle:@"Denying..." andMessage:@"" withCloseButton:false];
     
+    [[AuthHelper sharedInstance] denyRequestWithCompletion:^(BOOL success, NSString *errorMessage) {
+        
+        [alertView hideView];
+        
+//        if (success == false) {
+//            [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:errorMessage withCloseButton:true];
+//        } else {
+//            NSString* message = @"";
+//            message = NSLocalizedString(@"SuccessEnrollment", @"Success Authentication");
+//
+//            [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitleSuccess", @"Success") andMessage:message withCloseButton:true];
+//        }
+        
+        [self.view setUserInteractionEnabled:true];
+        [self.navigationController popToRootViewControllerAnimated:true];
+    }];
     
+//    [delegate denyRequest];
     
-    [delegate denyRequest];
-//    [self.navigationController popToRootViewControllerAnimated:true];
     [timer invalidate];
     timer = nil;
+}
+
+
+- (void)showAlertViewWithTitle:(NSString*)title andMessage:(NSString*)message withCloseButton:(BOOL)showCloseButton {
+    
+    NSString *closeTitle;
+    
+    if (alertView == nil) {
+        alertView = [[SCLAlertView alloc] initWithNewWindow];
+    }
+    
+    if (showCloseButton == true) {
+        closeTitle = @"Close";
+    }
+    
+    [alertView showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:title subTitle:message closeButtonTitle:closeTitle duration:20.0];
+    
 }
 
 -(IBAction)onDeleteClick{
-    [self deleteLogsAlert];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self showDeleteLogAlert];
 }
 
 -(NSString*)getTime:(NSString*)date{
@@ -268,7 +308,7 @@ OXPushManager* oxPushManager;
     return date;
 }
 
--(void)deleteLogsAlert{
+- (void)showDeleteLogAlert {
     SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
     [alert setHorizontalButtons:YES];
     [alert addButton:NSLocalizedString(@"YES", @"YES") actionBlock:^(void) {
@@ -285,23 +325,11 @@ OXPushManager* oxPushManager;
 }
 
 -(void)deleteLog:(UserLoginInfo*)log {
-    [[DataStoreManager sharedInstance] deleteAllLogs];
-    
         // Eric
-//    [[DataStoreManager sharedInstance] deleteLog:log];
+    [[DataStoreManager sharedInstance] deleteLog:log];
     
     [self.navigationController popViewControllerAnimated:true];
-//    [self back];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

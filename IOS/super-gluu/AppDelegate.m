@@ -12,7 +12,9 @@
 #import "OXPushManager.h"
 #import "NHNetworkTime.h"
 #import "AppConfiguration.h"
+#import "PushNotificationHelper.h"
 #import <AudioToolbox/AudioServices.h>
+
 
 //#import <UbertestersSDK/Ubertesters.h>
 
@@ -127,32 +129,35 @@
 //        [self manageRemoteNotification:userInfo];
         completionHandler(UIBackgroundFetchResultNewData);
     }
+    
     if ( application.applicationState == UIApplicationStateActive ){
         // app was already in the foreground and we show custom push notifications view
         [self parsePushAndNotify:userInfo];
+        
     } else {
-        // app was just brought from background to foreground and we wait when user click or slide on push notification
-        _pushNotificationRequest = userInfo;
-        [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:NotificationRequest];
+        // app state is Inactive. App was just brought from background to foreground and we wait when user click or slide on push notification
+        
+        // if/else prevents double handling of pushes received when no security measures are in place
+        if ([GluuUserDefaults hasTouchAuthEnabled] == true || [GluuUserDefaults userPin] != nil) {
+            [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:NotificationRequest];
+        } else {
+            _pushNotificationRequest = userInfo;
+        }
     }
+    
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:NotificationRequestActionsApprove];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:NotificationRequestActionsDeny];
     NSLog(@"Received notification: %@", userInfo);
 }
 
--(void)parsePushAndNotify:(NSDictionary*)pushInfo{
-    if (pushInfo != nil) {
-        NSData *data;
-        NSString* requestString = [pushInfo objectForKey:@"request"];
-        if ([requestString isKindOfClass:[NSDictionary class]]){
-            data = [NSJSONSerialization dataWithJSONObject:requestString options:NSJSONWritingPrettyPrinted error:nil];
-        } else {
-            data = [requestString dataUsingEncoding:NSUTF8StringEncoding];
-        }
-        NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-        if (jsonDictionary != nil){
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_ONLINE object:jsonDictionary];
-        }
+- (void)parsePushAndNotify:(NSDictionary*)pushInfo {
+    
+    if (pushInfo == nil) { return; }
+    
+    NSDictionary *parsedPushDict = [PushNotificationHelper parsedInfo: pushInfo];
+    
+    if (parsedPushDict != nil){
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_ONLINE object:parsedPushDict];
     }
 }
 
@@ -166,8 +171,8 @@
         [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:NotificationRequest];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:NotificationRequestActionsApprove];
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:NotificationRequestActionsDeny];
-    }
-    else if ([identifier isEqualToString:NotificationActionTwoIdent]) {
+    
+    } else if ([identifier isEqualToString:NotificationActionTwoIdent]) {
         NSLog(@"You chose action Deny.");
         isDecline = YES;
         _pushNotificationRequest = userInfo;
@@ -179,7 +184,8 @@
         
         completionHandler();
     }
-    [self sendQRReuest:YES];
+    
+    [self handleAuthenticationRequest:YES];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -190,16 +196,36 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
     [[NHNetworkClock sharedNetworkClock] synchronize];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
+    // if the user has secure entry, go to LaunchSetupVC
+    
+    BOOL hasSecurityEnabled = [GluuUserDefaults hasTouchAuthEnabled] == true || [GluuUserDefaults userPin] != nil;
+    
+    if (hasSecurityEnabled) {
+        
+        if ([self.window.rootViewController.presentedViewController isKindOfClass:[BaseNavigationController class]]) {
+            
+            BaseNavigationController *baseNavC = self.window.rootViewController.presentedViewController;
+            
+            [baseNavC unwindToRoot];
+            
+        }
+    }
+    
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+    
     NSLog(@"APP STARTING.....");
-    [self sendQRReuest:NO];
+    
+    // check if a push has been received. Method handles situation appropriately
+    [self handleAuthenticationRequest:NO];
+    
     
     // eric
 /*
@@ -213,55 +239,35 @@
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
--(void)sendQRReuest:(BOOL)isAction{
-    if (_pushNotificationRequest != nil) {
-        NSData *data;
-        NSString* requestString = [_pushNotificationRequest objectForKey:@"request"];
-        if ([requestString isKindOfClass:[NSDictionary class]]){
-            data = [NSJSONSerialization dataWithJSONObject:requestString options:NSJSONWritingPrettyPrinted error:nil];
-        } else {
-            data = [requestString dataUsingEncoding:NSUTF8StringEncoding];
-        }
-        NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-        if (![self isTimeOver]){
-            if (jsonDictionary){
-                if (!isAction){
-                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_RECEIVED object:jsonDictionary];
-                } else {
-                    isDecline ?
-                        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_RECEIVED_DENY object:jsonDictionary]
-                    :
-                        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_RECEIVED_APPROVE object:jsonDictionary]
-                    ;
-                }
-            }
-        } else {
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_TIMEOVER object:jsonDictionary];
-        }
-        _pushNotificationRequest = nil;
-    }
-}
 
--(BOOL)isTimeOver{
-    NSDate* createdTime = [[NSUserDefaults standardUserDefaults] objectForKey:PUSH_CAME_DATE];
-    if (createdTime == nil) return NO;
-//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-////    [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
-//    [formatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
-//
-//    //conversion of NSString to NSDate
-//    NSDate *dateFromString = [formatter dateFromString:createdTimeStr];
-//    if (dateFromString == nil) return NO;
-    NSDate* currentDate = [NSDate date];
-    NSTimeInterval distanceBetweenDates = [currentDate timeIntervalSinceDate:createdTime];
-    int seconds = (int)distanceBetweenDates;
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:PUSH_CAME_DATE];
-    return seconds > WAITING_TIME;//){
-//        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_TIMEOVER object:jsonDictionary];
-//        return ;
-//    } else {
-//        return YES;
-//    }
+- (void)handleAuthenticationRequest:(BOOL)isAction {
+    
+    if (_pushNotificationRequest == nil) { return; }
+    
+    NSDictionary* jsonDictionary = [PushNotificationHelper parsedInfo: _pushNotificationRequest];
+    
+    if ([PushNotificationHelper isLastPushExpired] == false) {
+        
+        if (jsonDictionary){
+        
+            if (!isAction){
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_RECEIVED object:jsonDictionary];
+            } else {
+                isDecline ?
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_RECEIVED_DENY object:jsonDictionary]
+                :
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_RECEIVED_APPROVE object:jsonDictionary]
+                ;
+            }
+        }
+    } else {
+        
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:NotificationRequest];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_TIMEOVER object:jsonDictionary];
+    }
+    
+    _pushNotificationRequest = nil;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -270,8 +276,6 @@
     [self saveContext];
     [[NHNetworkClock sharedNetworkClock] synchronize];
 }
-
-
 
 #pragma mark - Core Data stack
 
