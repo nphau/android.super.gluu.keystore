@@ -30,6 +30,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -184,6 +185,11 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     private void initNavDrawer() {
         toolbar = (Toolbar) findViewById(R.id.nav_drawer_toolbar);
         setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null) {
+            actionBar.setTitle(getString(R.string.home));
+        }
 
         // Find our drawer view
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
