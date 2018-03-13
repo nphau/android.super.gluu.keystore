@@ -47,22 +47,24 @@ public class LicenseFragment extends Fragment implements View.OnClickListener {
         licenseWebView.loadDataWithBaseURL(null, readLicenseTxt(), "text/html", "UTF-8", null);
 //        licenseTextView.setMovementMethod(new ScrollingMovementMethod());
 
+        //todo reimplement the back functionality on the action bar
+
         Button aceptButton = (Button) view.findViewById(R.id.accept_button);
-        LinearLayout action_left_button = (LinearLayout) view.findViewById(R.id.action_left_button);
-        action_left_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+//        LinearLayout action_left_button = (LinearLayout) view.findViewById(R.id.action_left_button);
+//        action_left_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                getActivity().onBackPressed();
+//            }
+//        });
         aceptButton.setOnClickListener(this);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) licenseWebView.getLayoutParams();
         if (!isForFirstLoading){
             aceptButton.setVisibility(View.GONE);
-            action_left_button.setVisibility(View.VISIBLE);
+            //action_left_button.setVisibility(View.VISIBLE);
             params.weight = 0.25f;
         } else {
-            action_left_button.setVisibility(View.GONE);
+            //action_left_button.setVisibility(View.GONE);
             params.weight = 0.98f;
         }
         licenseWebView.setLayoutParams(params);

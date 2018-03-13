@@ -55,20 +55,21 @@ public class SettingsFragment extends Fragment {
         this.inflater = inflater;
         fingerprint = new Fingerprint(context);
 
-        View actionBarView = (View) view.findViewById(R.id.actionBarView);
-        actionBarView.findViewById(R.id.action_right_button).setVisibility(View.GONE);
-        actionBarView.findViewById(R.id.actionbar_icon).setVisibility(View.GONE);
-        TextView title = (TextView) actionBarView.findViewById(R.id.actionbar_textview);
-        title.setVisibility(View.VISIBLE);
-        title.setText("MENU");
-        LinearLayout leftButton = (LinearLayout) actionBarView.findViewById(R.id.action_left_button);
-        leftButton.setVisibility(View.VISIBLE);
-        leftButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+        //todo reimplement toolbar functionality. Looks like just back button which is getting re-done
+//        View actionBarView = (View) view.findViewById(R.id.actionBarView);
+//        actionBarView.findViewById(R.id.action_right_button).setVisibility(View.GONE);
+//        actionBarView.findViewById(R.id.actionbar_icon).setVisibility(View.GONE);
+//        TextView title = (TextView) actionBarView.findViewById(R.id.actionbar_textview);
+//        title.setVisibility(View.VISIBLE);
+//        title.setText("MENU");
+//        LinearLayout leftButton = (LinearLayout) actionBarView.findViewById(R.id.action_left_button);
+//        leftButton.setVisibility(View.VISIBLE);
+//        leftButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                getActivity().onBackPressed();
+//            }
+//        });
 
         final String settingsId = this.getArguments().getString("settingsId");
 

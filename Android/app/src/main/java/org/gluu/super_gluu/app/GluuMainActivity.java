@@ -98,7 +98,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
-    private NavigationView navigationView;
     private ActionBarDrawerToggle drawerToggle;
 
 
@@ -186,15 +185,13 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         toolbar = (Toolbar) findViewById(R.id.nav_drawer_toolbar);
         setSupportActionBar(toolbar);
 
-        ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null) {
-            actionBar.setTitle(getString(R.string.home));
-        }
+        setTitle(getString(R.string.home));
+
 
         // Find our drawer view
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        navigationView = (NavigationView) findViewById(R.id.nvView);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nvView);
         if(navigationView != null) {
             navigationView.setItemIconTintList(null);
         }
@@ -759,7 +756,9 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                 startActivity(intent);
                 break;
             case R.id.nav_privacy_policy:
-                closeDrawerAfterItemSelected(new LicenseFragment(), menuItem);
+                LicenseFragment licenseFragment = new LicenseFragment();
+                licenseFragment.setForFirstLoading(false);
+                closeDrawerAfterItemSelected(licenseFragment, menuItem);
                 break;
             case R.id.nav_version:
                 break;

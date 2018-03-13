@@ -47,11 +47,13 @@ public class KeyFragmentListFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
 
         View rootView = inflater.inflate(R.layout.fragment_key_list, container, false);
-        View actionBarView = (View) rootView.findViewById(R.id.actionBarSettings);
-        actionBarView.findViewById(R.id.action_left_button).setVisibility(View.GONE);
-        actionBarView.findViewById(R.id.action_right_button).setVisibility(View.GONE);
-        actionBarView.findViewById(R.id.actionbar_icon).setVisibility(View.VISIBLE);
-        actionBarView.findViewById(R.id.actionbar_textview).setVisibility(View.GONE);
+
+        //todo reimplement toolbar actions. Think most of this was done anyways.
+//        View actionBarView = (View) rootView.findViewById(R.id.actionBarSettings);
+//        actionBarView.findViewById(R.id.action_left_button).setVisibility(View.GONE);
+//        actionBarView.findViewById(R.id.action_right_button).setVisibility(View.GONE);
+//        actionBarView.findViewById(R.id.actionbar_icon).setVisibility(View.VISIBLE);
+//        actionBarView.findViewById(R.id.actionbar_textview).setVisibility(View.GONE);
 
         listToken = getListToken(rootView);
         keyMainView = (RelativeLayout) rootView.findViewById(R.id.keyMainView);

@@ -20,7 +20,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -30,8 +29,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.LinearLayout;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdListener;
@@ -53,11 +52,8 @@ import org.gluu.super_gluu.u2f.v2.exception.U2FException;
 import org.gluu.super_gluu.u2f.v2.model.TokenResponse;
 import org.gluu.super_gluu.u2f.v2.store.DataStore;
 import org.json.JSONException;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import SuperGluu.app.BuildConfig;
 import SuperGluu.app.R;
@@ -164,11 +160,13 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         this.u2f = new SoftwareDevice(getActivity(), dataStore);
         adView = (LinearLayout)view.findViewById(R.id.view_ad_free);
 //        adView.setVisibility(View.GONE);
-        View actionBarView = (View) view.findViewById(R.id.actionBarView);
-        actionBarView.findViewById(R.id.action_left_button).setVisibility(View.GONE);
-        actionBarView.findViewById(R.id.action_right_button).setVisibility(View.GONE);
-        actionBarView.findViewById(R.id.actionbar_icon).setVisibility(View.VISIBLE);
-        actionBarView.findViewById(R.id.actionbar_textview).setVisibility(View.GONE);
+
+        //todo reimplement actionbar functionality. Looks like it didnt do much.
+//        View actionBarView = (View) view.findViewById(R.id.actionBarView);
+//        actionBarView.findViewById(R.id.action_left_button).setVisibility(View.GONE);
+//        actionBarView.findViewById(R.id.action_right_button).setVisibility(View.GONE);
+//        actionBarView.findViewById(R.id.actionbar_icon).setVisibility(View.VISIBLE);
+//        actionBarView.findViewById(R.id.actionbar_textview).setVisibility(View.GONE);
         Boolean isAdFree = Settings.getPurchase(context);
         if (isAdFree){
             adView.setVisibility(View.GONE);
