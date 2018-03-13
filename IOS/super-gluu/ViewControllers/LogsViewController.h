@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <SWTableViewCell/SWTableViewCell.h>
 
-@interface LogsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, SWTableViewCellDelegate>{
+@interface LogsViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, SWTableViewCellDelegate>{
 
     NSMutableArray* logsArray;
     IBOutlet UIView* topView;
@@ -21,6 +21,9 @@
     IBOutlet UIView* contentView;
     IBOutlet UIButton* selectAllButton;
     IBOutlet UIView* selectAllView;
+    
+    IBOutlet UIView *headerView;
+    IBOutlet UIView *headerImageBackgroundView;
 }
 
 @end

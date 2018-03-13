@@ -15,9 +15,11 @@
 #import <CFNetwork/CFNetwork.h>
 #import "NSString+URLEncode.h"
 
+#import "OXPushManager.h"
 #import "AFHTTPRequestOperationManager.h"
 #import "DataStoreManager.h"
 #import "SCLAlertView.h"
+
 
 #define moveUpY 70
 #define LANDSCAPE_Y 290
@@ -26,7 +28,12 @@
 
 #define ADDRESS_ERROR @"error"
 
-@interface ApproveDenyViewController ()
+@interface ApproveDenyViewController () {
+
+OXPushManager* oxPushManager;
+    SCLAlertView* alertView;
+
+}
 
 @end
 
@@ -37,16 +44,42 @@
     [super viewDidLoad];
     [self initLocalization];
     [self updateInfo];
-    if (!_isLogInfo){
+    
+    
+    if (!_isLogInfo) {
         [self initAndStartTimer];
+    } else {
+        // showing info about a specific log
+        SEL sel = @selector(showDeleteLogAlert);
+        UIBarButtonItem *trashButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_nav_trash"] style:UIBarButtonItemStylePlain target:self action:sel];
+        self.navigationItem.rightBarButtonItem = trashButton;
     }
-    [approveImage setCenter:approveRequest.center];
-    [denyImage setCenter:denyRequest.center];
+    
+    [self setupDisplay];
+    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openURL:)];
     serverUrlLabel.userInteractionEnabled = YES;
     [serverUrlLabel addGestureRecognizer:tap];
-    [timerView setProgressColor:[[AppConfiguration sharedInstance] systemColor]];
-    [timerLabel setTextColor:[[AppConfiguration sharedInstance] systemColor]];
+    
+//    [timerView setProgressColor:[[AppConfiguration sharedInstance] systemColor]];
+//    [timerLabel setTextColor:[[AppConfiguration sharedInstance] systemColor]];
+}
+
+- (void)setupDisplay {
+    
+    for (UIView *v in separators) {
+        v.backgroundColor = [Constant tableBackgroundColor];
+    }
+    
+    for (UILabel *l in titleLabels) {
+        l.textColor = [UIColor blackColor];
+//        l.font = [Constant regularFont: 16.0];
+    }
+    
+    cityNameLabel.textColor = [Constant lightGreyTextColor];
+    createdDateLabel.textColor = [Constant lightGreyTextColor];
+    
+    alertView = [[SCLAlertView alloc] initWithNewWindow];
 }
 
 - (void)openURL:(UITapGestureRecognizer *)tap
@@ -71,10 +104,23 @@
 }
 
 -(void)initAndStartTimer{
+    
+    // Add countdown timer label to right side of navbar
+    
+    timerLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 60, 24)];
+//    timerLabel.font = customFont;
+    timerLabel.numberOfLines = 1;
+    timerLabel.backgroundColor = [UIColor clearColor];
+    timerLabel.textColor = [UIColor whiteColor];
+    timerLabel.textAlignment = NSTextAlignmentRight;
+    
+    UIBarButtonItem *timerBBI = [[UIBarButtonItem alloc] initWithCustomView: timerLabel];
+    
+    self.navigationItem.rightBarButtonItem = timerBBI;
+    
     timerLabel.text = [NSString stringWithFormat:@"%i", START_TIME];
     time = START_TIME;
     timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTime) userInfo:nil repeats:YES];
-
 
 }
 
@@ -96,8 +142,8 @@
 }
 
 -(void)initLocalization{
-    [approveRequest setTitle:NSLocalizedString(@"Approve", @"Approve") forState:UIControlStateNormal];
-    [denyRequest setTitle:NSLocalizedString(@"Deny", @"Deny") forState:UIControlStateNormal];
+//    [approveRequest setTitle:NSLocalizedString(@"Approve", @"Approve") forState:UIControlStateNormal];
+//    [denyRequest setTitle:NSLocalizedString(@"Deny", @"Deny") forState:UIControlStateNormal];
     titleLabel.text = NSLocalizedString(@"PressApprove", @"To continue, press Approve");
 }
 
@@ -132,17 +178,22 @@
     typeLabel.text = info->authenticationType;
     
     if (_isLogInfo){
+        [approveDenyContainerView setHidden:YES];
         [backButton setHidden:NO];
         [timerView setHidden:YES];
         [buttonView setHidden:YES];
         titleLabel.text = NSLocalizedString(@"Information", @"Information");
     } else {
+        self.navigationItem.hidesBackButton = YES;
+        
+        self.title = @"Permission Approval";
+        
         [navigationView setHidden:YES];
     }
     [self moveUpViews];
 }
 
--(void)moveUpViews{
+- (void)moveUpViews{
     int moveUpPosition = titleLabel.center.y - timerView.center.y;
     [mainInfoView setCenter:CGPointMake(mainInfoView.center.x, titleLabel.center.y + titleLabel.frame.size.height/1.5)];
     if (!_isLogInfo){
@@ -152,32 +203,81 @@
     }
 }
 
--(IBAction)onApprove:(id)sender{
-    [delegate approveRequest];
-    [self back];
+- (IBAction)onApprove:(id)sender {
+    
+    [self.view setUserInteractionEnabled:false];
+    
+    [self showAlertViewWithTitle:@"Approving..." andMessage:@"" withCloseButton:false];
+    
+    [[AuthHelper sharedInstance] approveRequestWithCompletion:^(BOOL success, NSString *errorMessage) {
+        
+        [alertView hideView];
+        
+//        if (success == false) {
+//            [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:errorMessage withCloseButton:true];
+//        } else {
+//            NSString* message = @"";
+//            message = NSLocalizedString(@"SuccessEnrollment", @"Success Authentication");
+//
+//            [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitleSuccess", @"Success") andMessage:message withCloseButton:true];
+//        }
+     
+        [self.view setUserInteractionEnabled:true];
+        [self.navigationController popToRootViewControllerAnimated:true];
+    }];
+    
     [timer invalidate];
     timer = nil;
 }
 
--(IBAction)onDeny:(id)sender{
-    [delegate denyRequest];
-    [self back];
+- (IBAction)onDeny:(id)sender {
+    
+    [self.view setUserInteractionEnabled:false];
+    
+    [self showAlertViewWithTitle:@"Denying..." andMessage:@"" withCloseButton:false];
+    
+    [[AuthHelper sharedInstance] denyRequestWithCompletion:^(BOOL success, NSString *errorMessage) {
+        
+        [alertView hideView];
+        
+//        if (success == false) {
+//            [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:errorMessage withCloseButton:true];
+//        } else {
+//            NSString* message = @"";
+//            message = NSLocalizedString(@"SuccessEnrollment", @"Success Authentication");
+//
+//            [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitleSuccess", @"Success") andMessage:message withCloseButton:true];
+//        }
+        
+        [self.view setUserInteractionEnabled:true];
+        [self.navigationController popToRootViewControllerAnimated:true];
+    }];
+    
+//    [delegate denyRequest];
+    
     [timer invalidate];
     timer = nil;
 }
 
--(IBAction)back{
-    [self.navigationController popViewControllerAnimated:YES];
-    [self dismissViewControllerAnimated:YES completion:nil];
+
+- (void)showAlertViewWithTitle:(NSString*)title andMessage:(NSString*)message withCloseButton:(BOOL)showCloseButton {
+    
+    NSString *closeTitle;
+    
+    if (alertView == nil) {
+        alertView = [[SCLAlertView alloc] initWithNewWindow];
+    }
+    
+    if (showCloseButton == true) {
+        closeTitle = @"Close";
+    }
+    
+    [alertView showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:title subTitle:message closeButtonTitle:closeTitle duration:20.0];
+    
 }
 
 -(IBAction)onDeleteClick{
-    [self deleteLogsAlert];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self showDeleteLogAlert];
 }
 
 -(NSString*)getTime:(NSString*)date{
@@ -208,7 +308,7 @@
     return date;
 }
 
--(void)deleteLogsAlert{
+- (void)showDeleteLogAlert {
     SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
     [alert setHorizontalButtons:YES];
     [alert addButton:NSLocalizedString(@"YES", @"YES") actionBlock:^(void) {
@@ -225,18 +325,11 @@
 }
 
 -(void)deleteLog:(UserLoginInfo*)log {
+        // Eric
     [[DataStoreManager sharedInstance] deleteLog:log];
-    [self back];
+    
+    [self.navigationController popViewControllerAnimated:true];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

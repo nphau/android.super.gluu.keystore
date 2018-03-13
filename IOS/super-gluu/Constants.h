@@ -9,6 +9,8 @@
 #ifndef Constants_h
 #define Constants_h
 
+#define SCREEN_WIDTH = [[UIScreen mainScreen] bounds].size.width
+
 #define NotificationCategoryIdent @"ACTIONABLE"
 #define NotificationActionOneIdent @"ACTION_DENY"
 #define NotificationActionTwoIdent @"ACTION_APPROVE"
@@ -80,11 +82,11 @@
 
 //#define CUSTOM_GREEN_COLOR [UIColor colorWithRed:1/255.0 green:161/255.0 blue:97/255.0 alpha:1.0]
 
-#define PIN_PROTECTION_ID @"enabledPinCode"
-#define PIN_SIMPLE_ID @"simplePinCode"
+//#define PIN_PROTECTION_ID @"enabledPinCode"
+//#define PIN_SIMPLE_ID @"simplePinCode"
 #define PIN_CODE @"PinCode"
 #define PIN_ENABLED @"PinCodeEnabled"
-#define PIN_TYPE_IS_4_DIGIT @"is_4_digit"
+//#define PIN_TYPE_IS_4_DIGIT @"is_4_digit"
 #define SSL_ENABLED @"is_ssl_enabled"
 #define TOUCH_ID_ENABLED @"is_touchID_enabled"
 #define SECURE_CLICK_ENABLED @"secure_click_enabled"

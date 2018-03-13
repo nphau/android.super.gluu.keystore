@@ -13,9 +13,12 @@
 #import "CATCurveProgressView.h"
 #import "ADViewSubscriber.h"
 
-@interface ApproveDenyViewController : UIViewController <UIScrollViewDelegate> {
+@interface ApproveDenyViewController : BaseViewController <UIScrollViewDelegate> {
  
+    
     IBOutlet UILabel* titleLabel;
+    
+    IBOutlet UIView* approveDenyContainerView;
     IBOutlet UIButton* approveRequest;
     IBOutlet UIButton* denyRequest;
     
@@ -45,10 +48,14 @@
     
     NSTimer* timer;
     int time;
-    IBOutlet UILabel* timerLabel;
+    UILabel* timerLabel;
     
     IBOutlet UIImageView* approveImage;
     IBOutlet UIImageView* denyImage;
+    
+    IBOutletCollection(UIView) NSArray *separators;
+    IBOutletCollection(UILabel) NSArray *titleLabels;
+    IBOutletCollection(UILabel) NSArray *subtitleLabels;
 }
 
 @property (nonatomic,assign)  id <ApproveDenyDelegate> delegate;

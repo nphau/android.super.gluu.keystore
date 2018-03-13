@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 //#import <CoreLocation/CoreLocation.h>
 
-@interface LicenseAgreementView : UIViewController {
+@interface LicenseAgreementView : BaseViewController {
     
     IBOutlet UIView* topView;
 }

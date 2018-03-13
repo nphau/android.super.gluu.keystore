@@ -24,7 +24,7 @@
     [super viewDidLoad];
     
     settingsTopics = [[NSArray alloc] initWithObjects:@"Pin code", @"TouchID (fingerprint)", @"Trust all (SSL)", @"", @"User guide", @"Privacy policy", @"Upgrate to Ad-Free", @"", @"Version", @"", nil];//@"U2F BLE device(s)",
-    settingsKeys = [[NSArray alloc] initWithObjects:PIN_PROTECTION_ID, TOUCH_ID_ENABLED, SSL_ENABLED, nil];// SECURE_CLICK_ENABLED,
+    settingsKeys = [[NSArray alloc] initWithObjects:TOUCH_ID_ENABLED, SSL_ENABLED, nil];// SECURE_CLICK_ENABLED, PIN_PROTECTION_ID,
     if ([[ADSubsriber sharedInstance] isSubscribed]){
         settingsTopics = [[NSArray alloc] initWithObjects:@"Pin code", @"TouchID (fingerprint)", @"Trust all (SSL)", @"", @"User guide", @"Privacy policy", @"", @"Version", @"", nil];
     }
@@ -47,7 +47,7 @@
     NSString* subTitle = @"";
     switch (settings_index) {
         case 0:
-            subTitle = [self checkSettingsFor:PIN_PROTECTION_ID];
+            //subTitle = [self checkSettingsFor:PIN_PROTECTION_ID];
             break;
         case 1:
             subTitle = [self checkSettingsFor:TOUCH_ID_ENABLED];

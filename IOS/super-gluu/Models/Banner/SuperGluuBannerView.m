@@ -21,28 +21,38 @@
 }
 */
 
--(id)initWithAdSize:(GADAdSize)adSize andRootView:(UIViewController*)rootView{
+-(id)initWithAdSize:(GADAdSize)adSize andRootViewController:(UIViewController*)rootVC{
     //Determine type of AD (banner or interstitial)
+    
     if (adSize.size.height == kGADAdSizeBanner.size.height &&
-        adSize.size.width == kGADAdSizeBanner.size.width){
-        //Banner
-        if (bannerView == nil){
+        adSize.size.width == kGADAdSizeBanner.size.width) {
+    
+            //Banner
+        if (bannerView == nil) {
+            
             bannerView = [[GADBannerView alloc] initWithAdSize:adSize];
-            [rootView.view addSubview:bannerView];
-            if (adSize.size.height == kGADAdSizeBanner.size.height &&
-                adSize.size.width == kGADAdSizeBanner.size.width){
-                bannerView.center = CGPointMake(bannerView.center.x, [UIScreen mainScreen].bounds.size.height - 75);
-                bannerView.adUnitID = @"ca-app-pub-3326465223655655/9778254436";
-            }
-            bannerView.rootViewController = rootView;
+            bannerView.adUnitID = @"ca-app-pub-3326465223655655/9778254436";
+            bannerView.rootViewController = rootVC;
+                
+            CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+            CGFloat screenHeight = rootVC.view.bounds.size.height;
+            
+            CGFloat adHeight = adSize.size.height;
+            
+            CGFloat adCenterX = screenWidth / 2;
+            CGFloat adCenterY = screenHeight - (adHeight / 2);
+            
+            bannerView.center = CGPointMake(adCenterX, adCenterY);
+            
+            [rootVC.view addSubview:bannerView];
+            [rootVC.view bringSubviewToFront:bannerView];
+            
             [bannerView loadRequest:[GADRequest request]];
+            
             NSLog(@"Banner loaded successfully");
         }
     }
-//    else {
-//        //interstitial
-//        [self showInterstitial:rootView];
-//    }
+
     return self;
 }
 
@@ -61,11 +71,15 @@
     if (_interstitial.isReady) {
         [_interstitial presentFromRootViewController:rootView];
     } else {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [self showInterstitial:rootView];
+        });
+        
         NSLog(@"Ad wasn't ready");
     }
 }
 
--(void)closeAD{
+-(void)closeAD {
     bannerView.hidden = YES;
 }
 

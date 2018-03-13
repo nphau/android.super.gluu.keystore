@@ -41,7 +41,7 @@
 }
 
 -(void)initADView:(NSNotification*)notification{
-    smallBannerView = [[SuperGluuBannerView alloc] initWithAdSize:kGADAdSizeBanner andRootView:self];
+    smallBannerView = [[SuperGluuBannerView alloc] initWithAdSize:kGADAdSizeBanner andRootViewController:self];
     smallBannerView.alpha = 1.0;
 }
 

@@ -10,7 +10,7 @@
 #import "PAPasscodeViewController.h"
 #import "PinCodeDelegate.h"
 
-@interface PinCodeViewController : UIViewController <PAPasscodeViewControllerDelegate>{
+@interface PinCodeViewController : BaseViewController <PAPasscodeViewControllerDelegate>{
 
     IBOutlet UIView* topView;
     IBOutlet UIImageView* topIconView;

@@ -21,6 +21,12 @@
 #import <LocalAuthentication/LocalAuthentication.h>
 #import "PinCodeViewController.h"
 #import "PinCodeDelegate.h"
+#import "SuperGluuBannerView.h"
+#import "ADSubsriber.h"
+#import "PushNotificationHelper.h"
+
+
+
 #ifdef ADFREE
     #import "Super_Gluu___Ad_Free-Swift.h"
 #else
@@ -31,10 +37,17 @@
     PeripheralScanner* scanner;
     BOOL isSecureClick;
     BOOL isEnroll;
+    BOOL isShowingQRReader;
+    
+    int count;
     
     OXPushManager* oxPushManager;
     PinCodeViewController* pinView;
     UIAlertController * alert;
+    
+    SuperGluuBannerView* smallBannerView;
+    SuperGluuBannerView* bannerView;
+    
 }
 
 @end
@@ -42,46 +55,170 @@
 @implementation MainViewController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
-    [self initWiget];
-    [self initNotifications];
-    [self initQRScanner];
-    [self initLocalization];
-    oxPushManager = [[OXPushManager alloc] init];
-    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(initSecureClickScanner:)    name:INIT_SECURE_CLICK_NOTIFICATION  object:nil];
-
-    //For Push Notifications
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] > 7){//for ios 8 and higth
-        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
-        [[UIApplication sharedApplication] registerForRemoteNotifications];
-        [self registerForNotification];
+    
+    // on initial load, prompt user to setup secure entry to app
+    if ([GluuUserDefaults hasSeenSecurityPrompt] == false) {
+        [self performSegueWithIdentifier:@"segueToSecurityPrompt" sender:nil];
     }
-    [self checkPushNotification];
-    [self checkNetworkConnection];
+    
+    count = 0;
+    
+    [self initWiget];
+    [self initLocalization];
+    [self initNotificationCenterObservers];
+    [self setupDisplay];
+    [self setupAdHandling];
+    
+    oxPushManager = [[OXPushManager alloc] init];
+    
     //Disable BLE support
 //    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:SECURE_CLICK_ENABLED];
 }
 
--(void)viewWillAppear:(BOOL)animated{
+- (UIStatusBarStyle) preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
     BOOL secureClickEnable = [[NSUserDefaults standardUserDefaults] boolForKey:SECURE_CLICK_ENABLED];
     isSecureClick = secureClickEnable;
     [_notificationNetworkView checkNetwork];
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_INTERSTIAL object:nil];
+    
+    [self checkPushNotification];
+    
 }
 
--(void)initSecureClickScanner:(NSNotification*)notification{
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+//    [self registerForPushNotifications];
+    
+    // make sure the push notification ask happens after the security prompt
+    if ([GluuUserDefaults hasSeenNotificationPrompt] == false && [GluuUserDefaults hasSeenSecurityPrompt] == true) {
+        
+        [self registerForPushNotifications];
+        [GluuUserDefaults setNotificationPrompt];
+    } else {
+        [self initQRScanner];
+    }
+}
+
+- (void)setupDisplay {
+    
+    SEL sel = @selector(goToSettings);
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_menu"] style:UIBarButtonItemStylePlain target:self action:sel];
+    self.navigationItem.rightBarButtonItem = menuButton;
+    
+}
+
+
+- (void)setupAdHandling {
+#ifdef ADFREE
+        //skip here
+#else
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideADView:) name:NOTIFICATION_AD_FREE object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initADView:) name:NOTIFICATION_AD_NOT_FREE object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadInterstial:) name:NOTIFICATION_INTERSTIAL object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initFullPageBanner:) name:NOTIFICATION_REGISTRATION_SUCCESS object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initFullPageBanner:) name:NOTIFICATION_REGISTRATION_FAILED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initFullPageBanner:) name:NOTIFICATION_AUTENTIFICATION_SUCCESS object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initFullPageBanner:) name:NOTIFICATION_AUTENTIFICATION_FAILED object:nil];
+    
+        //Here we should also check subsciption for AD free
+    [[ADSubsriber sharedInstance] isSubscriptionExpired];
+#endif
+    bannerView = [[SuperGluuBannerView alloc] init];
+    [bannerView createAndLoadInterstitial];
+}
+
+#pragma Ad Handling:
+
+-(void)initADView:(NSNotification*)notification{
+    smallBannerView = [[SuperGluuBannerView alloc] initWithAdSize:kGADAdSizeBanner andRootViewController:self];
+    smallBannerView.alpha = 1.0;
+}
+
+-(void)hideADView:(NSNotification*)notification{
+    if (smallBannerView != nil){
+        [smallBannerView closeAD];
+    }
+}
+
+-(void)reloadInterstial:(NSNotification*)notification{
+    if (bannerView == nil){
+        bannerView = [[SuperGluuBannerView alloc] init];
+    }
+    [bannerView createAndLoadInterstitial];
+}
+
+-(void)initFullPageBanner:(NSNotification*)notification{
+
+    [bannerView showInterstitial:self];
+}
+
+-(void)reloadFullPageBanner:(NSNotification*)notification{
+    [bannerView createAndLoadInterstitial];
+}
+
+-(void)closeAD{
+    [bannerView closeAD];
+}
+
+
+- (void)registerForPushNotifications {
+        //For Push Notifications
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] > 7) { //for ios 8 and higth
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+        [self registerForNotification];
+        
+    }
+}
+
+- (void)goToSettings {
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    SettingsViewController *settingsVC = [storyboard instantiateViewControllerWithIdentifier:@"SettingsViewController"];
+    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:settingsVC] animated:YES completion:nil];
+    
+}
+
+- (void)initSecureClickScanner:(NSNotification*)notification {
+    
     NSData* valueData = notification.object;
     scanner = [[PeripheralScanner alloc] init];
     scanner.valueForWrite = valueData;
     scanner.isEnroll = isEnroll;
     [scanner start];
     [self showAlertViewWithTitle:@"SecureClick" andMessage:@"Short click on device button"];
+    
 }
 
--(void)checkPushNotification{
+- (void)checkPushNotification {
+    
+    // check for an existing request via push notification
     NSDictionary* pushNotificationRequest = [[NSUserDefaults standardUserDefaults] objectForKey:NotificationRequest];
+    
     if (pushNotificationRequest == nil) return;
+    
+    NSDictionary* jsonDictionary = [PushNotificationHelper parsedInfo:pushNotificationRequest];
+    
+    if ([PushNotificationHelper isLastPushExpired] == true) {
+        
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:NotificationRequest];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PUSH_TIMEOVER object:jsonDictionary];
+        
+        return;
+    }
+    
+    
+    /*
     NSData *data;
 //    if (data == nil) return;
     NSString* requestString = [pushNotificationRequest objectForKey:@"request"];
@@ -90,20 +227,32 @@
     } else {
         data = [requestString dataUsingEncoding:NSUTF8StringEncoding];
     }
-    NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+     */
+    
+       //[NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    
     if (jsonDictionary != nil){
-        NSString* message = NSLocalizedString(@"StartAuthentication", @"Authentication...");
-        [self updateStatus:message];
+//        NSString* message = NSLocalizedString(@"StartAuthentication", @"Authentication...");
+//        [self updateStatus:message];
+        
         //            [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
-        scanJsonDictionary = jsonDictionary
-        ;
+        
+        
+        [AuthHelper sharedInstance].requestDictionary = jsonDictionary;
+        
         [self initUserInfo:jsonDictionary];
+        
         BOOL isApprove = [[NSUserDefaults standardUserDefaults] boolForKey:NotificationRequestActionsApprove];
-        BOOL isDeny = [[NSUserDefaults standardUserDefaults] boolForKey:NotificationRequestActionsDeny];
+        BOOL isDeny    = [[NSUserDefaults standardUserDefaults] boolForKey:NotificationRequestActionsDeny];
+        
+        // Currently, we are double calling approve request.
+        // It's getting called both when we approve via the home screen, then again when
+        // the user comes into the app and the Main VC is launched.
+        
         if (isApprove){
-            [self onApprove];
+            [self approveRequest];
         } else if (isDeny){
-            [self onDecline];
+            [self denyRequest];
         } else {
             double delayInSeconds = 1.0;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
@@ -111,11 +260,13 @@
                 [self sendQRCodeRequest:jsonDictionary];
             });
         }
-        [self.tabBarController setSelectedIndex:0];
+        
+        // clear existing data
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:NotificationRequest];
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:NotificationRequestActionsApprove];
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:NotificationRequestActionsDeny];
     }
+    
 }
 
 - (void)registerForNotification {
@@ -160,33 +311,35 @@
     }
     statusView.layer.cornerRadius = BUTTON_CORNER_RADIUS;
     
-    scanButton.layer.cornerRadius = CORNER_RADIUS;
-    scanButton.layer.borderWidth = 2.0;
-    scanButton.layer.borderColor = [[AppConfiguration sharedInstance] systemColor].CGColor;
-//    [scanButton setTitleColor:[[AppConfiguration sharedInstance] systemColor] forState:UIControlStateNormal];
-    topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
+    scanButton.layer.cornerRadius = scanButton.bounds.size.height / 2;
+    
+    topView.backgroundColor    = [[AppConfiguration sharedInstance] systemColor];
+    
     statusView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
-    topIconView.image = [[AppConfiguration sharedInstance] systemIcon];
+    
+    topIconView.image          = [[AppConfiguration sharedInstance] systemIcon];
+    
     isUserInfo = NO;
 }
 
 -(void)initLocalization{
     welcomeLabel.text = NSLocalizedString(@"Welcome", @"Welcome");
     scanTextLabel.text = NSLocalizedString(@"ScanText", @"Scan Text");
-    [[self.tabBarController.tabBar.items objectAtIndex:0] setTitle:NSLocalizedString(@"Home", @"Home")];
-    [[self.tabBarController.tabBar.items objectAtIndex:1] setTitle:NSLocalizedString(@"Logs", @"Logs")];
-    [[self.tabBarController.tabBar.items objectAtIndex:2] setTitle:NSLocalizedString(@"Keys", @"Keys")];
 }
 
-- (void) initPushView:(NSNotification*)notification{
+- (void)initPushView:(NSNotification*)notification{
     //Make sound and vibrate like push
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
     AudioServicesPlaySystemSound(1003);//push sound
-    scanJsonDictionary = [notification object];
-    [self sendQRCodeRequest:scanJsonDictionary];
+    
+    NSDictionary *requestDictionary = [notification object];
+    
+    [AuthHelper sharedInstance].requestDictionary = requestDictionary;
+    
+    [self sendQRCodeRequest:requestDictionary];
 }
 
--(void)initNotifications{
+-(void)initNotificationCenterObservers{
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationRecieved:) name:NOTIFICATION_REGISTRATION_SUCCESS object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationRecieved:) name:NOTIFICATION_REGISTRATION_FAILED object:nil];
@@ -206,6 +359,8 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationRecieved:) name:NOTIFICATION_PUSH_TIMEOVER object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(initSecureClickScanner:)    name:INIT_SECURE_CLICK_NOTIFICATION  object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationDidDisconnecPeritheralRecieved:) name:DID_DISCONNECT_PERIPHERAL object:nil];
 }
 
@@ -214,124 +369,176 @@
 }
 
 -(void)notificationRecieved:(NSNotification*)notification{
+    
     NSString* step = [notification.userInfo valueForKey:@"oneStep"];
     BOOL oneStep = [step boolValue];
     NSString* message = @"";
-    if ([[notification name] isEqualToString:NOTIFICATION_REGISTRATION_SUCCESS]){
+    NSString *notiName = [notification name];
+    
+    if ([notiName isEqual:NOTIFICATION_REGISTRATION_SUCCESS]){
+        
         message = NSLocalizedString(@"SuccessEnrollment", @"Success Authentication");
+
         [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitleSuccess", @"Success") andMessage:message];
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_INTERSTIAL object:nil];
-    } else
-    if ([[notification name] isEqualToString:NOTIFICATION_REGISTRATION_FAILED]){
+        
+    } else if ([notiName isEqual:NOTIFICATION_REGISTRATION_FAILED]){
+        
         message = NSLocalizedString(@"FailedEnrollment", @"Failed Authentication");
+        
         if (oneStep){
             message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"OneStep", @"OneStep Authentication"), NSLocalizedString(@"FailedEnrollment", @"Failed Authentication")];
         } else {
             message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"TwoStep", @"TwoStep Authentication"), NSLocalizedString(@"FailedEnrollment", @"Failed Enrollment")];
         }
+        
         [self showAlertViewWithTitle:NSLocalizedString(@"FailedEnrollment", @"Failed Enrollment") andMessage:message];
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_INTERSTIAL object:nil];
-    } else
-    if ([[notification name] isEqualToString:NOTIFICATION_REGISTRATION_STARTING]){
+        
+    } else if ([notiName isEqual:NOTIFICATION_REGISTRATION_STARTING]){
+        
         message = NSLocalizedString(@"StartRegistration", @"Registration...");
+        
         if (oneStep){
             message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"OneStep", @"OneStep Authentication"), NSLocalizedString(@"StartRegistration", @"Registration...")];
         } else {
             message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"TwoStep", @"TwoStep Authentication"), NSLocalizedString(@"StartRegistration", @"Registration...")];
         }
-    } else
-    if ([[notification name] isEqualToString:NOTIFICATION_AUTENTIFICATION_SUCCESS]){
+        
+    } else if ([notiName isEqual:NOTIFICATION_AUTENTIFICATION_SUCCESS]){
+        
         isUserInfo = YES;
+        
         message = NSLocalizedString(@"SuccessAuthentication", @"Success Authentication");
         [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitleSuccess", @"Success") andMessage:message];
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_INTERSTIAL object:nil];
-    } else
-    if ([[notification name] isEqualToString:NOTIFICATION_AUTENTIFICATION_FAILED]){
+        
+    } else if ([notiName isEqual:NOTIFICATION_AUTENTIFICATION_FAILED]){
+        
         message = NSLocalizedString(@"FailedAuthentication", @"Failed Authentication");
+
         if (oneStep){
             message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"OneStep", @"OneStep Authentication"), NSLocalizedString(@"FailedAuthentication", @"Failed Authentication")];
         } else {
             message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"TwoStep", @"TwoStep Authentication"), NSLocalizedString(@"FailedAuthentication", @"Failed Authentication")];
         }
+
         [self showAlertViewWithTitle:NSLocalizedString(@"FailedAuthentication", @"Failed Authentication") andMessage:message];
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_INTERSTIAL object:nil];
-    } else
-    if ([[notification name] isEqualToString:NOTIFICATION_AUTENTIFICATION_STARTING]){
+        
+    } else if ([notiName isEqual:NOTIFICATION_AUTENTIFICATION_STARTING]){
+        
         if (oneStep){
             message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"OneStep", @"OneStep Authentication"), NSLocalizedString(@"StartAuthentication", @"Authentication...")];
         } else {
             message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"TwoStep", @"TwoStep Authentication"), NSLocalizedString(@"StartAuthentication", @"Authentication...")];
         }
-    } else
-    if ([[notification name] isEqualToString:NOTIFICATION_ERROR] || [[notification name] isEqualToString:@"ERRROR"]){
+        
+    } else if ([notiName isEqual:NOTIFICATION_ERROR] || [notiName isEqual:@"ERRROR"]){
+        
         message = [notification object];
 //        [UserLoginInfo sharedInstance]->logState = UNKNOWN_ERROR;
         [UserLoginInfo sharedInstance]->errorMessage = message;
         [[DataStoreManager sharedInstance] saveUserLoginInfo:[UserLoginInfo sharedInstance]];
-    } else 
-    if ([[notification name] isEqualToString:NOTIFICATION_UNSUPPORTED_VERSION]){
+        
+    } else if ([notiName isEqual:NOTIFICATION_UNSUPPORTED_VERSION]){
+        
         message = NSLocalizedString(@"UnsupportedU2FV2Version", @"Unsupported U2F_V2 version...");
-    } else
-    if ([[notification name] isEqualToString:NOTIFICATION_PUSH_RECEIVED]){
+        
+    } else if ([notiName isEqual:NOTIFICATION_PUSH_RECEIVED]){
+        
         if (oneStep){
             message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"OneStep", @"OneStep Authentication"), NSLocalizedString(@"StartAuthentication", @"Authentication...")];
         } else {
             message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"TwoStep", @"TwoStep Authentication"), NSLocalizedString(@"StartAuthentication", @"Authentication...")];
         }
+        
         NSDictionary* pushRequest = (NSDictionary*)notification.object;
         [self sendQRCodeRequest:pushRequest];
-    } else
-        if ([[notification name] isEqualToString:NOTIFICATION_PUSH_RECEIVED_APPROVE]){
-            NSDictionary* pushRequest = (NSDictionary*)notification.object;
-            scanJsonDictionary = pushRequest;
-            [self initUserInfo:pushRequest];
-            [self onApprove];
-            [self.tabBarController setSelectedIndex:0];
-            return;
-        }
-    if ([[notification name] isEqualToString:NOTIFICATION_PUSH_RECEIVED_DENY]){
+        
+    } else if ([notiName isEqual:NOTIFICATION_PUSH_RECEIVED_APPROVE])
+        {}
+    /*{
+        
         NSDictionary* pushRequest = (NSDictionary*)notification.object;
-        scanJsonDictionary = pushRequest;
+        [AuthHelper sharedInstance].requestDictionary = pushRequest;
+//            scanJsonDictionary = pushRequest;
         [self initUserInfo:pushRequest];
-        [self onDecline];
-        [self.tabBarController setSelectedIndex:0];
+        [self approveRequest];
         return;
     }
-    if ([[notification name] isEqualToString:NOTIFICATION_DECLINE_SUCCESS]){
+    
+    if ([notiName isEqual:NOTIFICATION_PUSH_RECEIVED_DENY]){
+        NSDictionary* pushRequest = (NSDictionary*)notification.object;
+        [AuthHelper sharedInstance].requestDictionary = pushRequest;
+//        scanJsonDictionary = pushRequest;
+        [self initUserInfo:pushRequest];
+        [self denyRequest];
+        return;
+    }
+    */
+     
+    if ([notiName isEqual:NOTIFICATION_DECLINE_SUCCESS]){
         message = NSLocalizedString(@"DenySuccess", @"Deny Success");
     }
-    if ([[notification name] isEqualToString:NOTIFICATION_DECLINE_FAILED]){
+    
+    if ([notiName isEqual:NOTIFICATION_DECLINE_FAILED]){
         message = NSLocalizedString(@"DenyFailed", @"Deny Failed");
     }
-    if ([[notification name] isEqualToString:NOTIFICATION_FAILED_KEYHANDLE]){
+    
+    if ([notiName isEqual:NOTIFICATION_FAILED_KEYHANDLE]){
         message = NSLocalizedString(@"FailedKeyHandle", @"Failed KeyHandles");
         [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:message];
     }
-    if ([[notification name] isEqualToString:NOTIFICATION_PUSH_TIMEOVER]){
+    
+    if ([notiName isEqual:NOTIFICATION_PUSH_TIMEOVER]){
         NSString* mess = NSLocalizedString(@"PushTimeOver", @"Push Time Over");
         [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:mess];
         return;
     }
-    [self updateStatus:message];
-    [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
+    
+//    [self updateStatus:message];
+//    [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
+    
 }
 
 #pragma LicenseAgreementDelegates
 
--(void)approveRequest{
-    NSString* message = NSLocalizedString(@"StartAuthentication", @"Authentication...");
-    [self updateStatus:message];
-    [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
-    [self.tabBarController.tabBar setHidden:NO];
-    [self onApprove];
+- (void)approveRequest:(void (^)(BOOL, NSString *))handler {
+    
+}
+
+- (void)approveRequest {
+//    NSString* message = NSLocalizedString(@"StartAuthentication", @"Authentication...");
+//    [self updateStatus:message];
+    
+//    [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
+    
+    [[AuthHelper sharedInstance] approveRequestWithCompletion:^(BOOL success, NSString *errorMessage) {
+        if (success == false) {
+//            [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:errorMessage];
+        }
+    }];
+    
+//    [self onApprove];
 }
 
 -(void)denyRequest{
-    NSString* message = @"Request canceled";
-    [self updateStatus:message];
-    [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
-    [self.tabBarController.tabBar setHidden:NO];
-    [self onDecline];
+    
+    [[AuthHelper sharedInstance] denyRequestWithCompletion:^(BOOL success, NSString * errorMessage) {
+        if (success == false) {
+//            [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:errorMessage];
+        }
+    }];
+    
+//    NSString* message = @"Request canceled";
+//    [self updateStatus:message];
+//    [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
+//    [self onDecline];
 }
 
 -(void)openRequest{
@@ -340,15 +547,30 @@
 
 //# ------------ END -----------------------------
 
--(void)initQRScanner{
+#pragma - mark - QR Code Reader
+
+-(void)initQRScanner {
+    
+    if (qrScanerVC != nil) {
+        return;
+    }
+    
     // Create the reader object
     QRCodeReader *reader = [QRCodeReader readerWithMetadataObjectTypes:@[AVMetadataObjectTypeQRCode]];
     
     // Instantiate the view controller
-    qrScanerVC = [QRCodeReaderViewController readerWithCancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel") codeReader:reader startScanningAtLoad:YES showSwitchCameraButton:YES showTorchButton:YES];
+    
+    qrScanerVC = [QRCodeReaderViewController readerWithCancelButtonTitle:@""//NSLocalizedString(@"Cancel", @"Cancel")
+                                                              codeReader:reader
+                                                     startScanningAtLoad:YES
+                                                  showSwitchCameraButton:NO
+                                                         showTorchButton:NO];
+    
     
     // Set the presentation style
-    qrScanerVC.modalPresentationStyle = UIModalPresentationFormSheet;
+//    qrScanerVC.modalPresentationStyle = UIModalPresentationFullScreen;
+    
+    
     
     // Define the delegate receiver
     qrScanerVC.delegate = self;
@@ -358,62 +580,224 @@
 
 -(void)sendQRCodeRequest:(NSDictionary*)jsonDictionary{
     if (jsonDictionary != nil){
-        scanJsonDictionary = jsonDictionary;
+        [AuthHelper sharedInstance].requestDictionary = jsonDictionary;
+//        scanJsonDictionary = jsonDictionary;
         [self initUserInfo:jsonDictionary];
-        [self checkTouchIDProtection];
+        
+        [self provideScanRequest];
+        
     } else {
         [self updateStatus:NSLocalizedString(@"WrongQRImage", @"Wrong QR Code image")];
         [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
     }
 }
 
--(void)provideScanRequest{
+- (void)provideScanRequest {
     isUserInfo = NO;
     [self loadApproveDenyView];
 //    [self performSegueWithIdentifier:@"InfoView" sender:nil];
 }
 
--(void)loadApproveDenyView{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    ApproveDenyViewController* approveDenyView = [storyboard instantiateViewControllerWithIdentifier:@"ApproveDenyView"];
-    approveDenyView.delegate = self;
-    [self presentViewController:approveDenyView animated:YES completion:nil];
-}
-
-- (IBAction)scanAction:(id)sender
-{
-    if (_notificationNetworkView.isNetworkAvailable){
-        if ([QRCodeReader isAvailable]){
-            [self updateStatus:NSLocalizedString(@"QRCodeScanning", @"QR Code Scanning")];
-            [self presentViewController:qrScanerVC animated:YES completion:NULL];
-        } else {
-            [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:NSLocalizedString(@"AlertMessageNoQRScanning", @"No QR Scanning available")];
+- (void)loadApproveDenyView {
+    
+    count++;
+    
+    NSLog(@"Count = %d", count);
+    
+    // prevent approve deny from loading 2x
+    for (UIViewController *vc in self.navigationController.viewControllers) {
+        if ([vc isKindOfClass:[ApproveDenyViewController class]]) {
+            return;
         }
     }
+    
+    if (self.presentedViewController != nil) {
+        [self.presentedViewController dismissViewControllerAnimated:false completion:nil];
+    }
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    ApproveDenyViewController *approveDenyView = [storyboard instantiateViewControllerWithIdentifier:@"ApproveDenyView"];
+    approveDenyView.delegate = self;
+    approveDenyView.isLogInfo = false;
+    
+    [self.navigationController pushViewController:approveDenyView animated:true];
+    
+//    [self presentViewController:approveDenyView animated:YES completion:nil];
+    
 }
 
--(void)onApprove{
-    NSString* message = [NSString stringWithFormat:@"%@", NSLocalizedString(@"StartAuthentication", @"Authentication...")];
-    [self updateStatus:message];
-    [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
+- (void)showQRReader {
     
-    [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:NO isSecureClick:isSecureClick callback:^(NSDictionary *result,NSError *error){
-        if (error){
-            [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:error.localizedDescription];
+    if (_notificationNetworkView.isNetworkAvailable) {
+        
+        if (qrScanerVC == nil) {
+            [self initQRScanner];
+        }
+        
+        if ([QRCodeReader isAvailable]) {
+            
+            [qrScanerVC setTitle:@"Scan Barcode"];
+            
+            [self.navigationController pushViewController:qrScanerVC animated:true];
+            
+        } else {
+            
+            [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:NSLocalizedString(@"AlertMessageNoQRScanning", @"No QR Scanning available")];
+            
+        }
+    }
+    
+    [scanButton setEnabled:true];
+}
+
+#pragma mark - Camera Permission Handling
+
+- (IBAction)scanQRTapped {
+    
+    [scanButton setEnabled:false];
+    
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    
+    switch (authStatus) {
+        case AVAuthorizationStatusAuthorized:
+            [self showQRReader];
+            break;
+            
+        case AVAuthorizationStatusNotDetermined: {
+            
+            NSLog(@"%@", @"Camera access not determined. Ask for permission.");
+            
+            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+                
+                if (granted) {
+                    
+                    NSLog(@"Granted access to %@", AVMediaTypeVideo);
+                    [self showQRReader];
+                    
+                } else {
+                    
+                    NSLog(@"Not granted access to %@", AVMediaTypeVideo);
+                    [self cameraDenied];
+                    
+                }
+            }];
+            
+            break;
+        }
+            
+        case AVAuthorizationStatusRestricted:
+            // User is restricted
+            [self cameraDenied];
+            break;
+            
+        case AVAuthorizationStatusDenied:
+            // User needs to head to settings
+            [self cameraDenied];
+            break;
+    
+    }
+
+}
+
+- (void)cameraDenied {
+    
+    NSLog(@"%@", @"Denied camera access");
+    
+    NSString *alertText;
+    NSString *alertButton;
+    
+    BOOL canOpenSettings = (&UIApplicationOpenSettingsURLString != NULL);
+    if (canOpenSettings) {
+        alertText = @"It looks like your privacy settings are preventing us from accessing your camera to do barcode scanning. You can fix this by doing the following:\n\n1. Touch the Go button below to open the Settings app.\n\n2. Touch Privacy.\n\n3. Turn the Camera on.\n\n4. Open this app and try again.";
+        
+        alertButton = @"Go";
+    } else {
+        alertText = @"It looks like your privacy settings are preventing us from accessing your camera to do barcode scanning. You can fix this by doing the following:\n\n1. Close this app.\n\n2. Open the Settings app.\n\n3. Scroll to the bottom and select this app in the list.\n\n4. Touch Privacy.\n\n5. Turn the Camera on.\n\n6. Open this app and try again.";
+        
+        alertButton = @"OK";
+    }
+    
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@"Camera Issue"
+                          message:alertText
+                          delegate:self
+                          cancelButtonTitle:alertButton
+                          otherButtonTitles:nil];
+    
+    alert.tag = 3491832;
+    [alert show];
+    
+    [scanButton setEnabled:true];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 3491832) {
+        BOOL canOpenSettings = (&UIApplicationOpenSettingsURLString != NULL);
+        
+        if (canOpenSettings)
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+        }
+}
+
+#pragma mark - Approve Deny View Delegate
+
+- (void)onApprove {
+    
+//    NSString* message = [NSString stringWithFormat:@"%@", NSLocalizedString(@"StartAuthentication", @"Authentication...")];
+//    [self updateStatus:message];
+    
+//    [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
+//
+//    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    // eric
+    // currently not receiving a call back here.
+    // Put this in Approve/Deny VC
+
+    /*
+    [[AuthHelper sharedInstance] approveRequestWithCompletion:^(BOOL success, NSString *errorMessage) {
+        if (success == false) {
+            [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:errorMessage];
         }
     }];
+     */
+    
+//    [oxPushManager onOxPushApproveRequest:scanJsonDictionary
+//                                isDecline:NO
+//                                 callback:^(NSDictionary *result, NSError *error) {
+//                                     if (error){
+//                                         [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:error.localizedDescription];
+//                                     }
+//                                 }];
+    
+    // Eric
+//    [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:NO isSecureClick:isSecureClick callback:^(NSDictionary *result,NSError *error){
+//        if (error){
+//            [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:error.localizedDescription];
+//        }
+//    }];
 }
 
--(void)onDecline{
-    NSString* message = @"Decline starting";
-    [self updateStatus:message];
-    [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
-    [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:YES isSecureClick:isSecureClick callback:^(NSDictionary *result,NSError *error){
-    }];
+- (void)onDecline {
+    
+//    NSString* message = @"Decline starting";
+//    [self updateStatus:message];
+//
+//
+//    [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
+//    [oxPushManager onOxPushApproveRequest:scanJsonDictionary
+//                                isDecline:YES
+//                                 callback:^(NSDictionary *result, NSError *error) {}];
+    
+    // Eric
+//    [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:YES isSecureClick:isSecureClick callback:^(NSDictionary *result,NSError *error){
+//    }];
 }
 
 -(void)showAlertViewWithTitle:(NSString*)title andMessage:(NSString*)message{
     SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+    
     [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:title subTitle:message closeButtonTitle:@"Close" duration:3.0f];
 }
 
@@ -421,6 +805,20 @@
 
 - (void)reader:(QRCodeReaderViewController *)reader didScanResult:(NSString *)result
 {
+    
+//    [self.navigationController popViewControllerAnimated:true];
+    
+    if(result){// && !isResultFromScan){
+//        [qrScanerVC dismissViewControllerAnimated:YES completion:nil];
+            //            isResultFromScan = YES;
+        
+        NSLog(@"%@", result);
+        NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        [self sendQRCodeRequest:jsonDictionary];
+    }
+   
+    /*
     [self dismissViewControllerAnimated:YES completion:^{
         if(result){// && !isResultFromScan){
             [qrScanerVC dismissViewControllerAnimated:YES completion:nil];
@@ -431,18 +829,21 @@
             [self sendQRCodeRequest:jsonDictionary];
         }
     }];
+     */
 }
 
 - (void)readerDidCancel:(QRCodeReaderViewController *)reader
 {
+    /*
     [self dismissViewControllerAnimated:YES completion:NULL];
 //    if (!isResultFromScan){
         [self updateStatus:NSLocalizedString(@"QRCodeCalceled", @"QR Code Calceled")];
         [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
 //    }
+     */
 }
 
--(void)updateStatus:(NSString*)status{
+-(void)updateStatus:(NSString*)status {
     if (status != nil){
         statusLabel.text = status;
     }
@@ -511,10 +912,6 @@
     [UserLoginInfo sharedInstance]->locationIP = [parameters objectForKey:@"req_ip"];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 -(void)checkNetworkConnection{
     // Allocate a reachability object
@@ -558,56 +955,20 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
--(void)checkTouchIDProtection{
-    //Skip all security levels
-    [self provideScanRequest];
-    /*
-    BOOL isTouchID = [[NSUserDefaults standardUserDefaults] boolForKey:TOUCH_ID_ENABLED];
-    if (isTouchID){
-        LAContext *myContext = [[LAContext alloc] init];
-        NSError *authError = nil;
-        NSString *myLocalizedReasonString = @"Please authenticate with your fingerprint to continue.";
-        [alert dismissViewControllerAnimated:YES completion:nil];
-        if ([myContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&authError]) {
-            [myContext evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
-                      localizedReason:myLocalizedReasonString
-                                reply:^(BOOL success, NSError *error) {
-                                    if (success) {
-                                        // User authenticated successfully, take appropriate action
-                                        NSLog(@"User authenticated successfully, take appropriate action");
-                                        [alert dismissViewControllerAnimated:YES completion:nil];
-                                        dispatch_async(dispatch_get_main_queue(), ^{
-                                            [self provideScanRequest];
-                                        });
-                                    } else {
-                                        // User did not authenticate successfully, look at error and take appropriate action
-                                        [self showTouchIDErrorMessage];
-                                    }
-                                }];
-        } else {
-            // Could not evaluate policy; look at authError and present an appropriate message to user
-            [self showTouchIDResultError:authError];
-        }
-    } else {
-        BOOL isPin = [[NSUserDefaults standardUserDefaults] boolForKey:PIN_PROTECTION_ID];
-        if (isPin){
-            [self loadPinView];
-        } else {
-            //Skip, continue normal flow
-            [self provideScanRequest];
-        }
+
+- (void)onResult:(Boolean)result{
+    if (result){
+        [pinView dismissViewControllerAnimated:YES completion:nil];
+        [self provideScanRequest];
     }
-    */
 }
 
--(void)loadPinView{
-    UIStoryboard *storyboardobj=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    pinView = (PinCodeViewController*)[storyboardobj instantiateViewControllerWithIdentifier:@"pinViewController"];
-    pinView.isCallback = YES;
-    [pinView setDelegate:self];
-    [self presentViewController:pinView animated:YES completion:nil];
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+
+/*
 -(void)showTouchIDErrorMessage{
     alert = [UIAlertController
              alertControllerWithTitle:@"TouchID Failed"
@@ -648,12 +1009,7 @@
     
     [self presentViewController:alert animated:YES completion:nil];
 }
+ */
 
-- (void)onResult:(Boolean)result{
-    if (result){
-        [pinView dismissViewControllerAnimated:YES completion:nil];
-        [self provideScanRequest];
-    }
-}
 
 @end

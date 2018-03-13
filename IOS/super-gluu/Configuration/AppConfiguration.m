@@ -11,7 +11,7 @@
 #define SYSTEM_TITLE @"systemTitle"
 #define SYSTEM_ICON @"systemIcon"
 #define SYSTEM_ALERT_ICON @"systemAlertIcon"
-#define SYSTEM_LOG_ICON @"systemLogIcon"
+#define SYSTEM_LOG_ICON @"icon_gluu_logo_log_details"
 #define SYSTEM_LOG_RED_ICON @"systemLogRedIcon"
 #define SYSTEM_COLOR @"systemColor"
 
@@ -75,7 +75,7 @@
         return [UIImage imageNamed:@"gluuIcon.png"];
     }
     
-    return [UIImage imageNamed:icon];
+    return [UIImage imageNamed:SYSTEM_LOG_ICON];
 }
 
 -(UIImage*)systemLogRedIcon{

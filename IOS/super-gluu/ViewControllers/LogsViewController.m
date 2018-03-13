@@ -18,25 +18,40 @@
 
 @implementation LogsViewController
 
--(void)viewDidLoad{
+-(void)viewDidLoad {
 
     [super viewDidLoad];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initPushView) name:NOTIFICATION_PUSH_ONLINE object:nil];
+    
+    self.navigationItem.title = @"Logs";
+    self.view.backgroundColor = [Constant tableBackgroundColor];
+    
     topView.backgroundColor = [[AppConfiguration sharedInstance] systemColor];
     topIconView.image = [[AppConfiguration sharedInstance] systemIcon];
+    
     [cancelButton setHidden: YES];
+    
     [editLogsButton setTag:1];
+    
     if ([[ADSubsriber sharedInstance] isSubscribed]){
         [selectAllView setCenter:CGPointMake(selectAllView.center.x, selectAllView.center.y+50)];
     }
+    
+    logsTableView.tableFooterView = [[UIView alloc] init];
+    logsTableView.allowsMultipleSelectionDuringEditing = YES;
+    logsTableView.separatorColor = [Constant cellSeparatorColor];
+    logsTableView.backgroundColor = [Constant tableBackgroundColor];
+    logsTableView.tableHeaderView.backgroundColor = [Constant tableBackgroundColor];
+
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.tabBarController.tabBar.hidden = NO;
+    
     [self updateLogs];
-    logsTableView.tableFooterView = [[UIView alloc] init];
-    logsTableView.allowsMultipleSelectionDuringEditing = YES;
+    
+    headerImageBackgroundView.layer.cornerRadius = 47;
 }
 
 -(void)initPushView{
@@ -46,16 +61,20 @@
 -(void)getLogs{
     logsArray = [[NSMutableArray alloc] init];
     logsArray = [[NSMutableArray alloc] initWithArray:[[DataStoreManager sharedInstance] getUserLoginInfo]];
-    [logsArray count] == 0 ? [logsTableView setHidden:YES] : [logsTableView setHidden:NO];
+    
+    [logsTableView reloadData];
+
     [editLogsButton setHidden: [logsArray count] == 0];
 }
 
--(void)deleteLog:(UserLoginInfo*)log {
+-(void)deleteLog:(UserLoginInfo *)log {
+    // eric
     [[DataStoreManager sharedInstance] deleteLog:log];
     [self updateLogs];
 }
 
 -(void)deleteLogs:(NSArray*)logs {
+    // eric
     [[DataStoreManager sharedInstance] deleteLogs:logs];
     [self updateLogs];
     [selectAllView setHidden:YES];
@@ -64,7 +83,6 @@
 -(void)updateLogs{
     [self getLogs];
     [logsTableView setEditing:NO animated:YES];
-    [logsTableView reloadData];
 }
 
 -(IBAction)editCleanLogs:(id)sender{

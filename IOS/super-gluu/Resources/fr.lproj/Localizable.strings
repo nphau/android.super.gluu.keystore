@@ -26,7 +26,7 @@
 "Enrol" = "Enrol";
 "Authentication" = "Authentication";
 
-"ScanText" = "You may be presented with a QR code for enrollment or authentication. Click the button to open your QR scanner.";
+"ScanText" = "You may be presented with a QR code for enrollment or authentication. Tap the button below to open your QR scanner.";
 "Welcome" = "Welcome to Super Gluu!";
 
 "PressApprove" = "To continue, press Approve";
