@@ -56,10 +56,10 @@
     </item>
 
 
-    <group
-        android:id="@+id/group_5">
+    <group>
         <item
-            android:title="V 3.12"/>
+            android:id="@+id/nav_version"
+            android:title="@string/version"/>
     </group>
 
 

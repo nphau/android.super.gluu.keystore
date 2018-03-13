@@ -724,52 +724,52 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     }
 
     public void selectDrawerItem(MenuItem menuItem) {
-        if(menuItem.getItemId() == R.id.nav_logs) {
-
-        }
         settings.setForLogs(menuItem.getItemId() == R.id.nav_logs);
         settings.setForKeys(menuItem.getItemId() == R.id.nav_keys);
         reloadLogs();
 
-        // Create a new fragment and specify the fragment to show based on nav item clicked
-        Fragment fragment = null;
-
         org.gluu.super_gluu.app.fragments.PageRootFragment rootFragment = new org.gluu.super_gluu.app.fragments.PageRootFragment();
 
-//
         switch(menuItem.getItemId()) {
             case R.id.nav_keys:
-                fragment = rootFragment.newInstance(FragmentType.FRAGMENT_TYPE.KEYS_FRAGMENT);
+                closeDrawerAfterItemSelected(rootFragment.newInstance(FragmentType.FRAGMENT_TYPE.KEYS_FRAGMENT), menuItem);
                 break;
             case R.id.nav_logs:
-                fragment = rootFragment.newInstance(FragmentType.FRAGMENT_TYPE.LOGS_FRAGMENT);
+                closeDrawerAfterItemSelected(rootFragment.newInstance(FragmentType.FRAGMENT_TYPE.LOGS_FRAGMENT), menuItem);
                 break;
             case R.id.nav_pin_code:
-                fragment = new org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsPinCode();
+                closeDrawerAfterItemSelected(new org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsPinCode(), menuItem);
                 break;
             case R.id.nav_touch_id:
-                fragment = createSettingsFragment("FingerprintSettings");
+                closeDrawerAfterItemSelected(createSettingsFragment("FingerprintSettings"), menuItem);
                 break;
             case R.id.nav_ssl:
-                fragment = createSettingsFragment("SSLConnectionSettings");
+                closeDrawerAfterItemSelected(createSettingsFragment("SSLConnectionSettings"), menuItem);
                 break;
             case R.id.nav_user_guide:
+                closeDrawerAfterItemSelected(null, menuItem);
                 Uri uri = Uri.parse("https://gluu.org/docs/supergluu/3.0.0/user-guide/");
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
                 break;
             case R.id.nav_privacy_policy:
-                fragment = new LicenseFragment();
+                closeDrawerAfterItemSelected(new LicenseFragment(), menuItem);
+                break;
+            case R.id.nav_version:
                 break;
             default:
-                fragment = rootFragment.newInstance(FragmentType.FRAGMENT_TYPE.MAIN_FRAGMENT);
+                closeDrawerAfterItemSelected(rootFragment.newInstance(FragmentType.FRAGMENT_TYPE.MAIN_FRAGMENT), menuItem);
         }
 
+    }
+
+    public void closeDrawerAfterItemSelected(Fragment fragment, MenuItem menuItem) {
         if(fragment != null) {
             // Insert the fragment by replacing any existing fragment
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
         }
+
 
         // Highlight the selected item has been done by NavigationView
         menuItem.setChecked(true);
