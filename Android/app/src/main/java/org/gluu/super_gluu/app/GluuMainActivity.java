@@ -15,26 +15,30 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
-import android.graphics.PorterDuff;
+import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.support.design.widget.TabLayout;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
@@ -45,7 +49,6 @@ import com.google.gson.Gson;
 import org.gluu.super_gluu.app.activities.GluuApplication;
 import org.gluu.super_gluu.app.activities.MainActivity;
 import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
-import org.gluu.super_gluu.app.fragments.GluuPagerView.GluuPagerView;
 import org.gluu.super_gluu.app.fragments.KeysFragment.KeyHandleInfoFragment;
 import org.gluu.super_gluu.app.fragments.LicenseFragment.LicenseFragment;
 import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
@@ -90,7 +93,13 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     public static final String QR_CODE_PUSH_NOTIFICATION = "QR_CODE_PUSH_NOTIFICATION";
     public static final int MESSAGE_NOTIFICATION_ID = 444555;
 
-    private TabLayout tabLayout;
+    //private TabLayout tabLayout;
+
+    private DrawerLayout drawerLayout;
+    private Toolbar toolbar;
+    private NavigationView navigationView;
+    private ActionBarDrawerToggle drawerToggle;
+
 
     private SoftwareDevice u2f;
     private AndroidKeyDataStore dataStore;
@@ -104,8 +113,8 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     private BroadcastReceiver mPushMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-            tabLayout.getTabAt(0).select();
+            //tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+            //tabLayout.getTabAt(0).select();
 
             // Get extra data included in the Intent
             String message = intent.getStringExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE);
@@ -135,7 +144,8 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         context = getApplicationContext();
 
         //Init main tab vie and pager
-        initMainTabView();
+        //initMainTabView();
+        initNavDrawer();
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mPushMessageReceiver,
                 new IntentFilter(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION));
@@ -157,6 +167,38 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
         //Init InAPP-Purchase service
         initIAPurchaseService();
+
+        setupInitialFragment();
+    }
+
+    private void setupInitialFragment() {
+        org.gluu.super_gluu.app.fragments.PageRootFragment rootFragment = new org.gluu.super_gluu.app.fragments.PageRootFragment();
+        Fragment fragment = rootFragment.newInstance(FragmentType.FRAGMENT_TYPE.MAIN_FRAGMENT);
+
+        // Insert the fragment by replacing any existing fragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+
+    }
+
+    private void initNavDrawer() {
+        toolbar = (Toolbar) findViewById(R.id.nav_drawer_toolbar);
+        setSupportActionBar(toolbar);
+
+        // Find our drawer view
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        navigationView = (NavigationView) findViewById(R.id.nvView);
+        if(navigationView != null) {
+            navigationView.setItemIconTintList(null);
+        }
+        setupDrawerContent(navigationView);
+
+        // Find our drawer view
+        drawerToggle = setupDrawerToggle();
+
+        // Tie DrawerLayout events to the ActionBarToggle
+        drawerLayout.addDrawerListener(drawerToggle);
     }
 
     private void initGoogleADS(Boolean isShow){
@@ -189,51 +231,51 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     }
 
     private void initMainTabView(){
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-
-        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Home").setIcon(R.drawable.home_action));
-        tabLayout.addTab(tabLayout.newTab().setText("Logs").setIcon(R.drawable.logs_action));
-        tabLayout.addTab(tabLayout.newTab().setText("Keys").setIcon(R.drawable.keys_action));
-        tabLayout.addTab(tabLayout.newTab().setText("Menu").setIcon(R.drawable.settings_action));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-        // Locate the viewpager in gluu_activity_main.xmln.xml
-        final GluuPagerView viewPager = (GluuPagerView) findViewById(R.id.pager);
-        viewPager.setSwipeLocked(true);
-
-        // Set the ViewPagerAdapter into ViewPager
-        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));//, tabLayout.getTabCount()
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        final int tabIconColor = ContextCompat.getColor(context, R.color.greenColor);
-        final int tabIconColorBlack = ContextCompat.getColor(context, R.color.blackColor);
-        tabLayout.getTabAt(0).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
-        tabLayout.getTabAt(1).getIcon().setColorFilter(tabIconColorBlack, PorterDuff.Mode.SRC_IN);
-        tabLayout.getTabAt(2).getIcon().setColorFilter(tabIconColorBlack, PorterDuff.Mode.SRC_IN);
-        tabLayout.getTabAt(3).getIcon().setColorFilter(tabIconColorBlack, PorterDuff.Mode.SRC_IN);
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                int position = tab.getPosition();
-//                isShowMenu = position == 3 ? true : false;
-                settings.setForLogs(position == 1 ? true : false);
-                settings.setForKeys(position == 2 ? true : false);
-                reloadLogs();
-                viewPager.setCurrentItem(position);
-                tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-                tab.getIcon().setColorFilter(tabIconColorBlack, PorterDuff.Mode.SRC_IN);
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
+////        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+////        setSupportActionBar(toolbar);
+//
+//        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+//        tabLayout.addTab(tabLayout.newTab().setText("Home").setIcon(R.drawable.home_action));
+//        tabLayout.addTab(tabLayout.newTab().setText("Logs").setIcon(R.drawable.logs_action));
+//        tabLayout.addTab(tabLayout.newTab().setText("Keys").setIcon(R.drawable.keys_action));
+//        tabLayout.addTab(tabLayout.newTab().setText("Menu").setIcon(R.drawable.settings_action));
+//        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+//
+//        // Locate the viewpager in gluu_activity_main.xmln.xml
+//        final GluuPagerView viewPager = (GluuPagerView) findViewById(R.id.pager);
+//        viewPager.setSwipeLocked(true);
+//
+//        // Set the ViewPagerAdapter into ViewPager
+//        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));//, tabLayout.getTabCount()
+//        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+//        final int tabIconColor = ContextCompat.getColor(context, R.color.greenColor);
+//        final int tabIconColorBlack = ContextCompat.getColor(context, R.color.blackColor);
+//        tabLayout.getTabAt(0).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+//        tabLayout.getTabAt(1).getIcon().setColorFilter(tabIconColorBlack, PorterDuff.Mode.SRC_IN);
+//        tabLayout.getTabAt(2).getIcon().setColorFilter(tabIconColorBlack, PorterDuff.Mode.SRC_IN);
+//        tabLayout.getTabAt(3).getIcon().setColorFilter(tabIconColorBlack, PorterDuff.Mode.SRC_IN);
+//        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//                int position = tab.getPosition();
+////                isShowMenu = position == 3 ? true : false;
+//                settings.setForLogs(position == 1 ? true : false);
+//                settings.setForKeys(position == 2 ? true : false);
+//                reloadLogs();
+//                viewPager.setCurrentItem(position);
+//                tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+//            }
+//
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//                tab.getIcon().setColorFilter(tabIconColorBlack, PorterDuff.Mode.SRC_IN);
+//            }
+//
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
+//
+//            }
+//        });
     }
 
     @Override
@@ -326,14 +368,14 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             public void onApprove() {
                 processManager.onOxPushRequest(false);
                 //Show tab again
-                tabLayout.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                //tabLayout.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
             }
 
             @Override
             public void onDeny() {
                 processManager.onOxPushRequest(true);
                 //Show tab again
-                tabLayout.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                //tabLayout.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
             }
         });
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -341,7 +383,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         transaction.addToBackStack(null);
         transaction.commitAllowingStateLoss();
         //To hide tabs
-        tabLayout.getLayoutParams().height = 0;
+        //tabLayout.getLayoutParams().height = 0;
     }
 
     @Override
@@ -401,7 +443,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 //            }
         transaction.commit();
         //To hide tabs
-        tabLayout.getLayoutParams().height = 0;
+        //tabLayout.getLayoutParams().height = 0;
     }
 
     private ProcessManager createProcessManager(OxPush2Request oxPush2Request){
@@ -648,5 +690,102 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         }
         // END_INCLUDE(camera_permission_request)
     }
+
+    //region drawer specific code
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        selectDrawerItem(menuItem);
+                        return true;
+                    }
+                });
+    }
+
+    private ActionBarDrawerToggle setupDrawerToggle() {
+        // NOTE: Make sure you pass in a valid toolbar reference.  ActionBarDrawToggle() does not require it
+        // and will not render the hamburger icon without it.
+        return new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open,  R.string.drawer_close);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggles
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    public void selectDrawerItem(MenuItem menuItem) {
+        if(menuItem.getItemId() == R.id.nav_logs) {
+
+        }
+        settings.setForLogs(menuItem.getItemId() == R.id.nav_logs);
+        settings.setForKeys(menuItem.getItemId() == R.id.nav_keys);
+        reloadLogs();
+
+        // Create a new fragment and specify the fragment to show based on nav item clicked
+        Fragment fragment = null;
+
+        org.gluu.super_gluu.app.fragments.PageRootFragment rootFragment = new org.gluu.super_gluu.app.fragments.PageRootFragment();
+
+//
+        switch(menuItem.getItemId()) {
+            case R.id.nav_keys:
+                fragment = rootFragment.newInstance(FragmentType.FRAGMENT_TYPE.KEYS_FRAGMENT);
+                break;
+            case R.id.nav_logs:
+                fragment = rootFragment.newInstance(FragmentType.FRAGMENT_TYPE.LOGS_FRAGMENT);
+                break;
+            case R.id.nav_pin_code:
+                fragment = new org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsPinCode();
+                break;
+            case R.id.nav_touch_id:
+                fragment = createSettingsFragment("FingerprintSettings");
+                break;
+            case R.id.nav_ssl:
+                fragment = createSettingsFragment("SSLConnectionSettings");
+                break;
+            case R.id.nav_user_guide:
+                Uri uri = Uri.parse("https://gluu.org/docs/supergluu/3.0.0/user-guide/");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+                break;
+            case R.id.nav_privacy_policy:
+                fragment = new LicenseFragment();
+                break;
+            default:
+                fragment = rootFragment.newInstance(FragmentType.FRAGMENT_TYPE.MAIN_FRAGMENT);
+        }
+
+        if(fragment != null) {
+            // Insert the fragment by replacing any existing fragment
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+        }
+
+        // Highlight the selected item has been done by NavigationView
+        menuItem.setChecked(true);
+        // Set action bar title
+        setTitle(menuItem.getTitle());
+        // Close the navigation drawer
+        drawerLayout.closeDrawers();
+    }
+
+    Fragment createSettingsFragment(String settingsId){
+        Fragment sslFragment = new org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("settingsId", settingsId);
+        sslFragment.setArguments(bundle);
+        return sslFragment;
+    }
+    //endregion
 
 }
