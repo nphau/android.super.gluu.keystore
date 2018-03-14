@@ -108,6 +108,9 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     private Boolean isOXRequestProtected = false;
     private OxPush2Request oxPush2RequestProtected;
 
+    FragmentManager fragmentManager;
+
+
     private Settings settings = new Settings();
 
     private BroadcastReceiver mPushMessageReceiver = new BroadcastReceiver() {
@@ -145,6 +148,8 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
         //Init main tab vie and pager
         //initMainTabView();
+
+        fragmentManager = getSupportFragmentManager();
         initNavDrawer();
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mPushMessageReceiver,
@@ -176,7 +181,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         Fragment fragment = rootFragment.newInstance(FragmentType.FRAGMENT_TYPE.MAIN_FRAGMENT);
 
         // Insert the fragment by replacing any existing fragment
-        FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
     }
@@ -771,8 +775,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     public void closeDrawerAfterItemSelected(Fragment fragment, MenuItem menuItem) {
         if(fragment != null) {
             // Insert the fragment by replacing any existing fragment
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).addToBackStack(null).commit();
         }
 
 
