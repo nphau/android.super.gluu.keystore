@@ -64,7 +64,7 @@ public class KeyFragmentListFragment extends Fragment {
             public void onKeyHandleInfo(KeyHandleInfoFragment infoFragment) {
                 getActivity().invalidateOptionsMenu();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.keys_root_frame, infoFragment);
+                transaction.replace(R.id.main_frame_layout, infoFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
             }

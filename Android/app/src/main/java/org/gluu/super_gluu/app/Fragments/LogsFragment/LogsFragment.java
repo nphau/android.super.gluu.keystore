@@ -92,7 +92,7 @@ public class LogsFragment extends Fragment {
                 setIsButtonVisible(false);
                 getActivity().invalidateOptionsMenu();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.logs_root_frame, approveDenyFragment);
+                transaction.replace(R.id.main_frame_layout, approveDenyFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
             }
