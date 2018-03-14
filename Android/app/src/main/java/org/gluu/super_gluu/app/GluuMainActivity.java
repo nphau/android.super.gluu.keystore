@@ -786,7 +786,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                 closeDrawerAfterItemSelected(createSettingsFragment("SSLConnectionSettings"), menuItem);
                 break;
             case R.id.nav_user_guide:
-                closeDrawerAfterItemSelected(null, menuItem);
+                closeDrawerAfterItemSelected(null, menuItem, false);
                 Uri uri = Uri.parse("https://gluu.org/docs/supergluu/3.0.0/user-guide/");
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
@@ -805,13 +805,19 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     }
 
     public void closeDrawerAfterItemSelected(Fragment fragment, MenuItem menuItem) {
+        closeDrawerAfterItemSelected(fragment, menuItem, true);
+    }
+
+    public void closeDrawerAfterItemSelected(Fragment fragment, MenuItem menuItem, boolean setTitle) {
         if(fragment != null) {
             // Insert the fragment by replacing any existing fragment
             fragmentManager.beginTransaction().replace(R.id.flContent, fragment).addToBackStack(null).commit();
         }
-        
-        // Set action bar title
-        setTitle(menuItem.getTitle());
+
+        if(setTitle) {
+            // Set action bar title
+            setTitle(menuItem.getTitle());
+        }
         // Close the navigation drawer
         drawer.closeDrawers();
     }
