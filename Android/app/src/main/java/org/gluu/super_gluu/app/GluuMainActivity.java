@@ -6,6 +6,7 @@
 
 package org.gluu.super_gluu.app;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
@@ -16,7 +17,6 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.graphics.drawable.Drawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -27,7 +27,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -35,12 +34,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
@@ -51,9 +48,13 @@ import com.google.gson.Gson;
 import org.gluu.super_gluu.app.activities.GluuApplication;
 import org.gluu.super_gluu.app.activities.MainActivity;
 import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
+import org.gluu.super_gluu.app.fragments.KeysFragment.KeyFragmentListFragment;
 import org.gluu.super_gluu.app.fragments.KeysFragment.KeyHandleInfoFragment;
 import org.gluu.super_gluu.app.fragments.LicenseFragment.LicenseFragment;
+import org.gluu.super_gluu.app.fragments.LogsFragment.LogsFragment;
 import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
+import org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsFragment;
+import org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsPinCode;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
 import org.gluu.super_gluu.app.model.LogInfo;
 import org.gluu.super_gluu.app.purchase.InAppPurchaseService;
@@ -273,54 +274,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         inAppPurchaseService.reloadPurchaseService();
     }
 
-    private void initMainTabView(){
-////        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-////        setSupportActionBar(toolbar);
-//
-//        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-//        tabLayout.addTab(tabLayout.newTab().setText("Home").setIcon(R.drawable.home_action));
-//        tabLayout.addTab(tabLayout.newTab().setText("Logs").setIcon(R.drawable.logs_action));
-//        tabLayout.addTab(tabLayout.newTab().setText("Keys").setIcon(R.drawable.keys_action));
-//        tabLayout.addTab(tabLayout.newTab().setText("Menu").setIcon(R.drawable.settings_action));
-//        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-//
-//        // Locate the viewpager in gluu_activity_main.xmln.xml
-//        final GluuPagerView viewPager = (GluuPagerView) findViewById(R.id.pager);
-//        viewPager.setSwipeLocked(true);
-//
-//        // Set the ViewPagerAdapter into ViewPager
-//        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));//, tabLayout.getTabCount()
-//        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-//        final int tabIconColor = ContextCompat.getColor(context, R.color.greenColor);
-//        final int tabIconColorBlack = ContextCompat.getColor(context, R.color.blackColor);
-//        tabLayout.getTabAt(0).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
-//        tabLayout.getTabAt(1).getIcon().setColorFilter(tabIconColorBlack, PorterDuff.Mode.SRC_IN);
-//        tabLayout.getTabAt(2).getIcon().setColorFilter(tabIconColorBlack, PorterDuff.Mode.SRC_IN);
-//        tabLayout.getTabAt(3).getIcon().setColorFilter(tabIconColorBlack, PorterDuff.Mode.SRC_IN);
-//        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//                int position = tab.getPosition();
-////                isShowMenu = position == 3 ? true : false;
-//                settings.setForLogs(position == 1 ? true : false);
-//                settings.setForKeys(position == 2 ? true : false);
-//                reloadLogs();
-//                viewPager.setCurrentItem(position);
-//                tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
-//            }
-//
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {
-//                tab.getIcon().setColorFilter(tabIconColorBlack, PorterDuff.Mode.SRC_IN);
-//            }
-//
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {
-//
-//            }
-//        });
-    }
-
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -331,22 +284,9 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         //skip it at all
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //Customize the ActionBar
-        return true;
-    }
-
-    private void setBackArrowForButton(Button button){
-        Drawable img = ContextCompat.getDrawable(this, R.drawable.back_arrow);
-        img.setBounds( 0, 0, 26, 26 );
-        button.setCompoundDrawables(img, null, null,null);
-    }
-
     private void reloadLogs(){
         Intent intent = new Intent("reload-logs");
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-//        Settings.setIsButtonVisible(context, dataStore.getLogs().size() != 0);
     }
 
     private void onBackButtonClicked(){
@@ -399,9 +339,13 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         if (!validateOxPush2Request(oxPush2Request)) {
             return;
         }
+        toolbar.setVisibility(View.GONE);
+
         Settings.setPushDataEmpty(getApplicationContext());
-        NotificationManager nMgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        nMgr.cancel(GluuMainActivity.MESSAGE_NOTIFICATION_ID);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if(notificationManager != null) {
+            notificationManager.cancel(GluuMainActivity.MESSAGE_NOTIFICATION_ID);
+        }
         final ProcessManager processManager = createProcessManager(oxPush2Request);
         ApproveDenyFragment approveDenyFragment = new ApproveDenyFragment();
         approveDenyFragment.setIsUserInfo(false);
@@ -423,16 +367,11 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         transaction.replace(R.id.main_frame_layout, approveDenyFragment);
         transaction.addToBackStack(null);
         transaction.commitAllowingStateLoss();
-        //To hide tabs
-        //tabLayout.getLayoutParams().height = 0;
     }
 
     @Override
     public void onQrRequest(final OxPush2Request oxPush2Request) {
         if (!this.isDestroyed()) {
-
-            toolbar.setVisibility(View.GONE);
-
             Boolean isFingerprint = Settings.getFingerprintEnabled(context);
             if (isFingerprint){
                 FingerPrintManager fingerPrintManager = new FingerPrintManager(this);
@@ -458,7 +397,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             if (!inAppPurchaseService.isSubscribed) {
                 inAppPurchaseService.purchase(GluuMainActivity.this);
             } else {
-                //Init GoogleMobile AD
                 initGoogleADS(true);
             }
         }
@@ -470,7 +408,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             if (!inAppPurchaseService.isSubscribed) {
                 inAppPurchaseService.restorePurchase();
             } else {
-                //Init GoogleMobile AD
                 initGoogleADS(true);
             }
         }
@@ -481,10 +418,11 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         pinCodeFragment.setIsSettings(false);
         pinCodeFragment.setIsSetNewPinCode(false);
 
-        fragmentManager.beginTransaction().replace(R.id.main_frame_layout, pinCodeFragment).addToBackStack(null).commit();
-
-        //To hide tabs
-        //tabLayout.getLayoutParams().height = 0;
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.main_frame_layout, pinCodeFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     private ProcessManager createProcessManager(OxPush2Request oxPush2Request){
@@ -499,12 +437,14 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             }
 
             @Override
-            public TokenResponse onSign(String jsonRequest, String origin, Boolean isDeny) throws JSONException, IOException, U2FException {
+            public TokenResponse onSign(String jsonRequest, String origin, Boolean isDeny)
+                    throws JSONException, IOException, U2FException {
                 return u2f.sign(jsonRequest, origin, isDeny);
             }
 
             @Override
-            public TokenResponse onEnroll(String jsonRequest, OxPush2Request oxPush2Request, Boolean isDeny) throws JSONException, IOException, U2FException {
+            public TokenResponse onEnroll(String jsonRequest, OxPush2Request oxPush2Request, Boolean isDeny)
+                    throws JSONException, IOException, U2FException {
                 return u2f.enroll(jsonRequest, oxPush2Request, isDeny);
             }
 
@@ -524,12 +464,14 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     }
 
     @Override
-    public TokenResponse onSign(String jsonRequest, String origin, Boolean isDeny) throws JSONException, IOException, U2FException {
+    public TokenResponse onSign(String jsonRequest, String origin, Boolean isDeny)
+            throws JSONException, IOException, U2FException {
         return u2f.sign(jsonRequest, origin, isDeny);
     }
 
     @Override
-    public TokenResponse onEnroll(String jsonRequest, OxPush2Request oxPush2Request, Boolean isDeny) throws JSONException, IOException, U2FException {
+    public TokenResponse onEnroll(String jsonRequest, OxPush2Request oxPush2Request, Boolean isDeny)
+            throws JSONException, IOException, U2FException {
         return u2f.enroll(jsonRequest, oxPush2Request, isDeny);
     }
 
@@ -555,7 +497,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                 }
             } else {
                 // All fields must be not empty
-                result = isCredManager ? isCredManager : false;
+                result = isCredManager;
             }
         } catch (Exception ex) {
             Log.e(TAG, "Failed to parse QR code");
@@ -588,13 +530,15 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         if (isPinCodeCorrect){
             if (isOXRequestProtected){
                 //Hide keyboard
-                ((InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE))
-                        .toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
-                this.onBackPressed();
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                if(inputMethodManager != null) {
+                    inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+                }
+                onBackPressed();
                 doQrRequest(oxPush2RequestProtected);
                 isOXRequestProtected = false;
             } else {
-                showAlertView("New Pin Added!");
+                showAlertView(getString(R.string.new_pin_added));
             }
         } else {
             //to change pin code, first need check if user knows current one
@@ -619,12 +563,8 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     @Override
     public void onDeleteLogInfo(List<LogInfo> logInfo) {
         dataStore.deleteLogs(logInfo);
-//        onBackButtonClicked();
         settings.setEditingModeLogs(false);
         reloadLogs();
-//        Intent intent = new Intent("editing-mode-logs");
-//        intent.putExtra("isEditingMode", false);
-//        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
     }
 
     //OnMainActivityListener methods
@@ -672,6 +612,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         super.onResume();
     }
 
+    @SuppressLint("ApplySharedPref")
     @Override
     protected void onDestroy() {
         SharedPreferences preferences = getApplicationContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
@@ -691,28 +632,22 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
     private void checkUserCameraPermission(){
         Log.i(TAG, "Show camera button pressed. Checking permission.");
-        // BEGIN_INCLUDE(camera_permission)
         // Check if the Camera permission is already available.
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
             // Camera permission has not been granted.
-
             requestCameraPermission();
 
         } else {
-
             // Camera permissions is already available, show the camera preview.
             Log.i(TAG,
                     "CAMERA permission has already been granted. Displaying camera preview.");
-//            showCameraPreview();
         }
-        // END_INCLUDE(camera_permission)
     }
 
     private void requestCameraPermission() {
         Log.i(TAG, "CAMERA permission has NOT been granted. Requesting permission.");
 
-        // BEGIN_INCLUDE(camera_permission_request)
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 android.Manifest.permission.CAMERA)) {
             // Provide an additional rationale to the user if the permission was not granted
@@ -724,15 +659,12 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                     new String[]{android.Manifest.permission.CAMERA},
                     REQUEST_CAMERA);
         } else {
-
             // Camera permission has not been granted yet. Request it directly.
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA},
                     REQUEST_CAMERA);
         }
-        // END_INCLUDE(camera_permission_request)
     }
 
-    //region drawer specific code
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -763,17 +695,15 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         settings.setForKeys(menuItem.getItemId() == R.id.nav_keys);
         reloadLogs();
 
-        org.gluu.super_gluu.app.fragments.PageRootFragment rootFragment = new org.gluu.super_gluu.app.fragments.PageRootFragment();
-
         switch(menuItem.getItemId()) {
             case R.id.nav_keys:
-                closeDrawerAfterItemSelected(new org.gluu.super_gluu.app.fragments.KeysFragment.KeyFragmentListFragment(), menuItem);
+                closeDrawerAfterItemSelected(new KeyFragmentListFragment(), menuItem);
                 break;
             case R.id.nav_logs:
-                closeDrawerAfterItemSelected(new org.gluu.super_gluu.app.fragments.LogsFragment.LogsFragment(), menuItem);
+                closeDrawerAfterItemSelected(new LogsFragment(), menuItem);
                 break;
             case R.id.nav_pin_code:
-                closeDrawerAfterItemSelected(new org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsPinCode(), menuItem);
+                closeDrawerAfterItemSelected(new SettingsPinCode(), menuItem);
                 break;
             case R.id.nav_touch_id:
                 closeDrawerAfterItemSelected(createSettingsFragment("FingerprintSettings"), menuItem);
@@ -795,7 +725,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             case R.id.nav_version:
                 break;
             default:
-                closeDrawerAfterItemSelected(rootFragment.newInstance(FragmentType.FRAGMENT_TYPE.MAIN_FRAGMENT), menuItem);
+                closeDrawerAfterItemSelected(new MainActivityFragment(), menuItem);
         }
 
     }
@@ -807,7 +737,11 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     public void closeDrawerAfterItemSelected(Fragment fragment, MenuItem menuItem, boolean setTitle) {
         if(fragment != null) {
             // Insert the fragment by replacing any existing fragment
-            fragmentManager.beginTransaction().replace(R.id.main_frame_layout, fragment).addToBackStack(null).commit();
+            fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.main_frame_layout, fragment)
+                    .addToBackStack(null)
+                    .commit();
         }
 
         if(setTitle) {
@@ -819,28 +753,11 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     }
 
     Fragment createSettingsFragment(String settingsId){
-        Fragment sslFragment = new org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsFragment();
+        Fragment settingsFragment = new SettingsFragment();
         Bundle bundle = new Bundle();
         bundle.putString("settingsId", settingsId);
-        sslFragment.setArguments(bundle);
-        return sslFragment;
-    }
-
-    public void sendFakeBroadcast() {
-        String message = "{\"app\":\"https://cred3.gluu.org/cred-manager\",\"method\":\"authenticate\",\"req_ip\":\"38.142.29.4\",\"created\":\"2018-03-14T19:41:29.094000\",\"issuer\":\"https://cred3.gluu.org\",\"req_loc\":\"United%20States%2C%20Texas%2C%20Houston\",\"state\":\"00f14ff3-e153-4f1f-a4c4-4587241b3b4d\",\"username\":\"eric3\"}\n";
-
-        Intent intent = new Intent(QR_CODE_PUSH_NOTIFICATION);
-        intent.putExtra(QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-    }
-
-    public OxPush2Request getFakeOXRequest() {
-        OxPush2Request oxPush2Request =
-                new OxPush2Request("eric3",
-                        "https://cred3.gluu.org", "https://cred3.gluu.org/cred-manager", "00f14ff3-e153-4f1f-a4c4-4587241b3b4d", "authenticate", "2018-03-14T19:41:29.094000", null);
-        oxPush2Request.setLocationCity("United%20States%2C%20Texas%2C%20Houston");
-        oxPush2Request.setLocationIP("38.142.29.4");
-        return oxPush2Request;
+        settingsFragment.setArguments(bundle);
+        return settingsFragment;
     }
     //endregion
 
