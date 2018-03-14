@@ -117,8 +117,10 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     private BroadcastReceiver mPushMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            //tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-            //tabLayout.getTabAt(0).select();
+            //Pop backstack to get back to home screen
+            if(fragmentManager.getBackStackEntryCount() > 0) {
+                fragmentManager.popBackStack();
+            }
 
             // Get extra data included in the Intent
             String message = intent.getStringExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE);
@@ -178,11 +180,13 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     }
 
     private void setupInitialFragment() {
-        org.gluu.super_gluu.app.fragments.PageRootFragment rootFragment = new org.gluu.super_gluu.app.fragments.PageRootFragment();
-        Fragment fragment = rootFragment.newInstance(FragmentType.FRAGMENT_TYPE.MAIN_FRAGMENT);
+        MainActivityFragment mainActivityFragment = new MainActivityFragment();
 
-        // Insert the fragment by replacing any existing fragment
-        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+         //Insert the fragment by replacing any existing fragment
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.main_frame_layout, mainActivityFragment)
+                .commit();
 
     }
 
@@ -412,19 +416,17 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             @Override
             public void onApprove() {
                 processManager.onOxPushRequest(false);
-                //Show tab again
-                //tabLayout.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                toolbar.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onDeny() {
                 processManager.onOxPushRequest(true);
-                //Show tab again
-                //tabLayout.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                toolbar.setVisibility(View.VISIBLE);
             }
         });
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.main_root_frame, approveDenyFragment);
+        transaction.replace(R.id.main_frame_layout, approveDenyFragment);
         transaction.addToBackStack(null);
         transaction.commitAllowingStateLoss();
         //To hide tabs
@@ -434,6 +436,9 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     @Override
     public void onQrRequest(final OxPush2Request oxPush2Request) {
         if (!this.isDestroyed()) {
+
+            toolbar.setVisibility(View.GONE);
+
             Boolean isFingerprint = Settings.getFingerprintEnabled(context);
             if (isFingerprint){
                 FingerPrintManager fingerPrintManager = new FingerPrintManager(this);
@@ -481,12 +486,9 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         PinCodeFragment pinCodeFragment = new PinCodeFragment();
         pinCodeFragment.setIsSettings(false);
         pinCodeFragment.setIsSetNewPinCode(false);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.main_root_frame, pinCodeFragment);
-//            if (isBackStack) {
-                transaction.addToBackStack(null);
-//            }
-        transaction.commit();
+
+        fragmentManager.beginTransaction().replace(R.id.main_frame_layout, pinCodeFragment).addToBackStack(null).commit();
+
         //To hide tabs
         //tabLayout.getLayoutParams().height = 0;
     }
@@ -771,10 +773,10 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
         switch(menuItem.getItemId()) {
             case R.id.nav_keys:
-                closeDrawerAfterItemSelected(rootFragment.newInstance(FragmentType.FRAGMENT_TYPE.KEYS_FRAGMENT), menuItem);
+                closeDrawerAfterItemSelected(new org.gluu.super_gluu.app.fragments.KeysFragment.KeyFragmentListFragment(), menuItem);
                 break;
             case R.id.nav_logs:
-                closeDrawerAfterItemSelected(rootFragment.newInstance(FragmentType.FRAGMENT_TYPE.LOGS_FRAGMENT), menuItem);
+                closeDrawerAfterItemSelected(new org.gluu.super_gluu.app.fragments.LogsFragment.LogsFragment(), menuItem);
                 break;
             case R.id.nav_pin_code:
                 closeDrawerAfterItemSelected(new org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsPinCode(), menuItem);
@@ -811,7 +813,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     public void closeDrawerAfterItemSelected(Fragment fragment, MenuItem menuItem, boolean setTitle) {
         if(fragment != null) {
             // Insert the fragment by replacing any existing fragment
-            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).addToBackStack(null).commit();
+            fragmentManager.beginTransaction().replace(R.id.main_frame_layout, fragment).addToBackStack(null).commit();
         }
 
         if(setTitle) {
@@ -828,6 +830,23 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         bundle.putString("settingsId", settingsId);
         sslFragment.setArguments(bundle);
         return sslFragment;
+    }
+
+    public void sendFakeBroadcast() {
+        String message = "{\"app\":\"https://cred3.gluu.org/cred-manager\",\"method\":\"authenticate\",\"req_ip\":\"38.142.29.4\",\"created\":\"2018-03-14T19:41:29.094000\",\"issuer\":\"https://cred3.gluu.org\",\"req_loc\":\"United%20States%2C%20Texas%2C%20Houston\",\"state\":\"00f14ff3-e153-4f1f-a4c4-4587241b3b4d\",\"username\":\"eric3\"}\n";
+
+        Intent intent = new Intent(QR_CODE_PUSH_NOTIFICATION);
+        intent.putExtra(QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
+    public OxPush2Request getFakeOXRequest() {
+        OxPush2Request oxPush2Request =
+                new OxPush2Request("eric3",
+                        "https://cred3.gluu.org", "https://cred3.gluu.org/cred-manager", "00f14ff3-e153-4f1f-a4c4-4587241b3b4d", "authenticate", "2018-03-14T19:41:29.094000", null);
+        oxPush2Request.setLocationCity("United%20States%2C%20Texas%2C%20Houston");
+        oxPush2Request.setLocationIP("38.142.29.4");
+        return oxPush2Request;
     }
     //endregion
 
