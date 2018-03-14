@@ -29,14 +29,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -96,9 +97,9 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
     //private TabLayout tabLayout;
 
-    private DrawerLayout drawerLayout;
+    private DrawerLayout drawer;
     private Toolbar toolbar;
-    private ActionBarDrawerToggle drawerToggle;
+    private ActionBarDrawerToggle toggle;
 
 
     private SoftwareDevice u2f;
@@ -191,21 +192,58 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
         setTitle(getString(R.string.home));
 
-
         // Find our drawer view
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nvView);
-        if(navigationView != null) {
+        if (navigationView != null) {
             navigationView.setItemIconTintList(null);
         }
         setupDrawerContent(navigationView);
 
-        // Find our drawer view
-        drawerToggle = setupDrawerToggle();
+        if (toolbar != null) {
+            toggle = new ActionBarDrawerToggle(
+                    this, drawer, toolbar, R.string.drawer_open, R.string.drawer_close);
+            toggle.syncState();
+            drawer.addDrawerListener(toggle);
+            getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+                @Override
+                public void onBackStackChanged() {
+                    if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // show back button
+                        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                setTitle(getString(R.string.home));
+                                onBackPressed();
+                            }
+                        });
+                    } else {
+                        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                        //show hamburger
+                        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                        toggle.syncState();
+                        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                drawer.openDrawer(GravityCompat.START);
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    }
 
-        // Tie DrawerLayout events to the ActionBarToggle
-        drawerLayout.addDrawerListener(drawerToggle);
+    @Override
+    public void onBackPressed() {
+
+        if(fragmentManager.getBackStackEntryCount() > 0) {
+            setTitle("Home");
+        }
+
+        super.onBackPressed();
     }
 
     private void initGoogleADS(Boolean isShow){
@@ -710,24 +748,18 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                 });
     }
 
-    private ActionBarDrawerToggle setupDrawerToggle() {
-        // NOTE: Make sure you pass in a valid toolbar reference.  ActionBarDrawToggle() does not require it
-        // and will not render the hamburger icon without it.
-        return new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open,  R.string.drawer_close);
-    }
-
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
-        drawerToggle.syncState();
+        toggle.syncState();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggles
-        drawerToggle.onConfigurationChanged(newConfig);
+        toggle.onConfigurationChanged(newConfig);
     }
 
     public void selectDrawerItem(MenuItem menuItem) {
@@ -777,14 +809,11 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             // Insert the fragment by replacing any existing fragment
             fragmentManager.beginTransaction().replace(R.id.flContent, fragment).addToBackStack(null).commit();
         }
-
-
-        // Highlight the selected item has been done by NavigationView
-        menuItem.setChecked(true);
+        
         // Set action bar title
         setTitle(menuItem.getTitle());
         // Close the navigation drawer
-        drawerLayout.closeDrawers();
+        drawer.closeDrawers();
     }
 
     Fragment createSettingsFragment(String settingsId){

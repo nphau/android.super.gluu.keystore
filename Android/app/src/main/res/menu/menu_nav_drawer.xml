@@ -5,7 +5,7 @@
     <item android:title="@string/history">
 
         <menu>
-            <group android:checkableBehavior="single">
+            <group android:checkableBehavior="none">
                 <item
                     android:id="@+id/nav_logs"
                     android:icon="@drawable/icon_logs"
@@ -21,7 +21,7 @@
     <item android:title="@string/settings">
 
         <menu>
-            <group android:checkableBehavior="single">
+            <group android:checkableBehavior="none">
                 <item
                     android:id="@+id/nav_pin_code"
                     android:icon="@drawable/icon_pin_code"
@@ -43,7 +43,7 @@
 
         <menu>
 
-            <group android:checkableBehavior="single">
+            <group android:checkableBehavior="none">
                 <item
                     android:id="@+id/nav_user_guide"
                     android:title="@string/user_guide" />
