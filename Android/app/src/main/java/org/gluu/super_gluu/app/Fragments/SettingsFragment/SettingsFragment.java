@@ -71,20 +71,20 @@ public class SettingsFragment extends Fragment {
 //            }
 //        });
 
-        final String settingsId = this.getArguments().getString("settingsId");
+        final String settingsId = this.getArguments().getString(Constant.SETTINGS_ID);
 
         TextView textSettings = (TextView)view.findViewById(R.id.textViewSettings);
         final TextView textSettingsSubTitle = (TextView)view.findViewById(R.id.textViewSubTitle);
 
         switchSettings = (Switch) view.findViewById(R.id.switch_setting);
-        textSettings.setText(settingsId.equalsIgnoreCase("SSLConnectionSettings") ? getString(R.string.trust_all_certificate) : getString(R.string.fingerprint_title));
-        textSettingsSubTitle.setText(settingsId.equalsIgnoreCase("SSLConnectionSettings") ? getString(R.string.warning_trust_all_certificate) : getString(R.string.pin_code_text));
+        textSettings.setText(settingsId.equalsIgnoreCase(Constant.SSL_CONNECTION_TYPE) ? getString(R.string.trust_all_certificate) : getString(R.string.fingerprint_title));
+        textSettingsSubTitle.setText(settingsId.equalsIgnoreCase(Constant.SSL_CONNECTION_TYPE) ? getString(R.string.warning_trust_all_certificate) : getString(R.string.pin_code_text));
         switchSettings.setChecked(Settings.getSettingsValueEnabled(context, settingsId));
 //        textSettingsSubTitle.setVisibility(switchSettings.isChecked() ? View.VISIBLE : View.GONE);
         switchSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (settingsId.equalsIgnoreCase("SSLConnectionSettings")) {
+                if (settingsId.equalsIgnoreCase(Constant.SSL_CONNECTION_TYPE)) {
                     GluuApplication.isTrustAllCertificates = switchSettings.isChecked();
 //                    if (switchSettings.isChecked()) {
 //                        String message = context.getString(R.string.warning_trust_all_certificate);
@@ -150,5 +150,16 @@ public class SettingsFragment extends Fragment {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.gluu_toast, null);
         gluuToast.showGluuToastWithText(view, text);
+    }
+
+    public static class Constant {
+        public final static String SETTINGS_ID = "settingsId";
+
+        //types
+        public final static String SSL_CONNECTION_TYPE = "SSLConnectionSettings";
+        public final static String FINGERPRINT_TYPE = "FingerprintSettings";
+
+
+        public final static String USER_GUIDE_URL = "https://gluu.org/docs/supergluu/3.0.0/user-guide/";
     }
 }

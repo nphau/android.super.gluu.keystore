@@ -108,8 +108,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     private Boolean isOXRequestProtected = false;
     private OxPush2Request oxPush2RequestProtected;
 
-    FragmentManager fragmentManager;
-
+    private FragmentManager fragmentManager;
 
     private Settings settings = new Settings();
 
@@ -706,14 +705,14 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                 closeDrawerAfterItemSelected(new SettingsPinCode(), menuItem);
                 break;
             case R.id.nav_touch_id:
-                closeDrawerAfterItemSelected(createSettingsFragment("FingerprintSettings"), menuItem);
+                closeDrawerAfterItemSelected(createSettingsFragment(SettingsFragment.Constant.FINGERPRINT_TYPE), menuItem);
                 break;
             case R.id.nav_ssl:
-                closeDrawerAfterItemSelected(createSettingsFragment("SSLConnectionSettings"), menuItem);
+                closeDrawerAfterItemSelected(createSettingsFragment(SettingsFragment.Constant.SSL_CONNECTION_TYPE), menuItem);
                 break;
             case R.id.nav_user_guide:
                 closeDrawerAfterItemSelected(null, menuItem, false);
-                Uri uri = Uri.parse("https://gluu.org/docs/supergluu/3.0.0/user-guide/");
+                Uri uri = Uri.parse(SettingsFragment.Constant.USER_GUIDE_URL);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
                 break;
@@ -755,7 +754,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     Fragment createSettingsFragment(String settingsId){
         Fragment settingsFragment = new SettingsFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("settingsId", settingsId);
+        bundle.putString(SettingsFragment.Constant.SETTINGS_ID, settingsId);
         settingsFragment.setArguments(bundle);
         return settingsFragment;
     }

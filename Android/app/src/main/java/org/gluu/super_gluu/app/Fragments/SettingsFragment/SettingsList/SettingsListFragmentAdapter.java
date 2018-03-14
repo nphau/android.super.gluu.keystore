@@ -75,7 +75,7 @@ public class SettingsListFragmentAdapter extends BaseAdapter {
     SettingsFragment createSettingsFragment(String settingsId){
         SettingsFragment sslFragment = new SettingsFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("settingsId", settingsId);
+        bundle.putString(SettingsFragment.Constant.SETTINGS_ID, settingsId);
         sslFragment.setArguments(bundle);
         return sslFragment;
     }
@@ -138,11 +138,11 @@ public class SettingsListFragmentAdapter extends BaseAdapter {
                 if (mListener != null && entry.getValue() == FragmentType.SETTINGS_FRAGMENT_TYPE.PIN_CODE_FRAGMENT.ordinal()) {
                     mListener.onSettingsList(new SettingsPinCode());
                 } else if (mListener != null && entry.getValue() == FragmentType.SETTINGS_FRAGMENT_TYPE.FINGERPRINT_FRAGMENT.ordinal()) {
-                    mListener.onSettingsList(createSettingsFragment("FingerprintSettings"));
+                    mListener.onSettingsList(createSettingsFragment(SettingsFragment.Constant.FINGERPRINT_TYPE));
                 } else if (mListener != null && entry.getValue() == FragmentType.SETTINGS_FRAGMENT_TYPE.SSL_FRAGMENT.ordinal()) {
-                    mListener.onSettingsList(createSettingsFragment("SSLConnectionSettings"));
+                    mListener.onSettingsList(createSettingsFragment(SettingsFragment.Constant.SSL_CONNECTION_TYPE));
                 } else if (entry.getValue() == FragmentType.SETTINGS_FRAGMENT_TYPE.USER_GUIDE_FRAGMENT.ordinal()){
-                    Uri uri = Uri.parse("https://gluu.org/docs/supergluu/3.0.0/user-guide/");
+                    Uri uri = Uri.parse(SettingsFragment.Constant.USER_GUIDE_URL);
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     activity.startActivity(intent);
                 } else if (entry.getValue() == FragmentType.SETTINGS_FRAGMENT_TYPE.PRIVACY_POLICY_FRAGMENT.ordinal()) {

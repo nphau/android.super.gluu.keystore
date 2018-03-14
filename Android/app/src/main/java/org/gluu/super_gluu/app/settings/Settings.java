@@ -3,6 +3,8 @@ package org.gluu.super_gluu.app.settings;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsFragment;
+
 /**
  * Created by nazaryavornytskyy on 7/12/16.
  */
@@ -140,29 +142,29 @@ public class Settings {
 
     //SSL Connection Settings
     public static void setSSLEnabled(Context context, Boolean isEnabled) {
-        SharedPreferences preferences = context.getSharedPreferences("SSLConnectionSettings", Context.MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences(SettingsFragment.Constant.SSL_CONNECTION_TYPE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("SSLConnectionSettings", isEnabled);
+        editor.putBoolean(SettingsFragment.Constant.SSL_CONNECTION_TYPE, isEnabled);
         editor.apply();
     }
 
     public static Boolean getSSLEnabled(Context context){
-        SharedPreferences preferences = context.getSharedPreferences("SSLConnectionSettings", Context.MODE_PRIVATE);
-        Boolean isSSLEnabled = preferences.getBoolean("SSLConnectionSettings", false);
+        SharedPreferences preferences = context.getSharedPreferences(SettingsFragment.Constant.SSL_CONNECTION_TYPE, Context.MODE_PRIVATE);
+        Boolean isSSLEnabled = preferences.getBoolean(SettingsFragment.Constant.SSL_CONNECTION_TYPE, false);
         return isSSLEnabled;
     }
 
     //Fingerprint settings
     public static void setFingerprintEnabled(Context context, Boolean isEnabled) {
-        SharedPreferences preferences = context.getSharedPreferences("FingerprintSettings", Context.MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences(SettingsFragment.Constant.FINGERPRINT_TYPE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("FingerprintSettings", isEnabled);
+        editor.putBoolean(SettingsFragment.Constant.FINGERPRINT_TYPE, isEnabled);
         editor.apply();
     }
 
     public static Boolean getFingerprintEnabled(Context context){
-        SharedPreferences preferences = context.getSharedPreferences("FingerprintSettings", Context.MODE_PRIVATE);
-        Boolean isFingerprintEnabled = preferences.getBoolean("FingerprintSettings", false);
+        SharedPreferences preferences = context.getSharedPreferences(SettingsFragment.Constant.FINGERPRINT_TYPE, Context.MODE_PRIVATE);
+        Boolean isFingerprintEnabled = preferences.getBoolean(SettingsFragment.Constant.FINGERPRINT_TYPE, false);
         return isFingerprintEnabled;
     }
 
