@@ -95,8 +95,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     public static final String QR_CODE_PUSH_NOTIFICATION = "QR_CODE_PUSH_NOTIFICATION";
     public static final int MESSAGE_NOTIFICATION_ID = 444555;
 
-    //private TabLayout tabLayout;
-
     private DrawerLayout drawer;
     private Toolbar toolbar;
     private ActionBarDrawerToggle toggle;
@@ -148,9 +146,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         // Get the view from gluu_activity_main_main.xml
         setContentView(R.layout.gluu_activity_main);
         context = getApplicationContext();
-
-        //Init main tab vie and pager
-        //initMainTabView();
 
         fragmentManager = getSupportFragmentManager();
         initNavDrawer();
@@ -242,9 +237,8 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
     @Override
     public void onBackPressed() {
-
         if(fragmentManager.getBackStackEntryCount() > 0) {
-            setTitle("Home");
+            setTitle(getString(R.string.home));
         }
 
         super.onBackPressed();
