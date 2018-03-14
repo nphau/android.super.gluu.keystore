@@ -205,11 +205,21 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
+
         if(fragmentManager.getBackStackEntryCount() > 0) {
+            Fragment fragment = fragmentManager.findFragmentById(R.id.main_frame_layout);
+
+            if(fragment != null) {
+                if(fragment instanceof KeyFragmentListFragment) {
+                    setTitle("Keys");
+                } else if(fragment instanceof LogsFragment) {
+                    setTitle("Logs");
+                }
+            }
+        } else {
             setTitle(getString(R.string.home));
         }
-
-        super.onBackPressed();
     }
 
     private void initGoogleADS(Boolean isShow){
