@@ -26,6 +26,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
@@ -188,51 +189,18 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     private void initNavDrawer() {
         toolbar = (Toolbar) findViewById(R.id.nav_drawer_toolbar);
         setSupportActionBar(toolbar);
-
         setTitle(getString(R.string.home));
 
-        // Find our drawer view
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nvView);
         if (navigationView != null) {
             navigationView.setItemIconTintList(null);
         }
+
         setupDrawerContent(navigationView);
 
-        if (toolbar != null) {
-            toggle = new ActionBarDrawerToggle(
-                    this, drawer, toolbar, R.string.drawer_open, R.string.drawer_close);
-            toggle.syncState();
-            drawer.addDrawerListener(toggle);
-            getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-                @Override
-                public void onBackStackChanged() {
-                    if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-                        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-                        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // show back button
-                        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                setTitle(getString(R.string.home));
-                                onBackPressed();
-                            }
-                        });
-                    } else {
-                        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                        //show hamburger
-                        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-                        toggle.syncState();
-                        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                drawer.openDrawer(GravityCompat.START);
-                            }
-                        });
-                    }
-                }
-            });
-        }
+        setupToggleState();
     }
 
     @Override
@@ -245,15 +213,19 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     }
 
     private void initGoogleADS(Boolean isShow){
-        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdView adView = (AdView) findViewById(R.id.adView);
         if (!isShow) {
             MobileAds.initialize(getApplicationContext(), "ca-app-pub-3932761366188106~2301594871");
             AdRequest adRequest = new AdRequest.Builder().build();
-            mAdView.loadAd(adRequest);
+            if(adView != null) {
+                adView.loadAd(adRequest);
+            }
         } else {
-            ViewGroup.LayoutParams params = mAdView.getLayoutParams();
-            params.height = 0;
-            mAdView.setLayoutParams(params);
+            if(adView != null) {
+                ViewGroup.LayoutParams params = adView.getLayoutParams();
+                params.height = 0;
+                adView.setLayoutParams(params);
+            }
         }
         Intent intent = new Intent("on-ad-free-event");
         // You can also include some extra data.
@@ -675,6 +647,53 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                 });
     }
 
+    private void setupToggleState() {
+        if (toolbar != null) {
+            toggle = new ActionBarDrawerToggle(
+                    this, drawer, toolbar, R.string.drawer_open, R.string.drawer_close);
+            toggle.syncState();
+            drawer.addDrawerListener(toggle);
+
+            OnBackStackChangedListener onBackStackChangedListener = new OnBackStackChangedListener() {
+                @Override
+                public void onBackStackChanged() {
+                    if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
+                        if(getSupportActionBar() != null) {
+                            getSupportActionBar().setDisplayHomeAsUpEnabled(true); // show back button
+                        }
+                        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                setTitle(getString(R.string.home));
+                                onBackPressed();
+                            }
+                        });
+                    } else {
+                        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
+                        //show hamburger
+                        if(getSupportActionBar() != null) {
+                            getSupportActionBar().setDisplayHomeAsUpEnabled(false); // show back button
+                        }
+                        toggle.syncState();
+                        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                drawer.openDrawer(GravityCompat.START);
+                            }
+                        });
+                    }
+
+                }
+            };
+
+            getSupportFragmentManager().addOnBackStackChangedListener(onBackStackChangedListener);
+        }
+
+    }
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -696,22 +715,23 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
         switch(menuItem.getItemId()) {
             case R.id.nav_keys:
-                closeDrawerAfterItemSelected(new KeyFragmentListFragment(), menuItem);
+                updateUIAfterNavItemSelected(new KeyFragmentListFragment(), menuItem);
                 break;
             case R.id.nav_logs:
-                closeDrawerAfterItemSelected(new LogsFragment(), menuItem);
+                updateUIAfterNavItemSelected(new LogsFragment(), menuItem);
                 break;
             case R.id.nav_pin_code:
-                closeDrawerAfterItemSelected(new SettingsPinCode(), menuItem);
+                updateUIAfterNavItemSelected(new SettingsPinCode(), menuItem);
                 break;
             case R.id.nav_touch_id:
-                closeDrawerAfterItemSelected(createSettingsFragment(SettingsFragment.Constant.FINGERPRINT_TYPE), menuItem);
+                updateUIAfterNavItemSelected(createSettingsFragment(SettingsFragment.Constant.FINGERPRINT_TYPE), menuItem);
                 break;
             case R.id.nav_ssl:
-                closeDrawerAfterItemSelected(createSettingsFragment(SettingsFragment.Constant.SSL_CONNECTION_TYPE), menuItem);
+                updateUIAfterNavItemSelected(createSettingsFragment(SettingsFragment.Constant.SSL_CONNECTION_TYPE), menuItem);
                 break;
             case R.id.nav_user_guide:
-                closeDrawerAfterItemSelected(null, menuItem, false);
+                updateUIAfterNavItemSelected(null, menuItem, false);
+
                 Uri uri = Uri.parse(SettingsFragment.Constant.USER_GUIDE_URL);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
@@ -719,21 +739,19 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             case R.id.nav_privacy_policy:
                 LicenseFragment licenseFragment = new LicenseFragment();
                 licenseFragment.setForFirstLoading(false);
-                closeDrawerAfterItemSelected(licenseFragment, menuItem);
+                updateUIAfterNavItemSelected(licenseFragment, menuItem);
                 break;
             case R.id.nav_version:
                 break;
-            default:
-                closeDrawerAfterItemSelected(new MainActivityFragment(), menuItem);
         }
 
     }
 
-    public void closeDrawerAfterItemSelected(Fragment fragment, MenuItem menuItem) {
-        closeDrawerAfterItemSelected(fragment, menuItem, true);
+    public void updateUIAfterNavItemSelected(Fragment fragment, MenuItem menuItem) {
+        updateUIAfterNavItemSelected(fragment, menuItem, true);
     }
 
-    public void closeDrawerAfterItemSelected(Fragment fragment, MenuItem menuItem, boolean setTitle) {
+    public void updateUIAfterNavItemSelected(Fragment fragment, MenuItem menuItem, boolean setTitle) {
         if(fragment != null) {
             // Insert the fragment by replacing any existing fragment
             fragmentManager
