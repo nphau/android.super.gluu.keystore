@@ -6,17 +6,10 @@
     android:background="@color/grayColorLight"
     android:orientation="vertical">
 
-    <!--<include-->
-        <!--android:id="@+id/actionBarSettings"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="65dp"-->
-        <!--layout="@layout/custom_action_bar" />-->
-
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grayColorLight"
-    android:layout_marginTop="70dp"
     android:paddingBottom="20dp">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -28,7 +21,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="12dp"
             android:paddingBottom="10dp"
             android:background="@android:color/white"
             android:orientation="horizontal">
