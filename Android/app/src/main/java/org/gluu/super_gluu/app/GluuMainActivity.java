@@ -101,8 +101,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     private DrawerLayout drawer;
     private Toolbar toolbar;
     private ActionBarDrawerToggle toggle;
-    DrawerLayout.DrawerListener drawerListener;
-
 
     private SoftwareDevice u2f;
     private AndroidKeyDataStore dataStore;
@@ -155,6 +153,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         context = getApplicationContext();
 
         fragmentManager = getSupportFragmentManager();
+        setupToolbar();
         initNavDrawer();
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mPushMessageReceiver,
@@ -192,11 +191,13 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
     }
 
-    private void initNavDrawer() {
+    private void setupToolbar() {
         toolbar = (Toolbar) findViewById(R.id.nav_drawer_toolbar);
         setSupportActionBar(toolbar);
         setTitle(getString(R.string.home));
+    }
 
+    private void initNavDrawer() {
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nvView);
@@ -217,7 +218,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             Fragment fragment = fragmentManager.findFragmentById(R.id.main_frame_layout);
 
             if(fragment != null) {
-
                 if(fragment instanceof KeyFragmentListFragment) {
                     setTitle(getString(R.string.keys));
                 } else if(fragment instanceof LogsFragment) {
@@ -679,8 +679,9 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                     if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
                         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
+                        //show hamburger
                         if(getSupportActionBar() != null) {
-                            getSupportActionBar().setDisplayHomeAsUpEnabled(true); // show back button
+                            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                         }
                         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                             @Override
@@ -693,7 +694,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
                         //show hamburger
                         if(getSupportActionBar() != null) {
-                            getSupportActionBar().setDisplayHomeAsUpEnabled(false); // show back button
+                            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                         }
                         toggle.syncState();
                         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -703,11 +704,10 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                             }
                         });
                     }
-
                 }
             };
 
-            getSupportFragmentManager().addOnBackStackChangedListener(onBackStackChangedListener);
+            fragmentManager.addOnBackStackChangedListener(onBackStackChangedListener);
         }
 
     }
