@@ -770,46 +770,20 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     }
 
     public void updateUIAfterNavItemSelected(final Fragment fragment, final MenuItem menuItem, final boolean setTitle) {
-        // Close the navigation drawer
+        if(fragment != null) {
+            fragmentManager
+                    .beginTransaction()
+                    .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                    .replace(R.id.main_frame_layout, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
+
+        if(setTitle) {
+            setTitle(menuItem.getTitle());
+        }
+
         drawer.closeDrawers();
-
-        drawerListener = new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                if(fragment != null) {
-                    // Insert the fragment by replacing any existing fragment
-                    fragmentManager
-                            .beginTransaction()
-                            .replace(R.id.main_frame_layout, fragment)
-                            .addToBackStack(null)
-                            .commit();
-                }
-
-                if(setTitle) {
-                    // Set action bar title
-                    setTitle(menuItem.getTitle());
-                }
-
-                drawer.removeDrawerListener(drawerListener);
-            }
-
-            @Override
-            public void onDrawerStateChanged(int newState) {
-
-            }
-        };
-
-        drawer.addDrawerListener(drawerListener);
     }
 
     Fragment createSettingsFragment(String settingsId){
