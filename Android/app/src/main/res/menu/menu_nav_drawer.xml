@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-
     <item android:title="@string/history">
 
         <menu>
@@ -55,12 +54,10 @@
         </menu>
     </item>
 
-
     <group>
         <item
             android:id="@+id/nav_version"
             android:title="@string/version"/>
     </group>
-
 
 </menu>

@@ -1,18 +1,10 @@
-.gradle
-build
-.idea
-.idea/workspace.xml
-.idea/libraries
-captures
-.DS_Store
-local.properties
-*.iml
-
 # Ignore Gradle GUI config
 gradle-app.setting
 
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
-!gradle-wrapper.jarndroid studio settings
+!gradle-wrapper.jar
+
+#android studio settings
 *.iml
 .gradle
 /local.properties
@@ -21,10 +13,6 @@ gradle-app.setting
 /build
 /captures
 .externalNativeBuild
-
-# Build application files
-
-
 
 # Files for the Dalvik VM
 *.dex
@@ -35,5 +23,3 @@ gradle-app.setting
 # Generated files
 bin/
 gen/
-
-

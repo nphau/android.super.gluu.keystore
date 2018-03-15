@@ -161,12 +161,6 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         adView = (LinearLayout)view.findViewById(R.id.view_ad_free);
 //        adView.setVisibility(View.GONE);
 
-        //todo reimplement actionbar functionality. Looks like it didnt do much.
-//        View actionBarView = (View) view.findViewById(R.id.actionBarView);
-//        actionBarView.findViewById(R.id.action_left_button).setVisibility(View.GONE);
-//        actionBarView.findViewById(R.id.action_right_button).setVisibility(View.GONE);
-//        actionBarView.findViewById(R.id.actionbar_icon).setVisibility(View.VISIBLE);
-//        actionBarView.findViewById(R.id.actionbar_textview).setVisibility(View.GONE);
         Boolean isAdFree = Settings.getPurchase(context);
         if (isAdFree){
             adView.setVisibility(View.GONE);

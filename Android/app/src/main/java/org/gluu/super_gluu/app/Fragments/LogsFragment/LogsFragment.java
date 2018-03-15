@@ -103,63 +103,63 @@ public class LogsFragment extends Fragment {
             }
         };
 
-        //todo reimplement the actionbar functionality here
-//        View actionBarView = (View) rootView.findViewById(R.id.actionBarSettings);
-//        actionBarView.findViewById(R.id.action_right_button).setVisibility(View.GONE);
-//        actionBarView.findViewById(R.id.actionbar_icon).setVisibility(View.VISIBLE);
-//        actionBarView.findViewById(R.id.actionbar_textview).setVisibility(View.GONE);
-//        selectAllView = (LinearLayout) rootView.findViewById(R.id.selectAllView);
-//        selectAllView.setVisibility(View.GONE);
-//        LinearLayout leftButton = (LinearLayout) actionBarView.findViewById(R.id.action_left_button);
-//        final Button rightButton = (Button) actionBarView.findViewById(R.id.action_right_button);
-//        selectAllButton = (Button) selectAllView.findViewById(R.id.selectAllButton);
-//        selectAllButton.setTag(1);// 1- no selected all, 2- selected all
-//        rightButton.setVisibility(View.GONE);
-//        int visible = logs.size() > 0 ? View.VISIBLE : View.GONE;
-//        leftButton.setVisibility(visible);
-//        leftButton.findViewById(R.id.actionBarBackArrow).setVisibility(View.GONE);
-//        final Button backButton = (Button) leftButton.findViewById(R.id.actionBarBackButton);
-//        backButton.setText("Edit");
-//        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) backButton.getLayoutParams();
-//        params.leftMargin = 25;
-//        backButton.requestLayout();
-//        leftButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (listAdapter.isEditingMode){
-//                    backButton.setText("Edit");
-//                    listAdapter.isEditingMode = false;
-//                    listAdapter.notifyDataSetChanged();
-//                    rightButton.setVisibility(View.GONE);
-//                    selectAllView.setVisibility(View.GONE);
-//                } else {
-//                    backButton.setText("Cancel");
-//                    selectAllButton.setText("Select All");
-//                    deselectAll();
-//                    listAdapter.isEditingMode = true;
-//                    listAdapter.notifyDataSetChanged();
-//                    rightButton.setVisibility(View.VISIBLE);
-//                    selectAllView.setVisibility(View.VISIBLE);
-//                }
-//            }
-//        });
-//        rightButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                showAlertView();
-//            }
-//        });
-//        selectAllButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int tag = (int)v.getTag();
-//                if (tag == 1) {
-//                    selectAll();
-//                } else {
-//                    deselectAll();
-//                }
-//            }
-//        });
+        //todo reimplement the actionbar functionality here. Changing with new designs most of this will be removed.
+        View actionBarView = (View) rootView.findViewById(R.id.actionBarSettings);
+        actionBarView.findViewById(R.id.action_right_button).setVisibility(View.GONE);
+        actionBarView.findViewById(R.id.actionbar_icon).setVisibility(View.VISIBLE);
+        actionBarView.findViewById(R.id.actionbar_textview).setVisibility(View.GONE);
+        selectAllView = (LinearLayout) rootView.findViewById(R.id.selectAllView);
+        selectAllView.setVisibility(View.GONE);
+        LinearLayout leftButton = (LinearLayout) actionBarView.findViewById(R.id.action_left_button);
+        final Button rightButton = (Button) actionBarView.findViewById(R.id.action_right_button);
+        selectAllButton = (Button) selectAllView.findViewById(R.id.selectAllButton);
+        selectAllButton.setTag(1);// 1- no selected all, 2- selected all
+        rightButton.setVisibility(View.GONE);
+        int visible = logs.size() > 0 ? View.VISIBLE : View.GONE;
+        leftButton.setVisibility(visible);
+        leftButton.findViewById(R.id.actionBarBackArrow).setVisibility(View.GONE);
+        final Button backButton = (Button) leftButton.findViewById(R.id.actionBarBackButton);
+        backButton.setText("Edit");
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) backButton.getLayoutParams();
+        params.leftMargin = 25;
+        backButton.requestLayout();
+        leftButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listAdapter.isEditingMode){
+                    backButton.setText("Edit");
+                    listAdapter.isEditingMode = false;
+                    listAdapter.notifyDataSetChanged();
+                    rightButton.setVisibility(View.GONE);
+                    selectAllView.setVisibility(View.GONE);
+                } else {
+                    backButton.setText("Cancel");
+                    selectAllButton.setText("Select All");
+                    deselectAll();
+                    listAdapter.isEditingMode = true;
+                    listAdapter.notifyDataSetChanged();
+                    rightButton.setVisibility(View.VISIBLE);
+                    selectAllView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        rightButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlertView();
+            }
+        });
+        selectAllButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int tag = (int)v.getTag();
+                if (tag == 1) {
+                    selectAll();
+                } else {
+                    deselectAll();
+                }
+            }
+        });
 
         listAdapter = new LogsFragmentListAdapter(getActivity(), logs, mListener);
         listView.setAdapter(listAdapter);

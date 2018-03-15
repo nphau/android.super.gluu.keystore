@@ -6,12 +6,6 @@
         android:background="@color/grayColorLight"
         android:orientation="vertical">
 
-    <!--<include-->
-        <!--android:id="@+id/actionBarView"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="65dp"-->
-        <!--layout="@layout/custom_action_bar" />-->
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
