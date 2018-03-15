@@ -15,7 +15,7 @@ public abstract class FakeAuthUtil {
             GluuMainActivity.class.getPackage().getName() + ".QR_CODE_PUSH_NOTIFICATION_MESSAGE";
     private static final String QR_CODE_PUSH_NOTIFICATION = "QR_CODE_PUSH_NOTIFICATION";
 
-    public Intent getFakeAuthBroadcastIntent() {
+    public static Intent getFakeAuthBroadcastIntent() {
         String message =
                 "{\"app\":\"https://cred3.gluu.org/cred-manager\",\"method\":\"authenticate\",\"req_ip\":\"38.142.29.4\",\"created\":\"2018-03-14T19:41:29.094000\",\"issuer\":\"https://cred3.gluu.org\",\"req_loc\":\"United%20States%2C%20Texas%2C%20Houston\",\"state\":\"00f14ff3-e153-4f1f-a4c4-4587241b3b4d\",\"username\":\"eric3\"}\n";
 
@@ -24,7 +24,7 @@ public abstract class FakeAuthUtil {
         return intent;
     }
 
-    public OxPush2Request getFakeOXRequest() {
+    public static OxPush2Request getFakeOXRequest() {
         OxPush2Request oxPush2Request =
                 new OxPush2Request("eric3",
                         "https://cred3.gluu.org",

@@ -54,6 +54,7 @@ import org.gluu.super_gluu.app.fragments.KeysFragment.KeyHandleInfoFragment;
 import org.gluu.super_gluu.app.fragments.LicenseFragment.LicenseFragment;
 import org.gluu.super_gluu.app.fragments.LogsFragment.LogsFragment;
 import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
+import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeSettingFragment;
 import org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsFragment;
 import org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsPinCode;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
@@ -119,8 +120,12 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         public void onReceive(Context context, Intent intent) {
             //Pop backstack to get back to home screen
             if(fragmentManager.getBackStackEntryCount() > 0) {
-                fragmentManager.popBackStack();
+                for (int i = 0; i < fragmentManager.getBackStackEntryCount(); i++) {
+                    fragmentManager.popBackStack();
+                }
             }
+
+            setTitle(getString(R.string.home));
 
             // Get extra data included in the Intent
             String message = intent.getStringExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE);
@@ -212,10 +217,13 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             Fragment fragment = fragmentManager.findFragmentById(R.id.main_frame_layout);
 
             if(fragment != null) {
+
                 if(fragment instanceof KeyFragmentListFragment) {
-                    setTitle("Keys");
+                    setTitle(getString(R.string.keys));
                 } else if(fragment instanceof LogsFragment) {
-                    setTitle("Logs");
+                    setTitle(getString(R.string.logs));
+                } else if(fragment instanceof PinCodeFragment || fragment instanceof PinCodeSettingFragment) {
+                    setTitle(getString(R.string.pin_code));
                 }
             }
         } else {
@@ -677,7 +685,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                setTitle(getString(R.string.home));
                                 onBackPressed();
                             }
                         });
