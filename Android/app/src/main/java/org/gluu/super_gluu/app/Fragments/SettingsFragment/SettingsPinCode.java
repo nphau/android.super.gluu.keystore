@@ -170,7 +170,7 @@ public class SettingsPinCode extends Fragment implements HorizontalNumberPickerL
         pinCodeFragment.setIsSettings(true);
         pinCodeFragment.setIsSetNewPinCode(true);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.root_frame, pinCodeFragment);
+        transaction.replace(R.id.main_frame_layout, pinCodeFragment);
         if (isBackStack) {
             transaction.addToBackStack(null);
         }

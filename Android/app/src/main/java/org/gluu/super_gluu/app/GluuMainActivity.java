@@ -100,6 +100,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     private DrawerLayout drawer;
     private Toolbar toolbar;
     private ActionBarDrawerToggle toggle;
+    DrawerLayout.DrawerListener drawerListener;
 
 
     private SoftwareDevice u2f;
@@ -761,22 +762,47 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         updateUIAfterNavItemSelected(fragment, menuItem, true);
     }
 
-    public void updateUIAfterNavItemSelected(Fragment fragment, MenuItem menuItem, boolean setTitle) {
-        if(fragment != null) {
-            // Insert the fragment by replacing any existing fragment
-            fragmentManager
-                    .beginTransaction()
-                    .replace(R.id.main_frame_layout, fragment)
-                    .addToBackStack(null)
-                    .commit();
-        }
-
-        if(setTitle) {
-            // Set action bar title
-            setTitle(menuItem.getTitle());
-        }
+    public void updateUIAfterNavItemSelected(final Fragment fragment, final MenuItem menuItem, final boolean setTitle) {
         // Close the navigation drawer
         drawer.closeDrawers();
+
+        drawerListener = new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                if(fragment != null) {
+                    // Insert the fragment by replacing any existing fragment
+                    fragmentManager
+                            .beginTransaction()
+                            .replace(R.id.main_frame_layout, fragment)
+                            .addToBackStack(null)
+                            .commit();
+                }
+
+                if(setTitle) {
+                    // Set action bar title
+                    setTitle(menuItem.getTitle());
+                }
+
+                drawer.removeDrawerListener(drawerListener);
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        };
+
+        drawer.addDrawerListener(drawerListener);
     }
 
     Fragment createSettingsFragment(String settingsId){
