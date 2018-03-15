@@ -103,7 +103,6 @@ public class LogsFragment extends Fragment {
             }
         };
 
-        //todo reimplement the actionbar functionality here. Changing with new designs most of this will be removed.
         View actionBarView = (View) rootView.findViewById(R.id.actionBarSettings);
         actionBarView.findViewById(R.id.action_right_button).setVisibility(View.GONE);
         actionBarView.findViewById(R.id.actionbar_icon).setVisibility(View.VISIBLE);

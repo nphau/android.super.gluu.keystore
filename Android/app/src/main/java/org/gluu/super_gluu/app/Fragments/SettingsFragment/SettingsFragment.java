@@ -138,12 +138,10 @@ public class SettingsFragment extends Fragment {
 
     public static class Constant {
         public final static String SETTINGS_ID = "settingsId";
+        public final static String USER_GUIDE_URL = "https://gluu.org/docs/supergluu/3.0.0/user-guide/";
 
         //types
         public final static String SSL_CONNECTION_TYPE = "SSLConnectionSettings";
         public final static String FINGERPRINT_TYPE = "FingerprintSettings";
-
-
-        public final static String USER_GUIDE_URL = "https://gluu.org/docs/supergluu/3.0.0/user-guide/";
     }
 }
