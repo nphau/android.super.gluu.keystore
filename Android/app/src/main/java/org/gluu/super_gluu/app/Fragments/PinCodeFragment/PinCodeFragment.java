@@ -5,11 +5,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.TextView;
 
 //import com.github.simonpercic.rxtime.RxTime;
@@ -20,8 +24,6 @@ import org.gluu.super_gluu.app.services.GlobalNetworkTime;
 import org.gluu.super_gluu.app.settings.Settings;
 
 import SuperGluu.app.R;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 
 /**
  * Created by nazaryavornytskyy on 3/24/16.
@@ -35,25 +37,63 @@ public class PinCodeFragment extends Fragment implements View.OnClickListener {
     private int setNewPinAttempts;
     public PinCodeViewListener pinCodeViewListener;
     private boolean isSetNewPinCode;
-    private TextView pinCodeTitle;
     private TextView attemptsLabel;
 
     private Context context;
+
+    private String fragmentType;
+
+    public static PinCodeFragment newInstance(String fragmentType) {
+        PinCodeFragment pinCodeFragment = new PinCodeFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.FRAGMENT_TYPE, fragmentType);
+        pinCodeFragment.setArguments(bundle);
+        return pinCodeFragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_pin_code, container, false);
+
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.nav_drawer_toolbar);
+
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
+        fragmentType = getArguments().getString(Constant.FRAGMENT_TYPE, Constant.ENTER_CODE);
+
+        if (fragmentType.equals(Constant.SET_CODE)) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.set_passcode));
+        } else {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.enter_passcode));
+        }
+
+        setHasOptionsMenu(true);
+
         context = getContext();
-        view.findViewById(R.id.close_button).setVisibility(View.GONE);
-        Button closeButton = (Button) view.findViewById(R.id.close_button);
-        closeButton.setOnClickListener(this);
-        pinCodeTitle = (TextView) view.findViewById(R.id.pin_code_title);
+
         attemptsLabel = (TextView) view.findViewById(R.id.attemptsLabel);
         updatePinCodeView();
         setNewPinAttempts = 0;
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_pin_code_entry, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.cancel_action:
+                exitScreen();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void updatePinCodeView(){
@@ -80,7 +120,7 @@ public class PinCodeFragment extends Fragment implements View.OnClickListener {
                 if (pinCode.equalsIgnoreCase("null")) {
                     if (setNewPinAttempts == 0){
                         setNewPinAttempts++;
-                        pinCodeTitle.setText("Re-enter your pin code.");
+                        //pinCodeTitle.setText("Re-enter your pin code.");
                         pcView.clearText();
                         return;
                     } else {
@@ -101,7 +141,7 @@ public class PinCodeFragment extends Fragment implements View.OnClickListener {
                 } else if (passcode.equalsIgnoreCase(Settings.getPinCode(getContext()))) {
                     if (isSetNewPinCode) {
                         attemptsLabel.setVisibility(View.GONE);
-                        pinCodeTitle.setText(R.string.set_new_pin_code);
+                        //pinCodeTitle.setText(R.string.set_new_pin_code);
                         pcView.clearText();
                         newPin = true;
                         resetCurrentPinAttempts();
@@ -122,7 +162,7 @@ public class PinCodeFragment extends Fragment implements View.OnClickListener {
         });
         if (pinCode.equalsIgnoreCase("null")){
             attemptsLabel.setVisibility(View.GONE);
-            pinCodeTitle.setText(R.string.set_new_pin_code);
+            //pinCodeTitle.setText(R.string.set_new_pin_code);
         } else {
 //            /**
 //             * set PinCodeMode to SET_NEW_PINCODE in order to create the new pin code,
@@ -139,7 +179,7 @@ public class PinCodeFragment extends Fragment implements View.OnClickListener {
 //                }
 //            }
             if (!newPin) {
-                pinCodeTitle.setText(R.string.enter_pin_code);
+                //pinCodeTitle.setText(R.string.enter_pin_code);
             }
         }
 
@@ -232,6 +272,10 @@ public class PinCodeFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        exitScreen();
+    }
+
+    private void exitScreen() {
         Settings.saveIsReset(getContext());
         getActivity().onBackPressed();
     }
@@ -252,5 +296,12 @@ public class PinCodeFragment extends Fragment implements View.OnClickListener {
     public interface PinCodeViewListener{
         public void onNewPinCode(String pinCode);
         public void onCorrectPinCode(boolean isPinCodeCorrect);
+    }
+
+    public class Constant {
+        public static final String FRAGMENT_TYPE = "code_type";
+
+        public static final String ENTER_CODE = "enter_code";
+        public static final String SET_CODE = "set_code";
     }
 }

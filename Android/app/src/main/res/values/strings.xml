@@ -91,6 +91,12 @@
     <string name="pin_code_enable_title">Add a Pin Code?</string>
     <string name="pin_code_enable_question">Protect access to Super Gluu by adding a pin code.</string>
 
+    <string name="set_passcode">Set Passcode</string>
+    <string name="enter_passcode">Enter Passcode</string>
+
+    <string name="enter_a_passcode">Enter a passcode</string>
+    <string name="enter_your_passcode">Enter your passcode</string>
+
     <!--<string name="available_keys">Available keys(%s)</string>-->
     <string name="available_keys">Available keys</string>
     <string name="text_keys">When you login with Super Gluu, a private key is generated and stored on your phone.</string>

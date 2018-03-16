@@ -14,6 +14,7 @@
     <color name="navyBlueColor">#143642</color>
     <color name="primaryBlue">#3F51B5</color>
     <color name="darkBlue">#303F9F</color>
+    <color name="pinCodeGray">#e5e5e5</color>
 
     <!--For fingerprint dialog-->
     <color name="warning_color">#f4511e</color>

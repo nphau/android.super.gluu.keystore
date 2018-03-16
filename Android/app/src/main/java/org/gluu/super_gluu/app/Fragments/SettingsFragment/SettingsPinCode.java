@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
+
 import com.hrules.horizontalnumberpicker.HorizontalNumberPicker;
 import com.hrules.horizontalnumberpicker.HorizontalNumberPickerListener;
 
@@ -22,7 +24,6 @@ import org.gluu.super_gluu.app.GluuMainActivity;
 import org.gluu.super_gluu.app.NotificationType;
 import org.gluu.super_gluu.app.base.ToolbarFragment;
 import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
-import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
 import org.gluu.super_gluu.app.settings.Settings;
 
 import SuperGluu.app.R;
@@ -155,7 +156,8 @@ public class SettingsPinCode extends ToolbarFragment implements HorizontalNumber
     }
 
     private void loadPinCodeView(Boolean isBackStack) {
-        pinCodeFragment = new PinCodeFragment();
+        PinCodeFragment pinCodeFragment = PinCodeFragment.newInstance(PinCodeFragment.Constant.SET_CODE);
+
         pinCodeFragment.setIsSettings(true);
         pinCodeFragment.setIsSetNewPinCode(true);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();

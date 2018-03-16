@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
     @Override
     public void onShowPinFragment() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        PinCodeFragment pinCodeFragment = new PinCodeFragment();
+        PinCodeFragment pinCodeFragment = PinCodeFragment.newInstance(PinCodeFragment.Constant.ENTER_CODE);
 
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.replace(R.id.fragment_container, pinCodeFragment);
