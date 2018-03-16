@@ -23,7 +23,7 @@
 
         <!-- The main content view where fragments are loaded -->
         <FrameLayout
-            android:layout_below="@+id/nav_drawer_toolbar"
+            android:layout_alignParentTop="true"
             android:id="@+id/main_frame_layout"
             android:layout_above="@+id/adView"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"

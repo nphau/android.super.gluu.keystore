@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.hrules.horizontalnumberpicker.HorizontalNumberPickerListener;
 
 import org.gluu.super_gluu.app.GluuMainActivity;
 import org.gluu.super_gluu.app.NotificationType;
+import org.gluu.super_gluu.app.base.ToolbarFragment;
 import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.app.fingerprint.Fingerprint;
 import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
@@ -31,7 +33,7 @@ import SuperGluu.app.R;
  * Created by nazaryavornytskyy on 5/17/17.
  */
 
-public class SettingsPinCode extends Fragment implements HorizontalNumberPickerListener {
+public class SettingsPinCode extends ToolbarFragment implements HorizontalNumberPickerListener {
 
     Button setResetPinButton;
     private Context context;
@@ -46,6 +48,10 @@ public class SettingsPinCode extends Fragment implements HorizontalNumberPickerL
         View view = inflater.inflate(R.layout.settings_pincode, container, false);
         context = getContext();
         this.inflater = inflater;
+
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.nav_drawer_toolbar);
+        setupToolbar(toolbar, getString(R.string.pin_code));
+        setHasOptionsMenu(true);
 
         setResetPinButton = (Button) view.findViewById(R.id.set_reset_pin_button);
         setResetPinButton.setOnClickListener(new View.OnClickListener() {

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ import org.gluu.super_gluu.app.ApproveDenyFragment;
 import SuperGluu.app.R;
 
 import org.gluu.super_gluu.app.GluuMainActivity;
+import org.gluu.super_gluu.app.base.ToolbarFragment;
 import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.app.model.LogInfo;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
@@ -36,7 +38,7 @@ import java.util.List;
 /**
  * Created by nazaryavornytskyy on 3/22/16.
  */
-public class LogsFragment extends Fragment {
+public class LogsFragment extends ToolbarFragment {
 
     private LogsFragmentListAdapter listAdapter;
     private AndroidKeyDataStore dataStore;
@@ -83,6 +85,11 @@ public class LogsFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
 
         View rootView = inflater.inflate(R.layout.fragment_logs_list, container, false);
+
+        Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.nav_drawer_toolbar);
+        setupToolbar(toolbar, getString(R.string.logs));
+        setHasOptionsMenu(true);
+
         dataStore = new AndroidKeyDataStore(getActivity().getApplicationContext());
         reloadLogs();
         listView = (ListView) rootView.findViewById(R.id.logs_listView);

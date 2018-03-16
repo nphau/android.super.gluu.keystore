@@ -18,6 +18,12 @@
         android:background="@color/grayColorLight"
         android:orientation="vertical">
 
+        <include
+            layout="@layout/toolbar_nav_drawer"
+            android:clickable="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

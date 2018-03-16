@@ -3,10 +3,17 @@
         android:id="@+id/settings_parent_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clickable="true"
         android:background="@color/grayColorLight"
         android:orientation="vertical">
 
-        <RelativeLayout
+    <include
+        layout="@layout/toolbar_nav_drawer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+            android:layout_below="@+id/nav_drawer_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"

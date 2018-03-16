@@ -4,17 +4,19 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.support.v7.widget.Toolbar;
 
 import com.google.gson.Gson;
 
+import org.gluu.super_gluu.app.base.ToolbarFragment;
 import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
 
 import SuperGluu.app.R;
@@ -32,7 +34,7 @@ import java.util.List;
 /**
  * Created by nazaryavornytskyy on 3/1/16.
  */
-public class KeyFragmentListFragment extends Fragment {
+public class KeyFragmentListFragment extends ToolbarFragment {
 
     private KeyFragmentListAdapter listAdapter;
     private KeyHandleInfo mListener;
@@ -47,6 +49,12 @@ public class KeyFragmentListFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
 
         View rootView = inflater.inflate(R.layout.fragment_key_list, container, false);
+
+        Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.nav_drawer_toolbar);
+
+        setupToolbar(toolbar, getString(R.string.keys));
+
+        setHasOptionsMenu(true);
 
         listToken = getListToken(rootView);
         keyMainView = (RelativeLayout) rootView.findViewById(R.id.keyMainView);

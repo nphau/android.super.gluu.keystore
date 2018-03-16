@@ -123,7 +123,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                 }
             }
 
-            setTitle(getString(R.string.home));
+            //setTitle(getString(R.string.home));
 
             // Get extra data included in the Intent
             String message = intent.getStringExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE);
@@ -219,15 +219,15 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
             if(fragment != null) {
                 if(fragment instanceof KeyFragmentListFragment) {
-                    setTitle(getString(R.string.keys));
+                    //setTitle(getString(R.string.keys));
                 } else if(fragment instanceof LogsFragment) {
-                    setTitle(getString(R.string.logs));
+                    //setTitle(getString(R.string.logs));
                 } else if(fragment instanceof PinCodeFragment || fragment instanceof PinCodeSettingFragment) {
-                    setTitle(getString(R.string.pin_code));
+                    //setTitle(getString(R.string.pin_code));
                 }
             }
         } else {
-            setTitle(getString(R.string.home));
+            //setTitle(getString(R.string.home));
         }
     }
 
@@ -302,26 +302,29 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        GluuAlertCallback listener = new GluuAlertCallback(){
-            @Override
-            public void onPositiveButton() {
-                dataStore.deleteLogs();
-                reloadLogs();
-                invalidateOptionsMenu();
-            }
 
-            @Override
-            public void onNegativeButton() {
-                //Skip here
-            }
+        //todo this should be handled at fragment level
+//        GluuAlertCallback listener = new GluuAlertCallback() {
+//            @Override
+//            public void onPositiveButton() {
+//                dataStore.deleteLogs();
+//                reloadLogs();
+//                invalidateOptionsMenu();
+//            }
+//
+//            @Override
+//            public void onNegativeButton() {
+//                //Skip here
+//            }
+//
+//        };
+//        CustomGluuAlert gluuAlert = new CustomGluuAlert(GluuMainActivity.this);
+//        gluuAlert.setMessage(getApplicationContext().getString(R.string.clear_logs));
+//        gluuAlert.setYesTitle(getApplicationContext().getString(R.string.yes));
+//        gluuAlert.setNoTitle(getApplicationContext().getString(R.string.no));
+//        gluuAlert.setmListener(listener);
+//        gluuAlert.show();
 
-        };
-        CustomGluuAlert gluuAlert = new CustomGluuAlert(GluuMainActivity.this);
-        gluuAlert.setMessage(getApplicationContext().getString(R.string.clear_logs));
-        gluuAlert.setYesTitle(getApplicationContext().getString(R.string.yes));
-        gluuAlert.setNoTitle(getApplicationContext().getString(R.string.no));
-        gluuAlert.setmListener(listener);
-        gluuAlert.show();
         return super.onOptionsItemSelected(item);
     }
 
@@ -780,7 +783,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         }
 
         if(setTitle) {
-            setTitle(menuItem.getTitle());
+            //setTitle(menuItem.getTitle());
         }
 
         drawer.closeDrawers();

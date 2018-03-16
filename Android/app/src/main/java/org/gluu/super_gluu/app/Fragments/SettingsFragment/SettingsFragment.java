@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import org.gluu.super_gluu.app.activities.GluuApplication;
+import org.gluu.super_gluu.app.base.ToolbarFragment;
 import org.gluu.super_gluu.app.fingerprint.Fingerprint;
 import org.gluu.super_gluu.app.gluuToast.GluuToast;
 import org.gluu.super_gluu.app.settings.Settings;
@@ -29,7 +31,7 @@ import SuperGluu.app.R;
  * Created by nazaryavornytskyy on 5/17/17.
  */
 
-public class SettingsFragment extends Fragment {
+public class SettingsFragment extends ToolbarFragment {
 
     private Context context;
     private LayoutInflater inflater;
@@ -51,11 +53,28 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
+
         context = getContext();
         this.inflater = inflater;
         fingerprint = new Fingerprint(context);
 
         final String settingsId = this.getArguments().getString(Constant.SETTINGS_ID);
+
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.nav_drawer_toolbar);
+
+        if(settingsId != null) {
+            switch (settingsId) {
+                case Constant.FINGERPRINT_TYPE:
+                    setupToolbar(toolbar, getString(R.string.fingerprint_title));
+                    break;
+                case Constant.SSL_CONNECTION_TYPE:
+                    setupToolbar(toolbar, getString(R.string.ssl_connection_settings));
+                    break;
+            }
+        } else {
+            setupToolbar(toolbar, getString(R.string.settings_title));
+        }
+        setHasOptionsMenu(true);
 
         TextView textSettings = (TextView)view.findViewById(R.id.textViewSettings);
         final TextView textSettingsSubTitle = (TextView)view.findViewById(R.id.textViewSubTitle);

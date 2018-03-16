@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.gluu.super_gluu.app.base.ToolbarFragment;
 import org.gluu.super_gluu.app.fragments.KeysFragment.KeyHandleInfoFragment;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -24,7 +26,7 @@ import SuperGluu.app.R;
 /**
  * Created by nazaryavornytskyy on 3/22/16.
  */
-public class LicenseFragment extends Fragment implements View.OnClickListener {
+public class LicenseFragment extends ToolbarFragment implements View.OnClickListener {
 
     OnMainActivityListener mainActivityListener;
 
@@ -43,6 +45,11 @@ public class LicenseFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.license_fragment, container, false);
+
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.nav_drawer_toolbar);
+        setupToolbar(toolbar, getString(R.string.privacy_policy));
+        setHasOptionsMenu(true);
+
         WebView licenseWebView = (WebView) view.findViewById(R.id.license_webView);
         licenseWebView.loadDataWithBaseURL(null, readLicenseTxt(), "text/html", "UTF-8", null);
 //        licenseTextView.setMovementMethod(new ScrollingMovementMethod());
