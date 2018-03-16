@@ -18,16 +18,13 @@ public class ToolbarFragment extends Fragment {
         if(appCompatActivity != null) {
 
             appCompatActivity.setSupportActionBar(toolbar);
-
-            //toolbar.setTitle(titleText);
-
+            
             ActionBar actionBar = appCompatActivity.getSupportActionBar();
 
             if(actionBar != null) {
                 appCompatActivity.getSupportActionBar().setTitle(titleText);
                 appCompatActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 appCompatActivity.getSupportActionBar().setHomeButtonEnabled(true);
-                appCompatActivity.getSupportActionBar().setDisplayShowHomeEnabled(true);
             }
         }
     }
