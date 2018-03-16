@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
-    android:weightSum="1"
     android:background="#dcd9d9">
 
     <include
@@ -15,19 +15,21 @@
     <include
         android:layout_below="@+id/nav_drawer_toolbar"
         android:id="@+id/actionBarSettings"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="65dp"
-        layout="@layout/custom_action_bar" />
+        layout="@layout/custom_action_bar"
+        tools:ignore="UnknownIdInLayout" />
 
     <ListView
         android:id="@+id/logs_listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/actionBarSettings"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
         android:layout_gravity="center_horizontal"
+        android:layout_above="@+id/selectAllView"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="12dp"
         android:background="@android:color/white"
         android:divider="@color/grayColorLight"
         android:dividerHeight="3px"
@@ -47,15 +49,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/backgroundColor">
-    <Button
-        android:id="@+id/selectAllButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:textAllCaps="false"
-        android:textSize="18dp"
-        android:background="@android:color/transparent"
-        android:text="Select All"/>
+
+        <Button
+            android:id="@+id/selectAllButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:textAllCaps="false"
+            android:textSize="18dp"
+            android:background="@android:color/transparent"
+            android:text="Select All"/>
+
     </LinearLayout>
 
 </RelativeLayout>
