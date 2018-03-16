@@ -120,8 +120,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                 }
             }
 
-            //setTitle(getString(R.string.home));
-
             // Get extra data included in the Intent
             String message = intent.getStringExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE);
             final OxPush2Request oxPush2Request = new Gson().fromJson(message, OxPush2Request.class);
