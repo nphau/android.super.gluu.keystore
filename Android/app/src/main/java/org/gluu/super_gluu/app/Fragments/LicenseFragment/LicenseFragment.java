@@ -3,17 +3,13 @@ package org.gluu.super_gluu.app.fragments.LicenseFragment;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebBackForwardList;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import org.gluu.super_gluu.app.base.ToolbarFragment;
 import org.gluu.super_gluu.app.fragments.KeysFragment.KeyHandleInfoFragment;
@@ -47,7 +43,7 @@ public class LicenseFragment extends ToolbarFragment implements View.OnClickList
         View view = inflater.inflate(R.layout.license_fragment, container, false);
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.nav_drawer_toolbar);
-        setupToolbar(toolbar, getString(R.string.privacy_policy));
+        setupHomeAsUpEnabledToolbar(toolbar, getString(R.string.privacy_policy));
         setHasOptionsMenu(true);
 
         WebView licenseWebView = (WebView) view.findViewById(R.id.license_webView);

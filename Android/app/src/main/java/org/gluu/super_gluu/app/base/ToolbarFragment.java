@@ -12,7 +12,7 @@ import android.view.MenuItem;
 
 public class ToolbarFragment extends Fragment {
 
-    public void setupToolbar(Toolbar toolbar, String titleText) {
+    public void setupHomeAsUpEnabledToolbar(Toolbar toolbar, String titleText) {
 
         AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
         if(appCompatActivity != null) {

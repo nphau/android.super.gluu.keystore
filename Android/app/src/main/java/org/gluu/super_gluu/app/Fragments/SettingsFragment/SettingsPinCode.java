@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
@@ -23,7 +22,6 @@ import org.gluu.super_gluu.app.GluuMainActivity;
 import org.gluu.super_gluu.app.NotificationType;
 import org.gluu.super_gluu.app.base.ToolbarFragment;
 import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
-import org.gluu.super_gluu.app.fingerprint.Fingerprint;
 import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
 import org.gluu.super_gluu.app.settings.Settings;
 
@@ -50,7 +48,7 @@ public class SettingsPinCode extends ToolbarFragment implements HorizontalNumber
         this.inflater = inflater;
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.nav_drawer_toolbar);
-        setupToolbar(toolbar, getString(R.string.pin_code));
+        setupHomeAsUpEnabledToolbar(toolbar, getString(R.string.pin_code));
         setHasOptionsMenu(true);
 
         setResetPinButton = (Button) view.findViewById(R.id.set_reset_pin_button);

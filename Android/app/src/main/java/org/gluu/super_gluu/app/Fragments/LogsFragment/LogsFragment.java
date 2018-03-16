@@ -87,7 +87,7 @@ public class LogsFragment extends ToolbarFragment {
         View rootView = inflater.inflate(R.layout.fragment_logs_list, container, false);
 
         Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.nav_drawer_toolbar);
-        setupToolbar(toolbar, getString(R.string.logs));
+        setupHomeAsUpEnabledToolbar(toolbar, getString(R.string.logs));
         setHasOptionsMenu(true);
 
         dataStore = new AndroidKeyDataStore(getActivity().getApplicationContext());

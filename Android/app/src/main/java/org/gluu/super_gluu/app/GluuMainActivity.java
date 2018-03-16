@@ -26,6 +26,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
@@ -277,7 +278,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        //todo this should be handled at fragment level
+        //todo this should be handled at the fragment screen level
 //        GluuAlertCallback listener = new GluuAlertCallback() {
 //            @Override
 //            public void onPositiveButton() {
@@ -650,8 +651,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             toggle.syncState();
             drawer.addDrawerListener(toggle);
 
-            FragmentManager.OnBackStackChangedListener onBackStackChangedListener =
-                    new FragmentManager.OnBackStackChangedListener() {
+            OnBackStackChangedListener onBackStackChangedListener = new OnBackStackChangedListener() {
                 @Override
                 public void onBackStackChanged() {
                     if (getSupportFragmentManager().getBackStackEntryCount() > 0) {

@@ -6,15 +6,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -65,14 +62,14 @@ public class SettingsFragment extends ToolbarFragment {
         if(settingsId != null) {
             switch (settingsId) {
                 case Constant.FINGERPRINT_TYPE:
-                    setupToolbar(toolbar, getString(R.string.fingerprint_title));
+                    setupHomeAsUpEnabledToolbar(toolbar, getString(R.string.fingerprint_title));
                     break;
                 case Constant.SSL_CONNECTION_TYPE:
-                    setupToolbar(toolbar, getString(R.string.ssl_connection_settings));
+                    setupHomeAsUpEnabledToolbar(toolbar, getString(R.string.trust_all_ssl));
                     break;
             }
         } else {
-            setupToolbar(toolbar, getString(R.string.settings_title));
+            setupHomeAsUpEnabledToolbar(toolbar, getString(R.string.settings_title));
         }
         setHasOptionsMenu(true);
 
