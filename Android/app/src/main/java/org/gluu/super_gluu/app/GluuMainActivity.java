@@ -26,10 +26,8 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -54,7 +52,6 @@ import org.gluu.super_gluu.app.fragments.KeysFragment.KeyHandleInfoFragment;
 import org.gluu.super_gluu.app.fragments.LicenseFragment.LicenseFragment;
 import org.gluu.super_gluu.app.fragments.LogsFragment.LogsFragment;
 import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
-import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeSettingFragment;
 import org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsFragment;
 import org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsPinCode;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
@@ -208,27 +205,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         setupDrawerContent(navigationView);
 
         setupToggleState();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        if(fragmentManager.getBackStackEntryCount() > 0) {
-            Fragment fragment = fragmentManager.findFragmentById(R.id.main_frame_layout);
-
-            if(fragment != null) {
-                if(fragment instanceof KeyFragmentListFragment) {
-                    //setTitle(getString(R.string.keys));
-                } else if(fragment instanceof LogsFragment) {
-                    //setTitle(getString(R.string.logs));
-                } else if(fragment instanceof PinCodeFragment || fragment instanceof PinCodeSettingFragment) {
-                    //setTitle(getString(R.string.pin_code));
-                }
-            }
-        } else {
-            //setTitle(getString(R.string.home));
-        }
     }
 
     private void initGoogleADS(Boolean isShow){
@@ -676,36 +652,14 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             toggle.syncState();
             drawer.addDrawerListener(toggle);
 
-            OnBackStackChangedListener onBackStackChangedListener = new OnBackStackChangedListener() {
+            FragmentManager.OnBackStackChangedListener onBackStackChangedListener =
+                    new FragmentManager.OnBackStackChangedListener() {
                 @Override
                 public void onBackStackChanged() {
                     if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
                         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-
-                        //show hamburger
-                        if(getSupportActionBar() != null) {
-                            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                        }
-                        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                onBackPressed();
-                            }
-                        });
                     } else {
                         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-
-                        //show hamburger
-                        if(getSupportActionBar() != null) {
-                            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-                        }
-                        toggle.syncState();
-                        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                drawer.openDrawer(GravityCompat.START);
-                            }
-                        });
                     }
                 }
             };
@@ -736,22 +690,22 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
         switch(menuItem.getItemId()) {
             case R.id.nav_keys:
-                updateUIAfterNavItemSelected(new KeyFragmentListFragment(), menuItem);
+                updateUIAfterNavItemSelected(new KeyFragmentListFragment());
                 break;
             case R.id.nav_logs:
-                updateUIAfterNavItemSelected(new LogsFragment(), menuItem);
+                updateUIAfterNavItemSelected(new LogsFragment());
                 break;
             case R.id.nav_pin_code:
-                updateUIAfterNavItemSelected(new SettingsPinCode(), menuItem);
+                updateUIAfterNavItemSelected(new SettingsPinCode());
                 break;
             case R.id.nav_touch_id:
-                updateUIAfterNavItemSelected(createSettingsFragment(SettingsFragment.Constant.FINGERPRINT_TYPE), menuItem);
+                updateUIAfterNavItemSelected(createSettingsFragment(SettingsFragment.Constant.FINGERPRINT_TYPE));
                 break;
             case R.id.nav_ssl:
-                updateUIAfterNavItemSelected(createSettingsFragment(SettingsFragment.Constant.SSL_CONNECTION_TYPE), menuItem);
+                updateUIAfterNavItemSelected(createSettingsFragment(SettingsFragment.Constant.SSL_CONNECTION_TYPE));
                 break;
             case R.id.nav_user_guide:
-                updateUIAfterNavItemSelected(null, menuItem, false);
+                updateUIAfterNavItemSelected(null);
 
                 Uri uri = Uri.parse(SettingsFragment.Constant.USER_GUIDE_URL);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
@@ -760,7 +714,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             case R.id.nav_privacy_policy:
                 LicenseFragment licenseFragment = new LicenseFragment();
                 licenseFragment.setForFirstLoading(false);
-                updateUIAfterNavItemSelected(licenseFragment, menuItem);
+                updateUIAfterNavItemSelected(licenseFragment);
                 break;
             case R.id.nav_version:
                 break;
@@ -768,11 +722,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
     }
 
-    public void updateUIAfterNavItemSelected(Fragment fragment, MenuItem menuItem) {
-        updateUIAfterNavItemSelected(fragment, menuItem, true);
-    }
-
-    public void updateUIAfterNavItemSelected(final Fragment fragment, final MenuItem menuItem, final boolean setTitle) {
+    public void updateUIAfterNavItemSelected(final Fragment fragment) {
         if(fragment != null) {
             fragmentManager
                     .beginTransaction()
@@ -780,10 +730,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                     .replace(R.id.main_frame_layout, fragment)
                     .addToBackStack(null)
                     .commit();
-        }
-
-        if(setTitle) {
-            //setTitle(menuItem.getTitle());
         }
 
         drawer.closeDrawers();
