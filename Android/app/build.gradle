@@ -153,6 +153,10 @@ dependencies {
     compile 'com.dinuscxj:circleprogressbar:1.1.1'
     //For swipe gesture for table
     compile 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.0'
+
+    //Butterknife for view injection
+    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -382,9 +382,8 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     }
 
     public void loadPinCodeFragment() {
-        PinCodeFragment pinCodeFragment = PinCodeFragment.newInstance(PinCodeFragment.Constant.ENTER_CODE);
-        pinCodeFragment.setIsSettings(false);
-        pinCodeFragment.setIsSetNewPinCode(false);
+        PinCodeFragment pinCodeFragment =
+                PinCodeFragment.newInstance(PinCodeFragment.Constant.ENTER_CODE, false, false);
 
         fragmentManager
                 .beginTransaction()

@@ -136,11 +136,11 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
     @Override
     public void onShowPinFragment() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        PinCodeFragment pinCodeFragment = PinCodeFragment.newInstance(PinCodeFragment.Constant.ENTER_CODE);
+        PinCodeFragment pinCodeFragment =
+                PinCodeFragment.newInstance(PinCodeFragment.Constant.ENTER_CODE, false, false);
 
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.replace(R.id.fragment_container, pinCodeFragment);
-//        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
     }
 
     public void checkPinCodeEnabled() {
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences(Settings.PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
         Boolean isDestroyed = preferences.getBoolean("isMainActivityDestroyed", false);
         if (isDestroyed) {
             loadGluuMainActivity();
@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
     }
 
     public void loadGluuMainActivity() {
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences(Settings.PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("isMainActivityDestroyed", false);
         editor.apply();
@@ -190,8 +190,7 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
 
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.replace(R.id.fragment_container, pinCodeFragmentSetting);
-//        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+s        fragmentTransaction.commit();
 
         setTitle("Pin Code");
     }
@@ -251,7 +250,7 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
     }
 
     private void setAppLockedTime(String lockedTime) {
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences(Settings.PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("appLockedTime", lockedTime);
         editor.commit();

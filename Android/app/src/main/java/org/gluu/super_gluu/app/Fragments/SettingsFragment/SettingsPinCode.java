@@ -156,10 +156,8 @@ public class SettingsPinCode extends ToolbarFragment implements HorizontalNumber
     }
 
     private void loadPinCodeView(Boolean isBackStack) {
-        PinCodeFragment pinCodeFragment = PinCodeFragment.newInstance(PinCodeFragment.Constant.SET_CODE);
-
-        pinCodeFragment.setIsSettings(true);
-        pinCodeFragment.setIsSetNewPinCode(true);
+        PinCodeFragment pinCodeFragment =
+                PinCodeFragment.newInstance(PinCodeFragment.Constant.SET_CODE, true, true);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.main_frame_layout, pinCodeFragment);
         if (isBackStack) {

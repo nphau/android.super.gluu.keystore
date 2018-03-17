@@ -10,7 +10,7 @@ import org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsFragment;
  */
 public class Settings {
 
-    private static final String PIN_CODE_SETTINGS = "PinCodeSettings";
+    public static final String PIN_CODE_SETTINGS = "PinCodeSettings";
 
     private Boolean isEditingModeLogs = false;
     private Boolean isForLogs = false;
@@ -21,40 +21,40 @@ public class Settings {
     public static void setPinCodeEnabled(Context context, Boolean isEnabled) {
         SharedPreferences preferences = context.getSharedPreferences(PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isPinEnabled", isEnabled);
+        editor.putBoolean(Constant.IS_PIN_ENABLED, isEnabled);
         editor.commit();
     }
 
     public static Boolean getPinCodeEnabled(Context context){
         SharedPreferences preferences = context.getSharedPreferences(PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
-        Boolean isPinEnabled = preferences.getBoolean("isPinEnabled", false);
+        Boolean isPinEnabled = preferences.getBoolean(Constant.IS_PIN_ENABLED, false);
         return isPinEnabled;
     }
 
     public static String getPinCode(Context context){
         SharedPreferences preferences = context.getSharedPreferences(PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
-        String pinCode = preferences.getString("PinCode", "null");
+        String pinCode = preferences.getString(Constant.PIN_CODE, null);
         return pinCode;
     }
 
     public static void savePinCode(Context context, String password){
         SharedPreferences preferences = context.getSharedPreferences(PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("PinCode", password);
+        editor.putString(Constant.PIN_CODE, password);
         editor.commit();
     }
 
     public static void setPinCodeAttempts(Context context, String attempts){
         SharedPreferences preferences = context.getSharedPreferences(PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("pinCodeAttempts", attempts);
+        editor.putString(Constant.PIN_CODE_ATTEMPTS, attempts);
         editor.commit();
     }
 
     public static int getPinCodeAttempts(Context context){
         if (context != null) {
             SharedPreferences preferences = context.getSharedPreferences(PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
-            String pinCode = preferences.getString("pinCodeAttempts", "5");
+            String pinCode = preferences.getString(Constant.PIN_CODE_ATTEMPTS, "5");
             return Integer.parseInt(pinCode);
         }
         return 5;
@@ -62,14 +62,23 @@ public class Settings {
 
     public static int getCurrentPinCodeAttempts(Context context){
         SharedPreferences preferences = context.getSharedPreferences(PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
-        String pinCode = preferences.getString("currentPinCodeAttempts", String.valueOf(Settings.getPinCodeAttempts(context)));
+        String pinCode = preferences.getString(Constant.CURRENT_PIN_CODE_ATTEMPTS, String.valueOf(Settings.getPinCodeAttempts(context)));
         return Integer.parseInt(pinCode);
     }
 
     public static void setCurrentPinCodeAttempts(Context context, int attempts){
         SharedPreferences preferences = context.getSharedPreferences(PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("currentPinCodeAttempts", String.valueOf(attempts));
+        editor.putString(Constant.CURRENT_PIN_CODE_ATTEMPTS, String.valueOf(attempts));
+        editor.commit();
+    }
+
+
+    public static void resetCurrentPinAttempts(Context context){
+        Settings.saveIsReset(context);
+        SharedPreferences preferences = context.getSharedPreferences(PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(Constant.CURRENT_PIN_CODE_ATTEMPTS, String.valueOf(getPinCodeAttempts(context)));
         editor.commit();
     }
 
@@ -258,5 +267,12 @@ public class Settings {
 
     public void setForKeys(Boolean forKeys) {
         isForKeys = forKeys;
+    }
+
+    public static class Constant {
+        public static final String PIN_CODE = "PinCode";
+        public static final String IS_PIN_ENABLED = "isPinEnabled";
+        public static final String PIN_CODE_ATTEMPTS = "pinCodeAttempts";
+        public static final String CURRENT_PIN_CODE_ATTEMPTS = "currentPinCodeAttempts";
     }
 }
