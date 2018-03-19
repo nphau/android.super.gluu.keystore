@@ -72,6 +72,7 @@ public class PinCodeFragment extends Fragment {
         isSettings = getArguments().getBoolean(Constant.IS_SETTINGS, false);
         isSetNewPinCode = getArguments().getBoolean(Constant.NEW_PIN_CODE, false);
 
+
         if (fragmentType.equals(Constant.SET_CODE)) {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.set_passcode));
             enterPasscodeTextView.setText(getString(R.string.set_passcode));
@@ -124,7 +125,13 @@ public class PinCodeFragment extends Fragment {
         int attempts = Settings.getCurrentPinCodeAttempts(getContext());
 
         //Set attempts left view
-        attemptsTextView.setText(getAttemptsLeftText(attempts));
+
+        if(isSetNewPinCode) {
+            attemptsTextView.setText("Enter your current passcode");
+        } else {
+            attemptsTextView.setText(getAttemptsLeftText(attempts));
+        }
+
         if (attempts <= 2) {
             attemptsTextView.setTextColor(getResources().getColor(R.color.redColor));
         }
@@ -161,7 +168,7 @@ public class PinCodeFragment extends Fragment {
                     //If user entered correct pin code
                 } else if (passcode.equalsIgnoreCase(Settings.getPinCode(getContext()))) {
                     if (isSetNewPinCode) {
-                        attemptsTextView.setVisibility(View.GONE);
+                        attemptsTextView.setText("Enter new passcode");
                         pinCodeEditText.setText("");
                         newPin = true;
                         Settings.resetCurrentPinAttempts(getContext());
@@ -180,57 +187,6 @@ public class PinCodeFragment extends Fragment {
                 }
             }
         });
-
-        //Setup pin code listener
-//        pinCodeView.setPasscodeEntryListener(new PasscodeView.PasscodeEntryListener() {
-//
-//            @Override
-//            public void onPasscodeEntered(String passcode) {
-//                //If there is no pin code set
-//                if (pinCode == null) {
-//                    if (setNewPinAttempts == 0){
-//                        setNewPinAttempts++;
-//                        pinCodeView.clearText();
-//                    } else {
-//                        attemptsLabel.setVisibility(View.VISIBLE);
-//                        attemptsLabel.setText(R.string.successfully_set_pin);
-//                        setNewPin(passcode);
-//                    }
-//                    //If we are setting a new code
-//                } else if (newPin) {
-//                    if (passcode.equalsIgnoreCase(pinCode)) {
-//                        showAlertView(getString(R.string.same_pin_code));
-//                        getActivity().onBackPressed();
-//                    } else {
-//                        showAlertView(getString(R.string.new_pin_success));
-//                        Settings.savePinCode(getContext(), passcode);
-//                        getActivity().onBackPressed();
-//                    }
-//                    newPin = false;
-//                    //If user entered correct pin code
-//                } else if (passcode.equalsIgnoreCase(Settings.getPinCode(getContext()))) {
-//                    if (isSetNewPinCode) {
-//                        attemptsLabel.setVisibility(View.GONE);
-//                        pinCodeView.clearText();
-//                        newPin = true;
-//                        Settings.resetCurrentPinAttempts(getContext());
-//                        return;
-//                    } else {
-//                        attemptsLabel.setTextColor(getResources().getColor(R.color.greenColor));
-//                        attemptsLabel.setText(R.string.correct_pin_code);
-//                    }
-//                    if (pinCodeViewListener != null) {
-//                        pinCodeViewListener.onCorrectPinCode(true);
-//                    }
-//                    isWrongPin = false;
-//                    Settings.resetCurrentPinAttempts(getContext());
-//                } else {
-//                    wrongPinCode();
-//                }
-//            }
-//        });
-
-
     }
 
     @SuppressLint("DefaultLocale")

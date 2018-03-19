@@ -68,7 +68,7 @@ public class SettingsPinCode extends ToolbarFragment {
             @Override
             public void onPositiveButton() {
                 Settings.saveIsReset(getContext());
-                loadPinCodeView(true);
+                loadPinCodeView(true, true);
             }
 
             @Override
@@ -86,7 +86,7 @@ public class SettingsPinCode extends ToolbarFragment {
                 String pinCode = Settings.getPinCode(getContext());
                 if(pinCode == null) {
                     Settings.saveIsReset(getContext());
-                    loadPinCodeView(true);
+                    loadPinCodeView(true, true);
                 } else {
                     showLoadPinCodeAlert();
                 }
@@ -163,9 +163,9 @@ public class SettingsPinCode extends ToolbarFragment {
         checkPinCode();
     }
 
-    private void loadPinCodeView(Boolean isBackStack) {
+    private void loadPinCodeView(Boolean isBackStack, boolean isNewPinCode) {
         PinCodeFragment pinCodeFragment =
-                PinCodeFragment.newInstance(PinCodeFragment.Constant.SET_CODE, true, true);
+                PinCodeFragment.newInstance(PinCodeFragment.Constant.SET_CODE, isNewPinCode, true);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.main_frame_layout, pinCodeFragment);
         if (isBackStack) {
@@ -175,22 +175,21 @@ public class SettingsPinCode extends ToolbarFragment {
     }
 
     private void showLoadPinCodeAlert() {
-        CustomGluuAlert gluuAlert = new CustomGluuAlert(getActivity());
+        CustomGluuAlert loadPinCodeAlert = new CustomGluuAlert(getActivity());
 
         String pinCode = Settings.getPinCode(getContext());
 
         if(pinCode == null) {
-            gluuAlert.setSub_title(getContext().getString(R.string.set_pin));
+            loadPinCodeAlert.setSub_title(getContext().getString(R.string.set_pin));
         } else {
-            gluuAlert.setSub_title(getContext().getString(R.string.change_pin));
+            loadPinCodeAlert.setSub_title(getContext().getString(R.string.change_pin));
         }
 
-
-        gluuAlert.setYesTitle(getContext().getString(R.string.yes));
-        gluuAlert.setNoTitle(getContext().getString(R.string.no));
-        gluuAlert.setmListener(listener);
-        gluuAlert.type = NotificationType.RENAME_KEY;
-        gluuAlert.show();
+        loadPinCodeAlert.setYesTitle(getContext().getString(R.string.yes));
+        loadPinCodeAlert.setNoTitle(getContext().getString(R.string.no));
+        loadPinCodeAlert.setmListener(listener);
+        loadPinCodeAlert.type = NotificationType.RENAME_KEY;
+        loadPinCodeAlert.show();
     }
 
 }
