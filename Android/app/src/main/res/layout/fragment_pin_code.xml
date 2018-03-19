@@ -21,7 +21,7 @@
             android:layout_below="@+id/nav_drawer_toolbar"
             android:id="@+id/enter_passcode_text_view"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="160dp"
+            android:layout_marginTop="140dp"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             android:layout_marginBottom="-2dp"
@@ -47,7 +47,6 @@
             app:pinRepeatedHint="\u2014"
             android:includeFontPadding="false"
             app:pinCharacterMask=" "/>
-
 
         <TextView
             android:layout_width="wrap_content"

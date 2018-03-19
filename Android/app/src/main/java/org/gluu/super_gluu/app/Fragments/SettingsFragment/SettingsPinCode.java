@@ -68,7 +68,9 @@ public class SettingsPinCode extends ToolbarFragment {
             @Override
             public void onPositiveButton() {
                 Settings.saveIsReset(getContext());
-                loadPinCodeView(true, true);
+                String pinCode = Settings.getPinCode(getContext());
+
+                loadPinCodeView(true, pinCode != null);
             }
 
             @Override
