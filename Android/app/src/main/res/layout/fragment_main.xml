@@ -2,67 +2,89 @@
     android:id="@+id/main_fragment_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="?attr/actionBarSize"
-    android:clickable="true"
-    android:background="@color/homeScreenGray"
+    android:background="@android:color/transparent"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_marginTop="80dp"
-        android:id="@+id/qr_code_image_view"
-        android:layout_centerHorizontal="true"
+    <RelativeLayout
+        android:background="@android:color/transparent"
         android:layout_alignParentTop="true"
-        android:src="@drawable/qr_home_screen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
 
-    <LinearLayout
-        android:layout_centerHorizontal="true"
-        android:orientation="vertical"
-        android:layout_marginLeft="72dp"
-        android:layout_marginRight="72dp"
-        android:layout_marginTop="50dp"
-        android:id="@+id/home_screen_welcome_layout"
-        android:layout_below="@+id/qr_code_image_view"
+        <ImageView
+            android:src="@drawable/white_gluu_icon"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:clickable="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:id="@+id/spacing_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/welcome_text_view"
+        <ImageView
+            android:layout_marginTop="72dp"
+            android:id="@+id/qr_code_image_view"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/qr_home_screen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical"
+            android:layout_marginLeft="72dp"
+            android:layout_marginRight="72dp"
+            android:layout_marginTop="50dp"
+            android:id="@+id/home_screen_welcome_layout"
+            android:layout_below="@+id/qr_code_image_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/welcome"
-            android:textColor="@color/homeScreenTextGray"
-            android:textSize="20sp" />
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/description_text_view"
+            <TextView
+                android:id="@+id/welcome_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/welcome"
+                android:textColor="@color/homeScreenTextGray"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/description_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:text="@string/scan_text"
+                android:textColor="@color/homeScreenTextGray" />
+
+            </LinearLayout>
+
+        <Button
+            android:id="@+id/button_scan"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
+            android:layout_marginRight="100dp"
+            android:layout_marginLeft="100dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="40dp"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:text="@string/scan_text"
-            android:textColor="@color/homeScreenTextGray" />
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/rounded_button"
+            android:text="@string/button_scan_oxpush2"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
 
-        </LinearLayout>
-
-    <Button
-        android:id="@+id/button_scan"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_marginRight="100dp"
-        android:layout_marginLeft="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:background="@drawable/rounded_button"
-        android:text="@string/button_scan_oxpush2"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="16sp" />
+    </RelativeLayout>
 
 </RelativeLayout>
