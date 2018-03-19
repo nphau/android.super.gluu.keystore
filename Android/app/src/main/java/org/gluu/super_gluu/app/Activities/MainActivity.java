@@ -1,54 +1,23 @@
 package org.gluu.super_gluu.app.activities;
 
-import android.app.KeyguardManager;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.hardware.fingerprint.FingerprintManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.security.keystore.KeyGenParameterSpec;
-import android.security.keystore.KeyPermanentlyInvalidatedException;
-import android.security.keystore.KeyProperties;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.widget.Toast;
-import org.gluu.super_gluu.app.fingerprint.FingerprintAuthenticationDialogFragment;
+
+import org.gluu.super_gluu.app.GluuMainActivity;
+import org.gluu.super_gluu.app.fragments.KeysFragment.KeyHandleInfoFragment;
 import org.gluu.super_gluu.app.fragments.LicenseFragment.LicenseFragment;
 import org.gluu.super_gluu.app.fragments.LockFragment.LockFragment;
 import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
 import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeSettingFragment;
-import org.gluu.super_gluu.app.GluuMainActivity;
-import org.gluu.super_gluu.app.fragments.KeysFragment.KeyHandleInfoFragment;
-import org.gluu.super_gluu.app.fingerprint.Fingerprint;
 import org.gluu.super_gluu.app.services.FingerPrintManager;
 import org.gluu.super_gluu.app.settings.Settings;
-import java.io.IOException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.KeyGenerator;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
 
 import SuperGluu.app.R;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by nazaryavornytskyy on 3/22/16.
@@ -223,7 +192,6 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
             /**
              * entered pin code is INCORRECT. DO something here.
              * */
-//            setCurrentNetworkTime();
             loadLockedFragment(false);
 
             setTitle("Application is locked");
@@ -234,13 +202,10 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
     private void loadLockedFragment(Boolean isRecover) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         LockFragment lockFragment = new LockFragment();
-        OnLockAppTimerOver timeOverListener = new OnLockAppTimerOver() {
-            @Override
-            public void onTimerOver() {
-                if (GluuApplication.isIsAppInForeground()) {
-                    Settings.setAppLocked(getApplicationContext(), false);
-                    loadPinCodeFragment();
-                }
+        OnLockAppTimerOver timeOverListener = (org.gluu.super_gluu.app.activities.MainActivity.OnLockAppTimerOver) () -> {
+            if (org.gluu.super_gluu.app.activities.GluuApplication.isIsAppInForeground()) {
+                Settings.setAppLocked(getApplicationContext(), false);
+                loadPinCodeFragment();
             }
         };
         lockFragment.setIsRecover(isRecover);
