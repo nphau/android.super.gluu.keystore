@@ -1,6 +1,5 @@
 package org.gluu.super_gluu.app.fragments.PinCodeFragment;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -16,11 +15,22 @@ import org.gluu.super_gluu.app.fragments.LicenseFragment.LicenseFragment;
 import org.gluu.super_gluu.app.settings.Settings;
 
 import SuperGluu.app.R;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by nazaryavornytskyy on 3/24/16.
  */
 public class PinCodeSettingFragment extends Fragment {
+
+    @BindView(R.id.yes_button_pin)
+    Button yesButton;
+    @BindView(R.id.no_button_pin)
+    Button noButton;
+    @BindView(R.id.pinCodeTitle)
+    TextView textSettingsTitle;
+    @BindView(R.id.pinSubCodeTitle)
+    TextView textSettingsSubTitle;
 
     LicenseFragment.OnMainActivityListener mainActivityListener;
 
@@ -30,28 +40,19 @@ public class PinCodeSettingFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_pin_code_setting, container, false);
 
+        ButterKnife.bind(this, view);
+
         if (!isPin()){
             mainActivityListener.onShowPinFragment(true);
         }
 
-        TextView textSettingsTitle = view.findViewById(R.id.pinCodeTitle);
-        TextView textSettingsSubTitle = view.findViewById(R.id.pinSubCodeTitle);
-
-        Button yesButton = view.findViewById(R.id.yes_button_pin);
-        yesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainActivityListener.onShowPinFragment(false);
-                Settings.setPinCodeEnabled(getContext(), true);
-            }
+        yesButton.setOnClickListener(v -> {
+            mainActivityListener.onShowPinFragment(false);
+            Settings.setPinCodeEnabled(getContext(), true);
         });
-        Button noButton = view.findViewById(R.id.no_button_pin);
-        noButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainActivityListener.onMainActivity();
-                Settings.setPinCodeEnabled(getContext(), false);
-            }
+        noButton.setOnClickListener(v -> {
+            mainActivityListener.onMainActivity();
+            Settings.setPinCodeEnabled(getContext(), false);
         });
 
         Typeface faceLight = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Regular.otf");
@@ -74,10 +75,7 @@ public class PinCodeSettingFragment extends Fragment {
         }
     }
 
-
-    public Boolean isPin(){
-        SharedPreferences preferences = getContext().getSharedPreferences(Settings.PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
-        String pinCode = preferences.getString(Settings.Constant.PIN_CODE, null);
-        return pinCode == null;
+    public boolean isPin() {
+        return Settings.getPinCode(getContext()) == null;
     }
 }
