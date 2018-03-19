@@ -276,6 +276,6 @@ public class PinCodeFragment extends Fragment {
         public static final String ENTER_CODE = "enter_code";
         public static final String SET_CODE = "set_code";
 
-        public static final String ATTEMPTS_LEFT_FORMAT = "You have %d attempts left";
+        public static final String ATTEMPTS_LEFT_FORMAT = "%d attempts left";
     }
 }
