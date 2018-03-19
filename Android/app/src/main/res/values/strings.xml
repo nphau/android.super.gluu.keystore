@@ -74,8 +74,8 @@
     <string name="noKeys">No Keys</string>
 
     <string name="accept">Accept and Continue</string>
-    <string name="welcome">Welcome to Super Gluu!</string>
-    <string name="scan_text">You may be presented with a QR code for enrollment or authentication. Click the button to open your QR scanner.</string>
+    <string name="welcome">Welcome to Super Gluu</string>
+    <string name="scan_text">You may be presented with a QR code for enrollment or authentication. Tap the button below to scan your code.</string>
 
     <string name="settings_title">Settings</string>
     <string name="pin_code_settings">Pin code</string>

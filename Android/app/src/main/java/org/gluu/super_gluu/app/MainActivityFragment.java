@@ -165,13 +165,17 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         if (isAdFree){
             adView.setVisibility(View.GONE);
         }
-        Button adFreeButton = (Button) view.findViewById(R.id.button_ad_free);
-        adFreeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                runSubscribeFlow();
-            }
-        });
+
+
+//        Button adFreeButton = (Button) view.findViewById(R.id.button_ad_free);
+//        adFreeButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                runSubscribeFlow();
+//            }
+//        });
+
+
         scanButton = (Button) view.findViewById(R.id.button_scan);
         scanButton.setOnClickListener(this);
 
@@ -194,7 +198,7 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Semibold.otf");
         Typeface faceLight = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Regular.otf");
         scanButton.setTypeface(face);
-        adFreeButton.setTypeface(face);
+        //adFreeButton.setTypeface(face);
         welcomeTextView.setTypeface(face);
         subTextView.setTypeface(faceLight);
 
