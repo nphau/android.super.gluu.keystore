@@ -42,13 +42,14 @@
             android:layout_centerHorizontal="true"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="100dp"
             android:src="@drawable/qr_home_screen"
             app:layout_constraintBottom_toTopOf="@+id/welcome_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread_inside" />
 
 
         <LinearLayout
@@ -92,14 +93,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="32dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:background="@drawable/very_rounded_button"
+            android:includeFontPadding="false"
             android:paddingLeft="48dp"
             android:paddingRight="48dp"
             android:text="@string/button_scan_oxpush2"
-            android:includeFontPadding="false"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="18sp"
