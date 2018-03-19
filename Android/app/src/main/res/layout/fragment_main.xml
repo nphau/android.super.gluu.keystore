@@ -19,8 +19,8 @@
     <LinearLayout
         android:layout_centerHorizontal="true"
         android:orientation="vertical"
-        android:layout_marginLeft="80dp"
-        android:layout_marginRight="80dp"
+        android:layout_marginLeft="72dp"
+        android:layout_marginRight="72dp"
         android:layout_marginTop="50dp"
         android:id="@+id/home_screen_welcome_layout"
         android:layout_below="@+id/qr_code_image_view"
@@ -28,20 +28,20 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/welcome_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center"
             android:gravity="center"
             android:text="@string/welcome"
             android:textColor="@color/homeScreenTextGray"
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/description_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center"
             android:layout_marginTop="40dp"
             android:textSize="16sp"
             android:gravity="center"

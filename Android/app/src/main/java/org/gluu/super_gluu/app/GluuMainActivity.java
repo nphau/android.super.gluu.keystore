@@ -196,7 +196,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
     private void setupToolbar() {
         setSupportActionBar(toolbar);
-        setTitle(getString(R.string.home));
+        setTitle("");
     }
 
     private void initNavDrawer() {

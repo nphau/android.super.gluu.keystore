@@ -192,10 +192,10 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         initGoogleInterstitialAd();
 
         //Setup fonts
-        TextView welcomeTextView = (TextView) view.findViewById(R.id.textView);
-        TextView subTextView = (TextView) view.findViewById(R.id.textView2);
+        TextView welcomeTextView = view.findViewById(R.id.welcome_text_view);
+        TextView subTextView = view.findViewById(R.id.description_text_view);
 
-        Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Semibold.otf");
+        Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Regular.otf");
         Typeface faceLight = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Regular.otf");
         scanButton.setTypeface(face);
         //adFreeButton.setTypeface(face);
