@@ -48,8 +48,10 @@ public class PinCodeFragment extends Fragment {
     private String fragmentType;
     private boolean isSettings;
     private boolean newPin;
-    private int setNewPinAttempts;
     private boolean isSetNewPinCode;
+
+    private int newPinAttempts;
+
 
     public static PinCodeFragment newInstance(String fragmentType, boolean isNewPinCode, boolean isSettings) {
         PinCodeFragment pinCodeFragment = new PinCodeFragment();
@@ -94,7 +96,7 @@ public class PinCodeFragment extends Fragment {
         setHasOptionsMenu(true);
 
         updatePinCodeView();
-        setNewPinAttempts = 0;
+        newPinAttempts = 0;
 
         return view;
     }
@@ -151,8 +153,8 @@ public class PinCodeFragment extends Fragment {
             String passcode = str.toString();
             //If there is no pin code set
             if (pinCode == null) {
-                if (setNewPinAttempts == 0){
-                    setNewPinAttempts++;
+                if (newPinAttempts == 0){
+                    newPinAttempts++;
                     pinCodeEditText.setText("");
                 } else {
                     attemptsTextView.setVisibility(View.VISIBLE);
