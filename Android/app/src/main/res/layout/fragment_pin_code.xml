@@ -1,10 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:passcodeView="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/whiteColor">
+    android:background="@color/pinCodeGray">
 
     <include
         android:layout_alignParentTop="true"
@@ -16,6 +14,9 @@
         android:layout_below="@+id/nav_drawer_toolbar"
         android:id="@+id/enter_passcode_text_view"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="120dp"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -31,7 +32,9 @@
         android:maxLength="4"
         app:pinLineColors="@android:color/transparent"
         android:textIsSelectable="false"
-        android:textSize="40sp"
+        android:textSize="30sp"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/black"
         app:pinRepeatedHint="-"
         app:pinCharacterMask="*"/>
 
@@ -42,9 +45,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/you_have_5_attempts_left"
         android:id="@+id/attemptsLabel"
-        android:textColor="@color/greenColor"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
         android:layout_below="@+id/pin_code_edit_text"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp" />
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

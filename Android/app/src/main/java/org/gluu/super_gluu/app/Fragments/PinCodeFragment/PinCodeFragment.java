@@ -74,10 +74,10 @@ public class PinCodeFragment extends Fragment {
 
         if (fragmentType.equals(Constant.SET_CODE)) {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.set_passcode));
-            enterPasscodeTextView.setText(getString(R.string.set_passcode));
+            enterPasscodeTextView.setText(getString(R.string.enter_a_passcode));
         } else {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.enter_passcode));
-            enterPasscodeTextView.setText(getString(R.string.enter_passcode));
+            enterPasscodeTextView.setText(getString(R.string.enter_your_passcode));
         }
 
         setHasOptionsMenu(true);
@@ -126,14 +126,11 @@ public class PinCodeFragment extends Fragment {
         //Set attempts left view
 
         if(isSetNewPinCode) {
-            attemptsTextView.setText("Enter your current passcode");
+            enterPasscodeTextView.setText("Enter your current passcode");
         } else {
             attemptsTextView.setText(getAttemptsLeftText(attempts));
         }
 
-        if (attempts <= 2) {
-            attemptsTextView.setTextColor(getResources().getColor(R.color.redColor));
-        }
         if (pinCode == null){
             attemptsTextView.setVisibility(View.GONE);
         }
@@ -167,13 +164,13 @@ public class PinCodeFragment extends Fragment {
                     //If user entered correct pin code
                 } else if (passcode.equalsIgnoreCase(Settings.getPinCode(getContext()))) {
                     if (isSetNewPinCode) {
-                        attemptsTextView.setText("Enter new passcode");
+                        attemptsTextView.setVisibility(View.INVISIBLE);
+                        enterPasscodeTextView.setText("Enter new passcode");
                         pinCodeEditText.setText("");
                         newPin = true;
                         Settings.resetCurrentPinAttempts(getContext());
                         return;
                     } else {
-                        attemptsTextView.setTextColor(getResources().getColor(R.color.greenColor));
                         attemptsTextView.setText(R.string.correct_pin_code);
                     }
                     if (pinCodeViewListener != null) {
@@ -209,9 +206,6 @@ public class PinCodeFragment extends Fragment {
 
         int attempts = Settings.getCurrentPinCodeAttempts(getContext());
         String attemptsText = getAttemptsLeftText(attempts);
-        if (attempts <= 2) {
-            attemptsTextView.setTextColor(getResources().getColor(R.color.redColor));
-        }
         attemptsTextView.setText(attemptsText);
 
         pinCodeEditText.setText("");
