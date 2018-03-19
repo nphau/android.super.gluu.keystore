@@ -40,6 +40,8 @@ public class PinCodeFragment extends Fragment {
     @BindView(R.id.pin_code_edit_text)
     PinEntryEditText pinCodeEditText;
 
+    Context context;
+
     public PinCodeViewListener pinCodeViewListener;
 
     private String fragmentType;
@@ -64,6 +66,8 @@ public class PinCodeFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_pin_code, container, false);
         ButterKnife.bind(this, view);
+
+        context = getContext();
 
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
@@ -111,7 +115,7 @@ public class PinCodeFragment extends Fragment {
             @Override
             public void run() {
                 pinCodeEditText.requestFocus();
-                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
                 if(imm != null) {
                     imm.showSoftInput(pinCodeEditText, InputMethodManager.SHOW_IMPLICIT);
                 }
@@ -120,8 +124,8 @@ public class PinCodeFragment extends Fragment {
 
 
         //get local variables
-        final String pinCode = Settings.getPinCode(getContext());
-        int attempts = Settings.getCurrentPinCodeAttempts(getContext());
+        final String pinCode = Settings.getPinCode(context);
+        int attempts = Settings.getCurrentPinCodeAttempts(context);
 
         //Set attempts left view
 
@@ -157,18 +161,18 @@ public class PinCodeFragment extends Fragment {
                         getActivity().onBackPressed();
                     } else {
                         showAlertView(getString(R.string.new_pin_success));
-                        Settings.savePinCode(getContext(), passcode);
+                        Settings.savePinCode(context, passcode);
                         getActivity().onBackPressed();
                     }
                     newPin = false;
                     //If user entered correct pin code
-                } else if (passcode.equalsIgnoreCase(Settings.getPinCode(getContext()))) {
+                } else if (passcode.equalsIgnoreCase(Settings.getPinCode(context))) {
                     if (isSetNewPinCode) {
                         attemptsTextView.setVisibility(View.INVISIBLE);
                         enterPasscodeTextView.setText("Enter new passcode");
                         pinCodeEditText.setText("");
                         newPin = true;
-                        Settings.resetCurrentPinAttempts(getContext());
+                        Settings.resetCurrentPinAttempts(context);
                         return;
                     } else {
                         attemptsTextView.setText(R.string.correct_pin_code);
@@ -176,7 +180,7 @@ public class PinCodeFragment extends Fragment {
                     if (pinCodeViewListener != null) {
                         pinCodeViewListener.onCorrectPinCode(true);
                     }
-                    Settings.resetCurrentPinAttempts(getContext());
+                    Settings.resetCurrentPinAttempts(context);
                 } else {
                     wrongPinCode();
                 }
@@ -190,9 +194,9 @@ public class PinCodeFragment extends Fragment {
     }
 
     private void setNewPin(String passcode){
-        Settings.savePinCode(getContext(), passcode);
+        Settings.savePinCode(context, passcode);
         pinCodeViewListener.onCorrectPinCode(true);
-        Settings.resetCurrentPinAttempts(getContext());
+        Settings.resetCurrentPinAttempts(context);
 
         //Hide keyboard
         ((InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE))
@@ -204,15 +208,15 @@ public class PinCodeFragment extends Fragment {
     private void wrongPinCode(){
         increaseAttempts();
 
-        int attempts = Settings.getCurrentPinCodeAttempts(getContext());
+        int attempts = Settings.getCurrentPinCodeAttempts(context);
         String attemptsText = getAttemptsLeftText(attempts);
         attemptsTextView.setText(attemptsText);
 
         pinCodeEditText.setText("");
         if (attempts <= 0) {
-            Settings.resetCurrentPinAttempts(getContext());
+            Settings.resetCurrentPinAttempts(context);
             if (isSettings) {
-                Settings.setAppLocked(getContext(), true);
+                Settings.setAppLocked(context, true);
                 setCurrentNetworkTime();
             }
             pinCodeViewListener.onCorrectPinCode(false);
@@ -220,10 +224,10 @@ public class PinCodeFragment extends Fragment {
     }
 
     private void setCurrentNetworkTime() {
-        new GlobalNetworkTime().getCurrentNetworkTime(getContext(), new GlobalNetworkTime.GetGlobalTimeCallback() {
+        new GlobalNetworkTime().getCurrentNetworkTime(context, new GlobalNetworkTime.GetGlobalTimeCallback() {
             @Override
             public void onGlobalTime(Long time) {
-                Settings.setAppLockedTime(getContext(), String.valueOf(time));
+                Settings.setAppLockedTime(context, String.valueOf(time));
             }
         });
     }
@@ -247,13 +251,13 @@ public class PinCodeFragment extends Fragment {
     }
 
     public void increaseAttempts(){
-        int attempts = Settings.getCurrentPinCodeAttempts(getContext());
+        int attempts = Settings.getCurrentPinCodeAttempts(context);
         attempts--;
-        Settings.setCurrentPinCodeAttempts(getContext(), attempts);
+        Settings.setCurrentPinCodeAttempts(context, attempts);
     }
 
     private void exitScreen() {
-        Settings.saveIsReset(getContext());
+        Settings.saveIsReset(context);
         getActivity().onBackPressed();
     }
 
