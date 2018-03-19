@@ -77,6 +77,8 @@ import java.util.List;
 
 import SuperGluu.app.BuildConfig;
 import SuperGluu.app.R;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Main activity
@@ -96,8 +98,14 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     public static final String QR_CODE_PUSH_NOTIFICATION = "QR_CODE_PUSH_NOTIFICATION";
     public static final int MESSAGE_NOTIFICATION_ID = 444555;
 
-    private DrawerLayout drawer;
-    private Toolbar toolbar;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawer;
+    @BindView(R.id.nvView)
+    NavigationView navigationView;
+    @BindView(R.id.nav_drawer_toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.adView)
+    AdView adView;
     private ActionBarDrawerToggle toggle;
 
     private SoftwareDevice u2f;
@@ -143,9 +151,8 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Get the view from gluu_activity_main_main.xml
         setContentView(R.layout.gluu_activity_main);
+        ButterKnife.bind(this);
         context = getApplicationContext();
 
         fragmentManager = getSupportFragmentManager();
@@ -188,18 +195,12 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     }
 
     private void setupToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.nav_drawer_toolbar);
         setSupportActionBar(toolbar);
         setTitle(getString(R.string.home));
     }
 
     private void initNavDrawer() {
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nvView);
-        if (navigationView != null) {
-            navigationView.setItemIconTintList(null);
-        }
+        navigationView.setItemIconTintList(null);
 
         setupDrawerContent(navigationView);
 
@@ -207,19 +208,14 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     }
 
     private void initGoogleADS(Boolean isShow){
-        AdView adView = (AdView) findViewById(R.id.adView);
         if (!isShow) {
             MobileAds.initialize(getApplicationContext(), "ca-app-pub-3932761366188106~2301594871");
             AdRequest adRequest = new AdRequest.Builder().build();
-            if(adView != null) {
-                adView.loadAd(adRequest);
-            }
+            adView.loadAd(adRequest);
         } else {
-            if(adView != null) {
-                ViewGroup.LayoutParams params = adView.getLayoutParams();
-                params.height = 0;
-                adView.setLayoutParams(params);
-            }
+            ViewGroup.LayoutParams params = adView.getLayoutParams();
+            params.height = 0;
+            adView.setLayoutParams(params);
         }
         Intent intent = new Intent("on-ad-free-event");
         // You can also include some extra data.
@@ -229,13 +225,8 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
     private void initIAPurchaseService(){
         inAppPurchaseService.initInAppService(context);
-        inAppPurchaseService.setCustomEventListener(new InAppPurchaseService.OnInAppServiceListener() {
-            @Override
-            public void onSubscribed(Boolean isSubscribed) {
-                //Init GoogleMobile AD
-                initGoogleADS(isSubscribed);
-            }
-        });
+        //Init GoogleMobile AD
+        inAppPurchaseService.setCustomEventListener(this::initGoogleADS);
         inAppPurchaseService.reloadPurchaseService();
     }
 

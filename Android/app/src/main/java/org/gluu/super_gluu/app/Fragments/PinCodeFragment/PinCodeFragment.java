@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -77,10 +78,16 @@ public class PinCodeFragment extends Fragment {
 
 
         if (fragmentType.equals(Constant.SET_CODE)) {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.set_passcode));
+            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            if(actionBar != null) {
+                actionBar.setTitle(getString(R.string.set_passcode));
+            }
             enterPasscodeTextView.setText(getString(R.string.enter_a_passcode));
         } else {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.enter_passcode));
+            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            if(actionBar != null) {
+                actionBar.setTitle(getString(R.string.enter_passcode));
+            }
             enterPasscodeTextView.setText(getString(R.string.enter_your_passcode));
         }
 
@@ -130,7 +137,7 @@ public class PinCodeFragment extends Fragment {
         //Set attempts left view
 
         if(isSetNewPinCode) {
-            enterPasscodeTextView.setText("Enter your current passcode");
+            enterPasscodeTextView.setText(R.string.enter_current_passcode);
         } else {
             attemptsTextView.setText(getAttemptsLeftText(attempts));
         }
@@ -139,51 +146,48 @@ public class PinCodeFragment extends Fragment {
             attemptsTextView.setVisibility(View.GONE);
         }
 
-        pinCodeEditText.setOnPinEnteredListener(new PinEntryEditText.OnPinEnteredListener() {
-            @Override
-            public void onPinEntered(CharSequence str) {
+        pinCodeEditText.setOnPinEnteredListener(str -> {
 
-                String passcode = str.toString();
-                //If there is no pin code set
-                if (pinCode == null) {
-                    if (setNewPinAttempts == 0){
-                        setNewPinAttempts++;
-                        pinCodeEditText.setText("");
-                    } else {
-                        attemptsTextView.setVisibility(View.VISIBLE);
-                        attemptsTextView.setText(R.string.successfully_set_pin);
-                        setNewPin(passcode);
-                    }
-                    //If we are setting a new code
-                } else if (newPin) {
-                    if (passcode.equalsIgnoreCase(pinCode)) {
-                        showAlertView(getString(R.string.same_pin_code));
-                        getActivity().onBackPressed();
-                    } else {
-                        showAlertView(getString(R.string.new_pin_success));
-                        Settings.savePinCode(context, passcode);
-                        getActivity().onBackPressed();
-                    }
-                    newPin = false;
-                    //If user entered correct pin code
-                } else if (passcode.equalsIgnoreCase(Settings.getPinCode(context))) {
-                    if (isSetNewPinCode) {
-                        attemptsTextView.setVisibility(View.INVISIBLE);
-                        enterPasscodeTextView.setText("Enter new passcode");
-                        pinCodeEditText.setText("");
-                        newPin = true;
-                        Settings.resetCurrentPinAttempts(context);
-                        return;
-                    } else {
-                        attemptsTextView.setText(R.string.correct_pin_code);
-                    }
-                    if (pinCodeViewListener != null) {
-                        pinCodeViewListener.onCorrectPinCode(true);
-                    }
-                    Settings.resetCurrentPinAttempts(context);
+            String passcode = str.toString();
+            //If there is no pin code set
+            if (pinCode == null) {
+                if (setNewPinAttempts == 0){
+                    setNewPinAttempts++;
+                    pinCodeEditText.setText("");
                 } else {
-                    wrongPinCode();
+                    attemptsTextView.setVisibility(View.VISIBLE);
+                    attemptsTextView.setText(R.string.successfully_set_pin);
+                    setNewPin(passcode);
                 }
+                //If we are setting a new code
+            } else if (newPin) {
+                if (passcode.equalsIgnoreCase(pinCode)) {
+                    showAlertView(getString(R.string.same_pin_code));
+                    getActivity().onBackPressed();
+                } else {
+                    showAlertView(getString(R.string.new_pin_success));
+                    Settings.savePinCode(context, passcode);
+                    getActivity().onBackPressed();
+                }
+                newPin = false;
+                //If user entered correct pin code
+            } else if (passcode.equalsIgnoreCase(Settings.getPinCode(context))) {
+                if (isSetNewPinCode) {
+                    attemptsTextView.setVisibility(View.INVISIBLE);
+                    enterPasscodeTextView.setText(R.string.enter_new_passcode);
+                    pinCodeEditText.setText("");
+                    newPin = true;
+                    Settings.resetCurrentPinAttempts(context);
+                    return;
+                } else {
+                    attemptsTextView.setText(R.string.correct_pin_code);
+                }
+                if (pinCodeViewListener != null) {
+                    pinCodeViewListener.onCorrectPinCode(true);
+                }
+                Settings.resetCurrentPinAttempts(context);
+            } else {
+                wrongPinCode();
             }
         });
     }
@@ -224,12 +228,8 @@ public class PinCodeFragment extends Fragment {
     }
 
     private void setCurrentNetworkTime() {
-        new GlobalNetworkTime().getCurrentNetworkTime(context, new GlobalNetworkTime.GetGlobalTimeCallback() {
-            @Override
-            public void onGlobalTime(Long time) {
-                Settings.setAppLockedTime(context, String.valueOf(time));
-            }
-        });
+        new GlobalNetworkTime().getCurrentNetworkTime(context,
+                time -> Settings.setAppLockedTime(context, String.valueOf(time)));
     }
 
     private void showAlertView(String message){

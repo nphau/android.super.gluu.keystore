@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -82,16 +81,13 @@ public class SettingsPinCode extends ToolbarFragment {
                 }
             }
         };
-        setResetPinButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String pinCode = Settings.getPinCode(getContext());
-                if(pinCode == null) {
-                    Settings.saveIsReset(getContext());
-                    loadPinCodeView(true, true);
-                } else {
-                    showLoadPinCodeAlert();
-                }
+        setResetPinButton.setOnClickListener(v -> {
+            String pinCode = Settings.getPinCode(getContext());
+            if(pinCode == null) {
+                Settings.saveIsReset(getContext());
+                loadPinCodeView(true, true);
+            } else {
+                showLoadPinCodeAlert();
             }
         });
 
@@ -99,18 +95,15 @@ public class SettingsPinCode extends ToolbarFragment {
         pinCodeSwitch.setChecked(Settings.getPinCodeEnabled(getContext()));
         setPinCode(pinCodeSwitch.isChecked());
 
-        pinCodeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                setPinCode(checked);
-                if (checked) {
-                    Settings.setFingerprintEnabled(getContext(), !pinCodeSwitch.isChecked());
-                }
+        pinCodeSwitch.setOnCheckedChangeListener((compoundButton, checked) -> {
+            setPinCode(checked);
+            if (checked) {
+                Settings.setFingerprintEnabled(getContext(), !pinCodeSwitch.isChecked());
+            }
 
-                String pinCode = Settings.getPinCode(getContext());
-                if(checked && pinCode == null) {
-                    showLoadPinCodeAlert();
-                }
+            String pinCode = Settings.getPinCode(getContext());
+            if(checked && pinCode == null) {
+                showLoadPinCodeAlert();
             }
         });
 
@@ -122,12 +115,9 @@ public class SettingsPinCode extends ToolbarFragment {
 
         checkPinCode();
 
-        adFreeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent("on-ad-free-flow");
-                LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
-            }
+        adFreeButton.setOnClickListener(v -> {
+            Intent intent = new Intent("on-ad-free-flow");
+            LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
         });
 
         //setup fonts

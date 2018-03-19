@@ -182,6 +182,8 @@
     <string name="new_pin_success">New Pin changed success!</string>
     <string name="correct_pin_code">Pin code is correct!</string>
     <string name="you_have_5_attempts_left">5 attempts left</string>
+    <string name="enter_current_passcode">Enter your current passcode</string>
+    <string name="enter_new_passcode">Enter new passcode</string>
 
 
 </resources>
