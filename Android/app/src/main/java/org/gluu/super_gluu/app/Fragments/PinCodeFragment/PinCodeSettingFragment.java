@@ -34,9 +34,10 @@ public class PinCodeSettingFragment extends Fragment {
             mainActivityListener.onShowPinFragment(true);
         }
 
-        TextView textSettingsTitle = (TextView)view.findViewById(R.id.pinCodeTitle);
-        TextView textSettingsSubTitle = (TextView)view.findViewById(R.id.pinSubCodeTitle);
-        Button yesButton = (Button)view.findViewById(R.id.yes_button_pin);
+        TextView textSettingsTitle = view.findViewById(R.id.pinCodeTitle);
+        TextView textSettingsSubTitle = view.findViewById(R.id.pinSubCodeTitle);
+
+        Button yesButton = view.findViewById(R.id.yes_button_pin);
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,7 +45,7 @@ public class PinCodeSettingFragment extends Fragment {
                 Settings.setPinCodeEnabled(getContext(), true);
             }
         });
-        Button noButton = (Button)view.findViewById(R.id.no_button_pin);
+        Button noButton = view.findViewById(R.id.no_button_pin);
         noButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

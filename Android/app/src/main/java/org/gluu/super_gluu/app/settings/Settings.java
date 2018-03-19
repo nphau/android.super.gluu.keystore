@@ -17,7 +17,6 @@ public class Settings {
     private Boolean isForKeys = false;
 
     //Pin code Settings
-
     public static void setPinCodeEnabled(Context context, Boolean isEnabled) {
         SharedPreferences preferences = context.getSharedPreferences(PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();

@@ -109,7 +109,8 @@
     <string name="clear_logs">Do you want to clear the logs?</string>
     <string name="clear_log_title">Are you sure you want to delete this log record?</string>
     <string name="clear_log_empty_title">No selected log record(s).</string>
-    <string name="change_pin">Do you want to change current Pin?</string>
+    <string name="change_pin">Do you want to change current pin?</string>
+    <string name="set_pin">Do you want to set a pin?</string>
 
     <string name="app_locked">Application is locked, please wait...</string>
     <string name="number_attempts">Number of attempts:</string>

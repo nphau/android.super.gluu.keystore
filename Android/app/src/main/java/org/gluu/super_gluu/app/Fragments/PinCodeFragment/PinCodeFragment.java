@@ -16,8 +16,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
-import com.mhk.android.passcodeview.PasscodeView;
-
 import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.app.services.GlobalNetworkTime;
 import org.gluu.super_gluu.app.settings.Settings;
@@ -26,8 +24,6 @@ import org.gluu.super_gluu.util.PinEntryEditText;
 import SuperGluu.app.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-//import com.github.simonpercic.rxtime.RxTime;
 
 /**
  * Created by nazaryavornytskyy on 3/24/16.

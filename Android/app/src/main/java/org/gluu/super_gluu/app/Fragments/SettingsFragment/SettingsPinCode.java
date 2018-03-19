@@ -1,6 +1,5 @@
 package org.gluu.super_gluu.app.fragments.SettingsFragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -11,15 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-
 import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
-
-import com.hrules.horizontalnumberpicker.HorizontalNumberPicker;
-import com.hrules.horizontalnumberpicker.HorizontalNumberPickerListener;
-
 import org.gluu.super_gluu.app.GluuMainActivity;
 import org.gluu.super_gluu.app.NotificationType;
 import org.gluu.super_gluu.app.base.ToolbarFragment;
@@ -27,114 +22,127 @@ import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.app.settings.Settings;
 
 import SuperGluu.app.R;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by nazaryavornytskyy on 5/17/17.
  */
 
-public class SettingsPinCode extends ToolbarFragment implements HorizontalNumberPickerListener {
+public class SettingsPinCode extends ToolbarFragment {
 
+    @BindView(R.id.nav_drawer_toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.set_reset_pin_button)
     Button setResetPinButton;
-    private Context context;
-    private LayoutInflater inflater;
-    private PinCodeFragment pinCodeFragment;
-    private LinearLayout attemptsLayout;
-    private TextView attemptsLabel;
+    @BindView(R.id.numbers_attempts_view)
+    LinearLayout attemptsLayout;
+    @BindView(R.id.numbers_attempts_description)
+    TextView attemptsDescription;
+    @BindView(R.id.switch_pin_code)
+    Switch pinCodeSwitch;
+    @BindView(R.id.button_ad_free)
+    Button adFreeButton;
+
+    @BindView(R.id.settings_textView1)
+    TextView textView1;
+    @BindView(R.id.settings_textView2)
+    TextView textView2;
+    @BindView(R.id.numbers_attempts_label)
+    TextView numberOfAttemptsLabel;
+    @BindView(R.id.number_of_attempts)
+    TextView numberOfAttemptsText;
+
+    GluuMainActivity.GluuAlertCallback listener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.settings_pincode, container, false);
-        context = getContext();
-        this.inflater = inflater;
+        ButterKnife.bind(this, view);
 
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.nav_drawer_toolbar);
         setupHomeAsUpEnabledToolbar(toolbar, getString(R.string.pin_code));
         setHasOptionsMenu(true);
 
-        setResetPinButton = (Button) view.findViewById(R.id.set_reset_pin_button);
+        listener = new GluuMainActivity.GluuAlertCallback() {
+            @Override
+            public void onPositiveButton() {
+                Settings.saveIsReset(getContext());
+                loadPinCodeView(true);
+            }
+
+            @Override
+            public void onNegativeButton() {
+                String pinCode = Settings.getPinCode(getContext());
+                if(pinCode == null) {
+                    setPinCode(false);
+                    pinCodeSwitch.setChecked(false);
+                }
+            }
+        };
         setResetPinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GluuMainActivity.GluuAlertCallback listener = new GluuMainActivity.GluuAlertCallback() {
-                    @Override
-                    public void onPositiveButton() {
-                        Settings.saveIsReset(context);
-                        loadPinCodeView(true);
-                    }
-
-                    @Override
-                    public void onNegativeButton() {
-                        //Skip here
-                    }
-                };
-                CustomGluuAlert gluuAlert = new CustomGluuAlert(getActivity());
-//                gluuAlert.setMessage(getContext().getString(R.string.change_pin));
-                gluuAlert.setSub_title(getContext().getString(R.string.change_pin));
-                gluuAlert.setYesTitle(getContext().getString(R.string.yes));
-                gluuAlert.setNoTitle(getContext().getString(R.string.no));
-                gluuAlert.setmListener(listener);
-                gluuAlert.type = NotificationType.RENAME_KEY;
-                gluuAlert.show();
-            }
-        });
-        attemptsLayout = (LinearLayout) view.findViewById(R.id.numbers_attempts_view);
-        attemptsLabel = (TextView) view.findViewById(R.id.numbers_attempts_label);
-
-        final Switch turOn = (Switch) view.findViewById(R.id.switch_pin_code);
-        turOn.setChecked(Settings.getPinCodeEnabled(context));
-        setPinCode(turOn.isChecked());
-        turOn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setPinCode(turOn.isChecked());
-                if (turOn.isChecked()) {
-                    Settings.setFingerprintEnabled(context, !turOn.isChecked());
+                String pinCode = Settings.getPinCode(getContext());
+                if(pinCode == null) {
+                    Settings.saveIsReset(getContext());
+                    loadPinCodeView(true);
+                } else {
+                    showLoadPinCodeAlert();
                 }
             }
         });
-        if (Settings.getPinCodeEnabled(context)) {
+
+
+        pinCodeSwitch.setChecked(Settings.getPinCodeEnabled(getContext()));
+        setPinCode(pinCodeSwitch.isChecked());
+
+        pinCodeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                setPinCode(checked);
+                if (checked) {
+                    Settings.setFingerprintEnabled(getContext(), !pinCodeSwitch.isChecked());
+                }
+
+                String pinCode = Settings.getPinCode(getContext());
+                if(checked && pinCode == null) {
+                    showLoadPinCodeAlert();
+                }
+            }
+        });
+
+        if (Settings.getPinCodeEnabled(getContext())) {
             setResetPinButton.setVisibility(View.VISIBLE);
         } else {
             setResetPinButton.setVisibility(View.GONE);
         }
-        HorizontalNumberPicker numberPicker = (HorizontalNumberPicker) view.findViewById(R.id.horizontal_number_picker);
-        numberPicker.setMaxValue(10);
-        numberPicker.setMinValue(5);
-        numberPicker.setValue(Settings.getPinCodeAttempts(context));
-        numberPicker.setListener(this);
+
         checkPinCode();
 
-        view.findViewById(R.id.button_ad_free).setOnClickListener(new View.OnClickListener() {
+        adFreeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent("on-ad-free-flow");
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
             }
         });
 
-        //Setup fonts
-        TextView settings_textView1 = (TextView) view.findViewById(R.id.settings_textView1);
-        TextView settings_textView2 = (TextView) view.findViewById(R.id.settings_textView2);
-        TextView textView7 = (TextView) view.findViewById(R.id.textView7);
-        TextView numbers_attempts_label = (TextView) view.findViewById(R.id.numbers_attempts_label);
-
-
+        //setup fonts
         Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Regular.otf");
         Typeface faceBold = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Semibold.otf");
-        settings_textView1.setTypeface(face);
-        settings_textView2.setTypeface(face);
-        textView7.setTypeface(face);
-        numbers_attempts_label.setTypeface(face);
-        attemptsLabel.setTypeface(face);
+        textView1.setTypeface(face);
+        textView2.setTypeface(face);
+        numberOfAttemptsLabel.setTypeface(face);
         setResetPinButton.setTypeface(faceBold);
+        numberOfAttemptsText.setTypeface(face);
 
         return view;
     }
 
     public void checkPinCode() {
-        String pinCode = Settings.getPinCode(context);
-        if (!pinCode.equalsIgnoreCase("null")) {
+        String pinCode = Settings.getPinCode(getContext());
+        if (pinCode != null) {
             setResetPinButton.setText(R.string.reset_pin_code);
         } else {
             setResetPinButton.setText(R.string.set_new_pin_code);
@@ -142,15 +150,15 @@ public class SettingsPinCode extends ToolbarFragment implements HorizontalNumber
     }
 
     private void setPinCode(Boolean isTurnOn) {
-        Settings.setPinCodeEnabled(context, isTurnOn);
+        Settings.setPinCodeEnabled(getContext(), isTurnOn);
         if (isTurnOn) {
             setResetPinButton.setVisibility(View.VISIBLE);
             attemptsLayout.setVisibility(View.VISIBLE);
-            attemptsLabel.setVisibility(View.VISIBLE);
+            attemptsDescription.setVisibility(View.VISIBLE);
         } else {
             setResetPinButton.setVisibility(View.GONE);
             attemptsLayout.setVisibility(View.GONE);
-            attemptsLabel.setVisibility(View.GONE);
+            attemptsDescription.setVisibility(View.GONE);
         }
         checkPinCode();
     }
@@ -166,9 +174,23 @@ public class SettingsPinCode extends ToolbarFragment implements HorizontalNumber
         transaction.commit();
     }
 
+    private void showLoadPinCodeAlert() {
+        CustomGluuAlert gluuAlert = new CustomGluuAlert(getActivity());
 
-    @Override
-    public void onHorizontalNumberPickerChanged(HorizontalNumberPicker horizontalNumberPicker, int value) {
-        Settings.setPinCodeAttempts(context, String.valueOf(value));
+        String pinCode = Settings.getPinCode(getContext());
+
+        if(pinCode == null) {
+            gluuAlert.setSub_title(getContext().getString(R.string.set_pin));
+        } else {
+            gluuAlert.setSub_title(getContext().getString(R.string.change_pin));
+        }
+
+
+        gluuAlert.setYesTitle(getContext().getString(R.string.yes));
+        gluuAlert.setNoTitle(getContext().getString(R.string.no));
+        gluuAlert.setmListener(listener);
+        gluuAlert.type = NotificationType.RENAME_KEY;
+        gluuAlert.show();
     }
+
 }
