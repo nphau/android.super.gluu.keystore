@@ -21,6 +21,7 @@ import com.mhk.android.passcodeview.PasscodeView;
 import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.app.services.GlobalNetworkTime;
 import org.gluu.super_gluu.app.settings.Settings;
+import org.gluu.super_gluu.util.PinEntryEditText;
 
 import SuperGluu.app.R;
 import butterknife.BindView;
@@ -36,11 +37,12 @@ public class PinCodeFragment extends Fragment {
     @BindView(R.id.nav_drawer_toolbar)
     Toolbar toolbar;
     @BindView(R.id.attemptsLabel)
-    TextView attemptsLabel;
+    TextView attemptsTextView;
+    @BindView(R.id.enter_passcode_text_view)
+    TextView enterPasscodeTextView;
 
-    @BindView(R.id.pin_view)
-    PasscodeView pinCodeView;
-
+    @BindView(R.id.pin_code_edit_text)
+    PinEntryEditText pinCodeEditText;
 
     public PinCodeViewListener pinCodeViewListener;
 
@@ -76,8 +78,10 @@ public class PinCodeFragment extends Fragment {
 
         if (fragmentType.equals(Constant.SET_CODE)) {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.set_passcode));
+            enterPasscodeTextView.setText(getString(R.string.set_passcode));
         } else {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.enter_passcode));
+            enterPasscodeTextView.setText(getString(R.string.enter_passcode));
         }
 
         setHasOptionsMenu(true);
@@ -105,41 +109,46 @@ public class PinCodeFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+
     private void updatePinCodeView(){
+        pinCodeEditText.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                pinCodeEditText.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if(imm != null) {
+                    imm.showSoftInput(pinCodeEditText, InputMethodManager.SHOW_IMPLICIT);
+                }
+            }
+        }, 400);
+
+
         //get local variables
         final String pinCode = Settings.getPinCode(getContext());
         int attempts = Settings.getCurrentPinCodeAttempts(getContext());
 
-        //Show the keyboard
-        pinCodeView.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                pinCodeView.requestToShowKeyboard();
-            }
-        }, 400);
-
         //Set attempts left view
-        attemptsLabel.setText(getAttemptsLeftText(attempts));
+        attemptsTextView.setText(getAttemptsLeftText(attempts));
         if (attempts <= 2) {
-            attemptsLabel.setTextColor(getResources().getColor(R.color.redColor));
+            attemptsTextView.setTextColor(getResources().getColor(R.color.redColor));
         }
         if (pinCode == null){
-            attemptsLabel.setVisibility(View.GONE);
+            attemptsTextView.setVisibility(View.GONE);
         }
 
-        //Setup pin code listener
-        pinCodeView.setPasscodeEntryListener(new PasscodeView.PasscodeEntryListener() {
-
+        pinCodeEditText.setOnPinEnteredListener(new PinEntryEditText.OnPinEnteredListener() {
             @Override
-            public void onPasscodeEntered(String passcode) {
+            public void onPinEntered(CharSequence str) {
+
+                String passcode = str.toString();
                 //If there is no pin code set
                 if (pinCode == null) {
                     if (setNewPinAttempts == 0){
                         setNewPinAttempts++;
-                        pinCodeView.clearText();
+                        pinCodeEditText.setText("");
                     } else {
-                        attemptsLabel.setVisibility(View.VISIBLE);
-                        attemptsLabel.setText(R.string.successfully_set_pin);
+                        attemptsTextView.setVisibility(View.VISIBLE);
+                        attemptsTextView.setText(R.string.successfully_set_pin);
                         setNewPin(passcode);
                     }
                     //If we are setting a new code
@@ -156,14 +165,14 @@ public class PinCodeFragment extends Fragment {
                     //If user entered correct pin code
                 } else if (passcode.equalsIgnoreCase(Settings.getPinCode(getContext()))) {
                     if (isSetNewPinCode) {
-                        attemptsLabel.setVisibility(View.GONE);
-                        pinCodeView.clearText();
+                        attemptsTextView.setVisibility(View.GONE);
+                        pinCodeEditText.setText("");
                         newPin = true;
                         Settings.resetCurrentPinAttempts(getContext());
                         return;
                     } else {
-                        attemptsLabel.setTextColor(getResources().getColor(R.color.greenColor));
-                        attemptsLabel.setText(R.string.correct_pin_code);
+                        attemptsTextView.setTextColor(getResources().getColor(R.color.greenColor));
+                        attemptsTextView.setText(R.string.correct_pin_code);
                     }
                     if (pinCodeViewListener != null) {
                         pinCodeViewListener.onCorrectPinCode(true);
@@ -175,6 +184,56 @@ public class PinCodeFragment extends Fragment {
                 }
             }
         });
+
+        //Setup pin code listener
+//        pinCodeView.setPasscodeEntryListener(new PasscodeView.PasscodeEntryListener() {
+//
+//            @Override
+//            public void onPasscodeEntered(String passcode) {
+//                //If there is no pin code set
+//                if (pinCode == null) {
+//                    if (setNewPinAttempts == 0){
+//                        setNewPinAttempts++;
+//                        pinCodeView.clearText();
+//                    } else {
+//                        attemptsLabel.setVisibility(View.VISIBLE);
+//                        attemptsLabel.setText(R.string.successfully_set_pin);
+//                        setNewPin(passcode);
+//                    }
+//                    //If we are setting a new code
+//                } else if (newPin) {
+//                    if (passcode.equalsIgnoreCase(pinCode)) {
+//                        showAlertView(getString(R.string.same_pin_code));
+//                        getActivity().onBackPressed();
+//                    } else {
+//                        showAlertView(getString(R.string.new_pin_success));
+//                        Settings.savePinCode(getContext(), passcode);
+//                        getActivity().onBackPressed();
+//                    }
+//                    newPin = false;
+//                    //If user entered correct pin code
+//                } else if (passcode.equalsIgnoreCase(Settings.getPinCode(getContext()))) {
+//                    if (isSetNewPinCode) {
+//                        attemptsLabel.setVisibility(View.GONE);
+//                        pinCodeView.clearText();
+//                        newPin = true;
+//                        Settings.resetCurrentPinAttempts(getContext());
+//                        return;
+//                    } else {
+//                        attemptsLabel.setTextColor(getResources().getColor(R.color.greenColor));
+//                        attemptsLabel.setText(R.string.correct_pin_code);
+//                    }
+//                    if (pinCodeViewListener != null) {
+//                        pinCodeViewListener.onCorrectPinCode(true);
+//                    }
+//                    isWrongPin = false;
+//                    Settings.resetCurrentPinAttempts(getContext());
+//                } else {
+//                    wrongPinCode();
+//                }
+//            }
+//        });
+
 
     }
 
@@ -203,11 +262,11 @@ public class PinCodeFragment extends Fragment {
         int attempts = Settings.getCurrentPinCodeAttempts(getContext());
         String attemptsText = getAttemptsLeftText(attempts);
         if (attempts <= 2) {
-            attemptsLabel.setTextColor(getResources().getColor(R.color.redColor));
+            attemptsTextView.setTextColor(getResources().getColor(R.color.redColor));
         }
-        attemptsLabel.setText(attemptsText);
+        attemptsTextView.setText(attemptsText);
 
-        pinCodeView.clearText();
+        pinCodeEditText.setText("");
         if (attempts <= 0) {
             Settings.resetCurrentPinAttempts(getContext());
             if (isSettings) {

@@ -1,5 +1,6 @@
 package org.gluu.super_gluu.app.fragments.PinCodeFragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -12,6 +13,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import org.gluu.super_gluu.app.fragments.LicenseFragment.LicenseFragment;
+import org.gluu.super_gluu.app.settings.Settings;
+
 import SuperGluu.app.R;
 
 /**
@@ -28,7 +31,7 @@ public class PinCodeSettingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_pin_code_setting, container, false);
 
         if (!isPin()){
-            mainActivityListener.onShowPinFragment();
+            mainActivityListener.onShowPinFragment(true);
         }
 
         TextView textSettingsTitle = (TextView)view.findViewById(R.id.pinCodeTitle);
@@ -37,8 +40,8 @@ public class PinCodeSettingFragment extends Fragment {
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mainActivityListener.onShowPinFragment();
-                setPincodeEnabled(true);
+                mainActivityListener.onShowPinFragment(false);
+                Settings.setPinCodeEnabled(getContext(), true);
             }
         });
         Button noButton = (Button)view.findViewById(R.id.no_button_pin);
@@ -46,7 +49,7 @@ public class PinCodeSettingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mainActivityListener.onMainActivity();
-                setPincodeEnabled(false);
+                Settings.setPinCodeEnabled(getContext(), false);
             }
         });
 
@@ -70,16 +73,10 @@ public class PinCodeSettingFragment extends Fragment {
         }
     }
 
-    public void setPincodeEnabled(Boolean isEnabled){
-        SharedPreferences preferences = getContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isPinEnabled", isEnabled);
-        editor.commit();
-    }
 
     public Boolean isPin(){
-        SharedPreferences preferences = getContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        String pinCode = preferences.getString("PinCode", "null");
-        return pinCode.equalsIgnoreCase("null");
+        SharedPreferences preferences = getContext().getSharedPreferences(Settings.PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
+        String pinCode = preferences.getString(Settings.Constant.PIN_CODE, null);
+        return pinCode == null;
     }
 }

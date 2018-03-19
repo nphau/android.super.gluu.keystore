@@ -111,7 +111,7 @@ public class LicenseFragment extends ToolbarFragment implements View.OnClickList
     public interface OnMainActivityListener {
         void onLicenseAgreement();
         void onMainActivity();
-        void onShowPinFragment();
+        void onShowPinFragment(boolean enterPinCode);
         void onShowKeyInfo(KeyHandleInfoFragment infoFragment);
     }
 }

@@ -180,6 +180,7 @@
     <string name="same_pin_code">New pin code is the same as old, choose new one.</string>
     <string name="new_pin_success">New Pin changed success!</string>
     <string name="correct_pin_code">Pin code is correct!</string>
+    <string name="you_have_5_attempts_left">You have 5 attempts left</string>
 
 
 </resources>

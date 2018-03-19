@@ -134,10 +134,13 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
     }
 
     @Override
-    public void onShowPinFragment() {
+    public void onShowPinFragment(boolean enterPinCode) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+        String fragmentType = enterPinCode ? PinCodeFragment.Constant.ENTER_CODE : PinCodeFragment.Constant.SET_CODE;
+
         PinCodeFragment pinCodeFragment =
-                PinCodeFragment.newInstance(PinCodeFragment.Constant.ENTER_CODE, false, false);
+                PinCodeFragment.newInstance(fragmentType, false, false);
 
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.replace(R.id.fragment_container, pinCodeFragment);
@@ -190,9 +193,9 @@ public class MainActivity extends AppCompatActivity implements LicenseFragment.O
 
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.replace(R.id.fragment_container, pinCodeFragmentSetting);
-s        fragmentTransaction.commit();
+        fragmentTransaction.commit();
 
-        setTitle("Pin Code");
+        setTitle(getString(R.string.pin_code));
     }
 
     public void saveUserDecision(String userChoose, String oxRequest) {

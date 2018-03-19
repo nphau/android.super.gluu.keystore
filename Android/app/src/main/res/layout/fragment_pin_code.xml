@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:passcodeView="http://schemas.android.com/apk/res-auto"
-    android:background="@color/pinCodeGray">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/whiteColor">
 
     <include
         android:layout_alignParentTop="true"
@@ -11,24 +12,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-
-    <com.mhk.android.passcodeview.PasscodeView
-        android:id="@+id/pin_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        passcodeView:numDigits="4"
-        android:layout_marginTop="30dp"
+    <TextView
         android:layout_below="@+id/nav_drawer_toolbar"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/enter_passcode_text_view"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <org.gluu.super_gluu.util.PinEntryEditText
+        android:layout_below="@+id/enter_passcode_text_view"
+        android:id="@+id/pin_code_edit_text"
+        android:layout_width="160dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:digits="1234567890"
+        android:inputType="number"
+        android:cursorVisible="false"
+        android:maxLength="4"
+        app:pinLineColors="@android:color/transparent"
+        android:textIsSelectable="false"
+        android:textSize="40sp"
+        app:pinRepeatedHint="-"
+        app:pinCharacterMask="*"/>
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="You have 5 attempts left"
+        android:text="@string/you_have_5_attempts_left"
         android:id="@+id/attemptsLabel"
         android:textColor="@color/greenColor"
-        android:layout_below="@+id/pin_view"
+        android:layout_below="@+id/pin_code_edit_text"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp" />
 

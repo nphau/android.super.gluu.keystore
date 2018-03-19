@@ -546,7 +546,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     }
 
     @Override
-    public void onShowPinFragment() {
+    public void onShowPinFragment(boolean enterPin) {
 
     }
 
