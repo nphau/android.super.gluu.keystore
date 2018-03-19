@@ -22,8 +22,11 @@ android {
         signingConfig signingConfigs.config
     }
     dexOptions {
-        incremental true
         javaMaxHeapSize "4g"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 //    productFlavors {
 //        adfree {
