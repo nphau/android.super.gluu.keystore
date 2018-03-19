@@ -45,7 +45,6 @@ public class PinCodeFragment extends Fragment {
     private String fragmentType;
     private boolean isSettings;
     private boolean newPin;
-    private boolean isWrongPin;
     private int setNewPinAttempts;
     private boolean isSetNewPinCode;
 
@@ -180,7 +179,6 @@ public class PinCodeFragment extends Fragment {
                     if (pinCodeViewListener != null) {
                         pinCodeViewListener.onCorrectPinCode(true);
                     }
-                    isWrongPin = false;
                     Settings.resetCurrentPinAttempts(getContext());
                 } else {
                     wrongPinCode();
@@ -195,7 +193,6 @@ public class PinCodeFragment extends Fragment {
     }
 
     private void setNewPin(String passcode){
-        isWrongPin = false;
         Settings.savePinCode(getContext(), passcode);
         pinCodeViewListener.onCorrectPinCode(true);
         Settings.resetCurrentPinAttempts(getContext());
@@ -208,7 +205,6 @@ public class PinCodeFragment extends Fragment {
     }
 
     private void wrongPinCode(){
-        isWrongPin = true;
         increaseAttempts();
 
         int attempts = Settings.getCurrentPinCodeAttempts(getContext());
