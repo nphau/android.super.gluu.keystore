@@ -41,9 +41,8 @@
 
         <activity
             android:name="org.gluu.super_gluu.app.activities.MainActivity"
-            android:theme="@style/splashScreenTheme">
-            <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
-            <!--android:theme="@style/AppTheme.NoActionBar">-->
+            android:theme="@style/SplashScreenTheme">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
