@@ -1,6 +1,5 @@
 package org.gluu.super_gluu.app.fragments.SettingsFragment;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
