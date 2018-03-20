@@ -29,8 +29,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="72dp"
-        android:layout_marginRight="72dp"
+        android:layout_marginLeft="68dp"
+        android:layout_marginRight="68dp"
         android:layout_marginTop="?attr/actionBarSize"
         android:clickable="true">
 
@@ -65,8 +65,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
                 android:gravity="center"
                 android:text="@string/welcome"
                 android:textColor="@color/homeScreenTextGray"
@@ -77,8 +75,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:text="@string/scan_text"
