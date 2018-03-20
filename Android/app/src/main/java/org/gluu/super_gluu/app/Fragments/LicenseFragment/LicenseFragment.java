@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import SuperGluu.app.R;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by nazaryavornytskyy on 3/22/16.
@@ -26,15 +28,25 @@ public class LicenseFragment extends ToolbarFragment implements View.OnClickList
 
     OnMainActivityListener mainActivityListener;
 
-    public Boolean getForFirstLoading() {
-        return isForFirstLoading;
-    }
+    @BindView(R.id.nav_drawer_toolbar)
+    Toolbar toolbar;
 
-    public void setForFirstLoading(Boolean forFirstLoading) {
-        isForFirstLoading = forFirstLoading;
-    }
+    @BindView(R.id.license_webView)
+    WebView licenseWebView;
 
-    private Boolean isForFirstLoading = true;
+    @BindView(R.id.accept_button)
+    Button acceptButton;
+
+    private Boolean isFirstTimeLoading;
+
+    public static LicenseFragment newInstance(boolean firstTimeLoading) {
+        LicenseFragment licenseFragment = new LicenseFragment();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(Constant.IS_FIRST_TIME_LOADING, firstTimeLoading);
+        licenseFragment.setArguments(bundle);
+
+        return licenseFragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,19 +54,19 @@ public class LicenseFragment extends ToolbarFragment implements View.OnClickList
 
         View view = inflater.inflate(R.layout.license_fragment, container, false);
 
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.nav_drawer_toolbar);
+        ButterKnife.bind(this, view);
+
+        isFirstTimeLoading = getArguments().getBoolean(Constant.IS_FIRST_TIME_LOADING);
+
         setupHomeAsUpEnabledToolbar(toolbar, getString(R.string.privacy_policy));
         setHasOptionsMenu(true);
 
-        WebView licenseWebView = (WebView) view.findViewById(R.id.license_webView);
         licenseWebView.loadDataWithBaseURL(null, readLicenseTxt(), "text/html", "UTF-8", null);
-//        licenseTextView.setMovementMethod(new ScrollingMovementMethod());
 
-        Button acceptButton = (Button) view.findViewById(R.id.accept_button);
 
         acceptButton.setOnClickListener(this);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) licenseWebView.getLayoutParams();
-        if (!isForFirstLoading){
+        if (!isFirstTimeLoading){
             acceptButton.setVisibility(View.GONE);
             //action_left_button.setVisibility(View.VISIBLE);
             params.weight = 0.25f;
@@ -63,9 +75,6 @@ public class LicenseFragment extends ToolbarFragment implements View.OnClickList
             params.weight = 0.98f;
         }
         licenseWebView.setLayoutParams(params);
-        //Setup fonts
-        Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Regular.otf");
-        acceptButton.setTypeface(face);
 
         return view;
     }
@@ -113,5 +122,9 @@ public class LicenseFragment extends ToolbarFragment implements View.OnClickList
         void onMainActivity();
         void onShowPinFragment(boolean enterPinCode);
         void onShowKeyInfo(KeyHandleInfoFragment infoFragment);
+    }
+
+    public class Constant {
+        private static final String IS_FIRST_TIME_LOADING = "is_first_time_loading";
     }
 }

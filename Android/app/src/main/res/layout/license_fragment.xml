@@ -23,12 +23,13 @@
         android:layout_width="match_parent"
         android:layout_height="65dp">
 
-        <Button
+        <android.support.v7.widget.AppCompatButton
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/accept"
             android:textAllCaps="false"
             android:textSize="17dp"
+            android:fontFamily="@font/proxima_nova_regular"
             android:id="@+id/accept_button"
             android:background="@color/greenColor"
             android:layout_gravity="center"

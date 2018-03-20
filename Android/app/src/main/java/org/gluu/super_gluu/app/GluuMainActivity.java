@@ -700,8 +700,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                 startActivity(intent);
                 break;
             case R.id.nav_privacy_policy:
-                LicenseFragment licenseFragment = new LicenseFragment();
-                licenseFragment.setForFirstLoading(false);
+                LicenseFragment licenseFragment = LicenseFragment.newInstance(false);
                 updateUIAfterNavItemSelected(licenseFragment);
                 break;
             case R.id.nav_version:
