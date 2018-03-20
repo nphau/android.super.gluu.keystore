@@ -30,7 +30,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdListener;
@@ -57,26 +56,31 @@ import java.io.IOException;
 
 import SuperGluu.app.BuildConfig;
 import SuperGluu.app.R;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Main activity fragment
  *
  * Created by Yuriy Movchan on 12/28/2015.
  */
-public class MainActivityFragment extends Fragment implements TextView.OnEditorActionListener, View.OnClickListener {
+public class MainActivityFragment extends Fragment implements TextView.OnEditorActionListener {
 
     private static final String TAG = "main-activity-fragment";
 
     private OxPush2RequestListener oxPush2RequestListener;
 
-    private LayoutInflater inflater;
-
     private Context context;
 
-    private LinearLayout adView;
     private InterstitialAd mInterstitialAd;
 
-    private Button scanButton;
+    @BindView(R.id.button_scan)
+    Button scanButton;
+
+    @BindView(R.id.welcome_text_view)
+    TextView welcomeTextView;
+    @BindView(R.id.description_text_view)
+    TextView descriptionTextView;
 
     private SoftwareDevice u2f;
     private AndroidKeyDataStore dataStore;
@@ -87,7 +91,6 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
             // Get extra data included in the Intent
             String message = intent.getStringExtra("message");
             if (context != null && !message.isEmpty()) {
-//                showToastWithText(message);
                 showDialog(message);
             }
             Boolean isAdFree = Settings.getPurchase(context);
@@ -96,19 +99,6 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
                     initGoogleInterstitialAd();
                 }
                 mInterstitialAd.show();
-            }
-        }
-    };
-
-    private BroadcastReceiver mAdFreeReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // Get extra data included in the Intent
-            Boolean isAdFree = intent.getBooleanExtra("isAdFree", false);
-            if (context != null && adView != null) {
-                if (isAdFree) {
-                    adView.setVisibility(View.GONE);
-                }
             }
         }
     };
@@ -154,53 +144,31 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-        this.inflater = inflater;
+
+        ButterKnife.bind(this, view);
+
         context = view.getContext();
         this.dataStore = new AndroidKeyDataStore(context);
         this.u2f = new SoftwareDevice(getActivity(), dataStore);
-        adView = (LinearLayout)view.findViewById(R.id.view_ad_free);
-//        adView.setVisibility(View.GONE);
 
-        Boolean isAdFree = Settings.getPurchase(context);
-        if (isAdFree){
-            adView.setVisibility(View.GONE);
-        }
+        //todo re-implement ad free code: Should call runSubscribeFlow when ads are removed
 
+        scanButton.setOnClickListener(v -> submit());
 
-//        Button adFreeButton = (Button) view.findViewById(R.id.button_ad_free);
-//        adFreeButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                runSubscribeFlow();
-//            }
-//        });
-
-
-        scanButton = (Button) view.findViewById(R.id.button_scan);
-        scanButton.setOnClickListener(this);
-
-        //Setup message receiver
-//        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
-//                new IntentFilter("ox_request-precess-event"));
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mAdFreeReceiver,
-                new IntentFilter("on-ad-free-event"));
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(onAdFree,
                 new IntentFilter("on-ad-free-flow"));
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(onRestorePurchase,
                 new IntentFilter("on-restore-purchase-flow"));
+
         //Init GoogleMobile AD
         initGoogleInterstitialAd();
 
         //Setup fonts
-        TextView welcomeTextView = view.findViewById(R.id.welcome_text_view);
-        TextView subTextView = view.findViewById(R.id.description_text_view);
-
         Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Regular.otf");
         Typeface faceLight = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Regular.otf");
         scanButton.setTypeface(face);
-        //adFreeButton.setTypeface(face);
         welcomeTextView.setTypeface(face);
-        subTextView.setTypeface(faceLight);
+        descriptionTextView.setTypeface(faceLight);
 
         return view;
     }
@@ -209,7 +177,6 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
     public void onResume() {
         super.onResume();
         if (!isConnected(context)) {
-//            showToastWithText("Your device is currently unable to establish a network connection. You will need a connection to approve or deny authentication requests with Super Gluu.");
             scanButton.setEnabled(false);
         } else {
             scanButton.setEnabled(true);
@@ -238,21 +205,13 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-//        oxPush2RequestListener = null;
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-//        Toast.makeText(getActivity(), R.string.process_qr_code, Toast.LENGTH_SHORT).show();
 
         switch (requestCode) {
             case IntentIntegrator.REQUEST_CODE:
                 if (resultCode == Activity.RESULT_OK) {
-//                    showToastWithText(context.getString(R.string.process_qr_code));
                     // Parsing bar code reader result
                     IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
                     if (BuildConfig.DEBUG) Log.d(TAG, "Parsing QR code result: " + result.toString());
@@ -270,11 +229,6 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
                 }
                 break;
         }
-    }
-
-    @Override
-    public void onClick(View v) {
-        submit();
     }
 
     @Override
@@ -338,27 +292,18 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
 
     private void showToastWithText(String text){
         GluuToast gluuToast = new GluuToast(context);
-        View view = inflater.inflate(R.layout.gluu_toast, null);
-        gluuToast.showGluuToastWithText(view, text);
+        LayoutInflater layoutInflater = getLayoutInflater();
+        if(layoutInflater != null) {
+            View view = getLayoutInflater().inflate(R.layout.gluu_toast, null);
+            gluuToast.showGluuToastWithText(view, text);
+        }
     }
 
     private void submit() {
-//        if (oxPush2RequestListener != null) {
-
-//        String message = "{\"app\":\"https://ce-release.gluu.org/identity/authentication/authcode\",\"method\":\"authenticate\",\"req_ip\":\"77.123.160.182\",\"created\":\"2017-07-30T20:19:27.307000\",\"issuer\":\"https://ce-release.gluu.org\",\"req_loc\":\"Ukraine%2C%20L%27vivs%27ka%20Oblast%27%2C%20Lviv\",\"state\":\"9e8fe200-5bab-4be1-857f-cc9a805a4738\",\"username\":\"qwerty2\"}";
-//            OxPush2Request oxPush2Request = null;
-//            try {
-//                oxPush2Request = new Gson().fromJson(message, OxPush2Request.class);
-//            }
-//            catch (Exception ex){
-//                //skip exception there
-//            }
-//            onQrRequest(oxPush2Request);
-            IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);
-            integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-            integrator.setPrompt(getString(R.string.scan_oxpush2_prompt));
-            integrator.initiateScan();
-//        }
+        IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+        integrator.setPrompt(getString(R.string.scan_oxpush2_prompt));
+        integrator.initiateScan();
     }
 
     private void showDialog(String message){
