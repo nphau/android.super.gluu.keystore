@@ -79,13 +79,16 @@
             android:id="@+id/key_imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="18dp"
             android:src="@drawable/key_list_item_icon" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/key_imageView"
+            android:layout_toStartOf="@+id/right_caret"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="7dp"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
@@ -93,7 +96,6 @@
                 android:id="@+id/contentKey"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="4dp"
                 tools:text="keyhandleName"
@@ -107,12 +109,12 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="10dp"
                 android:textColor="@color/light_grey_text"
-                android:layout_marginStart="10dp"
                 tools:text="createdDate"
                 android:textSize="14sp" />
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/right_caret"
             android:src="@drawable/right_caret"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
