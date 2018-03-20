@@ -52,6 +52,7 @@ public class SettingsFragment extends ToolbarFragment {
     @BindView(R.id.settings_image_view)
     ImageView settingsIconImageView;
 
+    String settingsId = null;
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -84,7 +85,7 @@ public class SettingsFragment extends ToolbarFragment {
 
         fingerprint = new Fingerprint(context);
 
-        final String settingsId = this.getArguments().getString(Constant.SETTINGS_ID);
+        settingsId = this.getArguments().getString(Constant.SETTINGS_ID);
 
         if(settingsId == null) {
             throw new RuntimeException("Must send a settings type to create generic settings fragment");
@@ -125,18 +126,23 @@ public class SettingsFragment extends ToolbarFragment {
 
         switchSettings.setOnClickListener(v -> {
 
-            if (settingsId.equals(Constant.SSL_CONNECTION_TYPE)) {
-                GluuApplication.isTrustAllCertificates = switchSettings.isChecked();
-            } else {
-                if (switchSettings.isChecked() && fingerprint.startFingerprintService()) {
-                    Log.v("TAG", "Fingerprint Settings enable: " + switchSettings.isChecked());
-                } else {
-                    switchSettings.setChecked(false);
-                }
+            switch (settingsId) {
+                case Constant.SSL_CONNECTION_TYPE:
+                    GluuApplication.isTrustAllCertificates = switchSettings.isChecked();
+
+                    updateSettingsAfterClick();
+                    break;
+
+                case Constant.FINGERPRINT_TYPE:
+                    if (switchSettings.isChecked() && fingerprint.startFingerprintService()) {
+                        Log.v("TAG", "Fingerprint Settings enable: " + switchSettings.isChecked());
+                    } else {
+                        switchSettings.setChecked(false);
+                    }
+
+                    updateSettingsAfterClick();
+                    break;
             }
-            Settings.setSettingsValueEnabled(context, settingsId, switchSettings.isChecked());
-            // Init network layer
-            CommunicationService.init();
         });
 
         //Setup message receiver
@@ -179,8 +185,14 @@ public class SettingsFragment extends ToolbarFragment {
         }
     }
 
+    private void updateSettingsAfterClick() {
+        Settings.setSettingsValueEnabled(context, settingsId, switchSettings.isChecked());
+        // Init network layer
+        CommunicationService.init();
+    }
+
     public static class Constant {
-        public final static String SETTINGS_ID = "settingsId";
+        private final static String SETTINGS_ID = "settingsId";
         public final static String USER_GUIDE_URL = "https://gluu.org/docs/supergluu/3.0.0/user-guide/";
 
         //types
