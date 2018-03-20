@@ -14,6 +14,7 @@ import org.gluu.super_gluu.app.fragments.LicenseFragment.LicenseFragment;
 import org.gluu.super_gluu.app.fragments.LockFragment.LockFragment;
 import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
 import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeSettingFragment;
+import org.gluu.super_gluu.app.listener.OnMainActivityListener;
 import org.gluu.super_gluu.app.services.FingerPrintManager;
 import org.gluu.super_gluu.app.settings.Settings;
 
@@ -22,12 +23,12 @@ import SuperGluu.app.R;
 /**
  * Created by nazaryavornytskyy on 3/22/16.
  */
-public class MainActivity extends AppCompatActivity implements LicenseFragment.OnMainActivityListener, PinCodeFragment.PinCodeViewListener {
-
+public class MainActivity extends AppCompatActivity implements OnMainActivityListener, PinCodeFragment.PinCodeViewListener {
 
     public static final String TIME_SERVER = "time-a.nist.gov";
     private static final String DENY_ACTION = "DENY_ACTION";
     private static final String APPROVE_ACTION = "APPROVE_ACTION";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

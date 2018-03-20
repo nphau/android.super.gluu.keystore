@@ -1,7 +1,6 @@
 package org.gluu.super_gluu.app.fragments.LicenseFragment;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -9,10 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.LinearLayout;
+
+import org.gluu.super_gluu.app.listener.OnMainActivityListener;
 
 import org.gluu.super_gluu.app.base.ToolbarFragment;
-import org.gluu.super_gluu.app.fragments.KeysFragment.KeyHandleInfoFragment;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 /**
  * Created by nazaryavornytskyy on 3/22/16.
  */
-public class LicenseFragment extends ToolbarFragment implements View.OnClickListener {
+public class LicenseFragment extends ToolbarFragment {
 
     OnMainActivityListener mainActivityListener;
 
@@ -49,32 +49,40 @@ public class LicenseFragment extends ToolbarFragment implements View.OnClickList
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnMainActivityListener) {
+            mainActivityListener = (OnMainActivityListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnMainActivityListener");
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.license_fragment, container, false);
-
         ButterKnife.bind(this, view);
 
-        isFirstTimeLoading = getArguments().getBoolean(Constant.IS_FIRST_TIME_LOADING);
-
-        setupHomeAsUpEnabledToolbar(toolbar, getString(R.string.privacy_policy));
         setHasOptionsMenu(true);
+
+        isFirstTimeLoading = getArguments().getBoolean(Constant.IS_FIRST_TIME_LOADING, false);
 
         licenseWebView.loadDataWithBaseURL(null, readLicenseTxt(), "text/html", "UTF-8", null);
 
+        acceptButton.setOnClickListener(v -> mainActivityListener.onLicenseAgreement());
 
-        acceptButton.setOnClickListener(this);
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) licenseWebView.getLayoutParams();
-        if (!isFirstTimeLoading){
-            acceptButton.setVisibility(View.GONE);
-            //action_left_button.setVisibility(View.VISIBLE);
-            params.weight = 0.25f;
+        if (isFirstTimeLoading){
+            acceptButton.setVisibility(View.VISIBLE);
+            setDefaultToolbar(toolbar, getString(R.string.privacy_policy), false);
         } else {
-            //action_left_button.setVisibility(View.GONE);
-            params.weight = 0.98f;
+            acceptButton.setVisibility(View.GONE);
+            setDefaultToolbar(toolbar, getString(R.string.privacy_policy), true);
         }
-        licenseWebView.setLayoutParams(params);
+
+        licenseWebView.loadDataWithBaseURL(null, readLicenseTxt(), "text/html", "UTF-8", null);
 
         return view;
     }
@@ -99,29 +107,6 @@ public class LicenseFragment extends ToolbarFragment implements View.OnClickList
         }
 
         return byteArrayOutputStream.toString();
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnMainActivityListener) {
-            mainActivityListener = (OnMainActivityListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnMainActivityListener");
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        mainActivityListener.onLicenseAgreement();
-    }
-
-    public interface OnMainActivityListener {
-        void onLicenseAgreement();
-        void onMainActivity();
-        void onShowPinFragment(boolean enterPinCode);
-        void onShowKeyInfo(KeyHandleInfoFragment infoFragment);
     }
 
     public class Constant {

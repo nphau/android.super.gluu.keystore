@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.gluu.super_gluu.app.listener.OnMainActivityListener;
+
 import org.gluu.super_gluu.app.fragments.LicenseFragment.LicenseFragment;
 import org.gluu.super_gluu.app.settings.Settings;
 
@@ -32,7 +34,7 @@ public class PinCodeSettingFragment extends Fragment {
     @BindView(R.id.pinSubCodeTitle)
     TextView textSettingsSubTitle;
 
-    LicenseFragment.OnMainActivityListener mainActivityListener;
+    OnMainActivityListener mainActivityListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,8 +69,8 @@ public class PinCodeSettingFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof LicenseFragment.OnMainActivityListener) {
-            mainActivityListener = (LicenseFragment.OnMainActivityListener) context;
+        if (context instanceof OnMainActivityListener) {
+            mainActivityListener = (OnMainActivityListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnMainActivityListener");

@@ -50,7 +50,7 @@ public class KeyFragmentListFragment extends ToolbarFragment {
         View rootView = inflater.inflate(R.layout.fragment_key_list, container, false);
 
         Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.nav_drawer_toolbar);
-        setupHomeAsUpEnabledToolbar(toolbar, getString(R.string.keys));
+        setDefaultToolbar(toolbar, getString(R.string.keys), true);
         setHasOptionsMenu(true);
 
         listToken = getListToken(rootView);

@@ -12,19 +12,19 @@ import android.view.MenuItem;
 
 public class ToolbarFragment extends Fragment {
 
-    public void setupHomeAsUpEnabledToolbar(Toolbar toolbar, String titleText) {
+    public void setDefaultToolbar(Toolbar toolbar, String titleText, boolean isHomeAsUpEnabled) {
 
         AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
         if(appCompatActivity != null) {
 
             appCompatActivity.setSupportActionBar(toolbar);
-            
+
             ActionBar actionBar = appCompatActivity.getSupportActionBar();
 
             if(actionBar != null) {
                 appCompatActivity.getSupportActionBar().setTitle(titleText);
-                appCompatActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                appCompatActivity.getSupportActionBar().setHomeButtonEnabled(true);
+                appCompatActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(isHomeAsUpEnabled);
+                appCompatActivity.getSupportActionBar().setHomeButtonEnabled(isHomeAsUpEnabled);
             }
         }
     }

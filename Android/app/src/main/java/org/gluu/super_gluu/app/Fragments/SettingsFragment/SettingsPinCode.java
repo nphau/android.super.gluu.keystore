@@ -51,7 +51,7 @@ public class SettingsPinCode extends ToolbarFragment {
         View view = inflater.inflate(R.layout.settings_pincode, container, false);
         ButterKnife.bind(this, view);
 
-        setupHomeAsUpEnabledToolbar(toolbar, getString(R.string.pin_code));
+        setDefaultToolbar(toolbar, getString(R.string.pin_code), true);
         setHasOptionsMenu(true);
 
         listener = new GluuMainActivity.GluuAlertCallback() {

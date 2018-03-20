@@ -1,39 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <include
+        android:layout_alignParentTop="true"
         layout="@layout/toolbar_nav_drawer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <WebView
+        android:layout_below="@+id/nav_drawer_toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/license_webView"
-        android:layout_weight="0.98"
+        android:layout_above="@+id/accept_button"
         android:scrollbars = "vertical"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" />
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        tools:ignore="UnknownIdInLayout" />
 
-    <LinearLayout
-        android:orientation="vertical"
+    <android.support.v7.widget.AppCompatButton
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="65dp">
+        android:layout_height="65dp"
+        android:text="@string/accept"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        android:fontFamily="@font/proxima_nova_regular"
+        android:id="@+id/accept_button"
+        android:background="@color/greenColor"
+        android:layout_gravity="center"
+        android:textColor="@android:color/white" />
 
-        <android.support.v7.widget.AppCompatButton
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/accept"
-            android:textAllCaps="false"
-            android:textSize="17dp"
-            android:fontFamily="@font/proxima_nova_regular"
-            android:id="@+id/accept_button"
-            android:background="@color/greenColor"
-            android:layout_gravity="center"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

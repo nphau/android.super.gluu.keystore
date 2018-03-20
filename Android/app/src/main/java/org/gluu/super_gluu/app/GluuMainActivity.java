@@ -55,6 +55,7 @@ import org.gluu.super_gluu.app.fragments.LogsFragment.LogsFragment;
 import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
 import org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsFragment;
 import org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsPinCode;
+import org.gluu.super_gluu.app.listener.OnMainActivityListener;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
 import org.gluu.super_gluu.app.model.LogInfo;
 import org.gluu.super_gluu.app.purchase.InAppPurchaseService;
@@ -85,7 +86,7 @@ import butterknife.ButterKnife;
  *
  * Created by Yuriy Movchan on 12/28/2015.
  */
-public class GluuMainActivity extends AppCompatActivity implements OxPush2RequestListener, KeyHandleInfoFragment.OnDeleteKeyHandleListener, PinCodeFragment.PinCodeViewListener, ApproveDenyFragment.OnDeleteLogInfoListener, LicenseFragment.OnMainActivityListener {
+public class GluuMainActivity extends AppCompatActivity implements OxPush2RequestListener, KeyHandleInfoFragment.OnDeleteKeyHandleListener, PinCodeFragment.PinCodeViewListener, ApproveDenyFragment.OnDeleteLogInfoListener, OnMainActivityListener {
 
     private static final String TAG = "main-activity";
 

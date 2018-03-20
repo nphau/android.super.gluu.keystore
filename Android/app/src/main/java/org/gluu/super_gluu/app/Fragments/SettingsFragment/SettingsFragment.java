@@ -93,13 +93,13 @@ public class SettingsFragment extends ToolbarFragment {
 
         switch (settingsId) {
             case Constant.SSL_CONNECTION_TYPE:
-                setupHomeAsUpEnabledToolbar(toolbar, getString(R.string.trust_all_ssl_no_parentheses));
+                setDefaultToolbar(toolbar, getString(R.string.trust_all_ssl_no_parentheses), true);
                 titleTextView.setText(getString(R.string.trust_all_certificate));
                 subtitleTextView.setText(R.string.warning_trust_all_certificate);
                 settingsIconImageView.setImageDrawable(getResources().getDrawable(R.drawable.icon_trust_all));
                 break;
             case Constant.FINGERPRINT_TYPE:
-                setupHomeAsUpEnabledToolbar(toolbar, getString(R.string.fingerprint_title));
+                setDefaultToolbar(toolbar, getString(R.string.fingerprint_title), true);
                 titleTextView.setText(getString(R.string.fingerprint_title));
                 settingsIconImageView.setImageDrawable(getResources().getDrawable(R.drawable.icon_touch_id));
 
