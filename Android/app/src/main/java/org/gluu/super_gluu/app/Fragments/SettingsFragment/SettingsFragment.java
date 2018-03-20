@@ -113,7 +113,8 @@ public class SettingsFragment extends ToolbarFragment {
 
         if(settingsId.equals(Constant.FINGERPRINT_TYPE)) {
             if(!fingerprint.checkIfFingerprintEnabled()) {
-                showToastWithText("Fingerprint is turned off for this device");
+
+                showToastWithText(getString(R.string.fingerprint_off_device));
 
                 switchSettings.setEnabled(false);
                 switchSettings.setClickable(false);
@@ -124,16 +125,13 @@ public class SettingsFragment extends ToolbarFragment {
 
         switchSettings.setOnClickListener(v -> {
 
-            Log.i("boogie", "Switch touched");
-
-            if (settingsId != null && settingsId.equals(Constant.SSL_CONNECTION_TYPE)) {
+            if (settingsId.equals(Constant.SSL_CONNECTION_TYPE)) {
                 GluuApplication.isTrustAllCertificates = switchSettings.isChecked();
             } else {
                 if (switchSettings.isChecked() && fingerprint.startFingerprintService()) {
                     Log.v("TAG", "Fingerprint Settings enable: " + switchSettings.isChecked());
                 } else {
                     switchSettings.setChecked(false);
-                    showToastWithText(getString(R.string.fingerprint_off_device));
                 }
             }
             Settings.setSettingsValueEnabled(context, settingsId, switchSettings.isChecked());
