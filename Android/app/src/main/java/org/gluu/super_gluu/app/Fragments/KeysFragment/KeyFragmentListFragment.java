@@ -46,7 +46,6 @@ public class KeyFragmentListFragment extends ToolbarFragment {
     private KeyHandleChangeName cListener;
     private AndroidKeyDataStore dataStore;
     private List<TokenEntry> listToken;
-    private RelativeLayout keyMainView;
 
     @BindView(R.id.nav_drawer_toolbar)
     Toolbar toolbar;
@@ -71,6 +70,8 @@ public class KeyFragmentListFragment extends ToolbarFragment {
 
         listToken = getListToken(rootView);
 
+        setListAndEmptyVisibility(listToken.size() > 0);
+
         mListener = new KeyHandleInfo() {
             @Override
             public void onKeyHandleInfo(KeyHandleInfoFragment infoFragment) {
@@ -83,7 +84,7 @@ public class KeyFragmentListFragment extends ToolbarFragment {
 
             @Override
             public void onUpdateList(Boolean isEmtryList) {
-                keyMainView.setVisibility(isEmtryList ? View.GONE : View.VISIBLE);
+                setListAndEmptyVisibility(!isEmtryList);
             }
         };
 
@@ -101,7 +102,6 @@ public class KeyFragmentListFragment extends ToolbarFragment {
 
         ViewGroup header = (ViewGroup) inflater.inflate(R.layout.key_list_header, keysListView,false);
         keysListView.addHeaderView(header);
-        keysListView.setEmptyView(emptyKeysTextView);
 
         listAdapter = new KeyFragmentListAdapter(getActivity(), listToken, mListener);
         keysListView.setAdapter(listAdapter);
@@ -148,6 +148,16 @@ public class KeyFragmentListFragment extends ToolbarFragment {
         Collections.reverse(tokensFromDB);
 
         return tokensFromDB;
+    }
+
+    public void setListAndEmptyVisibility(boolean listVisible) {
+        if(listVisible) {
+            keysListView.setVisibility(View.VISIBLE);
+            emptyKeysTextView.setVisibility(View.GONE);
+        } else {
+            keysListView.setVisibility(View.GONE);
+            emptyKeysTextView.setVisibility(View.VISIBLE);
+        }
     }
 
     public interface KeyHandleInfo {
