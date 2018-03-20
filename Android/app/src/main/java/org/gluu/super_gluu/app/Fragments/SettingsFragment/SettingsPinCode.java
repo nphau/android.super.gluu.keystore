@@ -29,17 +29,17 @@ public class SettingsPinCode extends ToolbarFragment {
 
     @BindView(R.id.nav_drawer_toolbar)
     Toolbar toolbar;
-    @BindView(R.id.set_reset_pin_button)
+    @BindView(R.id.set_reset_pin_text_view)
     TextView setResetTextView;
     @BindView(R.id.numbers_attempts_description)
     TextView attemptsDescription;
     @BindView(R.id.switch_pin_code)
     Switch pinCodeSwitch;
 
-    @BindView(R.id.settings_textView1)
-    TextView textView1;
-    @BindView(R.id.settings_textView2)
-    TextView textView2;
+    @BindView(R.id.pin_code_title)
+    TextView pinCodeTitle;
+    @BindView(R.id.pin_code_description)
+    TextView pinCodeDescription;
 
     @BindView(R.id.set_pin_code_container)
     RelativeLayout setPinCodeContainer;
@@ -104,13 +104,6 @@ public class SettingsPinCode extends ToolbarFragment {
         } else {
             setPinCodeContainer.setVisibility(View.GONE);
         }
-
-        //setup fonts
-        Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Regular.otf");
-        textView1.setTypeface(face);
-        textView2.setTypeface(face);
-        attemptsDescription.setTypeface(face);
-        setResetTextView.setTypeface(face);
 
         return view;
     }
