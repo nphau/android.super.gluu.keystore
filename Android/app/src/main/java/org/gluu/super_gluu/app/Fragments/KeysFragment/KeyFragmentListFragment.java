@@ -70,9 +70,6 @@ public class KeyFragmentListFragment extends ToolbarFragment {
         setHasOptionsMenu(true);
 
         listToken = getListToken(rootView);
-        
-        keysListView.setVisibility(listToken.size() > 0 ? View.VISIBLE : View.GONE);
-        emptyKeysTextView.setVisibility(listToken.size() <= 0 ? View.VISIBLE: View.GONE);
 
         mListener = new KeyHandleInfo() {
             @Override
@@ -104,6 +101,7 @@ public class KeyFragmentListFragment extends ToolbarFragment {
 
         ViewGroup header = (ViewGroup) inflater.inflate(R.layout.key_list_header, keysListView,false);
         keysListView.addHeaderView(header);
+        keysListView.setEmptyView(emptyKeysTextView);
 
         listAdapter = new KeyFragmentListAdapter(getActivity(), listToken, mListener);
         keysListView.setAdapter(listAdapter);
