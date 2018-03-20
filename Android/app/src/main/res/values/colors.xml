@@ -19,6 +19,7 @@
     <color name="homeScreenTextGray">#5E5E5E</color>
     <color name="dark_grey">#5E5E5E</color>
     <color name="border_grey">#C4C4C4</color>
+    <color name="light_grey_text">#C9C9C9</color>
 
     <!--For fingerprint dialog-->
     <color name="warning_color">#f4511e</color>

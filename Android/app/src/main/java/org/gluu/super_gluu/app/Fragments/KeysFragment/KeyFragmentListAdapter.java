@@ -131,7 +131,7 @@ public class KeyFragmentListAdapter extends BaseAdapter {
             contentView.setTypeface(faceTitle);
             createdDate.setTypeface(face);
         }
-        LinearLayout main_layout = (LinearLayout)view.findViewById(R.id.key_main_view);
+        RelativeLayout main_layout = view.findViewById(R.id.key_main_view);
         main_layout.setTag(position);
         main_layout.setOnClickListener(new View.OnClickListener() {
             @Override
