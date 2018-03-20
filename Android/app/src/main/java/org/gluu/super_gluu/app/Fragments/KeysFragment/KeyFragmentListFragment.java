@@ -5,20 +5,18 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.support.v7.widget.Toolbar;
 
 import com.google.gson.Gson;
 
 import org.gluu.super_gluu.app.base.ToolbarFragment;
 import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
-
-import SuperGluu.app.R;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
 import org.gluu.super_gluu.u2f.v2.model.TokenEntry;
 
@@ -29,6 +27,14 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+
+import org.gluu.super_gluu.app.fragments.KeysFragment.KeyFragmentListAdapter;
+import org.gluu.super_gluu.app.fragments.KeysFragment.KeyHandleInfoFragment;
+import org.gluu.super_gluu.util.FakeDataUtil;
+
+import SuperGluu.app.R;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by nazaryavornytskyy on 3/1/16.
@@ -42,6 +48,15 @@ public class KeyFragmentListFragment extends ToolbarFragment {
     private List<TokenEntry> listToken;
     private RelativeLayout keyMainView;
 
+    @BindView(R.id.nav_drawer_toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.keys_list_view)
+    ListView keysListView;
+
+    @BindView(R.id.empty_keys_text_view)
+    TextView emptyKeysTextView;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,14 +64,16 @@ public class KeyFragmentListFragment extends ToolbarFragment {
 
         View rootView = inflater.inflate(R.layout.fragment_key_list, container, false);
 
-        Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.nav_drawer_toolbar);
+        ButterKnife.bind(this, rootView);
+
         setDefaultToolbar(toolbar, getString(R.string.keys), true);
         setHasOptionsMenu(true);
 
         listToken = getListToken(rootView);
-        keyMainView = (RelativeLayout) rootView.findViewById(R.id.keyMainView);
-        keyMainView.setVisibility(listToken.size() > 0 ? View.VISIBLE : View.GONE);
-        ListView lv = (ListView) rootView.findViewById(R.id.keyHandleListView);
+        
+        keysListView.setVisibility(listToken.size() > 0 ? View.VISIBLE : View.GONE);
+        emptyKeysTextView.setVisibility(listToken.size() <= 0 ? View.VISIBLE: View.GONE);
+
         mListener = new KeyHandleInfo() {
             @Override
             public void onKeyHandleInfo(KeyHandleInfoFragment infoFragment) {
@@ -84,20 +101,12 @@ public class KeyFragmentListFragment extends ToolbarFragment {
                 gluuAlert.show();
             }
         };
-        listAdapter = new KeyFragmentListAdapter(getActivity(), listToken, mListener);
-        lv.setAdapter(listAdapter);
-        lv.setEmptyView(rootView.findViewById(R.id.empty_keyList));
 
-        TextView availableKeys = (TextView) rootView.findViewById(R.id.availableKeys_textView);
-        TextView keys_textView = (TextView) rootView.findViewById(R.id.keys_textView);
-//        TextView rename_textView = (TextView) rootView.findViewById(R.id.rename_textView);
-        Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Semibold.otf");
-        Typeface faceLight = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Regular.otf");
-        availableKeys.setTypeface(face);
-        keys_textView.setTypeface(faceLight);
-//        rename_textView.setTypeface(faceLight);
-//        availableKeys.setText(rootView.getContext().getString(R.string.available_keys, String.valueOf(listAdapter.getCount())));
-//        renameText = (TextView) rootView.findViewById(R.id.rename_textView);
+        ViewGroup header = (ViewGroup) inflater.inflate(R.layout.key_list_header, keysListView,false);
+        keysListView.addHeaderView(header);
+
+        listAdapter = new KeyFragmentListAdapter(getActivity(), listToken, mListener);
+        keysListView.setAdapter(listAdapter);
 
         return rootView;
     }
