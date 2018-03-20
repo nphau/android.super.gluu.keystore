@@ -176,4 +176,14 @@ public class Fingerprint {
             throw new RuntimeException("Failed to init Cipher", e);
         }
     }
+
+    public boolean checkIfFingerprintEnabled() {
+        if (Build.VERSION.SDK_INT <= 22) {
+            return false;
+        }
+
+        fingerprintManager = (FingerprintManager) context.getSystemService(Context.FINGERPRINT_SERVICE);
+
+        return fingerprintManager != null && fingerprintManager.isHardwareDetected();
+    }
 }

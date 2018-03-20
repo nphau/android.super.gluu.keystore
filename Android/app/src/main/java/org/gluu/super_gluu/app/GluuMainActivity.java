@@ -687,10 +687,10 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                 updateUIAfterNavItemSelected(new SettingsPinCode());
                 break;
             case R.id.nav_touch_id:
-                updateUIAfterNavItemSelected(createSettingsFragment(SettingsFragment.Constant.FINGERPRINT_TYPE));
+                updateUIAfterNavItemSelected(SettingsFragment.newInstance(SettingsFragment.Constant.FINGERPRINT_TYPE));
                 break;
             case R.id.nav_ssl:
-                updateUIAfterNavItemSelected(createSettingsFragment(SettingsFragment.Constant.SSL_CONNECTION_TYPE));
+                updateUIAfterNavItemSelected(SettingsFragment.newInstance(SettingsFragment.Constant.SSL_CONNECTION_TYPE));
                 break;
             case R.id.nav_user_guide:
                 updateUIAfterNavItemSelected(null);
@@ -723,13 +723,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         drawer.closeDrawers();
     }
 
-    Fragment createSettingsFragment(String settingsId){
-        Fragment settingsFragment = new SettingsFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString(SettingsFragment.Constant.SETTINGS_ID, settingsId);
-        settingsFragment.setArguments(bundle);
-        return settingsFragment;
-    }
     //endregion
 
 }
