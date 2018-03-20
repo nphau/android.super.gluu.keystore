@@ -83,7 +83,8 @@
 
     <string name="set_new_pin_code">Set pin code</string>
     <string name="enter_pin_code">Enter Pin code</string>
-    <string name="reset_pin_code">Change Pin code</string>
+    <string name="reset_pin_code">Set Pin code</string>
+    <string name="change_pin_code">Change Pin code</string>
     <string name="tur_on_pin_code">Turn on</string>
     <string name="tur_off_pin_code">Turn off</string>
     <string name="close">Close</string>
@@ -114,7 +115,7 @@
 
     <string name="app_locked">Application is locked, please wait...</string>
     <string name="number_attempts">Number of attempts:</string>
-    <string name="text_attempts">Super Gluu will be locked for 10 minutes after this many failed attempts</string>
+    <string name="text_attempts">Super Gluu will be locked for 10 minutes after 5 failed attempts.</string>
 
     <string name="rename_key_name">Do you want to change key name?</string>
     <string name="new_key_name_title">Change key name</string>
