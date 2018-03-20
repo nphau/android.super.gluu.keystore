@@ -86,40 +86,40 @@ public class SettingsFragment extends ToolbarFragment {
 
         final String settingsId = this.getArguments().getString(Constant.SETTINGS_ID);
 
-        if(settingsId != null) {
-            switch (settingsId) {
-                case Constant.SSL_CONNECTION_TYPE:
-                    setupHomeAsUpEnabledToolbar(toolbar, getString(R.string.trust_all_ssl));
-                    titleTextView.setText(getString(R.string.trust_all_certificate));
-                    subtitleTextView.setText(R.string.warning_trust_all_certificate);
-                    settingsIconImageView.setImageDrawable(getResources().getDrawable(R.drawable.icon_trust_all));
-                    break;
-                case Constant.FINGERPRINT_TYPE:
-                    setupHomeAsUpEnabledToolbar(toolbar, getString(R.string.fingerprint_title));
-                    titleTextView.setText(getString(R.string.fingerprint_title));
+        if(settingsId == null) {
+            throw new RuntimeException("Must send a settings type to create generic settings fragment");
+        }
 
-                    if(fingerprint.checkIfFingerprintEnabled()) {
-                        subtitleTextView.setText(getString(R.string.pin_code_text));
-                    } else {
-                        subtitleTextView.setText(getString(R.string.fingerprint_off_device));
-                    }
-                    settingsIconImageView.setImageDrawable(getResources().getDrawable(R.drawable.icon_touch_id));
-                    break;
-            }
-        } else {
-            setupHomeAsUpEnabledToolbar(toolbar, getString(R.string.settings_title));
+        switch (settingsId) {
+            case Constant.SSL_CONNECTION_TYPE:
+                setupHomeAsUpEnabledToolbar(toolbar, getString(R.string.trust_all_ssl_no_parentheses));
+                titleTextView.setText(getString(R.string.trust_all_certificate));
+                subtitleTextView.setText(R.string.warning_trust_all_certificate);
+                settingsIconImageView.setImageDrawable(getResources().getDrawable(R.drawable.icon_trust_all));
+                break;
+            case Constant.FINGERPRINT_TYPE:
+                setupHomeAsUpEnabledToolbar(toolbar, getString(R.string.fingerprint_title));
+                titleTextView.setText(getString(R.string.fingerprint_title));
+                settingsIconImageView.setImageDrawable(getResources().getDrawable(R.drawable.icon_touch_id));
+
+                if(fingerprint.checkIfFingerprintEnabled()) {
+                    subtitleTextView.setText(getString(R.string.pin_code_text));
+                } else {
+                    subtitleTextView.setText(getString(R.string.fingerprint_off_device));
+                }
+
+                if(fingerprint.checkIfFingerprintEnabled()) {
+                    subtitleTextView.setText(getString(R.string.pin_code_text));
+                } else {
+                    subtitleTextView.setText(getString(R.string.fingerprint_off_device));
+                    showToastWithText(getString(R.string.fingerprint_off_device));
+                    switchSettings.setEnabled(false);
+                    switchSettings.setClickable(false);
+                }
+                break;
+
         }
         setHasOptionsMenu(true);
-
-        if(settingsId.equals(Constant.FINGERPRINT_TYPE)) {
-            if(!fingerprint.checkIfFingerprintEnabled()) {
-
-                showToastWithText(getString(R.string.fingerprint_off_device));
-
-                switchSettings.setEnabled(false);
-                switchSettings.setClickable(false);
-            }
-        }
 
         switchSettings.setChecked(Settings.getSettingsValueEnabled(context, settingsId));
 
