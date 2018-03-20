@@ -136,8 +136,6 @@ extension SecurityPromptViewController: PAPasscodeViewControllerDelegate {
         
         GluuUserDefaults.setUserPin(newPin: controller.passcode)
         
-//        navigationController?.popToRootViewController(animated: true)
-        
         self.dismissVC()
         
     }

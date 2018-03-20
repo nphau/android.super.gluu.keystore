@@ -96,12 +96,10 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-//    [self registerForPushNotifications];
-    
     // make sure the push notification ask happens after the security prompt
     if ([GluuUserDefaults hasSeenNotificationPrompt] == false && [GluuUserDefaults hasSeenSecurityPrompt] == true) {
         
-        [self registerForPushNotifications];
+//        [self registerForPushNotifications];
         [GluuUserDefaults setNotificationPrompt];
     } else {
         [self initQRScanner];
@@ -134,50 +132,6 @@
 #endif
     bannerView = [[SuperGluuBannerView alloc] init];
     [bannerView createAndLoadInterstitial];
-}
-
-#pragma Ad Handling:
-
--(void)initADView:(NSNotification*)notification{
-    smallBannerView = [[SuperGluuBannerView alloc] initWithAdSize:kGADAdSizeBanner andRootViewController:self];
-    smallBannerView.alpha = 1.0;
-}
-
--(void)hideADView:(NSNotification*)notification{
-    if (smallBannerView != nil){
-        [smallBannerView closeAD];
-    }
-}
-
--(void)reloadInterstial:(NSNotification*)notification{
-    if (bannerView == nil){
-        bannerView = [[SuperGluuBannerView alloc] init];
-    }
-    [bannerView createAndLoadInterstitial];
-}
-
--(void)initFullPageBanner:(NSNotification*)notification{
-
-    [bannerView showInterstitial:self];
-}
-
--(void)reloadFullPageBanner:(NSNotification*)notification{
-    [bannerView createAndLoadInterstitial];
-}
-
--(void)closeAD{
-    [bannerView closeAD];
-}
-
-
-- (void)registerForPushNotifications {
-        //For Push Notifications
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] > 7) { //for ios 8 and higth
-        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
-        [[UIApplication sharedApplication] registerForRemoteNotifications];
-        [self registerForNotification];
-        
-    }
 }
 
 - (void)goToSettings {
@@ -269,43 +223,7 @@
     
 }
 
-- (void)registerForNotification {
-
-    UIMutableUserNotificationAction *action1;
-    action1 = [[UIMutableUserNotificationAction alloc] init];
-    [action1 setActivationMode:UIUserNotificationActivationModeForeground];
-    [action1 setTitle:NSLocalizedString(@"Approve", @"Approve")];
-    [action1 setIdentifier:NotificationActionOneIdent];
-    [action1 setDestructive:NO];
-    [action1 setAuthenticationRequired:NO];
-    
-    UIMutableUserNotificationAction *action2;
-    action2 = [[UIMutableUserNotificationAction alloc] init];
-    [action2 setActivationMode:UIUserNotificationActivationModeForeground];
-    [action2 setTitle:NSLocalizedString(@"Deny", @"Deny")];
-    [action2 setIdentifier:NotificationActionTwoIdent];
-    [action2 setDestructive:YES];
-    [action2 setAuthenticationRequired:NO];
-    
-    UIMutableUserNotificationCategory *actionCategory;
-    actionCategory = [[UIMutableUserNotificationCategory alloc] init];
-    [actionCategory setIdentifier:NotificationCategoryIdent];
-    [actionCategory setActions:@[action1, action2]
-                    forContext:UIUserNotificationActionContextDefault];
-    
-    NSSet *categories = [NSSet setWithObject:actionCategory];
-    UIUserNotificationType types = (UIUserNotificationTypeAlert|
-                                    UIUserNotificationTypeSound|
-                                    UIUserNotificationTypeBadge);
-    
-    UIUserNotificationSettings *settings;
-    settings = [UIUserNotificationSettings settingsForTypes:types
-                                                 categories:categories];
-    
-    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-}
-
--(void)initWiget{
+- (void)initWiget{
     if (IS_IPHONE_6){
         scanTextLabel.font = [UIFont systemFontOfSize:17];
     }
@@ -460,27 +378,29 @@
         NSDictionary* pushRequest = (NSDictionary*)notification.object;
         [self sendQRCodeRequest:pushRequest];
         
-    } else if ([notiName isEqual:NOTIFICATION_PUSH_RECEIVED_APPROVE])
-        {}
-    /*{
+    } else if ([notiName isEqual:NOTIFICATION_PUSH_RECEIVED_APPROVE]) {
+        // clear out the notification from user defaults. That way
+        // the check in viewWillAppear doesn't get called
         
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:NotificationRequest];
         NSDictionary* pushRequest = (NSDictionary*)notification.object;
         [AuthHelper sharedInstance].requestDictionary = pushRequest;
-//            scanJsonDictionary = pushRequest;
         [self initUserInfo:pushRequest];
         [self approveRequest];
         return;
-    }
-    
-    if ([notiName isEqual:NOTIFICATION_PUSH_RECEIVED_DENY]){
+        
+    } else if ([notiName isEqual:NOTIFICATION_PUSH_RECEIVED_DENY]) {
+        // clear out the notification from user defaults. That way
+        // the check in viewWillAppear doesn't get called
+        
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:NotificationRequest];
         NSDictionary* pushRequest = (NSDictionary*)notification.object;
         [AuthHelper sharedInstance].requestDictionary = pushRequest;
-//        scanJsonDictionary = pushRequest;
         [self initUserInfo:pushRequest];
         [self denyRequest];
         return;
     }
-    */
+    
      
     if ([notiName isEqual:NOTIFICATION_DECLINE_SUCCESS]){
         message = NSLocalizedString(@"DenySuccess", @"Deny Success");
@@ -508,37 +428,19 @@
 
 #pragma LicenseAgreementDelegates
 
-- (void)approveRequest:(void (^)(BOOL, NSString *))handler {
-    
-}
 
 - (void)approveRequest {
-//    NSString* message = NSLocalizedString(@"StartAuthentication", @"Authentication...");
-//    [self updateStatus:message];
-    
-//    [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
     
     [[AuthHelper sharedInstance] approveRequestWithCompletion:^(BOOL success, NSString *errorMessage) {
-        if (success == false) {
-//            [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:errorMessage];
-        }
     }];
     
-//    [self onApprove];
 }
 
 -(void)denyRequest{
     
     [[AuthHelper sharedInstance] denyRequestWithCompletion:^(BOOL success, NSString * errorMessage) {
-        if (success == false) {
-//            [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:errorMessage];
-        }
     }];
-    
-//    NSString* message = @"Request canceled";
-//    [self updateStatus:message];
-//    [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
-//    [self onDecline];
+
 }
 
 -(void)openRequest{
@@ -566,24 +468,17 @@
                                                   showSwitchCameraButton:NO
                                                          showTorchButton:NO];
     
-    
-    // Set the presentation style
-//    qrScanerVC.modalPresentationStyle = UIModalPresentationFullScreen;
-    
-    
-    
     // Define the delegate receiver
     qrScanerVC.delegate = self;
-    
-//    isResultFromScan = NO;
+
 }
 
 -(void)sendQRCodeRequest:(NSDictionary*)jsonDictionary{
+
     if (jsonDictionary != nil){
+    
         [AuthHelper sharedInstance].requestDictionary = jsonDictionary;
-//        scanJsonDictionary = jsonDictionary;
         [self initUserInfo:jsonDictionary];
-        
         [self provideScanRequest];
         
     } else {
@@ -593,9 +488,10 @@
 }
 
 - (void)provideScanRequest {
+    
     isUserInfo = NO;
+
     [self loadApproveDenyView];
-//    [self performSegueWithIdentifier:@"InfoView" sender:nil];
 }
 
 - (void)loadApproveDenyView {
@@ -621,8 +517,6 @@
     approveDenyView.isLogInfo = false;
     
     [self.navigationController pushViewController:approveDenyView animated:true];
-    
-//    [self presentViewController:approveDenyView animated:YES completion:nil];
     
 }
 
@@ -743,56 +637,11 @@
 #pragma mark - Approve Deny View Delegate
 
 - (void)onApprove {
-    
-//    NSString* message = [NSString stringWithFormat:@"%@", NSLocalizedString(@"StartAuthentication", @"Authentication...")];
-//    [self updateStatus:message];
-    
-//    [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
-//
-//    [self.navigationController popToRootViewControllerAnimated:YES];
-    
-    // eric
-    // currently not receiving a call back here.
-    // Put this in Approve/Deny VC
 
-    /*
-    [[AuthHelper sharedInstance] approveRequestWithCompletion:^(BOOL success, NSString *errorMessage) {
-        if (success == false) {
-            [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:errorMessage];
-        }
-    }];
-     */
-    
-//    [oxPushManager onOxPushApproveRequest:scanJsonDictionary
-//                                isDecline:NO
-//                                 callback:^(NSDictionary *result, NSError *error) {
-//                                     if (error){
-//                                         [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:error.localizedDescription];
-//                                     }
-//                                 }];
-    
-    // Eric
-//    [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:NO isSecureClick:isSecureClick callback:^(NSDictionary *result,NSError *error){
-//        if (error){
-//            [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitle", @"Info") andMessage:error.localizedDescription];
-//        }
-//    }];
 }
 
 - (void)onDecline {
-    
-//    NSString* message = @"Decline starting";
-//    [self updateStatus:message];
-//
-//
-//    [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
-//    [oxPushManager onOxPushApproveRequest:scanJsonDictionary
-//                                isDecline:YES
-//                                 callback:^(NSDictionary *result, NSError *error) {}];
-    
-    // Eric
-//    [oxPushManager onOxPushApproveRequest:scanJsonDictionary isDecline:YES isSecureClick:isSecureClick callback:^(NSDictionary *result,NSError *error){
-//    }];
+
 }
 
 -(void)showAlertViewWithTitle:(NSString*)title andMessage:(NSString*)message{
@@ -800,50 +649,59 @@
     
     [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:title subTitle:message closeButtonTitle:@"Close" duration:3.0f];
 }
+    
+#pragma mark - Ad Handling:
+    
+-(void)initADView:(NSNotification*)notification{
+    smallBannerView = [[SuperGluuBannerView alloc] initWithAdSize:kGADAdSizeBanner andRootViewController:self];
+    smallBannerView.alpha = 1.0;
+}
+    
+-(void)hideADView:(NSNotification*)notification{
+    if (smallBannerView != nil){
+        [smallBannerView closeAD];
+    }
+}
+    
+-(void)reloadInterstial:(NSNotification*)notification{
+    if (bannerView == nil){
+        bannerView = [[SuperGluuBannerView alloc] init];
+    }
+    [bannerView createAndLoadInterstitial];
+}
+    
+-(void)initFullPageBanner:(NSNotification*)notification{
+    
+    [bannerView showInterstitial:self];
+}
+    
+-(void)reloadFullPageBanner:(NSNotification*)notification{
+    [bannerView createAndLoadInterstitial];
+}
+    
+-(void)closeAD{
+    [bannerView closeAD];
+}
+
 
 #pragma mark - QRCodeReader Delegate Methods
 
 - (void)reader:(QRCodeReaderViewController *)reader didScanResult:(NSString *)result
 {
-    
-//    [self.navigationController popViewControllerAnimated:true];
-    
-    if(result){// && !isResultFromScan){
-//        [qrScanerVC dismissViewControllerAnimated:YES completion:nil];
-            //            isResultFromScan = YES;
-        
-        NSLog(@"%@", result);
+    if (result) {
         NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
         [self sendQRCodeRequest:jsonDictionary];
     }
-   
-    /*
-    [self dismissViewControllerAnimated:YES completion:^{
-        if(result){// && !isResultFromScan){
-            [qrScanerVC dismissViewControllerAnimated:YES completion:nil];
-//            isResultFromScan = YES;
-            NSLog(@"%@", result);
-            NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
-            NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            [self sendQRCodeRequest:jsonDictionary];
-        }
-    }];
-     */
+
 }
 
 - (void)readerDidCancel:(QRCodeReaderViewController *)reader
 {
-    /*
-    [self dismissViewControllerAnimated:YES completion:NULL];
-//    if (!isResultFromScan){
-        [self updateStatus:NSLocalizedString(@"QRCodeCalceled", @"QR Code Calceled")];
-        [self performSelector:@selector(hideStatusBar) withObject:nil afterDelay:5.0];
-//    }
-     */
+    // We don't use it
 }
 
--(void)updateStatus:(NSString*)status {
+- (void)updateStatus:(NSString*)status {
     if (status != nil){
         statusLabel.text = status;
     }
@@ -966,50 +824,6 @@
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
-
-/*
--(void)showTouchIDErrorMessage{
-    alert = [UIAlertController
-             alertControllerWithTitle:@"TouchID Failed"
-             message:@"Wrong fingerprint, if biometric locked go to TouchID&Passcode settings and reactive it"
-             preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction* okButton = [UIAlertAction
-                               actionWithTitle:@"Ok"
-                               style:UIAlertActionStyleDefault
-                               handler:^(UIAlertAction * action) {
-                                   //Handle no, thanks button
-                                   [alert dismissViewControllerAnimated:YES completion:nil];
-//                                   [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-                               }];
-    
-    [alert addAction:okButton];
-    
-    [self presentViewController:alert animated:YES completion:nil];
-}
-
--(void)showTouchIDResultError:(NSError*) authError{
-    NSString* message  = [NSString stringWithFormat:@"%@ Please add fingerprint in TouchID&Passcode settings", [authError.userInfo valueForKey:@"NSLocalizedDescription"]];
-    alert = [UIAlertController
-             alertControllerWithTitle:@"TouchID Failed"
-             message:message
-             preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction* okButton = [UIAlertAction
-                               actionWithTitle:@"Ok, thanks"
-                               style:UIAlertActionStyleDefault
-                               handler:^(UIAlertAction * action) {
-                                   //Handle no, thanks button
-                                   [alert dismissViewControllerAnimated:YES completion:nil];
-//                                   [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-                               }];
-    
-    [alert addAction:okButton];
-    
-    [self presentViewController:alert animated:YES completion:nil];
-}
- */
 
 
 @end

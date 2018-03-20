@@ -30,6 +30,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    [self registerForPushNotifications];
     
     // eric
     /*
@@ -68,6 +69,17 @@
 }
 
 #pragma Push Notification
+
+- (void)registerForPushNotifications {
+        //For Push Notifications
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] > 7) { //for ios 8 and higth
+        
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+        [self registerForNotification];
+        
+    }
+}
 
 - (void)registerForNotification {
     
