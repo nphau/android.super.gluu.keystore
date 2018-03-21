@@ -184,7 +184,7 @@
     <string name="you_have_5_attempts_left">5 attempts left</string>
     <string name="enter_current_passcode">Enter your current passcode</string>
     <string name="enter_new_passcode">Enter new passcode</string>
-    <string name="fingerprint_off_device">Fingerprint is turned off for this device</string>
+    <string name="fingerprint_off_device">Fingerprint is unavailable or turned off for this device.</string>
 
     <string name="trust_all_ssl_no_parentheses">Trust All SSL</string>
 
