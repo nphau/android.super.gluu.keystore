@@ -102,6 +102,7 @@ public class LicenseFragment extends ToolbarFragment {
         return view;
     }
 
+    //Unused but keeping this in case we need to load HTML directly form project again
     private String readLicenseTxt(){
 
         InputStream inputStream = getResources().openRawResource(R.raw.license_eula);
