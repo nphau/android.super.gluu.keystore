@@ -17,7 +17,7 @@
             layout="@layout/toolbar_nav_drawer" />
 
         <LinearLayout
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="18dp"
             android:layout_below="@+id/nav_drawer_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
