@@ -161,8 +161,6 @@
     <string name="description_bugdroid_icon">Android bugdroid image</string>
     <string name="description_fingerprint_icon">Fingerprint icon</string>
 
-
-    <!-- Strings for the navigation drawer -->
     <string name="history">History</string>
     <string name="logs">Logs</string>
     <string name="keys">Keys</string>
@@ -196,7 +194,5 @@
     <string name="key_details">Key Details</string>
     <string name="add_secure_entry">Add Secure Entry</string>
     <string name="skip">Skip</string>
-    <string name="fingerprint_setup_failed">Fingerprint setup failed. Please try again later.</string>
-
 
 </resources>
