@@ -10,6 +10,7 @@
 
     <!-- This LinearLayout represents the contents of the screen  -->
     <RelativeLayout
+        android:background="@color/default_screen_gray"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
