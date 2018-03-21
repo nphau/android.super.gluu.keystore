@@ -36,8 +36,6 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
     private static final String DENY_ACTION = "DENY_ACTION";
     private static final String APPROVE_ACTION = "APPROVE_ACTION";
 
-    Fingerprint fingerprint;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +54,6 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
             userChossed("deny", intent);
             return;
         }
-
-        fingerprint = new Fingerprint(MainActivity.this);
 
         Boolean isFingerprint = Settings.getFingerprintEnabled(getApplicationContext());
         if (isFingerprint){
@@ -277,14 +273,11 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
 
     @Override
     public void onFingerprintSelected() {
-        if(fingerprint != null) {
+        Fingerprint fingerprint = new Fingerprint(MainActivity.this);
             //Fingerprint Service should handle checking if fingerprint is available and messaging the user if it failed
-            if(fingerprint.startFingerprintService()) {
-                Settings.setFingerprintEnabled(MainActivity.this, true);
-                loadGluuMainActivity();
-            }
-        } else {
-            showToast(getString(R.string.fingerprint_setup_failed));
+        if(fingerprint.startFingerprintService()) {
+            Settings.setFingerprintEnabled(MainActivity.this, true);
+            loadGluuMainActivity();
         }
     }
 

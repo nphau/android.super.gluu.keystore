@@ -72,7 +72,7 @@ public class SecureEntryFragment extends ToolbarFragment {
 
         pinCodeRelativeLayout.setOnClickListener(view -> secureEntryListener.onPinCodeSelected());
 
-        Fingerprint fingerprint = new Fingerprint(getContext());
+        Fingerprint fingerprint = new Fingerprint(getContext(), false);
 
         if(!fingerprint.checkIfFingerprintEnabled()) {
             fingerprintRelativeLayout.setVisibility(View.GONE);

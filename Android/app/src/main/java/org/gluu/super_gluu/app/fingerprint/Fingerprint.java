@@ -40,7 +40,7 @@ public class Fingerprint {
     private FingerprintManager fingerprintManager;
     private FingerprintHandler helper;
 
-    public Fingerprint(Context context) {
+    public Fingerprint(Context context, boolean showErrorMessage) {
         this.context = context;
 
         // Initializing both Android Keyguard Manager and Fingerprint Manager
@@ -70,9 +70,15 @@ public class Fingerprint {
                  * Intent intent = new Intent(this, DefaultAuthenticationActivity.class);
                  * startActivity(intent);
                  */
-                helper.showToast("Your Device does not have a Fingerprint Sensor");
+                if(showErrorMessage) {
+                    helper.showToast("Your Device does not have a Fingerprint Sensor");
+                }
             }
         }
+    }
+
+    public Fingerprint(Context context) {
+        this(context, true);
     }
 
     public Boolean startFingerprintService() {
