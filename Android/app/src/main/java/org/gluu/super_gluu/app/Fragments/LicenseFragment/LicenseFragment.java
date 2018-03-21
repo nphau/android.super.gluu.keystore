@@ -7,11 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
-
-import org.gluu.super_gluu.app.listener.OnMainActivityListener;
+import android.widget.ProgressBar;
 
 import org.gluu.super_gluu.app.base.ToolbarFragment;
+import org.gluu.super_gluu.app.listener.OnMainActivityListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -33,6 +34,9 @@ public class LicenseFragment extends ToolbarFragment {
 
     @BindView(R.id.license_webView)
     WebView licenseWebView;
+
+    @BindView(R.id.license_progress_bar)
+    ProgressBar progressBar;
 
     @BindView(R.id.accept_button)
     Button acceptButton;
@@ -70,8 +74,6 @@ public class LicenseFragment extends ToolbarFragment {
 
         isFirstTimeLoading = getArguments().getBoolean(Constant.IS_FIRST_TIME_LOADING, false);
 
-        licenseWebView.loadDataWithBaseURL(null, readLicenseTxt(), "text/html", "UTF-8", null);
-
         acceptButton.setOnClickListener(v -> mainActivityListener.onLicenseAgreement());
 
         if (isFirstTimeLoading){
@@ -82,7 +84,20 @@ public class LicenseFragment extends ToolbarFragment {
             setDefaultToolbar(toolbar, getString(R.string.privacy_policy), true);
         }
 
-        licenseWebView.loadDataWithBaseURL(null, readLicenseTxt(), "text/html", "UTF-8", null);
+        licenseWebView.setWebViewClient(new WebViewClient() {
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return false;
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+
+        licenseWebView.loadUrl(Constant.PRIVACY_POLICY_URL);
 
         return view;
     }
@@ -111,5 +126,7 @@ public class LicenseFragment extends ToolbarFragment {
 
     public class Constant {
         private static final String IS_FIRST_TIME_LOADING = "is_first_time_loading";
+
+        private static final String PRIVACY_POLICY_URL = "https://docs.google.com/document/d/1E1xWq28_f-tam7PihkTZXhlqaXVGZxJbVt4cfx15kB4";
     }
 }
