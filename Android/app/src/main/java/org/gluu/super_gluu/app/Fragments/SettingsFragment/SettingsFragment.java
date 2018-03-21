@@ -113,7 +113,7 @@ public class SettingsFragment extends ToolbarFragment {
                     subtitleTextView.setText(getString(R.string.pin_code_text));
                 } else {
                     subtitleTextView.setText(getString(R.string.fingerprint_off_device));
-                    showToastWithText(getString(R.string.fingerprint_off_device));
+                    showToast(getString(R.string.fingerprint_off_device));
                     switchSettings.setEnabled(false);
                     switchSettings.setClickable(false);
                 }
@@ -158,14 +158,6 @@ public class SettingsFragment extends ToolbarFragment {
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mMessageReceiver);
     }
 
-    private void showToastWithText(String text){
-        GluuToast gluuToast = new GluuToast(context);
-        LayoutInflater layoutInflater = getLayoutInflater();
-        if(layoutInflater != null) {
-            View view = layoutInflater.inflate(R.layout.gluu_toast, null);
-            gluuToast.showGluuToastWithText(view, text);
-        }
-    }
 
     private void showWarning(int statusId) {
         String message = context.getString(statusId);

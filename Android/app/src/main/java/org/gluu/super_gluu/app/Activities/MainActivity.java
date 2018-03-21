@@ -7,8 +7,15 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Toast;
+
+import  org.gluu.super_gluu.app.gluuToast.GluuToast;
 
 import org.gluu.super_gluu.app.GluuMainActivity;
+import org.gluu.super_gluu.app.SecureEntryFragment;
+import org.gluu.super_gluu.app.fingerprint.Fingerprint;
 import org.gluu.super_gluu.app.fragments.KeysFragment.KeyHandleInfoFragment;
 import org.gluu.super_gluu.app.fragments.LicenseFragment.LicenseFragment;
 import org.gluu.super_gluu.app.fragments.LockFragment.LockFragment;
@@ -23,12 +30,13 @@ import SuperGluu.app.R;
 /**
  * Created by nazaryavornytskyy on 3/22/16.
  */
-public class MainActivity extends AppCompatActivity implements OnMainActivityListener, PinCodeFragment.PinCodeViewListener {
+public class MainActivity extends AppCompatActivity implements OnMainActivityListener, PinCodeFragment.PinCodeViewListener, SecureEntryFragment.SecureEntryListener {
 
     public static final String TIME_SERVER = "time-a.nist.gov";
     private static final String DENY_ACTION = "DENY_ACTION";
     private static final String APPROVE_ACTION = "APPROVE_ACTION";
 
+    Fingerprint fingerprint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +56,13 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
             userChossed("deny", intent);
             return;
         }
+
+        fingerprint = new Fingerprint(MainActivity.this);
+
         Boolean isFingerprint = Settings.getFingerprintEnabled(getApplicationContext());
         if (isFingerprint){
             FingerPrintManager fingerPrintManager = new FingerPrintManager(this);
-            fingerPrintManager.onFingerPrint(new FingerPrintManager.FingerPrintManagerCallback() {
-                @Override
-                public void fingerprintResult(Boolean isSuccess) {
-                    loadGluuMainActivity();
-                }
-            });
+            fingerPrintManager.onFingerPrint(isSuccess -> loadGluuMainActivity());
         } else {
             if (isAppLocked) {
                 loadLockedFragment(true);
@@ -94,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
     @Override
     public void onLicenseAgreement() {
         Settings.saveAccept(getApplicationContext());
-        checkPinCodeEnabled();
+        advanceToNextScreen();
     }
 
     @Override
@@ -145,6 +151,25 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
         }
     }
 
+    public void advanceToNextScreen() {
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences(Settings.PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
+        Boolean isDestroyed = preferences.getBoolean("isMainActivityDestroyed", false);
+        if (isDestroyed) {
+            loadGluuMainActivity();
+        } else {
+            if (Settings.getFirstLoad(getApplicationContext())) {
+                Settings.saveFirstLoad(getApplicationContext());
+                loadSecureEntryFragment();
+            } else {
+                if (Settings.getPinCodeEnabled(getApplicationContext())) {
+                    loadPinCodeFragment();
+                } else {
+                    loadGluuMainActivity();
+                }
+            }
+        }
+    }
+
     public void loadGluuMainActivity() {
         SharedPreferences preferences = getApplicationContext().getSharedPreferences(Settings.PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
@@ -165,6 +190,15 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
         fragmentTransaction.commit();
 
         setTitle(getString(R.string.pin_code));
+    }
+
+    public void loadSecureEntryFragment() {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        SecureEntryFragment secureEntryFragment = new SecureEntryFragment();
+
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        fragmentTransaction.replace(R.id.fragment_container, secureEntryFragment);
+        fragmentTransaction.commit();
     }
 
     public void saveUserDecision(String userChoose, String oxRequest) {
@@ -234,6 +268,30 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
     protected void onResume() {
         GluuApplication.applicationResumed();
         super.onResume();
+    }
+
+    @Override
+    public void onPinCodeSelected() {
+        loadPinCodeFragment();
+    }
+
+    @Override
+    public void onFingerprintSelected() {
+        if(fingerprint != null) {
+            if(fingerprint.startFingerprintService()) {
+                Settings.setFingerprintEnabled(MainActivity.this, true);
+                loadGluuMainActivity();
+            }
+        } else {
+            GluuToast gluuToast = new GluuToast(MainActivity.this);
+            View view = getLayoutInflater().inflate(R.layout.gluu_toast, null);
+            gluuToast.showGluuToastWithText(view, "Fingerprint setup failed. Please try again.");
+        }
+    }
+
+    @Override
+    public void onSkipSelected() {
+        loadGluuMainActivity();
     }
 
     public interface OnLockAppTimerOver {

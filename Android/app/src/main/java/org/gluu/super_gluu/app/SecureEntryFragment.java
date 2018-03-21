@@ -3,6 +3,7 @@ package org.gluu.super_gluu.app;
 /**
  * Created by SamIAm on 3/21/18.
  */
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
@@ -36,6 +37,24 @@ public class SecureEntryFragment extends ToolbarFragment {
     @BindView(R.id.pin_code_relative_layout)
     RelativeLayout pinCodeRelativeLayout;
 
+    public interface SecureEntryListener {
+        void onPinCodeSelected();
+        void onFingerprintSelected();
+        void onSkipSelected();
+    }
+
+    private SecureEntryListener secureEntryListener;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof SecureEntryListener) {
+            secureEntryListener = (SecureEntryListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement SecureEntryListener");
+        }
+    }
 
     @Nullable
     @Override
@@ -49,13 +68,9 @@ public class SecureEntryFragment extends ToolbarFragment {
 
         setHasOptionsMenu(true);
 
-        fingerprintRelativeLayout.setOnClickListener(view -> {
+        fingerprintRelativeLayout.setOnClickListener(view -> secureEntryListener.onFingerprintSelected());
 
-        });
-
-        pinCodeRelativeLayout.setOnClickListener(view -> {
-
-        });
+        pinCodeRelativeLayout.setOnClickListener(view -> secureEntryListener.onPinCodeSelected());
 
         Fingerprint fingerprint = new Fingerprint(getContext());
 
@@ -76,6 +91,7 @@ public class SecureEntryFragment extends ToolbarFragment {
 
         switch (item.getItemId()) {
             case R.id.skip_action:
+                secureEntryListener.onSkipSelected();
                 return true;
         }
 
