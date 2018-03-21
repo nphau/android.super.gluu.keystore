@@ -196,6 +196,7 @@
     <string name="key_details">Key Details</string>
     <string name="add_secure_entry">Add Secure Entry</string>
     <string name="skip">Skip</string>
+    <string name="fingerprint_setup_failed">Fingerprint setup failed. Please try again later.</string>
 
 
 </resources>

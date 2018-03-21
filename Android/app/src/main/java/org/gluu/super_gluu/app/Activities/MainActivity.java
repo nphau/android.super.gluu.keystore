@@ -278,14 +278,13 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
     @Override
     public void onFingerprintSelected() {
         if(fingerprint != null) {
+            //Fingerprint Service should handle checking if fingerprint is available and messaging the user if it failed
             if(fingerprint.startFingerprintService()) {
                 Settings.setFingerprintEnabled(MainActivity.this, true);
                 loadGluuMainActivity();
             }
         } else {
-            GluuToast gluuToast = new GluuToast(MainActivity.this);
-            View view = getLayoutInflater().inflate(R.layout.gluu_toast, null);
-            gluuToast.showGluuToastWithText(view, "Fingerprint setup failed. Please try again.");
+            showToast(getString(R.string.fingerprint_setup_failed));
         }
     }
 
@@ -296,6 +295,12 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
 
     public interface OnLockAppTimerOver {
         void onTimerOver();
+    }
+
+    public void showToast(String text) {
+        GluuToast gluuToast = new GluuToast(MainActivity.this);
+        View view = getLayoutInflater().inflate(R.layout.gluu_toast, null);
+        gluuToast.showGluuToastWithText(view, text);
     }
 
 }
