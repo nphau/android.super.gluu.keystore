@@ -69,7 +69,7 @@ public class KeyFragmentListFragment extends ToolbarFragment {
         setHasOptionsMenu(true);
 
         listToken = getListToken(rootView);
-
+        
         setListAndEmptyVisibility(listToken.size() > 0);
 
         mListener = new KeyHandleInfo() {

@@ -186,9 +186,14 @@
     <string name="enter_new_passcode">Enter new passcode</string>
     <string name="fingerprint_off_device">Fingerprint is turned off for this device</string>
 
-
     <string name="trust_all_ssl_no_parentheses">Trust All SSL</string>
 
+    <string name="user_name_with_colon">Username:</string>
+    <string name="created_with_colon">Created:</string>
+    <string name="id_provider_with_colon">Id Provider:</string>
+    <string name="key_handle_with_colon">Key Handle:</string>
+    <string name="delete">Delete</string>
+    <string name="key_details">Key Details</string>
 
 
 </resources>
