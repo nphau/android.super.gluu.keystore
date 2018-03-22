@@ -175,7 +175,7 @@
             <View
                 android:background="@color/default_screen_gray"
                 android:layout_width="match_parent"
-                android:layout_height="24dp"/>
+                android:layout_height="18dp"/>
 
         </LinearLayout>
 
