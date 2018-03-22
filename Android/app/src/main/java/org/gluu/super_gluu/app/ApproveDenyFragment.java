@@ -3,6 +3,8 @@ package org.gluu.super_gluu.app;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -106,7 +108,7 @@ public class ApproveDenyFragment extends ToolbarFragment {
         final View rootView = inflater.inflate(R.layout.fragment_approve_deny, container, false);
 
         ButterKnife.bind(this, rootView);
-        handler = initHandler();
+        initHandler();
 
 
         //Setup fonts
@@ -318,9 +320,8 @@ public class ApproveDenyFragment extends ToolbarFragment {
             public void run() {
                 seconds--;
                 //send message to update UI
-                if (handler == null){
-                    handler = initHandler();
-                }
+                initHandler();
+
                 handler.sendEmptyMessage(0);
             }
         }, 0, 1000);//put here time 1000 milliseconds=1 second
@@ -345,23 +346,20 @@ public class ApproveDenyFragment extends ToolbarFragment {
         }
     }
 
-    private Handler initHandler(){
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                handler = new Handler(){
-                    public void handleMessage(android.os.Message msg){
-                        if (seconds == 0){
-                            stopClocking();
-                            closeView();
-                        }
-                        String secondsText = seconds < 10 ? "0" + seconds : String.valueOf(seconds);
-                        timerTextView.setText(secondsText);
+    private void initHandler(){
+        if(handler == null) {
+            handler = new Handler(Looper.getMainLooper()) {
+                @Override
+                public void handleMessage(Message msg) {
+                    if (seconds == 0){
+                        stopClocking();
+                        closeView();
                     }
-                };
-            }
-        });
-        return handler;
+                    String secondsText = seconds < 10 ? "0" + seconds : String.valueOf(seconds);
+                    timerTextView.setText(secondsText);
+                }
+            };
+        }
     }
 
     public OxPush2Request getPush2Request() {
