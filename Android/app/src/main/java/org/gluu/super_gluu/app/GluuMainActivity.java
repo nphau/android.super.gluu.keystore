@@ -299,7 +299,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         if (!validateOxPush2Request(oxPush2Request)) {
             return;
         }
-        toolbar.setVisibility(View.GONE);
 
         Settings.setPushDataEmpty(getApplicationContext());
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -314,13 +313,11 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             @Override
             public void onApprove() {
                 processManager.onOxPushRequest(false);
-                toolbar.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onDeny() {
                 processManager.onOxPushRequest(true);
-                toolbar.setVisibility(View.VISIBLE);
             }
         });
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

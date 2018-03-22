@@ -1,7 +1,6 @@
 package org.gluu.super_gluu.app;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.Toolbar;
@@ -335,9 +334,7 @@ public class ApproveDenyFragment extends ToolbarFragment {
     }
 
     private void closeView(){
-        setIsBackButtonVisible(false);
         if (isUserInfo) {
-            setIsButtonVisible(true);
             getActivity().invalidateOptionsMenu();
         }
         try {
@@ -346,20 +343,6 @@ public class ApproveDenyFragment extends ToolbarFragment {
         catch (RuntimeException ex){
             //ignore there
         }
-    }
-
-    public void setIsButtonVisible(Boolean isVsible){
-        SharedPreferences preferences = getContext().getSharedPreferences("CleanLogsSettings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isCleanButtonVisible", isVsible);
-        editor.commit();
-    }
-
-    public void setIsBackButtonVisible(Boolean isVsible){
-        SharedPreferences preferences = getContext().getSharedPreferences("CleanLogsSettings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isBackButtonVisible", isVsible);
-        editor.commit();
     }
 
     private Handler initHandler(){
