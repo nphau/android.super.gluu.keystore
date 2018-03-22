@@ -3,6 +3,8 @@ package org.gluu.super_gluu.util;
 import android.content.Intent;
 
 import org.gluu.super_gluu.app.GluuMainActivity;
+import org.gluu.super_gluu.app.LogState;
+import org.gluu.super_gluu.app.model.LogInfo;
 import org.gluu.super_gluu.model.OxPush2Request;
 import org.gluu.super_gluu.u2f.v2.model.TokenEntry;
 
@@ -66,5 +68,30 @@ public abstract class FakeDataUtil {
         tokenEntry.setCreatedDate("2018-03-07T16:16:47.626");
 
         return tokenEntry;
+    }
+
+    public static List<LogInfo> getFakeListOfLogs(int size) {
+        ArrayList<LogInfo> logInfo = new ArrayList<>();
+
+        for (int i = 0; i < size; i++) {
+            logInfo.add(getFakeLogInfo());
+        }
+
+        return logInfo;
+    }
+
+    private static LogInfo getFakeLogInfo() {
+        LogInfo logInfo = new LogInfo();
+
+        logInfo.setLocationAddress("United States, Texas, Houston");
+        logInfo.setLocationIP("38.142.29.4");
+        logInfo.setLogState(LogState.ENROL_SUCCESS);
+        logInfo.setMessage(null);
+        logInfo.setCreatedDate("1520958064534");
+        logInfo.setUserName("eric3");
+        logInfo.setIssuer("https://cred3.gluu.org");
+        logInfo.setMethod("enroll");
+
+        return logInfo;
     }
 }
