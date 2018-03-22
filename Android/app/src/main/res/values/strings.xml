@@ -194,5 +194,7 @@
     <string name="key_details">Key Details</string>
     <string name="add_secure_entry">Add Secure Entry</string>
     <string name="skip">Skip</string>
+    <string name="log_details">Log Details</string>
+    <string name="permission_approval">Permission Approval</string>
 
 </resources>

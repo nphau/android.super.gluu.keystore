@@ -1,17 +1,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@color/grayColorLight"
+    android:background="@color/default_screen_gray"
     android:orientation="vertical">
 
     <include
-        android:id="@+id/actionBarView"
-        android:layout_width="fill_parent"
-        android:layout_height="65dp"
-        layout="@layout/custom_action_bar" />
+        android:layout_alignParentTop="true"
+        layout="@layout/toolbar_nav_drawer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <RelativeLayout
         android:id="@+id/topRelativeLayout"
@@ -48,26 +47,6 @@
             android:background="@android:color/transparent"
             android:orientation="vertical">
 
-            <!--<TextView-->
-            <!--android:id="@+id/timer_textView"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center_horizontal"-->
-            <!--android:layout_marginTop="5dp"-->
-            <!--android:text="@string/timer"-->
-            <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
-            <!--android:textColor="#FFFFFF" />-->
-
-            <!--<TextView-->
-            <!--android:id="@+id/secondsLeftTextView"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginBottom="5dp"-->
-            <!--android:layout_marginLeft="10dp"-->
-            <!--android:layout_marginRight="10dp"-->
-            <!--android:text="@string/seconds_left"-->
-            <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
-            <!--android:textColor="#FFFFFF" />-->
             <com.dinuscxj.progressbar.CircleProgressBar
                 android:id="@+id/line_progress"
                 android:layout_width="40dp"
@@ -88,214 +67,149 @@
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/title_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/topRelativeLayout"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp"
-        android:text="@string/to_continue"
-        android:textColor="@color/blackColor"
-        android:textSize="22dp"/>
-
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView
         android:id="@+id/ScrollView01"
+        android:layout_below="@+id/nav_drawer_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/title_textView"
         android:background="@drawable/rounded_row"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
         android:fillViewport="true">
 
         <!--android:layout_above="@+id/action_button_group"-->
 
-        <RelativeLayout
-            android:id="@+id/mainRelativeLayout"
+        <LinearLayout
+            android:id="@+id/content_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <TableLayout
-                android:id="@+id/tableLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="false"
-                android:layout_alignParentTop="false"
-                android:layout_marginTop="10dp">
+            <ImageView
+                android:id="@+id/main_image_view"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/table_cell_text">
+            <TextView
+                android:id="@+id/application_text_view"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:fontFamily="@font/proxima_nova_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-                    <ImageView
-                        android:id="@+id/logo_imageView"
-                        android:layout_width="20dp"
-                        android:layout_height="25dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="10dp"
-                        android:src="@drawable/gluu_icon" />
+            <TextView
+                android:id="@+id/url_text_view"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:fontFamily="@font/proxima_nova_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+            <View style="@style/DetailBorder"/>
 
-                        <TextView
-                            android:id="@+id/text_application_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/label_application"
-                            android:textColor="@color/blackColor"
-                            android:textSize="15sp" />
+            <RelativeLayout style="@style/DetailTextContainer">
 
-                        <TextView
-                            android:id="@+id/text_application_value"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_column="2"
-                            android:text="http://ce-release.gluu.com"
-                            android:textColor="@color/greenColor"
-                            android:textSize="15sp" />
-                    </LinearLayout>
-                </TableRow>
+                <ImageView style="@style/DetailIconImageView"
+                    android:id="@+id/username_icon_image_view"
+                    android:src="@drawable/username_detail_icon" />
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/table_cell_text">
+                <View style="@style/DetailCenterView"
+                    android:id="@+id/username_center"/>
 
-                    <ImageView
-                        android:id="@+id/imageView3"
-                        android:layout_width="25dp"
-                        android:layout_height="22dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="10dp"
-                        android:src="@drawable/user_icon" />
+                <TextView style="@style/DetailTextView"
+                    android:id="@+id/username_text_value"
+                    android:layout_toEndOf="@+id/username_center"
+                    android:textSize="16sp"/>
 
-                    <TextView
-                        android:id="@+id/text_user_name_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:enabled="true"
-                        android:text="@string/label_user_name"
-                        android:textColor="@color/blackColor"
-                        android:textSize="15sp" />
-                </TableRow>
+            </RelativeLayout>
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/table_cell_text">
+            <View style="@style/DetailBorder"/>
 
-                    <ImageView
-                        android:id="@+id/imageView5"
-                        android:layout_width="20dp"
-                        android:layout_height="25dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="10dp"
-                        android:src="@drawable/location_icon" />
+            <RelativeLayout style="@style/DetailTextContainer">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                <ImageView style="@style/DetailIconImageView"
+                    android:id="@+id/location_icon_image_view"
+                    android:src="@drawable/location_detail_icon" />
 
-                        <TextView
-                            android:id="@+id/location_ip"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:enabled="true"
-                            android:text="10.106.128.3"
-                            android:textColor="@color/blackColor"
-                            android:textSize="15sp" />
+                <View style="@style/DetailCenterView"
+                    android:id="@+id/location_center"/>
 
-                        <TextView
-                            android:id="@+id/location_address"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_column="2"
-                            android:text="Texas, AX"
-                            android:textColor="@android:color/darker_gray"
-                            android:textSize="15sp" />
-                    </LinearLayout>
+                <LinearLayout
+                    android:layout_alignParentEnd="true"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-                </TableRow>
+                    <TextView style="@style/DetailTextView"
+                        android:id="@+id/location_ip_text_value"
+                        android:gravity="end"
+                        android:layout_gravity="end"
+                        android:textSize="16sp" />
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/table_cell_text">
+                    <TextView style="@style/DetailTextView"
+                        android:id="@+id/location_address_text_value"
+                        android:gravity="end"
+                        android:layout_gravity="end"
+                        android:textSize="16sp" />
 
-                    <ImageView
-                        android:id="@+id/imageView4"
-                        android:layout_width="20dp"
-                        android:layout_height="25dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="10dp"
-                        android:src="@drawable/time_icon" />
+                </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+            </RelativeLayout>
 
-                        <TextView
-                            android:id="@+id/text_application_created_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="12:00:01 AM"
-                            android:textColor="@color/blackColor"
-                            android:textSize="15sp" />
+            <View style="@style/DetailBorder"/>
 
-                        <TextView
-                            android:id="@+id/text_created_value"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_column="2"
-                            android:text="Jan 1, 2016"
-                            android:textColor="@android:color/darker_gray"
-                            android:textSize="15sp" />
-                    </LinearLayout>
 
-                </TableRow>
+            <RelativeLayout style="@style/DetailTextContainer">
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginBottom="30dp"
-                    android:padding="@dimen/table_cell_text">
+                <ImageView style="@style/DetailIconImageView"
+                    android:id="@+id/time_icon_image_view"
+                    android:src="@drawable/time_detail_icon" />
 
-                    <ImageView
-                        android:id="@+id/imageView7"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="10dp"
-                        android:src="@drawable/type_icon" />
+                <View style="@style/DetailCenterView"
+                    android:id="@+id/time_center"/>
 
-                    <TextView
-                        android:id="@+id/text_type"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:enabled="true"
-                        android:text="type"
-                        android:textColor="@color/blackColor"
-                        android:textSize="15sp" />
-                </TableRow>
+                <LinearLayout
+                    android:layout_alignParentEnd="true"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-            </TableLayout>
+                    <TextView style="@style/DetailTextView"
+                        android:id="@+id/hour_minute_time_text_value"
+                        android:gravity="end"
+                        android:layout_gravity="end"
+                        android:textSize="16sp" />
 
-        </RelativeLayout>
+                    <TextView style="@style/DetailTextView"
+                        android:id="@+id/date_time_text_value"
+                        android:gravity="end"
+                        android:layout_gravity="end"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <View style="@style/DetailBorder"/>
+
+
+            <RelativeLayout style="@style/DetailTextContainer">
+
+                <ImageView style="@style/DetailIconImageView"
+                    android:id="@+id/event_icon_image_view"
+                    android:src="@drawable/enroll_detail_icon" />
+
+                <View style="@style/DetailCenterView"
+                    android:id="@+id/event_center"/>
+
+                <TextView style="@style/DetailTextView"
+                    android:id="@+id/event_text_value"
+                    android:layout_toEndOf="@+id/event_center"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
 
     </ScrollView>
 

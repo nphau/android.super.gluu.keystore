@@ -1,46 +1,34 @@
 package org.gluu.super_gluu.app;
 
-import android.app.ActionBar;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.DisplayMetrics;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dinuscxj.progressbar.CircleProgressBar;
 
 import org.apache.commons.codec.binary.StringUtils;
+import org.gluu.super_gluu.app.base.ToolbarFragment;
 import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.app.model.LogInfo;
-import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.model.OxPush2Request;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
 import org.gluu.super_gluu.util.Utils;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
@@ -52,10 +40,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import SuperGluu.app.R;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-import static org.bouncycastle.asn1.ua.DSTU4145NamedCurves.params;
-
-public class ApproveDenyFragment extends Fragment implements View.OnClickListener{
+public class ApproveDenyFragment extends ToolbarFragment implements View.OnClickListener{
 
     SimpleDateFormat isoDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
 
@@ -81,63 +69,71 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
         }
     };
 
+    @BindView(R.id.nav_drawer_toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.location_address_text_value)
+    TextView addressTextView;
+    @BindView(R.id.location_ip_text_value)
+    TextView ipLocationTextView;
+    @BindView(R.id.hour_minute_time_text_value)
+    TextView hourMinuteTextView;
+    @BindView(R.id.date_time_text_value)
+    TextView dateTextView;
+    @BindView(R.id.event_text_value)
+    TextView eventTextView;
+    @BindView(R.id.username_text_value)
+    TextView usernameTextView;
+
+    @BindView(R.id.application_text_view)
+    TextView applicationTextView;
+
+    @BindView(R.id.url_text_view)
+    TextView urlTextView;
+
+    @BindView(R.id.main_image_view)
+    ImageView mainImageView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         final View rootView = inflater.inflate(R.layout.fragment_approve_deny, container, false);
+
+        ButterKnife.bind(this, rootView);
         handler = initHandler(rootView);
         mLineProgressBar = (CircleProgressBar) rootView.findViewById(R.id.line_progress);
         mLineProgressBar.setMax(sec);
         Button approveButton = (Button) rootView.findViewById(R.id.button_approve);
         Button denyButton = (Button) rootView.findViewById(R.id.button_deny);
 
-        View actionBarView = (View) rootView.findViewById(R.id.actionBarView);
-        actionBarView.findViewById(R.id.action_right_button).setVisibility(View.GONE);
-        ImageView titleIcon = (ImageView) actionBarView.findViewById(R.id.actionbar_icon);
-        TextView title = (TextView) actionBarView.findViewById(R.id.actionbar_textview);
-        LinearLayout leftButton = (LinearLayout) actionBarView.findViewById(R.id.action_left_button);
-        leftButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
 
-        TextView titleTextView = (TextView) rootView.findViewById(R.id.title_textView);
         //Setup fonts
-        Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Semibold.otf");
-        titleTextView.setTypeface(face);
         if (isUserInfo){
             View timerView = (View) rootView.findViewById(R.id.timer_view);
-
             TextView timerTextView = (TextView) rootView.findViewById(R.id.timer_textView);
-//            Button closeButton = (Button) rootView.findViewById(R.id.approve_deny_close_button);
             timerView.setVisibility(View.GONE);
             timerTextView.setVisibility(View.GONE);
-            titleTextView.setVisibility(View.GONE);//setText(R.string.info);
             approveButton.setVisibility(View.GONE);
             denyButton.setVisibility(View.GONE);
-//            closeButton.setVisibility(View.GONE);
             mLineProgressBar.setVisibility(View.GONE);
-            leftButton.setVisibility(View.VISIBLE);
-            title.setVisibility(View.VISIBLE);
-            title.setText("LOG");
-            titleIcon.setVisibility(View.GONE);
         } else {
-            actionBarView.setVisibility(View.GONE);
             RelativeLayout topRelativeLayout = (RelativeLayout) rootView.findViewById(R.id.topRelativeLayout);
             ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) topRelativeLayout.getLayoutParams();
             params.topMargin = 10;
             topRelativeLayout.requestLayout();
-//            rootView.findViewById(R.id.approve_deny_close_button).setVisibility(View.GONE);
             startClockTick(rootView);
-            leftButton.setVisibility(View.GONE);
-            title.setVisibility(View.GONE);
-            titleIcon.setVisibility(View.VISIBLE);
         }
 
-        updateLogInfo(rootView);
-//        rootView.findViewById(R.id.approve_deny_close_button).setOnClickListener(this);
+        setHasOptionsMenu(true);
+
+        if(isUserInfo) {
+            setDefaultToolbar(toolbar, getString(R.string.log_details), true);
+        } else {
+            setDefaultToolbar(toolbar, getString(R.string.permission_approval), false);
+        }
+
+        updateLogInfo();
+        updateLogo();
         approveButton.setOnClickListener(this);
         denyButton.setOnClickListener(this);
 
@@ -145,38 +141,6 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
                 new IntentFilter("on-delete-log-event"));
 
         return rootView;
-    }
-
-    public void getBitmapFromURL(final String src) {
-        final ApproveDenyFragment mainFragmentObj = this;
-        Thread thread = new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                try  {
-                    try {
-                        URL url = new URL(src);
-                        String host = url.getHost();
-                        URL mainUrl = new URL("https://www.google.com/s2/favicons?domain=" + host);
-                        HttpURLConnection connection = (HttpURLConnection) mainUrl.openConnection();
-                        connection.setDoInput(true);
-                        connection.connect();
-                        InputStream input = connection.getInputStream();
-                        Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                        mainFragmentObj.updateLogo(myBitmap);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-//                        return null;
-
-//                        https://www.google.com/s2/favicons?domain=football.ua
-//                        https://www.google.com/s2/favicons?domain=ce-release.gluu.org
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        thread.start();
     }
 
     @Override
@@ -205,10 +169,9 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
         }
     }
 
-    private void updateLogInfo(View rootView){
+    private void updateLogInfo(){
         if (push2Request != null){
-            logo_imageView = (ImageView)rootView.findViewById(R.id.logo_imageView);
-            TextView application = (TextView) rootView.findViewById(R.id.text_application_label);
+
             URL url = null;
             try {
                 url = new URL(push2Request.getIssuer());
@@ -216,55 +179,36 @@ public class ApproveDenyFragment extends Fragment implements View.OnClickListene
                 e.printStackTrace();
             }
             String baseUrl = "Gluu Server " + url.getHost();
-            application.setText(baseUrl);
-            TextView applicationUrl = (TextView) rootView.findViewById(R.id.text_application_value);
-            applicationUrl.setText(push2Request.getIssuer());
-            TextView userName = (TextView) rootView.findViewById(R.id.text_user_name_label);
-            userName.setText(push2Request.getUserName());
-            TextView locationIP = (TextView) rootView.findViewById(R.id.location_ip);
-            locationIP.setText(push2Request.getLocationIP());
-            TextView locationAddress = (TextView) rootView.findViewById(R.id.location_address);
+            urlTextView.setText(baseUrl);
+
+            applicationTextView.setText(push2Request.getIssuer());
+
+            usernameTextView.setText(push2Request.getUserName());
+
+            ipLocationTextView.setText(push2Request.getLocationIP());
             if (push2Request.getLocationCity() != null) {
                 try {
-                    locationAddress.setText(java.net.URLDecoder.decode(push2Request.getLocationCity(), "UTF-8"));
+                    addressTextView.setText(java.net.URLDecoder.decode(push2Request.getLocationCity(), "UTF-8"));
                 } catch (UnsupportedEncodingException e) {
                     Log.d(this.getClass().getName(), e.getLocalizedMessage());
                 }
             }
-            TextView type = (TextView) rootView.findViewById(R.id.text_type);
             AndroidKeyDataStore dataStore = new AndroidKeyDataStore(getContext());
             final List<byte[]> keyHandles = dataStore.getKeyHandlesByIssuerAndAppId(push2Request.getIssuer(), push2Request.getApp());
             final boolean isEnroll = (keyHandles.size() == 0) || StringUtils.equals(push2Request.getMethod(), "enroll");
-            type.setText(capitalize(push2Request.getMethod()));
-            TextView time = (TextView) rootView.findViewById(R.id.text_application_created_label);
-            time.setText(getTimeFromString(push2Request.getCreated()));
-            TextView date = (TextView) rootView.findViewById(R.id.text_created_value);
-            date.setText(getDateFromString(push2Request.getCreated()));
-            //Setup fonts
-            Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Regular.otf");
-            application.setTypeface(face);
-            applicationUrl.setTypeface(face);
-            userName.setTypeface(face);
-            locationIP.setTypeface(face);
-            locationAddress.setTypeface(face);
-            type.setTypeface(face);
-            time.setTypeface(face);
-            date.setTypeface(face);
-
-            //Load favicon by url
-//            getBitmapFromURL(push2Request.getIssuer());
+            eventTextView.setText(capitalize(push2Request.getMethod()));
+            hourMinuteTextView.setText(getTimeFromString(push2Request.getCreated()));
+            dateTextView.setText(getDateFromString(push2Request.getCreated()));
         }
     }
 
-    private void updateLogo(final Bitmap logo){
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                //stuff that updates ui
-                logo_imageView.setImageBitmap(logo);
-            }
-        });
+    private void updateLogo(){
 
+        if(isUserInfo) {
+            mainImageView.setImageDrawable(getContext().getDrawable(R.drawable.log_detail_icon));
+        } else {
+            mainImageView.setImageDrawable(getContext().getDrawable(R.drawable.accept_deny_detail_icon));
+        }
     }
 
     private String getDateFromString(String dateString){
