@@ -241,8 +241,7 @@ public class LogsFragment extends ToolbarFragment {
             }
         });
         Collections.reverse(logsFromDB);
-        //logs = logsFromDB;
-        logs = FakeDataUtil.getFakeListOfLogs(20);
+        logs = logsFromDB;
     }
 
     void showAlertView(){
