@@ -28,6 +28,7 @@ import org.gluu.super_gluu.app.base.ToolbarFragment;
 import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.app.model.LogInfo;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
+import org.gluu.super_gluu.util.FakeDataUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -240,7 +241,8 @@ public class LogsFragment extends ToolbarFragment {
             }
         });
         Collections.reverse(logsFromDB);
-        logs = logsFromDB;
+        //logs = logsFromDB;
+        logs = FakeDataUtil.getFakeListOfLogs(20);
     }
 
     void showAlertView(){

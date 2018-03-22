@@ -13,8 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -43,7 +43,7 @@ import SuperGluu.app.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ApproveDenyFragment extends ToolbarFragment implements View.OnClickListener{
+public class ApproveDenyFragment extends ToolbarFragment {
 
     SimpleDateFormat isoDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
 
@@ -71,6 +71,11 @@ public class ApproveDenyFragment extends ToolbarFragment implements View.OnClick
 
     @BindView(R.id.nav_drawer_toolbar)
     Toolbar toolbar;
+
+    @BindView(R.id.approve_layout)
+    LinearLayout approveLayout;
+    @BindView(R.id.deny_layout)
+    LinearLayout denyLayout;
 
     @BindView(R.id.location_address_text_value)
     TextView addressTextView;
@@ -103,8 +108,6 @@ public class ApproveDenyFragment extends ToolbarFragment implements View.OnClick
         handler = initHandler(rootView);
         mLineProgressBar = (CircleProgressBar) rootView.findViewById(R.id.line_progress);
         mLineProgressBar.setMax(sec);
-        Button approveButton = (Button) rootView.findViewById(R.id.button_approve);
-        Button denyButton = (Button) rootView.findViewById(R.id.button_deny);
 
 
         //Setup fonts
@@ -113,11 +116,11 @@ public class ApproveDenyFragment extends ToolbarFragment implements View.OnClick
             TextView timerTextView = (TextView) rootView.findViewById(R.id.timer_textView);
             timerView.setVisibility(View.GONE);
             timerTextView.setVisibility(View.GONE);
-            approveButton.setVisibility(View.GONE);
-            denyButton.setVisibility(View.GONE);
+            approveLayout.setVisibility(View.GONE);
+            denyLayout.setVisibility(View.GONE);
             mLineProgressBar.setVisibility(View.GONE);
         } else {
-            RelativeLayout topRelativeLayout = (RelativeLayout) rootView.findViewById(R.id.topRelativeLayout);
+            RelativeLayout topRelativeLayout = (RelativeLayout) rootView.findViewById(R.id.custom_approve_deny_toolbar);
             ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) topRelativeLayout.getLayoutParams();
             params.topMargin = 10;
             topRelativeLayout.requestLayout();
@@ -134,8 +137,18 @@ public class ApproveDenyFragment extends ToolbarFragment implements View.OnClick
 
         updateLogInfo();
         updateLogo();
-        approveButton.setOnClickListener(this);
-        denyButton.setOnClickListener(this);
+        approveLayout.setOnClickListener(view -> {
+            if(listener != null) {
+                listener.onApprove();
+            }
+            cleanUpViewAfterClick();
+        });
+        denyLayout.setOnClickListener(view -> {
+            if(listener != null) {
+                listener.onDeny();
+            }
+            cleanUpViewAfterClick();
+        });
 
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mDeleteReceiver,
                 new IntentFilter("on-delete-log-event"));
@@ -179,9 +192,9 @@ public class ApproveDenyFragment extends ToolbarFragment implements View.OnClick
                 e.printStackTrace();
             }
             String baseUrl = "Gluu Server " + url.getHost();
-            urlTextView.setText(baseUrl);
+            applicationTextView.setText(baseUrl);
 
-            applicationTextView.setText(push2Request.getIssuer());
+            urlTextView.setText(push2Request.getIssuer());
 
             usernameTextView.setText(push2Request.getUserName());
 
@@ -307,17 +320,7 @@ public class ApproveDenyFragment extends ToolbarFragment implements View.OnClick
         this.logInfo = logInfo;
     }
 
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.button_approve){
-            if (listener != null){
-                listener.onApprove();
-            }
-        } else if (v.getId() == R.id.button_deny){
-            if (listener != null){
-                listener.onDeny();
-            }
-        }
+    public void cleanUpViewAfterClick() {
         stopClocking();
         closeView();
     }

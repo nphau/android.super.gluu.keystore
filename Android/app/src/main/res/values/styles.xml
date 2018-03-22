@@ -127,8 +127,8 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@color/whiteColor</item>
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
     </style>
 
     <style name="DetailTextView" >
@@ -139,7 +139,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_centerVertical">true</item>
-        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColor">@color/dark_grey</item>
         <item name="android:fontFamily">@font/proxima_nova_regular</item>
     </style>
 
@@ -163,6 +163,33 @@
         <item name="android:background">@color/border_grey</item>
         <item name="android:layout_marginStart">16dp</item>
         <item name="android:layout_marginEnd">16dp</item>
+    </style>
+
+
+    <style name="AcceptDenyLinearLayout">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:paddingBottom">15dp</item>
+        <item name="android:paddingTop">15dp</item>
+    </style>
+
+
+    <style name="AcceptDenyImageView">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+
+    <style name="AcceptDenyTextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/whiteColor</item>
     </style>
 
 </resources>

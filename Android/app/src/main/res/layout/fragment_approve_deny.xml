@@ -6,18 +6,22 @@
     android:background="@color/default_screen_gray"
     android:orientation="vertical">
 
+    <!-- Default toolbar -->
+
     <include
         android:layout_alignParentTop="true"
         layout="@layout/toolbar_nav_drawer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <!-- Timer view used on accept/deny screen -->
+
     <RelativeLayout
-        android:id="@+id/topRelativeLayout"
+        android:id="@+id/custom_approve_deny_toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@android:color/transparent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_gravity="center_horizontal"
         android:orientation="horizontal">
@@ -67,17 +71,18 @@
 
     </RelativeLayout>
 
+    <!-- Scroll view for main content layout -->
+
     <ScrollView
         android:id="@+id/ScrollView01"
         android:layout_below="@+id/nav_drawer_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_row"
         android:fillViewport="true">
 
-        <!--android:layout_above="@+id/action_button_group"-->
-
         <LinearLayout
+            android:layout_marginTop="12dp"
+            android:background="@drawable/top_bottom_grey_border"
             android:id="@+id/content_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -86,6 +91,8 @@
             <ImageView
                 android:id="@+id/main_image_view"
                 android:layout_gravity="center"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -93,6 +100,9 @@
                 android:id="@+id/application_text_view"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp"
+                android:textColor="@color/dark_grey"
                 android:fontFamily="@font/proxima_nova_regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -101,11 +111,14 @@
                 android:id="@+id/url_text_view"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
                 android:fontFamily="@font/proxima_nova_regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <View style="@style/DetailBorder"/>
+            <View style="@style/DetailBorder"
+                android:layout_marginTop="32dp"/>
 
             <RelativeLayout style="@style/DetailTextContainer">
 
@@ -142,15 +155,12 @@
 
                     <TextView style="@style/DetailTextView"
                         android:id="@+id/location_ip_text_value"
-                        android:gravity="end"
-                        android:layout_gravity="end"
-                        android:textSize="16sp" />
+                        android:layout_gravity="end" />
 
                     <TextView style="@style/DetailTextView"
                         android:id="@+id/location_address_text_value"
-                        android:gravity="end"
-                        android:layout_gravity="end"
-                        android:textSize="16sp" />
+                        android:textColor="@color/light_grey_text"
+                        android:layout_gravity="end" />
 
                 </LinearLayout>
 
@@ -176,15 +186,12 @@
 
                     <TextView style="@style/DetailTextView"
                         android:id="@+id/hour_minute_time_text_value"
-                        android:gravity="end"
-                        android:layout_gravity="end"
-                        android:textSize="16sp" />
+                        android:layout_gravity="end" />
 
                     <TextView style="@style/DetailTextView"
                         android:id="@+id/date_time_text_value"
-                        android:gravity="end"
                         android:layout_gravity="end"
-                        android:textSize="16sp" />
+                        android:textColor="@color/light_grey_text" />
 
                 </LinearLayout>
 
@@ -213,45 +220,38 @@
 
     </ScrollView>
 
+    <!-- Approve/Deny layout -->
+
     <LinearLayout
         android:id="@+id/action_button_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="false"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/button_approve"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1.15"
-            android:background="@color/greenColor"
-            android:drawableTop="@drawable/approve_icon"
-            android:gravity="center"
-            android:paddingBottom="15dp"
-            android:paddingLeft="20dp"
-            android:paddingTop="15dp"
-            android:text="@string/button_approve"
-            android:textSize="22dp"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF" />
+        <LinearLayout  style="@style/AcceptDenyLinearLayout"
+            android:id="@+id/approve_layout"
+            android:background="@color/greenColor">
 
-        <Button
-            android:id="@+id/button_deny"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1.24"
-            android:background="#ff0000"
-            android:drawableTop="@drawable/deny_icon"
-            android:gravity="center"
-            android:paddingBottom="15dp"
-            android:paddingLeft="20dp"
-            android:paddingTop="15dp"
-            android:text="@string/button_decline"
-            android:textSize="22dp"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF" />
+            <ImageView style="@style/AcceptDenyImageView"
+                android:src="@drawable/accept_checkmark"/>
+
+            <TextView style="@style/AcceptDenyTextView"
+                android:text="Approve" />
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/AcceptDenyLinearLayout"
+            android:id="@+id/deny_layout"
+            android:background="@color/redColor">
+
+            <ImageView style="@style/AcceptDenyImageView"
+                android:src="@drawable/deny_x" />
+
+            <TextView style="@style/AcceptDenyTextView"
+                android:text="Deny"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
