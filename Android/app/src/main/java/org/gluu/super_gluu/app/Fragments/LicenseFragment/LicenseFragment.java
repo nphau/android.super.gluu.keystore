@@ -42,11 +42,17 @@ public class LicenseFragment extends ToolbarFragment {
     Button acceptButton;
 
     private Boolean isFirstTimeLoading;
+    private Type type;
 
-    public static LicenseFragment newInstance(boolean firstTimeLoading) {
+    public enum Type {
+        PRIVACY, TERMS_OF_SERVICE
+    }
+
+    public static LicenseFragment newInstance(boolean firstTimeLoading, Type type) {
         LicenseFragment licenseFragment = new LicenseFragment();
         Bundle bundle = new Bundle();
         bundle.putBoolean(Constant.IS_FIRST_TIME_LOADING, firstTimeLoading);
+        bundle.putSerializable(Constant.LICENSE_TYPE, type);
         licenseFragment.setArguments(bundle);
 
         return licenseFragment;
@@ -73,15 +79,20 @@ public class LicenseFragment extends ToolbarFragment {
         setHasOptionsMenu(true);
 
         isFirstTimeLoading = getArguments().getBoolean(Constant.IS_FIRST_TIME_LOADING, false);
+        type = (Type) getArguments().getSerializable(Constant.LICENSE_TYPE);
 
         acceptButton.setOnClickListener(v -> mainActivityListener.onLicenseAgreement());
 
-        if (isFirstTimeLoading){
+        if (isFirstTimeLoading && type == Type.PRIVACY){
             acceptButton.setVisibility(View.VISIBLE);
             setDefaultToolbar(toolbar, getString(R.string.privacy_policy), false);
         } else {
             acceptButton.setVisibility(View.GONE);
-            setDefaultToolbar(toolbar, getString(R.string.privacy_policy), true);
+            if(type == Type.PRIVACY) {
+                setDefaultToolbar(toolbar, getString(R.string.privacy_policy), true);
+            } else {
+                setDefaultToolbar(toolbar, getString(R.string.user_guide), true);
+            }
         }
 
         licenseWebView.setWebViewClient(new WebViewClient() {
@@ -97,9 +108,22 @@ public class LicenseFragment extends ToolbarFragment {
             }
         });
 
-        licenseWebView.loadUrl(Constant.PRIVACY_POLICY_URL);
+
+        licenseWebView.loadUrl(getUrl());
 
         return view;
+    }
+
+    private String getUrl() {
+        switch (type) {
+            case PRIVACY:
+                return Constant.PRIVACY_POLICY_URL;
+            case TERMS_OF_SERVICE:
+                return Constant.USER_GUIDE_URL;
+            default:
+                return Constant.PRIVACY_POLICY_URL;
+        }
+
     }
 
     //Unused but keeping this in case we need to load HTML directly form project again
@@ -127,7 +151,9 @@ public class LicenseFragment extends ToolbarFragment {
 
     public class Constant {
         private static final String IS_FIRST_TIME_LOADING = "is_first_time_loading";
+        private static final String LICENSE_TYPE = "license_type";
 
         private static final String PRIVACY_POLICY_URL = "https://docs.google.com/document/d/1E1xWq28_f-tam7PihkTZXhlqaXVGZxJbVt4cfx15kB4";
+        private final static String USER_GUIDE_URL = "https://gluu.org/docs/supergluu/3.0.0/user-guide/";
     }
 }

@@ -691,15 +691,12 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
                 updateUIAfterNavItemSelected(SettingsFragment.newInstance(SettingsFragment.Constant.SSL_CONNECTION_TYPE));
                 break;
             case R.id.nav_user_guide:
-                updateUIAfterNavItemSelected(null);
-
-                Uri uri = Uri.parse(SettingsFragment.Constant.USER_GUIDE_URL);
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
+                LicenseFragment termsFragment = LicenseFragment.newInstance(false, LicenseFragment.Type.TERMS_OF_SERVICE);
+                updateUIAfterNavItemSelected(termsFragment);
                 break;
             case R.id.nav_privacy_policy:
-                LicenseFragment licenseFragment = LicenseFragment.newInstance(false);
-                updateUIAfterNavItemSelected(licenseFragment);
+                LicenseFragment privacyFragment = LicenseFragment.newInstance(false, LicenseFragment.Type.PRIVACY);
+                updateUIAfterNavItemSelected(privacyFragment);
                 break;
             case R.id.nav_version:
                 break;

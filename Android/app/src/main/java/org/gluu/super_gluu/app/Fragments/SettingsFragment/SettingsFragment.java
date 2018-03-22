@@ -185,7 +185,6 @@ public class SettingsFragment extends ToolbarFragment {
 
     public static class Constant {
         private final static String SETTINGS_ID = "settingsId";
-        public final static String USER_GUIDE_URL = "https://gluu.org/docs/supergluu/3.0.0/user-guide/";
 
         //types
         public final static String SSL_CONNECTION_TYPE = "SSLConnectionSettings";

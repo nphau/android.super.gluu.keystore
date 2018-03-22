@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
                     checkPinCodeEnabled();
                 } else {
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    LicenseFragment licenseFragment = LicenseFragment.newInstance(true);
+                    LicenseFragment licenseFragment = LicenseFragment.newInstance(true, LicenseFragment.Type.PRIVACY);
 
                     fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                     fragmentTransaction.replace(R.id.fragment_container, licenseFragment);
