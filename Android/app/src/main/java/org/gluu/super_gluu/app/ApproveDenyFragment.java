@@ -52,14 +52,7 @@ public class ApproveDenyFragment extends ToolbarFragment {
     private Timer clock;
     private Handler handler;
 
-    int seconds = 40;
-
-//    private BroadcastReceiver mDeleteReceiver = new BroadcastReceiver() {
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            showAlertView();
-//        }
-//    };
+    private int seconds = 40;
 
     @BindView(R.id.nav_drawer_toolbar)
     Toolbar toolbar;
@@ -94,6 +87,20 @@ public class ApproveDenyFragment extends ToolbarFragment {
     @BindView(R.id.timer_textView)
     TextView timerTextView;
 
+    @BindView(R.id.action_button_group)
+    LinearLayout approveDenyLayout;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnDeleteLogInfoListener) {
+            deleteLogListener = (OnDeleteLogInfoListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnDeleteKeyHandleListener");
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -108,8 +115,7 @@ public class ApproveDenyFragment extends ToolbarFragment {
             setDefaultToolbar(toolbar, getString(R.string.log_details), true);
 
             timerTextView.setVisibility(View.GONE);
-            approveLayout.setVisibility(View.GONE);
-            denyLayout.setVisibility(View.GONE);
+            approveDenyLayout.setVisibility(View.GONE);
         } else {
             setDefaultToolbar(toolbar, getString(R.string.permission_approval), false);
 
@@ -133,9 +139,6 @@ public class ApproveDenyFragment extends ToolbarFragment {
             cleanUpViewAfterClick();
         });
 
-//        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mDeleteReceiver,
-//                new IntentFilter("on-delete-log-event"));
-
         return rootView;
     }
 
@@ -145,23 +148,6 @@ public class ApproveDenyFragment extends ToolbarFragment {
         if (seconds == 0){
             listener.onDeny();
             closeView();
-        }
-    }
-
-    @Override
-    public void onPause(){
-        super.onPause();
-        //LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mDeleteReceiver);
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnDeleteLogInfoListener) {
-            deleteLogListener = (OnDeleteLogInfoListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnDeleteKeyHandleListener");
         }
     }
 

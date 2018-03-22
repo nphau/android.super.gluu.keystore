@@ -34,7 +34,7 @@
         android:layout_below="@+id/nav_drawer_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fillViewport="true">
+        android:layout_above="@+id/action_button_group">
 
         <LinearLayout
             android:layout_marginTop="12dp"
@@ -171,6 +171,11 @@
                     android:textSize="16sp" />
 
             </RelativeLayout>
+
+            <View
+                android:background="@color/default_screen_gray"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"/>
 
         </LinearLayout>
 
