@@ -56,7 +56,7 @@ public class KeyRecyclerViewAdapter extends ArrayAdapter {
         }
         TokenEntry token = (TokenEntry) mValues.get(position);
         if (token != null) {
-            TextView contentView = (TextView) view.findViewById(R.id.content);
+            TextView contentView = (TextView) view.findViewById(R.id.content_text_view);
 
             if (contentView != null) {
                 String deviceName = android.os.Build.MODEL;

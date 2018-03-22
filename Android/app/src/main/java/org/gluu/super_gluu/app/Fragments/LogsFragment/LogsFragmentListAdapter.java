@@ -127,18 +127,16 @@ public class LogsFragmentListAdapter extends BaseAdapter {
         }
         LogInfo log = list.get(position);
 //        view.setTag(position);
-        TextView contentView = (TextView) view.findViewById(R.id.content);
+        TextView contentView = (TextView) view.findViewById(R.id.content_text_view);
         if (log.getLogState() == LogState.ENROL_FAILED || log.getLogState() == LogState.LOGIN_FAILED
                 || log.getLogState() == LogState.UNKNOWN_ERROR || log.getLogState() == LogState.LOGIN_DECLINED || log.getLogState() == LogState.ENROL_DECLINED){
-            ImageView logo = (ImageView) view.findViewById(R.id.logLogo);
-            contentView.setTextColor(ContextCompat.getColor(view.getContext(), R.color.redColor));
-            logo.setImageResource(R.drawable.gluu_icon_red);
+            ImageView logo = (ImageView) view.findViewById(R.id.log_image_view);
+            logo.setImageResource(R.drawable.log_row_item_red_icon);
         } else {
-            ImageView logo = (ImageView) view.findViewById(R.id.logLogo);
-            contentView.setTextColor(ContextCompat.getColor(view.getContext(), R.color.blackColor));
-            logo.setImageResource(R.drawable.gluu_icon);
+            ImageView logo = (ImageView) view.findViewById(R.id.log_image_view);
+            logo.setImageResource(R.drawable.log_row_item_green_icon);
         }
-        LinearLayout log_main_view = (LinearLayout) view.findViewById(R.id.log_main_view);
+        RelativeLayout log_main_view = view.findViewById(R.id.log_main_view);
         log_main_view.setTag(position);
         log_main_view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,14 +156,14 @@ public class LogsFragmentListAdapter extends BaseAdapter {
         String title = log.getIssuer();
             String timeAgo = (String) DateUtils.getRelativeTimeSpanString(Long.valueOf(log.getCreatedDate()), System.currentTimeMillis(),
                     DateUtils.MINUTE_IN_MILLIS);
-            TextView createdTime = (TextView) view.findViewById(R.id.created_date);
+            TextView createdTime = (TextView) view.findViewById(R.id.created_date_text_view);
             createdTime.setText(timeAgo);
         switch (log.getLogState()){
             case LOGIN_SUCCESS:
                 title = "Logged in " + log.getIssuer();
                 break;
             case ENROL_SUCCESS:
-                title = "Enrol to " + log.getIssuer();
+                title = "Enroll to " + log.getIssuer();
                 break;
             case ENROL_DECLINED:
                 title = "Declined enrol to " + log.getIssuer();

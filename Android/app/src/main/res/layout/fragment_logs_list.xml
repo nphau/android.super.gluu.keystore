@@ -4,7 +4,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
-    android:background="#dcd9d9">
+    android:background="@color/default_screen_gray">
 
     <include
         android:layout_alignParentTop="true"
@@ -16,7 +16,7 @@
         android:layout_below="@+id/nav_drawer_toolbar"
         android:id="@+id/actionBarSettings"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
+        android:layout_height="40dp"
         layout="@layout/custom_action_bar"
         tools:ignore="UnknownIdInLayout" />
 
@@ -25,14 +25,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/actionBarSettings"
-        android:layout_alignParentLeft="true"
-        android:layout_gravity="center_horizontal"
         android:layout_above="@+id/selectAllView"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="12dp"
         android:background="@android:color/white"
-        android:divider="@color/grayColorLight"
-        android:dividerHeight="3px"
+        android:divider="@color/border_grey"
+        android:dividerHeight="0.5dp"
         android:scrollbars="none" />
 
     <TextView

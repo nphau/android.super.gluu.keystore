@@ -113,7 +113,7 @@ public class LogsFragment extends ToolbarFragment {
 
         View actionBarView = (View) rootView.findViewById(R.id.actionBarSettings);
         actionBarView.findViewById(R.id.action_right_button).setVisibility(View.GONE);
-        actionBarView.findViewById(R.id.actionbar_icon).setVisibility(View.VISIBLE);
+        actionBarView.findViewById(R.id.actionbar_icon).setVisibility(View.GONE);
         actionBarView.findViewById(R.id.actionbar_textview).setVisibility(View.GONE);
         selectAllView = (LinearLayout) rootView.findViewById(R.id.selectAllView);
         selectAllView.setVisibility(View.GONE);
