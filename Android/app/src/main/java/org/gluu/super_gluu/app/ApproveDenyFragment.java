@@ -1,24 +1,20 @@
 package org.gluu.super_gluu.app;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.dinuscxj.progressbar.CircleProgressBar;
 
 import org.apache.commons.codec.binary.StringUtils;
 import org.gluu.super_gluu.app.base.ToolbarFragment;
@@ -53,21 +49,17 @@ public class ApproveDenyFragment extends ToolbarFragment {
     private GluuMainActivity.RequestProcessListener listener;
     public OnDeleteLogInfoListener deleteLogListener;
 
-    private CircleProgressBar mLineProgressBar;
-
     private Timer clock;
     private Handler handler;
 
-    private ImageView logo_imageView;
+    int seconds = 40;
 
-    int sec = 40;
-
-    private BroadcastReceiver mDeleteReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            showAlertView();
-        }
-    };
+//    private BroadcastReceiver mDeleteReceiver = new BroadcastReceiver() {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            showAlertView();
+//        }
+//    };
 
     @BindView(R.id.nav_drawer_toolbar)
     Toolbar toolbar;
@@ -99,41 +91,32 @@ public class ApproveDenyFragment extends ToolbarFragment {
     @BindView(R.id.main_image_view)
     ImageView mainImageView;
 
+    @BindView(R.id.timer_textView)
+    TextView timerTextView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         final View rootView = inflater.inflate(R.layout.fragment_approve_deny, container, false);
 
         ButterKnife.bind(this, rootView);
-        handler = initHandler(rootView);
-        mLineProgressBar = (CircleProgressBar) rootView.findViewById(R.id.line_progress);
-        mLineProgressBar.setMax(sec);
+        handler = initHandler();
 
 
         //Setup fonts
         if (isUserInfo){
-            View timerView = (View) rootView.findViewById(R.id.timer_view);
-            TextView timerTextView = (TextView) rootView.findViewById(R.id.timer_textView);
-            timerView.setVisibility(View.GONE);
+            setDefaultToolbar(toolbar, getString(R.string.log_details), true);
+
             timerTextView.setVisibility(View.GONE);
             approveLayout.setVisibility(View.GONE);
             denyLayout.setVisibility(View.GONE);
-            mLineProgressBar.setVisibility(View.GONE);
         } else {
-            RelativeLayout topRelativeLayout = (RelativeLayout) rootView.findViewById(R.id.custom_approve_deny_toolbar);
-            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) topRelativeLayout.getLayoutParams();
-            params.topMargin = 10;
-            topRelativeLayout.requestLayout();
+            setDefaultToolbar(toolbar, getString(R.string.permission_approval), false);
+
             startClockTick(rootView);
         }
 
         setHasOptionsMenu(true);
-
-        if(isUserInfo) {
-            setDefaultToolbar(toolbar, getString(R.string.log_details), true);
-        } else {
-            setDefaultToolbar(toolbar, getString(R.string.permission_approval), false);
-        }
 
         updateLogInfo();
         updateLogo();
@@ -150,8 +133,8 @@ public class ApproveDenyFragment extends ToolbarFragment {
             cleanUpViewAfterClick();
         });
 
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mDeleteReceiver,
-                new IntentFilter("on-delete-log-event"));
+//        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mDeleteReceiver,
+//                new IntentFilter("on-delete-log-event"));
 
         return rootView;
     }
@@ -159,7 +142,7 @@ public class ApproveDenyFragment extends ToolbarFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (sec == 0){
+        if (seconds == 0){
             listener.onDeny();
             closeView();
         }
@@ -168,7 +151,7 @@ public class ApproveDenyFragment extends ToolbarFragment {
     @Override
     public void onPause(){
         super.onPause();
-        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mDeleteReceiver);
+        //LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mDeleteReceiver);
     }
 
     @Override
@@ -180,6 +163,26 @@ public class ApproveDenyFragment extends ToolbarFragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnDeleteKeyHandleListener");
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        if(isUserInfo) {
+            inflater.inflate(R.menu.menu_log_detail, menu);
+        } else {
+            super.onCreateOptionsMenu(menu, inflater);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.delete_action:
+                showAlertView();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void updateLogInfo(){
@@ -287,8 +290,6 @@ public class ApproveDenyFragment extends ToolbarFragment {
                 if (deleteLogListener != null){
                     deleteLogListener.onDeleteLogInfo(push2Request);
                 }
-//                android.support.v4.app.FragmentManager fm = getFragmentManager();
-//                fm.popBackStack();
             }
 
             @Override
@@ -330,10 +331,10 @@ public class ApproveDenyFragment extends ToolbarFragment {
         clock.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                sec--;
+                seconds--;
                 //send message to update UI
                 if (handler == null){
-                    handler = initHandler(rootView);
+                    handler = initHandler();
                 }
                 handler.sendEmptyMessage(0);
             }
@@ -375,20 +376,18 @@ public class ApproveDenyFragment extends ToolbarFragment {
         editor.commit();
     }
 
-    private Handler initHandler(final View rootView){
+    private Handler initHandler(){
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 handler = new Handler(){
                     public void handleMessage(android.os.Message msg){
-                        if (sec == 0){
+                        if (seconds == 0){
                             stopClocking();
                             closeView();
                         }
-                        mLineProgressBar.setProgress(sec);
-                        TextView seconds = (TextView) rootView.findViewById(R.id.timer_textView);
-                        String secStr = sec < 10 ? "0" + sec : String.valueOf(sec);
-                        seconds.setText(secStr);
+                        String secondsText = seconds < 10 ? "0" + seconds : String.valueOf(seconds);
+                        timerTextView.setText(secondsText);
                     }
                 };
             }

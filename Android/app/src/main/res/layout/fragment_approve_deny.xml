@@ -1,5 +1,4 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
@@ -16,65 +15,22 @@
 
     <!-- Timer view used on accept/deny screen -->
 
-    <RelativeLayout
-        android:id="@+id/custom_approve_deny_toolbar"
-        android:minHeight="?attr/actionBarSize"
-        android:background="@android:color/transparent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <TextView
+        android:gravity="center"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/timer_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignStart="@+id/timer_view"
-            android:gravity="center"
-            android:text="@string/timer"
-            android:textSize="15sp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="27dp"
-            android:textAlignment="center"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/greenColor" />
-
-        <LinearLayout
-            android:id="@+id/timer_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="false"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:background="@android:color/transparent"
-            android:orientation="vertical">
-
-            <com.dinuscxj.progressbar.CircleProgressBar
-                android:id="@+id/line_progress"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                app:draw_progress_text="false"
-                app:line_count="30"
-                app:line_width="3dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
-                app:progress_end_color="@color/greenColor"
-                app:progress_shader="sweep"
-                app:progress_start_color="@color/greenColor"
-                app:progress_stroke_cap="round"
-                app:progress_stroke_width="3dp"
-                app:progress_text_color="@color/greenColor"
-                app:style="solid_line" />
-        </LinearLayout>
-
-    </RelativeLayout>
+        android:layout_marginEnd="16dp"
+        android:minHeight="?attr/actionBarSize"
+        android:id="@+id/timer_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/whiteColor" />
 
     <!-- Scroll view for main content layout -->
 
     <ScrollView
-        android:id="@+id/ScrollView01"
+        android:id="@+id/main_content_scroll_view"
         android:layout_below="@+id/nav_drawer_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
