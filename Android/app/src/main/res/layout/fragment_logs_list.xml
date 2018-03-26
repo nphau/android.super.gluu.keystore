@@ -4,6 +4,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
+    android:animateLayoutChanges="true"
     android:background="@color/default_screen_gray">
 
     <include
@@ -67,6 +68,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/noLogs"
+        android:layout_centerInParent="true"
         android:id="@+id/noLogs_textView"
         android:layout_centerHorizontal="true" />
 

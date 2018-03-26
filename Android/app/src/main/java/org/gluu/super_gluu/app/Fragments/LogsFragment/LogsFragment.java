@@ -10,16 +10,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -51,18 +47,20 @@ public class LogsFragment extends ToolbarFragment {
     private AndroidKeyDataStore dataStore;
     private LogInfoListener mListener;
     public ApproveDenyFragment.OnDeleteLogInfoListener deleteLogListener;
-    private ListView listView;
     private List<LogInfo> logs;
 
+    @BindView(R.id.nav_drawer_toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.noLogs_textView)
+    TextView noLogsTextView;
+    @BindView(R.id.logs_listView)
+    ListView listView;
     @BindView(R.id.edit_container)
     RelativeLayout editContainer;
-
     @BindView(R.id.cancel_text_view)
     TextView cancelTextView;
-
     @BindView(R.id.delete_text_view)
     TextView deleteTextView;
-
 
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
@@ -104,13 +102,11 @@ public class LogsFragment extends ToolbarFragment {
 
         ButterKnife.bind(this, rootView);
 
-        Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.nav_drawer_toolbar);
         setDefaultToolbar(toolbar, getString(R.string.logs), true);
         setHasOptionsMenu(true);
 
         dataStore = new AndroidKeyDataStore(getActivity().getApplicationContext());
         reloadLogs();
-        listView = (ListView) rootView.findViewById(R.id.logs_listView);
         mListener = new LogInfoListener() {
             @Override
             public void onKeyHandleInfo(ApproveDenyFragment approveDenyFragment) {
@@ -128,96 +124,20 @@ public class LogsFragment extends ToolbarFragment {
             }
         };
 
-        //View actionBarView = (View) rootView.findViewById(R.id.actionBarSettings);
-        //actionBarView.findViewById(R.id.action_right_button).setVisibility(View.GONE);
-//        actionBarView.findViewById(R.id.actionbar_icon).setVisibility(View.GONE);
-//        actionBarView.findViewById(R.id.actionbar_textview).setVisibility(View.GONE);
-//        selectAllView = (LinearLayout) rootView.findViewById(R.id.selectAllView);
-//        selectAllView.setVisibility(View.GONE);
-//        LinearLayout leftButton = (LinearLayout) actionBarView.findViewById(R.id.action_left_button);
-//        final Button rightButton = (Button) actionBarView.findViewById(R.id.action_right_button);
-//        selectAllButton = (Button) selectAllView.findViewById(R.id.selectAllButton);
-//        selectAllButton.setTag(1);// 1- no selected all, 2- selected all
-//        rightButton.setVisibility(View.GONE);
-//        int visible = logs.size() > 0 ? View.VISIBLE : View.GONE;
-//        leftButton.setVisibility(visible);
-//        leftButton.findViewById(R.id.actionBarBackArrow).setVisibility(View.GONE);
-//        final Button backButton = (Button) leftButton.findViewById(R.id.actionBarBackButton);
-//        backButton.setText("Edit");
-//        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) backButton.getLayoutParams();
-//        params.leftMargin = 25;
-//        backButton.requestLayout();
-//        leftButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (listAdapter.isEditingMode){
-//                    backButton.setText("Edit");
-//                    listAdapter.isEditingMode = false;
-//                    listAdapter.notifyDataSetChanged();
-//                    rightButton.setVisibility(View.GONE);
-//                    selectAllView.setVisibility(View.GONE);
-//                } else {
-//                    backButton.setText("Cancel");
-//                    selectAllButton.setText("Select All");
-//                    deselectAll();
-//                    listAdapter.isEditingMode = true;
-//                    listAdapter.notifyDataSetChanged();
-//                    rightButton.setVisibility(View.VISIBLE);
-//                    selectAllView.setVisibility(View.VISIBLE);
-//                }
-//            }
-//        });
-//
-//        rightButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                showAlertView();
-//            }
-//        });
-//        selectAllButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int tag = (int)v.getTag();
-//                if (tag == 1) {
-//                    selectAll();
-//                } else {
-//                    deselectAll();
-//                }
-//            }
-//        });
-
-        cancelTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                hideEditContainer();
-                listAdapter.isEditingMode = false;
-                listAdapter.notifyDataSetChanged();
-            }
+        cancelTextView.setOnClickListener(view -> {
+            putScreenIntoViewMode();
+            hideEditContainer();
         });
 
-        deleteTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAlertView();
-            }
-        });
+        deleteTextView.setOnClickListener(view -> showAlertView());
 
 
         listAdapter = new LogsFragmentListAdapter(getActivity(), logs, mListener);
         listView.setAdapter(listAdapter);
-        listView.post(new Runnable() {
-            @Override
-            public void run() {
-                // Select the last row so it will scroll into view...
-                listView.setSelection(0);//logs.size() - 1);
-            }
+        listView.post(() -> {
+            // Select the last row so it will scroll into view...
+            listView.setSelection(0);//logs.size() - 1);
         });
-        TextView noLogs = (TextView) rootView.findViewById(R.id.noLogs_textView);
-        DisplayMetrics metrics = new DisplayMetrics();
-        WindowManager wm = (WindowManager) rootView.getContext().getSystemService(Context.WINDOW_SERVICE);
-        wm.getDefaultDisplay().getMetrics(metrics);
-        noLogs.setY(metrics.heightPixels/3);
-        listView.setEmptyView(noLogs);
 
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
                 new IntentFilter("reload-logs"));
@@ -251,29 +171,31 @@ public class LogsFragment extends ToolbarFragment {
         editContainer.setVisibility(View.VISIBLE);
     }
 
+    private void hideEditContainer() {
+        editContainer.setVisibility(View.GONE);
+    }
+
     private void putScreenIntoEditMode() {
         deselectAll();
         listAdapter.isEditingMode = true;
         listAdapter.notifyDataSetChanged();
     }
 
-    private void hideEditContainer() {
-        editContainer.setVisibility(View.GONE);
+    private void putScreenIntoViewMode() {
+        listAdapter.isEditingMode = false;
+        listAdapter.notifyDataSetChanged();
     }
+
 
     private void deselectAll() {
         //Deselect all records
-        //selectAllButton.setTag(1);// 1- no selected all, 2- selected all
         listAdapter.isSelectAllMode = false;
-        //selectAllButton.setText("Select All");
         listAdapter.notifyDataSetChanged();
         listAdapter.deSelectAllLogs();
     }
 
     private void selectAll() {
         //Select all records
-        //selectAllButton.setTag(2);// 1- no selected all, 2- selected all
-        //selectAllButton.setText("Deselect All");
         listAdapter.isSelectAllMode = true;
         listAdapter.selectAllLogs();
         listAdapter.notifyDataSetChanged();
@@ -300,16 +222,20 @@ public class LogsFragment extends ToolbarFragment {
 
     private void reloadLogs(){
         List<LogInfo> logsFromDB = new ArrayList<LogInfo>(dataStore.getLogs());
-        Collections.sort(logsFromDB, new Comparator<LogInfo>(){
-            public int compare(LogInfo log1, LogInfo log2) {
-                Date date1 = new Date(Long.valueOf(log1.getCreatedDate()));
-                Date date2 = new Date(Long.valueOf(log2.getCreatedDate()));
-                return date1.compareTo(date2);
-            }
+        Collections.sort(logsFromDB, (log1, log2) -> {
+            Date date1 = new Date(Long.valueOf(log1.getCreatedDate()));
+            Date date2 = new Date(Long.valueOf(log2.getCreatedDate()));
+            return date1.compareTo(date2);
         });
         Collections.reverse(logsFromDB);
-        //logs = logsFromDB;
-        logs = FakeDataUtil.getFakeListOfLogs(10);
+        logs = logsFromDB;
+
+        if(logs.size() == 0) {
+            noLogsTextView.setVisibility(View.VISIBLE);
+        } else {
+            noLogsTextView.setVisibility(View.GONE);
+        }
+
     }
 
     void showAlertView(){
