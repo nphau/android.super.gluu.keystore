@@ -125,8 +125,12 @@ public class SettingsPinCode extends ToolbarFragment {
     }
 
     private void loadPinCodeView(Boolean isBackStack, boolean isNewPinCode) {
+
+
+        PinCodeFragment.EntryType entryType = isNewPinCode ? PinCodeFragment.EntryType.CHANGING_CURRENT : PinCodeFragment.EntryType.SETTING_NEW;
+
         PinCodeFragment pinCodeFragment =
-                PinCodeFragment.newInstance(PinCodeFragment.Constant.SET_CODE, isNewPinCode, true);
+                PinCodeFragment.newInstance(PinCodeFragment.Constant.SET_CODE, isNewPinCode, true, entryType);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.main_frame_layout, pinCodeFragment);
         if (isBackStack) {

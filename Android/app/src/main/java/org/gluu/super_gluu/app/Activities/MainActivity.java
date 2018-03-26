@@ -95,9 +95,11 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
         String fragmentType = enterPinCode ? PinCodeFragment.Constant.ENTER_CODE : PinCodeFragment.Constant.SET_CODE;
+        PinCodeFragment.EntryType entryType = enterPinCode ? PinCodeFragment.EntryType.ENTERING_NORMAL : PinCodeFragment.EntryType.SETTING_NEW;
+
 
         PinCodeFragment pinCodeFragment =
-                PinCodeFragment.newInstance(fragmentType, false, false);
+                PinCodeFragment.newInstance(fragmentType, false, false, entryType);
 
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.replace(R.id.fragment_container, pinCodeFragment);

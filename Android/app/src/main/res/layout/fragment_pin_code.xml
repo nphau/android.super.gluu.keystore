@@ -50,6 +50,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="invisible"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/you_have_5_attempts_left"
             android:id="@+id/attemptsLabel"

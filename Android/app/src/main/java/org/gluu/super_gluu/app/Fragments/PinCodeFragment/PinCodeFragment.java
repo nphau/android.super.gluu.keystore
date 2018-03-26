@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,10 +17,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.app.services.GlobalNetworkTime;
 import org.gluu.super_gluu.app.settings.Settings;
+import org.gluu.super_gluu.u2f.v2.entry.Entry;
 import org.gluu.super_gluu.util.PinEntryEditText;
 
 import SuperGluu.app.R;
@@ -41,7 +44,20 @@ public class PinCodeFragment extends Fragment {
     @BindView(R.id.pin_code_edit_text)
     PinEntryEditText pinCodeEditText;
 
+    private String initialPinCode = null;
+
     Context context;
+
+    private EntryType entryType;
+    private EntryLevel entryLevel = EntryLevel.ONE;
+
+    public enum EntryType {
+        SETTING_NEW, ENTERING_NORMAL, CHANGING_CURRENT
+    }
+
+    public enum EntryLevel {
+        ONE, TWO
+    }
 
     public PinCodeViewListener pinCodeViewListener;
 
@@ -53,12 +69,13 @@ public class PinCodeFragment extends Fragment {
     private int newPinAttempts;
 
 
-    public static PinCodeFragment newInstance(String fragmentType, boolean isNewPinCode, boolean isSettings) {
+    public static PinCodeFragment newInstance(String fragmentType, boolean isNewPinCode, boolean isSettings, EntryType entryType) {
         PinCodeFragment pinCodeFragment = new PinCodeFragment();
         Bundle bundle = new Bundle();
         bundle.putString(Constant.FRAGMENT_TYPE, fragmentType);
         bundle.putBoolean(Constant.NEW_PIN_CODE, isNewPinCode);
         bundle.putBoolean(Constant.IS_SETTINGS, isSettings);
+        bundle.putSerializable(Constant.ENTRY_TYPE, entryType);
         pinCodeFragment.setArguments(bundle);
         return pinCodeFragment;
     }
@@ -77,7 +94,9 @@ public class PinCodeFragment extends Fragment {
         fragmentType = getArguments().getString(Constant.FRAGMENT_TYPE, Constant.ENTER_CODE);
         isSettings = getArguments().getBoolean(Constant.IS_SETTINGS, false);
         isSetNewPinCode = getArguments().getBoolean(Constant.NEW_PIN_CODE, false);
+        entryType = (EntryType) getArguments().getSerializable(Constant.ENTRY_TYPE);
 
+        Toast.makeText(getContext(), String.valueOf(entryType), Toast.LENGTH_LONG).show();
 
         if (fragmentType.equals(Constant.SET_CODE)) {
             ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
@@ -120,80 +139,115 @@ public class PinCodeFragment extends Fragment {
 
 
     private void updatePinCodeView(){
-        pinCodeEditText.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                pinCodeEditText.requestFocus();
-                InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                if(imm != null) {
-                    imm.showSoftInput(pinCodeEditText, InputMethodManager.SHOW_IMPLICIT);
-                }
+        pinCodeEditText.postDelayed(() -> {
+            pinCodeEditText.requestFocus();
+            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            if(imm != null) {
+                imm.showSoftInput(pinCodeEditText, InputMethodManager.SHOW_IMPLICIT);
             }
         }, 400);
 
 
-        //get local variables
         final String pinCode = Settings.getPinCode(context);
-        int attempts = Settings.getCurrentPinCodeAttempts(context);
 
-        //Set attempts left view
-
-        if(isSetNewPinCode) {
-            enterPasscodeTextView.setText(R.string.enter_current_passcode);
-        } else {
-            attemptsTextView.setText(getAttemptsLeftText(attempts));
+        switch (entryType) {
+            case SETTING_NEW:
+                enterPasscodeTextView.setText(R.string.enter_your_passcode);
+                break;
+            case ENTERING_NORMAL:
+                enterPasscodeTextView.setText(R.string.enter_your_passcode);
+                break;
+            case CHANGING_CURRENT:
+                enterPasscodeTextView.setText(R.string.enter_your_old_passcode);
+                break;
         }
 
-        if (pinCode == null){
-            attemptsTextView.setVisibility(View.GONE);
-        }
+        attemptsTextView.setVisibility(View.GONE);
+
 
         pinCodeEditText.setOnPinEnteredListener(str -> {
-
-            String passcode = str.toString();
-            //If there is no pin code set
-            if (pinCode == null) {
-                if (newPinAttempts == 0){
-                    newPinAttempts++;
-                    pinCodeEditText.setText("");
-                } else {
-                    attemptsTextView.setVisibility(View.VISIBLE);
-                    attemptsTextView.setText(R.string.successfully_set_pin);
-                    setNewPin(passcode);
-                }
-                //If we are setting a new code
-            } else if (newPin) {
-                if (passcode.equalsIgnoreCase(pinCode)) {
-                    showAlertView(getString(R.string.same_pin_code));
-                    getActivity().onBackPressed();
-                } else {
-                    showAlertView(getString(R.string.new_pin_success));
-                    Settings.savePinCode(context, passcode);
-                    getActivity().onBackPressed();
-                }
-                newPin = false;
-                //If user entered correct pin code
-            } else if (passcode.equalsIgnoreCase(Settings.getPinCode(context))) {
-                if (isSetNewPinCode) {
-                    attemptsTextView.setVisibility(View.INVISIBLE);
-                    enterPasscodeTextView.setText(R.string.enter_new_passcode);
-                    pinCodeEditText.setText("");
-                    newPin = true;
-                    Settings.resetCurrentPinAttempts(context);
-                    return;
-                } else {
-                    attemptsTextView.setText(R.string.correct_pin_code);
-                }
-                if (pinCodeViewListener != null) {
-                    pinCodeViewListener.onCorrectPinCode(true);
-                }
-                Settings.resetCurrentPinAttempts(context);
-            } else {
-                wrongPinCode();
-            }
+            handlePinCodeAttempt(str.toString(), pinCode);
         });
     }
 
+    private void handlePinCodeAttempt(String enteredPinCode, String currentPinCode) {
+
+        switch (entryType) {
+            case SETTING_NEW:
+
+                if (entryLevel == EntryLevel.TWO) {
+                    Log.i("boogie", String.valueOf(currentPinCode));
+                    if (enteredPinCode.equalsIgnoreCase(initialPinCode)) {
+                        setNewPin(enteredPinCode);
+                        attemptsTextView.setVisibility(View.VISIBLE);
+                        attemptsTextView.setText(R.string.correct_pin_code);
+                    } else {
+                        initialPinCode = null;
+                        enterPasscodeTextView.setText(R.string.enter_your_passcode);
+                        entryLevel = EntryLevel.ONE;
+                        attemptsTextView.setVisibility(View.VISIBLE);
+                        attemptsTextView.setText(R.string.pin_codes_dont_match);
+                        pinCodeEditText.setText("");
+                    }
+                } else if (entryLevel == EntryLevel.ONE) {
+                    initialPinCode = enteredPinCode;
+                    pinCodeEditText.setText("");
+                    attemptsTextView.setVisibility(View.INVISIBLE);
+                    enterPasscodeTextView.setText(R.string.re_enter_your_passcode);
+                    entryLevel = EntryLevel.TWO;
+                }
+                break;
+            case ENTERING_NORMAL:
+                if (enteredPinCode.equalsIgnoreCase(currentPinCode)) {
+                    //User entered correct pin code
+                    attemptsTextView.setVisibility(View.VISIBLE);
+                    attemptsTextView.setText(R.string.correct_pin_code);
+
+                    if (pinCodeViewListener != null) {
+                        pinCodeViewListener.onCorrectPinCode(true);
+                    }
+                    Settings.resetCurrentPinAttempts(context);
+                } else {
+                    //User entered wrong pin code
+                    pinCodeEditText.setText("");
+                    attemptsTextView.setVisibility(View.VISIBLE);
+                    wrongPinCode();
+                }
+
+
+                break;
+            case CHANGING_CURRENT:
+
+                if (entryLevel == EntryLevel.TWO) {
+                    //User already entered old passcode and are setting their new passcode
+                    setNewPin(enteredPinCode);
+
+                } else {
+                    //User is entering in their old passcode
+                    if (enteredPinCode.equalsIgnoreCase(currentPinCode)) {
+                        //User entered correct pin code
+
+                        attemptsTextView.setVisibility(View.GONE);
+                        enterPasscodeTextView.setText(R.string.enter_new_passcode);
+
+                        if (entryLevel == EntryLevel.ONE) {
+                            pinCodeEditText.setText("");
+
+                            entryLevel = EntryLevel.TWO;
+                        }
+                        Settings.resetCurrentPinAttempts(context);
+                    } else {
+                        //User entered incorrect pin code
+                        pinCodeEditText.setText("");
+                        attemptsTextView.setVisibility(View.VISIBLE);
+                        wrongPinCode();
+                    }
+                }
+                break;
+        }
+
+    }
+    
     @SuppressLint("DefaultLocale")
     private String getAttemptsLeftText(int attempts) {
         return String.format(Constant.ATTEMPTS_LEFT_FORMAT, attempts);
@@ -277,6 +331,8 @@ public class PinCodeFragment extends Fragment {
         public static final String FRAGMENT_TYPE = "code_type";
         public static final String NEW_PIN_CODE = "new_pin_code";
         public static final String IS_SETTINGS = "is_settings";
+
+        public static final String ENTRY_TYPE = "entry_type";
 
 
         public static final String ENTER_CODE = "enter_code";
