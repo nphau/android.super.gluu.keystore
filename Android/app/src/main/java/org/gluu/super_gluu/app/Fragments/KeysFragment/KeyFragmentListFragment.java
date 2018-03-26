@@ -17,7 +17,6 @@ import org.gluu.super_gluu.app.base.ToolbarFragment;
 import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
 import org.gluu.super_gluu.u2f.v2.model.TokenEntry;
-import org.gluu.super_gluu.util.FakeDataUtil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -69,7 +68,7 @@ public class KeyFragmentListFragment extends ToolbarFragment {
 
         mListener = new KeyHandleInfo() {
             @Override
-            public void onKeyHandleInfo(KeyHandleInfoFragment infoFragment) {
+            public void onKeyHandleInfo(org.gluu.super_gluu.app.fragments.KeysFragment.KeyHandleInfoFragment infoFragment) {
                 getActivity().invalidateOptionsMenu();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.main_frame_layout, infoFragment);
@@ -78,21 +77,18 @@ public class KeyFragmentListFragment extends ToolbarFragment {
             }
 
             @Override
-            public void onUpdateList(Boolean isEmtryList) {
-                setEmptyTextVisibility(!isEmtryList);
+            public void onUpdateList(Boolean isEmptyList) {
+                setEmptyTextVisibility(!isEmptyList);
             }
         };
 
-        cListener = new KeyHandleChangeName() {
-            @Override
-            public void onKeyNameChanged(String keyID) {
-                CustomGluuAlert gluuAlert = new CustomGluuAlert(getActivity());
-                gluuAlert.setMessage(getActivity().getApplicationContext().getString(R.string.enter_new_key_name));
-                gluuAlert.setYesTitle(getActivity().getApplicationContext().getString(R.string.yes));
-                gluuAlert.setNoTitle(getActivity().getApplicationContext().getString(R.string.no));
+        cListener = keyID -> {
+            CustomGluuAlert gluuAlert = new CustomGluuAlert(getActivity());
+            gluuAlert.setMessage(getActivity().getApplicationContext().getString(R.string.enter_new_key_name));
+            gluuAlert.setYesTitle(getActivity().getApplicationContext().getString(R.string.yes));
+            gluuAlert.setNoTitle(getActivity().getApplicationContext().getString(R.string.no));
 //                gluuAlert.setmListener(listener);
-                gluuAlert.show();
-            }
+            gluuAlert.show();
         };
 
         ViewGroup header = (ViewGroup) inflater.inflate(R.layout.key_list_header, keysListView,false);
@@ -127,18 +123,16 @@ public class KeyFragmentListFragment extends ToolbarFragment {
         }
         //Sort keys by created date
         List<TokenEntry> tokensFromDB = new ArrayList<TokenEntry>(tokens);
-        Collections.sort(tokensFromDB, new Comparator<TokenEntry>(){
-            public int compare(TokenEntry key1, TokenEntry key2) {
-                SimpleDateFormat isoDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
-                try {
-                    Date date1 = isoDateTimeFormat.parse(key1.getCreatedDate());
-                    Date date2 = isoDateTimeFormat.parse(key2.getCreatedDate());
-                    return date1.compareTo(date2);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                return 0;
+        Collections.sort(tokensFromDB, (key1, key2) -> {
+            SimpleDateFormat isoDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+            try {
+                Date date1 = isoDateTimeFormat.parse(key1.getCreatedDate());
+                Date date2 = isoDateTimeFormat.parse(key2.getCreatedDate());
+                return date1.compareTo(date2);
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
+            return 0;
         });
         Collections.reverse(tokensFromDB);
 
