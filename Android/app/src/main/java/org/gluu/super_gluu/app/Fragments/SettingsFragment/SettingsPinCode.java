@@ -1,5 +1,6 @@
 package org.gluu.super_gluu.app.fragments.SettingsFragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
@@ -108,6 +109,10 @@ public class SettingsPinCode extends ToolbarFragment {
     }
 
     private void setPinCode(Boolean isTurnOn) {
+        if(getContext() == null) {
+            return;
+        }
+
         Settings.setPinCodeEnabled(getContext(), isTurnOn);
         if (isTurnOn) {
             setPinCodeContainer.setVisibility(View.VISIBLE);
@@ -115,6 +120,7 @@ public class SettingsPinCode extends ToolbarFragment {
         } else {
             setPinCodeContainer.setVisibility(View.GONE);
             attemptsDescription.setVisibility(View.GONE);
+            Settings.clearPinCode(getContext());
         }
     }
 

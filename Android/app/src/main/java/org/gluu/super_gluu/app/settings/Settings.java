@@ -43,6 +43,13 @@ public class Settings {
         editor.commit();
     }
 
+    public static void clearPinCode(Context context){
+        SharedPreferences preferences = context.getSharedPreferences(PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(Constant.PIN_CODE, null);
+        editor.commit();
+    }
+
     public static void setPinCodeAttempts(Context context, String attempts){
         SharedPreferences preferences = context.getSharedPreferences(PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();

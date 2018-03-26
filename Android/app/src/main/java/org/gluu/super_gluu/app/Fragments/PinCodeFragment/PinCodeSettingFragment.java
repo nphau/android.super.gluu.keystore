@@ -55,6 +55,7 @@ public class PinCodeSettingFragment extends Fragment {
         noButton.setOnClickListener(v -> {
             mainActivityListener.onMainActivity();
             Settings.setPinCodeEnabled(getContext(), false);
+            Settings.clearPinCode(getContext());
         });
 
         Typeface faceLight = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Regular.otf");
