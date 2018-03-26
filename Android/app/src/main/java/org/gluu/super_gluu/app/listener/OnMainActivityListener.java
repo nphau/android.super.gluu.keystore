@@ -8,7 +8,6 @@ import org.gluu.super_gluu.app.fragments.KeysFragment.KeyHandleInfoFragment;
 
 public interface OnMainActivityListener {
 
-    void onLicenseAgreement();
     void onMainActivity();
     void onShowPinFragment(boolean enterPinCode);
     void onShowKeyInfo(KeyHandleInfoFragment infoFragment);

@@ -38,9 +38,6 @@ public class LicenseFragment extends ToolbarFragment {
     @BindView(R.id.license_progress_bar)
     ProgressBar progressBar;
 
-    @BindView(R.id.accept_button)
-    Button acceptButton;
-
     private Boolean isFirstTimeLoading;
     private Type type;
 
@@ -81,13 +78,10 @@ public class LicenseFragment extends ToolbarFragment {
         isFirstTimeLoading = getArguments().getBoolean(Constant.IS_FIRST_TIME_LOADING, false);
         type = (Type) getArguments().getSerializable(Constant.LICENSE_TYPE);
 
-        acceptButton.setOnClickListener(v -> mainActivityListener.onLicenseAgreement());
 
         if (isFirstTimeLoading && type == Type.PRIVACY){
-            acceptButton.setVisibility(View.VISIBLE);
             setDefaultToolbar(toolbar, getString(R.string.privacy_policy), false);
         } else {
-            acceptButton.setVisibility(View.GONE);
             if(type == Type.PRIVACY) {
                 setDefaultToolbar(toolbar, getString(R.string.privacy_policy), true);
             } else {

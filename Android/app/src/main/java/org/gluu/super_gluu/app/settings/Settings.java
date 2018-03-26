@@ -109,6 +109,7 @@ public class Settings {
         return preferences.getBoolean("isAppLocked", false);
     }
 
+    //todo delete both save accept and get accept if it is confirmed there is no plan to force user to accept license
     public static void saveAccept(Context context){
         SharedPreferences preferences = context.getSharedPreferences("IsAcceptLicense", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();

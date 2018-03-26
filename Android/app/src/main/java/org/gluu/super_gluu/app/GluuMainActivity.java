@@ -525,11 +525,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
     //OnMainActivityListener methods
     @Override
-    public void onLicenseAgreement() {
-
-    }
-
-    @Override
     public void onMainActivity() {
 
     }

@@ -63,16 +63,7 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
             if (isAppLocked) {
                 loadLockedFragment(true);
             } else {
-                if (Settings.getAccept(getApplicationContext())) {
-                    checkPinCodeEnabled();
-                } else {
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    LicenseFragment licenseFragment = LicenseFragment.newInstance(true, LicenseFragment.Type.PRIVACY);
-
-                    fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                    fragmentTransaction.replace(R.id.fragment_container, licenseFragment);
-                    fragmentTransaction.commit();
-                }
+                advanceToNextScreen();
             }
         }
         Settings.setIsBackButtonVisibleForKey(getBaseContext(), false);
@@ -93,11 +84,6 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
         nMgr.cancel(GluuMainActivity.MESSAGE_NOTIFICATION_ID);
     }
 
-    @Override
-    public void onLicenseAgreement() {
-        Settings.saveAccept(getApplicationContext());
-        advanceToNextScreen();
-    }
 
     @Override
     public void onMainActivity() {
