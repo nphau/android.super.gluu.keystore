@@ -104,13 +104,7 @@ public class SettingsFragment extends ToolbarFragment {
                 settingsIconImageView.setImageDrawable(getResources().getDrawable(R.drawable.icon_touch_id));
 
                 if(fingerprint.checkIfFingerprintEnabled()) {
-                    subtitleTextView.setText(getString(R.string.pin_code_text));
-                } else {
-                    subtitleTextView.setText(getString(R.string.fingerprint_off_device));
-                }
-
-                if(fingerprint.checkIfFingerprintEnabled()) {
-                    subtitleTextView.setText(getString(R.string.pin_code_text));
+                    subtitleTextView.setText(getString(R.string.fingerprint_protection_description));
                 } else {
                     subtitleTextView.setText(getString(R.string.fingerprint_off_device));
                     showToast(getString(R.string.fingerprint_off_device));

@@ -80,6 +80,7 @@
     <string name="settings_title">Settings</string>
     <string name="pin_code_settings">Pin code</string>
     <string name="pin_code_text">When enabled, access to your Super Gluu app will be protected by a pin code of your choice.</string>
+    <string name="fingerprint_protection_description">When enabled, access to your Super Gluu app will be protected by fingerprint.</string>
 
     <string name="set_new_pin_code">Set pin code</string>
     <string name="enter_pin_code">Enter Pin code</string>
