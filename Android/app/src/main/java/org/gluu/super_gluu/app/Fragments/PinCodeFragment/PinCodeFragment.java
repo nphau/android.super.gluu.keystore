@@ -154,80 +154,83 @@ public class PinCodeFragment extends Fragment {
     private void handlePinCodeAttempt(String enteredPinCode, String currentPinCode) {
 
         switch (entryType) {
-
             case SETTING_NEW:
-                if (entryLevel == EntryLevel.TWO) {
-                    if (enteredPinCode.equalsIgnoreCase(initialPinCode)) {
-                        setNewPin(enteredPinCode);
-                        attemptsTextView.setVisibility(View.VISIBLE);
-                        attemptsTextView.setText(R.string.correct_pin_code);
-                    } else {
-                        initialPinCode = null;
-                        enterPasscodeTextView.setText(R.string.enter_your_passcode);
-                        entryLevel = EntryLevel.ONE;
-                        attemptsTextView.setVisibility(View.VISIBLE);
-                        attemptsTextView.setText(R.string.pin_codes_dont_match);
-                        pinCodeEditText.setText("");
-                    }
-                } else if (entryLevel == EntryLevel.ONE) {
-                    initialPinCode = enteredPinCode;
-                    pinCodeEditText.setText("");
-                    attemptsTextView.setVisibility(View.INVISIBLE);
-                    enterPasscodeTextView.setText(R.string.re_enter_your_passcode);
-                    entryLevel = EntryLevel.TWO;
-                }
+                userSettingUpPinCode(enteredPinCode);
                 break;
-
             case ENTERING_NORMAL:
-                if (enteredPinCode.equalsIgnoreCase(currentPinCode)) {
-                    //User entered correct pin code
-                    attemptsTextView.setVisibility(View.VISIBLE);
-                    attemptsTextView.setText(R.string.correct_pin_code);
-
-                    if (pinCodeViewListener != null) {
-                        pinCodeViewListener.onCorrectPinCode(true);
-                    }
-                    Settings.resetCurrentPinAttempts(context);
-                } else {
-                    //User entered wrong pin code
-                    pinCodeEditText.setText("");
-                    attemptsTextView.setVisibility(View.VISIBLE);
-                    wrongPinCode();
-                }
+                userEnteringNormalPincode(enteredPinCode, currentPinCode);
                 break;
-
             case CHANGING_CURRENT:
-
-                if (entryLevel == EntryLevel.TWO) {
-                    //User already entered old passcode and are setting their new passcode
-                    setNewPin(enteredPinCode);
-
-                } else {
-                    //User is entering in their old passcode
-                    if (enteredPinCode.equalsIgnoreCase(currentPinCode)) {
-                        //User entered correct pin code
-
-                        attemptsTextView.setVisibility(View.GONE);
-                        enterPasscodeTextView.setText(R.string.enter_new_passcode);
-
-                        if (entryLevel == EntryLevel.ONE) {
-                            pinCodeEditText.setText("");
-
-                            entryLevel = EntryLevel.TWO;
-                        }
-                        Settings.resetCurrentPinAttempts(context);
-                    } else {
-                        //User entered incorrect pin code
-                        pinCodeEditText.setText("");
-                        attemptsTextView.setVisibility(View.VISIBLE);
-                        wrongPinCode();
-                    }
-                }
+                userChangingCurrentPinCode(enteredPinCode, currentPinCode);
                 break;
         }
 
     }
-    
+
+    private void userSettingUpPinCode(String enteredPinCode) {
+        if (entryLevel == EntryLevel.TWO) {
+            //Re-entering the pin code to make sure it matches first code entered
+            if (enteredPinCode.equalsIgnoreCase(initialPinCode)) {
+                correctPinCode(enteredPinCode, getString(R.string.correct_pin_code));
+            } else {
+                initialPinCode = null;
+                enterPasscodeTextView.setText(R.string.enter_your_passcode);
+                entryLevel = EntryLevel.ONE;
+                attemptsTextView.setVisibility(View.VISIBLE);
+                attemptsTextView.setText(R.string.pin_codes_dont_match);
+                pinCodeEditText.setText("");
+            }
+        } else if (entryLevel == EntryLevel.ONE) {
+            //Entering the pin code for the first time
+            initialPinCode = enteredPinCode;
+            pinCodeEditText.setText("");
+            attemptsTextView.setVisibility(View.INVISIBLE);
+            enterPasscodeTextView.setText(R.string.re_enter_your_passcode);
+            entryLevel = EntryLevel.TWO;
+        }
+    }
+
+    private void userEnteringNormalPincode(String enteredPinCode, String currentPinCode) {
+        if (enteredPinCode.equalsIgnoreCase(currentPinCode)) {
+            //User entered correct pin code
+            attemptsTextView.setVisibility(View.VISIBLE);
+            attemptsTextView.setText(R.string.correct_pin_code);
+
+            if (pinCodeViewListener != null) {
+                pinCodeViewListener.onCorrectPinCode(true);
+            }
+            Settings.resetCurrentPinAttempts(context);
+        } else {
+            //User entered wrong pin code
+            wrongPinCode();
+        }
+    }
+
+    private void userChangingCurrentPinCode(String enteredPinCode, String currentPinCode) {
+        if (entryLevel == EntryLevel.TWO) {
+            //User already entered old passcode and are setting their new passcode
+            correctPinCode(enteredPinCode, getString(R.string.code_changed));
+        } else {
+            //User is entering their old passcode before they can set their new passcode
+            if (enteredPinCode.equalsIgnoreCase(currentPinCode)) {
+                //User entered correct pin code
+                attemptsTextView.setVisibility(View.GONE);
+                enterPasscodeTextView.setText(R.string.enter_new_passcode);
+
+                if (entryLevel == EntryLevel.ONE) {
+                    pinCodeEditText.setText("");
+
+                    entryLevel = EntryLevel.TWO;
+                }
+                Settings.resetCurrentPinAttempts(context);
+            } else {
+                //User entered incorrect pin code
+                wrongPinCode();
+            }
+        }
+    }
+
+
     @SuppressLint("DefaultLocale")
     private String getAttemptsLeftText(int attempts) {
         return String.format(Constant.ATTEMPTS_LEFT_FORMAT, attempts);
@@ -245,7 +248,16 @@ public class PinCodeFragment extends Fragment {
         getActivity().onBackPressed();
     }
 
+    private void correctPinCode(String passcode, String correctText) {
+        setNewPin(passcode);
+        attemptsTextView.setVisibility(View.VISIBLE);
+        attemptsTextView.setText(correctText);
+    }
+
     private void wrongPinCode(){
+        pinCodeEditText.setText("");
+        attemptsTextView.setVisibility(View.VISIBLE);
+
         increaseAttempts();
 
         int attempts = Settings.getCurrentPinCodeAttempts(context);
