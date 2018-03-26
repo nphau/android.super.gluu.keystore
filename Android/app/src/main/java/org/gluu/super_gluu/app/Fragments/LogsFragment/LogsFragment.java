@@ -12,16 +12,22 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.gluu.super_gluu.app.ApproveDenyFragment;
 import SuperGluu.app.R;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import org.gluu.super_gluu.app.GluuMainActivity;
 import org.gluu.super_gluu.app.base.ToolbarFragment;
@@ -45,10 +51,19 @@ public class LogsFragment extends ToolbarFragment {
     private AndroidKeyDataStore dataStore;
     private LogInfoListener mListener;
     public ApproveDenyFragment.OnDeleteLogInfoListener deleteLogListener;
-    private LinearLayout selectAllView;
-    private Button selectAllButton;
     private ListView listView;
     private List<LogInfo> logs;
+
+    @BindView(R.id.edit_container)
+    RelativeLayout editContainer;
+
+    @BindView(R.id.cancel_text_view)
+    TextView cancelTextView;
+
+    @BindView(R.id.delete_text_view)
+    TextView deleteTextView;
+
+
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -87,6 +102,8 @@ public class LogsFragment extends ToolbarFragment {
 
         View rootView = inflater.inflate(R.layout.fragment_logs_list, container, false);
 
+        ButterKnife.bind(this, rootView);
+
         Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.nav_drawer_toolbar);
         setDefaultToolbar(toolbar, getString(R.string.logs), true);
         setHasOptionsMenu(true);
@@ -111,62 +128,80 @@ public class LogsFragment extends ToolbarFragment {
             }
         };
 
-        View actionBarView = (View) rootView.findViewById(R.id.actionBarSettings);
-        actionBarView.findViewById(R.id.action_right_button).setVisibility(View.GONE);
-        actionBarView.findViewById(R.id.actionbar_icon).setVisibility(View.GONE);
-        actionBarView.findViewById(R.id.actionbar_textview).setVisibility(View.GONE);
-        selectAllView = (LinearLayout) rootView.findViewById(R.id.selectAllView);
-        selectAllView.setVisibility(View.GONE);
-        LinearLayout leftButton = (LinearLayout) actionBarView.findViewById(R.id.action_left_button);
-        final Button rightButton = (Button) actionBarView.findViewById(R.id.action_right_button);
-        selectAllButton = (Button) selectAllView.findViewById(R.id.selectAllButton);
-        selectAllButton.setTag(1);// 1- no selected all, 2- selected all
-        rightButton.setVisibility(View.GONE);
-        int visible = logs.size() > 0 ? View.VISIBLE : View.GONE;
-        leftButton.setVisibility(visible);
-        leftButton.findViewById(R.id.actionBarBackArrow).setVisibility(View.GONE);
-        final Button backButton = (Button) leftButton.findViewById(R.id.actionBarBackButton);
-        backButton.setText("Edit");
-        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) backButton.getLayoutParams();
-        params.leftMargin = 25;
-        backButton.requestLayout();
-        leftButton.setOnClickListener(new View.OnClickListener() {
+        //View actionBarView = (View) rootView.findViewById(R.id.actionBarSettings);
+        //actionBarView.findViewById(R.id.action_right_button).setVisibility(View.GONE);
+//        actionBarView.findViewById(R.id.actionbar_icon).setVisibility(View.GONE);
+//        actionBarView.findViewById(R.id.actionbar_textview).setVisibility(View.GONE);
+//        selectAllView = (LinearLayout) rootView.findViewById(R.id.selectAllView);
+//        selectAllView.setVisibility(View.GONE);
+//        LinearLayout leftButton = (LinearLayout) actionBarView.findViewById(R.id.action_left_button);
+//        final Button rightButton = (Button) actionBarView.findViewById(R.id.action_right_button);
+//        selectAllButton = (Button) selectAllView.findViewById(R.id.selectAllButton);
+//        selectAllButton.setTag(1);// 1- no selected all, 2- selected all
+//        rightButton.setVisibility(View.GONE);
+//        int visible = logs.size() > 0 ? View.VISIBLE : View.GONE;
+//        leftButton.setVisibility(visible);
+//        leftButton.findViewById(R.id.actionBarBackArrow).setVisibility(View.GONE);
+//        final Button backButton = (Button) leftButton.findViewById(R.id.actionBarBackButton);
+//        backButton.setText("Edit");
+//        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) backButton.getLayoutParams();
+//        params.leftMargin = 25;
+//        backButton.requestLayout();
+//        leftButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (listAdapter.isEditingMode){
+//                    backButton.setText("Edit");
+//                    listAdapter.isEditingMode = false;
+//                    listAdapter.notifyDataSetChanged();
+//                    rightButton.setVisibility(View.GONE);
+//                    selectAllView.setVisibility(View.GONE);
+//                } else {
+//                    backButton.setText("Cancel");
+//                    selectAllButton.setText("Select All");
+//                    deselectAll();
+//                    listAdapter.isEditingMode = true;
+//                    listAdapter.notifyDataSetChanged();
+//                    rightButton.setVisibility(View.VISIBLE);
+//                    selectAllView.setVisibility(View.VISIBLE);
+//                }
+//            }
+//        });
+//
+//        rightButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showAlertView();
+//            }
+//        });
+//        selectAllButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int tag = (int)v.getTag();
+//                if (tag == 1) {
+//                    selectAll();
+//                } else {
+//                    deselectAll();
+//                }
+//            }
+//        });
+
+        cancelTextView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if (listAdapter.isEditingMode){
-                    backButton.setText("Edit");
-                    listAdapter.isEditingMode = false;
-                    listAdapter.notifyDataSetChanged();
-                    rightButton.setVisibility(View.GONE);
-                    selectAllView.setVisibility(View.GONE);
-                } else {
-                    backButton.setText("Cancel");
-                    selectAllButton.setText("Select All");
-                    deselectAll();
-                    listAdapter.isEditingMode = true;
-                    listAdapter.notifyDataSetChanged();
-                    rightButton.setVisibility(View.VISIBLE);
-                    selectAllView.setVisibility(View.VISIBLE);
-                }
+            public void onClick(View view) {
+                hideEditContainer();
+                listAdapter.isEditingMode = false;
+                listAdapter.notifyDataSetChanged();
             }
         });
-        rightButton.setOnClickListener(new View.OnClickListener() {
+
+        deleteTextView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 showAlertView();
             }
         });
-        selectAllButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int tag = (int)v.getTag();
-                if (tag == 1) {
-                    selectAll();
-                } else {
-                    deselectAll();
-                }
-            }
-        });
+
 
         listAdapter = new LogsFragmentListAdapter(getActivity(), logs, mListener);
         listView.setAdapter(listAdapter);
@@ -194,19 +229,51 @@ public class LogsFragment extends ToolbarFragment {
         return rootView;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_logs_list, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.edit_action:
+                putScreenIntoEditMode();
+                showEditContainer();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showEditContainer() {
+        editContainer.setVisibility(View.VISIBLE);
+    }
+
+    private void putScreenIntoEditMode() {
+        deselectAll();
+        listAdapter.isEditingMode = true;
+        listAdapter.notifyDataSetChanged();
+    }
+
+    private void hideEditContainer() {
+        editContainer.setVisibility(View.GONE);
+    }
+
     private void deselectAll() {
         //Deselect all records
-        selectAllButton.setTag(1);// 1- no selected all, 2- selected all
+        //selectAllButton.setTag(1);// 1- no selected all, 2- selected all
         listAdapter.isSelectAllMode = false;
-        selectAllButton.setText("Select All");
+        //selectAllButton.setText("Select All");
         listAdapter.notifyDataSetChanged();
         listAdapter.deSelectAllLogs();
     }
 
     private void selectAll() {
         //Select all records
-        selectAllButton.setTag(2);// 1- no selected all, 2- selected all
-        selectAllButton.setText("Deselect All");
+        //selectAllButton.setTag(2);// 1- no selected all, 2- selected all
+        //selectAllButton.setText("Deselect All");
         listAdapter.isSelectAllMode = true;
         listAdapter.selectAllLogs();
         listAdapter.notifyDataSetChanged();
@@ -241,7 +308,8 @@ public class LogsFragment extends ToolbarFragment {
             }
         });
         Collections.reverse(logsFromDB);
-        logs = logsFromDB;
+        //logs = logsFromDB;
+        logs = FakeDataUtil.getFakeListOfLogs(10);
     }
 
     void showAlertView(){

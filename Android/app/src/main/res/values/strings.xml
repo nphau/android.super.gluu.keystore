@@ -196,5 +196,6 @@
     <string name="skip">Skip</string>
     <string name="log_details">Log Details</string>
     <string name="permission_approval">Permission Approval</string>
+    <string name="edit">Edit</string>
 
 </resources>

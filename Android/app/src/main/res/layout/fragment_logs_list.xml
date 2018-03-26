@@ -12,20 +12,43 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <include
+    <RelativeLayout
+        android:id="@+id/edit_container"
+        android:background="@color/greenColor"
+        android:visibility="gone"
         android:layout_below="@+id/nav_drawer_toolbar"
-        android:id="@+id/actionBarSettings"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        layout="@layout/custom_action_bar"
-        tools:ignore="UnknownIdInLayout" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/cancel_text_view"
+            android:layout_alignParentStart="true"
+            android:text="Cancel"
+            android:padding="12dp"
+            android:layout_centerVertical="true"
+            android:textSize="16sp"
+            android:textColor="@color/whiteColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/delete_text_view"
+            android:layout_alignParentEnd="true"
+            android:text="Delete"
+            android:padding="12dp"
+            android:layout_centerVertical="true"
+            android:textSize="16sp"
+            android:textColor="@color/whiteColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/logs_listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/actionBarSettings"
-        android:layout_above="@+id/selectAllView"
+        android:layout_below="@+id/edit_container"
         android:background="@android:color/white"
         android:divider="@color/border_grey"
         android:dividerHeight="0.5dp"
@@ -38,24 +61,5 @@
         android:text="@string/noLogs"
         android:id="@+id/noLogs_textView"
         android:layout_centerHorizontal="true" />
-
-    <LinearLayout
-        android:id="@+id/selectAllView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/backgroundColor">
-
-        <Button
-            android:id="@+id/selectAllButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:textAllCaps="false"
-            android:textSize="18dp"
-            android:background="@android:color/transparent"
-            android:text="Select All"/>
-
-    </LinearLayout>
 
 </RelativeLayout>
