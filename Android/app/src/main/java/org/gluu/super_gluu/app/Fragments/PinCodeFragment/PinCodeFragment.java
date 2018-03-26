@@ -61,20 +61,9 @@ public class PinCodeFragment extends Fragment {
 
     public PinCodeViewListener pinCodeViewListener;
 
-    private String fragmentType;
-    private boolean isSettings;
-    private boolean newPin;
-    private boolean isSetNewPinCode;
-
-    private int newPinAttempts;
-
-
-    public static PinCodeFragment newInstance(String fragmentType, boolean isNewPinCode, boolean isSettings, EntryType entryType) {
+    public static PinCodeFragment newInstance(EntryType entryType) {
         PinCodeFragment pinCodeFragment = new PinCodeFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(Constant.FRAGMENT_TYPE, fragmentType);
-        bundle.putBoolean(Constant.NEW_PIN_CODE, isNewPinCode);
-        bundle.putBoolean(Constant.IS_SETTINGS, isSettings);
         bundle.putSerializable(Constant.ENTRY_TYPE, entryType);
         pinCodeFragment.setArguments(bundle);
         return pinCodeFragment;
@@ -91,31 +80,23 @@ public class PinCodeFragment extends Fragment {
 
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
-        fragmentType = getArguments().getString(Constant.FRAGMENT_TYPE, Constant.ENTER_CODE);
-        isSettings = getArguments().getBoolean(Constant.IS_SETTINGS, false);
-        isSetNewPinCode = getArguments().getBoolean(Constant.NEW_PIN_CODE, false);
         entryType = (EntryType) getArguments().getSerializable(Constant.ENTRY_TYPE);
 
-        Toast.makeText(getContext(), String.valueOf(entryType), Toast.LENGTH_LONG).show();
-
-        if (fragmentType.equals(Constant.SET_CODE)) {
+        if (entryType == EntryType.SETTING_NEW || entryType == EntryType.CHANGING_CURRENT) {
             ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
             if(actionBar != null) {
                 actionBar.setTitle(getString(R.string.set_passcode));
             }
-            enterPasscodeTextView.setText(getString(R.string.enter_a_passcode));
         } else {
             ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
             if(actionBar != null) {
                 actionBar.setTitle(getString(R.string.enter_passcode));
             }
-            enterPasscodeTextView.setText(getString(R.string.enter_your_passcode));
         }
 
         setHasOptionsMenu(true);
 
         updatePinCodeView();
-        newPinAttempts = 0;
 
         return view;
     }
@@ -173,10 +154,9 @@ public class PinCodeFragment extends Fragment {
     private void handlePinCodeAttempt(String enteredPinCode, String currentPinCode) {
 
         switch (entryType) {
-            case SETTING_NEW:
 
+            case SETTING_NEW:
                 if (entryLevel == EntryLevel.TWO) {
-                    Log.i("boogie", String.valueOf(currentPinCode));
                     if (enteredPinCode.equalsIgnoreCase(initialPinCode)) {
                         setNewPin(enteredPinCode);
                         attemptsTextView.setVisibility(View.VISIBLE);
@@ -197,6 +177,7 @@ public class PinCodeFragment extends Fragment {
                     entryLevel = EntryLevel.TWO;
                 }
                 break;
+
             case ENTERING_NORMAL:
                 if (enteredPinCode.equalsIgnoreCase(currentPinCode)) {
                     //User entered correct pin code
@@ -213,9 +194,8 @@ public class PinCodeFragment extends Fragment {
                     attemptsTextView.setVisibility(View.VISIBLE);
                     wrongPinCode();
                 }
-
-
                 break;
+
             case CHANGING_CURRENT:
 
                 if (entryLevel == EntryLevel.TWO) {
@@ -275,7 +255,7 @@ public class PinCodeFragment extends Fragment {
         pinCodeEditText.setText("");
         if (attempts <= 0) {
             Settings.resetCurrentPinAttempts(context);
-            if (isSettings) {
+            if (entryType == EntryType.CHANGING_CURRENT) {
                 Settings.setAppLocked(context, true);
                 setCurrentNetworkTime();
             }
