@@ -45,8 +45,7 @@
             android:textColor="@android:color/black"
             android:textColorHint="@android:color/black"
             app:pinRepeatedHint="\u2014"
-            android:includeFontPadding="false"
-            app:pinCharacterMask="\u2022"/>
+            app:pinCharacterMask="\u25CF"/>
 
         <TextView
             android:layout_width="wrap_content"
