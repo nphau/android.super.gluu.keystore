@@ -131,7 +131,9 @@ public class LogsFragment extends ToolbarFragment {
 
         deleteTextView.setOnClickListener(view -> showAlertView());
 
+        ViewGroup header = (ViewGroup) inflater.inflate(R.layout.log_list_header, listView,false);
 
+        listView.addHeaderView(header);
         listAdapter = new LogsFragmentListAdapter(getActivity(), logs, mListener);
         listView.setAdapter(listAdapter);
         listView.post(() -> {

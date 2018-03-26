@@ -1,7 +1,6 @@
 package org.gluu.super_gluu.app.fragments.KeysFragment;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
@@ -10,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -19,6 +17,7 @@ import org.gluu.super_gluu.app.base.ToolbarFragment;
 import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
 import org.gluu.super_gluu.u2f.v2.model.TokenEntry;
+import org.gluu.super_gluu.util.FakeDataUtil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,10 +26,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-
-import org.gluu.super_gluu.app.fragments.KeysFragment.KeyFragmentListAdapter;
-import org.gluu.super_gluu.app.fragments.KeysFragment.KeyHandleInfoFragment;
-import org.gluu.super_gluu.util.FakeDataUtil;
 
 import SuperGluu.app.R;
 import butterknife.BindView;
@@ -69,8 +64,8 @@ public class KeyFragmentListFragment extends ToolbarFragment {
         setHasOptionsMenu(true);
 
         listToken = getListToken(rootView);
-        
-        setListAndEmptyVisibility(listToken.size() > 0);
+
+        setEmptyTextVisibility(listToken.size() > 0);
 
         mListener = new KeyHandleInfo() {
             @Override
@@ -84,7 +79,7 @@ public class KeyFragmentListFragment extends ToolbarFragment {
 
             @Override
             public void onUpdateList(Boolean isEmtryList) {
-                setListAndEmptyVisibility(!isEmtryList);
+                setEmptyTextVisibility(!isEmtryList);
             }
         };
 
@@ -150,12 +145,10 @@ public class KeyFragmentListFragment extends ToolbarFragment {
         return tokensFromDB;
     }
 
-    public void setListAndEmptyVisibility(boolean listVisible) {
+    public void setEmptyTextVisibility(boolean listVisible) {
         if(listVisible) {
-            keysListView.setVisibility(View.VISIBLE);
             emptyKeysTextView.setVisibility(View.GONE);
         } else {
-            keysListView.setVisibility(View.GONE);
             emptyKeysTextView.setVisibility(View.VISIBLE);
         }
     }

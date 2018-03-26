@@ -70,7 +70,11 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/noLogs"
         android:visibility="gone"
-        android:layout_centerInParent="true"
+        android:textSize="16sp"
+        android:fontFamily="@font/proxima_nova_regular"
+        android:layout_below="@+id/logs_listView"
+        android:layout_marginTop="36dp"
+        android:textColor="@color/dark_grey"
         android:id="@+id/noLogs_textView"
         android:layout_centerHorizontal="true" />
 
