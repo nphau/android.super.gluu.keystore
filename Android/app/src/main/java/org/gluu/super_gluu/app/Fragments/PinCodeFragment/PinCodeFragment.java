@@ -95,6 +95,11 @@ public class PinCodeFragment extends Fragment {
 
         entryType = (EntryType) getArguments().getSerializable(Constant.ENTRY_TYPE);
 
+        if(entryType == null) {
+            throw new RuntimeException(context.toString()
+                    + " must provide entry type to PinCodeFragment");
+        }
+
         if (entryType == EntryType.SETTING_NEW || entryType == EntryType.CHANGING_CURRENT) {
             ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
             if(actionBar != null) {
