@@ -81,7 +81,7 @@ public class LockedFragment extends Fragment {
 
         enterPasscodeButton.setOnClickListener(view -> stuckListener.onPinCodeSelected());
 
-        fingerprintImageView.setOnClickListener(view -> stuckListener.fingerPrintEntered());
+        fingerprintImageView.setOnClickListener(view -> stuckListener.startFingerprintAuthentication());
 
         return rootView;
     }

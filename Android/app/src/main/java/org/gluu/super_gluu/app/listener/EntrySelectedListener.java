@@ -7,7 +7,8 @@ package org.gluu.super_gluu.app.listener;
 public interface EntrySelectedListener {
 
     void onPinCodeSelected();
-    void onFingerprintSelected();
-    void fingerPrintEntered();
+    void setupFingerprintAuthentication();
+    void startFingerprintAuthentication();
     void onSkipSelected();
 }
+

@@ -58,12 +58,6 @@ public class PinCodeSettingFragment extends Fragment {
             Settings.clearPinCode(getContext());
         });
 
-        Typeface faceLight = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Regular.otf");
-        textSettingsTitle.setTypeface(faceLight);
-        textSettingsSubTitle.setTypeface(faceLight);
-        yesButton.setTypeface(faceLight);
-        noButton.setTypeface(faceLight);
-
         return view;
     }
 

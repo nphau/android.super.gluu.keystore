@@ -216,17 +216,7 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
         if(entryType == PinCodeFragment.EntryType.SETTING_NEW) {
             loadGluuMainActivity();
         } else {
-
-            boolean showPinCode = Settings.getPinCodeEnabled(getBaseContext());
-            boolean showFingerprint = Settings.getFingerprintEnabled(getBaseContext());
-
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            LockedFragment lockedFragment = LockedFragment.newInstance(showPinCode, showFingerprint);
-            fragmentManager
-                    .beginTransaction()
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    .replace(R.id.fragment_container, lockedFragment)
-                    .commit();
+            navigateToLockedScreen();
         }
     }
 
@@ -272,7 +262,7 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
     }
 
     @Override
-    public void onFingerprintSelected() {
+    public void setupFingerprintAuthentication() {
         Fingerprint fingerprint = new Fingerprint(MainActivity.this);
             //Fingerprint Service should handle checking if fingerprint is available and messaging the user if it failed
         if(fingerprint.startFingerprintService()) {
@@ -282,9 +272,14 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
     }
 
     @Override
-    public void fingerPrintEntered() {
-        FingerPrintManager fingerPrintManager = new FingerPrintManager(this);
-        fingerPrintManager.onFingerPrint(isSuccess -> loadGluuMainActivity());
+    public void startFingerprintAuthentication() {
+        Boolean isFingerprint = Settings.getFingerprintEnabled(getApplicationContext());
+        if (isFingerprint) {
+            FingerPrintManager fingerPrintManager = new FingerPrintManager(this);
+            fingerPrintManager.onFingerPrint(isSuccess -> loadGluuMainActivity());
+        } else {
+            showToast(getString(R.string.fingerprint_protection_off));
+        }
     }
 
     @Override
@@ -300,6 +295,19 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
         GluuToast gluuToast = new GluuToast(MainActivity.this);
         View view = getLayoutInflater().inflate(R.layout.gluu_toast, null);
         gluuToast.showGluuToastWithText(view, text);
+    }
+
+    public void navigateToLockedScreen() {
+        boolean showPinCode = Settings.getPinCodeEnabled(getBaseContext());
+        boolean showFingerprint = Settings.getFingerprintEnabled(getBaseContext());
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        LockedFragment lockedFragment = LockedFragment.newInstance(showPinCode, showFingerprint);
+        fragmentManager
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(R.id.fragment_container, lockedFragment)
+                .commit();
     }
 
 }

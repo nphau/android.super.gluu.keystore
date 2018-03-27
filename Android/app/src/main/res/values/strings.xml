@@ -211,6 +211,7 @@
     <string name="re_enter_your_passcode">Re-enter your passcode</string>
     <string name="pin_codes_dont_match">Pin codes don\'t match. Let\'s try again</string>
     <string name="code_changed">Pin code updated</string>
+    <string name="fingerprint_protection_off">Fingerprint protection is not turned on.</string>
 
 
 </resources>
