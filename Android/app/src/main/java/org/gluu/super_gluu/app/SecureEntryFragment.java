@@ -28,7 +28,7 @@ public class SecureEntryFragment extends Fragment {
     @BindView(R.id.button_enter_passcode)
     Button enterPasscodeButton;
 
-    EntrySelectedListener stuckListener;
+    EntrySelectedListener entrySelectedListener;
 
     public static SecureEntryFragment newInstance(boolean showPinCode, boolean showFingerprint) {
         SecureEntryFragment secureEntryFragment = new SecureEntryFragment();
@@ -44,7 +44,7 @@ public class SecureEntryFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof EntrySelectedListener) {
-            stuckListener = (EntrySelectedListener) context;
+            entrySelectedListener = (EntrySelectedListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement EntrySelectedListener");
@@ -55,7 +55,7 @@ public class SecureEntryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_locked, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_secure_entry, container, false);
         ButterKnife.bind(this, rootView);
 
         boolean showPinCode = getArguments().getBoolean(Constant.SHOW_PIN_CODE);
@@ -73,9 +73,9 @@ public class SecureEntryFragment extends Fragment {
             fingerprintImageView.setVisibility(View.INVISIBLE);
         }
 
-        enterPasscodeButton.setOnClickListener(view -> stuckListener.onPinCodeSelected());
+        enterPasscodeButton.setOnClickListener(view -> entrySelectedListener.onPinCodeSelected());
 
-        fingerprintImageView.setOnClickListener(view -> stuckListener.startFingerprintAuthentication());
+        fingerprintImageView.setOnClickListener(view -> entrySelectedListener.startFingerprintAuthentication());
 
         return rootView;
     }

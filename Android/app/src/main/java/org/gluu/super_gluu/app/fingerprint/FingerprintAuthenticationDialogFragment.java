@@ -92,16 +92,7 @@ public class FingerprintAuthenticationDialogFragment extends android.support.v4.
             public void onClick(View view) {
                 dismiss();
 
-                boolean showPinCode = Settings.getPinCodeEnabled(mActivity.getBaseContext());
-                boolean showFingerprint = Settings.getFingerprintEnabled(mActivity.getBaseContext());
-
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                SecureEntryFragment secureEntryFragment = SecureEntryFragment.newInstance(showPinCode, showFingerprint);
-                fragmentManager
-                        .beginTransaction()
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .replace(R.id.fragment_container, secureEntryFragment)
-                        .commit();
+                navigateToSecureEntryScreen();
             }
         });
         mCancelButton.setVisibility(View.VISIBLE);
@@ -140,6 +131,19 @@ public class FingerprintAuthenticationDialogFragment extends android.support.v4.
             goToBackup();
         }
         return v;
+    }
+
+    private void navigateToSecureEntryScreen() {
+        boolean showPinCode = Settings.getPinCodeEnabled(mActivity.getBaseContext());
+        boolean showFingerprint = Settings.getFingerprintEnabled(mActivity.getBaseContext());
+
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        SecureEntryFragment secureEntryFragment = SecureEntryFragment.newInstance(showPinCode, showFingerprint);
+        fragmentManager
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(R.id.fragment_container, secureEntryFragment)
+                .commit();
     }
 
     @Override
