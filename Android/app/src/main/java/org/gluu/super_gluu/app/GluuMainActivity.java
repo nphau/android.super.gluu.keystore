@@ -501,7 +501,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     }
 
     @Override
-    public void onCancel() {
+    public void onCancel(PinCodeFragment.EntryType entryType) {
         onBackPressed();
     }
 

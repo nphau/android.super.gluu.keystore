@@ -220,17 +220,22 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
     }
 
     @Override
-    public void onCancel() {
-        boolean showPinCode = Settings.getPinCodeEnabled(getBaseContext());
-        boolean showFingerprint = Settings.getFingerprintEnabled(getBaseContext());
+    public void onCancel(PinCodeFragment.EntryType entryType) {
+        if(entryType == PinCodeFragment.EntryType.SETTING_NEW) {
+            loadGluuMainActivity();
+        } else {
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        StuckFragment stuckFragment = StuckFragment.newInstance(showPinCode, showFingerprint);
-        fragmentManager
-                .beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.fragment_container, stuckFragment)
-                .commit();
+            boolean showPinCode = Settings.getPinCodeEnabled(getBaseContext());
+            boolean showFingerprint = Settings.getFingerprintEnabled(getBaseContext());
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            StuckFragment stuckFragment = StuckFragment.newInstance(showPinCode, showFingerprint);
+            fragmentManager
+                    .beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .replace(R.id.fragment_container, stuckFragment)
+                    .commit();
+        }
     }
 
     private void loadLockedFragment(Boolean isRecover) {

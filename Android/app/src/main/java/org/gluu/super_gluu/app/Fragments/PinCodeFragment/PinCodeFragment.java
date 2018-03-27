@@ -334,7 +334,7 @@ public class PinCodeFragment extends Fragment {
 
     private void exitScreen() {
         Settings.saveIsReset(context);
-        pinCodeViewListener.onCancel();
+        pinCodeViewListener.onCancel(entryType);
     }
 
     @Override
@@ -344,7 +344,7 @@ public class PinCodeFragment extends Fragment {
 
     public interface PinCodeViewListener{
         void onCorrectPinCode(boolean isPinCodeCorrect);
-        void onCancel();
+        void onCancel(EntryType entryType);
     }
 
     public class Constant {
