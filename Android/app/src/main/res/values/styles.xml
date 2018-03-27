@@ -9,7 +9,7 @@
 
     <!-- Style for splash page -->
     <style name="SplashScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/splash_page</item>
+        <item name="android:windowBackground">@drawable/splash_screen</item>
         <item name="colorPrimary">@color/greenColor</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
