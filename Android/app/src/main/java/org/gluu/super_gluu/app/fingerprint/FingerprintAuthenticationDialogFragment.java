@@ -24,6 +24,8 @@ import android.content.pm.ActivityInfo;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +38,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.gluu.super_gluu.app.activities.MainActivity;
+import org.gluu.super_gluu.app.StuckFragment;
 import org.gluu.super_gluu.app.services.FingerPrintManager;
 
 import SuperGluu.app.R;
@@ -45,7 +47,7 @@ import SuperGluu.app.R;
  * A dialog which uses fingerprint APIs to authenticate the user, and falls back to password
  * authentication if fingerprint is not available.
  */
-public class FingerprintAuthenticationDialogFragment extends DialogFragment
+public class FingerprintAuthenticationDialogFragment extends android.support.v4.app.DialogFragment
         implements TextView.OnEditorActionListener, FingerprintUiHelper.Callback {
 
     private Button mCancelButton;
@@ -88,9 +90,17 @@ public class FingerprintAuthenticationDialogFragment extends DialogFragment
             @Override
             public void onClick(View view) {
                 dismiss();
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                StuckFragment stuckFragment = StuckFragment.newInstance(true, true);
+                fragmentManager
+                        .beginTransaction()
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .replace(R.id.fragment_container, stuckFragment)
+                        .commit();
             }
         });
-        mCancelButton.setVisibility(View.GONE);
+        mCancelButton.setVisibility(View.VISIBLE);
 
         mSecondDialogButton = (Button) v.findViewById(R.id.second_dialog_button);
         mSecondDialogButton.setVisibility(View.GONE);

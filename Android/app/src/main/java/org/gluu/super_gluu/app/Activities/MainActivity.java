@@ -5,12 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import org.gluu.super_gluu.app.StuckFragment;
 import  org.gluu.super_gluu.app.gluuToast.GluuToast;
 
 import org.gluu.super_gluu.app.GluuMainActivity;
@@ -27,6 +32,8 @@ import org.gluu.super_gluu.app.services.FingerPrintManager;
 import org.gluu.super_gluu.app.settings.Settings;
 
 import SuperGluu.app.R;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by nazaryavornytskyy on 3/22/16.
@@ -42,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
         GluuApplication.isTrustAllCertificates = Settings.getSSLEnabled(this);
 
         // Check if we get push notification
@@ -70,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
         Settings.setIsBackButtonVisibleForKey(getBaseContext(), false);
         Settings.setIsBackButtonVisibleForLog(getBaseContext(), false);
         Settings.setIsBackButtonVisibleForKey(getBaseContext(), false);
+
     }
 
     private void userChossed(String answer, Intent intent){
@@ -193,12 +202,6 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
     }
 
     @Override
-    public void onNewPinCode(String pinCode) {
-        Settings.savePinCode(getApplicationContext(), pinCode);
-        loadGluuMainActivity();
-    }
-
-    @Override
     public void onCorrectPinCode(boolean isPinCodeCorrect) {
         if (isPinCodeCorrect) {
             /**
@@ -214,6 +217,17 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
             setTitle("Application is locked");
             Settings.setAppLocked(getApplicationContext(), true);
         }
+    }
+
+    @Override
+    public void onCancel() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        StuckFragment stuckFragment = StuckFragment.newInstance(true, true);
+        fragmentManager
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(R.id.fragment_container, stuckFragment)
+                .commit();
     }
 
     private void loadLockedFragment(Boolean isRecover) {
@@ -265,6 +279,12 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
             Settings.setFingerprintEnabled(MainActivity.this, true);
             loadGluuMainActivity();
         }
+    }
+
+    @Override
+    public void fingerPrintEntered() {
+        FingerPrintManager fingerPrintManager = new FingerPrintManager(this);
+        fingerPrintManager.onFingerPrint(isSuccess -> loadGluuMainActivity());
     }
 
     @Override

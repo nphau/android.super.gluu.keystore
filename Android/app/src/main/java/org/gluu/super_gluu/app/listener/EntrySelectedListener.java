@@ -8,5 +8,6 @@ public interface EntrySelectedListener {
 
     void onPinCodeSelected();
     void onFingerprintSelected();
+    void fingerPrintEntered();
     void onSkipSelected();
 }

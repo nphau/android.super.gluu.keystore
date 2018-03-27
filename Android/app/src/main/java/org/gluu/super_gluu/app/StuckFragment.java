@@ -33,6 +33,19 @@ public class StuckFragment extends Fragment {
 
     EntrySelectedListener stuckListener;
 
+    private boolean showPinCode = false;
+    private boolean showFingerprint = false;
+
+    public static StuckFragment newInstance(boolean showPinCode, boolean showFingerprint) {
+        StuckFragment stuckFragment = new StuckFragment();
+        Bundle args = new Bundle();
+        args.putBoolean(Constant.SHOW_PIN_CODE, showPinCode);
+        args.putBoolean(Constant.SHOW_FINGERPRINT, showFingerprint);
+        stuckFragment.setArguments(args);
+
+        return stuckFragment;
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -49,18 +62,33 @@ public class StuckFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_stuck, container, false);
-
         ButterKnife.bind(this, rootView);
 
-        fingerprint = new Fingerprint(getContext(), false);
+        showPinCode = getArguments().getBoolean(Constant.SHOW_PIN_CODE);
+        showFingerprint = getArguments().getBoolean(Constant.SHOW_FINGERPRINT);
 
-        if(fingerprint.checkIfFingerprintEnabled()) {
-            enterPasscodeButton.setOnClickListener(view -> stuckListener.onPinCodeSelected());
+        if(showPinCode) {
+            enterPasscodeButton.setVisibility(View.VISIBLE);
         } else {
             enterPasscodeButton.setVisibility(View.GONE);
         }
 
+        if(showFingerprint) {
+            fingerprintImageView.setVisibility(View.VISIBLE);
+        } else {
+            fingerprintImageView.setVisibility(View.GONE);
+        }
+
+        enterPasscodeButton.setOnClickListener(view -> stuckListener.onPinCodeSelected());
+
+        fingerprintImageView.setOnClickListener(view -> stuckListener.fingerPrintEntered());
+
         return rootView;
+    }
+
+    public static class Constant {
+        public static final String SHOW_PIN_CODE = "show_pin_code";
+        public static final String SHOW_FINGERPRINT = "show_fingerprint";
     }
 
 

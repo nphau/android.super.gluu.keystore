@@ -476,10 +476,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         return context.getString(resourceID);
     }
 
-    @Override
-    public void onNewPinCode(String pinCode) {
-
-    }
 
     @Override
     public void onCorrectPinCode(boolean isPinCodeCorrect) {
@@ -502,6 +498,11 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             startActivity(intent);
             finish();
         }
+    }
+
+    @Override
+    public void onCancel() {
+        onBackPressed();
     }
 
     private void showAlertView(String message){

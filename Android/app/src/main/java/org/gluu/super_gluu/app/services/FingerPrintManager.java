@@ -9,6 +9,7 @@ import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -43,14 +44,14 @@ public class FingerPrintManager {
     private static final String KEY_NAME_NOT_INVALIDATED = "key_not_invalidated";
     public static final String DEFAULT_KEY_NAME = "default_key";
 
-    private Activity activity;
+    private AppCompatActivity activity;
     private KeyStore mKeyStore;
     private KeyGenerator mKeyGenerator;
     private FingerPrintManagerCallback mainCallBack;
     private SharedPreferences mSharedPreferences;
     Cipher defaultCipher;
 
-    public FingerPrintManager(Activity activity){
+    public FingerPrintManager(AppCompatActivity activity){
         this.activity = activity;
         initFingerprintService();
     }
@@ -75,8 +76,8 @@ public class FingerPrintManager {
                 fragment.setStage(
                         FingerprintAuthenticationDialogFragment.Stage.FINGERPRINT);//PASSWORD
             }
-            fragment.setCancelable(false);
-            fragment.show(activity.getFragmentManager(), DIALOG_FRAGMENT_TAG);
+            fragment.setCancelable(true);
+            fragment.show(activity.getSupportFragmentManager(), DIALOG_FRAGMENT_TAG);
         } else {
             // This happens if the lock screen has been disabled or or a fingerprint got
             // enrolled. Thus show the dialog to authenticate with their password first
@@ -88,7 +89,7 @@ public class FingerPrintManager {
             fragment.setStage(
                     FingerprintAuthenticationDialogFragment.Stage.NEW_FINGERPRINT_ENROLLED);
             fragment.setCancelable(false);
-            fragment.show(activity.getFragmentManager(), DIALOG_FRAGMENT_TAG);
+            fragment.show(activity.getSupportFragmentManager(), DIALOG_FRAGMENT_TAG);
         }
     }
 

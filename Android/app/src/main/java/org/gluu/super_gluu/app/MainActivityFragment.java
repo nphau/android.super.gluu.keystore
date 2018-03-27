@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -345,7 +346,7 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
             //First need to check is app protected by Fingerprint
             Boolean isFingerprint = Settings.getFingerprintEnabled(context);
             if (isFingerprint){
-                FingerPrintManager fingerPrintManager = new FingerPrintManager(getActivity());
+                FingerPrintManager fingerPrintManager = new FingerPrintManager((AppCompatActivity) getActivity());
                 fingerPrintManager.onFingerPrint(new FingerPrintManager.FingerPrintManagerCallback() {
                     @Override
                     public void fingerprintResult(Boolean isSuccess) {
