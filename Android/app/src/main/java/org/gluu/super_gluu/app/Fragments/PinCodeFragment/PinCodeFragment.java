@@ -51,10 +51,23 @@ public class PinCodeFragment extends Fragment {
     private EntryType entryType;
     private EntryLevel entryLevel = EntryLevel.ONE;
 
+    /*
+    / User can enter this screen in different instances. They can be setting a brand new code,
+    / entering a code to get into the app/approve an auth request, or be changing their currently
+    / set code
+     */
     public enum EntryType {
         SETTING_NEW, ENTERING_NORMAL, CHANGING_CURRENT
     }
 
+    /*
+    / User can be on different levels when entering their code.
+    / First level could be the user entering a new code initially.
+    / Or entering their current code when attempting to change their code.
+    /
+    / Second level can be the user confirming the previously entered code when setting up their code.
+    / Or when a user is entering a new code when changing their already set code.
+    */
     public enum EntryLevel {
         ONE, TWO
     }
