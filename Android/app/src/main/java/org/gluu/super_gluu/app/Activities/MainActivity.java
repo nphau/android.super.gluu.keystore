@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
         } else {
             if (Settings.getFirstLoad(getApplicationContext())) {
                 Settings.saveFirstLoad(getApplicationContext());
-                loadSecureEntryFragment();
+                loadSecureEntrySetupFragment();
             } else {
                 if (Settings.getPinCodeEnabled(getApplicationContext())) {
                     loadPinCodeFragment();
@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
         setTitle(getString(R.string.pin_code));
     }
 
-    public void loadSecureEntryFragment() {
+    public void loadSecureEntrySetupFragment() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         SecureEntrySetupFragment secureEntrySetupFragment = new SecureEntrySetupFragment();
 
@@ -216,7 +216,7 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
         if(entryType == PinCodeFragment.EntryType.SETTING_NEW) {
             loadGluuMainActivity();
         } else {
-            navigateToLockedScreen();
+            navigateToSecureEntryScreen();
         }
     }
 
@@ -297,7 +297,7 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
         gluuToast.showGluuToastWithText(view, text);
     }
 
-    public void navigateToLockedScreen() {
+    public void navigateToSecureEntryScreen() {
         boolean showPinCode = Settings.getPinCodeEnabled(getBaseContext());
         boolean showFingerprint = Settings.getFingerprintEnabled(getBaseContext());
 
