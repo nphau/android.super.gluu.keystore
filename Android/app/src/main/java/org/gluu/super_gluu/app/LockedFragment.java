@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import org.gluu.super_gluu.app.fingerprint.Fingerprint;
 import org.gluu.super_gluu.app.listener.EntrySelectedListener;
 
 import SuperGluu.app.R;
@@ -29,12 +28,7 @@ public class LockedFragment extends Fragment {
     @BindView(R.id.button_enter_passcode)
     Button enterPasscodeButton;
 
-    Fingerprint fingerprint;
-
     EntrySelectedListener stuckListener;
-
-    private boolean showPinCode = false;
-    private boolean showFingerprint = false;
 
     public static LockedFragment newInstance(boolean showPinCode, boolean showFingerprint) {
         LockedFragment lockedFragment = new LockedFragment();
@@ -64,8 +58,8 @@ public class LockedFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_locked, container, false);
         ButterKnife.bind(this, rootView);
 
-        showPinCode = getArguments().getBoolean(Constant.SHOW_PIN_CODE);
-        showFingerprint = getArguments().getBoolean(Constant.SHOW_FINGERPRINT);
+        boolean showPinCode = getArguments().getBoolean(Constant.SHOW_PIN_CODE);
+        boolean showFingerprint = getArguments().getBoolean(Constant.SHOW_FINGERPRINT);
 
         if(showPinCode) {
             enterPasscodeButton.setVisibility(View.VISIBLE);

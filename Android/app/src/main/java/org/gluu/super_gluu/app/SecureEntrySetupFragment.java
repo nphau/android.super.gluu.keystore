@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
  * Created by SamIAm on 3/21/18.
  */
 
-public class SecureEntryFragment extends ToolbarFragment {
+public class SecureEntrySetupFragment extends ToolbarFragment {
 
     @BindView(R.id.nav_drawer_toolbar)
     Toolbar toolbar;
@@ -55,7 +55,7 @@ public class SecureEntryFragment extends ToolbarFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_secure_entry, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_secure_entry_setup, container, false);
 
         ButterKnife.bind(this, rootView);
 

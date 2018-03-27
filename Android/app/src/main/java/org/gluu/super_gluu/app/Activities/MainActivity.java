@@ -14,7 +14,7 @@ import org.gluu.super_gluu.app.LockedFragment;
 import  org.gluu.super_gluu.app.gluuToast.GluuToast;
 
 import org.gluu.super_gluu.app.GluuMainActivity;
-import org.gluu.super_gluu.app.SecureEntryFragment;
+import org.gluu.super_gluu.app.SecureEntrySetupFragment;
 import org.gluu.super_gluu.app.fingerprint.Fingerprint;
 import org.gluu.super_gluu.app.fragments.KeysFragment.KeyHandleInfoFragment;
 import org.gluu.super_gluu.app.fragments.LockFragment.LockFragment;
@@ -177,10 +177,10 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
 
     public void loadSecureEntryFragment() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        SecureEntryFragment secureEntryFragment = new SecureEntryFragment();
+        SecureEntrySetupFragment secureEntrySetupFragment = new SecureEntrySetupFragment();
 
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        fragmentTransaction.replace(R.id.fragment_container, secureEntryFragment);
+        fragmentTransaction.replace(R.id.fragment_container, secureEntrySetupFragment);
         fragmentTransaction.commit();
     }
 
