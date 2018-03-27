@@ -168,7 +168,14 @@ public class PinCodeFragment extends Fragment {
     }
 
     private void userSettingUpPinCode(String enteredPinCode) {
-        if (entryLevel == EntryLevel.TWO) {
+        if(entryLevel == EntryLevel.ONE) {
+            //Entering the pin code for the first time
+            initialPinCode = enteredPinCode;
+            pinCodeEditText.setText("");
+            attemptsTextView.setVisibility(View.INVISIBLE);
+            enterPasscodeTextView.setText(R.string.re_enter_your_passcode);
+            entryLevel = EntryLevel.TWO;
+        } else if(entryLevel == EntryLevel.TWO) {
             //Re-entering the pin code to make sure it matches first code entered
             if (enteredPinCode.equalsIgnoreCase(initialPinCode)) {
                 correctPinCode(enteredPinCode, getString(R.string.correct_pin_code));
@@ -180,13 +187,6 @@ public class PinCodeFragment extends Fragment {
                 attemptsTextView.setText(R.string.pin_codes_dont_match);
                 pinCodeEditText.setText("");
             }
-        } else if (entryLevel == EntryLevel.ONE) {
-            //Entering the pin code for the first time
-            initialPinCode = enteredPinCode;
-            pinCodeEditText.setText("");
-            attemptsTextView.setVisibility(View.INVISIBLE);
-            enterPasscodeTextView.setText(R.string.re_enter_your_passcode);
-            entryLevel = EntryLevel.TWO;
         }
     }
 
@@ -207,10 +207,7 @@ public class PinCodeFragment extends Fragment {
     }
 
     private void userChangingCurrentPinCode(String enteredPinCode, String currentPinCode) {
-        if (entryLevel == EntryLevel.TWO) {
-            //User already entered old passcode and are setting their new passcode
-            correctPinCode(enteredPinCode, getString(R.string.code_changed));
-        } else {
+        if(entryLevel == EntryLevel.ONE) {
             //User is entering their old passcode before they can set their new passcode
             if (enteredPinCode.equalsIgnoreCase(currentPinCode)) {
                 //User entered correct pin code
@@ -227,6 +224,9 @@ public class PinCodeFragment extends Fragment {
                 //User entered incorrect pin code
                 wrongPinCode();
             }
+        } else if(entryLevel == EntryLevel.TWO) {
+            //User already entered old passcode and are setting their new passcode
+            correctPinCode(enteredPinCode, getString(R.string.code_changed));
         }
     }
 
@@ -330,16 +330,7 @@ public class PinCodeFragment extends Fragment {
     }
 
     public class Constant {
-        public static final String FRAGMENT_TYPE = "code_type";
-        public static final String NEW_PIN_CODE = "new_pin_code";
-        public static final String IS_SETTINGS = "is_settings";
-
         public static final String ENTRY_TYPE = "entry_type";
-
-
-        public static final String ENTER_CODE = "enter_code";
-        public static final String SET_CODE = "set_code";
-
         public static final String ATTEMPTS_LEFT_FORMAT = "%d attempts left";
     }
 }
