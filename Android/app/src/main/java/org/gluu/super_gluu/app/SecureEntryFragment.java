@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
  * Created by SamIAm on 3/27/18.
  */
 
-public class LockedFragment extends Fragment {
+public class SecureEntryFragment extends Fragment {
 
     @BindView(R.id.image_view_fingerprint)
     ImageView fingerprintImageView;
@@ -30,14 +30,14 @@ public class LockedFragment extends Fragment {
 
     EntrySelectedListener stuckListener;
 
-    public static LockedFragment newInstance(boolean showPinCode, boolean showFingerprint) {
-        LockedFragment lockedFragment = new LockedFragment();
+    public static SecureEntryFragment newInstance(boolean showPinCode, boolean showFingerprint) {
+        SecureEntryFragment secureEntryFragment = new SecureEntryFragment();
         Bundle args = new Bundle();
         args.putBoolean(Constant.SHOW_PIN_CODE, showPinCode);
         args.putBoolean(Constant.SHOW_FINGERPRINT, showFingerprint);
-        lockedFragment.setArguments(args);
+        secureEntryFragment.setArguments(args);
 
-        return lockedFragment;
+        return secureEntryFragment;
     }
 
     @Override

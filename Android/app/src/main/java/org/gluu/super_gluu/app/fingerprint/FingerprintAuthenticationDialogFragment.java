@@ -38,7 +38,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.gluu.super_gluu.app.LockedFragment;
+import org.gluu.super_gluu.app.SecureEntryFragment;
 import org.gluu.super_gluu.app.services.FingerPrintManager;
 import org.gluu.super_gluu.app.settings.Settings;
 
@@ -96,11 +96,11 @@ public class FingerprintAuthenticationDialogFragment extends android.support.v4.
                 boolean showFingerprint = Settings.getFingerprintEnabled(mActivity.getBaseContext());
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                LockedFragment lockedFragment = LockedFragment.newInstance(showPinCode, showFingerprint);
+                SecureEntryFragment secureEntryFragment = SecureEntryFragment.newInstance(showPinCode, showFingerprint);
                 fragmentManager
                         .beginTransaction()
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .replace(R.id.fragment_container, lockedFragment)
+                        .replace(R.id.fragment_container, secureEntryFragment)
                         .commit();
             }
         });

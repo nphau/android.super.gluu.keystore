@@ -10,7 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import org.gluu.super_gluu.app.LockedFragment;
+import org.gluu.super_gluu.app.SecureEntryFragment;
 import  org.gluu.super_gluu.app.gluuToast.GluuToast;
 
 import org.gluu.super_gluu.app.GluuMainActivity;
@@ -302,11 +302,11 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
         boolean showFingerprint = Settings.getFingerprintEnabled(getBaseContext());
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        LockedFragment lockedFragment = LockedFragment.newInstance(showPinCode, showFingerprint);
+        SecureEntryFragment secureEntryFragment = SecureEntryFragment.newInstance(showPinCode, showFingerprint);
         fragmentManager
                 .beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.fragment_container, lockedFragment)
+                .replace(R.id.fragment_container, secureEntryFragment)
                 .commit();
     }
 
