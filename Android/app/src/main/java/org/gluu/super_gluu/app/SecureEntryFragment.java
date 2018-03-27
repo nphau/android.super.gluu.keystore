@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 
 import org.gluu.super_gluu.app.base.ToolbarFragment;
 import org.gluu.super_gluu.app.fingerprint.Fingerprint;
+import org.gluu.super_gluu.app.listener.EntrySelectedListener;
 
 import SuperGluu.app.R;
 import butterknife.BindView;
@@ -37,22 +38,16 @@ public class SecureEntryFragment extends ToolbarFragment {
     @BindView(R.id.pin_code_relative_layout)
     RelativeLayout pinCodeRelativeLayout;
 
-    public interface SecureEntryListener {
-        void onPinCodeSelected();
-        void onFingerprintSelected();
-        void onSkipSelected();
-    }
-
-    private SecureEntryListener secureEntryListener;
+    private EntrySelectedListener secureEntryListener;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof SecureEntryListener) {
-            secureEntryListener = (SecureEntryListener) context;
+        if (context instanceof EntrySelectedListener) {
+            secureEntryListener = (EntrySelectedListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement SecureEntryListener");
+                    + " must implement EntrySelectedListener");
         }
     }
 
