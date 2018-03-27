@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
  * Created by SamIAm on 3/27/18.
  */
 
-public class StuckFragment extends Fragment {
+public class LockedFragment extends Fragment {
 
     @BindView(R.id.image_view_fingerprint)
     ImageView fingerprintImageView;
@@ -36,14 +36,14 @@ public class StuckFragment extends Fragment {
     private boolean showPinCode = false;
     private boolean showFingerprint = false;
 
-    public static StuckFragment newInstance(boolean showPinCode, boolean showFingerprint) {
-        StuckFragment stuckFragment = new StuckFragment();
+    public static LockedFragment newInstance(boolean showPinCode, boolean showFingerprint) {
+        LockedFragment lockedFragment = new LockedFragment();
         Bundle args = new Bundle();
         args.putBoolean(Constant.SHOW_PIN_CODE, showPinCode);
         args.putBoolean(Constant.SHOW_FINGERPRINT, showFingerprint);
-        stuckFragment.setArguments(args);
+        lockedFragment.setArguments(args);
 
-        return stuckFragment;
+        return lockedFragment;
     }
 
     @Override
@@ -61,7 +61,7 @@ public class StuckFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_stuck, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_locked, container, false);
         ButterKnife.bind(this, rootView);
 
         showPinCode = getArguments().getBoolean(Constant.SHOW_PIN_CODE);

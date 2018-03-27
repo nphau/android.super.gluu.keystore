@@ -5,24 +5,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Toast;
 
-import org.gluu.super_gluu.app.StuckFragment;
+import org.gluu.super_gluu.app.LockedFragment;
 import  org.gluu.super_gluu.app.gluuToast.GluuToast;
 
 import org.gluu.super_gluu.app.GluuMainActivity;
 import org.gluu.super_gluu.app.SecureEntryFragment;
 import org.gluu.super_gluu.app.fingerprint.Fingerprint;
 import org.gluu.super_gluu.app.fragments.KeysFragment.KeyHandleInfoFragment;
-import org.gluu.super_gluu.app.fragments.LicenseFragment.LicenseFragment;
 import org.gluu.super_gluu.app.fragments.LockFragment.LockFragment;
 import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
 import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeSettingFragment;
@@ -32,8 +26,6 @@ import org.gluu.super_gluu.app.services.FingerPrintManager;
 import org.gluu.super_gluu.app.settings.Settings;
 
 import SuperGluu.app.R;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by nazaryavornytskyy on 3/22/16.
@@ -229,11 +221,11 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
             boolean showFingerprint = Settings.getFingerprintEnabled(getBaseContext());
 
             FragmentManager fragmentManager = getSupportFragmentManager();
-            StuckFragment stuckFragment = StuckFragment.newInstance(showPinCode, showFingerprint);
+            LockedFragment lockedFragment = LockedFragment.newInstance(showPinCode, showFingerprint);
             fragmentManager
                     .beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    .replace(R.id.fragment_container, stuckFragment)
+                    .replace(R.id.fragment_container, lockedFragment)
                     .commit();
         }
     }
