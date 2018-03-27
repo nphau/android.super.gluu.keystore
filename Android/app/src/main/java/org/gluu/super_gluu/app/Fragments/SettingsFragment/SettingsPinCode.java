@@ -1,6 +1,7 @@
 package org.gluu.super_gluu.app.fragments.SettingsFragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
@@ -150,6 +151,7 @@ public class SettingsPinCode extends ToolbarFragment {
 
         loadPinCodeAlert.setYesTitle(getContext().getString(R.string.yes));
         loadPinCodeAlert.setNoTitle(getContext().getString(R.string.no));
+        loadPinCodeAlert.setOnCancelListener(dialogInterface -> listener.onNegativeButton());
         loadPinCodeAlert.setmListener(listener);
         loadPinCodeAlert.type = NotificationType.RENAME_KEY;
         loadPinCodeAlert.show();

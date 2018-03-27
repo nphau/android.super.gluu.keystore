@@ -242,8 +242,10 @@ public class PinCodeFragment extends Fragment {
         Settings.resetCurrentPinAttempts(context);
 
         //Hide keyboard
-        ((InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE))
-                .toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        if(inputMethodManager != null) {
+            inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+        }
 
         getActivity().onBackPressed();
     }
@@ -268,10 +270,18 @@ public class PinCodeFragment extends Fragment {
         if (attempts <= 0) {
             Settings.resetCurrentPinAttempts(context);
             if (entryType == EntryType.CHANGING_CURRENT) {
+                InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                if(inputMethodManager != null) {
+                    inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+                }
+
+                getActivity().onBackPressed();
+
+            } else {
                 Settings.setAppLocked(context, true);
                 setCurrentNetworkTime();
+                pinCodeViewListener.onCorrectPinCode(false);
             }
-            pinCodeViewListener.onCorrectPinCode(false);
         }
     }
 
