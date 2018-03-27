@@ -40,6 +40,7 @@ import android.widget.TextView;
 
 import org.gluu.super_gluu.app.StuckFragment;
 import org.gluu.super_gluu.app.services.FingerPrintManager;
+import org.gluu.super_gluu.app.settings.Settings;
 
 import SuperGluu.app.R;
 
@@ -91,8 +92,11 @@ public class FingerprintAuthenticationDialogFragment extends android.support.v4.
             public void onClick(View view) {
                 dismiss();
 
+                boolean showPinCode = Settings.getPinCodeEnabled(mActivity.getBaseContext());
+                boolean showFingerprint = Settings.getFingerprintEnabled(mActivity.getBaseContext());
+
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                StuckFragment stuckFragment = StuckFragment.newInstance(true, true);
+                StuckFragment stuckFragment = StuckFragment.newInstance(showPinCode, showFingerprint);
                 fragmentManager
                         .beginTransaction()
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)

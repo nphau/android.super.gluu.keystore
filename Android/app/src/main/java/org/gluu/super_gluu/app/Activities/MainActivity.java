@@ -221,8 +221,11 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
 
     @Override
     public void onCancel() {
+        boolean showPinCode = Settings.getPinCodeEnabled(getBaseContext());
+        boolean showFingerprint = Settings.getFingerprintEnabled(getBaseContext());
+
         FragmentManager fragmentManager = getSupportFragmentManager();
-        StuckFragment stuckFragment = StuckFragment.newInstance(true, true);
+        StuckFragment stuckFragment = StuckFragment.newInstance(showPinCode, showFingerprint);
         fragmentManager
                 .beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)

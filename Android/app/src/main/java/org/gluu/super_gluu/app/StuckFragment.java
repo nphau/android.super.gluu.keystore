@@ -70,13 +70,13 @@ public class StuckFragment extends Fragment {
         if(showPinCode) {
             enterPasscodeButton.setVisibility(View.VISIBLE);
         } else {
-            enterPasscodeButton.setVisibility(View.GONE);
+            enterPasscodeButton.setVisibility(View.INVISIBLE);
         }
 
         if(showFingerprint) {
             fingerprintImageView.setVisibility(View.VISIBLE);
         } else {
-            fingerprintImageView.setVisibility(View.GONE);
+            fingerprintImageView.setVisibility(View.INVISIBLE);
         }
 
         enterPasscodeButton.setOnClickListener(view -> stuckListener.onPinCodeSelected());
