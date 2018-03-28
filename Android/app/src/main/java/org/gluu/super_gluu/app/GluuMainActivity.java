@@ -517,23 +517,8 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         gluuAlert.setMessage(getString(R.string.camera_priming));
         gluuAlert.type = NotificationType.DEFAULT;
         gluuAlert.setCancelable(true);
-        gluuAlert.setOnDismissListener(dialogInterface -> {
-            requestCameraPermission();
-        });
-        gluuAlert.setOnCancelListener(dialogInterface -> {
-            requestCameraPermission();
-        });
-        gluuAlert.setmListener(new GluuAlertCallback() {
-            @Override
-            public void onPositiveButton() {
-                requestCameraPermission();
-            }
-
-            @Override
-            public void onNegativeButton() {
-                requestCameraPermission();
-            }
-        });
+        gluuAlert.setOnDismissListener(dialogInterface -> requestCameraPermission());
+        gluuAlert.setOnCancelListener(dialogInterface -> requestCameraPermission());
         gluuAlert.show();
     }
 
