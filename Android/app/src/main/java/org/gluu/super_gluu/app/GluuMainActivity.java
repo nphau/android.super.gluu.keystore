@@ -618,13 +618,9 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        selectDrawerItem(menuItem);
-                        return true;
-                    }
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+                    selectDrawerItem(menuItem);
+                    return true;
                 });
     }
 
@@ -635,14 +631,11 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             toggle.syncState();
             drawer.addDrawerListener(toggle);
 
-            OnBackStackChangedListener onBackStackChangedListener = new OnBackStackChangedListener() {
-                @Override
-                public void onBackStackChanged() {
-                    if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-                        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-                    } else {
-                        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                    }
+            OnBackStackChangedListener onBackStackChangedListener = () -> {
+                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                } else {
+                    drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                 }
             };
 
