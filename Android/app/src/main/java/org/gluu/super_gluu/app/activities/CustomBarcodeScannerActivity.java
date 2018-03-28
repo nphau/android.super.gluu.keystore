@@ -40,9 +40,8 @@ public class CustomBarcodeScannerActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
-            actionBar.setTitle("Scan Barcode");
+            actionBar.setTitle(R.string.scan_barcode);
         }
-
 
         capture = new CaptureManager(this, barcodeScannerView);
         capture.initializeFromIntent(getIntent(), savedInstanceState);
@@ -62,6 +61,7 @@ public class CustomBarcodeScannerActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.cancel_action:
                 onBackPressed();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

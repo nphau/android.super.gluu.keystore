@@ -56,7 +56,8 @@
 
         <activity
             android:name="org.gluu.super_gluu.app.activities.CustomBarcodeScannerActivity"
-            android:label="Barcode Scanner">
+            android:screenOrientation="portrait"
+            android:label="@string/barcode_scanner">
         </activity>
         <!--<activity-->
             <!--android:name="org.gluu.super_gluu.app.activities.GluuApplication"-->

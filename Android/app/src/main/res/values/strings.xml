@@ -212,6 +212,8 @@
     <string name="pin_codes_dont_match">Pin codes don\'t match. Let\'s try again</string>
     <string name="code_changed">Pin code updated</string>
     <string name="fingerprint_protection_off">Fingerprint protection is not turned on.</string>
+    <string name="barcode_scanner">Barcode Scanner</string>
+    <string name="scan_barcode">Scan Barcode</string>
 
 
 </resources>
