@@ -216,6 +216,7 @@
     <string name="scan_barcode">Scan Barcode</string>
     <string name="approve">Approve</string>
     <string name="deny">Deny</string>
+    <string name="camera_priming">Providing camera access allows you to scan QR Codes, an essential part of this app.</string>
 
 
 </resources>

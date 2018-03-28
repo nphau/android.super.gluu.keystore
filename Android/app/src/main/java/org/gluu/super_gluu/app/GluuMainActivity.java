@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -511,6 +512,31 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         gluuAlert.show();
     }
 
+    private void showCameraMessagingAlertView() {
+        CustomGluuAlert gluuAlert = new CustomGluuAlert(this);
+        gluuAlert.setMessage(getString(R.string.camera_priming));
+        gluuAlert.type = NotificationType.DEFAULT;
+        gluuAlert.setCancelable(true);
+        gluuAlert.setOnDismissListener(dialogInterface -> {
+            requestCameraPermission();
+        });
+        gluuAlert.setOnCancelListener(dialogInterface -> {
+            requestCameraPermission();
+        });
+        gluuAlert.setmListener(new GluuAlertCallback() {
+            @Override
+            public void onPositiveButton() {
+                requestCameraPermission();
+            }
+
+            @Override
+            public void onNegativeButton() {
+                requestCameraPermission();
+            }
+        });
+        gluuAlert.show();
+    }
+
     @Override
     public void onDeleteLogInfo(OxPush2Request oxPush2Request) {
         dataStore.deleteLogs(oxPush2Request);
@@ -588,7 +614,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
             // Camera permission has not been granted.
-            requestCameraPermission();
+            showCameraMessagingAlertView();
 
         } else {
             // Camera permissions is already available, show the camera preview.
