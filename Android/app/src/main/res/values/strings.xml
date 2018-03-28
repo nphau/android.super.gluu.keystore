@@ -214,6 +214,8 @@
     <string name="fingerprint_protection_off">Fingerprint protection is not turned on.</string>
     <string name="barcode_scanner">Barcode Scanner</string>
     <string name="scan_barcode">Scan Barcode</string>
+    <string name="approve">Approve</string>
+    <string name="deny">Deny</string>
 
 
 </resources>

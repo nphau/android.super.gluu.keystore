@@ -195,10 +195,12 @@
             android:background="@color/greenColor">
 
             <ImageView style="@style/AcceptDenyImageView"
+                android:scaleX="0.825"
+                android:scaleY="0.825"
                 android:src="@drawable/accept_checkmark"/>
 
             <TextView style="@style/AcceptDenyTextView"
-                android:text="Approve" />
+                android:text="@string/approve" />
 
         </LinearLayout>
 
@@ -207,10 +209,12 @@
             android:background="@color/redColor">
 
             <ImageView style="@style/AcceptDenyImageView"
+                android:scaleX="0.73"
+                android:scaleY="0.73"
                 android:src="@drawable/deny_x" />
 
             <TextView style="@style/AcceptDenyTextView"
-                android:text="Deny"/>
+                android:text="@string/deny"/>
 
         </LinearLayout>
 
