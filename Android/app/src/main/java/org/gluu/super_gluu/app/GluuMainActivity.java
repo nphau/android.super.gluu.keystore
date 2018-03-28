@@ -106,8 +106,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     NavigationView navigationView;
     @BindView(R.id.nav_drawer_toolbar)
     Toolbar toolbar;
-    @BindView(R.id.adView)
-    AdView adView;
+
     private ActionBarDrawerToggle toggle;
 
     private SoftwareDevice u2f;
@@ -210,17 +209,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     }
 
     private void initGoogleADS(Boolean isShow){
-        if (!isShow) {
-            MobileAds.initialize(getApplicationContext(), "ca-app-pub-3932761366188106~2301594871");
-            AdRequest adRequest = new AdRequest.Builder().build();
-            adView.loadAd(adRequest);
-        } else {
-            ViewGroup.LayoutParams params = adView.getLayoutParams();
-            params.height = 0;
-            adView.setLayoutParams(params);
-        }
         Intent intent = new Intent("on-ad-free-event");
-        // You can also include some extra data.
         intent.putExtra("isAdFree", isShow);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
@@ -228,7 +217,12 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     private void initIAPurchaseService(){
         inAppPurchaseService.initInAppService(context);
         //Init GoogleMobile AD
-        inAppPurchaseService.setCustomEventListener(this::initGoogleADS);
+        inAppPurchaseService.setCustomEventListener(new InAppPurchaseService.OnInAppServiceListener() {
+            @Override
+            public void onSubscribed(Boolean isSubscribed) {
+                initGoogleADS(isSubscribed);
+            }
+        });
         inAppPurchaseService.reloadPurchaseService();
     }
 

@@ -4,6 +4,7 @@
     android:id="@+id/main_fragment_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/transparent"
     android:orientation="vertical">
 
@@ -28,6 +29,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/adView"
         android:layout_below="@+id/mimic_toolbar">
 
         <ImageView
@@ -115,5 +117,15 @@
 
 
     </android.support.constraint.ConstraintLayout>
+
+    <!-- The ad view -->
+    <com.google.android.gms.ads.AdView
+        android:layout_alignParentBottom="true"
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        ads:adUnitId="@string/banner_ad_unit_id"
+        app:adSize="SMART_BANNER"/>
+
 
 </RelativeLayout>

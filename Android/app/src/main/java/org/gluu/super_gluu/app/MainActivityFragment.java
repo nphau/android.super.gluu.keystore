@@ -35,7 +35,9 @@ import android.widget.TextView;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -79,6 +81,9 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
     @BindView(R.id.button_scan)
     Button scanButton;
 
+    @BindView(R.id.adView)
+    AdView adView;
+
     @BindView(R.id.welcome_text_view)
     TextView welcomeTextView;
     @BindView(R.id.description_text_view)
@@ -86,6 +91,18 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
 
     private SoftwareDevice u2f;
     private AndroidKeyDataStore dataStore;
+
+    private BroadcastReceiver adBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            boolean isShow = intent.getBooleanExtra("isAdFree", false);
+
+            if (context != null) {
+                initGoogleADS(isShow);
+            }
+        }
+    };
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -178,6 +195,8 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
     @Override
     public void onResume() {
         super.onResume();
+
+        Log.i("boogie", "onResume");
         if (!isConnected(context)) {
             scanButton.setEnabled(false);
         } else {
@@ -185,8 +204,25 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         }
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
                 new IntentFilter("ox_request-precess-event"));
+
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(adBroadcastReceiver,
+                new IntentFilter("on-ad-free-event"));
+
         //Check push data
         checkIsPush();
+
+        if(adView != null) {
+            adView.resume();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        Log.i("boogie", "onPause");
+        if(adView != null) {
+            adView.pause();
+        }
+        super.onPause();
     }
 
     @Override
@@ -194,6 +230,15 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         super.onStop();
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mPushMessageReceiver);
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mMessageReceiver);
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(adBroadcastReceiver);
+    }
+
+    @Override
+    public void onDestroy() {
+        if(adView != null) {
+            adView.destroy();
+        }
+        super.onDestroy();
     }
 
     @Override
@@ -423,6 +468,18 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         boolean isConnected = activeNetwork != null &&
                 activeNetwork.isConnectedOrConnecting();
         return isConnected;
+    }
+
+    private void initGoogleADS(Boolean isShow){
+        if (!isShow) {
+            MobileAds.initialize(getActivity().getApplicationContext(), "ca-app-pub-3932761366188106~2301594871");
+            AdRequest adRequest = new AdRequest.Builder().build();
+            adView.loadAd(adRequest);
+        } else {
+            ViewGroup.LayoutParams params = adView.getLayoutParams();
+            params.height = 0;
+            adView.setLayoutParams(params);
+        }
     }
 
 }
