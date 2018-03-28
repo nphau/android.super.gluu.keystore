@@ -53,6 +53,11 @@
             android:launchMode="singleTask"
             android:label="">
         </activity>
+
+        <activity
+            android:name="org.gluu.super_gluu.app.activities.CustomBarcodeScannerActivity"
+            android:label="Barcode Scanner">
+        </activity>
         <!--<activity-->
             <!--android:name="org.gluu.super_gluu.app.activities.GluuApplication"-->
             <!--android:label="">-->

@@ -40,6 +40,7 @@ import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import org.gluu.super_gluu.app.activities.CustomBarcodeScannerActivity;
 import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.app.gluuToast.GluuToast;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
@@ -303,7 +304,7 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
     private void submit() {
         IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-        integrator.setPrompt(getString(R.string.scan_oxpush2_prompt));
+        integrator.setCaptureActivity(CustomBarcodeScannerActivity.class);
         integrator.initiateScan();
     }
 
