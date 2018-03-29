@@ -61,7 +61,7 @@ public class Fingerprint {
                 // for ActivityCompat#requestPermissions for more details.
                 return;
             }
-            if (fingerprintManager == null || fingerprintManager.isHardwareDetected()) {
+            if (fingerprintManager == null || !fingerprintManager.isHardwareDetected()) {
                 /**
                  * An error message will be displayed if the device does not contain the fingerprint hardware.
                  * However if you plan to implement a default authentication method,
