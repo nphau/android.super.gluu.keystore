@@ -209,7 +209,6 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
     public void onResume() {
         super.onResume();
 
-        Log.i("boogie", "onResume");
         if (!isConnected(context)) {
             scanButton.setEnabled(false);
         } else {
@@ -231,7 +230,6 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
 
     @Override
     public void onPause() {
-        Log.i("boogie", "onPause");
         if(adView != null) {
             adView.pause();
         }
