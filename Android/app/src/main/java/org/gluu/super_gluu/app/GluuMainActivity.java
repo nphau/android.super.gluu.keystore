@@ -217,12 +217,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     private void initIAPurchaseService(){
         inAppPurchaseService.initInAppService(context);
         //Init GoogleMobile AD
-        inAppPurchaseService.setCustomEventListener(new InAppPurchaseService.OnInAppServiceListener() {
-            @Override
-            public void onSubscribed(Boolean isSubscribed) {
-                initGoogleADS(isSubscribed);
-            }
-        });
+        inAppPurchaseService.setCustomEventListener(isSubscribed -> initGoogleADS(isSubscribed));
         inAppPurchaseService.reloadPurchaseService();
     }
 
