@@ -11,7 +11,6 @@ import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -36,14 +35,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.google.gson.Gson;
 
 import org.gluu.super_gluu.app.activities.GluuApplication;
@@ -185,12 +179,12 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     }
 
     private void setupInitialFragment() {
-        MainActivityFragment mainActivityFragment = new MainActivityFragment();
+        HomeFragment homeFragment = new HomeFragment();
 
          //Insert the fragment by replacing any existing fragment
         fragmentManager
                 .beginTransaction()
-                .replace(R.id.main_frame_layout, mainActivityFragment)
+                .replace(R.id.main_frame_layout, homeFragment)
                 .commit();
 
     }

@@ -13,7 +13,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
@@ -24,6 +23,7 @@ import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -68,7 +68,7 @@ import butterknife.ButterKnife;
  *
  * Created by Yuriy Movchan on 12/28/2015.
  */
-public class MainActivityFragment extends Fragment implements TextView.OnEditorActionListener {
+public class HomeFragment extends Fragment implements TextView.OnEditorActionListener {
 
     private static final String TAG = "main-activity-fragment";
 
@@ -83,6 +83,9 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
 
     @BindView(R.id.adView)
     AdView adView;
+
+    @BindView(R.id.remove_ad_card_view)
+    CardView removeAdView;
 
     @BindView(R.id.welcome_text_view)
     TextView welcomeTextView;
@@ -158,7 +161,7 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         }
     };
 
-    public MainActivityFragment() {}
+    public HomeFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -169,28 +172,19 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         context = view.getContext();
         this.dataStore = new AndroidKeyDataStore(context);
         this.u2f = new SoftwareDevice(getActivity(), dataStore);
-
-        //todo re-implement ad free code: Should call runSubscribeFlow when ads are removed
-
-        scanButton.setOnClickListener(v -> submit());
+        
+        scanButton.setOnClickListener(scanView -> submit());
+        removeAdView.setOnClickListener(removeView -> runSubscribeFlow());
 
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(onAdFree,
                 new IntentFilter("on-ad-free-flow"));
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(onRestorePurchase,
                 new IntentFilter("on-restore-purchase-flow"));
 
-
         setupBannerAd();
 
         //Init GoogleMobile AD
         initGoogleInterstitialAd();
-
-        //Setup fonts
-        Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Regular.otf");
-        Typeface faceLight = Typeface.createFromAsset(getActivity().getAssets(), "ProximaNova-Regular.otf");
-        scanButton.setTypeface(face);
-        welcomeTextView.setTypeface(face);
-        descriptionTextView.setTypeface(faceLight);
 
         return view;
     }
@@ -198,6 +192,7 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
     private void setupBannerAd() {
         if(Settings.getPurchase(getContext())) {
             adView.setVisibility(View.GONE);
+            removeAdView.setVisibility(View.GONE);
         } else {
             MobileAds.initialize(getActivity().getApplicationContext(), "ca-app-pub-3932761366188106~2301594871");
             AdRequest adRequest = new AdRequest.Builder().build();
@@ -364,6 +359,7 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         integrator.initiateScan();
     }
 
+
     private void showDialog(String message){
         Activity activity = getActivity();
         String textSuccess = getActivity().getApplicationContext().getString(R.string.auth_result_success);
@@ -483,6 +479,7 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
 
     private void handleAdBroadcastIntent(Boolean isAdFree){
         if (isAdFree) {
+            removeAdView.setVisibility(View.GONE);
             adView.setVisibility(View.GONE);
         }
     }
