@@ -122,10 +122,9 @@
     <com.google.android.gms.ads.AdView
         android:layout_alignParentBottom="true"
         android:id="@+id/adView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         ads:adUnitId="@string/banner_ad_unit_id"
         app:adSize="SMART_BANNER"/>
-
 
 </RelativeLayout>

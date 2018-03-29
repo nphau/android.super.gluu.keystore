@@ -96,10 +96,10 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            boolean isShow = intent.getBooleanExtra("isAdFree", false);
+            boolean isAdFree = intent.getBooleanExtra("isAdFree", false);
 
             if (context != null) {
-                initGoogleADS(isShow);
+                handleAdBroadcastIntent(isAdFree);
             }
         }
     };
@@ -179,6 +179,9 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(onRestorePurchase,
                 new IntentFilter("on-restore-purchase-flow"));
 
+
+        setupBannerAd();
+
         //Init GoogleMobile AD
         initGoogleInterstitialAd();
 
@@ -190,6 +193,16 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         descriptionTextView.setTypeface(faceLight);
 
         return view;
+    }
+
+    private void setupBannerAd() {
+        if(Settings.getPurchase(getContext())) {
+            adView.setVisibility(View.GONE);
+        } else {
+            MobileAds.initialize(getActivity().getApplicationContext(), "ca-app-pub-3932761366188106~2301594871");
+            AdRequest adRequest = new AdRequest.Builder().build();
+            adView.loadAd(adRequest);
+        }
     }
 
     @Override
@@ -470,15 +483,9 @@ public class MainActivityFragment extends Fragment implements TextView.OnEditorA
         return isConnected;
     }
 
-    private void initGoogleADS(Boolean isShow){
-        if (!isShow) {
-            MobileAds.initialize(getActivity().getApplicationContext(), "ca-app-pub-3932761366188106~2301594871");
-            AdRequest adRequest = new AdRequest.Builder().build();
-            adView.loadAd(adRequest);
-        } else {
-            ViewGroup.LayoutParams params = adView.getLayoutParams();
-            params.height = 0;
-            adView.setLayoutParams(params);
+    private void handleAdBroadcastIntent(Boolean isAdFree){
+        if (isAdFree) {
+            adView.setVisibility(View.GONE);
         }
     }
 
