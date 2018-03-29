@@ -87,6 +87,9 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
     @BindView(R.id.remove_ad_card_view)
     CardView removeAdView;
 
+    @BindView(R.id.button_remove_ads)
+    Button removeAdsButton;
+
     @BindView(R.id.welcome_text_view)
     TextView welcomeTextView;
     @BindView(R.id.description_text_view)
@@ -165,16 +168,16 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         ButterKnife.bind(this, view);
 
         context = view.getContext();
         this.dataStore = new AndroidKeyDataStore(context);
         this.u2f = new SoftwareDevice(getActivity(), dataStore);
-        
+
         scanButton.setOnClickListener(scanView -> submit());
-        removeAdView.setOnClickListener(removeView -> runSubscribeFlow());
+        removeAdsButton.setOnClickListener(buttonView -> runSubscribeFlow());
 
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(onAdFree,
                 new IntentFilter("on-ad-free-flow"));
@@ -294,13 +297,13 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
         return false;
     }
 
-    private  void runSubscribeFlow(){
+    private void runSubscribeFlow(){
         if (oxPush2RequestListener != null) {
             oxPush2RequestListener.onAdFreeButtonClick();
         }
     }
 
-    private  void runRestorePurchaseFlow(){
+    private void runRestorePurchaseFlow(){
         if (oxPush2RequestListener != null) {
             oxPush2RequestListener.onPurchaseRestored();
         }
