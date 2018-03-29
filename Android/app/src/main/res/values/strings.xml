@@ -17,6 +17,9 @@
     <string name="button_decline">Deny</string>
     <string name="button_delete">Delete</string>
 
+    <string name="button_scan_text">Scan QR Code</string>
+
+
     <string name="failed_subscribe_push_notification">Failed to subscribe application for push notifications</string>
 
     <string name="scan_oxpush2_prompt">Scanning QR code</string>
