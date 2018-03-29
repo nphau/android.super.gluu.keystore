@@ -256,6 +256,7 @@ public class PinCodeFragment extends Fragment {
 
     private void setNewPin(String passcode){
         Settings.savePinCode(context, passcode);
+        Settings.setPinCodeEnabled(context, true);
         pinCodeViewListener.onCorrectPinCode(true);
         Settings.resetCurrentPinAttempts(context);
 

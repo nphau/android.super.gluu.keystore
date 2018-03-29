@@ -90,9 +90,6 @@ public class SettingsPinCode extends ToolbarFragment {
 
             if(pinCodeSwitch.isPressed()) {
                 setPinCode(checked);
-                if (checked) {
-                    Settings.setFingerprintEnabled(getContext(), !pinCodeSwitch.isChecked());
-                }
 
                 String pinCode = Settings.getPinCode(getContext());
                 if (checked && pinCode == null) {
@@ -118,18 +115,20 @@ public class SettingsPinCode extends ToolbarFragment {
         }
     }
 
+
+
     private void setPinCode(Boolean isTurnOn) {
         if(getContext() == null) {
             return;
         }
 
-        Settings.setPinCodeEnabled(getContext(), isTurnOn);
         if (isTurnOn) {
             setPinCodeContainer.setVisibility(View.VISIBLE);
             attemptsDescription.setVisibility(View.VISIBLE);
         } else {
             setPinCodeContainer.setVisibility(View.GONE);
             attemptsDescription.setVisibility(View.GONE);
+            Settings.setPinCodeEnabled(getContext(), false);
             Settings.clearPinCode(getContext());
         }
     }

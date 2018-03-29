@@ -50,7 +50,6 @@ public class PinCodeSettingFragment extends Fragment {
 
         yesButton.setOnClickListener(v -> {
             mainActivityListener.onShowPinFragment(false);
-            Settings.setPinCodeEnabled(getContext(), true);
         });
         noButton.setOnClickListener(v -> {
             mainActivityListener.onMainActivity();
