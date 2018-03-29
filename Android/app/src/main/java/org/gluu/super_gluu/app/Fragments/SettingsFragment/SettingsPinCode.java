@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,28 +86,36 @@ public class SettingsPinCode extends ToolbarFragment {
         });
 
 
-        pinCodeSwitch.setChecked(Settings.getPinCodeEnabled(getContext()));
-        setPinCode(pinCodeSwitch.isChecked());
-
         pinCodeSwitch.setOnCheckedChangeListener((compoundButton, checked) -> {
-            setPinCode(checked);
-            if (checked) {
-                Settings.setFingerprintEnabled(getContext(), !pinCodeSwitch.isChecked());
-            }
 
-            String pinCode = Settings.getPinCode(getContext());
-            if(checked && pinCode == null) {
-                showLoadPinCodeAlert();
+            if(pinCodeSwitch.isPressed()) {
+                setPinCode(checked);
+                if (checked) {
+                    Settings.setFingerprintEnabled(getContext(), !pinCodeSwitch.isChecked());
+                }
+
+                String pinCode = Settings.getPinCode(getContext());
+                if (checked && pinCode == null) {
+                    showLoadPinCodeAlert();
+                }
             }
         });
 
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         if (Settings.getPinCodeEnabled(getContext())) {
             setPinCodeContainer.setVisibility(View.VISIBLE);
+            pinCodeSwitch.setChecked(true);
+            setPinCode(true);
         } else {
             setPinCodeContainer.setVisibility(View.GONE);
+            pinCodeSwitch.setChecked(false);
+            setPinCode(false);
         }
-
-        return view;
     }
 
     private void setPinCode(Boolean isTurnOn) {

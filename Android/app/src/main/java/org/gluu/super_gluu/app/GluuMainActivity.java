@@ -492,6 +492,17 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 
     @Override
     public void onCancel(PinCodeFragment.EntryType entryType) {
+
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        if(inputMethodManager != null) {
+            inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+        }
+
+        if(entryType == PinCodeFragment.EntryType.SETTING_NEW) {
+            Settings.setPinCodeEnabled(getBaseContext(), false);
+            Settings.clearPinCode(getBaseContext());
+        }
+
         onBackPressed();
     }
 
