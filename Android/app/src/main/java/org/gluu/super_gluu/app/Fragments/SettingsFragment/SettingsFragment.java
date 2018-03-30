@@ -35,6 +35,7 @@ import butterknife.ButterKnife;
 public class SettingsFragment extends ToolbarFragment {
 
     private Context context;
+
     private Fingerprint fingerprint;
 
     @BindView(R.id.nav_drawer_toolbar)
@@ -83,7 +84,7 @@ public class SettingsFragment extends ToolbarFragment {
 
         context = getContext();
 
-        fingerprint = new Fingerprint(context);
+        fingerprint = new Fingerprint(context, false);
 
         settingsId = this.getArguments().getString(Constant.SETTINGS_ID);
 

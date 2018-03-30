@@ -1,18 +1,16 @@
 package org.gluu.super_gluu.app.fragments.LicenseFragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.ProgressBar;
 
 import org.gluu.super_gluu.app.base.ToolbarFragment;
-import org.gluu.super_gluu.app.listener.OnMainActivityListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -27,8 +25,6 @@ import butterknife.ButterKnife;
  */
 public class LicenseFragment extends ToolbarFragment {
 
-    OnMainActivityListener mainActivityListener;
-
     @BindView(R.id.nav_drawer_toolbar)
     Toolbar toolbar;
 
@@ -38,32 +34,19 @@ public class LicenseFragment extends ToolbarFragment {
     @BindView(R.id.license_progress_bar)
     ProgressBar progressBar;
 
-    private Boolean isFirstTimeLoading;
     private Type type;
 
     public enum Type {
         PRIVACY, TERMS_OF_SERVICE
     }
 
-    public static LicenseFragment newInstance(boolean firstTimeLoading, Type type) {
+    public static LicenseFragment newInstance(Type type) {
         LicenseFragment licenseFragment = new LicenseFragment();
         Bundle bundle = new Bundle();
-        bundle.putBoolean(Constant.IS_FIRST_TIME_LOADING, firstTimeLoading);
         bundle.putSerializable(Constant.LICENSE_TYPE, type);
         licenseFragment.setArguments(bundle);
 
         return licenseFragment;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnMainActivityListener) {
-            mainActivityListener = (OnMainActivityListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnMainActivityListener");
-        }
     }
 
     @Override
@@ -75,18 +58,12 @@ public class LicenseFragment extends ToolbarFragment {
 
         setHasOptionsMenu(true);
 
-        isFirstTimeLoading = getArguments().getBoolean(Constant.IS_FIRST_TIME_LOADING, false);
         type = (Type) getArguments().getSerializable(Constant.LICENSE_TYPE);
 
-
-        if (isFirstTimeLoading && type == Type.PRIVACY){
-            setDefaultToolbar(toolbar, getString(R.string.privacy_policy), false);
+        if(type == Type.PRIVACY) {
+            setDefaultToolbar(toolbar, getString(R.string.privacy_policy), true);
         } else {
-            if(type == Type.PRIVACY) {
-                setDefaultToolbar(toolbar, getString(R.string.privacy_policy), true);
-            } else {
-                setDefaultToolbar(toolbar, getString(R.string.user_guide), true);
-            }
+            setDefaultToolbar(toolbar, getString(R.string.user_guide), true);
         }
 
         licenseWebView.setWebViewClient(new WebViewClient() {
@@ -95,6 +72,7 @@ public class LicenseFragment extends ToolbarFragment {
                 return false;
             }
 
+
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
@@ -102,6 +80,15 @@ public class LicenseFragment extends ToolbarFragment {
             }
         });
 
+        licenseWebView.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if(newProgress == Constant.LOADING_COMPLETE) {
+                    progressBar.setVisibility(View.GONE);
+                }
+            }
+        });
 
         licenseWebView.loadUrl(getUrl());
 
@@ -143,10 +130,9 @@ public class LicenseFragment extends ToolbarFragment {
         return byteArrayOutputStream.toString();
     }
 
-    public class Constant {
-        private static final String IS_FIRST_TIME_LOADING = "is_first_time_loading";
+    private class Constant {
         private static final String LICENSE_TYPE = "license_type";
-
+        private static final int LOADING_COMPLETE = 100;
         private static final String PRIVACY_POLICY_URL = "https://docs.google.com/document/d/1E1xWq28_f-tam7PihkTZXhlqaXVGZxJbVt4cfx15kB4";
         private final static String USER_GUIDE_URL = "https://gluu.org/docs/supergluu/3.0.0/user-guide/";
     }
