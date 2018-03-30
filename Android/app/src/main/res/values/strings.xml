@@ -223,6 +223,7 @@
     <string name="remove_ads">Remove Ads</string>
     <string name="multiple_attempts_left">%d attempts left</string>
     <string name="single_attempt_left">%d attempt left</string>
+    <string name="super_gluu_push_title">Super Gluu</string>
 
 
 </resources>

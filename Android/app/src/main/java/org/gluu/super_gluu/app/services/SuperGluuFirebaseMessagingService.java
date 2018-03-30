@@ -53,7 +53,7 @@ public class SuperGluuFirebaseMessagingService extends FirebaseMessagingService 
                 intent.putExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
                 LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
             } else {
-                sendNotification("Super Gluu", message);
+                sendNotification(getString(R.string.super_gluu_push_title), message);
             }
 
         }
@@ -75,15 +75,15 @@ public class SuperGluuFirebaseMessagingService extends FirebaseMessagingService 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.app_icon_push)
-                .setContentText(title)
                 .setSound(defaultSoundUri)
+                .setContentTitle(title)
+                .setContentText(message)
                 .setDefaults(Notification.DEFAULT_ALL)
-                .setTicker("Authentication request")
                 .setAutoCancel(true)
                 .setVibrate(new long[]{ 100, 250, 100, 250, 100, 250})
                 .setPriority(Notification.PRIORITY_MAX)
-                .addAction(R.drawable.deny_icon_push, "Deny", denyIntent)
-                .addAction(R.drawable.approve_icon_push, "Approve", approveIntent);
+                .addAction(R.drawable.deny_icon_push, getString(R.string.deny), denyIntent)
+                .addAction(R.drawable.approve_icon_push, getString(R.string.accept), approveIntent);
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
