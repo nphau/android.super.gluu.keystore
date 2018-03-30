@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:src="@drawable/view_action" />
+                android:src="@drawable/ic_visibility" />
 
         </RelativeLayout>
 
@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:src="@drawable/delete_action" />
+                android:src="@drawable/ic_delete" />
 
         </RelativeLayout>
 
