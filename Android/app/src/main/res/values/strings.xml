@@ -224,6 +224,7 @@
     <string name="multiple_attempts_left">%d attempts left</string>
     <string name="single_attempt_left">%d attempt left</string>
     <string name="super_gluu_push_title">Super Gluu</string>
+    <string name="push_login_format">Super Gluu login request to: %s</string>
 
 
 </resources>

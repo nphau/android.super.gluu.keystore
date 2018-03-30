@@ -15,10 +15,12 @@ import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.google.gson.Gson;
 
+import org.gluu.super_gluu.app.GluuMainActivity;
 import org.gluu.super_gluu.app.activities.GluuApplication;
 import org.gluu.super_gluu.app.activities.MainActivity;
-import org.gluu.super_gluu.app.GluuMainActivity;
+import org.gluu.super_gluu.model.OxPush2Request;
 import org.gluu.super_gluu.util.Utils;
 
 import SuperGluu.app.R;
@@ -67,6 +69,8 @@ public class SuperGluuFirebaseMessagingService extends FirebaseMessagingService 
         PendingIntent denyIntent = createPendingIntent(10, message);
         PendingIntent approveIntent = createPendingIntent(20, message);
 
+        String contentText = getContentText(message);
+
         Intent mainIntent = new Intent(this, MainActivity.class);
         mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                 | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -77,18 +81,31 @@ public class SuperGluuFirebaseMessagingService extends FirebaseMessagingService 
                 .setSmallIcon(R.drawable.app_icon_push)
                 .setSound(defaultSoundUri)
                 .setContentTitle(title)
-                .setContentText(message)
+                .setContentText(contentText)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(contentText))
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setAutoCancel(true)
                 .setVibrate(new long[]{ 100, 250, 100, 250, 100, 250})
                 .setPriority(Notification.PRIORITY_MAX)
                 .addAction(R.drawable.deny_icon_push, getString(R.string.deny), denyIntent)
-                .addAction(R.drawable.approve_icon_push, getString(R.string.accept), approveIntent);
+                .addAction(R.drawable.approve_icon_push, getString(R.string.approve), approveIntent);
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         setPushData(message);
         notificationManager.notify(GluuMainActivity.MESSAGE_NOTIFICATION_ID, notificationBuilder.build());
+    }
+
+    private String getContentText(String message) {
+        OxPush2Request push2Request = new Gson().fromJson(message, OxPush2Request.class);
+
+        if(push2Request == null || push2Request.getApp() == null) {
+            return "";
+        } else {
+            return push2Request.toPushMessage(getString(R.string.push_login_format));
+        }
+
     }
 
     private PendingIntent createPendingIntent(int type, String message){
