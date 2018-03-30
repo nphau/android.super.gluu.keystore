@@ -78,7 +78,7 @@ public class SuperGluuFirebaseMessagingService extends FirebaseMessagingService 
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.app_icon_push)
+                .setSmallIcon(R.drawable.push_icon)
                 .setSound(defaultSoundUri)
                 .setContentTitle(title)
                 .setContentText(contentText)

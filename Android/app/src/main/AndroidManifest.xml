@@ -37,7 +37,7 @@
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/app_icon_push" />
+            android:resource="@drawable/push_icon" />
 
         <activity
             android:name="org.gluu.super_gluu.app.activities.MainActivity"
