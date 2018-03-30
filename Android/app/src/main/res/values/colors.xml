@@ -15,12 +15,14 @@
     <color name="indigo">#112932</color>
     <color name="primaryBlue">#3F51B5</color>
     <color name="darkBlue">#303F9F</color>
-    <color name="pinCodeGray">#e5e5e5</color>
+    <color name="pinCodeGray">#DFDFDF</color>
     <color name="default_screen_gray">#F5F5F5</color>
     <color name="homeScreenTextGray">#5E5E5E</color>
     <color name="dark_grey">#5E5E5E</color>
     <color name="border_grey">#C4C4C4</color>
     <color name="light_grey_text">#C9C9C9</color>
+
+
 
     <!--For fingerprint dialog-->
     <color name="warning_color">#f4511e</color>

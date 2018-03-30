@@ -221,6 +221,8 @@
     <string name="deny">Deny</string>
     <string name="camera_priming">Providing camera access allows you to scan QR Codes, an essential part of this app.</string>
     <string name="remove_ads">Remove Ads</string>
+    <string name="multiple_attempts_left">%d attempts left</string>
+    <string name="single_attempt_left">%d attempt left</string>
 
 
 </resources>

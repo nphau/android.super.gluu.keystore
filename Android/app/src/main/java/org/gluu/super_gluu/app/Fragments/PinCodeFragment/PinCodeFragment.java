@@ -251,7 +251,11 @@ public class PinCodeFragment extends Fragment {
 
     @SuppressLint("DefaultLocale")
     private String getAttemptsLeftText(int attempts) {
-        return String.format(Constant.ATTEMPTS_LEFT_FORMAT, attempts);
+        if(attempts > 1) {
+            return String.format(getString(R.string.multiple_attempts_left), attempts);
+        } else {
+            return String.format(getString(R.string.single_attempt_left), attempts);
+        }
     }
 
     private void setNewPin(String passcode){
@@ -350,6 +354,5 @@ public class PinCodeFragment extends Fragment {
 
     public class Constant {
         public static final String ENTRY_TYPE = "entry_type";
-        public static final String ATTEMPTS_LEFT_FORMAT = "%d attempts left";
     }
 }
