@@ -116,48 +116,32 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
     }
 
     public void checkPinCodeEnabled() {
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences(Settings.PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
-        Boolean isDestroyed = preferences.getBoolean("isMainActivityDestroyed", false);
-        if (isDestroyed) {
-            loadGluuMainActivity();
+        if (Settings.getFirstLoad(getApplicationContext())) {
+            Settings.saveFirstLoad(getApplicationContext());
+            loadPinCodeFragment();
         } else {
-            if (Settings.getFirstLoad(getApplicationContext())) {
-                Settings.saveFirstLoad(getApplicationContext());
+            if (Settings.getPinCodeEnabled(getApplicationContext())) {
                 loadPinCodeFragment();
             } else {
-                if (Settings.getPinCodeEnabled(getApplicationContext())) {
-                    loadPinCodeFragment();
-                } else {
-                    loadGluuMainActivity();
-                }
+                loadGluuMainActivity();
             }
         }
     }
 
     public void advanceToNextScreen() {
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences(Settings.PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
-        Boolean isDestroyed = preferences.getBoolean("isMainActivityDestroyed", false);
-        if (isDestroyed) {
-            loadGluuMainActivity();
+        if (Settings.getFirstLoad(getApplicationContext())) {
+            Settings.saveFirstLoad(getApplicationContext());
+            loadSecureEntrySetupFragment();
         } else {
-            if (Settings.getFirstLoad(getApplicationContext())) {
-                Settings.saveFirstLoad(getApplicationContext());
-                loadSecureEntrySetupFragment();
+            if (Settings.getPinCodeEnabled(getApplicationContext())) {
+                loadPinCodeFragment();
             } else {
-                if (Settings.getPinCodeEnabled(getApplicationContext())) {
-                    loadPinCodeFragment();
-                } else {
-                    loadGluuMainActivity();
-                }
+                loadGluuMainActivity();
             }
         }
     }
 
     public void loadGluuMainActivity() {
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences(Settings.PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isMainActivityDestroyed", false);
-        editor.apply();
         Intent intent = new Intent(this, GluuMainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
         startActivity(intent);
@@ -264,7 +248,7 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
     @Override
     public void setupFingerprintAuthentication() {
         Fingerprint fingerprint = new Fingerprint(MainActivity.this);
-            //Fingerprint Service should handle checking if fingerprint is available and messaging the user if it failed
+        //Fingerprint Service should handle checking if fingerprint is available and messaging the user if it failed
         if(fingerprint.startFingerprintService()) {
             Settings.setFingerprintEnabled(MainActivity.this, true);
             loadGluuMainActivity();

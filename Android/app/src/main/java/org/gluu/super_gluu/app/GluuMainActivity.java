@@ -572,10 +572,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     @SuppressLint("ApplySharedPref")
     @Override
     protected void onDestroy() {
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isMainActivityDestroyed", true);
-        editor.commit();
         Log.d(String.valueOf(GluuApplication.class), "APP DESTROYED");
         inAppPurchaseService.deInitPurchaseService();
         super.onDestroy();
