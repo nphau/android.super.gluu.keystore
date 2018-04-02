@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app.fragments.LogsFragment;
+package org.gluu.super_gluu.app.fragment;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -20,8 +20,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import org.gluu.super_gluu.app.ApproveDenyFragment;
-import org.gluu.super_gluu.app.MainNavDrawerActivity;
+import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.base.ToolbarFragment;
 import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.app.model.LogInfo;

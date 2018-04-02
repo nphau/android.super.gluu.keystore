@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsList;
+package org.gluu.super_gluu.app.fragment;
 
 /**
  * Created by nazaryavornytskyy on 3/23/16.

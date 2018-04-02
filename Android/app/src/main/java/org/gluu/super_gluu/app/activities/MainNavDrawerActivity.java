@@ -4,7 +4,7 @@
  *  Copyright (c) 2014, Gluu
  */
 
-package org.gluu.super_gluu.app;
+package org.gluu.super_gluu.app.activities;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -39,16 +39,18 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
-import org.gluu.super_gluu.app.activities.EntryActivity;
-import org.gluu.super_gluu.app.activities.GluuApplication;
+import org.gluu.super_gluu.app.fragment.HomeFragment;
+import org.gluu.super_gluu.app.NotificationType;
+import org.gluu.super_gluu.app.ProcessManager;
 import org.gluu.super_gluu.app.customview.CustomAlert;
-import org.gluu.super_gluu.app.fragments.KeysFragment.KeyFragmentListFragment;
-import org.gluu.super_gluu.app.fragments.KeysFragment.KeyHandleInfoFragment;
-import org.gluu.super_gluu.app.fragments.LicenseFragment.LicenseFragment;
-import org.gluu.super_gluu.app.fragments.LogsFragment.LogsFragment;
-import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
-import org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsFragment;
-import org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsPinCode;
+import org.gluu.super_gluu.app.fragment.ApproveDenyFragment;
+import org.gluu.super_gluu.app.fragment.KeyFragmentListFragment;
+import org.gluu.super_gluu.app.fragment.KeyHandleInfoFragment;
+import org.gluu.super_gluu.app.fragment.LicenseFragment;
+import org.gluu.super_gluu.app.fragment.LogsFragment;
+import org.gluu.super_gluu.app.fragment.PinCodeFragment;
+import org.gluu.super_gluu.app.fragment.SettingsFragment;
+import org.gluu.super_gluu.app.fragment.SettingsPinCode;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
 import org.gluu.super_gluu.app.model.LogInfo;
 import org.gluu.super_gluu.app.purchase.InAppPurchaseService;

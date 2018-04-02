@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app.fragments.KeysFragment;
+package org.gluu.super_gluu.app.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -67,7 +67,7 @@ public class KeyFragmentListFragment extends ToolbarFragment {
 
         mListener = new KeyHandleInfo() {
             @Override
-            public void onKeyHandleInfo(org.gluu.super_gluu.app.fragments.KeysFragment.KeyHandleInfoFragment infoFragment) {
+            public void onKeyHandleInfo(KeyHandleInfoFragment infoFragment) {
                 getActivity().invalidateOptionsMenu();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.main_frame_layout, infoFragment);

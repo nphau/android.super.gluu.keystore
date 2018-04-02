@@ -10,7 +10,7 @@ import android.util.Log;
 
 import org.apache.commons.codec.binary.StringUtils;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.gluu.super_gluu.app.MainNavDrawerActivity;
+import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
 import org.gluu.super_gluu.u2f.v2.cert.KeyPairGenerator;
 import org.gluu.super_gluu.u2f.v2.codec.RawMessageCodec;
 import org.gluu.super_gluu.u2f.v2.exception.U2FException;

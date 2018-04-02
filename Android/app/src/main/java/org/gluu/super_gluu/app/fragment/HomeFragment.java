@@ -4,7 +4,7 @@
  *  Copyright (c) 2014, Gluu
  */
 
-package org.gluu.super_gluu.app;
+package org.gluu.super_gluu.app.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -42,8 +42,12 @@ import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import org.gluu.super_gluu.app.NotificationType;
+import org.gluu.super_gluu.app.ProcessManager;
 import org.gluu.super_gluu.app.activities.CustomBarcodeScannerActivity;
+import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.customview.CustomAlert;
+import org.gluu.super_gluu.app.customview.CustomToast;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
 import org.gluu.super_gluu.app.services.FingerPrintManager;
 import org.gluu.super_gluu.app.settings.Settings;
@@ -349,7 +353,7 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
     }
 
     private void showToastWithText(String text){
-        org.gluu.super_gluu.app.gluuToast.CustomToast customToast = new org.gluu.super_gluu.app.gluuToast.CustomToast(context);
+        CustomToast customToast = new CustomToast(context);
         LayoutInflater layoutInflater = getLayoutInflater();
         if(layoutInflater != null) {
             View view = getLayoutInflater().inflate(R.layout.custom_toast, null);

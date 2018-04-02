@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app;
+package org.gluu.super_gluu.app.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.apache.commons.codec.binary.StringUtils;
+import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.base.ToolbarFragment;
 import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.app.model.LogInfo;

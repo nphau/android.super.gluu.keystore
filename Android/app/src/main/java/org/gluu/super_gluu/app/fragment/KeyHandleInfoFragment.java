@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app.fragments.KeysFragment;
+package org.gluu.super_gluu.app.fragment;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
-import org.gluu.super_gluu.app.MainNavDrawerActivity;
+import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.base.ToolbarFragment;
 import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.u2f.v2.model.TokenEntry;

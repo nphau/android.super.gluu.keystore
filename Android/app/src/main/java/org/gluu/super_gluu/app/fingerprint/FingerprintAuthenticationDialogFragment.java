@@ -38,7 +38,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.gluu.super_gluu.app.SecureEntryFragment;
+import org.gluu.super_gluu.app.fragment.SecureEntryFragment;
 import org.gluu.super_gluu.app.services.FingerPrintManager;
 import org.gluu.super_gluu.app.settings.Settings;
 

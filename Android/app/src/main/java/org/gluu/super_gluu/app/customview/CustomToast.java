@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app.gluuToast;
+package org.gluu.super_gluu.app.customview;
 
 import android.app.Activity;
 import android.app.Application;

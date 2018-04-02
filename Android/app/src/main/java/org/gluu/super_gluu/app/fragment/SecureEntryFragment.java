@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app;
+package org.gluu.super_gluu.app.fragment;
 
 import android.content.Context;
 import android.os.Bundle;

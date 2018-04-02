@@ -16,7 +16,7 @@ import android.util.Log;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
 
-import org.gluu.super_gluu.app.MainNavDrawerActivity;
+import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.activities.EntryActivity;
 import org.gluu.super_gluu.app.activities.GluuApplication;
 import org.gluu.super_gluu.model.OxPush2Request;

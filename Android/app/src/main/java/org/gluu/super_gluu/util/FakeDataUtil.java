@@ -2,7 +2,7 @@ package org.gluu.super_gluu.util;
 
 import android.content.Intent;
 
-import org.gluu.super_gluu.app.MainNavDrawerActivity;
+import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.LogState;
 import org.gluu.super_gluu.app.model.LogInfo;
 import org.gluu.super_gluu.model.OxPush2Request;

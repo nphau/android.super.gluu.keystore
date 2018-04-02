@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app.fragments.SettingsFragment;
+package org.gluu.super_gluu.app.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -10,11 +10,10 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import org.gluu.super_gluu.app.MainNavDrawerActivity;
+import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.NotificationType;
 import org.gluu.super_gluu.app.base.ToolbarFragment;
 import org.gluu.super_gluu.app.customview.CustomAlert;
-import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
 import org.gluu.super_gluu.app.settings.Settings;
 
 import SuperGluu.app.R;

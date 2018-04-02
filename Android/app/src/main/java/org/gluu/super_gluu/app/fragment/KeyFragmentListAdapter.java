@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app.fragments.KeysFragment;
+package org.gluu.super_gluu.app.fragment;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,7 +15,7 @@ import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.google.gson.Gson;
 
-import org.gluu.super_gluu.app.MainNavDrawerActivity;
+import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.NotificationType;
 import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.app.settings.Settings;

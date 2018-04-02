@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app.fragments.LicenseFragment;
+package org.gluu.super_gluu.app.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;

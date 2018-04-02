@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app;
+package org.gluu.super_gluu.app.fragment;
 
 /**
  * Created by SamIAm on 3/21/18.

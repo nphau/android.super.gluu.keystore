@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app.fragments.LockFragment;
+package org.gluu.super_gluu.app.fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;

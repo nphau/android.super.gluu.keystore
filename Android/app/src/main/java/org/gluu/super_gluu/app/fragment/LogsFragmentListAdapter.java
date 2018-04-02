@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app.fragments.LogsFragment;
+package org.gluu.super_gluu.app.fragment;
 
 import android.app.Activity;
 import android.graphics.Typeface;
@@ -17,9 +17,7 @@ import android.widget.TextView;
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 
-import org.gluu.super_gluu.app.ApproveDenyFragment;
 import org.gluu.super_gluu.app.LogState;
-import SuperGluu.app.R;
 import org.gluu.super_gluu.app.model.LogInfo;
 import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.model.OxPush2Request;
@@ -27,6 +25,8 @@ import org.gluu.super_gluu.model.OxPush2Request;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import SuperGluu.app.R;
 
 /**
  * Created by nazaryavornytskyy on 4/5/16.

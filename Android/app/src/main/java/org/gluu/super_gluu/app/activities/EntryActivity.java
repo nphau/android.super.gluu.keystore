@@ -10,15 +10,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import org.gluu.super_gluu.app.MainNavDrawerActivity;
-import org.gluu.super_gluu.app.SecureEntryFragment;
-
-import org.gluu.super_gluu.app.SecureEntrySetupFragment;
+import org.gluu.super_gluu.app.customview.CustomToast;
 import org.gluu.super_gluu.app.fingerprint.Fingerprint;
-import org.gluu.super_gluu.app.fragments.KeysFragment.KeyHandleInfoFragment;
-import org.gluu.super_gluu.app.fragments.LockFragment.LockFragment;
-import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
-import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeSettingFragment;
+import org.gluu.super_gluu.app.fragment.LockFragment;
+import org.gluu.super_gluu.app.fragment.PinCodeFragment;
+import org.gluu.super_gluu.app.fragment.PinCodeSettingFragment;
+import org.gluu.super_gluu.app.fragment.SecureEntryFragment;
+import org.gluu.super_gluu.app.fragment.SecureEntrySetupFragment;
 import org.gluu.super_gluu.app.listener.EntryActivityListener;
 import org.gluu.super_gluu.app.listener.EntrySelectedListener;
 import org.gluu.super_gluu.app.services.FingerPrintManager;
@@ -266,7 +264,7 @@ public class EntryActivity extends AppCompatActivity implements
     }
 
     public void showToast(String text) {
-        org.gluu.super_gluu.app.gluuToast.CustomToast customToast = new org.gluu.super_gluu.app.gluuToast.CustomToast(EntryActivity.this);
+        CustomToast customToast = new CustomToast(EntryActivity.this);
         View view = getLayoutInflater().inflate(R.layout.custom_toast, null);
         customToast.showGluuToastWithText(view, text);
     }

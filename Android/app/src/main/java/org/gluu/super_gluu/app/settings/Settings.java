@@ -3,7 +3,7 @@ package org.gluu.super_gluu.app.settings;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsFragment;
+import org.gluu.super_gluu.app.fragment.SettingsFragment;
 
 /**
  * Created by nazaryavornytskyy on 7/12/16.

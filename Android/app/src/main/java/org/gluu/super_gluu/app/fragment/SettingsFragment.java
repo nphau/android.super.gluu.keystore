@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app.fragments.SettingsFragment;
+package org.gluu.super_gluu.app.fragment;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -20,6 +20,8 @@ import org.gluu.super_gluu.app.base.ToolbarFragment;
 import org.gluu.super_gluu.app.fingerprint.Fingerprint;
 import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.net.CommunicationService;
+import org.gluu.super_gluu.app.customview.CustomToast;
+
 
 import SuperGluu.app.R;
 import butterknife.BindView;
@@ -161,7 +163,7 @@ public class SettingsFragment extends ToolbarFragment {
     }
 
     public void showToast(String text){
-        org.gluu.super_gluu.app.gluuToast.CustomToast customToast = new org.gluu.super_gluu.app.gluuToast.CustomToast(context);
+        CustomToast customToast = new CustomToast(context);
         LayoutInflater inflater = getLayoutInflater();
         if(inflater != null) {
             View view = inflater.inflate(R.layout.custom_toast, null);

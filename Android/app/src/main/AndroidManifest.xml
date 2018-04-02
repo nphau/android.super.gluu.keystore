@@ -51,7 +51,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.gluu.super_gluu.app.MainNavDrawerActivity"
+            android:name="org.gluu.super_gluu.app.activities.MainNavDrawerActivity"
             android:launchMode="singleTask"
             android:label="">
         </activity>
