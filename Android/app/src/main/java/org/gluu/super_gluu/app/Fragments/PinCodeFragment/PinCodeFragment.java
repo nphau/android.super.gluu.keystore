@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,12 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
+import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.app.services.GlobalNetworkTime;
 import org.gluu.super_gluu.app.settings.Settings;
-import org.gluu.super_gluu.u2f.v2.entry.Entry;
 import org.gluu.super_gluu.util.PinEntryEditText;
 
 import SuperGluu.app.R;
@@ -314,10 +311,10 @@ public class PinCodeFragment extends Fragment {
     }
 
     private void showAlertView(String message){
-        CustomGluuAlert gluuAlert = new CustomGluuAlert(getActivity());
-        gluuAlert.setMessage(message);
-        gluuAlert.setYesTitle(getActivity().getApplicationContext().getString(R.string.ok));
-        gluuAlert.show();
+        CustomAlert customAlert = new CustomAlert(getActivity());
+        customAlert.setMessage(message);
+        customAlert.setYesTitle(getActivity().getApplicationContext().getString(R.string.ok));
+        customAlert.show();
     }
 
     @Override

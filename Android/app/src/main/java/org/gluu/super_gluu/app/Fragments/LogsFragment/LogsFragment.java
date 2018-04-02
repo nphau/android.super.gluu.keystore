@@ -21,22 +21,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.gluu.super_gluu.app.ApproveDenyFragment;
-import SuperGluu.app.R;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-import org.gluu.super_gluu.app.GluuMainActivity;
+import org.gluu.super_gluu.app.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.base.ToolbarFragment;
-import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
+import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.app.model.LogInfo;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
-import org.gluu.super_gluu.util.FakeDataUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+
+import SuperGluu.app.R;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by nazaryavornytskyy on 3/22/16.
@@ -242,7 +240,7 @@ public class LogsFragment extends ToolbarFragment {
 
     void showAlertView(){
         final Fragment frg = this;
-        GluuMainActivity.GluuAlertCallback listener = new GluuMainActivity.GluuAlertCallback(){
+        MainNavDrawerActivity.GluuAlertCallback listener = new MainNavDrawerActivity.GluuAlertCallback(){
             @Override
             public void onPositiveButton() {
                 if (!listAdapter.getSelectedLogList().isEmpty() && deleteLogListener != null){
@@ -257,7 +255,7 @@ public class LogsFragment extends ToolbarFragment {
                 //Skip here
             }
         };
-        CustomGluuAlert gluuAlert = new CustomGluuAlert(getActivity());
+        CustomAlert gluuAlert = new CustomAlert(getActivity());
         if (listAdapter.getSelectedLogList().isEmpty()){
 //            gluuAlert.setMessage(getActivity().getApplicationContext().getString(R.string.clear_log_empty_title));
             gluuAlert.setSub_title(getActivity().getApplicationContext().getString(R.string.clear_log_empty_title));

@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import org.apache.commons.codec.binary.StringUtils;
 import org.gluu.super_gluu.app.base.ToolbarFragment;
-import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
+import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.app.model.LogInfo;
 import org.gluu.super_gluu.model.OxPush2Request;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
@@ -47,7 +47,7 @@ public class ApproveDenyFragment extends ToolbarFragment {
     private Boolean isUserInfo = false;
     private LogInfo logInfo;
     private OxPush2Request push2Request;
-    private GluuMainActivity.RequestProcessListener listener;
+    private MainNavDrawerActivity.RequestProcessListener listener;
     public OnDeleteLogInfoListener deleteLogListener;
 
     private Timer clock;
@@ -271,7 +271,7 @@ public class ApproveDenyFragment extends ToolbarFragment {
     }
 
     void showAlertView(){
-        GluuMainActivity.GluuAlertCallback listener = new GluuMainActivity.GluuAlertCallback(){
+        MainNavDrawerActivity.GluuAlertCallback listener = new MainNavDrawerActivity.GluuAlertCallback(){
             @Override
             public void onPositiveButton() {
                 if (deleteLogListener != null){
@@ -284,12 +284,12 @@ public class ApproveDenyFragment extends ToolbarFragment {
                 //Skip here
             }
         };
-        CustomGluuAlert gluuAlert = new CustomGluuAlert(getActivity());
-        gluuAlert.setMessage(getActivity().getApplicationContext().getString(R.string.clear_log_title));
-        gluuAlert.setYesTitle(getActivity().getApplicationContext().getString(R.string.yes));
-        gluuAlert.setNoTitle(getActivity().getApplicationContext().getString(R.string.no));
-        gluuAlert.setmListener(listener);
-        gluuAlert.show();
+        CustomAlert customAlert = new CustomAlert(getActivity());
+        customAlert.setMessage(getActivity().getApplicationContext().getString(R.string.clear_log_title));
+        customAlert.setYesTitle(getActivity().getApplicationContext().getString(R.string.yes));
+        customAlert.setNoTitle(getActivity().getApplicationContext().getString(R.string.no));
+        customAlert.setmListener(listener);
+        customAlert.show();
     }
 
     public Boolean getIsUserInfo() {
@@ -370,11 +370,11 @@ public class ApproveDenyFragment extends ToolbarFragment {
         this.push2Request = push2Request;
     }
 
-    public GluuMainActivity.RequestProcessListener getListener() {
+    public MainNavDrawerActivity.RequestProcessListener getListener() {
         return listener;
     }
 
-    public void setListener(GluuMainActivity.RequestProcessListener listener) {
+    public void setListener(MainNavDrawerActivity.RequestProcessListener listener) {
         this.listener = listener;
     }
 

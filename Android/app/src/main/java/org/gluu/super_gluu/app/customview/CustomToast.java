@@ -13,7 +13,7 @@ import SuperGluu.app.R;
 /**
  * Created by nazaryavornytskyy on 4/25/16.
  */
-public class GluuToast extends Toast {
+public class CustomToast extends Toast {
 
     private Context context;
 
@@ -24,7 +24,7 @@ public class GluuToast extends Toast {
      * @param context The context to use.  Usually your {@link Application}
      *                or {@link Activity} object.
      */
-    public GluuToast(Context context) {
+    public CustomToast(Context context) {
         super(context);
         this.context = context;
     }

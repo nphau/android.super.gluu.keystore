@@ -11,8 +11,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import org.gluu.super_gluu.app.gluuToast.GluuToast;
-
 import SuperGluu.app.R;
 
 /**
@@ -71,9 +69,9 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     }
 
     public void showToast(String text){
-        GluuToast gluuToast = new GluuToast(context);
+        org.gluu.super_gluu.app.gluuToast.CustomToast customToast = new org.gluu.super_gluu.app.gluuToast.CustomToast(context);
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.gluu_toast, null);
-        gluuToast.showGluuToastWithText(view, text);
+        View view = inflater.inflate(R.layout.custom_toast, null);
+        customToast.showGluuToastWithText(view, text);
     }
 }

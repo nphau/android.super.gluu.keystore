@@ -10,18 +10,17 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import org.gluu.super_gluu.app.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.SecureEntryFragment;
-import  org.gluu.super_gluu.app.gluuToast.GluuToast;
 
-import org.gluu.super_gluu.app.GluuMainActivity;
 import org.gluu.super_gluu.app.SecureEntrySetupFragment;
 import org.gluu.super_gluu.app.fingerprint.Fingerprint;
 import org.gluu.super_gluu.app.fragments.KeysFragment.KeyHandleInfoFragment;
 import org.gluu.super_gluu.app.fragments.LockFragment.LockFragment;
 import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
 import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeSettingFragment;
+import org.gluu.super_gluu.app.listener.EntryActivityListener;
 import org.gluu.super_gluu.app.listener.EntrySelectedListener;
-import org.gluu.super_gluu.app.listener.OnMainActivityListener;
 import org.gluu.super_gluu.app.services.FingerPrintManager;
 import org.gluu.super_gluu.app.settings.Settings;
 
@@ -30,7 +29,8 @@ import SuperGluu.app.R;
 /**
  * Created by nazaryavornytskyy on 3/22/16.
  */
-public class MainActivity extends AppCompatActivity implements OnMainActivityListener, PinCodeFragment.PinCodeViewListener, EntrySelectedListener {
+public class EntryActivity extends AppCompatActivity implements
+        EntryActivityListener, PinCodeFragment.PinCodeViewListener, EntrySelectedListener {
 
     public static final String TIME_SERVER = "time-a.nist.gov";
     private static final String DENY_ACTION = "DENY_ACTION";
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
 
     private void userChossed(String answer, Intent intent){
         Boolean isAppLocked = Settings.isAppLocked(getApplicationContext());
-        String requestJson = intent.getStringExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE);
+        String requestJson = intent.getStringExtra(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE);
         saveUserDecision(answer, requestJson);
         if (isAppLocked) {
             loadLockedFragment(true);
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
             checkPinCodeEnabled();
         }
         NotificationManager nMgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        nMgr.cancel(GluuMainActivity.MESSAGE_NOTIFICATION_ID);
+        nMgr.cancel(MainNavDrawerActivity.MESSAGE_NOTIFICATION_ID);
     }
 
 
@@ -103,16 +103,6 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.replace(R.id.fragment_container, pinCodeFragment);
         fragmentTransaction.commit();
-    }
-
-    @Override
-    public void onShowKeyInfo(KeyHandleInfoFragment fragment) {
-//        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//
-//        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//        fragmentTransaction.replace(R.id.fragment_container, fragment);
-//        fragmentTransaction.addToBackStack(null);
-//        fragmentTransaction.commit();
     }
 
     public void checkPinCodeEnabled() {
@@ -142,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
     }
 
     public void loadGluuMainActivity() {
-        Intent intent = new Intent(this, GluuMainActivity.class);
+        Intent intent = new Intent(this, MainNavDrawerActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
         startActivity(intent);
         this.finish();
@@ -207,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
     private void loadLockedFragment(Boolean isRecover) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         LockFragment lockFragment = new LockFragment();
-        OnLockAppTimerOver timeOverListener = (org.gluu.super_gluu.app.activities.MainActivity.OnLockAppTimerOver) () -> {
+        OnLockAppTimerOver timeOverListener = (EntryActivity.OnLockAppTimerOver) () -> {
             if (org.gluu.super_gluu.app.activities.GluuApplication.isIsAppInForeground()) {
                 Settings.setAppLocked(getApplicationContext(), false);
                 loadPinCodeFragment();
@@ -247,10 +237,10 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
 
     @Override
     public void setupFingerprintAuthentication() {
-        Fingerprint fingerprint = new Fingerprint(MainActivity.this);
+        Fingerprint fingerprint = new Fingerprint(EntryActivity.this);
         //Fingerprint Service should handle checking if fingerprint is available and messaging the user if it failed
         if(fingerprint.startFingerprintService()) {
-            Settings.setFingerprintEnabled(MainActivity.this, true);
+            Settings.setFingerprintEnabled(EntryActivity.this, true);
             loadGluuMainActivity();
         }
     }
@@ -276,9 +266,9 @@ public class MainActivity extends AppCompatActivity implements OnMainActivityLis
     }
 
     public void showToast(String text) {
-        GluuToast gluuToast = new GluuToast(MainActivity.this);
-        View view = getLayoutInflater().inflate(R.layout.gluu_toast, null);
-        gluuToast.showGluuToastWithText(view, text);
+        org.gluu.super_gluu.app.gluuToast.CustomToast customToast = new org.gluu.super_gluu.app.gluuToast.CustomToast(EntryActivity.this);
+        View view = getLayoutInflater().inflate(R.layout.custom_toast, null);
+        customToast.showGluuToastWithText(view, text);
     }
 
     public void navigateToSecureEntryScreen() {

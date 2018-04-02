@@ -42,7 +42,7 @@
             android:resource="@drawable/push_icon" />
 
         <activity
-            android:name="org.gluu.super_gluu.app.activities.MainActivity"
+            android:name="org.gluu.super_gluu.app.activities.EntryActivity"
             android:theme="@style/SplashScreenTheme">
 
             <intent-filter>
@@ -51,7 +51,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.gluu.super_gluu.app.GluuMainActivity"
+            android:name="org.gluu.super_gluu.app.MainNavDrawerActivity"
             android:launchMode="singleTask"
             android:label="">
         </activity>
@@ -67,14 +67,14 @@
         <!--</activity>-->
         <!--For FCM instead of GMS-->
         <service
-            android:name="org.gluu.super_gluu.app.services.SuperGluuFirebaseInstanceIDService"
+            android:name="org.gluu.super_gluu.app.services.AppFirebaseInstanceIDService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
         <service
-            android:name="org.gluu.super_gluu.app.services.SuperGluuFirebaseMessagingService"
+            android:name="org.gluu.super_gluu.app.services.AppFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>

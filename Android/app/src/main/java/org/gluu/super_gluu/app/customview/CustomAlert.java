@@ -1,11 +1,10 @@
-package org.gluu.super_gluu.app.customGluuAlertView;
+package org.gluu.super_gluu.app.customview;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -19,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.gluu.super_gluu.app.GluuMainActivity;
+import org.gluu.super_gluu.app.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.NotificationType;
 
 import SuperGluu.app.R;
@@ -27,18 +26,18 @@ import SuperGluu.app.R;
 /**
  * Created by nazaryavornytskyy on 4/15/16.
  */
-public class CustomGluuAlert extends Dialog implements android.view.View.OnClickListener {
+public class CustomAlert extends Dialog implements android.view.View.OnClickListener {
 
     private String sub_title, message, yesTitle, noTitle;
     private Activity activity;
     private Button yes, no;
-    private GluuMainActivity.GluuAlertCallback mListener;
+    private MainNavDrawerActivity.GluuAlertCallback mListener;
     private Boolean isTextView = false;
     private String text;
 
     public NotificationType type;
 
-    public CustomGluuAlert(Activity a) {
+    public CustomAlert(Activity a) {
         super(a);
         this.activity = a;
     }
@@ -47,7 +46,7 @@ public class CustomGluuAlert extends Dialog implements android.view.View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.custom_gluu_alert);
+        setContentView(R.layout.custom_alert);
         TextView sub_title = (TextView) findViewById(R.id.alert_message_subText);
         TextView message = (TextView) findViewById(R.id.alert_message_textView);
         final EditText textField = (EditText) findViewById(R.id.alert_textField);
@@ -191,7 +190,7 @@ public class CustomGluuAlert extends Dialog implements android.view.View.OnClick
         return mListener;
     }
 
-    public void setmListener(GluuMainActivity.GluuAlertCallback mListener) {
+    public void setmListener(MainNavDrawerActivity.GluuAlertCallback mListener) {
         this.mListener = mListener;
     }
 

@@ -43,8 +43,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import org.gluu.super_gluu.app.activities.CustomBarcodeScannerActivity;
-import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
-import org.gluu.super_gluu.app.gluuToast.GluuToast;
+import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
 import org.gluu.super_gluu.app.services.FingerPrintManager;
 import org.gluu.super_gluu.app.settings.Settings;
@@ -134,7 +133,7 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
         public void onReceive(Context context, Intent intent) {
             if (!getActivity().isDestroyed()) {
                 // Get extra data included in the Intent
-                String message = intent.getStringExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE);
+                String message = intent.getStringExtra(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE);
                 final OxPush2Request oxPush2Request = new Gson().fromJson(message, OxPush2Request.class);
                 onQrRequest(oxPush2Request);
                 //play sound and vibrate
@@ -350,11 +349,11 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
     }
 
     private void showToastWithText(String text){
-        GluuToast gluuToast = new GluuToast(context);
+        org.gluu.super_gluu.app.gluuToast.CustomToast customToast = new org.gluu.super_gluu.app.gluuToast.CustomToast(context);
         LayoutInflater layoutInflater = getLayoutInflater();
         if(layoutInflater != null) {
-            View view = getLayoutInflater().inflate(R.layout.gluu_toast, null);
-            gluuToast.showGluuToastWithText(view, text);
+            View view = getLayoutInflater().inflate(R.layout.custom_toast, null);
+            customToast.showGluuToastWithText(view, text);
         }
     }
 
@@ -379,12 +378,12 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
             finalMessage = activity.getApplicationContext().getString(R.string.deny_result_success);
             finalTitle = activity.getApplicationContext().getString(R.string.failed);
         }
-        final CustomGluuAlert gluuAlert = new CustomGluuAlert(activity);
+        final CustomAlert gluuAlert = new CustomAlert(activity);
         gluuAlert.setMessage(finalTitle);
         gluuAlert.setSub_title(finalMessage);
         gluuAlert.setYesTitle(activity.getApplicationContext().getString(R.string.ok));
         gluuAlert.type = NotificationType.DEFAULT;
-        gluuAlert.setmListener(new GluuMainActivity.GluuAlertCallback() {
+        gluuAlert.setmListener(new MainNavDrawerActivity.GluuAlertCallback() {
             @Override
             public void onPositiveButton() {
                 //Skip here

@@ -3,18 +3,14 @@ package org.gluu.super_gluu.app.fragments.LogsFragment;
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,7 +18,6 @@ import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 
 import org.gluu.super_gluu.app.ApproveDenyFragment;
-import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
 import org.gluu.super_gluu.app.LogState;
 import SuperGluu.app.R;
 import org.gluu.super_gluu.app.model.LogInfo;
@@ -30,9 +25,6 @@ import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.model.OxPush2Request;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 

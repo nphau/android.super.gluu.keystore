@@ -1,22 +1,20 @@
 package org.gluu.super_gluu.app.fragments.SettingsFragment;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
-import org.gluu.super_gluu.app.GluuMainActivity;
+
+import org.gluu.super_gluu.app.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.NotificationType;
 import org.gluu.super_gluu.app.base.ToolbarFragment;
-import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
+import org.gluu.super_gluu.app.customview.CustomAlert;
+import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
 import org.gluu.super_gluu.app.settings.Settings;
 
 import SuperGluu.app.R;
@@ -46,7 +44,7 @@ public class SettingsPinCode extends ToolbarFragment {
     @BindView(R.id.set_pin_code_container)
     RelativeLayout setPinCodeContainer;
 
-    GluuMainActivity.GluuAlertCallback listener;
+    MainNavDrawerActivity.GluuAlertCallback listener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,7 +55,7 @@ public class SettingsPinCode extends ToolbarFragment {
         setDefaultToolbar(toolbar, getString(R.string.pin_code), true);
         setHasOptionsMenu(true);
 
-        listener = new GluuMainActivity.GluuAlertCallback() {
+        listener = new MainNavDrawerActivity.GluuAlertCallback() {
             @Override
             public void onPositiveButton() {
                 Settings.saveIsReset(getContext());
@@ -147,7 +145,7 @@ public class SettingsPinCode extends ToolbarFragment {
     }
 
     private void showLoadPinCodeAlert() {
-        CustomGluuAlert loadPinCodeAlert = new CustomGluuAlert(getActivity());
+        CustomAlert loadPinCodeAlert = new CustomAlert(getActivity());
 
         String pinCode = Settings.getPinCode(getContext());
 

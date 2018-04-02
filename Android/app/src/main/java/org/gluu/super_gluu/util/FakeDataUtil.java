@@ -2,7 +2,7 @@ package org.gluu.super_gluu.util;
 
 import android.content.Intent;
 
-import org.gluu.super_gluu.app.GluuMainActivity;
+import org.gluu.super_gluu.app.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.LogState;
 import org.gluu.super_gluu.app.model.LogInfo;
 import org.gluu.super_gluu.model.OxPush2Request;
@@ -18,7 +18,7 @@ import java.util.List;
 public abstract class FakeDataUtil {
 
     private static final String QR_CODE_PUSH_NOTIFICATION_MESSAGE =
-            GluuMainActivity.class.getPackage().getName() + ".QR_CODE_PUSH_NOTIFICATION_MESSAGE";
+            MainNavDrawerActivity.class.getPackage().getName() + ".QR_CODE_PUSH_NOTIFICATION_MESSAGE";
     private static final String QR_CODE_PUSH_NOTIFICATION = "QR_CODE_PUSH_NOTIFICATION";
 
     public static Intent getFakeAuthBroadcastIntent() {

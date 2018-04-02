@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -20,9 +19,9 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
-import org.gluu.super_gluu.app.GluuMainActivity;
+import org.gluu.super_gluu.app.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.base.ToolbarFragment;
-import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
+import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.u2f.v2.model.TokenEntry;
 import org.gluu.super_gluu.util.Utils;
 
@@ -162,7 +161,7 @@ public class KeyHandleInfoFragment extends ToolbarFragment {
     }
 
     void showAlertView(){
-        GluuMainActivity.GluuAlertCallback listener = new GluuMainActivity.GluuAlertCallback(){
+        MainNavDrawerActivity.GluuAlertCallback listener = new MainNavDrawerActivity.GluuAlertCallback(){
             @Override
             public void onPositiveButton() {
                 mDeleteListener.onDeleteKeyHandle(tokenEntry);
@@ -175,13 +174,13 @@ public class KeyHandleInfoFragment extends ToolbarFragment {
                 //Skip here
             }
         };
-        CustomGluuAlert gluuAlert = new CustomGluuAlert(mActivity);
-        gluuAlert.setMessage(mActivity.getApplicationContext().getString(R.string.approve_delete));
-        gluuAlert.setSub_title(mActivity.getApplicationContext().getString(R.string.delete_key_sub_title));
-        gluuAlert.setYesTitle(mActivity.getApplicationContext().getString(R.string.yes));
-        gluuAlert.setNoTitle(mActivity.getApplicationContext().getString(R.string.no));
-        gluuAlert.setmListener(listener);
-        gluuAlert.show();
+        CustomAlert customAlert = new CustomAlert(mActivity);
+        customAlert.setMessage(mActivity.getApplicationContext().getString(R.string.approve_delete));
+        customAlert.setSub_title(mActivity.getApplicationContext().getString(R.string.delete_key_sub_title));
+        customAlert.setYesTitle(mActivity.getApplicationContext().getString(R.string.yes));
+        customAlert.setNoTitle(mActivity.getApplicationContext().getString(R.string.no));
+        customAlert.setmListener(listener);
+        customAlert.show();
     }
 
     void setupPairingDateByFormat(TextView textView){

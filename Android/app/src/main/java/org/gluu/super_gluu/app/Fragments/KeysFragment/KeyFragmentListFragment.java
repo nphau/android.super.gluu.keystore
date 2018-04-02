@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 
 import org.gluu.super_gluu.app.base.ToolbarFragment;
-import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
+import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
 import org.gluu.super_gluu.u2f.v2.model.TokenEntry;
 
@@ -22,7 +22,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -83,7 +82,7 @@ public class KeyFragmentListFragment extends ToolbarFragment {
         };
 
         cListener = keyID -> {
-            CustomGluuAlert gluuAlert = new CustomGluuAlert(getActivity());
+            CustomAlert gluuAlert = new CustomAlert(getActivity());
             gluuAlert.setMessage(getActivity().getApplicationContext().getString(R.string.enter_new_key_name));
             gluuAlert.setYesTitle(getActivity().getApplicationContext().getString(R.string.yes));
             gluuAlert.setNoTitle(getActivity().getApplicationContext().getString(R.string.no));

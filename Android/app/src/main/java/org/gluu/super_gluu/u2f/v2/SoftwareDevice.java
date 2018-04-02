@@ -15,7 +15,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
-import org.gluu.super_gluu.app.services.SuperGluuFirebaseInstanceIDService;
+import org.gluu.super_gluu.app.services.AppFirebaseInstanceIDService;
 import org.gluu.super_gluu.model.OxPush2Request;
 import org.gluu.super_gluu.u2f.v2.cert.KeyPairGeneratorImpl;
 import org.gluu.super_gluu.u2f.v2.codec.RawMessageCodec;
@@ -142,7 +142,7 @@ public class SoftwareDevice {
 
         DeviceData deviceData = new DeviceData();
         deviceData.setUuid(DeviceUuidManager.getDeviceUuid(context).toString());
-        deviceData.setPushToken(new SuperGluuFirebaseInstanceIDService().getPushRegistrationId(this.context));
+        deviceData.setPushToken(new AppFirebaseInstanceIDService().getPushRegistrationId(this.context));
         deviceData.setType(deviceType);
         deviceData.setPlatform("android");
         deviceData.setName(Build.MODEL);

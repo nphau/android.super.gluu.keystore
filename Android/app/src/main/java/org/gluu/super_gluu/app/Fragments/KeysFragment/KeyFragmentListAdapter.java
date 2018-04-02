@@ -8,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,17 +15,10 @@ import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.google.gson.Gson;
 
-import org.gluu.super_gluu.app.ApproveDenyFragment;
+import org.gluu.super_gluu.app.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.NotificationType;
-import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
-import org.gluu.super_gluu.app.GluuMainActivity;
-
-import SuperGluu.app.R;
-
-import org.gluu.super_gluu.app.fragments.LogsFragment.LogsFragmentListAdapter;
-import org.gluu.super_gluu.app.model.LogInfo;
+import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.app.settings.Settings;
-import org.gluu.super_gluu.model.OxPush2Request;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
 import org.gluu.super_gluu.u2f.v2.model.TokenEntry;
 import org.gluu.super_gluu.util.Utils;
@@ -37,6 +28,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import SuperGluu.app.R;
 
 /**
  * Created by nazaryavornytskyy on 3/1/16.
@@ -153,13 +146,13 @@ public class KeyFragmentListAdapter extends BaseAdapter {
                 int position = (int) v.getTag();
                 String token = new Gson().toJson(list.get(position));
                 final TokenEntry tokenEntry = new Gson().fromJson(token, TokenEntry.class);
-                CustomGluuAlert gluuAlert = new CustomGluuAlert(activity);
+                CustomAlert gluuAlert = new CustomAlert(activity);
 //                gluuAlert.setMessage(activity.getApplicationContext().getString(R.string.rename_key_name));
                 gluuAlert.setSub_title(activity.getApplicationContext().getString(R.string.rename_key_name));
                 gluuAlert.setYesTitle(activity.getApplicationContext().getString(R.string.yes));
                 gluuAlert.setNoTitle(activity.getApplicationContext().getString(R.string.no));
                 gluuAlert.type = NotificationType.RENAME_KEY;
-                gluuAlert.setmListener(new GluuMainActivity.GluuAlertCallback() {
+                gluuAlert.setmListener(new MainNavDrawerActivity.GluuAlertCallback() {
                     @Override
                     public void onPositiveButton() {
                         showRenameDialog(tokenEntry);
@@ -225,14 +218,14 @@ public class KeyFragmentListAdapter extends BaseAdapter {
     }
 
     private void showRenameDialog(final TokenEntry tokenEntry){
-        final CustomGluuAlert gluuAlert = new CustomGluuAlert(activity);
+        final CustomAlert gluuAlert = new CustomAlert(activity);
         gluuAlert.setMessage(activity.getApplicationContext().getString(R.string.new_key_name_title));
         gluuAlert.setSub_title(activity.getApplicationContext().getString(R.string.enter_new_key_name));
         gluuAlert.setYesTitle(activity.getApplicationContext().getString(R.string.save));
         gluuAlert.setNoTitle(activity.getApplicationContext().getString(R.string.cancel));
         gluuAlert.setIsTextView(true);
         gluuAlert.type = NotificationType.RENAME_KEY;
-        gluuAlert.setmListener(new GluuMainActivity.GluuAlertCallback() {
+        gluuAlert.setmListener(new MainNavDrawerActivity.GluuAlertCallback() {
             @Override
             public void onPositiveButton() {
                 Context context = activity.getApplicationContext();
@@ -250,7 +243,7 @@ public class KeyFragmentListAdapter extends BaseAdapter {
     }
 
     void showDeleteKeyAlertView(final TokenEntry tokenEntry){
-        GluuMainActivity.GluuAlertCallback listener = new GluuMainActivity.GluuAlertCallback(){
+        MainNavDrawerActivity.GluuAlertCallback listener = new MainNavDrawerActivity.GluuAlertCallback(){
             @Override
             public void onPositiveButton() {
                 Context context = activity.getApplicationContext();
@@ -264,7 +257,7 @@ public class KeyFragmentListAdapter extends BaseAdapter {
                 //Skip here
             }
         };
-        CustomGluuAlert gluuAlert = new CustomGluuAlert(activity);
+        CustomAlert gluuAlert = new CustomAlert(activity);
         gluuAlert.setMessage(activity.getApplicationContext().getString(R.string.approve_delete));
         gluuAlert.setSub_title(activity.getApplicationContext().getString(R.string.delete_key_sub_title));
         gluuAlert.setYesTitle(activity.getApplicationContext().getString(R.string.yes));

@@ -13,13 +13,12 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
 
-import org.gluu.super_gluu.app.GluuMainActivity;
+import org.gluu.super_gluu.app.MainNavDrawerActivity;
+import org.gluu.super_gluu.app.activities.EntryActivity;
 import org.gluu.super_gluu.app.activities.GluuApplication;
-import org.gluu.super_gluu.app.activities.MainActivity;
 import org.gluu.super_gluu.model.OxPush2Request;
 import org.gluu.super_gluu.util.Utils;
 
@@ -28,7 +27,7 @@ import SuperGluu.app.R;
 /**
  * Created by nazaryavornytskyy on 4/3/17.
  */
-public class SuperGluuFirebaseMessagingService extends FirebaseMessagingService {
+public class AppFirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
 
     private static final String TAG = "FBMessagingService";
     private static final String DENY_ACTION = "DENY_ACTION";
@@ -51,8 +50,8 @@ public class SuperGluuFirebaseMessagingService extends FirebaseMessagingService 
             }
 
             if (GluuApplication.isIsAppInForeground()) {
-                Intent intent = new Intent(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION);
-                intent.putExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
+                Intent intent = new Intent(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION);
+                intent.putExtra(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
                 LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
             } else {
                 sendNotification(getString(R.string.super_gluu_push_title), message);
@@ -71,7 +70,7 @@ public class SuperGluuFirebaseMessagingService extends FirebaseMessagingService 
 
         String contentText = getContentText(message);
 
-        Intent mainIntent = new Intent(this, MainActivity.class);
+        Intent mainIntent = new Intent(this, EntryActivity.class);
         mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                 | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,mainIntent,0);
@@ -94,7 +93,7 @@ public class SuperGluuFirebaseMessagingService extends FirebaseMessagingService 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         setPushData(message);
-        notificationManager.notify(GluuMainActivity.MESSAGE_NOTIFICATION_ID, notificationBuilder.build());
+        notificationManager.notify(MainNavDrawerActivity.MESSAGE_NOTIFICATION_ID, notificationBuilder.build());
     }
 
     private String getContentText(String message) {
@@ -109,9 +108,9 @@ public class SuperGluuFirebaseMessagingService extends FirebaseMessagingService 
     }
 
     private PendingIntent createPendingIntent(int type, String message){
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, EntryActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
+        intent.putExtra(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
         if (type == 10){
             intent.setAction(DENY_ACTION);
         } else {

@@ -5,26 +5,23 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-//import com.github.simonpercic.rxtime.RxTime;
-import org.gluu.super_gluu.app.activities.MainActivity;
-import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
+import org.gluu.super_gluu.app.activities.EntryActivity;
+import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.app.services.GlobalNetworkTime;
 import org.gluu.super_gluu.app.settings.Settings;
-import SuperGluu.app.R;
+
 import java.text.SimpleDateFormat;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
+import SuperGluu.app.R;
 
-import static android.content.ContentValues.TAG;
+//import com.github.simonpercic.rxtime.RxTime;
 
 /**
  * Created by nazaryavornytskyy on 4/20/16.
@@ -35,7 +32,7 @@ public class LockFragment extends Fragment {
 
     private Timer clock;
     private Handler handler;
-    private MainActivity.OnLockAppTimerOver listener;
+    private EntryActivity.OnLockAppTimerOver listener;
     private Boolean isRecover;
 
     private Context context;
@@ -111,11 +108,11 @@ public class LockFragment extends Fragment {
         }
     }
 
-    public MainActivity.OnLockAppTimerOver getListener() {
+    public EntryActivity.OnLockAppTimerOver getListener() {
         return listener;
     }
 
-    public void setListener(MainActivity.OnLockAppTimerOver listener) {
+    public void setListener(EntryActivity.OnLockAppTimerOver listener) {
         this.listener = listener;
     }
 
@@ -182,7 +179,7 @@ public class LockFragment extends Fragment {
     }
 
     private void showAlertView(String message){
-        CustomGluuAlert gluuAlert = new CustomGluuAlert(getActivity());
+        CustomAlert gluuAlert = new CustomAlert(getActivity());
         gluuAlert.setMessage(message);
         gluuAlert.show();
     }

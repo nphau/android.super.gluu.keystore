@@ -14,7 +14,7 @@ import static android.content.ContentValues.TAG;
  * Created by nazaryavornytskyy on 4/3/17.
  */
 
-public class SuperGluuFirebaseInstanceIDService extends FirebaseInstanceIdService {
+public class AppFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
     @Override
     public void onTokenRefresh() {

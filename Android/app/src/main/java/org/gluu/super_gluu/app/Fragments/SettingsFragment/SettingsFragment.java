@@ -4,9 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -20,7 +18,6 @@ import android.widget.TextView;
 import org.gluu.super_gluu.app.activities.GluuApplication;
 import org.gluu.super_gluu.app.base.ToolbarFragment;
 import org.gluu.super_gluu.app.fingerprint.Fingerprint;
-import org.gluu.super_gluu.app.gluuToast.GluuToast;
 import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.net.CommunicationService;
 
@@ -164,11 +161,11 @@ public class SettingsFragment extends ToolbarFragment {
     }
 
     public void showToast(String text){
-        GluuToast gluuToast = new GluuToast(context);
+        org.gluu.super_gluu.app.gluuToast.CustomToast customToast = new org.gluu.super_gluu.app.gluuToast.CustomToast(context);
         LayoutInflater inflater = getLayoutInflater();
         if(inflater != null) {
-            View view = inflater.inflate(R.layout.gluu_toast, null);
-            gluuToast.showGluuToastWithText(view, text);
+            View view = inflater.inflate(R.layout.custom_toast, null);
+            customToast.showGluuToastWithText(view, text);
         }
     }
 

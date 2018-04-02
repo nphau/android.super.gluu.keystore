@@ -13,7 +13,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -40,9 +39,9 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import org.gluu.super_gluu.app.activities.EntryActivity;
 import org.gluu.super_gluu.app.activities.GluuApplication;
-import org.gluu.super_gluu.app.activities.MainActivity;
-import org.gluu.super_gluu.app.customGluuAlertView.CustomGluuAlert;
+import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.app.fragments.KeysFragment.KeyFragmentListFragment;
 import org.gluu.super_gluu.app.fragments.KeysFragment.KeyHandleInfoFragment;
 import org.gluu.super_gluu.app.fragments.LicenseFragment.LicenseFragment;
@@ -50,7 +49,6 @@ import org.gluu.super_gluu.app.fragments.LogsFragment.LogsFragment;
 import org.gluu.super_gluu.app.fragments.PinCodeFragment.PinCodeFragment;
 import org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsFragment;
 import org.gluu.super_gluu.app.fragments.SettingsFragment.SettingsPinCode;
-import org.gluu.super_gluu.app.listener.OnMainActivityListener;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
 import org.gluu.super_gluu.app.model.LogInfo;
 import org.gluu.super_gluu.app.purchase.InAppPurchaseService;
@@ -81,7 +79,9 @@ import butterknife.ButterKnife;
  *
  * Created by Yuriy Movchan on 12/28/2015.
  */
-public class GluuMainActivity extends AppCompatActivity implements OxPush2RequestListener, KeyHandleInfoFragment.OnDeleteKeyHandleListener, PinCodeFragment.PinCodeViewListener, ApproveDenyFragment.OnDeleteLogInfoListener, OnMainActivityListener {
+public class MainNavDrawerActivity extends AppCompatActivity
+        implements OxPush2RequestListener, KeyHandleInfoFragment.OnDeleteKeyHandleListener,
+        PinCodeFragment.PinCodeViewListener, ApproveDenyFragment.OnDeleteLogInfoListener {
 
     private static final String TAG = "main-activity";
 
@@ -90,7 +90,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
      */
     private static final int REQUEST_CAMERA = 0;
 
-    public static final String QR_CODE_PUSH_NOTIFICATION_MESSAGE = GluuMainActivity.class.getPackage().getName() + ".QR_CODE_PUSH_NOTIFICATION_MESSAGE";
+    public static final String QR_CODE_PUSH_NOTIFICATION_MESSAGE = MainNavDrawerActivity.class.getPackage().getName() + ".QR_CODE_PUSH_NOTIFICATION_MESSAGE";
     public static final String QR_CODE_PUSH_NOTIFICATION = "QR_CODE_PUSH_NOTIFICATION";
     public static final int MESSAGE_NOTIFICATION_ID = 444555;
 
@@ -125,7 +125,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             }
 
             // Get extra data included in the Intent
-            String message = intent.getStringExtra(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE);
+            String message = intent.getStringExtra(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE);
             final OxPush2Request oxPush2Request = new Gson().fromJson(message, OxPush2Request.class);
             onQrRequest(oxPush2Request);
             //play sound and vibrate
@@ -146,7 +146,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.gluu_activity_main);
+        setContentView(R.layout.activity_nav_drawer_main);
         ButterKnife.bind(this);
         context = getApplicationContext();
 
@@ -155,7 +155,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         initNavDrawer();
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mPushMessageReceiver,
-                new IntentFilter(GluuMainActivity.QR_CODE_PUSH_NOTIFICATION));
+                new IntentFilter(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION));
 
         // Init network layer
         CommunicationService.init();
@@ -269,7 +269,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
 //            }
 //
 //        };
-//        CustomGluuAlert gluuAlert = new CustomGluuAlert(GluuMainActivity.this);
+//        CustomAlert gluuAlert = new CustomAlert(MainNavDrawerActivity.this);
 //        gluuAlert.setMessage(getApplicationContext().getString(R.string.clear_logs));
 //        gluuAlert.setYesTitle(getApplicationContext().getString(R.string.yes));
 //        gluuAlert.setNoTitle(getApplicationContext().getString(R.string.no));
@@ -287,7 +287,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         Settings.setPushDataEmpty(getApplicationContext());
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         if(notificationManager != null) {
-            notificationManager.cancel(GluuMainActivity.MESSAGE_NOTIFICATION_ID);
+            notificationManager.cancel(MainNavDrawerActivity.MESSAGE_NOTIFICATION_ID);
         }
         final ProcessManager processManager = createProcessManager(oxPush2Request);
         ApproveDenyFragment approveDenyFragment = new ApproveDenyFragment();
@@ -336,7 +336,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     public void onAdFreeButtonClick(){
         if (inAppPurchaseService.readyToPurchase) {
             if (!inAppPurchaseService.isSubscribed) {
-                inAppPurchaseService.purchase(GluuMainActivity.this);
+                inAppPurchaseService.purchase(MainNavDrawerActivity.this);
             } else {
                 initGoogleADS(true);
             }
@@ -478,7 +478,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             }
         } else {
             //to change pin code, first need check if user knows current one
-            Intent intent = new Intent(GluuMainActivity.this, MainActivity.class);
+            Intent intent = new Intent(MainNavDrawerActivity.this, EntryActivity.class);
             startActivity(intent);
             finish();
         }
@@ -501,19 +501,19 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
     }
 
     private void showAlertView(String message){
-        CustomGluuAlert gluuAlert = new CustomGluuAlert(this);
-        gluuAlert.setMessage(message);
-        gluuAlert.show();
+        CustomAlert customAlert = new CustomAlert(this);
+        customAlert.setMessage(message);
+        customAlert.show();
     }
 
     private void showCameraMessagingAlertView() {
-        CustomGluuAlert gluuAlert = new CustomGluuAlert(this);
-        gluuAlert.setMessage(getString(R.string.camera_priming));
-        gluuAlert.type = NotificationType.DEFAULT;
-        gluuAlert.setCancelable(true);
-        gluuAlert.setOnDismissListener(dialogInterface -> requestCameraPermission());
-        gluuAlert.setOnCancelListener(dialogInterface -> requestCameraPermission());
-        gluuAlert.show();
+        CustomAlert customAlert = new CustomAlert(this);
+        customAlert.setMessage(getString(R.string.camera_priming));
+        customAlert.type = NotificationType.DEFAULT;
+        customAlert.setCancelable(true);
+        customAlert.setOnDismissListener(dialogInterface -> requestCameraPermission());
+        customAlert.setOnCancelListener(dialogInterface -> requestCameraPermission());
+        customAlert.show();
     }
 
     @Override
@@ -528,23 +528,6 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
         settings.setEditingModeLogs(false);
         reloadLogs();
     }
-
-    //OnMainActivityListener methods
-    @Override
-    public void onMainActivity() {
-
-    }
-
-    @Override
-    public void onShowPinFragment(boolean enterPin) {
-
-    }
-
-    @Override
-    public void onShowKeyInfo(KeyHandleInfoFragment infoFragment) {
-
-    }
-    //// OnMainActivityListener End
 
     public interface GluuAlertCallback{
         void onPositiveButton();
@@ -608,7 +591,7 @@ public class GluuMainActivity extends AppCompatActivity implements OxPush2Reques
             // For example if the user has previously denied the permission.
             Log.i(TAG,
                     "Displaying camera permission rationale to provide additional context.");
-            ActivityCompat.requestPermissions(GluuMainActivity.this,
+            ActivityCompat.requestPermissions(MainNavDrawerActivity.this,
                     new String[]{android.Manifest.permission.CAMERA},
                     REQUEST_CAMERA);
         } else {

@@ -1,8 +1,6 @@
 package org.gluu.super_gluu.app.fragments.PinCodeFragment;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,9 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.gluu.super_gluu.app.listener.OnMainActivityListener;
+import org.gluu.super_gluu.app.listener.EntryActivityListener;
 
-import org.gluu.super_gluu.app.fragments.LicenseFragment.LicenseFragment;
 import org.gluu.super_gluu.app.settings.Settings;
 
 import SuperGluu.app.R;
@@ -34,7 +31,7 @@ public class PinCodeSettingFragment extends Fragment {
     @BindView(R.id.pinSubCodeTitle)
     TextView textSettingsSubTitle;
 
-    OnMainActivityListener mainActivityListener;
+    EntryActivityListener entryActivityListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,14 +42,14 @@ public class PinCodeSettingFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         if (!isPin()){
-            mainActivityListener.onShowPinFragment(true);
+            entryActivityListener.onShowPinFragment(true);
         }
 
         yesButton.setOnClickListener(v -> {
-            mainActivityListener.onShowPinFragment(false);
+            entryActivityListener.onShowPinFragment(false);
         });
         noButton.setOnClickListener(v -> {
-            mainActivityListener.onMainActivity();
+            entryActivityListener.onMainActivity();
             Settings.setPinCodeEnabled(getContext(), false);
             Settings.clearPinCode(getContext());
         });
@@ -63,11 +60,11 @@ public class PinCodeSettingFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnMainActivityListener) {
-            mainActivityListener = (OnMainActivityListener) context;
+        if (context instanceof EntryActivityListener) {
+            entryActivityListener = (EntryActivityListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnMainActivityListener");
+                    + " must implement EntryActivityListener");
         }
     }
 

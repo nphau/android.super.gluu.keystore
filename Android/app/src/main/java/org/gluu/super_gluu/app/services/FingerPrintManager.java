@@ -216,7 +216,7 @@ public class FingerPrintManager {
         } catch (BadPaddingException | IllegalBlockSizeException e) {
             Toast.makeText(this.activity, "Failed to encrypt the data with the generated key. "
                     + "Retry the purchase", Toast.LENGTH_LONG).show();
-            String TAG = "MainActivity";
+            String TAG = "EntryActivity";
             Log.e(TAG, "Failed to encrypt the data with the generated key." + e.getMessage());
         }
     }

@@ -9,7 +9,6 @@ import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.PurchaseState;
 import com.anjlab.android.iab.v3.TransactionDetails;
 
-import org.gluu.super_gluu.app.GluuMainActivity;
 import org.gluu.super_gluu.app.settings.Settings;
 
 /**
