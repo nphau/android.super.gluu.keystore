@@ -92,7 +92,7 @@
             android:text="@string/yes"
             android:textAllCaps="false"
             android:textSize="17dp"
-            android:background="@drawable/rounded_button"
+            android:background="@drawable/rounded_green_button"
             android:textColor="#ffffff"/>
 
         <Button
