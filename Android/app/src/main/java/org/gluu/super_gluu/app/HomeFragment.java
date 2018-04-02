@@ -193,7 +193,7 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
     }
 
     private void setupBannerAd() {
-        if(Settings.getPurchase(getContext())) {
+        if(Settings.getPurchase(getContext()) || !getResources().getBoolean(R.bool.adsEnabled)) {
             adView.setVisibility(View.GONE);
             removeAdView.setVisibility(View.GONE);
         } else {
@@ -310,24 +310,27 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
     }
 
     private void initGoogleInterstitialAd(){
-        mInterstitialAd = new InterstitialAd(context);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3326465223655655/1731023230");
+        if(getResources().getBoolean(R.bool.adsEnabled)) {
+            mInterstitialAd = new InterstitialAd(context);
+            //todo this should be a build flavor attribute
+            mInterstitialAd.setAdUnitId("ca-app-pub-3326465223655655/1731023230");
 
-        mInterstitialAd.setAdListener(new AdListener() {
+            mInterstitialAd.setAdListener(new AdListener() {
 
-            @Override
-            public void onAdOpened() {
-                // Code to be executed when the ad is displayed.
-                Log.i("Ads", "onAdOpened");
-            }
+                @Override
+                public void onAdOpened() {
+                    // Code to be executed when the ad is displayed.
+                    Log.i("Ads", "onAdOpened");
+                }
 
-            @Override
-            public void onAdClosed() {
-                // Load the next interstitial.
-                mInterstitialAd.loadAd(new AdRequest.Builder().build());
-            }
-        });
-        requestNewInterstitial();
+                @Override
+                public void onAdClosed() {
+                    // Load the next interstitial.
+                    mInterstitialAd.loadAd(new AdRequest.Builder().build());
+                }
+            });
+            requestNewInterstitial();
+        }
     }
 
     private void requestNewInterstitial() {

@@ -3,7 +3,7 @@
     <color name="colorPrimary">#1ab26b</color>
     <color name="colorPrimaryDark">#00813f</color>
     <color name="colorAccent">#1ab26b</color>
-    <color name="greenColor">#1ab26b</color>
+    <color name="acceptGreen">#1ab26b</color>
     <color name="grayColorLight">#efeff4</color>
     <color name="grayColorTinLight">#dddddd</color>
     <color name="grayColor">#919191</color>

@@ -15,7 +15,7 @@
 
     <RelativeLayout
         android:id="@+id/edit_container"
-        android:background="@color/greenColor"
+        android:background="@color/colorPrimary"
         android:visibility="gone"
         android:layout_below="@+id/nav_drawer_toolbar"
         android:layout_width="match_parent"

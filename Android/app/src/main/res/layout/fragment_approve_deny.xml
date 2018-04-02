@@ -192,7 +192,7 @@
 
         <LinearLayout  style="@style/AcceptDenyLinearLayout"
             android:id="@+id/approve_layout"
-            android:background="@color/greenColor">
+            android:background="@color/acceptGreen">
 
             <ImageView style="@style/AcceptDenyImageView"
                 android:scaleX="0.825"
