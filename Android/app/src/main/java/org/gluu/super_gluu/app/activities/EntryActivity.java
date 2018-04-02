@@ -58,7 +58,7 @@ public class EntryActivity extends AppCompatActivity implements
         Boolean isFingerprint = Settings.getFingerprintEnabled(getApplicationContext());
         if (isFingerprint){
             FingerPrintManager fingerPrintManager = new FingerPrintManager(this);
-            fingerPrintManager.onFingerPrint(isSuccess -> loadGluuMainActivity());
+            fingerPrintManager.onFingerPrint(isSuccess -> loadNavDrawerActivity());
         } else {
             if (isAppLocked) {
                 loadLockedFragment(true);
@@ -87,8 +87,8 @@ public class EntryActivity extends AppCompatActivity implements
 
 
     @Override
-    public void onMainActivity() {
-        loadGluuMainActivity();
+    public void onNavigateToMainNavDrawerActivity() {
+        loadNavDrawerActivity();
     }
 
     @Override
@@ -112,7 +112,7 @@ public class EntryActivity extends AppCompatActivity implements
             if (Settings.getPinCodeEnabled(getApplicationContext())) {
                 loadPinCodeFragment();
             } else {
-                loadGluuMainActivity();
+                loadNavDrawerActivity();
             }
         }
     }
@@ -125,12 +125,12 @@ public class EntryActivity extends AppCompatActivity implements
             if (Settings.getPinCodeEnabled(getApplicationContext())) {
                 loadPinCodeFragment();
             } else {
-                loadGluuMainActivity();
+                loadNavDrawerActivity();
             }
         }
     }
 
-    public void loadGluuMainActivity() {
+    public void loadNavDrawerActivity() {
         Intent intent = new Intent(this, MainNavDrawerActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
         startActivity(intent);
@@ -172,7 +172,7 @@ public class EntryActivity extends AppCompatActivity implements
             /**
              * entered pin code is correct. DO something here.
              * */
-            loadGluuMainActivity();
+            loadNavDrawerActivity();
         } else {
             /**
              * entered pin code is INCORRECT. DO something here.
@@ -187,7 +187,7 @@ public class EntryActivity extends AppCompatActivity implements
     @Override
     public void onCancel(PinCodeFragment.EntryType entryType) {
         if(entryType == PinCodeFragment.EntryType.SETTING_NEW) {
-            loadGluuMainActivity();
+            loadNavDrawerActivity();
         } else {
             navigateToSecureEntryScreen();
         }
@@ -240,7 +240,7 @@ public class EntryActivity extends AppCompatActivity implements
         //Fingerprint Service should handle checking if fingerprint is available and messaging the user if it failed
         if(fingerprint.startFingerprintService()) {
             Settings.setFingerprintEnabled(EntryActivity.this, true);
-            loadGluuMainActivity();
+            loadNavDrawerActivity();
         }
     }
 
@@ -249,7 +249,7 @@ public class EntryActivity extends AppCompatActivity implements
         Boolean isFingerprint = Settings.getFingerprintEnabled(getApplicationContext());
         if (isFingerprint) {
             FingerPrintManager fingerPrintManager = new FingerPrintManager(this);
-            fingerPrintManager.onFingerPrint(isSuccess -> loadGluuMainActivity());
+            fingerPrintManager.onFingerPrint(isSuccess -> loadNavDrawerActivity());
         } else {
             showToast(getString(R.string.fingerprint_protection_off));
         }
@@ -257,7 +257,7 @@ public class EntryActivity extends AppCompatActivity implements
 
     @Override
     public void onSkipSelected() {
-        loadGluuMainActivity();
+        loadNavDrawerActivity();
     }
 
     public interface OnLockAppTimerOver {

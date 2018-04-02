@@ -13,12 +13,13 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
 
-import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
-import org.gluu.super_gluu.app.activities.EntryActivity;
 import org.gluu.super_gluu.app.GluuApplication;
+import org.gluu.super_gluu.app.activities.EntryActivity;
+import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
 import org.gluu.super_gluu.model.OxPush2Request;
 import org.gluu.super_gluu.util.Utils;
 
@@ -27,7 +28,7 @@ import SuperGluu.app.R;
 /**
  * Created by nazaryavornytskyy on 4/3/17.
  */
-public class AppFirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
+public class AppFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "FBMessagingService";
     private static final String DENY_ACTION = "DENY_ACTION";

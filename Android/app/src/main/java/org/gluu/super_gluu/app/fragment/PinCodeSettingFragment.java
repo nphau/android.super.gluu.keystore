@@ -49,7 +49,7 @@ public class PinCodeSettingFragment extends Fragment {
             entryActivityListener.onShowPinFragment(false);
         });
         noButton.setOnClickListener(v -> {
-            entryActivityListener.onMainActivity();
+            entryActivityListener.onNavigateToMainNavDrawerActivity();
             Settings.setPinCodeEnabled(getContext(), false);
             Settings.clearPinCode(getContext());
         });

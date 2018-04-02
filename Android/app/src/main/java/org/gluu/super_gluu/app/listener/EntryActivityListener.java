@@ -6,6 +6,6 @@ package org.gluu.super_gluu.app.listener;
 
 public interface EntryActivityListener {
 
-    void onMainActivity();
+    void onNavigateToMainNavDrawerActivity();
     void onShowPinFragment(boolean enterPinCode);
 }
