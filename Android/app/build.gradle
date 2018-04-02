@@ -124,17 +124,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    flavorDimensions "standard"
-
-    productFlavors {
-        gluu {
-            dimension "standard"
-        }
-        austin {
-            applicationId "com.austinauth"
-            dimension "standard"
-        }
-    }
 }
 
 dependencies {
