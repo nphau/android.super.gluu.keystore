@@ -39,6 +39,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import org.gluu.super_gluu.app.GluuApplication;
 import org.gluu.super_gluu.app.fragment.HomeFragment;
 import org.gluu.super_gluu.app.NotificationType;
 import org.gluu.super_gluu.app.ProcessManager;

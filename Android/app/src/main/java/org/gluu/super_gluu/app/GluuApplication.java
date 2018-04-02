@@ -1,4 +1,4 @@
-package org.gluu.super_gluu.app.activities;
+package org.gluu.super_gluu.app;
 
 import android.app.Application;
 import android.util.Log;

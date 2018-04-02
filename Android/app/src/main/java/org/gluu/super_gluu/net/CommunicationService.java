@@ -13,7 +13,7 @@ import android.util.Log;
 
 import SuperGluu.app.BuildConfig;
 
-import org.gluu.super_gluu.app.activities.GluuApplication;
+import org.gluu.super_gluu.app.GluuApplication;
 import org.gluu.super_gluu.util.CertUtils;
 import org.gluu.super_gluu.util.Utils;
 

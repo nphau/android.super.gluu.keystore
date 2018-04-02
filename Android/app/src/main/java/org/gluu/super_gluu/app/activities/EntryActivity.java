@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import org.gluu.super_gluu.app.GluuApplication;
 import org.gluu.super_gluu.app.customview.CustomToast;
 import org.gluu.super_gluu.app.fingerprint.Fingerprint;
 import org.gluu.super_gluu.app.fragment.LockFragment;
@@ -196,7 +197,7 @@ public class EntryActivity extends AppCompatActivity implements
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         LockFragment lockFragment = new LockFragment();
         OnLockAppTimerOver timeOverListener = (EntryActivity.OnLockAppTimerOver) () -> {
-            if (org.gluu.super_gluu.app.activities.GluuApplication.isIsAppInForeground()) {
+            if (GluuApplication.isIsAppInForeground()) {
                 Settings.setAppLocked(getApplicationContext(), false);
                 loadPinCodeFragment();
             }

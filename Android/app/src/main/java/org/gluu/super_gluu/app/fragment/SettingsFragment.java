@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import org.gluu.super_gluu.app.activities.GluuApplication;
+import org.gluu.super_gluu.app.GluuApplication;
 import org.gluu.super_gluu.app.base.ToolbarFragment;
 import org.gluu.super_gluu.app.fingerprint.Fingerprint;
 import org.gluu.super_gluu.app.settings.Settings;
