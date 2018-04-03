@@ -15,8 +15,8 @@ import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.google.gson.Gson;
 
-import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.NotificationType;
+import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
@@ -76,13 +76,33 @@ public class KeyFragmentListAdapter extends BaseAdapter {
             LayoutInflater inflater = mInflater;
             view = inflater.inflate(R.layout.fragment_key, null);
             holder = new ViewHolder();
-//            holder.textView = (TextView) convertView.findViewById(R.id.text);
-            View swipeView = view.findViewById(R.id.swipe_menu_layout);
+
+            View swipeView = inflater.inflate(R.layout.fragment_key, null);
             swipeView.setTag(position);
-            holder.deleteButton = (RelativeLayout) swipeView.findViewById(R.id.swipe_delete_button);
-            holder.showButton = (RelativeLayout) swipeView.findViewById(R.id.swipe_show_button);
-            holder.renameButton = (RelativeLayout) swipeView.findViewById(R.id.swipe_rename_button);
-            holder.swipeLayout = (SwipeRevealLayout) view.findViewById(R.id.swipe_layout);
+            holder.deleteButton = swipeView.findViewById(R.id.swipe_delete_button);
+            holder.showButton = swipeView.findViewById(R.id.swipe_show_button);
+            holder.renameButton = swipeView.findViewById(R.id.swipe_rename_button);
+            holder.swipeLayout = view.findViewById(R.id.swipe_layout);
+            holder.swipeLayout.setSwipeListener(new SwipeRevealLayout.SwipeListener() {
+                @Override
+                public void onClosed(SwipeRevealLayout view) {
+                    if(!holder.swipeOpened) {
+                        view.findViewById(R.id.key_main_view).callOnClick();
+                    }
+
+                    holder.swipeOpened = false;
+                }
+
+                @Override
+                public void onOpened(SwipeRevealLayout view) {
+                    holder.swipeOpened = true;
+                }
+
+                @Override
+                public void onSlide(SwipeRevealLayout view, float slideOffset) {
+                    //No-Op
+                }
+            });
             holder.deleteButton.setTag(position);
             holder.showButton.setTag(position);
             holder.renameButton.setTag(position);
@@ -287,5 +307,7 @@ public class KeyFragmentListAdapter extends BaseAdapter {
         RelativeLayout showButton;
         RelativeLayout renameButton;
         SwipeRevealLayout swipeLayout;
+
+        boolean swipeOpened = false;
     }
 }
