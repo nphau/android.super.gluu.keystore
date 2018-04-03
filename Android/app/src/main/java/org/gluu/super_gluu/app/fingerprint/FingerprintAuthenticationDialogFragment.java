@@ -185,7 +185,9 @@ public class FingerprintAuthenticationDialogFragment extends android.support.v4.
         mStage = Stage.FINGERPRINT;//PASSWORD;
         updateStage();
         mStatusLabel.setText("Too many attempts, try again around 1 minute");
-        mStatusLabel.setTextColor(getResources().getColor(R.color.redColor));
+        if(isAdded() && !isDetached() && getResources() != null) {
+            mStatusLabel.setTextColor(getResources().getColor(R.color.redColor));
+        }
 //        mPassword.requestFocus();
 
         // Show the keyboard.
