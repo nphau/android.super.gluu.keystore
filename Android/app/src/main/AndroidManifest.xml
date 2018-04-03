@@ -61,10 +61,7 @@
             android:screenOrientation="portrait"
             android:label="@string/barcode_scanner">
         </activity>
-        <!--<activity-->
-            <!--android:naorg.gluu.super_gluu.app.GluuApplicationtion"-->
-            <!--android:label="">-->
-        <!--</activity>-->
+
         <!--For FCM instead of GMS-->
         <service
             android:name="org.gluu.super_gluu.app.services.AppFirebaseInstanceIDService"

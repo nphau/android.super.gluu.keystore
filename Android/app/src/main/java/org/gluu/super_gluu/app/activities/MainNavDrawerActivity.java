@@ -254,34 +254,6 @@ public class MainNavDrawerActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        //todo this should be handled at the fragment screen level
-//        GluuAlertCallback listener = new GluuAlertCallback() {
-//            @Override
-//            public void onPositiveButton() {
-//                dataStore.deleteLogs();
-//                reloadLogs();
-//                invalidateOptionsMenu();
-//            }
-//
-//            @Override
-//            public void onNegativeButton() {
-//                //Skip here
-//            }
-//
-//        };
-//        CustomAlert gluuAlert = new CustomAlert(MainNavDrawerActivity.this);
-//        gluuAlert.setMessage(getApplicationContext().getString(R.string.clear_logs));
-//        gluuAlert.setYesTitle(getApplicationContext().getString(R.string.yes));
-//        gluuAlert.setNoTitle(getApplicationContext().getString(R.string.no));
-//        gluuAlert.setmListener(listener);
-//        gluuAlert.show();
-
-        return super.onOptionsItemSelected(item);
-    }
-
     public void doQrRequest(OxPush2Request oxPush2Request) {
         if (!validateOxPush2Request(oxPush2Request)) {
             return;
