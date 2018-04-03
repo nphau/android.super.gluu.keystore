@@ -110,9 +110,6 @@ public class MainNavDrawerActivity extends AppCompatActivity
     private AndroidKeyDataStore dataStore;
     private static Context context;
 
-    private Boolean isOXRequestProtected = false;
-    private OxPush2Request oxPush2RequestProtected;
-
     private FragmentManager fragmentManager;
 
     private Settings settings = new Settings();
@@ -288,22 +285,7 @@ public class MainNavDrawerActivity extends AppCompatActivity
     @Override
     public void onQrRequest(final OxPush2Request oxPush2Request) {
         if (!this.isDestroyed()) {
-            Boolean isFingerprint = Settings.getFingerprintEnabled(context);
-            if (isFingerprint){
-                FingerPrintManager fingerPrintManager = new FingerPrintManager(this);
-                fingerPrintManager.onFingerPrint(new FingerPrintManager.FingerPrintManagerCallback() {
-                    @Override
-                    public void fingerprintResult(Boolean isSuccess) {
-                        doQrRequest(oxPush2Request);
-                    }
-                });
-            } else if (Settings.getPinCodeEnabled(getApplicationContext())) {
-                isOXRequestProtected = true;
-                oxPush2RequestProtected = oxPush2Request;
-                loadPinCodeFragment();
-            } else {
-                doQrRequest(oxPush2Request);
-            }
+            doQrRequest(oxPush2Request);
         }
     }
 
@@ -439,18 +421,7 @@ public class MainNavDrawerActivity extends AppCompatActivity
     @Override
     public void onCorrectPinCode(boolean isPinCodeCorrect) {
         if (isPinCodeCorrect){
-            if (isOXRequestProtected){
-                //Hide keyboard
-                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-                if(inputMethodManager != null) {
-                    inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
-                }
-                onBackPressed();
-                doQrRequest(oxPush2RequestProtected);
-                isOXRequestProtected = false;
-            } else {
-                showAlertView(getString(R.string.new_pin_added));
-            }
+            showAlertView(getString(R.string.new_pin_added));
         } else {
             //to change pin code, first need check if user knows current one
             Intent intent = new Intent(MainNavDrawerActivity.this, EntryActivity.class);
