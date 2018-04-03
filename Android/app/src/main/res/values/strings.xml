@@ -98,6 +98,7 @@
 
     <string name="set_passcode">Set Passcode</string>
     <string name="enter_passcode">Enter Passcode</string>
+    <string name="enter_fingerprint">Enter Fingerprint</string>
 
     <string name="enter_a_passcode">Enter a passcode</string>
     <string name="enter_your_passcode">Enter your passcode</string>

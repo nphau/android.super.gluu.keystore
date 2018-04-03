@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import org.gluu.super_gluu.app.listener.EntrySelectedListener;
 
@@ -22,8 +21,8 @@ import butterknife.ButterKnife;
 
 public class SecureEntryFragment extends Fragment {
 
-    @BindView(R.id.image_view_fingerprint)
-    ImageView fingerprintImageView;
+    @BindView(R.id.button_enter_fingerprint)
+    Button enterFingerprintButton;
 
     @BindView(R.id.button_enter_passcode)
     Button enterPasscodeButton;
@@ -68,14 +67,14 @@ public class SecureEntryFragment extends Fragment {
         }
 
         if(showFingerprint) {
-            fingerprintImageView.setVisibility(View.VISIBLE);
+            enterFingerprintButton.setVisibility(View.VISIBLE);
         } else {
-            fingerprintImageView.setVisibility(View.INVISIBLE);
+            enterFingerprintButton.setVisibility(View.INVISIBLE);
         }
 
         enterPasscodeButton.setOnClickListener(view -> entrySelectedListener.onPinCodeSelected());
 
-        fingerprintImageView.setOnClickListener(view -> entrySelectedListener.startFingerprintAuthentication());
+        enterFingerprintButton.setOnClickListener(view -> entrySelectedListener.startFingerprintAuthentication());
 
         return rootView;
     }
