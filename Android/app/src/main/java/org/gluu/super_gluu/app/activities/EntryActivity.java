@@ -55,17 +55,12 @@ public class EntryActivity extends AppCompatActivity implements
             return;
         }
 
-        Boolean isFingerprint = Settings.getFingerprintEnabled(getApplicationContext());
-        if (isFingerprint){
-            FingerPrintManager fingerPrintManager = new FingerPrintManager(this);
-            fingerPrintManager.onFingerPrint(isSuccess -> loadNavDrawerActivity());
+        if(isAppLocked) {
+            loadLockedFragment(true);
         } else {
-            if (isAppLocked) {
-                loadLockedFragment(true);
-            } else {
-                advanceToNextScreen();
-            }
+            advanceToNextScreen();
         }
+
         Settings.setIsBackButtonVisibleForKey(getBaseContext(), false);
         Settings.setIsBackButtonVisibleForLog(getBaseContext(), false);
         Settings.setIsBackButtonVisibleForKey(getBaseContext(), false);
@@ -122,7 +117,17 @@ public class EntryActivity extends AppCompatActivity implements
             Settings.saveFirstLoad(getApplicationContext());
             loadSecureEntrySetupFragment();
         } else {
-            if (Settings.getPinCodeEnabled(getApplicationContext())) {
+            Boolean isFingerprint = Settings.getFingerprintEnabled(getApplicationContext());
+            if (isFingerprint){
+                FingerPrintManager fingerPrintManager = new FingerPrintManager(this);
+                fingerPrintManager.onFingerPrint(isSuccess -> {
+                    if(isSuccess) {
+                        loadNavDrawerActivity();
+                    } else {
+                        navigateToSecureEntryScreen();
+                    }
+                });
+            } else if (Settings.getPinCodeEnabled(getApplicationContext())) {
                 loadPinCodeFragment();
             } else {
                 loadNavDrawerActivity();

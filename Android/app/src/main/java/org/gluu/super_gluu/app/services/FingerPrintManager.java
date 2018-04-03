@@ -2,6 +2,7 @@ package org.gluu.super_gluu.app.services;
 
 import android.app.Activity;
 import android.app.KeyguardManager;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.hardware.fingerprint.FingerprintManager;
 import android.preference.PreferenceManager;
@@ -76,7 +77,7 @@ public class FingerPrintManager {
                 fragment.setStage(
                         FingerprintAuthenticationDialogFragment.Stage.FINGERPRINT);//PASSWORD
             }
-            fragment.setCancelable(true);
+            fragment.setCancelable(false);
             fragment.show(activity.getSupportFragmentManager(), DIALOG_FRAGMENT_TAG);
         } else {
             // This happens if the lock screen has been disabled or or a fingerprint got

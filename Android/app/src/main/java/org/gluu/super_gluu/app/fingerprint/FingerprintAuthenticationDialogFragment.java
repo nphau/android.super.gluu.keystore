@@ -19,6 +19,7 @@ package org.gluu.super_gluu.app.fingerprint;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.hardware.fingerprint.FingerprintManager;
@@ -87,26 +88,20 @@ public class FingerprintAuthenticationDialogFragment extends android.support.v4.
         getDialog().setTitle(getString(R.string.sign_in));
         View v = inflater.inflate(R.layout.fingerprint_dialog_container, container, false);
         mCancelButton = (Button) v.findViewById(R.id.cancel_button);
-        mCancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dismiss();
+        mCancelButton.setOnClickListener(view -> {
+            dismiss();
 
-                navigateToSecureEntryScreen();
-            }
+            navigateToSecureEntryScreen();
         });
         mCancelButton.setVisibility(View.VISIBLE);
 
         mSecondDialogButton = (Button) v.findViewById(R.id.second_dialog_button);
         mSecondDialogButton.setVisibility(View.GONE);
-        mSecondDialogButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mStage == Stage.FINGERPRINT) {
-                    goToBackup();
-                } else {
-                    verifyPassword();
-                }
+        mSecondDialogButton.setOnClickListener(view -> {
+            if (mStage == Stage.FINGERPRINT) {
+                goToBackup();
+            } else {
+                verifyPassword();
             }
         });
         mFingerprintContent = v.findViewById(R.id.fingerprint_container);
