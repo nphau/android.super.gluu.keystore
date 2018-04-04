@@ -29,6 +29,10 @@
                     android:id="@+id/nav_touch_id"
                     android:icon="@drawable/icon_touch_id"
                     android:title="@string/fingerprint" />
+                <item
+                    android:id="@+id/nav_ssl"
+                    android:icon="@drawable/icon_trust_all"
+                    android:title="@string/trust_all_ssl" />
             </group>
 
         </menu>

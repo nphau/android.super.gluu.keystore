@@ -605,6 +605,9 @@ public class MainNavDrawerActivity extends AppCompatActivity
             case R.id.nav_touch_id:
                 updateUIAfterNavItemSelected(SettingsFragment.newInstance(SettingsFragment.Constant.FINGERPRINT_TYPE));
                 break;
+            case R.id.nav_ssl:
+                showSSLAlertView();
+                break;
             case R.id.nav_user_guide:
                 LicenseFragment termsFragment = LicenseFragment.newInstance(LicenseFragment.Type.TERMS_OF_SERVICE);
                 updateUIAfterNavItemSelected(termsFragment);
@@ -617,6 +620,28 @@ public class MainNavDrawerActivity extends AppCompatActivity
                 break;
         }
 
+    }
+
+    private void showSSLAlertView() {
+        CustomAlert customAlert = new CustomAlert(this);
+        customAlert.setmListener(new GluuAlertCallback() {
+            @Override
+            public void onPositiveButton() {
+                updateUIAfterNavItemSelected(SettingsFragment.newInstance(SettingsFragment.Constant.SSL_CONNECTION_TYPE));
+            }
+
+            @Override
+            public void onNegativeButton() {
+                updateUIAfterNavItemSelected(null);
+
+            }
+        });
+        customAlert.setMessage("SSL testing admins only");
+        customAlert.setSub_title("Message for ssl admins needed here");
+        customAlert.setYesTitle(getString(R.string.yes));
+        customAlert.setNoTitle(getString(R.string.no));
+        customAlert.type = NotificationType.DEFAULT;
+        customAlert.show();
     }
 
     public void updateUIAfterNavItemSelected(final Fragment fragment) {
