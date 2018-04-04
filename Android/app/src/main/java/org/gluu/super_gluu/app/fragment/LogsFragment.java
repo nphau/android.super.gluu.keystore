@@ -26,7 +26,6 @@ import org.gluu.super_gluu.app.base.ToolbarFragment;
 import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.app.model.LogInfo;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
-import org.gluu.super_gluu.util.FakeDataUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -230,7 +229,6 @@ public class LogsFragment extends ToolbarFragment {
         });
         Collections.reverse(logsFromDB);
         logs = logsFromDB;
-        logs = FakeDataUtil.getFakeListOfLogs(10);
 
         if(logs.size() == 0) {
             noLogsTextView.setVisibility(View.VISIBLE);
