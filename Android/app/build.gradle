@@ -19,6 +19,7 @@ android {
         versionName "3.1.2"
         multiDexEnabled true
         signingConfig signingConfigs.config
+        resValue "string", "versionNumber", "V" + versionName
     }
     dexOptions {
         javaMaxHeapSize "4g"
@@ -27,22 +28,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-//    productFlavors {
-//        adfree {
-//            applicationIdSuffix ".adfree"
-//            versionNameSuffix "-adfree"
-//            flavorDimension "ad_access"
-//            buildConfigField 'boolean', 'IS_AD', 'false'
-//            signingConfig signingConfigs.config
-//        }
-//        ad {
-//            applicationIdSuffix ".ad"
-//            versionNameSuffix "-ad"
-//            flavorDimension "ad_access"
-//            buildConfigField 'boolean', 'IS_AD', 'true'
-//            signingConfig signingConfigs.config
-//        }
-//    }
+
     buildTypes {
         debug {
             buildConfigField "String", "VENDOR_CERTIFICATE_CERT",

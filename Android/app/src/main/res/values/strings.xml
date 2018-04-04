@@ -183,7 +183,6 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    <string name="version">V 3.12</string>
     <string name="new_pin_added">New Pin Added!</string>
     <string name="successfully_set_pin">Set new pin success!</string>
     <string name="same_pin_code">New pin code is the same as old, choose new one.</string>
