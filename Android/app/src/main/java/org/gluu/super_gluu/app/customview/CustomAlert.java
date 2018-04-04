@@ -63,22 +63,12 @@ public class CustomAlert extends Dialog implements android.view.View.OnClickList
 
         ButterKnife.bind(this);
 
-        if (message != null && !message.isEmpty()){
-            messageTextView.setText(message);
-        }
         if (header != null && !header.isEmpty()){
             headerTextView.setText(header);
-            if (messageTextView.getText().length() > 0){
-                if(getContext().getResources() != null) {
-                    headerTextView.setTextColor(
-                            getContext().getResources().getColor(R.color.acceptGreen));
-                }
-            } else {
-                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) messageTextView.getLayoutParams();
-                params.topMargin = 0;
-                params.bottomMargin = 0;
-                messageTextView.requestLayout();
-            }
+        }
+
+        if (message != null && !message.isEmpty()){
+            messageTextView.setText(message);
         }
 
         if (yesTitle != null && !yesTitle.isEmpty()){
