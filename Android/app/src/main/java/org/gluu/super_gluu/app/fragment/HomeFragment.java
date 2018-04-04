@@ -383,8 +383,8 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
             finalTitle = activity.getApplicationContext().getString(R.string.failed);
         }
         final CustomAlert gluuAlert = new CustomAlert(activity);
-        gluuAlert.setMessage(finalTitle);
-        gluuAlert.setSubTitle(finalMessage);
+        gluuAlert.setHeader(finalTitle);
+        gluuAlert.setMessage(finalMessage);
         gluuAlert.setYesTitle(activity.getApplicationContext().getString(R.string.ok));
         gluuAlert.type = NotificationType.DEFAULT;
         gluuAlert.setListener(new MainNavDrawerActivity.GluuAlertCallback() {

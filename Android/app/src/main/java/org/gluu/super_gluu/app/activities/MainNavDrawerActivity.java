@@ -55,7 +55,6 @@ import org.gluu.super_gluu.app.fragment.SettingsPinCode;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
 import org.gluu.super_gluu.app.model.LogInfo;
 import org.gluu.super_gluu.app.purchase.InAppPurchaseService;
-import org.gluu.super_gluu.app.services.FingerPrintManager;
 import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.device.DeviceUuidManager;
 import org.gluu.super_gluu.model.OxPush2Request;
@@ -448,15 +447,15 @@ public class MainNavDrawerActivity extends AppCompatActivity
 
     private void showAlertView(String title, String message){
         CustomAlert customAlert = new CustomAlert(this);
-        customAlert.setMessage(title);
-        customAlert.setSubTitle(message);
+        customAlert.setHeader(title);
+        customAlert.setMessage(message);
         customAlert.show();
     }
 
     private void showCameraMessagingAlertView() {
         CustomAlert customAlert = new CustomAlert(this);
-        customAlert.setMessage(getString(R.string.camera_access));
-        customAlert.setSubTitle(getString(R.string.camera_priming));
+        customAlert.setHeader(getString(R.string.camera_access));
+        customAlert.setMessage(getString(R.string.camera_priming));
         customAlert.type = NotificationType.DEFAULT;
         customAlert.setCancelable(true);
         customAlert.setOnDismissListener(dialogInterface -> requestCameraPermission());

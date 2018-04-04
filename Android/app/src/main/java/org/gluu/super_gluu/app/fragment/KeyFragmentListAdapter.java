@@ -202,8 +202,8 @@ public class KeyFragmentListAdapter extends BaseAdapter {
 
     private void showRenameDialog(final TokenEntry tokenEntry){
         final CustomAlert gluuAlert = new CustomAlert(activity);
-        gluuAlert.setMessage(activity.getApplicationContext().getString(R.string.new_key_name_title));
-        gluuAlert.setSubTitle(activity.getApplicationContext().getString(R.string.enter_new_key_name));
+        gluuAlert.setHeader(activity.getApplicationContext().getString(R.string.new_key_name_title));
+        gluuAlert.setMessage(activity.getApplicationContext().getString(R.string.enter_new_key_name));
         gluuAlert.setYesTitle(activity.getApplicationContext().getString(R.string.save));
         gluuAlert.setNoTitle(activity.getApplicationContext().getString(R.string.cancel));
         gluuAlert.setIsTextView(true);
@@ -241,8 +241,8 @@ public class KeyFragmentListAdapter extends BaseAdapter {
             }
         };
         CustomAlert gluuAlert = new CustomAlert(activity);
-        gluuAlert.setMessage(activity.getApplicationContext().getString(R.string.approve_delete));
-        gluuAlert.setSubTitle(activity.getApplicationContext().getString(R.string.delete_key_sub_title));
+        gluuAlert.setHeader(activity.getApplicationContext().getString(R.string.approve_delete));
+        gluuAlert.setMessage(activity.getApplicationContext().getString(R.string.delete_key_sub_title));
         gluuAlert.setYesTitle(activity.getApplicationContext().getString(R.string.yes));
         gluuAlert.setNoTitle(activity.getApplicationContext().getString(R.string.no));
         gluuAlert.setListener(listener);

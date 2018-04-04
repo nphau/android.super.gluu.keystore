@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
  */
 public class CustomAlert extends Dialog implements android.view.View.OnClickListener {
 
-    private String subTitle, message, yesTitle, noTitle;
+    private String header, message, yesTitle, noTitle;
     private MainNavDrawerActivity.GluuAlertCallback listener;
     private Boolean isTextView = false;
     private String text;
@@ -38,9 +38,9 @@ public class CustomAlert extends Dialog implements android.view.View.OnClickList
     public NotificationType type;
 
     @BindView(R.id.alert_message_textView)
-    TextView messageTextView;
+    TextView headerTextView;
     @BindView(R.id.alert_message_subText)
-    TextView subTitleTextView;
+    TextView messageTextView;
     @BindView(R.id.alert_textField)
     EditText alertEditText;
     @BindView(R.id.yes_button)
@@ -64,27 +64,27 @@ public class CustomAlert extends Dialog implements android.view.View.OnClickList
 
         ButterKnife.bind(this);
 
-        if (subTitle != null && !subTitle.isEmpty()){
-            subTitleTextView.setText(subTitle);
-        }
         if (message != null && !message.isEmpty()){
             messageTextView.setText(message);
-            if (subTitleTextView.getText().length() > 0){
+        }
+        if (header != null && !header.isEmpty()){
+            headerTextView.setText(header);
+            if (messageTextView.getText().length() > 0){
                 if(getContext().getResources() != null) {
-                    messageTextView.setTextColor(
+                    headerTextView.setTextColor(
                             getContext().getResources().getColor(R.color.acceptGreen));
                 }
                 if (type == NotificationType.RENAME_KEY || type == NotificationType.DEFAULT){
                     Typeface face = Typeface.createFromAsset(
                             getContext().getAssets(), "ProximaNova-Semibold.otf");
-                    messageTextView.setTypeface(face);
-                    messageTextView.setTextSize(24);
+                    headerTextView.setTypeface(face);
+                    headerTextView.setTextSize(24);
                 }
             } else {
-                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) subTitleTextView.getLayoutParams();
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) messageTextView.getLayoutParams();
                 params.topMargin = 0;
                 params.bottomMargin = 0;
-                subTitleTextView.requestLayout();
+                messageTextView.requestLayout();
             }
         }
 
@@ -170,12 +170,8 @@ public class CustomAlert extends Dialog implements android.view.View.OnClickList
         dismiss();
     }
 
-    public void setSubTitle(String sub_title) {
-        this.subTitle = sub_title;
-    }
-
-    public String getMessage() {
-        return message;
+    public void setHeader(String header) {
+        this.header = header;
     }
 
     public void setMessage(String message) {

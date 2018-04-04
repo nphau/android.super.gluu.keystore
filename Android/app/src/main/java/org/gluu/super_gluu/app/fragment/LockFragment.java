@@ -180,8 +180,8 @@ public class LockFragment extends Fragment {
 
     private void showAlertView(String title, String message){
         CustomAlert gluuAlert = new CustomAlert(getActivity());
-        gluuAlert.setSubTitle(message);
-        gluuAlert.setMessage(title);
+        gluuAlert.setMessage(message);
+        gluuAlert.setHeader(title);
         gluuAlert.show();
     }
 }

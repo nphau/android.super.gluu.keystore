@@ -175,8 +175,8 @@ public class KeyHandleInfoFragment extends ToolbarFragment {
             }
         };
         CustomAlert customAlert = new CustomAlert(mActivity);
-        customAlert.setMessage(mActivity.getApplicationContext().getString(R.string.approve_delete));
-        customAlert.setSubTitle(mActivity.getApplicationContext().getString(R.string.delete_key_sub_title));
+        customAlert.setHeader(mActivity.getApplicationContext().getString(R.string.approve_delete));
+        customAlert.setMessage(mActivity.getApplicationContext().getString(R.string.delete_key_sub_title));
         customAlert.setYesTitle(mActivity.getApplicationContext().getString(R.string.yes));
         customAlert.setNoTitle(mActivity.getApplicationContext().getString(R.string.no));
         customAlert.setListener(listener);
