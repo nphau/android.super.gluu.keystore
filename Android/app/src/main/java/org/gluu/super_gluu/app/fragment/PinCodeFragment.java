@@ -310,13 +310,6 @@ public class PinCodeFragment extends Fragment {
                 time -> Settings.setAppLockedTime(context, String.valueOf(time)));
     }
 
-    private void showAlertView(String message){
-        CustomAlert customAlert = new CustomAlert(getActivity());
-        customAlert.setMessage(message);
-        customAlert.setYesTitle(getActivity().getApplicationContext().getString(R.string.ok));
-        customAlert.show();
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

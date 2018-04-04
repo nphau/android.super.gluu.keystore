@@ -83,7 +83,7 @@ public class LockFragment extends Fragment {
                 listener.onTimerOver();
             }
         } else {
-            showAlertView("You entered wrong Pin code many times, application is locked");
+            showAlertView(getString(R.string.entered_wrong_pin_code_limit_message));
             clock = new Timer();
             clock.scheduleAtFixedRate(new TimerTask() {
                 @Override

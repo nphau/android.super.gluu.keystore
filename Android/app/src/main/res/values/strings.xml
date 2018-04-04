@@ -225,6 +225,7 @@
     <string name="single_attempt_left">%d attempt left</string>
     <string name="super_gluu_push_title">Super Gluu</string>
     <string name="push_login_format">Super Gluu login request to: %s</string>
+    <string name="entered_wrong_pin_code_limit_message">You have entered the wrong pin code too many times. The application will be locked for 10 minutes.</string>
 
 
 </resources>

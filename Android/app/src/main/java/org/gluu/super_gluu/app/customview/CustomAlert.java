@@ -40,7 +40,7 @@ public class CustomAlert extends Dialog implements android.view.View.OnClickList
     @BindView(R.id.alert_message_textView)
     TextView messageTextView;
     @BindView(R.id.alert_message_subText)
-    TextView subtTitleTextView;
+    TextView subTitleTextView;
     @BindView(R.id.alert_textField)
     EditText alertEditText;
     @BindView(R.id.yes_button)
@@ -65,11 +65,11 @@ public class CustomAlert extends Dialog implements android.view.View.OnClickList
         ButterKnife.bind(this);
 
         if (subTitle != null && !subTitle.isEmpty()){
-            subtTitleTextView.setText(subTitle);
+            subTitleTextView.setText(subTitle);
         }
         if (message != null && !message.isEmpty()){
             messageTextView.setText(message);
-            if (subtTitleTextView.getText().length() > 0){
+            if (subTitleTextView.getText().length() > 0){
                 if(getContext().getResources() != null) {
                     messageTextView.setTextColor(
                             getContext().getResources().getColor(R.color.acceptGreen));
@@ -81,10 +81,10 @@ public class CustomAlert extends Dialog implements android.view.View.OnClickList
                     messageTextView.setTextSize(24);
                 }
             } else {
-                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) subtTitleTextView.getLayoutParams();
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) subTitleTextView.getLayoutParams();
                 params.topMargin = 0;
                 params.bottomMargin = 0;
-                subtTitleTextView.requestLayout();
+                subTitleTextView.requestLayout();
             }
         }
 
