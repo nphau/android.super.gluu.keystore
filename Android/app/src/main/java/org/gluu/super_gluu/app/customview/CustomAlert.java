@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
 /**
  * Created by nazaryavornytskyy on 4/15/16.
  */
-public class CustomAlert extends Dialog implements android.view.View.OnClickListener {
+public class CustomAlert extends Dialog {
 
     private String header, message, yesTitle, noTitle;
     private MainNavDrawerActivity.GluuAlertCallback listener;
@@ -112,8 +112,21 @@ public class CustomAlert extends Dialog implements android.view.View.OnClickList
             params.topMargin = 0;
             alertButtonsContainer.requestLayout();
         }
-        yesButton.setOnClickListener(this);
-        noButton.setOnClickListener(this);
+
+
+        yesButton.setOnClickListener(view -> {
+            if (listener != null){
+                listener.onPositiveButton();
+            }
+            dismiss();
+        });
+
+        noButton.setOnClickListener(view -> {
+            if (listener != null){
+                listener.onNegativeButton();
+            }
+            dismiss();
+        });
 
         //Setup title icons
         if (type == NotificationType.RENAME_KEY){
@@ -130,28 +143,6 @@ public class CustomAlert extends Dialog implements android.view.View.OnClickList
 
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.yes_button:
-                if (listener != null){
-                    listener.onPositiveButton();
-                }
-                dismiss();
-                break;
-
-            case R.id.no_button:
-                if (listener != null){
-                    listener.onNegativeButton();
-                }
-                dismiss();
-                break;
-
-        default:
-            break;
-        }
-        dismiss();
-    }
 
     public void setHeader(String header) {
         this.header = header;
