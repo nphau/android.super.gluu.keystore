@@ -456,7 +456,6 @@ public class MainNavDrawerActivity extends AppCompatActivity
         CustomAlert customAlert = new CustomAlert(this);
         customAlert.setHeader(getString(R.string.camera_access));
         customAlert.setMessage(getString(R.string.camera_priming));
-        customAlert.type = NotificationType.DEFAULT;
         customAlert.setCancelable(true);
         customAlert.setOnDismissListener(dialogInterface -> requestCameraPermission());
         customAlert.setOnCancelListener(dialogInterface -> requestCameraPermission());

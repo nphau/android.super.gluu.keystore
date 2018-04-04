@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.apache.commons.codec.binary.StringUtils;
+import org.gluu.super_gluu.app.NotificationType;
 import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.base.ToolbarFragment;
 import org.gluu.super_gluu.app.customview.CustomAlert;
@@ -290,6 +291,7 @@ public class ApproveDenyFragment extends ToolbarFragment {
         customAlert.setMessage(getActivity().getApplicationContext().getString(R.string.clear_log_message));
         customAlert.setYesTitle(getActivity().getApplicationContext().getString(R.string.yes));
         customAlert.setNoTitle(getActivity().getApplicationContext().getString(R.string.no));
+        customAlert.setType(NotificationType.DELETE_LOG);
         customAlert.setListener(listener);
         customAlert.show();
     }

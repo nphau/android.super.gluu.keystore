@@ -207,7 +207,7 @@ public class KeyFragmentListAdapter extends BaseAdapter {
         gluuAlert.setYesTitle(activity.getApplicationContext().getString(R.string.save));
         gluuAlert.setNoTitle(activity.getApplicationContext().getString(R.string.cancel));
         gluuAlert.setIsTextView(true);
-        gluuAlert.type = NotificationType.RENAME_KEY;
+        gluuAlert.setType(NotificationType.RENAME_KEY);
         gluuAlert.setListener(new MainNavDrawerActivity.GluuAlertCallback() {
             @Override
             public void onPositiveButton() {
@@ -245,6 +245,7 @@ public class KeyFragmentListAdapter extends BaseAdapter {
         gluuAlert.setMessage(activity.getApplicationContext().getString(R.string.delete_key_sub_title));
         gluuAlert.setYesTitle(activity.getApplicationContext().getString(R.string.yes));
         gluuAlert.setNoTitle(activity.getApplicationContext().getString(R.string.no));
+        gluuAlert.setType(NotificationType.DELETE_KEY);
         gluuAlert.setListener(listener);
         gluuAlert.show();
     }

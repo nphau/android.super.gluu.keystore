@@ -34,7 +34,7 @@ public class CustomAlert extends Dialog {
     private Boolean isTextView = false;
     private String text;
 
-    public NotificationType type;
+    private NotificationType type = NotificationType.DEFAULT;
 
     @BindView(R.id.alert_message_textView)
     TextView headerTextView;
@@ -128,21 +128,29 @@ public class CustomAlert extends Dialog {
             dismiss();
         });
 
-        //Setup title icons
-        if (type == NotificationType.RENAME_KEY){
-            alertImageView.setImageResource(R.drawable.edit_key_icon);
-        } else if (type == NotificationType.DEFAULT){
-            alertImageView.setImageResource(R.drawable.default_alert_icon);
+
+        switch (type) {
+            case DELETE_KEY:
+            case DELETE_LOG:
+                alertImageView.setImageResource(R.drawable.delete_log_icon);
+                break;
+            case RENAME_KEY:
+                alertImageView.setImageResource(R.drawable.edit_key_icon);
+                break;
+            default:
+                alertImageView.setImageResource(R.drawable.default_alert_icon);
         }
 
         Window window = getWindow();
-
         if(window != null) {
             window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
 
     }
 
+    public void setType(NotificationType type) {
+        this.type = type;
+    }
 
     public void setHeader(String header) {
         this.header = header;

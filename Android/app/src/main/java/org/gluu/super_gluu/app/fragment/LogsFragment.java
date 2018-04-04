@@ -20,11 +20,13 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.gluu.super_gluu.app.NotificationType;
 import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.base.ToolbarFragment;
 import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.app.model.LogInfo;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
+import org.gluu.super_gluu.util.FakeDataUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -228,6 +230,7 @@ public class LogsFragment extends ToolbarFragment {
         });
         Collections.reverse(logsFromDB);
         logs = logsFromDB;
+        logs = FakeDataUtil.getFakeListOfLogs(10);
 
         if(logs.size() == 0) {
             noLogsTextView.setVisibility(View.VISIBLE);
@@ -265,6 +268,7 @@ public class LogsFragment extends ToolbarFragment {
             gluuAlert.setYesTitle(getActivity().getApplicationContext().getString(R.string.yes));
             gluuAlert.setNoTitle(getActivity().getApplicationContext().getString(R.string.no));
         }
+        gluuAlert.setType(NotificationType.DELETE_LOG);
         gluuAlert.setListener(listener);
         gluuAlert.show();
     }

@@ -386,7 +386,6 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
         gluuAlert.setHeader(finalTitle);
         gluuAlert.setMessage(finalMessage);
         gluuAlert.setYesTitle(activity.getApplicationContext().getString(R.string.ok));
-        gluuAlert.type = NotificationType.DEFAULT;
         gluuAlert.setListener(new MainNavDrawerActivity.GluuAlertCallback() {
             @Override
             public void onPositiveButton() {

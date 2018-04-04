@@ -13,10 +13,12 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import org.gluu.super_gluu.app.NotificationType;
 import org.gluu.super_gluu.app.base.ToolbarFragment;
 import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
 import org.gluu.super_gluu.u2f.v2.model.TokenEntry;
+import org.gluu.super_gluu.util.FakeDataUtil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -62,6 +64,7 @@ public class KeyFragmentListFragment extends ToolbarFragment {
         setHasOptionsMenu(true);
 
         listToken = getListToken(rootView);
+        listToken = FakeDataUtil.getFakeListOfTokens(10);
 
         setEmptyTextVisibility(listToken.size() > 0);
 
@@ -87,7 +90,7 @@ public class KeyFragmentListFragment extends ToolbarFragment {
             gluuAlert.setHeader(getString(R.string.enter_new_key_name));
             gluuAlert.setYesTitle(getActivity().getApplicationContext().getString(R.string.yes));
             gluuAlert.setNoTitle(getActivity().getApplicationContext().getString(R.string.no));
-//                gluuAlert.setListener(listener);
+            gluuAlert.setType(NotificationType.RENAME_KEY);
             gluuAlert.show();
         };
 

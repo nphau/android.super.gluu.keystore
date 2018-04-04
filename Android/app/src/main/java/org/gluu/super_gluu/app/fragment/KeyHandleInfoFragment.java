@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import org.gluu.super_gluu.app.NotificationType;
 import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.base.ToolbarFragment;
 import org.gluu.super_gluu.app.customview.CustomAlert;
@@ -179,6 +180,7 @@ public class KeyHandleInfoFragment extends ToolbarFragment {
         customAlert.setMessage(mActivity.getApplicationContext().getString(R.string.delete_key_sub_title));
         customAlert.setYesTitle(mActivity.getApplicationContext().getString(R.string.yes));
         customAlert.setNoTitle(mActivity.getApplicationContext().getString(R.string.no));
+        customAlert.setType(NotificationType.DELETE_KEY);
         customAlert.setListener(listener);
         customAlert.show();
     }

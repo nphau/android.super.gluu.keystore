@@ -160,7 +160,7 @@ public class SettingsPinCode extends ToolbarFragment {
         loadPinCodeAlert.setNoTitle(getContext().getString(R.string.no));
         loadPinCodeAlert.setOnCancelListener(dialogInterface -> listener.onNegativeButton());
         loadPinCodeAlert.setListener(listener);
-        loadPinCodeAlert.type = NotificationType.RENAME_KEY;
+        loadPinCodeAlert.setType(NotificationType.RENAME_KEY);
         loadPinCodeAlert.show();
     }
 
