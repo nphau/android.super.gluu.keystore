@@ -40,11 +40,11 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import org.gluu.super_gluu.app.GluuApplication;
-import org.gluu.super_gluu.app.fragment.HomeFragment;
 import org.gluu.super_gluu.app.NotificationType;
 import org.gluu.super_gluu.app.ProcessManager;
 import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.app.fragment.ApproveDenyFragment;
+import org.gluu.super_gluu.app.fragment.HomeFragment;
 import org.gluu.super_gluu.app.fragment.KeyFragmentListFragment;
 import org.gluu.super_gluu.app.fragment.KeyHandleInfoFragment;
 import org.gluu.super_gluu.app.fragment.LicenseFragment;
@@ -55,7 +55,6 @@ import org.gluu.super_gluu.app.fragment.SettingsPinCode;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
 import org.gluu.super_gluu.app.model.LogInfo;
 import org.gluu.super_gluu.app.purchase.InAppPurchaseService;
-import org.gluu.super_gluu.app.services.FingerPrintManager;
 import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.device.DeviceUuidManager;
 import org.gluu.super_gluu.model.OxPush2Request;
@@ -605,9 +604,6 @@ public class MainNavDrawerActivity extends AppCompatActivity
                 break;
             case R.id.nav_touch_id:
                 updateUIAfterNavItemSelected(SettingsFragment.newInstance(SettingsFragment.Constant.FINGERPRINT_TYPE));
-                break;
-            case R.id.nav_ssl:
-                updateUIAfterNavItemSelected(SettingsFragment.newInstance(SettingsFragment.Constant.SSL_CONNECTION_TYPE));
                 break;
             case R.id.nav_user_guide:
                 LicenseFragment termsFragment = LicenseFragment.newInstance(LicenseFragment.Type.TERMS_OF_SERVICE);
