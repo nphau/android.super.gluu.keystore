@@ -148,6 +148,8 @@ public class SettingsPinCode extends ToolbarFragment {
 
         String pinCode = Settings.getPinCode(getContext());
 
+        loadPinCodeAlert.setMessage(getContext().getString(R.string.pin_code));
+
         if(pinCode == null) {
             loadPinCodeAlert.setSubTitle(getContext().getString(R.string.set_pin));
         } else {

@@ -146,24 +146,7 @@ public class KeyFragmentListAdapter extends BaseAdapter {
                 int position = (int) v.getTag();
                 String token = new Gson().toJson(list.get(position));
                 final TokenEntry tokenEntry = new Gson().fromJson(token, TokenEntry.class);
-                CustomAlert gluuAlert = new CustomAlert(activity);
-//                gluuAlert.setMessage(activity.getApplicationContext().getString(R.string.rename_key_name));
-                gluuAlert.setSubTitle(activity.getApplicationContext().getString(R.string.rename_key_name));
-                gluuAlert.setYesTitle(activity.getApplicationContext().getString(R.string.yes));
-                gluuAlert.setNoTitle(activity.getApplicationContext().getString(R.string.no));
-                gluuAlert.type = NotificationType.RENAME_KEY;
-                gluuAlert.setListener(new MainNavDrawerActivity.GluuAlertCallback() {
-                    @Override
-                    public void onPositiveButton() {
-                        showRenameDialog(tokenEntry);
-                    }
-
-                    @Override
-                    public void onNegativeButton() {
-                        //Skip here
-                    }
-                });
-                gluuAlert.show();
+                showRenameDialog(tokenEntry);
                 return true;
             }
         });

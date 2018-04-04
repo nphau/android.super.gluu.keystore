@@ -118,8 +118,10 @@
     <string name="timer">40</string>
 
     <string name="clear_logs">Do you want to clear the logs?</string>
-    <string name="clear_log_title">Are you sure you want to delete this log record?</string>
+    <string name="clear_log_message">Are you sure you want to delete this log record?</string>
     <string name="clear_log_empty_title">No selected log record(s).</string>
+    <string name="clear_log_empty_message">Make sure to select at least one log before deleting.</string>
+
     <string name="change_pin">Do you want to change current pin?</string>
     <string name="set_pin">Do you want to set a pin?</string>
 
@@ -226,6 +228,9 @@
     <string name="super_gluu_push_title">Super Gluu</string>
     <string name="push_login_format">Super Gluu login request to: %s</string>
     <string name="entered_wrong_pin_code_limit_message">You have entered the wrong pin code too many times. The application will be locked for 10 minutes.</string>
+    <string name="camera_access">Camera Access</string>
+    <string name="delete_log">Delete Log</string>
+    <string name="wrong_code">Wrong Code</string>
 
 
 </resources>

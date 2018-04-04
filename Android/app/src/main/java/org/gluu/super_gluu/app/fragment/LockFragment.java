@@ -83,7 +83,7 @@ public class LockFragment extends Fragment {
                 listener.onTimerOver();
             }
         } else {
-            showAlertView(getString(R.string.entered_wrong_pin_code_limit_message));
+            showAlertView(getString(R.string.wrong_code), getString(R.string.entered_wrong_pin_code_limit_message));
             clock = new Timer();
             clock.scheduleAtFixedRate(new TimerTask() {
                 @Override
@@ -178,9 +178,10 @@ public class LockFragment extends Fragment {
         this.isRecover = isRecover;
     }
 
-    private void showAlertView(String message){
+    private void showAlertView(String title, String message){
         CustomAlert gluuAlert = new CustomAlert(getActivity());
-        gluuAlert.setMessage(message);
+        gluuAlert.setSubTitle(message);
+        gluuAlert.setMessage(title);
         gluuAlert.show();
     }
 }

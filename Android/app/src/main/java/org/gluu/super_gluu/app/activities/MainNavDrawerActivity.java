@@ -421,7 +421,7 @@ public class MainNavDrawerActivity extends AppCompatActivity
     @Override
     public void onCorrectPinCode(boolean isPinCodeCorrect) {
         if (isPinCodeCorrect){
-            showAlertView(getString(R.string.new_pin_added));
+            showAlertView(getString(R.string.pin_code), getString(R.string.new_pin_added));
         } else {
             //to change pin code, first need check if user knows current one
             Intent intent = new Intent(MainNavDrawerActivity.this, EntryActivity.class);
@@ -446,15 +446,17 @@ public class MainNavDrawerActivity extends AppCompatActivity
         onBackPressed();
     }
 
-    private void showAlertView(String message){
+    private void showAlertView(String title, String message){
         CustomAlert customAlert = new CustomAlert(this);
-        customAlert.setMessage(message);
+        customAlert.setMessage(title);
+        customAlert.setSubTitle(message);
         customAlert.show();
     }
 
     private void showCameraMessagingAlertView() {
         CustomAlert customAlert = new CustomAlert(this);
-        customAlert.setMessage(getString(R.string.camera_priming));
+        customAlert.setMessage(getString(R.string.camera_access));
+        customAlert.setSubTitle(getString(R.string.camera_priming));
         customAlert.type = NotificationType.DEFAULT;
         customAlert.setCancelable(true);
         customAlert.setOnDismissListener(dialogInterface -> requestCameraPermission());

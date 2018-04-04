@@ -83,7 +83,8 @@ public class KeyFragmentListFragment extends ToolbarFragment {
 
         cListener = keyID -> {
             CustomAlert gluuAlert = new CustomAlert(getActivity());
-            gluuAlert.setMessage(getActivity().getApplicationContext().getString(R.string.enter_new_key_name));
+            gluuAlert.setSubTitle(getString(R.string.new_key_name_title));
+            gluuAlert.setMessage(getString(R.string.enter_new_key_name));
             gluuAlert.setYesTitle(getActivity().getApplicationContext().getString(R.string.yes));
             gluuAlert.setNoTitle(getActivity().getApplicationContext().getString(R.string.no));
 //                gluuAlert.setListener(listener);
