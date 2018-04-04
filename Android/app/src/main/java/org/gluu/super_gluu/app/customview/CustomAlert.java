@@ -3,7 +3,6 @@ package org.gluu.super_gluu.app.customview;
 import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,8 +17,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.NotificationType;
+import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
 
 import SuperGluu.app.R;
 import butterknife.BindView;
@@ -73,12 +72,6 @@ public class CustomAlert extends Dialog implements android.view.View.OnClickList
                 if(getContext().getResources() != null) {
                     headerTextView.setTextColor(
                             getContext().getResources().getColor(R.color.acceptGreen));
-                }
-                if (type == NotificationType.RENAME_KEY || type == NotificationType.DEFAULT){
-                    Typeface face = Typeface.createFromAsset(
-                            getContext().getAssets(), "ProximaNova-Semibold.otf");
-                    headerTextView.setTypeface(face);
-                    headerTextView.setTextSize(24);
                 }
             } else {
                 ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) messageTextView.getLayoutParams();
