@@ -149,15 +149,15 @@ public class SettingsPinCode extends ToolbarFragment {
         String pinCode = Settings.getPinCode(getContext());
 
         if(pinCode == null) {
-            loadPinCodeAlert.setSub_title(getContext().getString(R.string.set_pin));
+            loadPinCodeAlert.setSubTitle(getContext().getString(R.string.set_pin));
         } else {
-            loadPinCodeAlert.setSub_title(getContext().getString(R.string.change_pin));
+            loadPinCodeAlert.setSubTitle(getContext().getString(R.string.change_pin));
         }
 
         loadPinCodeAlert.setYesTitle(getContext().getString(R.string.yes));
         loadPinCodeAlert.setNoTitle(getContext().getString(R.string.no));
         loadPinCodeAlert.setOnCancelListener(dialogInterface -> listener.onNegativeButton());
-        loadPinCodeAlert.setmListener(listener);
+        loadPinCodeAlert.setListener(listener);
         loadPinCodeAlert.type = NotificationType.RENAME_KEY;
         loadPinCodeAlert.show();
     }

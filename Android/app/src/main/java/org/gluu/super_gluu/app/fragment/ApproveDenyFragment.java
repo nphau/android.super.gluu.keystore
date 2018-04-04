@@ -289,7 +289,7 @@ public class ApproveDenyFragment extends ToolbarFragment {
         customAlert.setMessage(getActivity().getApplicationContext().getString(R.string.clear_log_title));
         customAlert.setYesTitle(getActivity().getApplicationContext().getString(R.string.yes));
         customAlert.setNoTitle(getActivity().getApplicationContext().getString(R.string.no));
-        customAlert.setmListener(listener);
+        customAlert.setListener(listener);
         customAlert.show();
     }
 

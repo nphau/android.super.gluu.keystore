@@ -257,15 +257,15 @@ public class LogsFragment extends ToolbarFragment {
         CustomAlert gluuAlert = new CustomAlert(getActivity());
         if (listAdapter.getSelectedLogList().isEmpty()){
 //            gluuAlert.setMessage(getActivity().getApplicationContext().getString(R.string.clear_log_empty_title));
-            gluuAlert.setSub_title(getActivity().getApplicationContext().getString(R.string.clear_log_empty_title));
+            gluuAlert.setSubTitle(getActivity().getApplicationContext().getString(R.string.clear_log_empty_title));
             gluuAlert.setYesTitle(getActivity().getApplicationContext().getString(R.string.ok));
         } else {
 //            gluuAlert.setMessage(getActivity().getApplicationContext().getString(R.string.clear_log_title));
-            gluuAlert.setSub_title(getActivity().getApplicationContext().getString(R.string.clear_log_title));
+            gluuAlert.setSubTitle(getActivity().getApplicationContext().getString(R.string.clear_log_title));
             gluuAlert.setYesTitle(getActivity().getApplicationContext().getString(R.string.yes));
             gluuAlert.setNoTitle(getActivity().getApplicationContext().getString(R.string.no));
         }
-        gluuAlert.setmListener(listener);
+        gluuAlert.setListener(listener);
         gluuAlert.show();
     }
 

@@ -148,11 +148,11 @@ public class KeyFragmentListAdapter extends BaseAdapter {
                 final TokenEntry tokenEntry = new Gson().fromJson(token, TokenEntry.class);
                 CustomAlert gluuAlert = new CustomAlert(activity);
 //                gluuAlert.setMessage(activity.getApplicationContext().getString(R.string.rename_key_name));
-                gluuAlert.setSub_title(activity.getApplicationContext().getString(R.string.rename_key_name));
+                gluuAlert.setSubTitle(activity.getApplicationContext().getString(R.string.rename_key_name));
                 gluuAlert.setYesTitle(activity.getApplicationContext().getString(R.string.yes));
                 gluuAlert.setNoTitle(activity.getApplicationContext().getString(R.string.no));
                 gluuAlert.type = NotificationType.RENAME_KEY;
-                gluuAlert.setmListener(new MainNavDrawerActivity.GluuAlertCallback() {
+                gluuAlert.setListener(new MainNavDrawerActivity.GluuAlertCallback() {
                     @Override
                     public void onPositiveButton() {
                         showRenameDialog(tokenEntry);
@@ -220,12 +220,12 @@ public class KeyFragmentListAdapter extends BaseAdapter {
     private void showRenameDialog(final TokenEntry tokenEntry){
         final CustomAlert gluuAlert = new CustomAlert(activity);
         gluuAlert.setMessage(activity.getApplicationContext().getString(R.string.new_key_name_title));
-        gluuAlert.setSub_title(activity.getApplicationContext().getString(R.string.enter_new_key_name));
+        gluuAlert.setSubTitle(activity.getApplicationContext().getString(R.string.enter_new_key_name));
         gluuAlert.setYesTitle(activity.getApplicationContext().getString(R.string.save));
         gluuAlert.setNoTitle(activity.getApplicationContext().getString(R.string.cancel));
         gluuAlert.setIsTextView(true);
         gluuAlert.type = NotificationType.RENAME_KEY;
-        gluuAlert.setmListener(new MainNavDrawerActivity.GluuAlertCallback() {
+        gluuAlert.setListener(new MainNavDrawerActivity.GluuAlertCallback() {
             @Override
             public void onPositiveButton() {
                 Context context = activity.getApplicationContext();
@@ -259,10 +259,10 @@ public class KeyFragmentListAdapter extends BaseAdapter {
         };
         CustomAlert gluuAlert = new CustomAlert(activity);
         gluuAlert.setMessage(activity.getApplicationContext().getString(R.string.approve_delete));
-        gluuAlert.setSub_title(activity.getApplicationContext().getString(R.string.delete_key_sub_title));
+        gluuAlert.setSubTitle(activity.getApplicationContext().getString(R.string.delete_key_sub_title));
         gluuAlert.setYesTitle(activity.getApplicationContext().getString(R.string.yes));
         gluuAlert.setNoTitle(activity.getApplicationContext().getString(R.string.no));
-        gluuAlert.setmListener(listener);
+        gluuAlert.setListener(listener);
         gluuAlert.show();
     }
 

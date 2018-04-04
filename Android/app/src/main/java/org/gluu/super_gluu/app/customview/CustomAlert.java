@@ -22,24 +22,38 @@ import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.NotificationType;
 
 import SuperGluu.app.R;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by nazaryavornytskyy on 4/15/16.
  */
 public class CustomAlert extends Dialog implements android.view.View.OnClickListener {
 
-    private String sub_title, message, yesTitle, noTitle;
-    private Activity activity;
-    private Button yes, no;
-    private MainNavDrawerActivity.GluuAlertCallback mListener;
+    private String subTitle, message, yesTitle, noTitle;
+    private MainNavDrawerActivity.GluuAlertCallback listener;
     private Boolean isTextView = false;
     private String text;
 
     public NotificationType type;
 
-    public CustomAlert(Activity a) {
-        super(a);
-        this.activity = a;
+    @BindView(R.id.alert_message_textView)
+    TextView messageTextView;
+    @BindView(R.id.alert_message_subText)
+    TextView subtTitleTextView;
+    @BindView(R.id.alert_textField)
+    EditText alertEditText;
+    @BindView(R.id.yes_button)
+    Button yesButton;
+    @BindView(R.id.no_button)
+    Button noButton;
+    @BindView(R.id.actionbar_icon)
+    ImageView alertImageView;
+    @BindView(R.id.alert_buttons_view)
+    LinearLayout alertButtonsContainer;
+
+    public CustomAlert(Activity activity) {
+        super(activity);
     }
 
     @Override
@@ -47,51 +61,52 @@ public class CustomAlert extends Dialog implements android.view.View.OnClickList
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.custom_alert);
-        TextView sub_title = (TextView) findViewById(R.id.alert_message_subText);
-        TextView message = (TextView) findViewById(R.id.alert_message_textView);
-        final EditText textField = (EditText) findViewById(R.id.alert_textField);
-        Typeface faceLight = Typeface.createFromAsset(activity.getAssets(), "ProximaNova-Regular.otf");
-        message.setTypeface(faceLight);
-        sub_title.setTypeface(faceLight);
-        if (this.sub_title != null && !this.sub_title.isEmpty()){
-            sub_title.setText(this.sub_title);
+
+        ButterKnife.bind(this);
+
+        if (subTitle != null && !subTitle.isEmpty()){
+            subtTitleTextView.setText(subTitle);
         }
-        if (this.message != null && !this.message.isEmpty()){
-            message.setText(this.message);
-            if (sub_title.getText().length() > 0){
-                message.setTextColor(Color.parseColor("#1ab26b"));
+        if (message != null && !message.isEmpty()){
+            messageTextView.setText(message);
+            if (subtTitleTextView.getText().length() > 0){
+                if(getContext().getResources() != null) {
+                    messageTextView.setTextColor(
+                            getContext().getResources().getColor(R.color.acceptGreen));
+                }
                 if (type == NotificationType.RENAME_KEY || type == NotificationType.DEFAULT){
-                    Typeface face = Typeface.createFromAsset(activity.getAssets(), "ProximaNova-Semibold.otf");
-                    message.setTypeface(face);
-                    message.setTextSize(24);
+                    Typeface face = Typeface.createFromAsset(
+                            getContext().getAssets(), "ProximaNova-Semibold.otf");
+                    messageTextView.setTypeface(face);
+                    messageTextView.setTextSize(24);
                 }
             } else {
-                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) sub_title.getLayoutParams();
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) subtTitleTextView.getLayoutParams();
                 params.topMargin = 0;
                 params.bottomMargin = 0;
-                sub_title.requestLayout();
+                subtTitleTextView.requestLayout();
             }
         }
-        yes = (Button) findViewById(R.id.yes_button);
-        if (this.yesTitle != null && !this.yesTitle.isEmpty()){
-            yes.setText(this.yesTitle);
+
+        if (yesTitle != null && !yesTitle.isEmpty()){
+            yesButton.setText(yesTitle);
         } else {
-            yes.setVisibility(View.GONE);
+            yesButton.setVisibility(View.GONE);
         }
-        no = (Button) findViewById(R.id.no_button);
-        if (this.noTitle != null && !this.noTitle.isEmpty()){
-            no.setText(this.noTitle);
+
+        if (noTitle != null && !noTitle.isEmpty()){
+            noButton.setText(noTitle);
         } else {
-            no.setVisibility(View.GONE);
+            noButton.setVisibility(View.GONE);
         }
-        if (yes.getVisibility() == View.GONE && no.getVisibility() == View.GONE){
-            yes.setVisibility(View.VISIBLE);
-            yes.setText("OK");
+        if (yesButton.getVisibility() == View.GONE && noButton.getVisibility() == View.GONE){
+            yesButton.setVisibility(View.VISIBLE);
+            yesButton.setText(R.string.ok);
         }
         if (isTextView){
-            textField.setVisibility(View.VISIBLE);
-            textField.setFilters(new InputFilter[]{new InputFilter.LengthFilter(50)});
-            textField.addTextChangedListener(new TextWatcher() {
+            alertEditText.setVisibility(View.VISIBLE);
+            alertEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(50)});
+            alertEditText.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -108,42 +123,43 @@ public class CustomAlert extends Dialog implements android.view.View.OnClickList
                 }
             });
         } else {
-            textField.setVisibility(View.GONE);
-            LinearLayout alert_buttons_view = (LinearLayout) findViewById(R.id.alert_buttons_view);
-            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) alert_buttons_view.getLayoutParams();
+            alertEditText.setVisibility(View.GONE);
+            ViewGroup.MarginLayoutParams params =
+                    (ViewGroup.MarginLayoutParams) alertButtonsContainer.getLayoutParams();
             params.topMargin = 0;
-            alert_buttons_view.requestLayout();
+            alertButtonsContainer.requestLayout();
         }
-        yes.setOnClickListener(this);
-        no.setOnClickListener(this);
-
-        yes.setTypeface(faceLight);
-        no.setTypeface(faceLight);
+        yesButton.setOnClickListener(this);
+        noButton.setOnClickListener(this);
 
         //Setup title icons
-        ImageView actionbar_icon = (ImageView) findViewById(R.id.actionbar_icon);
         if (type == NotificationType.RENAME_KEY){
-            actionbar_icon.setImageResource(R.drawable.edit_key_icon);
+            alertImageView.setImageResource(R.drawable.edit_key_icon);
         } else if (type == NotificationType.DEFAULT){
-            actionbar_icon.setImageResource(R.drawable.default_alert_icon);
+            alertImageView.setImageResource(R.drawable.default_alert_icon);
         }
 
-        super.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Window window = getWindow();
+
+        if(window != null) {
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.yes_button:
-                if (mListener != null){
-                     mListener.onPositiveButton();
+                if (listener != null){
+                    listener.onPositiveButton();
                 }
                 dismiss();
                 break;
 
             case R.id.no_button:
-                if (mListener != null){
-                    mListener.onNegativeButton();
+                if (listener != null){
+                    listener.onNegativeButton();
                 }
                 dismiss();
                 break;
@@ -154,12 +170,8 @@ public class CustomAlert extends Dialog implements android.view.View.OnClickList
         dismiss();
     }
 
-    public String getSub_title() {
-        return sub_title;
-    }
-
-    public void setSub_title(String sub_title) {
-        this.sub_title = sub_title;
+    public void setSubTitle(String sub_title) {
+        this.subTitle = sub_title;
     }
 
     public String getMessage() {
@@ -170,32 +182,16 @@ public class CustomAlert extends Dialog implements android.view.View.OnClickList
         this.message = message;
     }
 
-    public String getYesTitle() {
-        return yesTitle;
-    }
-
     public void setYesTitle(String yesTitle) {
         this.yesTitle = yesTitle;
-    }
-
-    public String getNoTitle() {
-        return noTitle;
     }
 
     public void setNoTitle(String noTitle) {
         this.noTitle = noTitle;
     }
 
-    public Object getmListener() {
-        return mListener;
-    }
-
-    public void setmListener(MainNavDrawerActivity.GluuAlertCallback mListener) {
-        this.mListener = mListener;
-    }
-
-    public Boolean getIsTextView() {
-        return isTextView;
+    public void setListener(MainNavDrawerActivity.GluuAlertCallback listener) {
+        this.listener = listener;
     }
 
     public void setIsTextView(Boolean isTextView) {
