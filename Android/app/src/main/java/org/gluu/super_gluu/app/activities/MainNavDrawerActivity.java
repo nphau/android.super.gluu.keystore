@@ -644,7 +644,7 @@ public class MainNavDrawerActivity extends AppCompatActivity
         customAlert.show();
     }
 
-    public void updateUIAfterNavItemSelected(final Fragment fragment) {
+    public void updateUIAfterNavItemSelected(Fragment fragment) {
         if(fragment != null) {
             fragmentManager
                     .beginTransaction()
