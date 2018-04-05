@@ -40,11 +40,11 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import org.gluu.super_gluu.app.GluuApplication;
-import org.gluu.super_gluu.app.fragment.HomeFragment;
 import org.gluu.super_gluu.app.NotificationType;
 import org.gluu.super_gluu.app.ProcessManager;
 import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.app.fragment.ApproveDenyFragment;
+import org.gluu.super_gluu.app.fragment.HomeFragment;
 import org.gluu.super_gluu.app.fragment.KeyFragmentListFragment;
 import org.gluu.super_gluu.app.fragment.KeyHandleInfoFragment;
 import org.gluu.super_gluu.app.fragment.LicenseFragment;
@@ -607,7 +607,7 @@ public class MainNavDrawerActivity extends AppCompatActivity
                 updateUIAfterNavItemSelected(SettingsFragment.newInstance(SettingsFragment.Constant.FINGERPRINT_TYPE));
                 break;
             case R.id.nav_ssl:
-                updateUIAfterNavItemSelected(SettingsFragment.newInstance(SettingsFragment.Constant.SSL_CONNECTION_TYPE));
+                showSSLAlertView();
                 break;
             case R.id.nav_user_guide:
                 LicenseFragment termsFragment = LicenseFragment.newInstance(LicenseFragment.Type.TERMS_OF_SERVICE);
@@ -623,7 +623,29 @@ public class MainNavDrawerActivity extends AppCompatActivity
 
     }
 
-    public void updateUIAfterNavItemSelected(final Fragment fragment) {
+    private void showSSLAlertView() {
+        CustomAlert customAlert = new CustomAlert(this);
+        customAlert.setmListener(new GluuAlertCallback() {
+            @Override
+            public void onPositiveButton() {
+                updateUIAfterNavItemSelected(SettingsFragment.newInstance(SettingsFragment.Constant.SSL_CONNECTION_TYPE));
+            }
+
+            @Override
+            public void onNegativeButton() {
+                updateUIAfterNavItemSelected(null);
+
+            }
+        });
+        customAlert.setMessage("SSL testing admins only");
+        customAlert.setSub_title("Message for ssl admins needed here");
+        customAlert.setYesTitle(getString(R.string.yes));
+        customAlert.setNoTitle(getString(R.string.no));
+        customAlert.type = NotificationType.DEFAULT;
+        customAlert.show();
+    }
+
+    public void updateUIAfterNavItemSelected(Fragment fragment) {
         if(fragment != null) {
             fragmentManager
                     .beginTransaction()
