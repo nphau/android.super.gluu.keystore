@@ -178,8 +178,8 @@ public class KeyHandleInfoFragment extends ToolbarFragment {
         CustomAlert customAlert = new CustomAlert(mActivity);
         customAlert.setHeader(mActivity.getApplicationContext().getString(R.string.approve_delete));
         customAlert.setMessage(mActivity.getApplicationContext().getString(R.string.delete_key_sub_title));
-        customAlert.setYesTitle(mActivity.getApplicationContext().getString(R.string.yes));
-        customAlert.setNoTitle(mActivity.getApplicationContext().getString(R.string.no));
+        customAlert.setPositiveText(mActivity.getApplicationContext().getString(R.string.yes));
+        customAlert.setNegativeText(mActivity.getApplicationContext().getString(R.string.no));
         customAlert.setType(NotificationType.DELETE_KEY);
         customAlert.setListener(listener);
         customAlert.show();

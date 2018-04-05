@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +15,13 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import org.gluu.super_gluu.app.GluuApplication;
+import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.base.ToolbarFragment;
+import org.gluu.super_gluu.app.customview.CustomAlert;
+import org.gluu.super_gluu.app.customview.CustomToast;
 import org.gluu.super_gluu.app.fingerprint.Fingerprint;
 import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.net.CommunicationService;
-import org.gluu.super_gluu.app.customview.CustomToast;
-
 
 import SuperGluu.app.R;
 import butterknife.BindView;
@@ -122,19 +122,23 @@ public class SettingsFragment extends ToolbarFragment {
 
             switch (settingsId) {
                 case Constant.SSL_CONNECTION_TYPE:
-                    GluuApplication.isTrustAllCertificates = switchSettings.isChecked();
+                    if(switchSettings.isChecked()) {
+                        showSSLAlert();
+                    } else {
+                        GluuApplication.isTrustAllCertificates = switchSettings.isChecked();
 
-                    updateSettingsAfterClick();
+                        updateSettingsAfterClick(false);
+                    }
                     break;
 
                 case Constant.FINGERPRINT_TYPE:
                     if (switchSettings.isChecked() && fingerprint.startFingerprintService()) {
-                        Log.v("TAG", "Fingerprint Settings enable: " + switchSettings.isChecked());
+                        updateSettingsAfterClick(true);
                     } else {
+                        updateSettingsAfterClick(false);
                         switchSettings.setChecked(false);
                     }
 
-                    updateSettingsAfterClick();
                     break;
             }
         });
@@ -145,6 +149,32 @@ public class SettingsFragment extends ToolbarFragment {
 
         return view;
     }
+
+    private void showSSLAlert() {
+        CustomAlert customAlert = new CustomAlert(getActivity());
+        customAlert.setListener(new MainNavDrawerActivity.GluuAlertCallback() {
+            @Override
+            public void onPositiveButton() {
+                GluuApplication.isTrustAllCertificates = true;
+
+                updateSettingsAfterClick(true);
+            }
+
+            @Override
+            public void onNegativeButton() {
+                switchSettings.setChecked(false);
+                GluuApplication.isTrustAllCertificates = false;
+
+                updateSettingsAfterClick(false);
+            }
+        });
+        customAlert.setHeader(getString(R.string.ssl_testing));
+        customAlert.setMessage(getString(R.string.ssl_alert_message));
+        customAlert.setPositiveText(getString(R.string.yes));
+        customAlert.setNegativeText(getString(R.string.no));
+        customAlert.show();
+    }
+
 
     @Override
     public void onStop() {
@@ -171,8 +201,8 @@ public class SettingsFragment extends ToolbarFragment {
         }
     }
 
-    private void updateSettingsAfterClick() {
-        Settings.setSettingsValueEnabled(context, settingsId, switchSettings.isChecked());
+    private void updateSettingsAfterClick(boolean enabled) {
+        Settings.setSettingsValueEnabled(context, settingsId, enabled);
         // Init network layer
         CommunicationService.init();
     }

@@ -200,8 +200,8 @@ public class KeyFragmentListAdapter extends BaseAdapter {
         final CustomAlert gluuAlert = new CustomAlert(activity);
         gluuAlert.setHeader(activity.getApplicationContext().getString(R.string.new_key_name_title));
         gluuAlert.setMessage(activity.getApplicationContext().getString(R.string.enter_new_key_name));
-        gluuAlert.setYesTitle(activity.getApplicationContext().getString(R.string.save));
-        gluuAlert.setNoTitle(activity.getApplicationContext().getString(R.string.cancel));
+        gluuAlert.setPositiveText(activity.getApplicationContext().getString(R.string.save));
+        gluuAlert.setNegativeText(activity.getApplicationContext().getString(R.string.cancel));
         gluuAlert.setIsTextView(true);
         gluuAlert.setType(NotificationType.RENAME_KEY);
         gluuAlert.setListener(new MainNavDrawerActivity.GluuAlertCallback() {
@@ -209,7 +209,7 @@ public class KeyFragmentListAdapter extends BaseAdapter {
             public void onPositiveButton() {
                 Context context = activity.getApplicationContext();
                 AndroidKeyDataStore dataStore = new AndroidKeyDataStore(context);
-                dataStore.changeKeyHandleName(tokenEntry, gluuAlert.getText());
+                dataStore.changeKeyHandleName(tokenEntry, gluuAlert.getEnteredText());
                 updateResults(dataStore);
             }
 
@@ -239,8 +239,8 @@ public class KeyFragmentListAdapter extends BaseAdapter {
         CustomAlert gluuAlert = new CustomAlert(activity);
         gluuAlert.setHeader(activity.getApplicationContext().getString(R.string.approve_delete));
         gluuAlert.setMessage(activity.getApplicationContext().getString(R.string.delete_key_sub_title));
-        gluuAlert.setYesTitle(activity.getApplicationContext().getString(R.string.yes));
-        gluuAlert.setNoTitle(activity.getApplicationContext().getString(R.string.no));
+        gluuAlert.setPositiveText(activity.getApplicationContext().getString(R.string.yes));
+        gluuAlert.setNegativeText(activity.getApplicationContext().getString(R.string.no));
         gluuAlert.setType(NotificationType.DELETE_KEY);
         gluuAlert.setListener(listener);
         gluuAlert.show();

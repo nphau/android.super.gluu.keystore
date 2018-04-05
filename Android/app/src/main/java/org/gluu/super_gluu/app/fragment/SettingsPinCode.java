@@ -156,8 +156,8 @@ public class SettingsPinCode extends ToolbarFragment {
             loadPinCodeAlert.setMessage(getContext().getString(R.string.change_pin));
         }
 
-        loadPinCodeAlert.setYesTitle(getContext().getString(R.string.yes));
-        loadPinCodeAlert.setNoTitle(getContext().getString(R.string.no));
+        loadPinCodeAlert.setPositiveText(getContext().getString(R.string.yes));
+        loadPinCodeAlert.setNegativeText(getContext().getString(R.string.no));
         loadPinCodeAlert.setOnCancelListener(dialogInterface -> listener.onNegativeButton());
         loadPinCodeAlert.setListener(listener);
         loadPinCodeAlert.setType(NotificationType.EDIT_PIN);

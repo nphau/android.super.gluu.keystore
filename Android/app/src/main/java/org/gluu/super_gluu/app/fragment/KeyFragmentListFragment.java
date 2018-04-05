@@ -86,8 +86,8 @@ public class KeyFragmentListFragment extends ToolbarFragment {
             CustomAlert gluuAlert = new CustomAlert(getActivity());
             gluuAlert.setMessage(getString(R.string.new_key_name_title));
             gluuAlert.setHeader(getString(R.string.enter_new_key_name));
-            gluuAlert.setYesTitle(getActivity().getApplicationContext().getString(R.string.yes));
-            gluuAlert.setNoTitle(getActivity().getApplicationContext().getString(R.string.no));
+            gluuAlert.setPositiveText(getActivity().getApplicationContext().getString(R.string.yes));
+            gluuAlert.setNegativeText(getActivity().getApplicationContext().getString(R.string.no));
             gluuAlert.setType(NotificationType.RENAME_KEY);
             gluuAlert.show();
         };

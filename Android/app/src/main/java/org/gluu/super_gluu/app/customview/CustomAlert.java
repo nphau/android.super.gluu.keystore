@@ -29,10 +29,10 @@ import butterknife.ButterKnife;
  */
 public class CustomAlert extends Dialog {
 
-    private String header, message, yesTitle, noTitle;
+    private String header, message, positiveText, negativeText;
     private MainNavDrawerActivity.GluuAlertCallback listener;
     private Boolean isTextView = false;
-    private String text;
+    private String enteredText;
 
     private NotificationType type = NotificationType.DEFAULT;
 
@@ -43,9 +43,9 @@ public class CustomAlert extends Dialog {
     @BindView(R.id.alert_textField)
     EditText alertEditText;
     @BindView(R.id.yes_button)
-    Button yesButton;
+    Button positiveButton;
     @BindView(R.id.no_button)
-    Button noButton;
+    Button negativeButton;
     @BindView(R.id.actionbar_icon)
     ImageView alertImageView;
     @BindView(R.id.alert_buttons_view)
@@ -71,20 +71,20 @@ public class CustomAlert extends Dialog {
             messageTextView.setText(message);
         }
 
-        if (yesTitle != null && !yesTitle.isEmpty()){
-            yesButton.setText(yesTitle);
+        if (positiveText != null && !positiveText.isEmpty()){
+            positiveButton.setText(positiveText);
         } else {
-            yesButton.setVisibility(View.GONE);
+            positiveButton.setVisibility(View.GONE);
         }
 
-        if (noTitle != null && !noTitle.isEmpty()){
-            noButton.setText(noTitle);
+        if (negativeText != null && !negativeText.isEmpty()){
+            negativeButton.setText(negativeText);
         } else {
-            noButton.setVisibility(View.GONE);
+            negativeButton.setVisibility(View.GONE);
         }
-        if (yesButton.getVisibility() == View.GONE && noButton.getVisibility() == View.GONE){
-            yesButton.setVisibility(View.VISIBLE);
-            yesButton.setText(R.string.ok);
+        if (positiveButton.getVisibility() == View.GONE && negativeButton.getVisibility() == View.GONE){
+            positiveButton.setVisibility(View.VISIBLE);
+            positiveButton.setText(R.string.ok);
         }
         if (isTextView){
             alertEditText.setVisibility(View.VISIBLE);
@@ -97,7 +97,7 @@ public class CustomAlert extends Dialog {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    text = String.valueOf(s);
+                    enteredText = String.valueOf(s);
                 }
 
                 @Override
@@ -114,14 +114,14 @@ public class CustomAlert extends Dialog {
         }
 
 
-        yesButton.setOnClickListener(view -> {
+        positiveButton.setOnClickListener(view -> {
             if (listener != null){
                 listener.onPositiveButton();
             }
             dismiss();
         });
 
-        noButton.setOnClickListener(view -> {
+        negativeButton.setOnClickListener(view -> {
             if (listener != null){
                 listener.onNegativeButton();
             }
@@ -161,12 +161,12 @@ public class CustomAlert extends Dialog {
         this.message = message;
     }
 
-    public void setYesTitle(String yesTitle) {
-        this.yesTitle = yesTitle;
+    public void setPositiveText(String positiveText) {
+        this.positiveText = positiveText;
     }
 
-    public void setNoTitle(String noTitle) {
-        this.noTitle = noTitle;
+    public void setNegativeText(String negativeText) {
+        this.negativeText = negativeText;
     }
 
     public void setListener(MainNavDrawerActivity.GluuAlertCallback listener) {
@@ -177,11 +177,8 @@ public class CustomAlert extends Dialog {
         this.isTextView = isTextView;
     }
 
-    public String getText() {
-        return text;
+    public String getEnteredText() {
+        return enteredText;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
 }

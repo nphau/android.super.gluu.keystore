@@ -234,8 +234,8 @@
     <string name="delete_log">Delete Log</string>
     <string name="wrong_code">Wrong Code</string>
     <string name="enter_key_name">Enter Key Name</string>
-    <string name="ssl_alert_message">SSL Testing is meant for administrators only. Enable this only during development</string>
-    <string name="ssl_testing">SSL Testing</string>
+    <string name="ssl_alert_message">This feature is just for admin testing purposes. Are you an admin needing to enable it?</string>
+    <string name="ssl_testing">Admin Testing Only</string>
 
 
 </resources>

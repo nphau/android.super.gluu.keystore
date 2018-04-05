@@ -259,12 +259,12 @@ public class LogsFragment extends ToolbarFragment {
         if (listAdapter.getSelectedLogList().isEmpty()){
             gluuAlert.setHeader(getActivity().getApplicationContext().getString(R.string.clear_log_empty_title));
             gluuAlert.setMessage(getActivity().getApplicationContext().getString(R.string.clear_log_empty_message));
-            gluuAlert.setYesTitle(getActivity().getApplicationContext().getString(R.string.ok));
+            gluuAlert.setPositiveText(getActivity().getApplicationContext().getString(R.string.ok));
         } else {
             gluuAlert.setHeader(getActivity().getApplicationContext().getString(R.string.delete_log));
             gluuAlert.setMessage(getActivity().getApplicationContext().getString(R.string.clear_log_message));
-            gluuAlert.setYesTitle(getActivity().getApplicationContext().getString(R.string.yes));
-            gluuAlert.setNoTitle(getActivity().getApplicationContext().getString(R.string.no));
+            gluuAlert.setPositiveText(getActivity().getApplicationContext().getString(R.string.yes));
+            gluuAlert.setNegativeText(getActivity().getApplicationContext().getString(R.string.no));
         }
         gluuAlert.setType(NotificationType.DELETE_LOG);
         gluuAlert.setListener(listener);
