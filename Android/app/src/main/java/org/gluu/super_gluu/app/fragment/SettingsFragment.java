@@ -169,6 +169,7 @@ public class SettingsFragment extends ToolbarFragment {
         });
         customAlert.setHeader(getString(R.string.ssl_testing));
         customAlert.setMessage(getString(R.string.ssl_alert_message));
+        customAlert.setCancelable(false);
         customAlert.setPositiveText(getString(R.string.yes));
         customAlert.setNegativeText(getString(R.string.no));
         customAlert.show();
