@@ -16,7 +16,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 26
         versionCode 47
-        versionName "3.1.2"
+        versionName "3.1.2 - 2"
         multiDexEnabled true
         signingConfig signingConfigs.config
         resValue "string", "versionNumber", "V" + versionName
