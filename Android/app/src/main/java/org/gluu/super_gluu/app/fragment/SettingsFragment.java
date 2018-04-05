@@ -60,7 +60,7 @@ public class SettingsFragment extends ToolbarFragment {
             // Get extra data included in the Intent
             boolean success = intent.getBooleanExtra("message", false);
             switchSettings.setChecked(success);
-            String message = success ? "You've success authenticated by fingerprint" : "You've failed authenticated by fingerprint";
+            String message = success ? getString(R.string.success_fingerprint_auth) : getString(R.string.failed_fingerprint_auth);
             showToast(message);
         }
     };
@@ -125,8 +125,7 @@ public class SettingsFragment extends ToolbarFragment {
                     if(switchSettings.isChecked()) {
                         showSSLAlert();
                     } else {
-                        GluuApplication.isTrustAllCertificates = switchSettings.isChecked();
-
+                        GluuApplication.isTrustAllCertificates = false;
                         updateSettingsAfterClick(false);
                     }
                     break;
@@ -180,16 +179,6 @@ public class SettingsFragment extends ToolbarFragment {
     public void onStop() {
         super.onStop();
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mMessageReceiver);
-    }
-
-
-    private void showWarning(int statusId) {
-        String message = context.getString(statusId);
-        Intent intent = new Intent("ox_request-precess-event");
-
-        // You can also include some extra data.
-        intent.putExtra("message", message);
-        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
     public void showToast(String text){

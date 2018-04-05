@@ -236,6 +236,8 @@
     <string name="enter_key_name">Enter Key Name</string>
     <string name="ssl_alert_message">This feature is just for admin testing purposes. Are you an admin needing to enable it?</string>
     <string name="ssl_testing">Admin Testing Only</string>
+    <string name="success_fingerprint_auth">You\'ve success authenticated by fingerprint</string>
+    <string name="failed_fingerprint_auth">You\'ve failed authenticated by fingerprint</string>
 
 
 </resources>
