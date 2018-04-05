@@ -625,7 +625,7 @@ public class MainNavDrawerActivity extends AppCompatActivity
 
     private void showSSLAlertView() {
         CustomAlert customAlert = new CustomAlert(this);
-        customAlert.setmListener(new GluuAlertCallback() {
+        customAlert.setListener(new GluuAlertCallback() {
             @Override
             public void onPositiveButton() {
                 updateUIAfterNavItemSelected(SettingsFragment.newInstance(SettingsFragment.Constant.SSL_CONNECTION_TYPE));
@@ -637,11 +637,10 @@ public class MainNavDrawerActivity extends AppCompatActivity
 
             }
         });
-        customAlert.setMessage("SSL testing admins only");
-        customAlert.setSub_title("Message for ssl admins needed here");
-        customAlert.setYesTitle(getString(R.string.yes));
-        customAlert.setNoTitle(getString(R.string.no));
-        customAlert.type = NotificationType.DEFAULT;
+        customAlert.setHeader(getString(R.string.ssl_testing));
+        customAlert.setMessage(getString(R.string.ssl_alert_message));
+        customAlert.setYesTitle(getString(R.string.ok));
+        customAlert.setNoTitle(getString(R.string.cancel));
         customAlert.show();
     }
 

@@ -32,7 +32,7 @@
                 android:fontFamily="@font/proxima_nova_regular"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:textColor="@color/blackColor"
+                android:textColor="@color/colorPrimary"
                 android:gravity="center"/>
 
             <TextView
