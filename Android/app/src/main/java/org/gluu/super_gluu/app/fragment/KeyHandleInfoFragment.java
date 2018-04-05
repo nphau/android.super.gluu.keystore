@@ -137,14 +137,11 @@ public class KeyHandleInfoFragment extends ToolbarFragment {
     }
 
     private void updateKeyHandleDetails(View view) {
-        TextView keyHandle_user_nameTitle = ((TextView) view.findViewById(R.id.keyHandle_user_name_label));
-        TextView keyHandle_user_name = ((TextView) view.findViewById(R.id.keyHandle_user_name_label_value));
+        TextView keyHandle_user_name = view.findViewById(R.id.keyHandle_user_name_label_value);
         keyHandle_user_name.setText(tokenEntry.getUserName());
-        TextView keyHandle_created = (TextView) view.findViewById(R.id.keyHandle_created_value);
-        TextView keyHandle_createdTitle = (TextView) view.findViewById(R.id.keyHandle_created);
+        TextView keyHandle_created = view.findViewById(R.id.keyHandle_created_value);
         setupPairingDateByFormat(keyHandle_created);
-        TextView keyHandle_issuer = ((TextView) view.findViewById(R.id.keyHandle_issuer_value));
-        TextView keyHandle_issuerTitle = ((TextView) view.findViewById(R.id.keyHandle_issuer_label));
+        TextView keyHandle_issuer = view.findViewById(R.id.keyHandle_issuer_value);
         try {
             URI uri = new URI(tokenEntry.getIssuer());
             String path = uri.getHost();
@@ -156,8 +153,7 @@ public class KeyHandleInfoFragment extends ToolbarFragment {
 
         String keyStr = Utils.encodeHexString(tokenEntry.getKeyHandle());
         String keyHandleString = keyStr.substring(0, 6) + "..." + keyStr.substring(keyStr.length()-6);
-        TextView keyHandle_id = ((TextView) view.findViewById(R.id.keyHandle_id));
-        TextView keyHandle_idTitle = ((TextView) view.findViewById(R.id.keyHandle_label));
+        TextView keyHandle_id = view.findViewById(R.id.keyHandle_id);
         keyHandle_id.setText(keyHandleString);
     }
 
@@ -176,10 +172,10 @@ public class KeyHandleInfoFragment extends ToolbarFragment {
             }
         };
         CustomAlert customAlert = new CustomAlert(mActivity);
-        customAlert.setHeader(mActivity.getApplicationContext().getString(R.string.approve_delete));
-        customAlert.setMessage(mActivity.getApplicationContext().getString(R.string.delete_key_sub_title));
-        customAlert.setPositiveText(mActivity.getApplicationContext().getString(R.string.yes));
-        customAlert.setNegativeText(mActivity.getApplicationContext().getString(R.string.no));
+        customAlert.setHeader(getString(R.string.approve_delete));
+        customAlert.setMessage(getString(R.string.delete_key_sub_title));
+        customAlert.setPositiveText(getString(R.string.yes));
+        customAlert.setNegativeText(getString(R.string.no));
         customAlert.setType(NotificationType.DELETE_KEY);
         customAlert.setListener(listener);
         customAlert.show();

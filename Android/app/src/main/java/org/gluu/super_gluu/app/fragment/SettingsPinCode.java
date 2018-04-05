@@ -151,13 +151,13 @@ public class SettingsPinCode extends ToolbarFragment {
         loadPinCodeAlert.setHeader(getContext().getString(R.string.pin_code));
 
         if(pinCode == null) {
-            loadPinCodeAlert.setMessage(getContext().getString(R.string.set_pin));
+            loadPinCodeAlert.setMessage(getString(R.string.set_pin));
         } else {
-            loadPinCodeAlert.setMessage(getContext().getString(R.string.change_pin));
+            loadPinCodeAlert.setMessage(getString(R.string.change_pin));
         }
 
-        loadPinCodeAlert.setPositiveText(getContext().getString(R.string.yes));
-        loadPinCodeAlert.setNegativeText(getContext().getString(R.string.no));
+        loadPinCodeAlert.setPositiveText(getString(R.string.yes));
+        loadPinCodeAlert.setNegativeText(getString(R.string.no));
         loadPinCodeAlert.setOnCancelListener(dialogInterface -> listener.onNegativeButton());
         loadPinCodeAlert.setListener(listener);
         loadPinCodeAlert.setType(NotificationType.EDIT_PIN);

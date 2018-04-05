@@ -287,10 +287,10 @@ public class ApproveDenyFragment extends ToolbarFragment {
             }
         };
         CustomAlert customAlert = new CustomAlert(getActivity());
-        customAlert.setHeader(getActivity().getApplicationContext().getString(R.string.delete_log));
-        customAlert.setMessage(getActivity().getApplicationContext().getString(R.string.clear_log_message));
-        customAlert.setPositiveText(getActivity().getApplicationContext().getString(R.string.yes));
-        customAlert.setNegativeText(getActivity().getApplicationContext().getString(R.string.no));
+        customAlert.setHeader(getString(R.string.delete_log));
+        customAlert.setMessage(getString(R.string.clear_log_message));
+        customAlert.setPositiveText(getString(R.string.yes));
+        customAlert.setNegativeText(getString(R.string.no));
         customAlert.setType(NotificationType.DELETE_LOG);
         customAlert.setListener(listener);
         customAlert.show();

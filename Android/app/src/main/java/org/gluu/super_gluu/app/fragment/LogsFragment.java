@@ -186,7 +186,6 @@ public class LogsFragment extends ToolbarFragment {
         listAdapter.notifyDataSetChanged();
     }
 
-
     private void deselectAll() {
         //Deselect all records
         listAdapter.isSelectAllMode = false;
@@ -194,19 +193,10 @@ public class LogsFragment extends ToolbarFragment {
         listAdapter.deSelectAllLogs();
     }
 
-    private void selectAll() {
-        //Select all records
-        listAdapter.isSelectAllMode = true;
-        listAdapter.selectAllLogs();
-        listAdapter.notifyDataSetChanged();
-    }
-
     @Override
     public void onPause(){
         super.onPause();
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mDeleteReceiver);
-//        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mMessageReceiver);
-//        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mEditingModeReceiver);
     }
 
     @Override
@@ -257,14 +247,14 @@ public class LogsFragment extends ToolbarFragment {
         };
         CustomAlert gluuAlert = new CustomAlert(getActivity());
         if (listAdapter.getSelectedLogList().isEmpty()){
-            gluuAlert.setHeader(getActivity().getApplicationContext().getString(R.string.clear_log_empty_title));
-            gluuAlert.setMessage(getActivity().getApplicationContext().getString(R.string.clear_log_empty_message));
-            gluuAlert.setPositiveText(getActivity().getApplicationContext().getString(R.string.ok));
+            gluuAlert.setHeader(getString(R.string.clear_log_empty_title));
+            gluuAlert.setMessage(getString(R.string.clear_log_empty_message));
+            gluuAlert.setPositiveText(getString(R.string.ok));
         } else {
-            gluuAlert.setHeader(getActivity().getApplicationContext().getString(R.string.delete_log));
-            gluuAlert.setMessage(getActivity().getApplicationContext().getString(R.string.clear_log_message));
-            gluuAlert.setPositiveText(getActivity().getApplicationContext().getString(R.string.yes));
-            gluuAlert.setNegativeText(getActivity().getApplicationContext().getString(R.string.no));
+            gluuAlert.setHeader(getString(R.string.delete_log));
+            gluuAlert.setMessage(getString(R.string.clear_log_message));
+            gluuAlert.setPositiveText(getString(R.string.yes));
+            gluuAlert.setNegativeText(getString(R.string.no));
         }
         gluuAlert.setType(NotificationType.DELETE_LOG);
         gluuAlert.setListener(listener);
