@@ -118,27 +118,28 @@ public class SettingsFragment extends ToolbarFragment {
 
         switchSettings.setChecked(Settings.getSettingsValueEnabled(context, settingsId));
 
-        switchSettings.setOnClickListener(v -> {
+        switchSettings.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (switchSettings.isPressed()) {
+                switch (settingsId) {
+                    case Constant.SSL_CONNECTION_TYPE:
+                        if(switchSettings.isChecked()) {
+                            showSSLAlert();
+                        } else {
+                            GluuApplication.isTrustAllCertificates = false;
+                            updateSettingsAfterClick(false);
+                        }
+                        break;
 
-            switch (settingsId) {
-                case Constant.SSL_CONNECTION_TYPE:
-                    if(switchSettings.isChecked()) {
-                        showSSLAlert();
-                    } else {
-                        GluuApplication.isTrustAllCertificates = false;
-                        updateSettingsAfterClick(false);
-                    }
-                    break;
+                    case Constant.FINGERPRINT_TYPE:
+                        if (switchSettings.isChecked() && fingerprint.startFingerprintService()) {
+                            updateSettingsAfterClick(true);
+                        } else {
+                            updateSettingsAfterClick(false);
+                            switchSettings.setChecked(false);
+                        }
 
-                case Constant.FINGERPRINT_TYPE:
-                    if (switchSettings.isChecked() && fingerprint.startFingerprintService()) {
-                        updateSettingsAfterClick(true);
-                    } else {
-                        updateSettingsAfterClick(false);
-                        switchSettings.setChecked(false);
-                    }
-
-                    break;
+                        break;
+                }
             }
         });
 
