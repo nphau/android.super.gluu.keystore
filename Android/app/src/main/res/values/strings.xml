@@ -39,6 +39,8 @@
     <string name="process_deny_start">Deny starting...</string>
     <string name="process_u2f_request">Processing Fido U2F request, please wait…</string>
 
+    <string name="generic_auth_result">Authentication</string>
+
     <string name="auth_result_success">You have successfully authenticated!</string>
     <string name="enrol_result_success">Your enrollment was successful!</string>
     <string name="auth_result_failed">Authentication failed!</string>

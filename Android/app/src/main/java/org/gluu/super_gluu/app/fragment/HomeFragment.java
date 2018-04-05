@@ -42,7 +42,6 @@ import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import org.gluu.super_gluu.app.NotificationType;
 import org.gluu.super_gluu.app.ProcessManager;
 import org.gluu.super_gluu.app.activities.CustomBarcodeScannerActivity;
 import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
@@ -371,16 +370,17 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
 
     private void showDialog(String message){
         Activity activity = getActivity();
-        String textSuccess = getActivity().getApplicationContext().getString(R.string.auth_result_success);
-        String textDeny = getActivity().getApplicationContext().getString(R.string.deny_result_success);
+        String textSuccess = getString(R.string.auth_result_success);
+        String textDeny = getString(R.string.deny_result_success);
         String finalMessage = message;
-        String finalTitle = "";
+        String finalTitle = getString(R.string.generic_auth_result);
+
         if (message.equalsIgnoreCase(textSuccess)){
-            finalMessage = activity.getApplicationContext().getString(R.string.auth_result_success);
-            finalTitle = activity.getApplicationContext().getString(R.string.success);
+            finalMessage = getString(R.string.auth_result_success);
+            finalTitle = getString(R.string.success);
         } else if (message.equalsIgnoreCase(textDeny)){
-            finalMessage = activity.getApplicationContext().getString(R.string.deny_result_success);
-            finalTitle = activity.getApplicationContext().getString(R.string.failed);
+            finalMessage = getString(R.string.deny_result_success);
+            finalTitle = getString(R.string.failed);
         }
         final CustomAlert gluuAlert = new CustomAlert(activity);
         gluuAlert.setHeader(finalTitle);
