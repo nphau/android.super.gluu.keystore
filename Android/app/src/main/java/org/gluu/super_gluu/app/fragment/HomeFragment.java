@@ -25,6 +25,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.util.Log;
+import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -369,22 +370,14 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
 
 
     private void showDialog(String message){
-        Activity activity = getActivity();
-        String textSuccess = getString(R.string.auth_result_success);
-        String textDeny = getString(R.string.deny_result_success);
-        String finalMessage = message;
-        String finalTitle = getString(R.string.generic_auth_result);
+        Log.i("boogie", message);
 
-        if (message.equalsIgnoreCase(textSuccess)){
-            finalMessage = getString(R.string.auth_result_success);
-            finalTitle = getString(R.string.success);
-        } else if (message.equalsIgnoreCase(textDeny)){
-            finalMessage = getString(R.string.deny_result_success);
-            finalTitle = getString(R.string.failed);
-        }
+        Activity activity = getActivity();
+        Pair<String, String> titleMessageText = getTitleBasedOnMessage(message);
+
         final CustomAlert gluuAlert = new CustomAlert(activity);
-        gluuAlert.setHeader(finalTitle);
-        gluuAlert.setMessage(finalMessage);
+        gluuAlert.setHeader(titleMessageText.first);
+        gluuAlert.setMessage(titleMessageText.second);
         gluuAlert.setPositiveText(getString(R.string.ok));
         gluuAlert.setListener(new MainNavDrawerActivity.GluuAlertCallback() {
             @Override
@@ -398,6 +391,28 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
             }
         });
         gluuAlert.show();
+    }
+
+
+    private Pair<String, String> getTitleBasedOnMessage(String message) {
+
+        switch (message) {
+            case Constant.AUTH_SUCCESS:
+                return new Pair<>(getString(R.string.success), getString(R.string.auth_result_success));
+            case Constant.AUTH_FAILURE:
+            case Constant.AUTHENTICATED_FAILED_OTHER:
+                return new Pair<>(getString(R.string.failed), getString(R.string.deny_result_success));
+            case Constant.ENROLLMENT_SUCCESS:
+                return new Pair<>(getString(R.string.enroll_result_title), message);
+            case Constant.FIDO_U2F_INVALID:
+                return new Pair<>(getString(R.string.fido_failure), message);
+            case Constant.CHALLENGE:
+                return new Pair<>(getString(R.string.challenge), message);
+            case Constant.DECLINE_FAILED:
+                return new Pair<>(getString(R.string.decline), message);
+            default:
+                return new Pair<>(getString(R.string.generic_auth_result), message);
+        }
     }
 
     public void checkIsPush(){
@@ -490,6 +505,16 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
             removeAdView.setVisibility(View.GONE);
             adView.setVisibility(View.GONE);
         }
+    }
+
+    private class Constant {
+        private static final String AUTH_SUCCESS = "You have successfully authenticated!";
+        private static final String AUTH_FAILURE = "The authentication request has been denied or failed.";
+        private static final String ENROLLMENT_SUCCESS = "Your enrollment was successful!";
+        private static final String FIDO_U2F_INVALID = "Fido U2F token response is invalid";
+        private static final String CHALLENGE = "Challenges doesn\'t match";
+        private static final String DECLINE_FAILED = "Decline Failed";
+        private static final String AUTHENTICATED_FAILED_OTHER = "Authentication failed!";
     }
 
 }

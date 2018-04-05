@@ -42,7 +42,8 @@
     <string name="generic_auth_result">Authentication</string>
 
     <string name="auth_result_success">You have successfully authenticated!</string>
-    <string name="enrol_result_success">Your enrollment was successful!</string>
+    <string name="enroll_result_success">Your enrollment was successful!</string>
+    <string name="enroll_result_title">Enrollment Successful</string>
     <string name="auth_result_failed">Authentication failed!</string>
     <string name="deny_result_success">The authentication request has been denied or failed.</string>
     <string name="deny_result_failed">Decline Failed</string>
@@ -238,6 +239,9 @@
     <string name="ssl_testing">Admin Testing Only</string>
     <string name="success_fingerprint_auth">You\'ve success authenticated by fingerprint</string>
     <string name="failed_fingerprint_auth">You\'ve failed authenticated by fingerprint</string>
+    <string name="fido_failure">Invalid Token</string>
+    <string name="challenge">Challenge</string>
+    <string name="decline">Decline</string>
 
 
 </resources>
