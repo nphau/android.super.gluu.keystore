@@ -132,6 +132,7 @@ public class CustomAlert extends Dialog {
         switch (type) {
             case DELETE_KEY:
             case DELETE_LOG:
+            case EDIT_PIN:
                 alertImageView.setImageResource(R.drawable.delete_log_icon);
                 break;
             case RENAME_KEY:
