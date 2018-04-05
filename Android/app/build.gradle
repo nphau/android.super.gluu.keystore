@@ -144,7 +144,7 @@ dependencies {
     //Circle progressBar
     implementation 'com.dinuscxj:circleprogressbar:1.1.1'
     //For swipe gesture for table
-    implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.0'
+    implementation "com.daimajia.swipelayout:library:1.2.0@aar"
 
     //Butterknife for view injection
     implementation 'com.jakewharton:butterknife:8.8.1'

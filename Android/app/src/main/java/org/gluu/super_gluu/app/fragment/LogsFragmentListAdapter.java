@@ -2,7 +2,6 @@ package org.gluu.super_gluu.app.fragment;
 
 import android.app.Activity;
 import android.graphics.Typeface;
-import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +13,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.chauthai.swipereveallayout.SwipeRevealLayout;
-import com.chauthai.swipereveallayout.ViewBinderHelper;
+import com.daimajia.swipe.SwipeLayout;
 
 import org.gluu.super_gluu.app.LogState;
 import org.gluu.super_gluu.app.model.LogInfo;
@@ -39,8 +37,6 @@ public class LogsFragmentListAdapter extends BaseAdapter {
     private LogsFragment.LogInfoListener mListener;
     private Activity activity;
 
-    private final ViewBinderHelper binderHelper;
-
     public Boolean isEditingMode = false;
     public Boolean isSelectAllMode = false;
 
@@ -49,7 +45,6 @@ public class LogsFragmentListAdapter extends BaseAdapter {
         this.activity = activity;
         mInflater = LayoutInflater.from(activity);
         mListener = listener;
-        binderHelper = new ViewBinderHelper();
     }
 
     @Override
@@ -78,17 +73,34 @@ public class LogsFragmentListAdapter extends BaseAdapter {
 //            holder.textView = (TextView) convertView.findViewById(R.id.text);
             View swipeView = view.findViewById(R.id.delete_layout);
             swipeView.setTag(position);
-            holder.deleteButton = (RelativeLayout) swipeView.findViewById(R.id.swipe_delete_button);
-            holder.showButton = (RelativeLayout) swipeView.findViewById(R.id.swipe_show_button);
+            holder.deleteButton = swipeView.findViewById(R.id.swipe_delete_button);
+            holder.showButton = swipeView.findViewById(R.id.swipe_show_button);
             holder.deleteButton.setTag(position);
             holder.showButton.setTag(position);
 //            holder.showView = view.findViewById(R.id.show_layout);
-            holder.swipeLayout = (SwipeRevealLayout) view.findViewById(R.id.swipe_layout);
+            holder.swipeLayout =  view.findViewById(R.id.swipe_layout);
             holder.index = position;
             final View finalView = view;
-            holder.swipeLayout.setSwipeListener(new SwipeRevealLayout.SwipeListener() {
+            holder.swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
                 @Override
-                public void onClosed(SwipeRevealLayout view) {
+                public void onStartOpen(SwipeLayout layout) {
+
+                }
+
+                @Override
+                public void onOpen(SwipeLayout layout) {
+                    ViewHolder tag = (ViewHolder) finalView.getTag();
+                    int position = tag.index;
+                    selectedLogList.add(list.get(position));
+                }
+
+                @Override
+                public void onStartClose(SwipeLayout layout) {
+
+                }
+
+                @Override
+                public void onClose(SwipeLayout layout) {
                     ViewHolder tag = (ViewHolder) finalView.getTag();
                     int position = tag.index;
                     LogInfo checkedLogInfo = list.get(position);
@@ -102,14 +114,12 @@ public class LogsFragmentListAdapter extends BaseAdapter {
                 }
 
                 @Override
-                public void onOpened(SwipeRevealLayout view) {
-                    ViewHolder tag = (ViewHolder) finalView.getTag();
-                    int position = tag.index;
-                    selectedLogList.add(list.get(position));
+                public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
+
                 }
 
                 @Override
-                public void onSlide(SwipeRevealLayout view, float slideOffset) {
+                public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
 
                 }
             });
@@ -171,7 +181,6 @@ public class LogsFragmentListAdapter extends BaseAdapter {
 
         final String item = log.getUserName();
         if (item != null) {
-            binderHelper.bind(holder.swipeLayout, item);
 
 //            holder.textView.setText(item);
             holder.deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -276,27 +285,11 @@ public class LogsFragmentListAdapter extends BaseAdapter {
         selectedLogList.clear();
     }
 
-    /**
-     * Only if you need to restore open/close state when the orientation is changed.
-     * Call this method in {@link android.app.Activity#onSaveInstanceState(Bundle)}
-     */
-    public void saveStates(Bundle outState) {
-        binderHelper.saveStates(outState);
-    }
-
-    /**
-     * Only if you need to restore open/close state when the orientation is changed.
-     * Call this method in {@link android.app.Activity#onRestoreInstanceState(Bundle)}
-     */
-    public void restoreStates(Bundle inState) {
-        binderHelper.restoreStates(inState);
-    }
-
     private class ViewHolder {
         int index;
         TextView textView;
         RelativeLayout deleteButton;
         RelativeLayout showButton;
-        SwipeRevealLayout swipeLayout;
+        SwipeLayout swipeLayout;
     }
 }

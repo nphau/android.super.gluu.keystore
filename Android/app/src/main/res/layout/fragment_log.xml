@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.chauthai.swipereveallayout.SwipeRevealLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipe_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:dragEdge="right"
-    app:mode="normal">
+    android:layout_height="wrap_content">
 
     <!-- Layout for swipe -->
 
@@ -124,4 +122,4 @@
     </RelativeLayout>
 
 
-</com.chauthai.swipereveallayout.SwipeRevealLayout>
+</com.daimajia.swipe.SwipeLayout>

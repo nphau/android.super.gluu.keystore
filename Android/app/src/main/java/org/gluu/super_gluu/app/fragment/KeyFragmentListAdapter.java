@@ -11,12 +11,11 @@ import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.chauthai.swipereveallayout.SwipeRevealLayout;
-import com.chauthai.swipereveallayout.ViewBinderHelper;
+import com.daimajia.swipe.SwipeLayout;
 import com.google.gson.Gson;
 
-import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.NotificationType;
+import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
@@ -43,14 +42,12 @@ public class KeyFragmentListAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private Activity activity;
     private KeyFragmentListFragment.KeyHandleInfo mListener;
-    private final ViewBinderHelper binderHelper;
 
     public KeyFragmentListAdapter(Activity activity, List<TokenEntry> listContact, KeyFragmentListFragment.KeyHandleInfo keyHandleInfo) {
         list = listContact;
         this.activity = activity;
         mInflater = LayoutInflater.from(activity);
         mListener = keyHandleInfo;
-        binderHelper = new ViewBinderHelper();
     }
 
     @Override
@@ -79,10 +76,10 @@ public class KeyFragmentListAdapter extends BaseAdapter {
 //            holder.textView = (TextView) convertView.findViewById(R.id.text);
             View swipeView = view.findViewById(R.id.swipe_menu_layout);
             swipeView.setTag(position);
-            holder.deleteButton = (RelativeLayout) swipeView.findViewById(R.id.swipe_delete_button);
-            holder.showButton = (RelativeLayout) swipeView.findViewById(R.id.swipe_show_button);
-            holder.renameButton = (RelativeLayout) swipeView.findViewById(R.id.swipe_rename_button);
-            holder.swipeLayout = (SwipeRevealLayout) view.findViewById(R.id.swipe_layout);
+            holder.deleteButton = swipeView.findViewById(R.id.swipe_delete_button);
+            holder.showButton = swipeView.findViewById(R.id.swipe_show_button);
+            holder.renameButton = swipeView.findViewById(R.id.swipe_rename_button);
+            holder.swipeLayout = view.findViewById(R.id.swipe_layout);
             holder.deleteButton.setTag(position);
             holder.showButton.setTag(position);
             holder.renameButton.setTag(position);
@@ -91,10 +88,10 @@ public class KeyFragmentListAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
 //        view.setTag(position);
-        final TokenEntry token = (TokenEntry) list.get(position);
+        final TokenEntry token = list.get(position);
         if (token != null) {
-            TextView createdDate = (TextView) view.findViewById(R.id.created_dateKey);
-            TextView contentView = (TextView) view.findViewById(R.id.contentKey);
+            TextView createdDate = view.findViewById(R.id.created_dateKey);
+            TextView contentView = view.findViewById(R.id.contentKey);
 
             if (contentView != null) {
                 contentView.setText(token.getKeyName());
@@ -153,7 +150,6 @@ public class KeyFragmentListAdapter extends BaseAdapter {
 
         final String item = token.getUserName();
         if (item != null) {
-            binderHelper.bind(holder.swipeLayout, item);
 
 //            holder.textView.setText(item);
             final View finalView = view;
@@ -270,6 +266,6 @@ public class KeyFragmentListAdapter extends BaseAdapter {
         RelativeLayout deleteButton;
         RelativeLayout showButton;
         RelativeLayout renameButton;
-        SwipeRevealLayout swipeLayout;
+        SwipeLayout swipeLayout;
     }
 }
