@@ -204,6 +204,8 @@
 		C8494D191FD72A6A00CD5FA8 /* LogInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8494D171FD72A6A00CD5FA8 /* LogInfoView.xib */; };
 		C8494D1B1FD72D7200CD5FA8 /* LogDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8494D1A1FD72D7200CD5FA8 /* LogDetailsViewController.swift */; };
 		C8494D1C1FD72D7200CD5FA8 /* LogDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8494D1A1FD72D7200CD5FA8 /* LogDetailsViewController.swift */; };
+		C86B05A72076A037008875D3 /* SubscriptionDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86B05A62076A037008875D3 /* SubscriptionDetailsViewController.swift */; };
+		C86B05A92076A9CA008875D3 /* UIButton+SuperGluu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86B05A82076A9CA008875D3 /* UIButton+SuperGluu.swift */; };
 		C8735EAD2001D07E00722BD5 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8735EAC2001D07E00722BD5 /* BaseNavigationController.swift */; };
 		C8B402B41FE9E71B00202A4B /* AuthHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B402B31FE9E71B00202A4B /* AuthHelper.swift */; };
 		C8B402B61FE9F28C00202A4B /* LaunchSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B402B51FE9F28C00202A4B /* LaunchSetupViewController.swift */; };
@@ -404,6 +406,8 @@
 		C8494D141FD72A5400CD5FA8 /* LogInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LogInfoView.swift; path = Views/LogInfoView.swift; sourceTree = "<group>"; };
 		C8494D171FD72A6A00CD5FA8 /* LogInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = LogInfoView.xib; path = Views/LogInfoView.xib; sourceTree = "<group>"; };
 		C8494D1A1FD72D7200CD5FA8 /* LogDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDetailsViewController.swift; sourceTree = "<group>"; };
+		C86B05A62076A037008875D3 /* SubscriptionDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionDetailsViewController.swift; sourceTree = "<group>"; };
+		C86B05A82076A9CA008875D3 /* UIButton+SuperGluu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIButton+SuperGluu.swift"; path = "Extensions/UIButton+SuperGluu.swift"; sourceTree = "<group>"; };
 		C8735EAC2001D07E00722BD5 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		C8B402B31FE9E71B00202A4B /* AuthHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHelper.swift; sourceTree = "<group>"; };
 		C8B402B51FE9F28C00202A4B /* LaunchSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchSetupViewController.swift; sourceTree = "<group>"; };
@@ -843,6 +847,7 @@
 		BB79FA361E7A8B2C00AEAE58 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				C86B05A82076A9CA008875D3 /* UIButton+SuperGluu.swift */,
 				C848322B1FE9A90800679640 /* SwiftMessages+Extension.swift */,
 				C8494D0C1FD5FCB800CD5FA8 /* Font+Extension.swift */,
 				C8F0E2DB1FD21C3800FF9342 /* Color+Extension.swift */,
@@ -855,6 +860,7 @@
 		BB87A27C1EA0D93B007F70E9 /* MainTab */ = {
 			isa = PBXGroup;
 			children = (
+				C86B05A62076A037008875D3 /* SubscriptionDetailsViewController.swift */,
 				BB87A27F1EA0DAD8007F70E9 /* MainTabViewController.h */,
 				BB87A2801EA0DAD8007F70E9 /* MainTabViewController.m */,
 			);
@@ -1365,8 +1371,10 @@
 				BBD738E81F8770450051FF3F /* AdFreeViewController.m in Sources */,
 				C848322C1FE9A90800679640 /* SwiftMessages+Extension.swift in Sources */,
 				BBB7C1051C90723300833B12 /* InformationViewController.m in Sources */,
+				C86B05A92076A9CA008875D3 /* UIButton+SuperGluu.swift in Sources */,
 				BB4EDA491F4EC52700EA807B /* UIImage+ImageEffects.m in Sources */,
 				BB37DF3D1C7E0B8E0016D422 /* KeysViewController.m in Sources */,
+				C86B05A72076A037008875D3 /* SubscriptionDetailsViewController.swift in Sources */,
 				C82967621FE9C2C1008FEBE8 /* WebViewController.swift in Sources */,
 				BB87A2811EA0DAD8007F70E9 /* MainTabViewController.m in Sources */,
 				BB128D821E8002890041BD21 /* SettingsTableViewController.m in Sources */,

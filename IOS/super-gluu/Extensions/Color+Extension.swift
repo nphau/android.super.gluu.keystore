@@ -45,6 +45,8 @@ struct GluuConstants {
     static let IS_FIRST_LOAD = "firstLoad"
     static let SECURITY_PROMPT_SHOWN = "securityPromptyShown"
     static let NOTIFICATION_PROMPT = "notificationPrompt"
+    static let NOTIFICATION_AD_FREE = "NOTIFICATION_AD_FREE"
+    static let NOTIFICATION_AD_NOT_FREE = "NOTIFICATION_AD_NOT_FREE"
     
 }
 
@@ -74,7 +76,8 @@ struct GluuConstants {
     class func isFirstLoad()          -> String { return GluuConstants.IS_FIRST_LOAD }
     class func securityPromptShown()  -> String { return GluuConstants.SECURITY_PROMPT_SHOWN }
     class func notificationPrompt()   -> String { return GluuConstants.NOTIFICATION_PROMPT }
-    
+    class func notificationAdFree()   -> String { return GluuConstants.NOTIFICATION_AD_FREE }
+    class func notificationAdNotFree()   -> String { return GluuConstants.NOTIFICATION_AD_NOT_FREE }
 }
 
 @objc class AlertV: NSObject {

@@ -30,17 +30,17 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    [self registerForPushNotifications];
+    
+    NSDictionary *remoteNotif = [launchOptions objectForKey: UIApplicationLaunchOptionsRemoteNotificationKey];
+    
+        //Accept push notification when app is not open
+    if (remoteNotif != nil) {
+        [[NSUserDefaults standardUserDefaults] setObject:remoteNotif forKey:NotificationRequest];
+    }
     
     // eric
-    /*
-    //For Push Notifications
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] > 7){//for ios 8 and higth
-        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
-        [[UIApplication sharedApplication] registerForRemoteNotifications];
-        [self registerForNotification];
-    }
-    NSDictionary *remoteNotif = [launchOptions objectForKey: UIApplicationLaunchOptionsRemoteNotificationKey];
-     
+     /*
     
     //Accept push notification when app is not open
     if (remoteNotif != nil) {
@@ -68,6 +68,17 @@
 }
 
 #pragma Push Notification
+
+- (void)registerForPushNotifications {
+        //For Push Notifications
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] > 7) { //for ios 8 and higth
+        
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+        [self registerForNotification];
+        
+    }
+}
 
 - (void)registerForNotification {
     
@@ -111,6 +122,9 @@
     token = [token stringByReplacingOccurrencesOfString:@">" withString:@""];
     token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
     [[TokenDevice sharedInstance] setDeviceToken:token];
+    
+    
+    
     NSLog(@"Token is: %@", token);
 }
 

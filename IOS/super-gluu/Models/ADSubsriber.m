@@ -89,6 +89,7 @@
                                                                 [[IAPShare sharedHelper].iap provideContentWithTransaction:trans];
                                                                 NSLog(@"SUCCESS %@",response);
                                                                 NSLog(@"Pruchases %@",[IAPShare sharedHelper].iap.purchasedProducts);
+                                                            
                                                                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_FREE object:nil];
                                                                 _isSubscribed = YES;
                                                             }

@@ -49,7 +49,6 @@ import LocalAuthentication
     
     func authenticateUser(completion: @escaping (Bool, String?) -> Void) {
         let context = LAContext()
-        var error: NSError?
         
         guard canEvaluatePolicy() else {
             return
