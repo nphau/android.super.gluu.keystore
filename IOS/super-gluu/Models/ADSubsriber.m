@@ -126,7 +126,6 @@
     }
     
     [IAPShare sharedHelper].iap.production = YES;
-//    [IAPShare sharedHelper].iap.production = NO;
     
     //Get receipt with info about subscription
     [[IAPShare sharedHelper].iap checkReceipt:[NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]] AndSharedSecret:SHARED_SECRET_KEY onCompletion:^(NSString *response, NSError *error) {
