@@ -104,6 +104,7 @@
     } else {
         [self initQRScanner];
     }
+    
 }
 
 - (void)setupDisplay {
@@ -689,6 +690,7 @@
 - (void)reader:(QRCodeReaderViewController *)reader didScanResult:(NSString *)result
 {
     if (result) {
+        NSLog(@"Did Scan Result");
         NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
         [self sendQRCodeRequest:jsonDictionary];

@@ -89,6 +89,7 @@
                                                                 [[IAPShare sharedHelper].iap provideContentWithTransaction:trans];
                                                                 NSLog(@"SUCCESS %@",response);
                                                                 NSLog(@"Pruchases %@",[IAPShare sharedHelper].iap.purchasedProducts);
+                                                            
                                                                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_FREE object:nil];
                                                                 _isSubscribed = YES;
                                                             }
@@ -125,6 +126,7 @@
     }
     
     [IAPShare sharedHelper].iap.production = YES;
+//    [IAPShare sharedHelper].iap.production = NO;
     
     //Get receipt with info about subscription
     [[IAPShare sharedHelper].iap checkReceipt:[NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]] AndSharedSecret:SHARED_SECRET_KEY onCompletion:^(NSString *response, NSError *error) {
