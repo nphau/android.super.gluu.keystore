@@ -55,7 +55,7 @@ public class AppFirebaseMessagingService extends FirebaseMessagingService {
                 intent.putExtra(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
                 LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
             } else {
-                sendNotification(getString(R.string.super_gluu_push_title), message);
+                sendNotification(getString(R.string.push_title), message);
             }
 
         }

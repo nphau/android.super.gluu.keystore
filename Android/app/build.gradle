@@ -110,6 +110,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    flavorDimensions "standard"
+
+    productFlavors {
+        gluu {
+            dimension "standard"
+        }
+        whiteLabel {
+            applicationId "com.whitelabel"
+            dimension "standard"
+        }
+    }
 }
 
 dependencies {
