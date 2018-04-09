@@ -19,7 +19,6 @@ android {
         versionName "3.1.2 - 2"
         multiDexEnabled true
         signingConfig signingConfigs.config
-        resValue "string", "versionNumber", "V" + versionName
     }
     dexOptions {
         javaMaxHeapSize "4g"
@@ -115,10 +114,12 @@ android {
     productFlavors {
         gluu {
             dimension "standard"
+            resValue "string", "versionNumber", "V" + defaultConfig.versionName
         }
         whiteLabel {
             applicationId "com.whitelabel"
             dimension "standard"
+            resValue "string", "versionNumber", "V1.0.0 - 1"
         }
     }
 }
