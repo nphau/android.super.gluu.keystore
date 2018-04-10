@@ -81,7 +81,7 @@ import butterknife.ButterKnife;
  *
  * Created by Yuriy Movchan on 12/28/2015.
  */
-public class MainNavDrawerActivity extends AppCompatActivity
+public class MainNavDrawerActivity extends BaseActivity
         implements OxPush2RequestListener, KeyHandleInfoFragment.OnDeleteKeyHandleListener,
         PinCodeFragment.PinCodeViewListener, ApproveDenyFragment.OnDeleteLogInfoListener {
 
@@ -175,6 +175,14 @@ public class MainNavDrawerActivity extends AppCompatActivity
         initIAPurchaseService();
 
         setupInitialFragment();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(!GluuApplication.wentThroughLauncherActivity()) {
+            newTaskToEntryActivity();
+        }
     }
 
     private void setupInitialFragment() {
@@ -310,16 +318,6 @@ public class MainNavDrawerActivity extends AppCompatActivity
         }
     }
 
-    public void loadPinCodeFragment() {
-        PinCodeFragment pinCodeFragment =
-                PinCodeFragment.newInstance(PinCodeFragment.EntryType.ENTERING_NORMAL);
-
-        fragmentManager
-                .beginTransaction()
-                .replace(R.id.main_frame_layout, pinCodeFragment)
-                .addToBackStack(null)
-                .commit();
-    }
 
     private ProcessManager createProcessManager(OxPush2Request oxPush2Request){
         ProcessManager processManager = new ProcessManager();
@@ -483,19 +481,6 @@ public class MainNavDrawerActivity extends AppCompatActivity
     public interface RequestProcessListener{
         void onApprove();
         void onDeny();
-    }
-
-    @Override
-    protected void onPause() {
-        GluuApplication.applicationPaused();
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        inAppPurchaseService.reloadPurchaseService();
-        GluuApplication.applicationResumed();
-        super.onResume();
     }
 
     @SuppressLint("ApplySharedPref")

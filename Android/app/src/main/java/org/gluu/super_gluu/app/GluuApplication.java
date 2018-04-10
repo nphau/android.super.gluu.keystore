@@ -1,38 +1,42 @@
 package org.gluu.super_gluu.app;
 
-import android.app.Application;
-import android.util.Log;
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.LifecycleObserver;
+import android.arch.lifecycle.OnLifecycleEvent;
+import android.arch.lifecycle.ProcessLifecycleOwner;
+import android.support.multidex.MultiDexApplication;
 
 /**
  * Created by nazaryavornytskyy on 5/9/16.
  */
-public class GluuApplication extends Application {
+public class GluuApplication extends MultiDexApplication implements LifecycleObserver {
 
     private static GluuApplication sInstance;
 
     private static boolean isAppInForeground;
+    private static boolean wentThroughLauncherActivity = false;
     public static boolean isTrustAllCertificates =false;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
+    }
 
     public static boolean isIsAppInForeground() {
         return isAppInForeground;
     }
 
-    public static void applicationResumed() {
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    void onAppForegrounded() {
         isAppInForeground = true;
-        Log.d(String.valueOf(GluuApplication.class), "APP RESUMED");
     }
 
-    public static void applicationPaused() {
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+    void onAppBackgrounded() {
         isAppInForeground = false;
-        Log.d(String.valueOf(GluuApplication.class), "APP PAUSED");
+        wentThroughLauncherActivity = false;
     }
-
-//    private final Billing mBilling = new Billing(this, new Billing.DefaultConfiguration() {
-//        @Override
-//        public String getPublicKey() {
-//            return "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyYw9xTiyhyjQ6mnWOwEWduDkOM84BkqHfN+jrAu82M0xBwg3RAorPwT/38sMcOZMAwcWudN0vjQo7uXAl2j4+N7BiMI2qlO2x33wY8fDvlN4ue54BBdZExZhTpkVEAmIm9cLCI3i+nOlUZgiwX6+sQOb5K+7q9WiNuSBDWRR2WDNOY7QmQdI1VzbHBPQoM00N9/0UDSFCw4LCRngm7ZeuW8AQMyYo6r5K3dy8m+Ys0JWGKA+xuQY4ZutSb47IYX4m7lzxbN0mqH9TLeA3V6audrhs5i0OYYKwbCd68NikB7Wco6L/HOzh1y6LoxIFXZ6M+vnZ6OLfTJuVmEfTOOhIwIDAQAB";//"Your public key, don't forget abput encryption";
-//        }
-//    });
 
     public GluuApplication() {
         sInstance = this;
@@ -42,7 +46,11 @@ public class GluuApplication extends Application {
         return sInstance;
     }
 
-//    public Billing getBilling() {
-//        return mBilling;
-//    }
+    public static void setWentThroughLauncherActivity(boolean wentThroughLauncherActivity) {
+        GluuApplication.wentThroughLauncherActivity = wentThroughLauncherActivity;
+    }
+
+    public static boolean wentThroughLauncherActivity() {
+        return wentThroughLauncherActivity;
+    }
 }

@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import org.gluu.super_gluu.app.GluuApplication;
@@ -28,7 +27,7 @@ import SuperGluu.app.R;
 /**
  * Created by nazaryavornytskyy on 3/22/16.
  */
-public class EntryActivity extends AppCompatActivity implements
+public class EntryActivity extends BaseActivity implements
         EntryActivityListener, PinCodeFragment.PinCodeViewListener, EntrySelectedListener {
 
     public static final String TIME_SERVER = "time-a.nist.gov";
@@ -40,6 +39,8 @@ public class EntryActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        GluuApplication.setWentThroughLauncherActivity(true);
 
         GluuApplication.isTrustAllCertificates = Settings.getSSLEnabled(this);
 
@@ -220,18 +221,6 @@ public class EntryActivity extends AppCompatActivity implements
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("appLockedTime", lockedTime);
         editor.commit();
-    }
-
-    @Override
-    protected void onPause() {
-        GluuApplication.applicationPaused();
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        GluuApplication.applicationResumed();
-        super.onResume();
     }
 
     @Override

@@ -3,7 +3,6 @@ package org.gluu.super_gluu.app.activities;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -11,6 +10,8 @@ import android.view.MenuItem;
 
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
+
+import org.gluu.super_gluu.app.GluuApplication;
 
 import SuperGluu.app.R;
 import butterknife.BindView;
@@ -20,7 +21,7 @@ import butterknife.ButterKnife;
  * Created by SamIAm on 3/28/18.
  */
 
-public class CustomBarcodeScannerActivity extends AppCompatActivity {
+public class CustomBarcodeScannerActivity extends BaseActivity {
 
     private CaptureManager capture;
 
@@ -71,6 +72,9 @@ public class CustomBarcodeScannerActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         capture.onResume();
+        if(!GluuApplication.wentThroughLauncherActivity()) {
+            newTaskToEntryActivity();
+        }
     }
 
     @Override
@@ -95,4 +99,5 @@ public class CustomBarcodeScannerActivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         return barcodeScannerView.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);
     }
+
 }
