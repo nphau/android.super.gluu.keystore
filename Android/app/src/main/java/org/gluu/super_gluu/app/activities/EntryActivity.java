@@ -40,8 +40,6 @@ public class EntryActivity extends BaseActivity implements
 
         setContentView(R.layout.activity_main);
 
-        GluuApplication.setWentThroughLauncherActivity(true);
-
         GluuApplication.isTrustAllCertificates = Settings.getSSLEnabled(this);
 
         // Check if we get push notification
@@ -66,6 +64,12 @@ public class EntryActivity extends BaseActivity implements
         Settings.setIsBackButtonVisibleForLog(getBaseContext(), false);
         Settings.setIsBackButtonVisibleForKey(getBaseContext(), false);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        GluuApplication.setWentThroughLauncherActivity(true);
     }
 
     private void userChossed(String answer, Intent intent){

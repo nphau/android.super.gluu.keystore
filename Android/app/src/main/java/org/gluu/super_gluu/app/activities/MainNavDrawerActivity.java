@@ -30,7 +30,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -40,7 +39,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import org.gluu.super_gluu.app.GluuApplication;
-import org.gluu.super_gluu.app.NotificationType;
 import org.gluu.super_gluu.app.ProcessManager;
 import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.app.fragment.ApproveDenyFragment;
@@ -180,7 +178,7 @@ public class MainNavDrawerActivity extends BaseActivity
     @Override
     protected void onResume() {
         super.onResume();
-        if(!GluuApplication.wentThroughLauncherActivity()
+        if(!GluuApplication.didAppGoThroughLauncherActivity()
                 && Settings.isAuthEnabled(MainNavDrawerActivity.this)) {
             newTaskToEntryActivity();
         }

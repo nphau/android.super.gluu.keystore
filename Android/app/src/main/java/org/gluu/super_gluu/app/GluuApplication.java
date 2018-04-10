@@ -15,7 +15,7 @@ public class GluuApplication extends MultiDexApplication implements LifecycleObs
 
     private static boolean isAppInForeground;
     private static boolean wentThroughLauncherActivity = false;
-    public static boolean isTrustAllCertificates =false;
+    public static boolean isTrustAllCertificates = false;
 
     @Override
     public void onCreate() {
@@ -50,7 +50,7 @@ public class GluuApplication extends MultiDexApplication implements LifecycleObs
         GluuApplication.wentThroughLauncherActivity = wentThroughLauncherActivity;
     }
 
-    public static boolean wentThroughLauncherActivity() {
+    public static boolean didAppGoThroughLauncherActivity() {
         return wentThroughLauncherActivity;
     }
 }

@@ -73,7 +73,7 @@ public class CustomBarcodeScannerActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         capture.onResume();
-        if(!GluuApplication.wentThroughLauncherActivity()
+        if(!GluuApplication.didAppGoThroughLauncherActivity()
                 && Settings.isAuthEnabled(CustomBarcodeScannerActivity.this)) {
             newTaskToEntryActivity();
         }
