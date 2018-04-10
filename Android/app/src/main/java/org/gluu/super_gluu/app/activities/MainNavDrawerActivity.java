@@ -180,7 +180,8 @@ public class MainNavDrawerActivity extends BaseActivity
     @Override
     protected void onResume() {
         super.onResume();
-        if(!GluuApplication.wentThroughLauncherActivity()) {
+        if(!GluuApplication.wentThroughLauncherActivity()
+                && Settings.isAuthEnabled(MainNavDrawerActivity.this)) {
             newTaskToEntryActivity();
         }
     }

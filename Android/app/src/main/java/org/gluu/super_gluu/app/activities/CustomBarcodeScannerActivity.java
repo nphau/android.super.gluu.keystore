@@ -12,6 +12,7 @@ import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 
 import org.gluu.super_gluu.app.GluuApplication;
+import org.gluu.super_gluu.app.settings.Settings;
 
 import SuperGluu.app.R;
 import butterknife.BindView;
@@ -72,7 +73,8 @@ public class CustomBarcodeScannerActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         capture.onResume();
-        if(!GluuApplication.wentThroughLauncherActivity()) {
+        if(!GluuApplication.wentThroughLauncherActivity()
+                && Settings.isAuthEnabled(CustomBarcodeScannerActivity.this)) {
             newTaskToEntryActivity();
         }
     }

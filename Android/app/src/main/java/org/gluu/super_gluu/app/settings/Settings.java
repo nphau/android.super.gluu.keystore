@@ -16,6 +16,11 @@ public class Settings {
     private Boolean isForLogs = false;
     private Boolean isForKeys = false;
 
+
+    public static boolean isAuthEnabled(Context context) {
+        return getFingerprintEnabled(context) || getPinCodeEnabled(context);
+    }
+
     //Pin code Settings
     public static void setPinCodeEnabled(Context context, Boolean isEnabled) {
         SharedPreferences preferences = context.getSharedPreferences(PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
