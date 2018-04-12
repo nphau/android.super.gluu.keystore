@@ -70,7 +70,7 @@ public class AppFirebaseMessagingService extends FirebaseMessagingService {
         // message, here is where that should be initiated. See sendNotification method below.
     }
 
-    public void sendNotification(String title, String message) {
+    private void sendNotification(String title, String message) {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         PendingIntent denyIntent = createPendingIntent(DENY_TYPE, message);
         PendingIntent approveIntent = createPendingIntent(APPROVE_TYPE, message);
