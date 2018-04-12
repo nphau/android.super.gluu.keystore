@@ -22,7 +22,6 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.util.Pair;
@@ -50,7 +49,6 @@ import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.app.customview.CustomToast;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
-import org.gluu.super_gluu.app.services.FingerPrintManager;
 import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.model.OxPush2Request;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
@@ -371,8 +369,6 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
 
 
     private void showDialog(String message){
-        Log.i("boogie", message);
-
         Activity activity = getActivity();
         Pair<String, String> titleMessageText = getTitleBasedOnMessage(message);
 
@@ -420,14 +416,7 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
         final SharedPreferences preferences = context.getSharedPreferences("oxPushSettings", Context.MODE_PRIVATE);
         final String requestString = preferences.getString("oxRequest", "null");
         if (!requestString.equalsIgnoreCase("null")) {
-            //First need to check is app protected by Fingerprint
-            Boolean isFingerprint = Settings.getFingerprintEnabled(context);
-            if (isFingerprint){
-                FingerPrintManager fingerPrintManager = new FingerPrintManager((AppCompatActivity) getActivity());
-                fingerPrintManager.onFingerPrint(isSuccess -> makeOxRequest(preferences, requestString));
-            } else {
-                makeOxRequest(preferences, requestString);
-            }
+            makeOxRequest(preferences, requestString);
         }
     }
 

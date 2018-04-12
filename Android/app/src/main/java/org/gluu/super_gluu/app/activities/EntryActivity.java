@@ -88,10 +88,12 @@ public class EntryActivity extends BaseActivity implements
         if (isAppLocked) {
             loadLockedFragment(true);
         } else {
-            checkPinCodeEnabled();
+            advanceToNextScreen();
         }
-        NotificationManager nMgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        nMgr.cancel(MainNavDrawerActivity.MESSAGE_NOTIFICATION_ID);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if(notificationManager != null) {
+            notificationManager.cancel(MainNavDrawerActivity.MESSAGE_NOTIFICATION_ID);
+        }
     }
 
 
