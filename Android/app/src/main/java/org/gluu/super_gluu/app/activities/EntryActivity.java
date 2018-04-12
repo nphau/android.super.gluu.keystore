@@ -115,19 +115,6 @@ public class EntryActivity extends BaseActivity implements
         fragmentTransaction.commit();
     }
 
-    public void checkPinCodeEnabled() {
-        if (Settings.getFirstLoad(getApplicationContext())) {
-            Settings.saveFirstLoad(getApplicationContext());
-            loadPinCodeFragment();
-        } else {
-            if (Settings.getPinCodeEnabled(getApplicationContext())) {
-                loadPinCodeFragment();
-            } else {
-                loadNavDrawerActivity();
-            }
-        }
-    }
-
     public void advanceToNextScreen() {
         if (Settings.getFirstLoad(getApplicationContext())) {
             Settings.saveFirstLoad(getApplicationContext());
