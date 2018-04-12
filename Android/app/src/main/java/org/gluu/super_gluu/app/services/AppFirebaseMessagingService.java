@@ -74,22 +74,12 @@ public class AppFirebaseMessagingService extends FirebaseMessagingService {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         PendingIntent denyIntent = createPendingIntent(DENY_TYPE, message);
         PendingIntent approveIntent = createPendingIntent(APPROVE_TYPE, message);
+        PendingIntent mainPendingIntent = createPendingIntent(NO_ACTION_TYPE, message);
 
         String contentText = getContentText(message);
 
-        Intent mainIntent = new Intent(this, EntryActivity.class);
-        mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        mainIntent.putExtra(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
-        mainIntent.setAction(PUSH_NO_ACTION);
-        Bundle noBundle = new Bundle();
-        noBundle.putInt("requestType", NO_ACTION_TYPE);
-        mainIntent.putExtras(noBundle);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,0, mainIntent,0);
-
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setContentIntent(pendingIntent)
+                .setContentIntent(mainPendingIntent)
                 .setSmallIcon(R.drawable.push_icon)
                 .setSound(defaultSoundUri)
                 .setContentTitle(title)
@@ -126,17 +116,23 @@ public class AppFirebaseMessagingService extends FirebaseMessagingService {
         Intent intent = new Intent(this, EntryActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
-        if (type == DENY_TYPE){
-            intent.setAction(DENY_ACTION);
-        } else if(type == APPROVE_TYPE) {
-            intent.setAction(APPROVE_ACTION);
+
+        switch (type) {
+            case DENY_TYPE:
+                intent.setAction(DENY_ACTION);
+                break;
+            case APPROVE_TYPE:
+                intent.setAction(APPROVE_ACTION);
+                break;
+            case NO_ACTION_TYPE:
+                intent.setAction(PUSH_NO_ACTION);
+                break;
         }
+
         Bundle noBundle = new Bundle();
         noBundle.putInt("requestType", type);
         intent.putExtras(noBundle);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, PendingIntent.FLAG_ONE_SHOT);
-
-        return pendingIntent;
+        return PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, PendingIntent.FLAG_ONE_SHOT);
     }
 
     private void setPushData(String message){

@@ -45,6 +45,7 @@ import com.google.zxing.integration.android.IntentResult;
 
 import org.gluu.super_gluu.app.ProcessManager;
 import org.gluu.super_gluu.app.activities.CustomBarcodeScannerActivity;
+import org.gluu.super_gluu.app.activities.EntryActivity;
 import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.app.customview.CustomToast;
@@ -431,7 +432,7 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
     }
 
     private void makeOxRequest(SharedPreferences preferences, String requestString){
-     if(preferences.getString("userChoose", "null").equalsIgnoreCase("no action")) {
+     if(preferences.getString("userChoose", "null").equalsIgnoreCase(EntryActivity.NO_ACTION_PUSH)) {
 
          String message = preferences.getString("oxRequest", null);
 
@@ -450,13 +451,13 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
          Settings.setPushDataEmpty(getContext());
          final OxPush2Request oxPush2Request = new Gson().fromJson(requestString, OxPush2Request.class);
          final ProcessManager processManager = createProcessManager(oxPush2Request);
-         if (preferences.getString("userChoose", "null").equalsIgnoreCase("deny")) {
+         if (preferences.getString("userChoose",  "null").equalsIgnoreCase(EntryActivity.DENY_PUSH)) {
              showToastWithText(context.getString(R.string.process_deny_start));
              processManager.onOxPushRequest(true);
              return;
          }
 
-         if (preferences.getString("userChoose", "null").equalsIgnoreCase("approve")) {
+         if (preferences.getString("userChoose", "null").equalsIgnoreCase(EntryActivity.APPROVE_PUSH)) {
              showToastWithText(context.getString(R.string.process_authentication_start));
              processManager.onOxPushRequest(false);
              return;

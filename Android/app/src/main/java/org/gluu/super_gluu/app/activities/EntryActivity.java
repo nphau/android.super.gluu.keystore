@@ -33,6 +33,10 @@ public class EntryActivity extends BaseActivity implements
 
     public static final String TIME_SERVER = "time-a.nist.gov";
 
+    public static String APPROVE_PUSH = "approve";
+    public static String DENY_PUSH = "deny";
+    public static String NO_ACTION_PUSH = "no action";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,13 +52,13 @@ public class EntryActivity extends BaseActivity implements
 
         if(intent.getAction() != null) {
             if (intent.getAction().equalsIgnoreCase(AppFirebaseMessagingService.APPROVE_ACTION)) {
-                userComingFromPush("approve", intent);
+                userComingFromPush(APPROVE_PUSH, intent);
                 return;
             } else if (intent.getAction().equalsIgnoreCase(AppFirebaseMessagingService.DENY_ACTION)) {
-                userComingFromPush("deny", intent);
+                userComingFromPush(DENY_PUSH, intent);
                 return;
             } else if (intent.getAction().equalsIgnoreCase(AppFirebaseMessagingService.PUSH_NO_ACTION)) {
-                userComingFromPush("no action", intent);
+                userComingFromPush(NO_ACTION_PUSH, intent);
                 return;
             }
         }
