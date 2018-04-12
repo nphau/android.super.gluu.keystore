@@ -91,6 +91,7 @@ public class MainNavDrawerActivity extends BaseActivity
     private static final int REQUEST_CAMERA = 0;
 
     public static final String QR_CODE_PUSH_NOTIFICATION_MESSAGE = MainNavDrawerActivity.class.getPackage().getName() + ".QR_CODE_PUSH_NOTIFICATION_MESSAGE";
+    public static final String VIBRATE_AND_RINGTONE = "VIBRATE_AND_PLAY_RINGTONE";
     public static final String QR_CODE_PUSH_NOTIFICATION = "QR_CODE_PUSH_NOTIFICATION";
     public static final int MESSAGE_NOTIFICATION_ID = 444555;
 
@@ -121,19 +122,26 @@ public class MainNavDrawerActivity extends BaseActivity
                 }
             }
 
+            boolean vibrateAndPlayRingtone = intent.getBooleanExtra(MainNavDrawerActivity.VIBRATE_AND_RINGTONE, true);
+
             // Get extra data included in the Intent
             String message = intent.getStringExtra(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE);
             final OxPush2Request oxPush2Request = new Gson().fromJson(message, OxPush2Request.class);
             onQrRequest(oxPush2Request);
             //play sound and vibrate
-            try {
-                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                Ringtone r = RingtoneManager.getRingtone(context, notification);
-                r.play();
-            } catch (Exception e) {
-                e.printStackTrace();
+            if(vibrateAndPlayRingtone) {
+                try {
+                    Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                    Ringtone r = RingtoneManager.getRingtone(context, notification);
+                    r.play();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Vibrator vibrator = (Vibrator) getApplication().getSystemService(Context.VIBRATOR_SERVICE);
+                if(vibrator != null) {
+                    vibrator.vibrate(800);
+                }
             }
-            ((Vibrator)getApplication().getSystemService(Context.VIBRATOR_SERVICE)).vibrate(800);
         }
     };
 

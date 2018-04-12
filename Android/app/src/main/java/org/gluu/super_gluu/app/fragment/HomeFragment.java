@@ -435,20 +435,13 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
      if(preferences.getString("userChoose", "null").equalsIgnoreCase(EntryActivity.NO_ACTION_PUSH)) {
 
          String message = preferences.getString("oxRequest", null);
-
-         SharedPreferences.Editor editor = preferences.edit();
-         editor.putString("oxRequest", null);
-         editor.apply();
-         Settings.setPushDataEmpty(getContext());
-
+         clearPushAndOxData(preferences);
          Intent intent = new Intent(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION);
          intent.putExtra(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
+         intent.putExtra(MainNavDrawerActivity.VIBRATE_AND_RINGTONE, false);
          LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
      } else {
-         SharedPreferences.Editor editor = preferences.edit();
-         editor.putString("oxRequest", null);
-         editor.apply();
-         Settings.setPushDataEmpty(getContext());
+         clearPushAndOxData(preferences);
          final OxPush2Request oxPush2Request = new Gson().fromJson(requestString, OxPush2Request.class);
          final ProcessManager processManager = createProcessManager(oxPush2Request);
          if (preferences.getString("userChoose",  "null").equalsIgnoreCase(EntryActivity.DENY_PUSH)) {
@@ -463,6 +456,13 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
              return;
          }
      }
+    }
+
+    private void clearPushAndOxData(SharedPreferences preferences) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("oxRequest", null);
+        editor.apply();
+        Settings.setPushDataEmpty(getContext());
     }
 
     private ProcessManager createProcessManager(OxPush2Request oxPush2Request){
