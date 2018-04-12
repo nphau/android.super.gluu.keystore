@@ -20,6 +20,8 @@
     <string name="warning_trust_all_certificate">Enable this option only during development. When enabled, &appNameFull; will trust self-signed certificates.\n\nIf the certificate is signed by a certificate authority (CA) trust all should be disabled.</string>
     <string name="push_title">&appNameFull;</string>
     <string name="push_login_format">&appNameFull; login request to: %s</string>
+    <string name="channel_name">&appNameFull; Channel</string>
+    <string name="channel_description">&appNameFull; Authentication</string>
 
 
     <string name="label_user_name">Username</string>
@@ -247,6 +249,5 @@
     <string name="fido_failure">Invalid Token</string>
     <string name="challenge">Challenge</string>
     <string name="decline">Decline</string>
-
 
 </resources>

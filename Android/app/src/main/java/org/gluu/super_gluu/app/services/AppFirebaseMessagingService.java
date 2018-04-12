@@ -70,7 +70,7 @@ public class AppFirebaseMessagingService extends FirebaseMessagingService {
         // message, here is where that should be initiated. See sendNotification method below.
     }
 
-    private void sendNotification(String title, String message) {
+    public void sendNotification(String title, String message) {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         PendingIntent denyIntent = createPendingIntent(DENY_TYPE, message);
         PendingIntent approveIntent = createPendingIntent(APPROVE_TYPE, message);
@@ -78,7 +78,7 @@ public class AppFirebaseMessagingService extends FirebaseMessagingService {
 
         String contentText = getContentText(message);
 
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, GluuApplication.CHANNEL_ID)
                 .setContentIntent(mainPendingIntent)
                 .setSmallIcon(R.drawable.push_icon)
                 .setSound(defaultSoundUri)
@@ -88,13 +88,16 @@ public class AppFirebaseMessagingService extends FirebaseMessagingService {
                         .bigText(contentText))
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setAutoCancel(true)
+                .setChannelId(GluuApplication.CHANNEL_ID)
                 .setVibrate(new long[]{ 100, 250, 100, 250, 100, 250})
                 .setPriority(Notification.PRIORITY_MAX)
                 .addAction(R.drawable.deny_icon_push, getString(R.string.deny), denyIntent)
                 .addAction(R.drawable.approve_icon_push, getString(R.string.approve), approveIntent);
 
+
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
         setPushData(message);
         if(notificationManager != null) {
             notificationManager.notify(MainNavDrawerActivity.MESSAGE_NOTIFICATION_ID, notificationBuilder.build());
