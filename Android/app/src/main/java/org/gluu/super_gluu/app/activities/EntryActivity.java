@@ -19,6 +19,7 @@ import org.gluu.super_gluu.app.fragment.SecureEntryFragment;
 import org.gluu.super_gluu.app.fragment.SecureEntrySetupFragment;
 import org.gluu.super_gluu.app.listener.EntryActivityListener;
 import org.gluu.super_gluu.app.listener.EntrySelectedListener;
+import org.gluu.super_gluu.app.services.AppFirebaseMessagingService;
 import org.gluu.super_gluu.app.services.FingerPrintManager;
 import org.gluu.super_gluu.app.settings.Settings;
 
@@ -31,8 +32,6 @@ public class EntryActivity extends BaseActivity implements
         EntryActivityListener, PinCodeFragment.PinCodeViewListener, EntrySelectedListener {
 
     public static final String TIME_SERVER = "time-a.nist.gov";
-    private static final String DENY_ACTION = "DENY_ACTION";
-    private static final String APPROVE_ACTION = "APPROVE_ACTION";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +45,18 @@ public class EntryActivity extends BaseActivity implements
         Intent intent = getIntent();
         Boolean isAppLocked = Settings.isAppLocked(getApplicationContext());
         //Check if user tap on Approve/Deny button or just on push body
-        if (intent.getAction() != null && intent.getAction().equalsIgnoreCase(APPROVE_ACTION)){
-            userChossed("approve", intent);
-            return;
-        } else if (intent.getAction() != null && intent.getAction().equalsIgnoreCase(DENY_ACTION)){
-            userChossed("deny", intent);
-            return;
+
+        if(intent.getAction() != null) {
+            if (intent.getAction().equalsIgnoreCase(AppFirebaseMessagingService.APPROVE_ACTION)) {
+                userComingFromPush("approve", intent);
+                return;
+            } else if (intent.getAction().equalsIgnoreCase(AppFirebaseMessagingService.DENY_ACTION)) {
+                userComingFromPush("deny", intent);
+                return;
+            } else if (intent.getAction().equalsIgnoreCase(AppFirebaseMessagingService.PUSH_NO_ACTION)) {
+                userComingFromPush("no action", intent);
+                return;
+            }
         }
 
         if(isAppLocked) {
@@ -72,7 +77,7 @@ public class EntryActivity extends BaseActivity implements
         GluuApplication.setWentThroughLauncherActivity(true);
     }
 
-    private void userChossed(String answer, Intent intent){
+    private void userComingFromPush(String answer, Intent intent){
         Boolean isAppLocked = Settings.isAppLocked(getApplicationContext());
         String requestJson = intent.getStringExtra(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE);
         saveUserDecision(answer, requestJson);

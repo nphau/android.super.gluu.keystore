@@ -423,12 +423,7 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
             Boolean isFingerprint = Settings.getFingerprintEnabled(context);
             if (isFingerprint){
                 FingerPrintManager fingerPrintManager = new FingerPrintManager((AppCompatActivity) getActivity());
-                fingerPrintManager.onFingerPrint(new FingerPrintManager.FingerPrintManagerCallback() {
-                    @Override
-                    public void fingerprintResult(Boolean isSuccess) {
-                        makeOxRequest(preferences, requestString);
-                    }
-                });
+                fingerPrintManager.onFingerPrint(isSuccess -> makeOxRequest(preferences, requestString));
             } else {
                 makeOxRequest(preferences, requestString);
             }
@@ -436,22 +431,37 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
     }
 
     private void makeOxRequest(SharedPreferences preferences, String requestString){
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("oxRequest", null);
-        editor.apply();
-        Settings.setPushDataEmpty(getContext());
-        final OxPush2Request oxPush2Request = new Gson().fromJson(requestString, OxPush2Request.class);
-        final ProcessManager processManager = createProcessManager(oxPush2Request);
-        if (preferences.getString("userChoose", "null").equalsIgnoreCase("deny")) {
-            showToastWithText(context.getString(R.string.process_deny_start));
-            processManager.onOxPushRequest(true);
-            return;
-        }
-        if (preferences.getString("userChoose", "null").equalsIgnoreCase("approve")) {
-            showToastWithText(context.getString(R.string.process_authentication_start));
-            processManager.onOxPushRequest(false);
-            return;
-        }
+     if(preferences.getString("userChoose", "null").equalsIgnoreCase("no action")) {
+
+         String message = preferences.getString("oxRequest", null);
+
+         SharedPreferences.Editor editor = preferences.edit();
+         editor.putString("oxRequest", null);
+         editor.apply();
+         Settings.setPushDataEmpty(getContext());
+
+         Intent intent = new Intent(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION);
+         intent.putExtra(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
+         LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
+     } else {
+         SharedPreferences.Editor editor = preferences.edit();
+         editor.putString("oxRequest", null);
+         editor.apply();
+         Settings.setPushDataEmpty(getContext());
+         final OxPush2Request oxPush2Request = new Gson().fromJson(requestString, OxPush2Request.class);
+         final ProcessManager processManager = createProcessManager(oxPush2Request);
+         if (preferences.getString("userChoose", "null").equalsIgnoreCase("deny")) {
+             showToastWithText(context.getString(R.string.process_deny_start));
+             processManager.onOxPushRequest(true);
+             return;
+         }
+
+         if (preferences.getString("userChoose", "null").equalsIgnoreCase("approve")) {
+             showToastWithText(context.getString(R.string.process_authentication_start));
+             processManager.onOxPushRequest(false);
+             return;
+         }
+     }
     }
 
     private ProcessManager createProcessManager(OxPush2Request oxPush2Request){

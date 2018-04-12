@@ -31,8 +31,14 @@ import SuperGluu.app.R;
 public class AppFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "FBMessagingService";
-    private static final String DENY_ACTION = "DENY_ACTION";
-    private static final String APPROVE_ACTION = "APPROVE_ACTION";
+    public static final String DENY_ACTION = "DENY_ACTION";
+    public static final String APPROVE_ACTION = "APPROVE_ACTION";
+    public static final String PUSH_NO_ACTION = "PUSH_ACTION";
+
+    public static final int APPROVE_TYPE = 10;
+    public static final int DENY_TYPE = 20;
+    public static final int NO_ACTION_TYPE = 30;
+
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -66,15 +72,21 @@ public class AppFirebaseMessagingService extends FirebaseMessagingService {
 
     private void sendNotification(String title, String message) {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        PendingIntent denyIntent = createPendingIntent(10, message);
-        PendingIntent approveIntent = createPendingIntent(20, message);
+        PendingIntent denyIntent = createPendingIntent(DENY_TYPE, message);
+        PendingIntent approveIntent = createPendingIntent(APPROVE_TYPE, message);
 
         String contentText = getContentText(message);
 
         Intent mainIntent = new Intent(this, EntryActivity.class);
         mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                 | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,mainIntent,0);
+        mainIntent.putExtra(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
+        mainIntent.setAction(PUSH_NO_ACTION);
+        Bundle noBundle = new Bundle();
+        noBundle.putInt("requestType", NO_ACTION_TYPE);
+        mainIntent.putExtras(noBundle);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,0, mainIntent,0);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setContentIntent(pendingIntent)
@@ -94,7 +106,9 @@ public class AppFirebaseMessagingService extends FirebaseMessagingService {
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         setPushData(message);
-        notificationManager.notify(MainNavDrawerActivity.MESSAGE_NOTIFICATION_ID, notificationBuilder.build());
+        if(notificationManager != null) {
+            notificationManager.notify(MainNavDrawerActivity.MESSAGE_NOTIFICATION_ID, notificationBuilder.build());
+        }
     }
 
     private String getContentText(String message) {
@@ -112,9 +126,9 @@ public class AppFirebaseMessagingService extends FirebaseMessagingService {
         Intent intent = new Intent(this, EntryActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
-        if (type == 10){
+        if (type == DENY_TYPE){
             intent.setAction(DENY_ACTION);
-        } else {
+        } else if(type == APPROVE_TYPE) {
             intent.setAction(APPROVE_ACTION);
         }
         Bundle noBundle = new Bundle();
