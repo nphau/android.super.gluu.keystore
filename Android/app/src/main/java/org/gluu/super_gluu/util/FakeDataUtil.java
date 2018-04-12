@@ -1,15 +1,26 @@
 package org.gluu.super_gluu.util;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.support.v4.app.NotificationCompat;
 
-import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
+import org.gluu.super_gluu.app.GluuApplication;
 import org.gluu.super_gluu.app.LogState;
+import org.gluu.super_gluu.app.activities.EntryActivity;
+import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.model.LogInfo;
 import org.gluu.super_gluu.model.OxPush2Request;
 import org.gluu.super_gluu.u2f.v2.model.TokenEntry;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import SuperGluu.app.R;
 
 /**
  * Created by SamIAm on 3/14/18.
@@ -41,6 +52,47 @@ public abstract class FakeDataUtil {
         oxPush2Request.setLocationCity("United%20States%2C%20Texas%2C%20Houston");
         oxPush2Request.setLocationIP("38.142.29.4");
         return oxPush2Request;
+    }
+
+    public static String getFakePushJsonString() {
+        return "{\"app\":\"https://cred3.gluu.org/cred-manager\",\"method\":\"authenticate\",\"req_ip\":\"72.48.183.102\",\"created\":\"2018-04-12T17:47:20.838000\",\"issuer\":\"https://cred3.gluu.org\",\"req_loc\":\"United%20States%2C%20Texas%2C%20Austin\",\"state\":\"9d7b1684-b3ab-415a-9459-d2c878bb5c55\",\"username\":\"eric2\"}";
+    }
+
+
+    public static void sendNotification(Context context) {
+
+        NotificationManager notificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        String contentText = "Example Content Text";
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, GluuApplication.CHANNEL_ID)
+                .setContentIntent(getFakePendingIntent(context))
+                .setSmallIcon(R.drawable.push_icon)
+                .setSound(defaultSoundUri)
+                .setContentTitle("Example Title")
+                .setContentText(contentText)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(contentText))
+                .setChannelId(GluuApplication.CHANNEL_ID)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setAutoCancel(true)
+                .setVibrate(new long[]{ 100, 250, 100, 250, 100, 250})
+                .setPriority(Notification.PRIORITY_MAX)
+                .addAction(R.drawable.deny_icon_push, "Deny", getFakePendingIntent(context))
+                .addAction(R.drawable.approve_icon_push, "Approve", getFakePendingIntent(context));
+
+        if(notificationManager != null) {
+            notificationManager.notify(MainNavDrawerActivity.MESSAGE_NOTIFICATION_ID, notificationBuilder.build());
+        }
+    }
+
+    private static PendingIntent getFakePendingIntent(Context context) {
+        Intent intent = new Intent();
+        intent.setClass(context, EntryActivity.class);
+        return PendingIntent.getActivity(context, (int) System.currentTimeMillis(), intent, PendingIntent.FLAG_ONE_SHOT);
     }
 
     public static List<TokenEntry> getFakeListOfTokens(int size) {
