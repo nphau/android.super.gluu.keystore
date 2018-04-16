@@ -1,5 +1,6 @@
 package org.gluu.super_gluu.app.settings;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -150,15 +151,40 @@ public class Settings {
 
     //END Pin code Settings
 
-    public static void setPushData(Context context, String pushData) {
-        SharedPreferences preferences = context.getSharedPreferences("PushNotification", Context.MODE_PRIVATE);
+    @SuppressLint("ApplySharedPref")
+    public static void setPushOxData(Context context, String pushData) {
+        SharedPreferences preferences = context.getSharedPreferences(Constant.OX_PUSH_SETTINGS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("PushData", pushData);
+        editor.putString(Constant.OX_REQUEST_DATA, pushData);
         editor.commit();
     }
 
-    public static void setPushDataEmpty(Context context) {
-        setPushData(context, null);
+    public static String getOxRequestData(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(Constant.OX_PUSH_SETTINGS, Context.MODE_PRIVATE);
+        return preferences.getString(Constant.OX_REQUEST_DATA, null);
+    }
+
+    public static boolean isAuthPending(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(Constant.OX_PUSH_SETTINGS, Context.MODE_PRIVATE);
+        return preferences.getString(Constant.OX_REQUEST_DATA, null) != null;
+    }
+
+    public static String getUserChoice(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(Constant.OX_PUSH_SETTINGS, Context.MODE_PRIVATE);
+        return preferences.getString(Constant.USER_CHOICE, null);
+    }
+
+    public static void clearPushOxData(Context context) {
+        setPushOxData(context, null);
+        setUserChoice(context,null);
+    }
+
+    @SuppressLint("ApplySharedPref")
+    public static void setUserChoice(Context context, String userChoice) {
+        SharedPreferences preferences = context.getSharedPreferences(Constant.OX_PUSH_SETTINGS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(Constant.USER_CHOICE, userChoice);
+        editor.apply();
     }
 
     //SSL Connection Settings
@@ -286,5 +312,10 @@ public class Settings {
         public static final String IS_PIN_ENABLED = "isPinEnabled";
         public static final String PIN_CODE_ATTEMPTS = "pinCodeAttempts";
         public static final String CURRENT_PIN_CODE_ATTEMPTS = "currentPinCodeAttempts";
+
+
+        public static final String OX_PUSH_SETTINGS = "oxPushSettings";
+        public static final String USER_CHOICE = "UserChoice";
+        public static final String OX_REQUEST_DATA = "OxRequestData";
     }
 }

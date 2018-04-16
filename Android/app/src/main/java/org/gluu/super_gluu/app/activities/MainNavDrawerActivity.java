@@ -278,7 +278,7 @@ public class MainNavDrawerActivity extends BaseActivity
             return;
         }
 
-        Settings.setPushDataEmpty(getApplicationContext());
+        Settings.clearPushOxData(getApplicationContext());
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         if(notificationManager != null) {
             notificationManager.cancel(MainNavDrawerActivity.MESSAGE_NOTIFICATION_ID);

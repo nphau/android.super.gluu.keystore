@@ -5,7 +5,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +19,7 @@ import com.google.gson.Gson;
 import org.gluu.super_gluu.app.GluuApplication;
 import org.gluu.super_gluu.app.activities.EntryActivity;
 import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
+import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.model.OxPush2Request;
 import org.gluu.super_gluu.util.Utils;
 
@@ -61,6 +61,7 @@ public class AppFirebaseMessagingService extends FirebaseMessagingService {
                 intent.putExtra(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
                 LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
             } else {
+                Settings.setPushOxData(getApplicationContext(), message);
                 sendNotification(getString(R.string.push_title), message);
             }
 
@@ -72,9 +73,9 @@ public class AppFirebaseMessagingService extends FirebaseMessagingService {
 
     private void sendNotification(String title, String message) {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        PendingIntent denyIntent = createPendingIntent(DENY_TYPE, message);
-        PendingIntent approveIntent = createPendingIntent(APPROVE_TYPE, message);
-        PendingIntent mainPendingIntent = createPendingIntent(NO_ACTION_TYPE, message);
+        PendingIntent denyIntent = createPendingIntent(DENY_TYPE);
+        PendingIntent approveIntent = createPendingIntent(APPROVE_TYPE);
+        PendingIntent mainPendingIntent = createPendingIntent(NO_ACTION_TYPE);
 
         String contentText = getContentText(message);
 
@@ -98,7 +99,6 @@ public class AppFirebaseMessagingService extends FirebaseMessagingService {
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        setPushData(message);
         if(notificationManager != null) {
             notificationManager.notify(MainNavDrawerActivity.MESSAGE_NOTIFICATION_ID, notificationBuilder.build());
         }
@@ -115,10 +115,9 @@ public class AppFirebaseMessagingService extends FirebaseMessagingService {
 
     }
 
-    private PendingIntent createPendingIntent(int type, String message){
+    private PendingIntent createPendingIntent(int type){
         Intent intent = new Intent(this, EntryActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
 
         switch (type) {
             case DENY_TYPE:
@@ -138,10 +137,4 @@ public class AppFirebaseMessagingService extends FirebaseMessagingService {
         return PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, PendingIntent.FLAG_ONE_SHOT);
     }
 
-    private void setPushData(String message){
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("PushNotification", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("PushData", message);
-        editor.commit();
-    }
 }

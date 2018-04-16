@@ -52,13 +52,13 @@ public class EntryActivity extends BaseActivity implements
 
         if(intent.getAction() != null) {
             if (intent.getAction().equalsIgnoreCase(AppFirebaseMessagingService.APPROVE_ACTION)) {
-                userComingFromPush(APPROVE_PUSH, intent);
+                userComingFromPush(APPROVE_PUSH);
                 return;
             } else if (intent.getAction().equalsIgnoreCase(AppFirebaseMessagingService.DENY_ACTION)) {
-                userComingFromPush(DENY_PUSH, intent);
+                userComingFromPush(DENY_PUSH);
                 return;
             } else if (intent.getAction().equalsIgnoreCase(AppFirebaseMessagingService.PUSH_NO_ACTION)) {
-                userComingFromPush(NO_ACTION_PUSH, intent);
+                userComingFromPush(NO_ACTION_PUSH);
                 return;
             }
         }
@@ -81,10 +81,9 @@ public class EntryActivity extends BaseActivity implements
         GluuApplication.setWentThroughLauncherActivity(true);
     }
 
-    private void userComingFromPush(String answer, Intent intent){
+    private void userComingFromPush(String answer){
         Boolean isAppLocked = Settings.isAppLocked(getApplicationContext());
-        String requestJson = intent.getStringExtra(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE);
-        saveUserDecision(answer, requestJson);
+        Settings.setUserChoice(EntryActivity.this, answer);
         if (isAppLocked) {
             loadLockedFragment(true);
         } else {
@@ -165,13 +164,8 @@ public class EntryActivity extends BaseActivity implements
         fragmentTransaction.commit();
     }
 
-    public void saveUserDecision(String userChoose, String oxRequest) {
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("oxPushSettings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("userChoose", userChoose);
-        editor.putString("oxRequest", oxRequest);
-        editor.apply();
-        Settings.setPushData(getApplicationContext(), null);
+    public void saveUserDecision(String userChoice, String oxRequest) {
+        Settings.setUserChoice(EntryActivity.this, userChoice);
     }
 
     @Override

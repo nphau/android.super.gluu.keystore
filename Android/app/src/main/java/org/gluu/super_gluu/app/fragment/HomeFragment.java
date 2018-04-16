@@ -12,7 +12,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
@@ -386,45 +385,34 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
     }
 
     public void checkIsPush(){
-        final SharedPreferences preferences = context.getSharedPreferences("oxPushSettings", Context.MODE_PRIVATE);
-        final String requestString = preferences.getString("oxRequest", "null");
-        if (!requestString.equalsIgnoreCase("null")) {
-            makeOxRequest(preferences, requestString);
+        if(Settings.isAuthPending(getContext())) {
+            makeOxRequest();
         }
     }
 
-    private void makeOxRequest(SharedPreferences preferences, String requestString){
-     if(preferences.getString("userChoose", "null").equalsIgnoreCase(EntryActivity.NO_ACTION_PUSH)) {
+    private void makeOxRequest(){
+        String requestDataString = Settings.getOxRequestData(context);
+        String userChoice = Settings.getUserChoice(context);
 
-         String message = preferences.getString("oxRequest", null);
-         clearPushAndOxData(preferences);
-         Intent intent = new Intent(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION);
-         intent.putExtra(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
-         intent.putExtra(MainNavDrawerActivity.VIBRATE_AND_RINGTONE, false);
-         LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
-     } else {
-         clearPushAndOxData(preferences);
-         final OxPush2Request oxPush2Request = new Gson().fromJson(requestString, OxPush2Request.class);
-         final ProcessManager processManager = createProcessManager(oxPush2Request);
-         if (preferences.getString("userChoose",  "null").equalsIgnoreCase(EntryActivity.DENY_PUSH)) {
-             showToastWithText(context.getString(R.string.process_deny_start));
-             processManager.onOxPushRequest(true);
-             return;
-         }
+        Settings.clearPushOxData(context);
 
-         if (preferences.getString("userChoose", "null").equalsIgnoreCase(EntryActivity.APPROVE_PUSH)) {
-             showToastWithText(context.getString(R.string.process_authentication_start));
-             processManager.onOxPushRequest(false);
-             return;
-         }
-     }
-    }
+        if(userChoice == null || userChoice.equalsIgnoreCase(EntryActivity.NO_ACTION_PUSH)) {
+            Intent intent = new Intent(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION);
+            intent.putExtra(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, requestDataString);
+            intent.putExtra(MainNavDrawerActivity.VIBRATE_AND_RINGTONE, false);
+            LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
+        } else {
+            final OxPush2Request oxPush2Request = new Gson().fromJson(requestDataString, OxPush2Request.class);
+            final ProcessManager processManager = createProcessManager(oxPush2Request);
+            if (userChoice.equalsIgnoreCase(EntryActivity.DENY_PUSH)) {
+                showToastWithText(context.getString(R.string.process_deny_start));
+                processManager.onOxPushRequest(true);
+            } else if (userChoice.equalsIgnoreCase(EntryActivity.APPROVE_PUSH)) {
+                showToastWithText(context.getString(R.string.process_authentication_start));
+                processManager.onOxPushRequest(false);
+            }
+        }
 
-    private void clearPushAndOxData(SharedPreferences preferences) {
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("oxRequest", null);
-        editor.apply();
-        Settings.setPushDataEmpty(getContext());
     }
 
     private ProcessManager createProcessManager(OxPush2Request oxPush2Request){
