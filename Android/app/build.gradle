@@ -75,6 +75,7 @@ android {
             buildConfigField "boolean", "TRUST_ALL_CERT", "false"
 
             buildConfigField "String", "PROJECT_NUMBER", "\"815756138308\""
+            buildConfigField "String", "INTERSTITIAL_AD_ID", "\"ca-app-pub-3940256099942544/1033173712\""
         }
         release {
             buildConfigField "String", "VENDOR_CERTIFICATE_CERT",
@@ -104,6 +105,8 @@ android {
             buildConfigField "boolean", "TRUST_ALL_CERT", "false"
 
             buildConfigField "String", "PROJECT_NUMBER", "\"815756138308\""
+
+            buildConfigField "String", "INTERSTITIAL_AD_ID", "\"ca-app-pub-3326465223655655/1731023230\""
 
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

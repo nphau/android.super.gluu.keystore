@@ -33,10 +33,8 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -78,8 +76,6 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
 
     private Context context;
 
-    private InterstitialAd mInterstitialAd;
-
     @BindView(R.id.button_scan)
     Button scanButton;
 
@@ -100,6 +96,12 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
     private SoftwareDevice u2f;
     private AndroidKeyDataStore dataStore;
 
+    public interface InterstitialAdListener {
+        void showAd();
+    }
+
+    InterstitialAdListener interstitialAdListener;
+
     private BroadcastReceiver adBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -119,13 +121,6 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
             String message = intent.getStringExtra("message");
             if (context != null && !message.isEmpty()) {
                 showDialog(message);
-            }
-            Boolean isAdFree = Settings.getPurchase(context);
-            if (mInterstitialAd.isLoaded() && !isAdFree) {
-                if (mInterstitialAd == null){
-                    initGoogleInterstitialAd();
-                }
-                mInterstitialAd.show();
             }
         }
     };
@@ -187,9 +182,6 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
                 new IntentFilter("on-restore-purchase-flow"));
 
         setupBannerAd();
-
-        //Init GoogleMobile AD
-        initGoogleInterstitialAd();
 
         return view;
     }
@@ -260,6 +252,12 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
         } else {
             throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
         }
+
+        if (context instanceof InterstitialAdListener) {
+            interstitialAdListener = (InterstitialAdListener) context;
+        } else {
+            throw new RuntimeException(context.toString() + " must implement InterstitialAdListener");
+        }
     }
 
     @Override
@@ -311,38 +309,6 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
         }
     }
 
-    private void initGoogleInterstitialAd(){
-        if(getResources().getBoolean(R.bool.adsEnabled)) {
-            mInterstitialAd = new InterstitialAd(context);
-            //todo this should be a build flavor attribute
-            mInterstitialAd.setAdUnitId("ca-app-pub-3326465223655655/1731023230");
-
-            mInterstitialAd.setAdListener(new AdListener() {
-
-                @Override
-                public void onAdOpened() {
-                    // Code to be executed when the ad is displayed.
-                    Log.i("Ads", "onAdOpened");
-                }
-
-                @Override
-                public void onAdClosed() {
-                    // Load the next interstitial.
-                    mInterstitialAd.loadAd(new AdRequest.Builder().build());
-                }
-            });
-            requestNewInterstitial();
-        }
-    }
-
-    private void requestNewInterstitial() {
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .build();
-
-        mInterstitialAd.loadAd(adRequest);
-    }
-
     private void onQrRequest(OxPush2Request oxPush2Request){
         if (oxPush2Request == null){
             showToastWithText("You scanned wrong QR code");
@@ -376,18 +342,25 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
         gluuAlert.setHeader(titleMessageText.first);
         gluuAlert.setMessage(titleMessageText.second);
         gluuAlert.setPositiveText(getString(R.string.ok));
+        gluuAlert.setOnCancelListener(dialogInterface -> showInterstitialAd());
         gluuAlert.setListener(new MainNavDrawerActivity.GluuAlertCallback() {
             @Override
             public void onPositiveButton() {
-                //Skip here
+                showInterstitialAd();
             }
 
             @Override
             public void onNegativeButton() {
-                //Skip here
             }
         });
         gluuAlert.show();
+    }
+
+    public void showInterstitialAd() {
+        Boolean isAdFree = Settings.getPurchase(context);
+        if(!isAdFree) {
+            interstitialAdListener.showAd();
+        }
     }
 
 

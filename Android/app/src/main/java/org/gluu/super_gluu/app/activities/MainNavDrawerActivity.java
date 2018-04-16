@@ -36,6 +36,9 @@ import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.gson.Gson;
 
 import org.gluu.super_gluu.app.GluuApplication;
@@ -81,7 +84,8 @@ import butterknife.ButterKnife;
  */
 public class MainNavDrawerActivity extends BaseActivity
         implements OxPush2RequestListener, KeyHandleInfoFragment.OnDeleteKeyHandleListener,
-        PinCodeFragment.PinCodeViewListener, ApproveDenyFragment.OnDeleteLogInfoListener {
+        PinCodeFragment.PinCodeViewListener, ApproveDenyFragment.OnDeleteLogInfoListener,
+        HomeFragment.InterstitialAdListener {
 
     private static final String TAG = "main-activity";
 
@@ -111,6 +115,8 @@ public class MainNavDrawerActivity extends BaseActivity
     private FragmentManager fragmentManager;
 
     private Settings settings = new Settings();
+
+    private InterstitialAd interstitialAd;
 
     private BroadcastReceiver mPushMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -179,6 +185,8 @@ public class MainNavDrawerActivity extends BaseActivity
 
         //Init InAPP-Purchase service
         initIAPurchaseService();
+
+        setupInterstitialAd();
 
         setupInitialFragment();
     }
@@ -480,6 +488,13 @@ public class MainNavDrawerActivity extends BaseActivity
         reloadLogs();
     }
 
+    @Override
+    public void showAd() {
+        if(interstitialAd.isLoaded()) {
+            interstitialAd.show();
+        }
+    }
+
     public interface GluuAlertCallback{
         void onPositiveButton();
         void onNegativeButton();
@@ -626,6 +641,28 @@ public class MainNavDrawerActivity extends BaseActivity
         }
 
         drawer.closeDrawers();
+    }
+
+    private void setupInterstitialAd(){
+        if(getResources().getBoolean(R.bool.adsEnabled)) {
+            interstitialAd = new InterstitialAd(MainNavDrawerActivity.this);
+            Log.i("boogie", BuildConfig.INTERSTITIAL_AD_ID);
+            interstitialAd.setAdUnitId(BuildConfig.INTERSTITIAL_AD_ID);
+            final AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
+            adRequestBuilder.addTestDevice("42AEE1668211972A192E5AEB4C934090");
+            interstitialAd.setAdListener(new AdListener() {
+                @Override
+                public void onAdLoaded() {
+                    super.onAdLoaded();
+                }
+                @Override
+                public void onAdClosed() {
+                    super.onAdClosed();
+                    interstitialAd.loadAd(adRequestBuilder.build());
+                }
+            });
+            interstitialAd.loadAd(adRequestBuilder.build());
+        }
     }
 
     //endregion
