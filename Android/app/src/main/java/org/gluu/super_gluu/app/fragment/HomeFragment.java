@@ -6,19 +6,14 @@
 
 package org.gluu.super_gluu.app.fragment;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.CardView;
@@ -124,28 +119,6 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
         }
     };
 
-    private BroadcastReceiver mPushMessageReceiver = new BroadcastReceiver() {
-        @SuppressLint("NewApi")
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (!getActivity().isDestroyed()) {
-                // Get extra data included in the Intent
-                String message = intent.getStringExtra(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE);
-                final OxPush2Request oxPush2Request = new Gson().fromJson(message, OxPush2Request.class);
-                onQrRequest(oxPush2Request);
-                //play sound and vibrate
-                try {
-                    Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                    Ringtone r = RingtoneManager.getRingtone(context, notification);
-                    r.play();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                ((Vibrator)getActivity().getSystemService(Context.VIBRATOR_SERVICE)).vibrate(800);
-            }
-        }
-    };
-
     private BroadcastReceiver onAdFree = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -230,7 +203,6 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
     @Override
     public void onStop() {
         super.onStop();
-        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mPushMessageReceiver);
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mMessageReceiver);
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(adBroadcastReceiver);
     }
