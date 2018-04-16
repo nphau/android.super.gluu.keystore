@@ -646,7 +646,6 @@ public class MainNavDrawerActivity extends BaseActivity
     private void setupInterstitialAd(){
         if(getResources().getBoolean(R.bool.adsEnabled)) {
             interstitialAd = new InterstitialAd(MainNavDrawerActivity.this);
-            Log.i("boogie", BuildConfig.INTERSTITIAL_AD_ID);
             interstitialAd.setAdUnitId(BuildConfig.INTERSTITIAL_AD_ID);
             final AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
             adRequestBuilder.addTestDevice("42AEE1668211972A192E5AEB4C934090");
