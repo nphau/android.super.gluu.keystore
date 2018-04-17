@@ -92,19 +92,6 @@ public class MainNavDrawerActivity extends BaseActivity
         PinCodeFragment.PinCodeViewListener, ApproveDenyFragment.OnDeleteLogInfoListener,
         HomeFragment.InterstitialAdListener {
 
-    //region inner class interfaces
-    public interface GluuAlertCallback{
-        void onPositiveButton();
-        void onNegativeButton();
-    }
-
-    public interface RequestProcessListener{
-        void onApprove();
-        void onDeny();
-    }
-
-    //endregion
-
     //region class variables
 
     private static final String TAG = "main-activity";
@@ -753,4 +740,18 @@ public class MainNavDrawerActivity extends BaseActivity
         customToast.showGluuToastWithText(view, text);
     }
     //endregion
+
+    //region inner class interfaces
+    public interface GluuAlertCallback{
+        void onPositiveButton();
+        void onNegativeButton();
+    }
+
+    public interface RequestProcessListener{
+        void onApprove();
+        void onDeny();
+    }
+
+    //endregion
+
 }
