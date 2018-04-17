@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -68,9 +67,6 @@ public class AppFirebaseMessagingService extends FirebaseMessagingService {
             }
 
         }
-
-        // Also if you intend on generating your own notifications as a result of a received FCM
-        // message, here is where that should be initiated. See sendNotification method below.
     }
 
     private void sendNotification(String title, String message) {
@@ -133,9 +129,6 @@ public class AppFirebaseMessagingService extends FirebaseMessagingService {
                 break;
         }
 
-        Bundle noBundle = new Bundle();
-        noBundle.putInt("requestType", type);
-        intent.putExtras(noBundle);
         return PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, PendingIntent.FLAG_ONE_SHOT);
     }
 

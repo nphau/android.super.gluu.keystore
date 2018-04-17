@@ -6,7 +6,6 @@
 
 package org.gluu.super_gluu.app.activities;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
@@ -117,7 +116,7 @@ public class MainNavDrawerActivity extends BaseActivity
 
     private SoftwareDevice u2f;
     private AndroidKeyDataStore dataStore;
-    private static Context context;
+    private Context context;
 
     private FragmentManager fragmentManager;
 
@@ -163,7 +162,7 @@ public class MainNavDrawerActivity extends BaseActivity
 
     //endregion
 
-    //region lifecycle methods
+    //region lifecycle and activity methods
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -260,10 +259,8 @@ public class MainNavDrawerActivity extends BaseActivity
         super.onBackPressed();
     }
 
-    @SuppressLint("ApplySharedPref")
     @Override
     protected void onDestroy() {
-        Log.d(String.valueOf(GluuApplication.class), "APP DESTROYED");
         inAppPurchaseService.deInitPurchaseService();
         super.onDestroy();
     }
@@ -327,6 +324,7 @@ public class MainNavDrawerActivity extends BaseActivity
             interstitialAd = new InterstitialAd(MainNavDrawerActivity.this);
             interstitialAd.setAdUnitId(BuildConfig.INTERSTITIAL_AD_ID);
             final AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
+            //todo remove this test device. Only here to test out interstitials on dev testing device.
             adRequestBuilder.addTestDevice("42AEE1668211972A192E5AEB4C934090");
             interstitialAd.setAdListener(new AdListener() {
                 @Override
@@ -611,10 +609,6 @@ public class MainNavDrawerActivity extends BaseActivity
         }
 
         return result;
-    }
-
-    public static String getResourceString(int resourceID){
-        return context.getString(resourceID);
     }
 
     private void showAlertView(String title, String message){

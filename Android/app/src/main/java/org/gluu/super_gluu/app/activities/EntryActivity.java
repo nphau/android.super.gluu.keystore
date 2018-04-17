@@ -48,8 +48,8 @@ public class EntryActivity extends BaseActivity implements
         // Check if we get push notification
         Intent intent = getIntent();
         Boolean isAppLocked = Settings.isAppLocked(getApplicationContext());
-        //Check if user tap on Approve/Deny button or just on push body
 
+        //Check if user tap on Approve/Deny button or just on push body
         if(intent.getAction() != null) {
             if (intent.getAction().equalsIgnoreCase(AppFirebaseMessagingService.APPROVE_ACTION)) {
                 userComingFromPush(APPROVE_PUSH);
@@ -162,10 +162,6 @@ public class EntryActivity extends BaseActivity implements
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.replace(R.id.fragment_container, secureEntrySetupFragment);
         fragmentTransaction.commit();
-    }
-
-    public void saveUserDecision(String userChoice, String oxRequest) {
-        Settings.setUserChoice(EntryActivity.this, userChoice);
     }
 
     @Override

@@ -153,12 +153,19 @@ public class Settings {
 
     //END Pin code Settings
 
+    //region Push Notification/Auth Request Settings
+
     @SuppressLint("ApplySharedPref")
     public static void setPushOxData(Context context, String pushData) {
         SharedPreferences preferences = context.getSharedPreferences(Constant.OX_PUSH_SETTINGS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(Constant.OX_REQUEST_DATA, pushData);
         editor.commit();
+    }
+
+    public static String getOxRequestData(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(Constant.OX_PUSH_SETTINGS, Context.MODE_PRIVATE);
+        return preferences.getString(Constant.OX_REQUEST_DATA, null);
     }
 
     @SuppressLint("ApplySharedPref")
@@ -176,34 +183,13 @@ public class Settings {
     }
 
     @SuppressLint("ApplySharedPref")
-    public static void clearPushOxRequestTime(Context context) {
+    private static void clearPushOxRequestTime(Context context) {
         SharedPreferences preferences = context.getSharedPreferences(Constant.OX_PUSH_SETTINGS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putLong(Constant.OX_REQUEST_RECEIVED_TIME, 0);
         editor.commit();
     }
 
-
-    public static String getOxRequestData(Context context) {
-        SharedPreferences preferences = context.getSharedPreferences(Constant.OX_PUSH_SETTINGS, Context.MODE_PRIVATE);
-        return preferences.getString(Constant.OX_REQUEST_DATA, null);
-    }
-
-    public static boolean isAuthPending(Context context) {
-        SharedPreferences preferences = context.getSharedPreferences(Constant.OX_PUSH_SETTINGS, Context.MODE_PRIVATE);
-        return preferences.getString(Constant.OX_REQUEST_DATA, null) != null;
-    }
-
-    public static String getUserChoice(Context context) {
-        SharedPreferences preferences = context.getSharedPreferences(Constant.OX_PUSH_SETTINGS, Context.MODE_PRIVATE);
-        return preferences.getString(Constant.USER_CHOICE, null);
-    }
-
-    public static void clearPushOxData(Context context) {
-        setPushOxData(context, null);
-        setUserChoice(context,null);
-        clearPushOxRequestTime(context);
-    }
 
     @SuppressLint("ApplySharedPref")
     public static void setUserChoice(Context context, String userChoice) {
@@ -212,6 +198,24 @@ public class Settings {
         editor.putString(Constant.USER_CHOICE, userChoice);
         editor.apply();
     }
+
+    public static String getUserChoice(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(Constant.OX_PUSH_SETTINGS, Context.MODE_PRIVATE);
+        return preferences.getString(Constant.USER_CHOICE, null);
+    }
+
+    public static boolean isAuthPending(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(Constant.OX_PUSH_SETTINGS, Context.MODE_PRIVATE);
+        return preferences.getString(Constant.OX_REQUEST_DATA, null) != null;
+    }
+
+    public static void clearPushOxData(Context context) {
+        setPushOxData(context, null);
+        setUserChoice(context,null);
+        clearPushOxRequestTime(context);
+    }
+
+    //endregion
 
     //SSL Connection Settings
     public static void setSSLEnabled(Context context, Boolean isEnabled) {
