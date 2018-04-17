@@ -32,7 +32,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
@@ -44,6 +46,7 @@ import com.google.gson.Gson;
 import org.gluu.super_gluu.app.GluuApplication;
 import org.gluu.super_gluu.app.ProcessManager;
 import org.gluu.super_gluu.app.customview.CustomAlert;
+import org.gluu.super_gluu.app.customview.CustomToast;
 import org.gluu.super_gluu.app.fragment.ApproveDenyFragment;
 import org.gluu.super_gluu.app.fragment.HomeFragment;
 import org.gluu.super_gluu.app.fragment.KeyFragmentListFragment;
@@ -70,7 +73,9 @@ import org.gluu.super_gluu.util.Utils;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import SuperGluu.app.BuildConfig;
 import SuperGluu.app.R;
@@ -86,6 +91,21 @@ public class MainNavDrawerActivity extends BaseActivity
         implements OxPush2RequestListener, KeyHandleInfoFragment.OnDeleteKeyHandleListener,
         PinCodeFragment.PinCodeViewListener, ApproveDenyFragment.OnDeleteLogInfoListener,
         HomeFragment.InterstitialAdListener {
+
+    //region inner class interfaces
+    public interface GluuAlertCallback{
+        void onPositiveButton();
+        void onNegativeButton();
+    }
+
+    public interface RequestProcessListener{
+        void onApprove();
+        void onDeny();
+    }
+
+    //endregion
+
+    //region class variables
 
     private static final String TAG = "main-activity";
 
@@ -154,6 +174,15 @@ public class MainNavDrawerActivity extends BaseActivity
     //For purchases
     private InAppPurchaseService inAppPurchaseService = new InAppPurchaseService();
 
+    //endregion
+
+    //region lifecycle methods
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -164,9 +193,6 @@ public class MainNavDrawerActivity extends BaseActivity
         fragmentManager = getSupportFragmentManager();
         setupToolbar();
         initNavDrawer();
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(mPushMessageReceiver,
-                new IntentFilter(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION));
 
         // Init network layer
         CommunicationService.init();
@@ -192,18 +218,75 @@ public class MainNavDrawerActivity extends BaseActivity
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mPushMessageReceiver,
+                new IntentFilter(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mPushMessageReceiver);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         if(!GluuApplication.didAppGoThroughLauncherActivity()
                 && Settings.isAuthEnabled(MainNavDrawerActivity.this)) {
             newTaskToEntryActivity();
+        } else {
+            //Check push data
+            checkIsPush();
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (inAppPurchaseService.isHandleResult(requestCode, resultCode, data))
+            super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        toggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggles
+        toggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = fragmentManager.findFragmentById(R.id.main_frame_layout);
+
+        if(fragment != null && fragment instanceof ApproveDenyFragment) {
+            return;
+        }
+
+        super.onBackPressed();
+    }
+
+    @SuppressLint("ApplySharedPref")
+    @Override
+    protected void onDestroy() {
+        Log.d(String.valueOf(GluuApplication.class), "APP DESTROYED");
+        inAppPurchaseService.deInitPurchaseService();
+        super.onDestroy();
+    }
+    //endregion
+
+    //region initialization methods
     private void setupInitialFragment() {
         HomeFragment homeFragment = new HomeFragment();
 
-         //Insert the fragment by replacing any existing fragment
+        //Insert the fragment by replacing any existing fragment
         fragmentManager
                 .beginTransaction()
                 .replace(R.id.main_frame_layout, homeFragment)
@@ -237,15 +320,184 @@ public class MainNavDrawerActivity extends BaseActivity
         inAppPurchaseService.reloadPurchaseService();
     }
 
+    private void checkUserCameraPermission(){
+        Log.i(TAG, "Show camera button pressed. Checking permission.");
+        // Check if the Camera permission is already available.
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Camera permission has not been granted.
+            showCameraMessagingAlertView();
+
+        } else {
+            // Camera permissions is already available, show the camera preview.
+            Log.i(TAG,
+                    "CAMERA permission has already been granted. Displaying camera preview.");
+        }
+    }
+
+    private void setupInterstitialAd(){
+        if(getResources().getBoolean(R.bool.adsEnabled)) {
+            interstitialAd = new InterstitialAd(MainNavDrawerActivity.this);
+            interstitialAd.setAdUnitId(BuildConfig.INTERSTITIAL_AD_ID);
+            final AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
+            adRequestBuilder.addTestDevice("42AEE1668211972A192E5AEB4C934090");
+            interstitialAd.setAdListener(new AdListener() {
+                @Override
+                public void onAdLoaded() {
+                    super.onAdLoaded();
+                }
+                @Override
+                public void onAdClosed() {
+                    super.onAdClosed();
+                    interstitialAd.loadAd(adRequestBuilder.build());
+                }
+            });
+            interstitialAd.loadAd(adRequestBuilder.build());
+        }
+    }
+
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+            selectDrawerItem(menuItem);
+            return true;
+        });
+    }
+
+    private void setupToggleState() {
+        if (toolbar != null) {
+            toggle = new ActionBarDrawerToggle(
+                    this, drawer, toolbar, R.string.drawer_open, R.string.drawer_close);
+            toggle.syncState();
+            drawer.addDrawerListener(toggle);
+
+            OnBackStackChangedListener onBackStackChangedListener = () -> {
+                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                } else {
+                    drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                }
+            };
+
+            fragmentManager.addOnBackStackChangedListener(onBackStackChangedListener);
+        }
+
+    }
+
+    public void checkIsPush(){
+        if(Settings.isAuthPending(getBaseContext())) {
+            if(getTimeDifferenceInSeconds() < Settings.Constant.AUTH_VALID_TIME) {
+                makeOxRequest();
+            } else {
+                Settings.clearPushOxData(context);
+            }
+        }
+    }
+
+    //endregion
+
+    //region interface implementations
     @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
+    public void onQrRequest(final OxPush2Request oxPush2Request) {
+        if (!this.isDestroyed()) {
+            doQrRequest(oxPush2Request);
+        }
     }
 
     @Override
-    public void onSaveInstanceState( Bundle outState ) {
-        //skip it at all
+    public void onAdFreeButtonClick(){
+        if (inAppPurchaseService.readyToPurchase) {
+            if (!inAppPurchaseService.isSubscribed) {
+                inAppPurchaseService.purchase(MainNavDrawerActivity.this);
+            } else {
+                initGoogleADS(true);
+            }
+        }
     }
+
+    @Override
+    public void onPurchaseRestored() {
+        if (inAppPurchaseService.readyToPurchase) {
+            if (!inAppPurchaseService.isSubscribed) {
+                inAppPurchaseService.restorePurchase();
+            } else {
+                initGoogleADS(true);
+            }
+        }
+    }
+
+    @Override
+    public TokenResponse onSign(String jsonRequest, String origin, Boolean isDeny)
+            throws JSONException, IOException, U2FException {
+        return u2f.sign(jsonRequest, origin, isDeny);
+    }
+
+    @Override
+    public TokenResponse onEnroll(String jsonRequest, OxPush2Request oxPush2Request, Boolean isDeny)
+            throws JSONException, IOException, U2FException {
+        return u2f.enroll(jsonRequest, oxPush2Request, isDeny);
+    }
+
+    @Override
+    public DataStore onGetDataStore() {
+        return dataStore;
+    }
+
+    @Override
+    public void onDeleteLogInfo(OxPush2Request oxPush2Request) {
+        dataStore.deleteLogs(oxPush2Request);
+        onBackButtonClicked();
+    }
+
+    @Override
+    public void onDeleteLogInfo(List<LogInfo> logInfo) {
+        dataStore.deleteLogs(logInfo);
+        settings.setEditingModeLogs(false);
+        reloadLogs();
+    }
+
+    @Override
+    public void showAd() {
+        if(interstitialAd.isLoaded()) {
+            interstitialAd.show();
+        }
+    }
+
+    @Override
+    public void onDeleteKeyHandle(TokenEntry key) {
+        dataStore.deleteKeyHandle(key);
+    }
+
+    @Override
+    public void onCorrectPinCode(boolean isPinCodeCorrect) {
+        if (isPinCodeCorrect){
+            showAlertView(getString(R.string.pin_code), getString(R.string.new_pin_added));
+        } else {
+            //to change pin code, first need check if user knows current one
+            Intent intent = new Intent(MainNavDrawerActivity.this, EntryActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
+    @Override
+    public void onCancel(PinCodeFragment.EntryType entryType) {
+
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        if(inputMethodManager != null) {
+            inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+        }
+
+        if(entryType == PinCodeFragment.EntryType.SETTING_NEW) {
+            Settings.setPinCodeEnabled(getBaseContext(), false);
+            Settings.clearPinCode(getBaseContext());
+        }
+
+        onBackPressed();
+    }
+
+    //endregion
+
+    //region general helper methods
 
     private void reloadLogs(){
         Intent intent = new Intent("reload-logs");
@@ -305,36 +557,6 @@ public class MainNavDrawerActivity extends BaseActivity
         transaction.commitAllowingStateLoss();
     }
 
-    @Override
-    public void onQrRequest(final OxPush2Request oxPush2Request) {
-        if (!this.isDestroyed()) {
-            doQrRequest(oxPush2Request);
-        }
-    }
-
-    @Override
-    public void onAdFreeButtonClick(){
-        if (inAppPurchaseService.readyToPurchase) {
-            if (!inAppPurchaseService.isSubscribed) {
-                inAppPurchaseService.purchase(MainNavDrawerActivity.this);
-            } else {
-                initGoogleADS(true);
-            }
-        }
-    }
-
-    @Override
-    public void onPurchaseRestored() {
-        if (inAppPurchaseService.readyToPurchase) {
-            if (!inAppPurchaseService.isSubscribed) {
-                inAppPurchaseService.restorePurchase();
-            } else {
-                initGoogleADS(true);
-            }
-        }
-    }
-
-
     private ProcessManager createProcessManager(OxPush2Request oxPush2Request){
         ProcessManager processManager = new ProcessManager();
         processManager.setOxPush2Request(oxPush2Request);
@@ -373,23 +595,6 @@ public class MainNavDrawerActivity extends BaseActivity
         return processManager;
     }
 
-    @Override
-    public TokenResponse onSign(String jsonRequest, String origin, Boolean isDeny)
-            throws JSONException, IOException, U2FException {
-        return u2f.sign(jsonRequest, origin, isDeny);
-    }
-
-    @Override
-    public TokenResponse onEnroll(String jsonRequest, OxPush2Request oxPush2Request, Boolean isDeny)
-            throws JSONException, IOException, U2FException {
-        return u2f.enroll(jsonRequest, oxPush2Request, isDeny);
-    }
-
-    @Override
-    public DataStore onGetDataStore() {
-        return dataStore;
-    }
-
     private boolean validateOxPush2Request(OxPush2Request oxPush2Request) {
         boolean result = true;
         try {
@@ -421,42 +626,8 @@ public class MainNavDrawerActivity extends BaseActivity
         return result;
     }
 
-    @Override
-    public void onDeleteKeyHandle(TokenEntry key) {
-        dataStore.deleteKeyHandle(key);
-    }
-
     public static String getResourceString(int resourceID){
         return context.getString(resourceID);
-    }
-
-
-    @Override
-    public void onCorrectPinCode(boolean isPinCodeCorrect) {
-        if (isPinCodeCorrect){
-            showAlertView(getString(R.string.pin_code), getString(R.string.new_pin_added));
-        } else {
-            //to change pin code, first need check if user knows current one
-            Intent intent = new Intent(MainNavDrawerActivity.this, EntryActivity.class);
-            startActivity(intent);
-            finish();
-        }
-    }
-
-    @Override
-    public void onCancel(PinCodeFragment.EntryType entryType) {
-
-        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-        if(inputMethodManager != null) {
-            inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
-        }
-
-        if(entryType == PinCodeFragment.EntryType.SETTING_NEW) {
-            Settings.setPinCodeEnabled(getBaseContext(), false);
-            Settings.clearPinCode(getBaseContext());
-        }
-
-        onBackPressed();
     }
 
     private void showAlertView(String title, String message){
@@ -474,65 +645,6 @@ public class MainNavDrawerActivity extends BaseActivity
         customAlert.setOnDismissListener(dialogInterface -> requestCameraPermission());
         customAlert.setOnCancelListener(dialogInterface -> requestCameraPermission());
         customAlert.show();
-    }
-
-    @Override
-    public void onDeleteLogInfo(OxPush2Request oxPush2Request) {
-        dataStore.deleteLogs(oxPush2Request);
-        onBackButtonClicked();
-    }
-
-    @Override
-    public void onDeleteLogInfo(List<LogInfo> logInfo) {
-        dataStore.deleteLogs(logInfo);
-        settings.setEditingModeLogs(false);
-        reloadLogs();
-    }
-
-    @Override
-    public void showAd() {
-        if(interstitialAd.isLoaded()) {
-            interstitialAd.show();
-        }
-    }
-
-    public interface GluuAlertCallback{
-        void onPositiveButton();
-        void onNegativeButton();
-    }
-
-    public interface RequestProcessListener{
-        void onApprove();
-        void onDeny();
-    }
-
-    @SuppressLint("ApplySharedPref")
-    @Override
-    protected void onDestroy() {
-        Log.d(String.valueOf(GluuApplication.class), "APP DESTROYED");
-        inAppPurchaseService.deInitPurchaseService();
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (inAppPurchaseService.isHandleResult(requestCode, resultCode, data))
-            super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private void checkUserCameraPermission(){
-        Log.i(TAG, "Show camera button pressed. Checking permission.");
-        // Check if the Camera permission is already available.
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-            // Camera permission has not been granted.
-            showCameraMessagingAlertView();
-
-        } else {
-            // Camera permissions is already available, show the camera preview.
-            Log.i(TAG,
-                    "CAMERA permission has already been granted. Displaying camera preview.");
-        }
     }
 
     private void requestCameraPermission() {
@@ -553,47 +665,6 @@ public class MainNavDrawerActivity extends BaseActivity
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA},
                     REQUEST_CAMERA);
         }
-    }
-
-    private void setupDrawerContent(NavigationView navigationView) {
-        navigationView.setNavigationItemSelectedListener(menuItem -> {
-                    selectDrawerItem(menuItem);
-                    return true;
-                });
-    }
-
-    private void setupToggleState() {
-        if (toolbar != null) {
-            toggle = new ActionBarDrawerToggle(
-                    this, drawer, toolbar, R.string.drawer_open, R.string.drawer_close);
-            toggle.syncState();
-            drawer.addDrawerListener(toggle);
-
-            OnBackStackChangedListener onBackStackChangedListener = () -> {
-                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-                    drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-                } else {
-                    drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                }
-            };
-
-            fragmentManager.addOnBackStackChangedListener(onBackStackChangedListener);
-        }
-
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        toggle.syncState();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        // Pass any configuration change to the drawer toggles
-        toggle.onConfigurationChanged(newConfig);
     }
 
     public void selectDrawerItem(MenuItem menuItem) {
@@ -644,27 +715,42 @@ public class MainNavDrawerActivity extends BaseActivity
         drawer.closeDrawers();
     }
 
-    private void setupInterstitialAd(){
-        if(getResources().getBoolean(R.bool.adsEnabled)) {
-            interstitialAd = new InterstitialAd(MainNavDrawerActivity.this);
-            interstitialAd.setAdUnitId(BuildConfig.INTERSTITIAL_AD_ID);
-            final AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
-            adRequestBuilder.addTestDevice("42AEE1668211972A192E5AEB4C934090");
-            interstitialAd.setAdListener(new AdListener() {
-                @Override
-                public void onAdLoaded() {
-                    super.onAdLoaded();
-                }
-                @Override
-                public void onAdClosed() {
-                    super.onAdClosed();
-                    interstitialAd.loadAd(adRequestBuilder.build());
-                }
-            });
-            interstitialAd.loadAd(adRequestBuilder.build());
+    public long getTimeDifferenceInSeconds() {
+        Date currentDate = new Date();
+        Date olderDate = new Date(Settings.getOxRequestTime(context));
+        long timeDifferenceInMilliseconds = currentDate.getTime() - olderDate.getTime();
+        return TimeUnit.SECONDS.convert(timeDifferenceInMilliseconds, TimeUnit.MILLISECONDS);
+    }
+
+
+    private void makeOxRequest(){
+        String requestDataString = Settings.getOxRequestData(context);
+        String userChoice = Settings.getUserChoice(context);
+
+        if(userChoice == null || userChoice.equalsIgnoreCase(EntryActivity.NO_ACTION_PUSH)) {
+            Intent intent = new Intent(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION);
+            intent.putExtra(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, requestDataString);
+            intent.putExtra(MainNavDrawerActivity.VIBRATE_AND_RINGTONE, false);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+        } else {
+            final OxPush2Request oxPush2Request = new Gson().fromJson(requestDataString, OxPush2Request.class);
+            final ProcessManager processManager = createProcessManager(oxPush2Request);
+            Settings.clearPushOxData(context);
+            if (userChoice.equalsIgnoreCase(EntryActivity.DENY_PUSH)) {
+                showToastWithText(context.getString(R.string.process_deny_start));
+                processManager.onOxPushRequest(true);
+            } else if (userChoice.equalsIgnoreCase(EntryActivity.APPROVE_PUSH)) {
+                showToastWithText(context.getString(R.string.process_authentication_start));
+                processManager.onOxPushRequest(false);
+            }
         }
     }
 
+    private void showToastWithText(String text){
+        CustomToast customToast = new CustomToast(context);
+        LayoutInflater layoutInflater = getLayoutInflater();
+        View view = layoutInflater.inflate(R.layout.custom_toast, null);
+        customToast.showGluuToastWithText(view, text);
+    }
     //endregion
-
 }
