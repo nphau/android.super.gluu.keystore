@@ -51,6 +51,8 @@ import org.gluu.super_gluu.u2f.v2.store.DataStore;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import SuperGluu.app.BuildConfig;
 import SuperGluu.app.R;
@@ -357,16 +359,29 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
     }
 
     public void checkIsPush(){
+
         if(Settings.isAuthPending(getContext())) {
-            makeOxRequest();
+            if(getTimeDifferenceInSeconds() < Settings.Constant.AUTH_VALID_TIME) {
+                Log.i("boogie", "Time valid. Time since push sent: " + getTimeDifferenceInSeconds());
+
+                makeOxRequest();
+            } else {
+                Log.i("boogie", "Time expired, clearing data");
+                Settings.clearPushOxData(context);
+            }
         }
+    }
+
+    public long getTimeDifferenceInSeconds() {
+        Date currentDate = new Date();
+        Date olderDate = new Date(Settings.getOxRequestTime(context));
+        long timeDifferenceInMilliseconds = currentDate.getTime() - olderDate.getTime();
+        return TimeUnit.SECONDS.convert(timeDifferenceInMilliseconds, TimeUnit.MILLISECONDS);
     }
 
     private void makeOxRequest(){
         String requestDataString = Settings.getOxRequestData(context);
         String userChoice = Settings.getUserChoice(context);
-
-        Settings.clearPushOxData(context);
 
         if(userChoice == null || userChoice.equalsIgnoreCase(EntryActivity.NO_ACTION_PUSH)) {
             Intent intent = new Intent(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION);
@@ -376,6 +391,7 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
         } else {
             final OxPush2Request oxPush2Request = new Gson().fromJson(requestDataString, OxPush2Request.class);
             final ProcessManager processManager = createProcessManager(oxPush2Request);
+            Settings.clearPushOxData(context);
             if (userChoice.equalsIgnoreCase(EntryActivity.DENY_PUSH)) {
                 showToastWithText(context.getString(R.string.process_deny_start));
                 processManager.onOxPushRequest(true);

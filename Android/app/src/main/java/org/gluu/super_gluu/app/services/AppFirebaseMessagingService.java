@@ -56,12 +56,14 @@ public class AppFirebaseMessagingService extends FirebaseMessagingService {
                 return;
             }
 
+            Settings.setPushOxRequestTime(getApplicationContext());
+            Settings.setPushOxData(getApplicationContext(), message);
+
             if (GluuApplication.isIsAppInForeground()) {
                 Intent intent = new Intent(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION);
                 intent.putExtra(MainNavDrawerActivity.QR_CODE_PUSH_NOTIFICATION_MESSAGE, message);
                 LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
             } else {
-                Settings.setPushOxData(getApplicationContext(), message);
                 sendNotification(getString(R.string.push_title), message);
             }
 

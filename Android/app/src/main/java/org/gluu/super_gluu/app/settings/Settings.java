@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 
 import org.gluu.super_gluu.app.fragment.SettingsFragment;
 
+import java.util.Date;
+
 /**
  * Created by nazaryavornytskyy on 7/12/16.
  */
@@ -159,6 +161,29 @@ public class Settings {
         editor.commit();
     }
 
+    @SuppressLint("ApplySharedPref")
+    public static void setPushOxRequestTime(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(Constant.OX_PUSH_SETTINGS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        Date date = new Date(System.currentTimeMillis());
+        editor.putLong(Constant.OX_REQUEST_RECEIVED_TIME, date.getTime());
+        editor.commit();
+    }
+
+    public static Long getOxRequestTime(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(Constant.OX_PUSH_SETTINGS, Context.MODE_PRIVATE);
+        return preferences.getLong(Constant.OX_REQUEST_RECEIVED_TIME, 0);
+    }
+
+    @SuppressLint("ApplySharedPref")
+    public static void clearPushOxRequestTime(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(Constant.OX_PUSH_SETTINGS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putLong(Constant.OX_REQUEST_RECEIVED_TIME, 0);
+        editor.commit();
+    }
+
+
     public static String getOxRequestData(Context context) {
         SharedPreferences preferences = context.getSharedPreferences(Constant.OX_PUSH_SETTINGS, Context.MODE_PRIVATE);
         return preferences.getString(Constant.OX_REQUEST_DATA, null);
@@ -177,6 +202,7 @@ public class Settings {
     public static void clearPushOxData(Context context) {
         setPushOxData(context, null);
         setUserChoice(context,null);
+        clearPushOxRequestTime(context);
     }
 
     @SuppressLint("ApplySharedPref")
@@ -308,14 +334,17 @@ public class Settings {
     }
 
     public static class Constant {
-        public static final String PIN_CODE = "PinCode";
-        public static final String IS_PIN_ENABLED = "isPinEnabled";
-        public static final String PIN_CODE_ATTEMPTS = "pinCodeAttempts";
-        public static final String CURRENT_PIN_CODE_ATTEMPTS = "currentPinCodeAttempts";
+        private static final String PIN_CODE = "PinCode";
+        private static final String IS_PIN_ENABLED = "isPinEnabled";
+        private static final String PIN_CODE_ATTEMPTS = "pinCodeAttempts";
+        private static final String CURRENT_PIN_CODE_ATTEMPTS = "currentPinCodeAttempts";
 
 
-        public static final String OX_PUSH_SETTINGS = "oxPushSettings";
-        public static final String USER_CHOICE = "UserChoice";
-        public static final String OX_REQUEST_DATA = "OxRequestData";
+        private static final String OX_PUSH_SETTINGS = "oxPushSettings";
+        private static final String USER_CHOICE = "UserChoice";
+        private static final String OX_REQUEST_DATA = "OxRequestData";
+        private static final String OX_REQUEST_RECEIVED_TIME = "OxRequestReceievedTime";
+
+        public static final int AUTH_VALID_TIME = 60;
     }
 }

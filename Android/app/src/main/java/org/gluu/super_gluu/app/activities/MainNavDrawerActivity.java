@@ -278,7 +278,6 @@ public class MainNavDrawerActivity extends BaseActivity
             return;
         }
 
-        Settings.clearPushOxData(getApplicationContext());
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         if(notificationManager != null) {
             notificationManager.cancel(MainNavDrawerActivity.MESSAGE_NOTIFICATION_ID);
@@ -290,11 +289,13 @@ public class MainNavDrawerActivity extends BaseActivity
         approveDenyFragment.setListener(new RequestProcessListener() {
             @Override
             public void onApprove() {
+                Settings.clearPushOxData(getApplicationContext());
                 processManager.onOxPushRequest(false);
             }
 
             @Override
             public void onDeny() {
+                Settings.clearPushOxData(getApplicationContext());
                 processManager.onOxPushRequest(true);
             }
         });
