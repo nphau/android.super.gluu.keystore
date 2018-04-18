@@ -162,7 +162,7 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
             adView.setVisibility(View.GONE);
             removeAdView.setVisibility(View.GONE);
         } else {
-            MobileAds.initialize(getActivity().getApplicationContext(), "ca-app-pub-3932761366188106~2301594871");
+            MobileAds.initialize(getActivity().getApplicationContext(), BuildConfig.BANNER_AD_ID);
             AdRequest adRequest = new AdRequest.Builder().build();
             adView.loadAd(adRequest);
         }

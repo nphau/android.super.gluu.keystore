@@ -76,6 +76,8 @@ android {
 
             buildConfigField "String", "PROJECT_NUMBER", "\"815756138308\""
             buildConfigField "String", "INTERSTITIAL_AD_ID", "\"ca-app-pub-3940256099942544/1033173712\""
+            buildConfigField "String", "BANNER_AD_ID", "\"ca-app-pub-3940256099942544/6300978111\""
+
         }
         release {
             buildConfigField "String", "VENDOR_CERTIFICATE_CERT",
@@ -107,6 +109,7 @@ android {
             buildConfigField "String", "PROJECT_NUMBER", "\"815756138308\""
 
             buildConfigField "String", "INTERSTITIAL_AD_ID", "\"ca-app-pub-3326465223655655/1731023230\""
+            buildConfigField "String", "BANNER_AD_ID", "\"ca-app-pub-3932761366188106~2301594871\""
 
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
