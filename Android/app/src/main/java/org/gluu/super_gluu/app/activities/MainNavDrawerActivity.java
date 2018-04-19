@@ -324,8 +324,6 @@ public class MainNavDrawerActivity extends BaseActivity
             interstitialAd = new InterstitialAd(MainNavDrawerActivity.this);
             interstitialAd.setAdUnitId(BuildConfig.INTERSTITIAL_AD_ID);
             final AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
-            //todo remove this test device. Only here to test out interstitials on dev testing device.
-            adRequestBuilder.addTestDevice("42AEE1668211972A192E5AEB4C934090");
             interstitialAd.setAdListener(new AdListener() {
                 @Override
                 public void onAdLoaded() {
