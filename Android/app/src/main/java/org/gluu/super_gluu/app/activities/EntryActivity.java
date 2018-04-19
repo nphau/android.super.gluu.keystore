@@ -9,6 +9,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
+import com.crashlytics.android.Crashlytics;
+
 import org.gluu.super_gluu.app.GluuApplication;
 import org.gluu.super_gluu.app.customview.CustomToast;
 import org.gluu.super_gluu.app.fingerprint.Fingerprint;
@@ -23,7 +25,9 @@ import org.gluu.super_gluu.app.services.AppFirebaseMessagingService;
 import org.gluu.super_gluu.app.services.FingerPrintManager;
 import org.gluu.super_gluu.app.settings.Settings;
 
+import SuperGluu.app.BuildConfig;
 import SuperGluu.app.R;
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by nazaryavornytskyy on 3/22/16.
@@ -40,7 +44,7 @@ public class EntryActivity extends BaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        startFabric();
         setContentView(R.layout.activity_main);
 
         GluuApplication.isTrustAllCertificates = Settings.getSSLEnabled(this);
@@ -72,7 +76,6 @@ public class EntryActivity extends BaseActivity implements
         Settings.setIsBackButtonVisibleForKey(getBaseContext(), false);
         Settings.setIsBackButtonVisibleForLog(getBaseContext(), false);
         Settings.setIsBackButtonVisibleForKey(getBaseContext(), false);
-
     }
 
     @Override
@@ -267,6 +270,14 @@ public class EntryActivity extends BaseActivity implements
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.fragment_container, secureEntryFragment)
                 .commit();
+    }
+
+    private void startFabric() {
+        if (BuildConfig.DEBUG) {
+            Fabric.with(this);
+        } else {
+            Fabric.with(this, new Crashlytics());
+        }
     }
 
 }
