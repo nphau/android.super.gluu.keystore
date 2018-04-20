@@ -249,17 +249,6 @@ public class MainNavDrawerActivity extends BaseActivity
     }
 
     @Override
-    public void onBackPressed() {
-        Fragment fragment = fragmentManager.findFragmentById(R.id.main_frame_layout);
-
-        if(fragment != null && fragment instanceof ApproveDenyFragment) {
-            return;
-        }
-
-        super.onBackPressed();
-    }
-
-    @Override
     protected void onDestroy() {
         inAppPurchaseService.deInitPurchaseService();
         super.onDestroy();
