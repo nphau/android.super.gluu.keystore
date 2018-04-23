@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.apache.commons.codec.binary.StringUtils;
+import org.gluu.super_gluu.app.LogState;
 import org.gluu.super_gluu.app.NotificationType;
 import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.base.ToolbarFragment;
@@ -209,7 +210,7 @@ public class ApproveDenyFragment extends ToolbarFragment {
 
     private void updateLogo(){
 
-        if(isUserInfo) {
+        if(isUserInfo && isFailedLog()) {
             mainImageView.setImageDrawable(getContext().getDrawable(R.drawable.log_detail_icon));
         } else {
             mainImageView.setImageDrawable(getContext().getDrawable(R.drawable.accept_deny_detail_icon));
@@ -380,6 +381,12 @@ public class ApproveDenyFragment extends ToolbarFragment {
 
     public void setListener(MainNavDrawerActivity.RequestProcessListener listener) {
         this.listener = listener;
+    }
+
+    public boolean isFailedLog() {
+        return logInfo != null && (logInfo.getLogState() == LogState.ENROL_FAILED || logInfo.getLogState() == LogState.LOGIN_FAILED ||
+                logInfo.getLogState() == LogState.UNKNOWN_ERROR || logInfo.getLogState() == LogState.LOGIN_DECLINED ||
+                logInfo.getLogState() == LogState.ENROL_DECLINED);
     }
 
     public interface OnDeleteLogInfoListener {

@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -66,18 +65,15 @@ public class LogsFragmentListAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         View view = convertView;
         ViewHolder holder;
-//        final LogInfo current_log = list.get(position);
         if (view == null) {
             view = mInflater.inflate(R.layout.fragment_log, parent, false);
             holder = new ViewHolder();
-//            holder.textView = (TextView) convertView.findViewById(R.id.text);
             View swipeView = view.findViewById(R.id.delete_layout);
             swipeView.setTag(position);
             holder.deleteButton = swipeView.findViewById(R.id.swipe_delete_button);
             holder.showButton = swipeView.findViewById(R.id.swipe_show_button);
             holder.deleteButton.setTag(position);
             holder.showButton.setTag(position);
-//            holder.showView = view.findViewById(R.id.show_layout);
             holder.swipeLayout =  view.findViewById(R.id.swipe_layout);
             holder.index = position;
             final View finalView = view;
@@ -128,37 +124,33 @@ public class LogsFragmentListAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
         LogInfo log = list.get(position);
-//        view.setTag(position);
-        TextView contentView = (TextView) view.findViewById(R.id.content_text_view);
+        TextView contentView = view.findViewById(R.id.content_text_view);
         if (log.getLogState() == LogState.ENROL_FAILED || log.getLogState() == LogState.LOGIN_FAILED
                 || log.getLogState() == LogState.UNKNOWN_ERROR || log.getLogState() == LogState.LOGIN_DECLINED || log.getLogState() == LogState.ENROL_DECLINED){
-            ImageView logo = (ImageView) view.findViewById(R.id.log_image_view);
+            ImageView logo = view.findViewById(R.id.log_image_view);
             logo.setImageResource(R.drawable.log_row_item_red_icon);
         } else {
-            ImageView logo = (ImageView) view.findViewById(R.id.log_image_view);
+            ImageView logo = view.findViewById(R.id.log_image_view);
             logo.setImageResource(R.drawable.log_row_item_green_icon);
         }
         RelativeLayout log_main_view = view.findViewById(R.id.log_main_view);
         log_main_view.setTag(position);
-        log_main_view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = (int) v.getTag();
-                ApproveDenyFragment approveDenyFragment = new ApproveDenyFragment();
-                approveDenyFragment.setIsUserInfo(true);
-                OxPush2Request request = oxPush2Adapter(list.get(position));
-                approveDenyFragment.setPush2Request(request);
-                if (mListener != null) {
-//                        Settings.setIsBackButtonVisible(activity.getApplicationContext(), true);
-                    Settings.setIsBackButtonVisibleForLog(activity.getApplicationContext(), true);
-                    mListener.onKeyHandleInfo(approveDenyFragment);
-                }
+        log_main_view.setOnClickListener(v -> {
+            int position1 = (int) v.getTag();
+            ApproveDenyFragment approveDenyFragment = new ApproveDenyFragment();
+            approveDenyFragment.setIsUserInfo(true);
+            approveDenyFragment.setLogInfo(log);
+            OxPush2Request request = oxPush2Adapter(list.get(position1));
+            approveDenyFragment.setPush2Request(request);
+            if (mListener != null) {
+                Settings.setIsBackButtonVisibleForLog(activity.getApplicationContext(), true);
+                mListener.onKeyHandleInfo(approveDenyFragment);
             }
         });
         String title = log.getIssuer();
             String timeAgo = (String) DateUtils.getRelativeTimeSpanString(Long.valueOf(log.getCreatedDate()), System.currentTimeMillis(),
                     DateUtils.MINUTE_IN_MILLIS);
-            TextView createdTime = (TextView) view.findViewById(R.id.created_date_text_view);
+            TextView createdTime = view.findViewById(R.id.created_date_text_view);
             createdTime.setText(timeAgo);
         switch (log.getLogState()){
             case LOGIN_SUCCESS:
@@ -168,7 +160,7 @@ public class LogsFragmentListAdapter extends BaseAdapter {
                 title = "Enroll to " + log.getIssuer();
                 break;
             case ENROL_DECLINED:
-                title = "Declined enrol to " + log.getIssuer();
+                title = "Declined enroll to " + log.getIssuer();
                 break;
             case LOGIN_DECLINED:
                 title = "Declined login to " + log.getIssuer();
@@ -182,30 +174,23 @@ public class LogsFragmentListAdapter extends BaseAdapter {
         final String item = log.getUserName();
         if (item != null) {
 
-//            holder.textView.setText(item);
-            holder.deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mListener != null) {
-                        mListener.onDeleteLogEvent();
-                    }
+            holder.deleteButton.setOnClickListener(v -> {
+                if (mListener != null) {
+                    mListener.onDeleteLogEvent();
                 }
             });
             final View finalView = view;
-            holder.showButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ViewHolder tag = (ViewHolder) finalView.getTag();
-                    int position = (int) tag.deleteButton.getTag();
-                    ApproveDenyFragment approveDenyFragment = new ApproveDenyFragment();
-                    approveDenyFragment.setIsUserInfo(true);
-                    OxPush2Request request = oxPush2Adapter(list.get(position));
-                    approveDenyFragment.setPush2Request(request);
-                    if (mListener != null) {
-//                        Settings.setIsBackButtonVisible(activity.getApplicationContext(), true);
-                        Settings.setIsBackButtonVisibleForLog(activity.getApplicationContext(), true);
-                        mListener.onKeyHandleInfo(approveDenyFragment);
-                    }
+            holder.showButton.setOnClickListener(v -> {
+                ViewHolder tag = (ViewHolder) finalView.getTag();
+                int position12 = (int) tag.deleteButton.getTag();
+                ApproveDenyFragment approveDenyFragment = new ApproveDenyFragment();
+                approveDenyFragment.setIsUserInfo(true);
+                approveDenyFragment.setLogInfo(log);
+                OxPush2Request request = oxPush2Adapter(list.get(position12));
+                approveDenyFragment.setPush2Request(request);
+                if (mListener != null) {
+                    Settings.setIsBackButtonVisibleForLog(activity.getApplicationContext(), true);
+                    mListener.onKeyHandleInfo(approveDenyFragment);
                 }
             });
         }
@@ -228,19 +213,16 @@ public class LogsFragmentListAdapter extends BaseAdapter {
                 check.setChecked(checkedLogInfo.getCreatedDate().equalsIgnoreCase(logInf.getCreatedDate()));
             }
         }
-        check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    selectedLogList.add(list.get((Integer) check.getTag()));
-                } else {
-                    LogInfo checkedLogInfo = list.get((Integer) check.getTag());
-                    Iterator<LogInfo> iter = selectedLogList.iterator();
-                    while (iter.hasNext()) {
-                        LogInfo logInf = iter.next();
-                        if (checkedLogInfo.getCreatedDate().equalsIgnoreCase(logInf.getCreatedDate())){
-                            iter.remove();
-                        }
+        check.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked){
+                selectedLogList.add(list.get((Integer) check.getTag()));
+            } else {
+                LogInfo checkedLogInfo1 = list.get((Integer) check.getTag());
+                Iterator<LogInfo> iter = selectedLogList.iterator();
+                while (iter.hasNext()) {
+                    LogInfo logInf = iter.next();
+                    if (checkedLogInfo1.getCreatedDate().equalsIgnoreCase(logInf.getCreatedDate())){
+                        iter.remove();
                     }
                 }
             }
@@ -269,7 +251,6 @@ public class LogsFragmentListAdapter extends BaseAdapter {
         list = results;
         //Triggers the list update
         notifyDataSetChanged();
-//        Settings.setIsButtonVisible(activity.getApplicationContext(), list.size() != 0);
     }
 
     public List<LogInfo> getSelectedLogList(){
