@@ -3,7 +3,6 @@ package org.gluu.super_gluu.app.activities;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -33,7 +32,7 @@ import io.fabric.sdk.android.Fabric;
  * Created by nazaryavornytskyy on 3/22/16.
  */
 public class EntryActivity extends BaseActivity implements
-        EntryActivityListener, PinCodeFragment.PinCodeViewListener, EntrySelectedListener {
+        EntryActivityListener, PinCodeFragment.PinCodeViewListener, EntrySelectedListener, LockFragment.OnLockAppTimerOver {
 
     public static final String TIME_SERVER = "time-a.nist.gov";
 
@@ -51,7 +50,6 @@ public class EntryActivity extends BaseActivity implements
 
         // Check if we get push notification
         Intent intent = getIntent();
-        Boolean isAppLocked = Settings.isAppLocked(getApplicationContext());
 
         //Check if user tap on Approve/Deny button or just on push body
         if(intent.getAction() != null) {
@@ -67,8 +65,8 @@ public class EntryActivity extends BaseActivity implements
             }
         }
 
-        if(isAppLocked) {
-            loadLockedFragment(true);
+        if(Settings.isAppLocked(getApplicationContext())) {
+            loadLockedFragment();
         } else {
             advanceToNextScreen();
         }
@@ -88,7 +86,7 @@ public class EntryActivity extends BaseActivity implements
         Boolean isAppLocked = Settings.isAppLocked(getApplicationContext());
         Settings.setUserChoice(EntryActivity.this, answer);
         if (isAppLocked) {
-            loadLockedFragment(true);
+            loadLockedFragment();
         } else {
             advanceToNextScreen();
         }
@@ -178,7 +176,7 @@ public class EntryActivity extends BaseActivity implements
             /**
              * entered pin code is INCORRECT. DO something here.
              * */
-            loadLockedFragment(false);
+            loadLockedFragment();
 
             setTitle("Application is locked");
             Settings.setAppLocked(getApplicationContext(), true);
@@ -194,28 +192,12 @@ public class EntryActivity extends BaseActivity implements
         }
     }
 
-    private void loadLockedFragment(Boolean isRecover) {
+    private void loadLockedFragment() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         LockFragment lockFragment = new LockFragment();
-        OnLockAppTimerOver timeOverListener = (EntryActivity.OnLockAppTimerOver) () -> {
-            if (GluuApplication.isIsAppInForeground()) {
-                Settings.setAppLocked(getApplicationContext(), false);
-                loadPinCodeFragment();
-            }
-        };
-        lockFragment.setIsRecover(isRecover);
-        lockFragment.setListener(timeOverListener);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.replace(R.id.fragment_container, lockFragment);
-//            fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-    }
-
-    private void setAppLockedTime(String lockedTime) {
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences(Settings.PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("appLockedTime", lockedTime);
-        editor.commit();
     }
 
     @Override
@@ -249,9 +231,13 @@ public class EntryActivity extends BaseActivity implements
         loadNavDrawerActivity();
     }
 
-    public interface OnLockAppTimerOver {
-        void onTimerOver();
+    @Override
+    public void onTimerOver() {
+        Settings.setAppLocked(EntryActivity.this, false);
+        Settings.clearAppLockedTime(EntryActivity.this);
+        loadPinCodeFragment();
     }
+
 
     public void showToast(String text) {
         CustomToast customToast = new CustomToast(EntryActivity.this);

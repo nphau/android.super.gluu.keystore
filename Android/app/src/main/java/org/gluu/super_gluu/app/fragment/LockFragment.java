@@ -4,43 +4,53 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.gluu.super_gluu.app.activities.EntryActivity;
 import org.gluu.super_gluu.app.customview.CustomAlert;
-import org.gluu.super_gluu.app.services.GlobalNetworkTime;
 import org.gluu.super_gluu.app.settings.Settings;
 
-import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import SuperGluu.app.R;
-
-//import com.github.simonpercic.rxtime.RxTime;
 
 /**
  * Created by nazaryavornytskyy on 4/20/16.
  */
 public class LockFragment extends Fragment {
 
-    final SimpleDateFormat isoDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
-
     private Timer clock;
     private Handler handler;
-    private EntryActivity.OnLockAppTimerOver listener;
-    private Boolean isRecover;
+    private OnLockAppTimerOver listener;
 
     private Context context;
 
-    private TextView txtTime;
+    private TextView minutesTextView;
+    private TextView secondsTextView;
 
-    int min = 10;
-    int sec = 0;
+    long minutes = Settings.Constant.APP_LOCKED_MINUTES;
+    long seconds = 0;
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnLockAppTimerOver) {
+            listener = (OnLockAppTimerOver) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnLockAppTimerOver");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,52 +58,58 @@ public class LockFragment extends Fragment {
 
         super.onCreateView(inflater, container, savedInstanceState);
         context = getContext();
-        final View rootView = inflater.inflate(R.layout.fragment_lock_app, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_lock_app, container, false);
 
-        handler = new Handler(){
-            public void handleMessage(android.os.Message msg){
-                if (min == 0 && sec == 0){
-                    stopClocking();
-                    resetCurrentPinAttempts();
-                    if (listener != null){
-                        listener.onTimerOver();
-                    }
-                }
-                TextView minutes = (TextView) rootView.findViewById(R.id.locked_screen_minutes);
-                TextView seconds = (TextView) rootView.findViewById(R.id.locked_screen_seconds);
-                String minStr = min < 10 ? "0" + min + ":" : min + ":";
-                String secStr = sec < 10 ? "0" + sec : String.valueOf(sec);
-                minutes.setText(minStr);
-                seconds.setText(secStr);
-            }
-        };
-//        if (isRecover) {
-            min = 10;
+        LinearLayout timerView = rootView.findViewById(R.id.timer_view);
+
+        minutesTextView = rootView.findViewById(R.id.locked_screen_minutes);
+        secondsTextView = rootView.findViewById(R.id.locked_screen_seconds);
+
+        if(hasTimeExpired()) {
+            timerView.setVisibility(View.GONE);
+            onTimeHasExpired();
+        } else {
+            timerView.setVisibility(View.VISIBLE);
             calculateTimeLeft();
-//        } else {
-//            startClockTick();
-//        }
+            initHandler();
+            startClockTick();
+        }
 
         return rootView;
     }
 
+    private void initHandler(){
+        if(handler == null) {
+            handler = new Handler(Looper.getMainLooper()) {
+                @Override
+                public void handleMessage(Message msg) {
+                    if (minutes <= 0 && seconds <= 0){
+                        onTimeHasExpired();
+                    }
+                    String minStr = minutes < 10 ? "0" + minutes + ":" : minutes + ":";
+                    String secStr = seconds < 10 ? "0" + seconds : String.valueOf(seconds);
+                    minutesTextView.setText(minStr);
+                    secondsTextView.setText(secStr);
+                }
+            };
+        }
+    }
+
     private void startClockTick() {
-        if (!Settings.isAppLocked(context) && min == 0 && sec == 0) {
-            if (listener != null) {
-                listener.onTimerOver();
-            }
+        if (hasTimeExpired()) {
+            onTimeHasExpired();
         } else {
             showAlertView(getString(R.string.wrong_code), getString(R.string.entered_wrong_pin_code_limit_message));
             clock = new Timer();
             clock.scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {
-                    if (sec == 0) {
-                        min = min - 1;
-                        min = min < 0 ? 0 : min;
-                        sec = 60;
+                    if (seconds == 0) {
+                        minutes = minutes - 1;
+                        minutes = minutes < 0 ? 0 : minutes;
+                        seconds = 60;
                     }
-                    sec--;
+                    seconds--;
                     //send message to update UI
                     handler.sendEmptyMessage(0);
                 }
@@ -108,54 +124,32 @@ public class LockFragment extends Fragment {
         }
     }
 
-    public EntryActivity.OnLockAppTimerOver getListener() {
-        return listener;
+    private void onTimeHasExpired() {
+        stopClocking();
+        Settings.setAppLocked(context, false);
+        Settings.clearAppLockedTime(context);
+        resetCurrentPinAttempts();
+        listener.onTimerOver();
     }
 
-    public void setListener(EntryActivity.OnLockAppTimerOver listener) {
-        this.listener = listener;
+
+    private boolean hasTimeExpired() {
+        Date currentTime = new Date(System.currentTimeMillis());
+        return currentTime.getTime() >= Settings.getAppLockedTime(context);
     }
 
-    private void calculateTimeLeft(){
-        new GlobalNetworkTime().getCurrentNetworkTime(context, new GlobalNetworkTime.GetGlobalTimeCallback() {
-            @Override
-            public void onGlobalTime(Long time) {
-                currentNetworkTime(time);
-                startClockTick();
-            }
-        });
+    private void calculateTimeLeft() {
+        Date currentTime = new Date(System.currentTimeMillis());
+
+        long difference = Settings.getAppLockedTime(context) - currentTime.getTime()  ;
+
+        long minutesDifference = TimeUnit.MILLISECONDS.toMinutes(difference);
+        long secondsDifference = TimeUnit.MILLISECONDS.toSeconds(difference);
+
+        minutes = minutesDifference;
+        seconds = secondsDifference - (minutesDifference * 60);
     }
 
-    private String getAppLockedTime(){
-        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        return preferences.getString("appLockedTime", "");
-    }
-
-    private void currentNetworkTime(Long time){
-//        Date lockedDate;
-//        Date currentDate;
-//        lockedDate = new Date(Long.parseLong(getAppLockedTime()));// isoDateTimeFormat.parse(getAppLockedTime());
-//        currentDate = new Date(time);//isoDateTimeFormat.parse(String.valueOf(time));
-        String lockedTimeStr = getAppLockedTime();
-        if (lockedTimeStr.equalsIgnoreCase("")){
-            Settings.setAppLocked(context, false);
-        } else {
-            long lockedTime = Long.parseLong(getAppLockedTime());
-            long diff = time - lockedTime;
-            long secondsInMilli = 1000;
-            long minutesInMilli = secondsInMilli * 60;
-            long elapsedMinutes = diff / minutesInMilli;
-            diff = diff % minutesInMilli;
-            long elapsedSeconds = diff / secondsInMilli;
-            min = (int) (min - elapsedMinutes);
-            sec = (min > 11 || min < 0) ? 0 : (int) elapsedSeconds;
-            min = min < 0 ? 0 : min;
-            min = min > 10 ? 0 : min;
-            if (min == 0 && sec == 0) {
-                Settings.setAppLocked(context, false);
-            }
-        }
-    }
 
     public void resetCurrentPinAttempts(){
         SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
@@ -170,18 +164,15 @@ public class LockFragment extends Fragment {
         return Integer.parseInt(pinCode);
     }
 
-    public Boolean getIsRecover() {
-        return isRecover;
-    }
-
-    public void setIsRecover(Boolean isRecover) {
-        this.isRecover = isRecover;
-    }
 
     private void showAlertView(String title, String message){
         CustomAlert gluuAlert = new CustomAlert(getActivity());
         gluuAlert.setMessage(message);
         gluuAlert.setHeader(title);
         gluuAlert.show();
+    }
+
+    public interface OnLockAppTimerOver {
+        void onTimerOver();
     }
 }
