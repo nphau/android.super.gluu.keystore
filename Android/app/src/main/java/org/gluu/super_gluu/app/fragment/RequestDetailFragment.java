@@ -43,7 +43,7 @@ import SuperGluu.app.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ApproveDenyFragment extends ToolbarFragment {
+public class RequestDetailFragment extends ToolbarFragment {
 
     SimpleDateFormat isoDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
 
@@ -93,6 +93,19 @@ public class ApproveDenyFragment extends ToolbarFragment {
 
     @BindView(R.id.action_button_group)
     LinearLayout approveDenyLayout;
+
+    public static RequestDetailFragment newInstance(
+            boolean isUserInfo, LogInfo logInfo, OxPush2Request oxPush2Request,
+            MainNavDrawerActivity.RequestProcessListener listener) {
+
+        RequestDetailFragment requestDetailFragment = new RequestDetailFragment();
+        requestDetailFragment.setIsUserInfo(isUserInfo);
+        requestDetailFragment.setLogInfo(logInfo);
+        requestDetailFragment.setPush2Request(oxPush2Request);
+        requestDetailFragment.setListener(listener);
+
+        return requestDetailFragment;
+    }
 
     @Override
     public void onAttach(Context context) {

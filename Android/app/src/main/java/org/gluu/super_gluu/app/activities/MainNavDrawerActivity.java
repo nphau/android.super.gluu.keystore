@@ -46,7 +46,7 @@ import org.gluu.super_gluu.app.GluuApplication;
 import org.gluu.super_gluu.app.ProcessManager;
 import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.app.customview.CustomToast;
-import org.gluu.super_gluu.app.fragment.ApproveDenyFragment;
+import org.gluu.super_gluu.app.fragment.RequestDetailFragment;
 import org.gluu.super_gluu.app.fragment.HomeFragment;
 import org.gluu.super_gluu.app.fragment.KeyFragmentListFragment;
 import org.gluu.super_gluu.app.fragment.KeyHandleInfoFragment;
@@ -88,7 +88,7 @@ import butterknife.ButterKnife;
  */
 public class MainNavDrawerActivity extends BaseActivity
         implements OxPush2RequestListener, KeyHandleInfoFragment.OnDeleteKeyHandleListener,
-        PinCodeFragment.PinCodeViewListener, ApproveDenyFragment.OnDeleteLogInfoListener,
+        PinCodeFragment.PinCodeViewListener, RequestDetailFragment.OnDeleteLogInfoListener,
         HomeFragment.InterstitialAdListener {
 
     //region class variables
@@ -507,10 +507,8 @@ public class MainNavDrawerActivity extends BaseActivity
             notificationManager.cancel(MainNavDrawerActivity.MESSAGE_NOTIFICATION_ID);
         }
         final ProcessManager processManager = createProcessManager(oxPush2Request);
-        ApproveDenyFragment approveDenyFragment = new ApproveDenyFragment();
-        approveDenyFragment.setIsUserInfo(false);
-        approveDenyFragment.setPush2Request(oxPush2Request);
-        approveDenyFragment.setListener(new RequestProcessListener() {
+
+        RequestProcessListener requestProcessListener = new RequestProcessListener() {
             @Override
             public void onApprove() {
                 Settings.clearPushOxData(getApplicationContext());
@@ -522,9 +520,13 @@ public class MainNavDrawerActivity extends BaseActivity
                 Settings.clearPushOxData(getApplicationContext());
                 processManager.onOxPushRequest(true);
             }
-        });
+        };
+
+        RequestDetailFragment requestDetailFragment =
+                RequestDetailFragment.newInstance(false, null, oxPush2Request, requestProcessListener);
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.main_frame_layout, approveDenyFragment);
+        transaction.replace(R.id.main_frame_layout, requestDetailFragment);
         transaction.addToBackStack(null);
         transaction.commitAllowingStateLoss();
     }

@@ -137,14 +137,14 @@ public class LogsFragmentListAdapter extends BaseAdapter {
         log_main_view.setTag(position);
         log_main_view.setOnClickListener(v -> {
             int position1 = (int) v.getTag();
-            ApproveDenyFragment approveDenyFragment = new ApproveDenyFragment();
-            approveDenyFragment.setIsUserInfo(true);
-            approveDenyFragment.setLogInfo(log);
+
             OxPush2Request request = oxPush2Adapter(list.get(position1));
-            approveDenyFragment.setPush2Request(request);
+            RequestDetailFragment requestDetailFragment =
+                    RequestDetailFragment.newInstance(true, log, request, null);
+
             if (mListener != null) {
                 Settings.setIsBackButtonVisibleForLog(activity.getApplicationContext(), true);
-                mListener.onKeyHandleInfo(approveDenyFragment);
+                mListener.onKeyHandleInfo(requestDetailFragment);
             }
         });
         String title = log.getIssuer();
@@ -183,14 +183,14 @@ public class LogsFragmentListAdapter extends BaseAdapter {
             holder.showButton.setOnClickListener(v -> {
                 ViewHolder tag = (ViewHolder) finalView.getTag();
                 int position12 = (int) tag.deleteButton.getTag();
-                ApproveDenyFragment approveDenyFragment = new ApproveDenyFragment();
-                approveDenyFragment.setIsUserInfo(true);
-                approveDenyFragment.setLogInfo(log);
+
                 OxPush2Request request = oxPush2Adapter(list.get(position12));
-                approveDenyFragment.setPush2Request(request);
+                RequestDetailFragment requestDetailFragment =
+                        RequestDetailFragment.newInstance(true, log, request, null);
+                requestDetailFragment.setPush2Request(request);
                 if (mListener != null) {
                     Settings.setIsBackButtonVisibleForLog(activity.getApplicationContext(), true);
-                    mListener.onKeyHandleInfo(approveDenyFragment);
+                    mListener.onKeyHandleInfo(requestDetailFragment);
                 }
             });
         }

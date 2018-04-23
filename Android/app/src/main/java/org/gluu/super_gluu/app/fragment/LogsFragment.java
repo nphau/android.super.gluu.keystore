@@ -44,7 +44,7 @@ public class LogsFragment extends ToolbarFragment {
     private LogsFragmentListAdapter listAdapter;
     private AndroidKeyDataStore dataStore;
     private LogInfoListener mListener;
-    public ApproveDenyFragment.OnDeleteLogInfoListener deleteLogListener;
+    public RequestDetailFragment.OnDeleteLogInfoListener deleteLogListener;
     private List<LogInfo> logs;
 
     @BindView(R.id.nav_drawer_toolbar)
@@ -107,11 +107,11 @@ public class LogsFragment extends ToolbarFragment {
         reloadLogs();
         mListener = new LogInfoListener() {
             @Override
-            public void onKeyHandleInfo(ApproveDenyFragment approveDenyFragment) {
+            public void onKeyHandleInfo(RequestDetailFragment requestDetailFragment) {
                 setIsButtonVisible(false);
                 getActivity().invalidateOptionsMenu();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.main_frame_layout, approveDenyFragment);
+                transaction.replace(R.id.main_frame_layout, requestDetailFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
             }
@@ -202,8 +202,8 @@ public class LogsFragment extends ToolbarFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof ApproveDenyFragment.OnDeleteLogInfoListener) {
-            deleteLogListener = (ApproveDenyFragment.OnDeleteLogInfoListener) context;
+        if (context instanceof RequestDetailFragment.OnDeleteLogInfoListener) {
+            deleteLogListener = (RequestDetailFragment.OnDeleteLogInfoListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnDeleteKeyHandleListener");
@@ -269,7 +269,7 @@ public class LogsFragment extends ToolbarFragment {
     }
 
     public interface LogInfoListener {
-        void onKeyHandleInfo(ApproveDenyFragment approveDenyFragment);
+        void onKeyHandleInfo(RequestDetailFragment requestDetailFragment);
         void onDeleteLogEvent();
     }
 
