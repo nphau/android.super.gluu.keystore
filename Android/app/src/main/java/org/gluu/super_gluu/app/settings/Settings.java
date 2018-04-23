@@ -370,10 +370,9 @@ public class Settings {
         private static final String OX_REQUEST_RECEIVED_TIME = "OxRequestReceievedTime";
 
         private static final String APP_LOCKED = "isAppLocked";
-        private static final String APP_LOCKED_TIME = "appLockedTime";
+        private static final String APP_LOCKED_TIME = "appLockedTimeLong";
 
         public static final int APP_LOCKED_MINUTES = 10;
-
 
         public static final int AUTH_VALID_TIME = 60;
     }
