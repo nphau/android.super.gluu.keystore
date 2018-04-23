@@ -17,8 +17,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
-import org.gluu.super_gluu.app.customview.CustomAlert;
-import org.gluu.super_gluu.app.services.GlobalNetworkTime;
 import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.util.PinEntryEditText;
 
@@ -299,15 +297,10 @@ public class PinCodeFragment extends Fragment {
 
             } else {
                 Settings.setAppLocked(context, true);
-                setCurrentNetworkTime();
+                Settings.setAppLockedTime(context);
                 pinCodeViewListener.onCorrectPinCode(false);
             }
         }
-    }
-
-    private void setCurrentNetworkTime() {
-        new GlobalNetworkTime().getCurrentNetworkTime(context,
-                time -> Settings.setAppLockedTime(context, String.valueOf(time)));
     }
 
     @Override
