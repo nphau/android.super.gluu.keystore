@@ -1,7 +1,6 @@
 package org.gluu.super_gluu.app.fragment;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -34,6 +33,7 @@ public class LockFragment extends Fragment {
 
     private Context context;
 
+    private LinearLayout timerView;
     private TextView minutesTextView;
     private TextView secondsTextView;
 
@@ -60,7 +60,7 @@ public class LockFragment extends Fragment {
         context = getContext();
         View rootView = inflater.inflate(R.layout.fragment_lock_app, container, false);
 
-        LinearLayout timerView = rootView.findViewById(R.id.timer_view);
+        timerView = rootView.findViewById(R.id.timer_view);
 
         minutesTextView = rootView.findViewById(R.id.locked_screen_minutes);
         secondsTextView = rootView.findViewById(R.id.locked_screen_seconds);
@@ -76,6 +76,16 @@ public class LockFragment extends Fragment {
         }
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(hasTimeExpired()) {
+            timerView.setVisibility(View.GONE);
+            onTimeHasExpired();
+        }
     }
 
     private void initHandler(){
@@ -128,7 +138,7 @@ public class LockFragment extends Fragment {
         stopClocking();
         Settings.setAppLocked(context, false);
         Settings.clearAppLockedTime(context);
-        resetCurrentPinAttempts();
+        Settings.resetCurrentPinAttempts(context);
         listener.onTimerOver();
     }
 
@@ -148,20 +158,6 @@ public class LockFragment extends Fragment {
 
         minutes = minutesDifference;
         seconds = secondsDifference - (minutesDifference * 60);
-    }
-
-
-    public void resetCurrentPinAttempts(){
-        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("currentPinCodeAttempts", String.valueOf(getPinCodeAttempts()));
-        editor.commit();
-    }
-
-    public int getPinCodeAttempts(){
-        SharedPreferences preferences = context.getSharedPreferences("PinCodeSettings", Context.MODE_PRIVATE);
-        String pinCode = preferences.getString("pinCodeAttempts", "5");
-        return Integer.parseInt(pinCode);
     }
 
 

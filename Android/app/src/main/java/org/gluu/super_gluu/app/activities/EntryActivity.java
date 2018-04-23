@@ -235,7 +235,9 @@ public class EntryActivity extends BaseActivity implements
     public void onTimerOver() {
         Settings.setAppLocked(EntryActivity.this, false);
         Settings.clearAppLockedTime(EntryActivity.this);
-        loadPinCodeFragment();
+        if(GluuApplication.isIsAppInForeground()) {
+            loadPinCodeFragment();
+        }
     }
 
 

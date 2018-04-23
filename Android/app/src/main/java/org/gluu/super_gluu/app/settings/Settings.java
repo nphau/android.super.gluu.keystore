@@ -63,18 +63,10 @@ public class Settings {
         editor.commit();
     }
 
-    public static int getPinCodeAttempts(Context context){
-        if (context != null) {
-            SharedPreferences preferences = context.getSharedPreferences(Constant.PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
-            String pinCode = preferences.getString(Constant.PIN_CODE_ATTEMPTS, "5");
-            return Integer.parseInt(pinCode);
-        }
-        return 5;
-    }
 
     public static int getCurrentPinCodeAttempts(Context context){
         SharedPreferences preferences = context.getSharedPreferences(Constant.PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
-        String pinCode = preferences.getString(Constant.CURRENT_PIN_CODE_ATTEMPTS, String.valueOf(Settings.getPinCodeAttempts(context)));
+        String pinCode = preferences.getString(Constant.CURRENT_PIN_CODE_ATTEMPTS, String.valueOf(Constant.PIN_CODE_ATTEMPTS_VALUE));
         return Integer.parseInt(pinCode);
     }
 
@@ -90,7 +82,7 @@ public class Settings {
         Settings.saveIsReset(context);
         SharedPreferences preferences = context.getSharedPreferences(Constant.PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(Constant.CURRENT_PIN_CODE_ATTEMPTS, String.valueOf(getPinCodeAttempts(context)));
+        editor.putString(Constant.CURRENT_PIN_CODE_ATTEMPTS, String.valueOf(Constant.PIN_CODE_ATTEMPTS_VALUE));
         editor.commit();
     }
 
@@ -373,6 +365,9 @@ public class Settings {
         private static final String APP_LOCKED_TIME = "appLockedTimeLong";
 
         public static final int APP_LOCKED_MINUTES = 10;
+
+        private static final int PIN_CODE_ATTEMPTS_VALUE = 5;
+
 
         public static final int AUTH_VALID_TIME = 60;
     }
