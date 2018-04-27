@@ -1,7 +1,6 @@
 package org.gluu.super_gluu.app.fragment;
 
 import android.app.Activity;
-import android.graphics.Typeface;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,13 +69,18 @@ public class LogsFragmentListAdapter extends BaseAdapter {
             holder = new ViewHolder();
             View swipeView = view.findViewById(R.id.delete_layout);
             swipeView.setTag(position);
+            holder.checkBox = view.findViewById(R.id.logCheckBox);
+            holder.contentTextView = view.findViewById(R.id.content_text_view);
+            holder.dateTextView = view.findViewById(R.id.created_date_text_view);
+            holder.typeImageView = view.findViewById(R.id.log_item_image_view);
+            holder.logMainView = view.findViewById(R.id.log_main_view);
+
+
             holder.deleteButton = swipeView.findViewById(R.id.swipe_delete_button);
             holder.showButton = swipeView.findViewById(R.id.swipe_show_button);
-            holder.deleteButton.setTag(position);
-            holder.showButton.setTag(position);
             holder.swipeLayout =  view.findViewById(R.id.swipe_layout);
             holder.index = position;
-            final View finalView = view;
+
             holder.swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
                 @Override
                 public void onStartOpen(SwipeLayout layout) {
@@ -85,8 +89,6 @@ public class LogsFragmentListAdapter extends BaseAdapter {
 
                 @Override
                 public void onOpen(SwipeLayout layout) {
-                    ViewHolder tag = (ViewHolder) finalView.getTag();
-                    int position = tag.index;
                     selectedLogList.add(list.get(position));
                 }
 
@@ -97,8 +99,6 @@ public class LogsFragmentListAdapter extends BaseAdapter {
 
                 @Override
                 public void onClose(SwipeLayout layout) {
-                    ViewHolder tag = (ViewHolder) finalView.getTag();
-                    int position = tag.index;
                     LogInfo checkedLogInfo = list.get(position);
                     Iterator<LogInfo> iter = selectedLogList.iterator();
                     while (iter.hasNext()) {
@@ -124,21 +124,15 @@ public class LogsFragmentListAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
         LogInfo log = list.get(position);
-        TextView contentView = view.findViewById(R.id.content_text_view);
         if (log.getLogState() == LogState.ENROL_FAILED || log.getLogState() == LogState.LOGIN_FAILED
                 || log.getLogState() == LogState.UNKNOWN_ERROR || log.getLogState() == LogState.LOGIN_DECLINED || log.getLogState() == LogState.ENROL_DECLINED){
-            ImageView logo = view.findViewById(R.id.log_image_view);
-            logo.setImageResource(R.drawable.log_row_item_red_icon);
+            holder.typeImageView.setImageResource(R.drawable.log_row_item_red_icon);
         } else {
-            ImageView logo = view.findViewById(R.id.log_image_view);
-            logo.setImageResource(R.drawable.log_row_item_green_icon);
+            holder.typeImageView.setImageResource(R.drawable.log_row_item_green_icon);
         }
-        RelativeLayout log_main_view = view.findViewById(R.id.log_main_view);
-        log_main_view.setTag(position);
-        log_main_view.setOnClickListener(v -> {
-            int position1 = (int) v.getTag();
 
-            OxPush2Request request = oxPush2Adapter(list.get(position1));
+        holder.logMainView.setOnClickListener(v -> {
+            OxPush2Request request = oxPush2Adapter(list.get(position));
             RequestDetailFragment requestDetailFragment =
                     RequestDetailFragment.newInstance(true, log, request, null);
 
@@ -150,8 +144,7 @@ public class LogsFragmentListAdapter extends BaseAdapter {
         String title = log.getIssuer();
             String timeAgo = (String) DateUtils.getRelativeTimeSpanString(Long.valueOf(log.getCreatedDate()), System.currentTimeMillis(),
                     DateUtils.MINUTE_IN_MILLIS);
-            TextView createdTime = view.findViewById(R.id.created_date_text_view);
-            createdTime.setText(timeAgo);
+            holder.dateTextView.setText(timeAgo);
         switch (log.getLogState()){
             case LOGIN_SUCCESS:
                 title = "Logged in " + log.getIssuer();
@@ -169,7 +162,7 @@ public class LogsFragmentListAdapter extends BaseAdapter {
             default:
                 break;
         }
-        contentView.setText(title);
+        holder.contentTextView.setText(title);
 
         final String item = log.getUserName();
         if (item != null) {
@@ -179,12 +172,8 @@ public class LogsFragmentListAdapter extends BaseAdapter {
                     mListener.onDeleteLogEvent();
                 }
             });
-            final View finalView = view;
             holder.showButton.setOnClickListener(v -> {
-                ViewHolder tag = (ViewHolder) finalView.getTag();
-                int position12 = (int) tag.deleteButton.getTag();
-
-                OxPush2Request request = oxPush2Adapter(list.get(position12));
+                OxPush2Request request = oxPush2Adapter(list.get(position));
                 RequestDetailFragment requestDetailFragment =
                         RequestDetailFragment.newInstance(true, log, request, null);
                 requestDetailFragment.setPush2Request(request);
@@ -195,42 +184,35 @@ public class LogsFragmentListAdapter extends BaseAdapter {
             });
         }
 
-        //Setup fonts
-        Typeface face = Typeface.createFromAsset(activity.getAssets(), "ProximaNova-Regular.otf");
-        Typeface faceTitle = Typeface.createFromAsset(activity.getAssets(), "ProximaNova-Semibold.otf");
-        contentView.setTypeface(faceTitle);
-        createdTime.setTypeface(face);
-
-        //Show hide checkboxes depends on editing mode
-        final CheckBox check = (CheckBox) view.findViewById(R.id.logCheckBox);
-        check.setTag(position);
-        check.setChecked(selectedLogList.size() > 0);
-        LogInfo checkedLogInfo = list.get((Integer) check.getTag());
+        holder.checkBox.setChecked(selectedLogList.size() > 0);
+        LogInfo checkedLogInfo = (LogInfo) getItem(position);
         for (LogInfo logInf : new ArrayList<>(selectedLogList)){
             if (isSelectAllMode){
-                check.setChecked(isSelectAllMode);
+                holder.checkBox.setChecked(isSelectAllMode);
             } else {
-                check.setChecked(checkedLogInfo.getCreatedDate().equalsIgnoreCase(logInf.getCreatedDate()));
+                holder.checkBox.setChecked(checkedLogInfo.getCreatedDate().equalsIgnoreCase(logInf.getCreatedDate()));
             }
         }
-        check.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked){
-                selectedLogList.add(list.get((Integer) check.getTag()));
-            } else {
-                LogInfo checkedLogInfo1 = list.get((Integer) check.getTag());
-                Iterator<LogInfo> iter = selectedLogList.iterator();
-                while (iter.hasNext()) {
-                    LogInfo logInf = iter.next();
-                    if (checkedLogInfo1.getCreatedDate().equalsIgnoreCase(logInf.getCreatedDate())){
-                        iter.remove();
+        holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (holder.checkBox.isPressed()) {
+                if (isChecked) {
+                    selectedLogList.add((LogInfo) getItem(position));
+                } else {
+                    LogInfo checkedLogInfo1 = list.get(position);
+                    Iterator<LogInfo> iter = selectedLogList.iterator();
+                    while (iter.hasNext()) {
+                        LogInfo logInf = iter.next();
+                        if (checkedLogInfo1.getCreatedDate().equalsIgnoreCase(logInf.getCreatedDate())) {
+                            iter.remove();
+                        }
                     }
                 }
             }
         });
         if (isEditingMode){
-            check.setVisibility(View.VISIBLE);
+            holder.checkBox.setVisibility(View.VISIBLE);
         } else {
-            check.setVisibility(View.GONE);
+            holder.checkBox.setVisibility(View.GONE);
         }
 
         return view;
@@ -268,7 +250,11 @@ public class LogsFragmentListAdapter extends BaseAdapter {
 
     private class ViewHolder {
         int index;
-        TextView textView;
+        RelativeLayout logMainView;
+        ImageView typeImageView;
+        CheckBox checkBox;
+        TextView contentTextView;
+        TextView dateTextView;
         RelativeLayout deleteButton;
         RelativeLayout showButton;
         SwipeLayout swipeLayout;
