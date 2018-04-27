@@ -249,5 +249,6 @@
     <string name="fido_failure">Invalid Token</string>
     <string name="challenge">Challenge</string>
     <string name="decline">Decline</string>
+    <string name="gluu_server">Gluu Server</string>
 
 </resources>

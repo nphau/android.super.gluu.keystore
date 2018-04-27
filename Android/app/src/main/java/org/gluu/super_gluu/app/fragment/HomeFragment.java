@@ -238,12 +238,12 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
                     // Parsing bar code reader result
                     IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
                     if (BuildConfig.DEBUG) Log.d(TAG, "Parsing QR code result: " + result.toString());
-                    OxPush2Request oxPush2Request = null;
+                    OxPush2Request oxPush2Request;
                     try {
                         oxPush2Request = new Gson().fromJson(result.getContents(), OxPush2Request.class);
                     }
                     catch (Exception ex){
-                        //skip exception there
+                        oxPush2Request = null;
                     }
                     onQrRequest(oxPush2Request);
                 }
