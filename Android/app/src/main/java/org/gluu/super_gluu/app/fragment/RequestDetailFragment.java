@@ -45,6 +45,7 @@ import butterknife.ButterKnife;
 
 public class RequestDetailFragment extends ToolbarFragment {
 
+    //region class variables
     SimpleDateFormat isoDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
 
     private Boolean isUserInfo = false;
@@ -94,6 +95,9 @@ public class RequestDetailFragment extends ToolbarFragment {
     @BindView(R.id.action_button_group)
     LinearLayout approveDenyLayout;
 
+    //endregion
+
+    //region new instance and interfaces
     public static RequestDetailFragment newInstance(
             boolean isUserInfo, LogInfo logInfo, OxPush2Request oxPush2Request,
             MainNavDrawerActivity.RequestProcessListener listener) {
@@ -106,6 +110,14 @@ public class RequestDetailFragment extends ToolbarFragment {
 
         return requestDetailFragment;
     }
+
+    public interface OnDeleteLogInfoListener {
+        void onDeleteLogInfo(OxPush2Request oxPush2Request);
+        void onDeleteLogInfo(List<LogInfo> logInfos);
+    }
+    //endregion
+
+    //region lifecycle methods
 
     @Override
     public void onAttach(Context context) {
@@ -126,7 +138,6 @@ public class RequestDetailFragment extends ToolbarFragment {
         ButterKnife.bind(this, rootView);
         initHandler();
 
-
         //Setup fonts
         if (isUserInfo){
             setDefaultToolbar(toolbar, getString(R.string.log_details), true);
@@ -136,7 +147,7 @@ public class RequestDetailFragment extends ToolbarFragment {
         } else {
             setDefaultToolbar(toolbar, getString(R.string.permission_approval), false);
 
-            startClockTick(rootView);
+            startClockTick();
         }
 
         setHasOptionsMenu(true);
@@ -188,6 +199,9 @@ public class RequestDetailFragment extends ToolbarFragment {
         return super.onOptionsItemSelected(item);
     }
 
+    //endregion
+
+    //region helper methods
     private void updateLogInfo(){
         if (push2Request != null){
 
@@ -197,8 +211,12 @@ public class RequestDetailFragment extends ToolbarFragment {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
-            String baseUrl = "Gluu Server " + url.getHost();
-            applicationTextView.setText(baseUrl);
+
+            if(url!= null) {
+                String baseUrl = "Gluu Server " + url.getHost();
+                applicationTextView.setText(baseUrl);
+            }
+
 
             urlTextView.setText(push2Request.getIssuer());
 
@@ -310,28 +328,12 @@ public class RequestDetailFragment extends ToolbarFragment {
         customAlert.show();
     }
 
-    public Boolean getIsUserInfo() {
-        return isUserInfo;
-    }
-
-    public void setIsUserInfo(Boolean isUserInfo) {
-        this.isUserInfo = isUserInfo;
-    }
-
-    public LogInfo getLogInfo() {
-        return logInfo;
-    }
-
-    public void setLogInfo(LogInfo logInfo) {
-        this.logInfo = logInfo;
-    }
-
     public void cleanUpViewAfterClick() {
         stopClocking();
         closeView();
     }
 
-    private void startClockTick(final View rootView){
+    private void startClockTick(){
         clock = new Timer();
         clock.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -380,8 +382,21 @@ public class RequestDetailFragment extends ToolbarFragment {
         }
     }
 
-    public OxPush2Request getPush2Request() {
-        return push2Request;
+    public boolean isFailedLog() {
+        return logInfo != null && (logInfo.getLogState() == LogState.ENROL_FAILED || logInfo.getLogState() == LogState.LOGIN_FAILED ||
+                logInfo.getLogState() == LogState.UNKNOWN_ERROR || logInfo.getLogState() == LogState.LOGIN_DECLINED ||
+                logInfo.getLogState() == LogState.ENROL_DECLINED);
+    }
+
+    //endregion
+
+    //region getters and setters
+    public void setIsUserInfo(Boolean isUserInfo) {
+        this.isUserInfo = isUserInfo;
+    }
+
+    public void setLogInfo(LogInfo logInfo) {
+        this.logInfo = logInfo;
     }
 
     public void setPush2Request(OxPush2Request push2Request) {
@@ -395,15 +410,6 @@ public class RequestDetailFragment extends ToolbarFragment {
     public void setListener(MainNavDrawerActivity.RequestProcessListener listener) {
         this.listener = listener;
     }
+    //endregion
 
-    public boolean isFailedLog() {
-        return logInfo != null && (logInfo.getLogState() == LogState.ENROL_FAILED || logInfo.getLogState() == LogState.LOGIN_FAILED ||
-                logInfo.getLogState() == LogState.UNKNOWN_ERROR || logInfo.getLogState() == LogState.LOGIN_DECLINED ||
-                logInfo.getLogState() == LogState.ENROL_DECLINED);
-    }
-
-    public interface OnDeleteLogInfoListener {
-        void onDeleteLogInfo(OxPush2Request oxPush2Request);
-        void onDeleteLogInfo(List<LogInfo> logInfos);
-    }
 }

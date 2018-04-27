@@ -107,6 +107,10 @@ public class OxPush2Request {
         this.enrollment = enrollment;
     }
 
+    public void setApp(String app) {
+        this.app = app;
+    }
+
     public String toPushMessage(String format) {
         return String.format(format, this.app);
     }
