@@ -212,7 +212,7 @@ public class RequestDetailFragment extends ToolbarFragment {
                 e.printStackTrace();
             }
 
-            if(url!= null) {
+            if(url != null) {
                 String baseUrl = "Gluu Server " + url.getHost();
                 applicationTextView.setText(baseUrl);
             }
