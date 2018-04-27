@@ -249,6 +249,22 @@ public class MainNavDrawerActivity extends BaseActivity
     }
 
     @Override
+    public void onBackPressed() {
+        if(fragmentManager != null) {
+            Fragment fragment = fragmentManager.findFragmentById(R.id.main_frame_layout);
+            if(fragment instanceof RequestDetailFragment) {
+                if(((RequestDetailFragment)fragment).getUserInfo()) {
+                    super.onBackPressed();
+                }
+            } else {
+                super.onBackPressed();
+            }
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         inAppPurchaseService.deInitPurchaseService();
         super.onDestroy();

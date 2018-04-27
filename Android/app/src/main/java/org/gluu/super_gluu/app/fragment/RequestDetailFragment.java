@@ -395,6 +395,10 @@ public class RequestDetailFragment extends ToolbarFragment {
         this.isUserInfo = isUserInfo;
     }
 
+    public Boolean getUserInfo() {
+        return isUserInfo;
+    }
+
     public void setLogInfo(LogInfo logInfo) {
         this.logInfo = logInfo;
     }
