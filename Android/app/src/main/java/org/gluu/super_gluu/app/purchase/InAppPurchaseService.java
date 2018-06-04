@@ -11,6 +11,8 @@ import com.anjlab.android.iab.v3.TransactionDetails;
 
 import org.gluu.super_gluu.app.settings.Settings;
 
+import SuperGluu.app.R;
+
 /**
  * Created by nazaryavornytskyy on 6/30/17.
  */
@@ -20,10 +22,7 @@ public class InAppPurchaseService {
     private static final String TAG = "InAppPurchaseService";
 
     // PRODUCT & SUBSCRIPTION IDS
-    private static final String SUBSCRIPTION_ID = "org.gluu.monthly.ad.free";
-//    private static final String SUBSCRIPTION_ID_TEST = "android.test.purchased";
-    private static final String LICENSE_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyYw9xTiyhyjQ6mnWOwEWduDkOM84BkqHfN+jrAu82M0xBwg3RAorPwT/38sMcOZMAwcWudN0vjQo7uXAl2j4+N7BiMI2qlO2x33wY8fDvlN4ue54BBdZExZhTpkVEAmIm9cLCI3i+nOlUZgiwX6+sQOb5K+7q9WiNuSBDWRR2WDNOY7QmQdI1VzbHBPQoM00N9/0UDSFCw4LCRngm7ZeuW8AQMyYo6r5K3dy8m+Ys0JWGKA+xuQY4ZutSb47IYX4m7lzxbN0mqH9TLeA3V6audrhs5i0OYYKwbCd68NikB7Wco6L/HOzh1y6LoxIFXZ6M+vnZ6OLfTJuVmEfTOOhIwIDAQAB";
-    private static final String MERCHANT_ID=null;
+    private static final String MERCHANT_ID = null;
 
     public boolean readyToPurchase = false;
     public boolean isSubscribed = false;
@@ -46,7 +45,10 @@ public class InAppPurchaseService {
             Log.e(TAG, "In-app billing service is unavailable, please upgrade Android Market/Play to version >= 3.9.16");
         }
 
-        bp = new BillingProcessor(context, LICENSE_KEY, MERCHANT_ID, new BillingProcessor.IBillingHandler() {
+        String licenseKey = context.getString(R.string.purchase_license_key);
+        String subscriptionId = context.getString(R.string.subscription_id);
+
+        bp = new BillingProcessor(context, licenseKey, MERCHANT_ID, new BillingProcessor.IBillingHandler() {
             @Override
             public void onProductPurchased(String productId, TransactionDetails details) {
                 Log.e(TAG, "onProductPurchased: " + productId);
@@ -66,11 +68,11 @@ public class InAppPurchaseService {
             public void onBillingInitialized() {
                 Log.e(TAG, "onBillingInitialized");
                 readyToPurchase = true;
-                TransactionDetails transactionDetails = bp.getSubscriptionTransactionDetails(SUBSCRIPTION_ID);
+                TransactionDetails transactionDetails = bp.getSubscriptionTransactionDetails(subscriptionId);
                 if (transactionDetails != null) {
                     isSubscribed = transactionDetails.purchaseInfo.purchaseData.autoRenewing;
                 }
-                TransactionDetails transactionDetails2 = bp.getPurchaseTransactionDetails(SUBSCRIPTION_ID);
+                TransactionDetails transactionDetails2 = bp.getPurchaseTransactionDetails(subscriptionId);
                 if (transactionDetails2 != null) {
                     isSubscribed = transactionDetails2.purchaseInfo.purchaseData.purchaseState == PurchaseState.PurchasedSuccessfully;
                 }
@@ -93,7 +95,9 @@ public class InAppPurchaseService {
     }
 
     public void purchase(final Activity activity){
-        bp.subscribe(activity, SUBSCRIPTION_ID);
+        String subscriptionId = activity.getString(R.string.subscription_id);
+
+        bp.subscribe(activity, subscriptionId);
     }
 
     public void restorePurchase(){
