@@ -28,7 +28,7 @@ import SuperGluu.app.R;
 
 public abstract class FakeDataUtil {
 
-    public static final String FAKE_LICENSED_JSON = "{\"app\":\"https://cred3.gluu.org/cred-manager\",\"method\":\"enroll\",\"req_ip\":\"38.142.29.4\",\"created\":\"2018-06-04T16:38:42.615\",\"req_loc\":\"United States, Texas, Houston\",\"issuer\":\"https://cred3.gluu.org\",\"username\":\"eric4\",\"enrollment\":\"e461af7a-c97e-4820-89d4-c30da5ad6ca1\", \"licensed\": true}";
+    public static final String FAKE_LICENSED_JSON = "{\"app\":\"https://cred3.gluu.org/cred-manager\",\"method\":\"enroll\",\"req_ip\":\"38.142.29.4\",\"created\":\"2018-06-04T16:38:42.615\",\"req_loc\":\"United States, Texas, Houston\",\" \",\"username\":\"eric4\",\"enrollment\":\"e461af7a-c97e-4820-89d4-c30da5ad6ca1\", \"licensed\": true}";
 
 
     private static final String QR_CODE_PUSH_NOTIFICATION_MESSAGE =

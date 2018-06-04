@@ -241,9 +241,6 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
                     OxPush2Request oxPush2Request;
                     try {
                         oxPush2Request = new Gson().fromJson(result.getContents(), OxPush2Request.class);
-                        if(oxPush2Request.isLicensed()) {
-                            Settings.setLicensed(context, true);
-                        }
                     }
                     catch (Exception ex){
                         oxPush2Request = null;

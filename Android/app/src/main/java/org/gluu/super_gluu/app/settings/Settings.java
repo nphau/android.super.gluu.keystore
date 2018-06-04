@@ -3,10 +3,12 @@ package org.gluu.super_gluu.app.settings;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import org.gluu.super_gluu.app.fragment.SettingsFragment;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Created by nazaryavornytskyy on 7/12/16.
@@ -276,16 +278,41 @@ public class Settings {
         return isFingerprintEnabled;
     }
 
-    public static void setLicensed(Context context, Boolean isLicensed) {
-        SharedPreferences preferences = context.getSharedPreferences(Constant.OX_PUSH_SETTINGS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean(Constant.LICENSED, isLicensed);
+    public static void addLicense(Context context, String licenseId, boolean isLicensed) {
+        Log.i("boogie", "Added license: " + licenseId + " : " + String.valueOf(isLicensed));
+        SharedPreferences licensePrefs = context.getSharedPreferences(Constant.LICENSE_SETTINGS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = licensePrefs.edit();
+        editor.putBoolean(licenseId, isLicensed);
+        editor.apply();
+    }
+
+    public static void removeLicense(Context context, String licenseId) {
+        Log.i("boogie", "Removed license: " + licenseId);
+        SharedPreferences licensePrefs = context.getSharedPreferences(Constant.LICENSE_SETTINGS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = licensePrefs.edit();
+        editor.remove(licenseId);
         editor.apply();
     }
 
     public static boolean isLicensed(Context context) {
-        SharedPreferences preferences = context.getSharedPreferences(Constant.OX_PUSH_SETTINGS, Context.MODE_PRIVATE);
-        return preferences.getBoolean(Constant.LICENSED, false);
+        SharedPreferences licensePrefs = context.getSharedPreferences(Constant.LICENSE_SETTINGS, Context.MODE_PRIVATE);
+        Map<String, ?> allEntries = licensePrefs.getAll();
+
+        if(allEntries.isEmpty()) {
+            Log.i("boogie", "No licenses found");
+            return false;
+        }
+
+        for(Map.Entry<String, ?> entry : allEntries.entrySet()) {
+            Boolean licensed = licensePrefs.getBoolean(entry.getKey(), false);
+            if(licensed) {
+                Log.i("boogie", "Found ad free license: " + entry.getKey());
+                return true;
+            }
+        }
+
+        Log.i("boogie", "No ad free licenses found");
+        return false;
     }
 
     //For actions bar menu
@@ -373,6 +400,8 @@ public class Settings {
         private static final String USER_CHOICE = "UserChoice";
         private static final String OX_REQUEST_DATA = "OxRequestData";
         private static final String OX_REQUEST_RECEIVED_TIME = "OxRequestReceievedTime";
+
+        private static final String LICENSE_SETTINGS = "license_settings";
 
         private static final String APP_LOCKED = "isAppLocked";
         private static final String APP_LOCKED_TIME = "appLockedTimeLong";

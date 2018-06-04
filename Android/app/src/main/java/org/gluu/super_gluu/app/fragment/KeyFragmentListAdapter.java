@@ -228,6 +228,7 @@ public class KeyFragmentListAdapter extends BaseAdapter {
                 Context context = activity.getApplicationContext();
                 AndroidKeyDataStore dataStore = new AndroidKeyDataStore(context);
                 dataStore.deleteKeyHandle(tokenEntry);
+                Settings.removeLicense(context, tokenEntry.getIssuer() + tokenEntry.getUserName());
                 updateResults(dataStore);
             }
 

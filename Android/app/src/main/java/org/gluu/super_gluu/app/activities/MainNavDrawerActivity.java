@@ -46,13 +46,13 @@ import org.gluu.super_gluu.app.GluuApplication;
 import org.gluu.super_gluu.app.ProcessManager;
 import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.app.customview.CustomToast;
-import org.gluu.super_gluu.app.fragment.RequestDetailFragment;
 import org.gluu.super_gluu.app.fragment.HomeFragment;
 import org.gluu.super_gluu.app.fragment.KeyFragmentListFragment;
 import org.gluu.super_gluu.app.fragment.KeyHandleInfoFragment;
 import org.gluu.super_gluu.app.fragment.LicenseFragment;
 import org.gluu.super_gluu.app.fragment.LogsFragment;
 import org.gluu.super_gluu.app.fragment.PinCodeFragment;
+import org.gluu.super_gluu.app.fragment.RequestDetailFragment;
 import org.gluu.super_gluu.app.fragment.SettingsFragment;
 import org.gluu.super_gluu.app.fragment.SettingsPinCode;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
@@ -325,7 +325,7 @@ public class MainNavDrawerActivity extends BaseActivity
     }
 
     private void setupInterstitialAd(){
-        if(getResources().getBoolean(R.bool.adsEnabled)) {
+        if(getResources().getBoolean(R.bool.adsEnabled) && !Settings.isLicensed(context)) {
             interstitialAd = new InterstitialAd(MainNavDrawerActivity.this);
             interstitialAd.setAdUnitId(BuildConfig.INTERSTITIAL_AD_ID);
             final AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
@@ -517,6 +517,8 @@ public class MainNavDrawerActivity extends BaseActivity
         if (!validateOxPush2Request(oxPush2Request)) {
             return;
         }
+
+        Settings.addLicense(context, oxPush2Request.getIssuer() + oxPush2Request.getUserName(), oxPush2Request.isLicensed());
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         if(notificationManager != null) {
