@@ -117,15 +117,11 @@ android {
         gluu {
             dimension "standard"
             resValue "string", "versionNumber", "V" + defaultConfig.versionName
-            resValue "string", "purchase_license_key", "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyYw9xTiyhyjQ6mnWOwEWduDkOM84BkqHfN+jrAu82M0xBwg3RAorPwT/38sMcOZMAwcWudN0vjQo7uXAl2j4+N7BiMI2qlO2x33wY8fDvlN4ue54BBdZExZhTpkVEAmIm9cLCI3i+nOlUZgiwX6+sQOb5K+7q9WiNuSBDWRR2WDNOY7QmQdI1VzbHBPQoM00N9/0UDSFCw4LCRngm7ZeuW8AQMyYo6r5K3dy8m+Ys0JWGKA+xuQY4ZutSb47IYX4m7lzxbN0mqH9TLeA3V6audrhs5i0OYYKwbCd68NikB7Wco6L/HOzh1y6LoxIFXZ6M+vnZ6OLfTJuVmEfTOOhIwIDAQAB"
-            resValue "string", "subscription_id", "org.gluu.monthly.ad.free"
         }
         whiteLabel {
             applicationId "com.whitelabel"
             dimension "standard"
             resValue "string", "versionNumber", "V1.0.0 - 1"
-            resValue "string", "purchase_license_key", ""
-            resValue "string", "subscription_id", ""
         }
     }
 }

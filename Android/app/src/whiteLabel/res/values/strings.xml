@@ -21,4 +21,7 @@
     <string name="channel_name">&appNameFull; Channel</string>
     <string name="channel_description">&appNameFull; Authentication</string>
 
+    <string name="purchase_license_key"></string>
+    <string name="subscription_id"></string>
+
 </resources>
