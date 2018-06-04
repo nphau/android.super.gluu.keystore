@@ -276,6 +276,18 @@ public class Settings {
         return isFingerprintEnabled;
     }
 
+    public static void setLicensed(Context context, Boolean isLicensed) {
+        SharedPreferences preferences = context.getSharedPreferences(Constant.OX_PUSH_SETTINGS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(Constant.LICENSED, isLicensed);
+        editor.apply();
+    }
+
+    public static boolean isLicensed(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(Constant.OX_PUSH_SETTINGS, Context.MODE_PRIVATE);
+        return preferences.getBoolean(Constant.LICENSED, false);
+    }
+
     //For actions bar menu
     public static Boolean getIsSettingsMenuVisible(Context context){
         SharedPreferences preferences = context.getSharedPreferences("CleanLogsSettings", Context.MODE_PRIVATE);
@@ -353,6 +365,7 @@ public class Settings {
         private static final String IS_PIN_ENABLED = "isPinEnabled";
         private static final String PIN_CODE_ATTEMPTS = "pinCodeAttempts";
         private static final String CURRENT_PIN_CODE_ATTEMPTS = "currentPinCodeAttempts";
+        private static final String LICENSED = "licensed";
         public static final String PIN_CODE_SETTINGS = "PinCodeSettings";
 
 

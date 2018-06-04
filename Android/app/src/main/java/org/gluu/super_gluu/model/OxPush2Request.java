@@ -30,6 +30,8 @@ public class OxPush2Request {
 
     private String enrollment;
 
+    private boolean licensed = false;
+
     @SerializedName("req_ip")
     private String locationIP;
 
@@ -39,7 +41,7 @@ public class OxPush2Request {
     public OxPush2Request() {
     }
 
-    public OxPush2Request(String userName, String issuer, String app, String state, String method, String created, String enrollment) {
+    public OxPush2Request(String userName, String issuer, String app, String state, String method, String created, String enrollment, boolean licensed) {
         this.userName = userName;
         this.issuer = issuer;
         this.app = app;
@@ -47,6 +49,7 @@ public class OxPush2Request {
         this.method = method;
         this.created = created;
         this.enrollment = enrollment;
+        this.licensed = licensed;
     }
 
     public String getUserName() {
@@ -115,4 +118,7 @@ public class OxPush2Request {
         return String.format(format, this.app);
     }
 
+    public boolean isLicensed() {
+        return licensed;
+    }
 }

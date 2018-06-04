@@ -48,7 +48,7 @@ public abstract class FakeDataUtil {
                         "https://cred3.gluu.org/cred-manager",
                         "00f14ff3-e153-4f1f-a4c4-4587241b3b4d",
                         "authenticate", "2018-03-14T19:41:29.094000",
-                        null);
+                        null, true);
         oxPush2Request.setLocationCity("United%20States%2C%20Texas%2C%20Houston");
         oxPush2Request.setLocationIP("38.142.29.4");
         return oxPush2Request;

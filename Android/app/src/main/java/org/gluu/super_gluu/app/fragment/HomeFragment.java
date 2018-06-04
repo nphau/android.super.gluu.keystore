@@ -158,7 +158,7 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
     }
 
     private void setupBannerAd() {
-        if(Settings.getPurchase(getContext()) || !getResources().getBoolean(R.bool.adsEnabled)) {
+        if(Settings.getPurchase(context) || !getResources().getBoolean(R.bool.adsEnabled) || Settings.isLicensed(context)) {
             adView.setVisibility(View.GONE);
             removeAdView.setVisibility(View.GONE);
         } else {
@@ -241,6 +241,9 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
                     OxPush2Request oxPush2Request;
                     try {
                         oxPush2Request = new Gson().fromJson(result.getContents(), OxPush2Request.class);
+                        if(oxPush2Request.isLicensed()) {
+                            Settings.setLicensed(context, true);
+                        }
                     }
                     catch (Exception ex){
                         oxPush2Request = null;
@@ -324,7 +327,7 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
     }
 
     public void showInterstitialAd() {
-        Boolean isAdFree = Settings.getPurchase(context);
+        Boolean isAdFree = Settings.getPurchase(context) || Settings.isLicensed(context);
         if(!isAdFree) {
             interstitialAdListener.showAd();
         }
