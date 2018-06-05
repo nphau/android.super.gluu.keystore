@@ -338,7 +338,9 @@ public class MainNavDrawerActivity extends BaseActivity
                 @Override
                 public void onAdClosed() {
                     super.onAdClosed();
-                    interstitialAd.loadAd(adRequestBuilder.build());
+                    if(interstitialAd != null) {
+                        interstitialAd.loadAd(adRequestBuilder.build());
+                    }
                 }
             });
             interstitialAd.loadAd(adRequestBuilder.build());
@@ -446,7 +448,9 @@ public class MainNavDrawerActivity extends BaseActivity
 
     @Override
     public void showInterstitialAd() {
-        if(interstitialAd.isLoaded()) {
+        if(interstitialAd == null) {
+            setupInterstitialAd();
+        } else if(interstitialAd.isLoaded()) {
             interstitialAd.show();
         }
     }
