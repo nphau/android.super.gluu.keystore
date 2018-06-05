@@ -325,7 +325,7 @@ public class MainNavDrawerActivity extends BaseActivity
 
     private void setupInterstitialAd(){
 
-        if(!isAdFree()) {
+        if(!areAdsDisabled()) {
             interstitialAd = new InterstitialAd(MainNavDrawerActivity.this);
             interstitialAd.setAdUnitId(BuildConfig.INTERSTITIAL_AD_ID);
             final AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
@@ -451,7 +451,7 @@ public class MainNavDrawerActivity extends BaseActivity
     }
 
     @Override
-    public boolean isAdFree() {
+    public boolean areAdsDisabled() {
         return !getResources().getBoolean(R.bool.adsEnabled) ||
                 Settings.isLicensed(context) ||
                 Settings.getPurchase(context);
@@ -534,7 +534,7 @@ public class MainNavDrawerActivity extends BaseActivity
         RequestProcessListener requestProcessListener = new RequestProcessListener() {
             @Override
             public void onApprove() {
-                String licenseId = OxPush2Request.getLicenseId(oxPush2Request.getIssuer(), oxPush2Request.getUserName());
+                String licenseId = OxPush2Request.getLicenseId(oxPush2Request.getIssuer());
                 Settings.updateLicense(context, licenseId, oxPush2Request.isLicensed());
                 Settings.clearPushOxData(getApplicationContext());
                 processManager.onOxPushRequest(false);

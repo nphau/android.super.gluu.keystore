@@ -90,7 +90,7 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
 
     public interface AdListener {
         void showInterstitialAd();
-        boolean isAdFree();
+        boolean areAdsDisabled();
     }
 
     AdListener adListener;
@@ -159,7 +159,7 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
 
     private void setupBannerAd() {
 
-        if(adListener.isAdFree()) {
+        if(adListener.areAdsDisabled()) {
             adView.setVisibility(View.GONE);
             removeAdView.setVisibility(View.GONE);
         } else {
@@ -326,7 +326,7 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
 
     public void showInterstitialAd() {
 
-        if(!adListener.isAdFree()) {
+        if(!adListener.areAdsDisabled()) {
             adListener.showInterstitialAd();
         }
     }

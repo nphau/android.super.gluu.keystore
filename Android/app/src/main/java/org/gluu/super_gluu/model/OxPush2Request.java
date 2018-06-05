@@ -52,8 +52,8 @@ public class OxPush2Request {
         this.licensed = licensed;
     }
 
-    public static String getLicenseId(String issuer, String username) {
-        return issuer + username;
+    public static String getLicenseId(String issuer) {
+        return issuer;
     }
 
     public String getUserName() {
