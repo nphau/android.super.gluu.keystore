@@ -3,7 +3,6 @@ package org.gluu.super_gluu.app.settings;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import org.gluu.super_gluu.app.fragment.SettingsFragment;
 
@@ -293,7 +292,6 @@ public class Settings {
     }
 
     public static boolean isLicensed(Context context) {
-        Date startDate = new Date();
         SharedPreferences licensePrefs = context.getSharedPreferences(Constant.LICENSE_SETTINGS, Context.MODE_PRIVATE);
         Map<String, ?> allEntries = licensePrefs.getAll();
 
@@ -388,8 +386,7 @@ public class Settings {
         private static final String IS_PIN_ENABLED = "isPinEnabled";
         private static final String PIN_CODE_ATTEMPTS = "pinCodeAttempts";
         private static final String CURRENT_PIN_CODE_ATTEMPTS = "currentPinCodeAttempts";
-        private static final String LICENSED = "licensed";
-        public static final String PIN_CODE_SETTINGS = "PinCodeSettings";
+        private static final String PIN_CODE_SETTINGS = "PinCodeSettings";
 
 
         private static final String OX_PUSH_SETTINGS = "oxPushSettings";

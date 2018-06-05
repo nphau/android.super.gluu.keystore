@@ -89,7 +89,7 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
     private AndroidKeyDataStore dataStore;
 
     public interface AdListener {
-        void showAd();
+        void showInterstitialAd();
         boolean isAdFree();
     }
 
@@ -327,7 +327,7 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
     public void showInterstitialAd() {
 
         if(!adListener.isAdFree()) {
-            adListener.showAd();
+            adListener.showInterstitialAd();
         }
     }
 

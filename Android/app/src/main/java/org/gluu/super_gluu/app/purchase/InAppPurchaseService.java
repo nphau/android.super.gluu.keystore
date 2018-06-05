@@ -21,9 +21,6 @@ public class InAppPurchaseService {
 
     private static final String TAG = "InAppPurchaseService";
 
-    // PRODUCT & SUBSCRIPTION IDS
-    private static final String MERCHANT_ID = null;
-
     public boolean readyToPurchase = false;
     public boolean isSubscribed = false;
 
@@ -48,7 +45,7 @@ public class InAppPurchaseService {
         String licenseKey = context.getString(R.string.purchase_license_key);
         String subscriptionId = context.getString(R.string.subscription_id);
 
-        bp = new BillingProcessor(context, licenseKey, MERCHANT_ID, new BillingProcessor.IBillingHandler() {
+        bp = new BillingProcessor(context, licenseKey, null, new BillingProcessor.IBillingHandler() {
             @Override
             public void onProductPurchased(String productId, TransactionDetails details) {
                 Log.e(TAG, "onProductPurchased: " + productId);

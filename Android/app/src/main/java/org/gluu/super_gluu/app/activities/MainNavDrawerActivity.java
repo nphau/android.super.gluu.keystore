@@ -444,7 +444,7 @@ public class MainNavDrawerActivity extends BaseActivity
     }
 
     @Override
-    public void showAd() {
+    public void showInterstitialAd() {
         if(interstitialAd.isLoaded()) {
             interstitialAd.show();
         }
