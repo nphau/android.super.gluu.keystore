@@ -278,7 +278,7 @@ public class Settings {
         return isFingerprintEnabled;
     }
 
-    public static void addLicense(Context context, String licenseId, boolean isLicensed) {
+    public static void updateLicense(Context context, String licenseId, boolean isLicensed) {
         Log.i("boogie", "Added license: " + licenseId + " : " + String.valueOf(isLicensed));
         SharedPreferences licensePrefs = context.getSharedPreferences(Constant.LICENSE_SETTINGS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = licensePrefs.edit();
@@ -295,11 +295,13 @@ public class Settings {
     }
 
     public static boolean isLicensed(Context context) {
+        Date startDate = new Date();
         SharedPreferences licensePrefs = context.getSharedPreferences(Constant.LICENSE_SETTINGS, Context.MODE_PRIVATE);
         Map<String, ?> allEntries = licensePrefs.getAll();
 
         if(allEntries.isEmpty()) {
             Log.i("boogie", "No licenses found");
+            Log.i("boogie", "Method took: " + String.valueOf(getTimeDiff(startDate)));
             return false;
         }
 
@@ -307,12 +309,19 @@ public class Settings {
             Boolean licensed = licensePrefs.getBoolean(entry.getKey(), false);
             if(licensed) {
                 Log.i("boogie", "Found ad free license: " + entry.getKey());
+                Log.i("boogie", "Method took: " + String.valueOf(getTimeDiff(startDate)));
                 return true;
             }
         }
 
         Log.i("boogie", "No ad free licenses found");
+        Log.i("boogie", "Method took: " + String.valueOf(getTimeDiff(startDate)));
         return false;
+    }
+
+    private static long getTimeDiff(Date startDate) {
+        Date currentDate = new Date();
+        return currentDate.getTime() - startDate.getTime();
     }
 
     //For actions bar menu

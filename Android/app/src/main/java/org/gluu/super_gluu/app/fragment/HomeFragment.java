@@ -40,7 +40,6 @@ import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.app.customview.CustomToast;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
-import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.model.OxPush2Request;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
 import org.gluu.super_gluu.u2f.v2.SoftwareDevice;
@@ -89,11 +88,12 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
     private SoftwareDevice u2f;
     private AndroidKeyDataStore dataStore;
 
-    public interface InterstitialAdListener {
+    public interface AdListener {
         void showAd();
+        boolean isAdFree();
     }
 
-    InterstitialAdListener interstitialAdListener;
+    AdListener adListener;
 
     private BroadcastReceiver adBroadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -158,7 +158,8 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
     }
 
     private void setupBannerAd() {
-        if(Settings.getPurchase(context) || !getResources().getBoolean(R.bool.adsEnabled) || Settings.isLicensed(context)) {
+
+        if(adListener.isAdFree()) {
             adView.setVisibility(View.GONE);
             removeAdView.setVisibility(View.GONE);
         } else {
@@ -220,10 +221,10 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
             throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
         }
 
-        if (context instanceof InterstitialAdListener) {
-            interstitialAdListener = (InterstitialAdListener) context;
+        if (context instanceof AdListener) {
+            adListener = (AdListener) context;
         } else {
-            throw new RuntimeException(context.toString() + " must implement InterstitialAdListener");
+            throw new RuntimeException(context.toString() + " must implement AdListener");
         }
     }
 
@@ -324,9 +325,9 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
     }
 
     public void showInterstitialAd() {
-        Boolean isAdFree = Settings.getPurchase(context) || Settings.isLicensed(context);
-        if(!isAdFree) {
-            interstitialAdListener.showAd();
+
+        if(!adListener.isAdFree()) {
+            adListener.showAd();
         }
     }
 

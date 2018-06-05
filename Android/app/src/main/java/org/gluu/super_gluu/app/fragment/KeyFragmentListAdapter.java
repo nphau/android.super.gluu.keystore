@@ -18,6 +18,7 @@ import org.gluu.super_gluu.app.NotificationType;
 import org.gluu.super_gluu.app.activities.MainNavDrawerActivity;
 import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.app.settings.Settings;
+import org.gluu.super_gluu.model.OxPush2Request;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
 import org.gluu.super_gluu.u2f.v2.model.TokenEntry;
 import org.gluu.super_gluu.util.Utils;
@@ -228,7 +229,8 @@ public class KeyFragmentListAdapter extends BaseAdapter {
                 Context context = activity.getApplicationContext();
                 AndroidKeyDataStore dataStore = new AndroidKeyDataStore(context);
                 dataStore.deleteKeyHandle(tokenEntry);
-                Settings.removeLicense(context, tokenEntry.getIssuer() + tokenEntry.getUserName());
+                String uniqueLicenseId = OxPush2Request.getLicenseId(tokenEntry.getIssuer(), tokenEntry.getUserName());
+                Settings.removeLicense(context, uniqueLicenseId);
                 updateResults(dataStore);
             }
 

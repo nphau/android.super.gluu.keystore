@@ -37,7 +37,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.gson.Gson;
@@ -89,7 +88,7 @@ import butterknife.ButterKnife;
 public class MainNavDrawerActivity extends BaseActivity
         implements OxPush2RequestListener, KeyHandleInfoFragment.OnDeleteKeyHandleListener,
         PinCodeFragment.PinCodeViewListener, RequestDetailFragment.OnDeleteLogInfoListener,
-        HomeFragment.InterstitialAdListener {
+        HomeFragment.AdListener {
 
     //region class variables
 
@@ -325,11 +324,12 @@ public class MainNavDrawerActivity extends BaseActivity
     }
 
     private void setupInterstitialAd(){
-        if(getResources().getBoolean(R.bool.adsEnabled) && !Settings.isLicensed(context)) {
+
+        if(!isAdFree()) {
             interstitialAd = new InterstitialAd(MainNavDrawerActivity.this);
             interstitialAd.setAdUnitId(BuildConfig.INTERSTITIAL_AD_ID);
             final AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
-            interstitialAd.setAdListener(new AdListener() {
+            interstitialAd.setAdListener(new com.google.android.gms.ads.AdListener() {
                 @Override
                 public void onAdLoaded() {
                     super.onAdLoaded();
@@ -451,6 +451,13 @@ public class MainNavDrawerActivity extends BaseActivity
     }
 
     @Override
+    public boolean isAdFree() {
+        return !getResources().getBoolean(R.bool.adsEnabled) ||
+                Settings.isLicensed(context) ||
+                Settings.getPurchase(context);
+    }
+
+    @Override
     public void onDeleteKeyHandle(TokenEntry key) {
         dataStore.deleteKeyHandle(key);
     }
@@ -518,8 +525,6 @@ public class MainNavDrawerActivity extends BaseActivity
             return;
         }
 
-        Settings.addLicense(context, oxPush2Request.getIssuer() + oxPush2Request.getUserName(), oxPush2Request.isLicensed());
-
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         if(notificationManager != null) {
             notificationManager.cancel(MainNavDrawerActivity.MESSAGE_NOTIFICATION_ID);
@@ -529,6 +534,8 @@ public class MainNavDrawerActivity extends BaseActivity
         RequestProcessListener requestProcessListener = new RequestProcessListener() {
             @Override
             public void onApprove() {
+                String licenseId = OxPush2Request.getLicenseId(oxPush2Request.getIssuer(), oxPush2Request.getUserName());
+                Settings.updateLicense(context, licenseId, oxPush2Request.isLicensed());
                 Settings.clearPushOxData(getApplicationContext());
                 processManager.onOxPushRequest(false);
             }
