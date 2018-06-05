@@ -37,6 +37,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.gson.Gson;
@@ -88,7 +89,7 @@ import butterknife.ButterKnife;
 public class MainNavDrawerActivity extends BaseActivity
         implements OxPush2RequestListener, KeyHandleInfoFragment.OnDeleteKeyHandleListener,
         PinCodeFragment.PinCodeViewListener, RequestDetailFragment.OnDeleteLogInfoListener,
-        HomeFragment.AdListener {
+        HomeFragment.GluuAdListener {
 
     //region class variables
 
@@ -329,7 +330,7 @@ public class MainNavDrawerActivity extends BaseActivity
             interstitialAd = new InterstitialAd(MainNavDrawerActivity.this);
             interstitialAd.setAdUnitId(BuildConfig.INTERSTITIAL_AD_ID);
             final AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
-            interstitialAd.setAdListener(new com.google.android.gms.ads.AdListener() {
+            interstitialAd.setAdListener(new AdListener() {
                 @Override
                 public void onAdLoaded() {
                     super.onAdLoaded();

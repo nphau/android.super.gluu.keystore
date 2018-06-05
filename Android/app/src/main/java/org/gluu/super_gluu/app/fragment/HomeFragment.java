@@ -88,12 +88,12 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
     private SoftwareDevice u2f;
     private AndroidKeyDataStore dataStore;
 
-    public interface AdListener {
+    public interface GluuAdListener {
         void showInterstitialAd();
         boolean areAdsDisabled();
     }
 
-    AdListener adListener;
+    GluuAdListener gluuAdListener;
 
     private BroadcastReceiver adBroadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -159,7 +159,7 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
 
     private void setupBannerAd() {
 
-        if(adListener.areAdsDisabled()) {
+        if(gluuAdListener.areAdsDisabled()) {
             adView.setVisibility(View.GONE);
             removeAdView.setVisibility(View.GONE);
         } else {
@@ -221,10 +221,10 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
             throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
         }
 
-        if (context instanceof AdListener) {
-            adListener = (AdListener) context;
+        if (context instanceof GluuAdListener) {
+            gluuAdListener = (GluuAdListener) context;
         } else {
-            throw new RuntimeException(context.toString() + " must implement AdListener");
+            throw new RuntimeException(context.toString() + " must implement GluuAdListener");
         }
     }
 
@@ -326,8 +326,8 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
 
     public void showInterstitialAd() {
 
-        if(!adListener.areAdsDisabled()) {
-            adListener.showInterstitialAd();
+        if(!gluuAdListener.areAdsDisabled()) {
+            gluuAdListener.showInterstitialAd();
         }
     }
 
