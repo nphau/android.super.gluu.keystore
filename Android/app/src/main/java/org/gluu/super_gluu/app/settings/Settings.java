@@ -279,7 +279,6 @@ public class Settings {
     }
 
     public static void updateLicense(Context context, String licenseId, boolean isLicensed) {
-        Log.i("boogie", "Added license: " + licenseId + " : " + String.valueOf(isLicensed));
         SharedPreferences licensePrefs = context.getSharedPreferences(Constant.LICENSE_SETTINGS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = licensePrefs.edit();
         editor.putBoolean(licenseId, isLicensed);
@@ -287,7 +286,6 @@ public class Settings {
     }
 
     public static void removeLicense(Context context, String licenseId) {
-        Log.i("boogie", "Removed license: " + licenseId);
         SharedPreferences licensePrefs = context.getSharedPreferences(Constant.LICENSE_SETTINGS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = licensePrefs.edit();
         editor.remove(licenseId);
@@ -300,28 +298,17 @@ public class Settings {
         Map<String, ?> allEntries = licensePrefs.getAll();
 
         if(allEntries.isEmpty()) {
-            Log.i("boogie", "No licenses found");
-            Log.i("boogie", "Method took: " + String.valueOf(getTimeDiff(startDate)));
             return false;
         }
 
         for(Map.Entry<String, ?> entry : allEntries.entrySet()) {
             Boolean licensed = licensePrefs.getBoolean(entry.getKey(), false);
             if(licensed) {
-                Log.i("boogie", "Found ad free license: " + entry.getKey());
-                Log.i("boogie", "Method took: " + String.valueOf(getTimeDiff(startDate)));
                 return true;
             }
         }
 
-        Log.i("boogie", "No ad free licenses found");
-        Log.i("boogie", "Method took: " + String.valueOf(getTimeDiff(startDate)));
         return false;
-    }
-
-    private static long getTimeDiff(Date startDate) {
-        Date currentDate = new Date();
-        return currentDate.getTime() - startDate.getTime();
     }
 
     //For actions bar menu
