@@ -293,13 +293,13 @@ public class Settings {
 
     public static boolean isLicensed(Context context) {
         SharedPreferences licensePrefs = context.getSharedPreferences(Constant.LICENSE_SETTINGS, Context.MODE_PRIVATE);
-        Map<String, ?> allEntries = licensePrefs.getAll();
+        Map<String, ?> allLicenseEntries = licensePrefs.getAll();
 
-        if(allEntries.isEmpty()) {
+        if(allLicenseEntries.isEmpty()) {
             return false;
         }
 
-        for(Map.Entry<String, ?> entry : allEntries.entrySet()) {
+        for(Map.Entry<String, ?> entry : allLicenseEntries.entrySet()) {
             Boolean licensed = licensePrefs.getBoolean(entry.getKey(), false);
             if(licensed) {
                 return true;

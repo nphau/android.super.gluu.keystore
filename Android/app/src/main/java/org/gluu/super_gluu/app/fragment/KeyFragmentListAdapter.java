@@ -229,7 +229,7 @@ public class KeyFragmentListAdapter extends BaseAdapter {
                 Context context = activity.getApplicationContext();
                 AndroidKeyDataStore dataStore = new AndroidKeyDataStore(context);
                 dataStore.deleteKeyHandle(tokenEntry);
-                String uniqueLicenseId = OxPush2Request.getLicenseId(tokenEntry.getIssuer());
+                String uniqueLicenseId = OxPush2Request.getLicenseId(tokenEntry.getIssuer(), tokenEntry.getUserName());
                 Settings.removeLicense(context, uniqueLicenseId);
                 updateResults(dataStore);
             }

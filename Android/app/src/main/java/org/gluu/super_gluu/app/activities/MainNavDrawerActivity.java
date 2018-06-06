@@ -539,7 +539,7 @@ public class MainNavDrawerActivity extends BaseActivity
         RequestProcessListener requestProcessListener = new RequestProcessListener() {
             @Override
             public void onApprove() {
-                String licenseId = OxPush2Request.getLicenseId(oxPush2Request.getIssuer());
+                String licenseId = OxPush2Request.getLicenseId(oxPush2Request.getIssuer(), oxPush2Request.getUserName());
                 Settings.updateLicense(context, licenseId, oxPush2Request.isLicensed());
                 Settings.clearPushOxData(getApplicationContext());
                 processManager.onOxPushRequest(false);
