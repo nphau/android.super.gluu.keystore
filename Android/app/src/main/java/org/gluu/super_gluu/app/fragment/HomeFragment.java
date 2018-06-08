@@ -348,6 +348,8 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
                 return new Pair<>(getString(R.string.challenge), message);
             case Constant.DECLINE_FAILED:
                 return new Pair<>(getString(R.string.decline), message);
+            case Constant.DUPLICATE_ENROLLMENT:
+                return new Pair<>(message, getString(R.string.existing_key_message));
             default:
                 return new Pair<>(getString(R.string.generic_auth_result), message);
         }
@@ -417,6 +419,7 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
         private static final String CHALLENGE = "Challenges doesn\'t match";
         private static final String DECLINE_FAILED = "Decline Failed";
         private static final String AUTHENTICATED_FAILED_OTHER = "Authentication failed!";
+        private static final String DUPLICATE_ENROLLMENT = "Failed: Duplicate Enrollment";
     }
 
 }
