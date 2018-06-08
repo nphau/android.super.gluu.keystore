@@ -377,8 +377,6 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
             setFinalStatus(R.string.challenge_doesnt_match);
         }
 
-
-
         if (StringUtils.equals("success", u2fOperationResult.getStatus())) {
             LogInfo log = new LogInfo();
             log.setIssuer(oxPush2Request.getIssuer());
@@ -393,11 +391,9 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
                 LogState state = isEnroll ? LogState.ENROL_DECLINED : LogState.LOGIN_DECLINED;
                 log.setLogState(state);
             } else {
-                if(isEnroll) {
-                    if(dataStore.doesKeyAlreadyExist(oxPush2Request)) {
-                        setFinalStatus(R.string.duplicate_enrollment_title);
-                        return;
-                    }
+                if(isEnroll && tokenResponse.isDuplicate()) {
+                    setFinalStatus(R.string.duplicate_enrollment_title);
+                    return;
                 }
 
                 setFinalStatus(isEnroll ? R.string.enroll_result_success : R.string.auth_result_success);
