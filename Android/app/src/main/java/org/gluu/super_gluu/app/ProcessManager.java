@@ -167,14 +167,9 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
     }
 
     private void setFinalStatus(int statusId) {
-        String message = activity.getApplicationContext().getString(statusId);
-        setFinalStatus(message);
-    }
-
-    private void setFinalStatus(String message) {
         Intent intent = new Intent("ox_request-precess-event");
         // You can also include some extra data.
-        intent.putExtra("message", message);
+        intent.putExtra("message", statusId);
         LocalBroadcastManager.getInstance(activity).sendBroadcast(intent);
     }
 

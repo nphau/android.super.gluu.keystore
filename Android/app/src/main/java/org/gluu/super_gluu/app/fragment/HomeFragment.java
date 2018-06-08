@@ -111,9 +111,9 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
         @Override
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
-            String message = intent.getStringExtra("message");
-            if (context != null && !message.isEmpty()) {
-                showDialog(message);
+            int messageId = intent.getIntExtra("message", 0);
+            if (context != null && messageId != 0) {
+                showDialog(messageId);
             }
         }
     };
@@ -302,9 +302,9 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
     }
 
 
-    private void showDialog(String message){
+    private void showDialog(int messageId){
         Activity activity = getActivity();
-        Pair<String, String> titleMessageText = getTitleBasedOnMessage(message);
+        Pair<String, String> titleMessageText = getTitleBasedOnMessage(messageId);
 
         final CustomAlert gluuAlert = new CustomAlert(activity);
         gluuAlert.setHeader(titleMessageText.first);
@@ -332,26 +332,26 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
     }
 
 
-    private Pair<String, String> getTitleBasedOnMessage(String message) {
+    private Pair<String, String> getTitleBasedOnMessage(int messageId) {
 
-        switch (message) {
+        switch (messageId) {
             case Constant.AUTH_SUCCESS:
                 return new Pair<>(getString(R.string.success), getString(R.string.auth_result_success));
             case Constant.AUTH_FAILURE:
             case Constant.AUTHENTICATED_FAILED_OTHER:
                 return new Pair<>(getString(R.string.failed), getString(R.string.deny_result_success));
             case Constant.ENROLLMENT_SUCCESS:
-                return new Pair<>(getString(R.string.enroll_result_title), message);
+                return new Pair<>(getString(R.string.enroll_result_title), getString(messageId));
             case Constant.FIDO_U2F_INVALID:
-                return new Pair<>(getString(R.string.fido_failure), message);
+                return new Pair<>(getString(R.string.fido_failure), getString(messageId));
             case Constant.CHALLENGE:
-                return new Pair<>(getString(R.string.challenge), message);
+                return new Pair<>(getString(R.string.challenge), getString(messageId));
             case Constant.DECLINE_FAILED:
-                return new Pair<>(getString(R.string.decline), message);
+                return new Pair<>(getString(R.string.decline), getString(messageId));
             case Constant.DUPLICATE_ENROLLMENT:
-                return new Pair<>(message, getString(R.string.existing_key_message));
+                return new Pair<>(getString(messageId), getString(R.string.existing_key_message));
             default:
-                return new Pair<>(getString(R.string.generic_auth_result), message);
+                return new Pair<>(getString(R.string.generic_auth_result), getString(messageId));
         }
     }
 
@@ -412,14 +412,19 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
     }
 
     private class Constant {
-        private static final String AUTH_SUCCESS = "You have successfully authenticated!";
-        private static final String AUTH_FAILURE = "The authentication request has been denied or failed.";
-        private static final String ENROLLMENT_SUCCESS = "Your enrollment was successful!";
-        private static final String FIDO_U2F_INVALID = "Fido U2F token response is invalid";
-        private static final String CHALLENGE = "Challenges doesn\'t match";
-        private static final String DECLINE_FAILED = "Decline Failed";
-        private static final String AUTHENTICATED_FAILED_OTHER = "Authentication failed!";
-        private static final String DUPLICATE_ENROLLMENT = "Failed: Duplicate Enrollment";
+        private static final int AUTH_SUCCESS = R.string.auth_result_success;
+        private static final int AUTH_FAILURE = R.string.deny_result_success;
+        private static final int ENROLLMENT_SUCCESS = R.string.enroll_result_success;
+        private static final int FIDO_U2F_INVALID = R.string.wrong_token_response;
+        private static final int CHALLENGE = R.string.challenge_doesnt_match;
+        private static final int DECLINE_FAILED = R.string.deny_result_failed;
+        private static final int AUTHENTICATED_FAILED_OTHER = R.string.auth_result_failed;
+        private static final int DUPLICATE_ENROLLMENT = R.string.duplicate_enrollment_title;
+        private static final int FAILED_PROCESS_STATUS = R.string.failed_process_status;
+        private static final int FAILED_PROCESS_RESPONSE = R.string.failed_process_response;
+        private static final int NO_VALID_KEY_HANDLES = R.string.no_valid_key_handles;
+        private static final int FAILED_PROCESS_CHALLENGE = R.string.failed_process_challenge;
+        private static final int WRONG_U2F_METADATA = R.string.wrong_u2f_metadata;
     }
 
 }
