@@ -177,6 +177,10 @@ public class AndroidKeyDataStore implements DataStore {
     @Override
     public boolean doesKeyAlreadyExist(OxPush2Request oxPush2Request) {
         List<String> tokensString = getTokenEntries();
+        if(tokensString == null || tokensString.isEmpty()) {
+            return false;
+        }
+
         List<TokenEntry> tokens = new ArrayList<TokenEntry>();
         for (String tokenString : tokensString){
             TokenEntry token = new Gson().fromJson(tokenString, TokenEntry.class);
@@ -184,8 +188,9 @@ public class AndroidKeyDataStore implements DataStore {
         }
 
         for(TokenEntry tokenEntry: tokens) {
-            if(tokenEntry.getUserName().equals(oxPush2Request.getUserName())
-                    && tokenEntry.getIssuer().equals(oxPush2Request.getIssuer())) {
+            if(tokenEntry != null && oxPush2Request != null &&
+                    tokenEntry.getUserName().equals(oxPush2Request.getUserName()) &&
+                    tokenEntry.getIssuer().equals(oxPush2Request.getIssuer())) {
                 return true;
             }
         }
