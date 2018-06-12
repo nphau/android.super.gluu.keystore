@@ -59,7 +59,10 @@
 }
 
 @property (nonatomic,assign)  id <ApproveDenyDelegate> delegate;
+
+// if isLogInfo, we're just displaying info about a previous data log
 @property (assign, nonatomic) BOOL isLogInfo;
+
 @property (strong, nonatomic) UserLoginInfo* userInfo;
 @property (nonatomic, weak) IBOutlet ADViewSubscriber* adFreeView;
 

@@ -194,7 +194,7 @@
                                                             <rect key="frame" x="93.5" y="0.0" width="94" height="116"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_logs_header" translatesAutoresizingMaskIntoConstraints="NO" id="yx2-5z-NZw">
-                                                                    <rect key="frame" x="0.0" y="11.5" width="94" height="94"/>
+                                                                    <rect key="frame" x="0.0" y="12" width="94" height="94"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="94" id="2tC-eQ-Gbx"/>
                                                                         <constraint firstAttribute="height" constant="94" id="Way-a6-VJ8"/>
@@ -1291,14 +1291,14 @@
                                         <rect key="frame" x="30" y="144.5" width="315" height="236"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image_homescreen_qrcode" translatesAutoresizingMaskIntoConstraints="NO" id="5QX-lk-50V">
-                                                <rect key="frame" x="85.5" y="0.5" width="144" height="123"/>
+                                                <rect key="frame" x="85.5" y="0.0" width="144" height="123"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="144" id="XLl-iu-Nmg"/>
                                                     <constraint firstAttribute="width" secondItem="5QX-lk-50V" secondAttribute="height" multiplier="48:41" id="pim-8r-EdJ"/>
                                                 </constraints>
                                             </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="752" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="fBw-De-95J">
-                                                <rect key="frame" x="-30" y="143.5" width="0.0" height="25"/>
+                                                <rect key="frame" x="-30" y="143" width="0.0" height="25"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="755" text="Welcome to Super Gluu!" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="FDP-Hk-qh3">
                                                         <rect key="frame" x="0.0" y="0.0" width="0.0" height="20"/>
@@ -1315,7 +1315,7 @@
                                                 </subviews>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ffN-SG-7rx">
-                                                <rect key="frame" x="57.5" y="188.5" width="200" height="48"/>
+                                                <rect key="frame" x="57.5" y="188" width="200" height="48"/>
                                                 <color key="backgroundColor" red="0.0039215686269999999" green="0.63137254899999995" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="200" id="CK8-Yb-5uQ"/>
