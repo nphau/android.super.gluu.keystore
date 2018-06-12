@@ -654,8 +654,11 @@
 #pragma mark - Ad Handling:
     
 -(void)initADView:(NSNotification*)notification{
-    smallBannerView = [[SuperGluuBannerView alloc] initWithAdSize:kGADAdSizeBanner andRootViewController:self];
-    smallBannerView.alpha = 1.0;
+    BOOL isLicensed = [[NSUserDefaults standardUserDefaults] boolForKey:LICENSED_AD_FREE];
+    if (isLicensed != true) {
+        smallBannerView = [[SuperGluuBannerView alloc] initWithAdSize:kGADAdSizeBanner andRootViewController:self];
+        smallBannerView.alpha = 1.0;
+    }
 }
     
 -(void)hideADView:(NSNotification*)notification{
@@ -665,19 +668,27 @@
 }
     
 -(void)reloadInterstial:(NSNotification*)notification{
-    if (bannerView == nil){
-        bannerView = [[SuperGluuBannerView alloc] init];
+    BOOL isLicensed = [[NSUserDefaults standardUserDefaults] boolForKey:LICENSED_AD_FREE];
+    if (isLicensed != true) {
+        if (bannerView == nil){
+            bannerView = [[SuperGluuBannerView alloc] init];
+        }
+        [bannerView createAndLoadInterstitial];
     }
-    [bannerView createAndLoadInterstitial];
 }
     
 -(void)initFullPageBanner:(NSNotification*)notification{
-    
-    [bannerView showInterstitial:self];
+    BOOL isLicensed = [[NSUserDefaults standardUserDefaults] boolForKey:LICENSED_AD_FREE];
+    if (isLicensed != true) {
+        [bannerView showInterstitial:self];
+    }
 }
     
 -(void)reloadFullPageBanner:(NSNotification*)notification{
-    [bannerView createAndLoadInterstitial];
+    BOOL isLicensed = [[NSUserDefaults standardUserDefaults] boolForKey:LICENSED_AD_FREE];
+    if (isLicensed != true) {
+        [bannerView createAndLoadInterstitial];
+    }
 }
     
 -(void)closeAD{
@@ -752,6 +763,8 @@
     NSString* issuer = [parameters objectForKey:@"issuer"];
     NSString* username = [parameters objectForKey:@"username"];
     NSString* method = [parameters objectForKey:@"method"];
+    BOOL licensed = [parameters objectForKey:@"licensed"];
+    
     BOOL oneStep = username == nil ? YES : NO;
     
     [UserLoginInfo sharedInstance]->application = app;
@@ -764,12 +777,58 @@
         [UserLoginInfo sharedInstance]->authenticationType = type;
     } else {
         [UserLoginInfo sharedInstance]->authenticationType = method;
-        
     }
+    
+    // we use the token issuer combined with the username
+    NSString *keyIssuer = [issuer stringByAppendingString:@"username"];
+    
+    if (licensed == true) {
+        [self saveLicensedUserKey:keyIssuer];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:LICENSED_AD_FREE];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_FREE object:nil];
+    } else {
+        [self removeUnlicensedKey:keyIssuer];
+        if (![self userHasLicensedKey]) {
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:LICENSED_AD_FREE];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_NOT_FREE object:nil];
+        }
+    }
+    
     NSString* mode = oneStep ? NSLocalizedString(@"OneStepMode", @"One Step") : NSLocalizedString(@"TwoStepMode", @"Two Step");
     [UserLoginInfo sharedInstance]->authenticationMode = mode;
     [UserLoginInfo sharedInstance]->locationCity = [parameters objectForKey:@"req_loc"];
     [UserLoginInfo sharedInstance]->locationIP = [parameters objectForKey:@"req_ip"];
+}
+
+// store licensed key identifiers in array
+- (void)saveLicensedUserKey:(NSString *)keyUsername {
+    
+    NSMutableArray *userKeys = [NSMutableArray new];
+    [userKeys addObjectsFromArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"licensedKeys"]];
+    if (![userKeys containsObject:keyUsername]) {
+        [userKeys addObject:keyUsername];
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setObject:userKeys forKey:@"licensedKeys"];
+}
+
+// see if we have a licensed key
+- (BOOL)userHasLicensedKey {
+    NSArray *licensedKeys = [[NSUserDefaults standardUserDefaults] objectForKey:@"licensedKeys"];
+    return licensedKeys.count > 0;
+}
+
+// make sure any key where the license expired, or is no longer valid is removed
+- (void)removeUnlicensedKey:(NSString *)keyUsername {
+    NSMutableArray *userKeys = [NSMutableArray new];
+    NSArray *licensedKeys = [[NSUserDefaults standardUserDefaults] objectForKey:@"licensedKeys"];
+    for (NSString* key in licensedKeys) {
+        if (![key isEqual:keyUsername]) {
+            [userKeys addObject:key];
+        }
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setObject:userKeys forKey:@"licensedKeys"];
 }
 
 

@@ -40,9 +40,12 @@
     [bannerView createAndLoadInterstitial];
 }
 
--(void)initADView:(NSNotification*)notification{
-    smallBannerView = [[SuperGluuBannerView alloc] initWithAdSize:kGADAdSizeBanner andRootViewController:self];
-    smallBannerView.alpha = 1.0;
+-(void)initADView:(NSNotification*)notification {
+    BOOL isLicensed = [[NSUserDefaults standardUserDefaults] boolForKey:LICENSED_AD_FREE];
+    if (isLicensed != true) {
+        smallBannerView = [[SuperGluuBannerView alloc] initWithAdSize:kGADAdSizeBanner andRootViewController:self];
+        smallBannerView.alpha = 1.0;
+    }
 }
 
 -(void)hideADView:(NSNotification*)notification{

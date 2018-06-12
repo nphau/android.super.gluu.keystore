@@ -90,12 +90,12 @@
                                                                 NSLog(@"SUCCESS %@",response);
                                                                 NSLog(@"Pruchases %@",[IAPShare sharedHelper].iap.purchasedProducts);
                                                             
-                                                                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_FREE object:nil];
+                                                                [self triggerHideAdsNoti];
                                                                 _isSubscribed = YES;
                                                             }
                                                             else {
                                                                 NSLog(@"Fail");
-                                                                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_NOT_FREE object:nil];
+                                                                [self triggerShowAdsNoti];
                                                                 _isSubscribed = NO;
                                                             }
                                                         }
@@ -103,7 +103,7 @@
                                                 }
                                                 else if(trans.transactionState == SKPaymentTransactionStateFailed) {
                                                     NSLog(@"Fail");
-                                                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_NOT_FREE object:nil];
+                                                    [self triggerShowAdsNoti];
                                                     _isSubscribed = NO;
                                                 }
                                             }];//end of buy product
@@ -111,7 +111,7 @@
          }];
     } else {
         NSLog(@"You've successfully subscribed");
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_FREE object:nil];
+        [self triggerHideAdsNoti];
         _isSubscribed = YES;
     }
 }
@@ -131,7 +131,7 @@
     [[IAPShare sharedHelper].iap checkReceipt:[NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]] AndSharedSecret:SHARED_SECRET_KEY onCompletion:^(NSString *response, NSError *error) {
         
         if (response == nil){
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_NOT_FREE object:nil];
+            [self triggerShowAdsNoti];
             _isSubscribed = NO;
             return;
         }
@@ -160,10 +160,10 @@
                 NSDateComponents *dateComponent = [calender components:NSCalendarUnitMinute fromDate:[NSDate date] toDate:expiredDate options:0];
                 NSInteger mins = [dateComponent minute];
                 if (mins >= 0){
-                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_FREE object:nil];
+                    [self triggerHideAdsNoti];
                     _isSubscribed = YES;
                 } else {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_NOT_FREE object:nil];
+                    [self triggerShowAdsNoti];
                     _isSubscribed = NO;
                 }
                 NSLog(@"Minutes - %ld", (long)mins);
@@ -171,7 +171,7 @@
         }
         else {
             NSLog(@"Fail");
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_NOT_FREE object:nil];
+            [self triggerShowAdsNoti];
             _isSubscribed = NO;
         }
     }];
@@ -182,6 +182,14 @@
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss VV"];
     NSDate* newDate = [formatter dateFromString:date];
     return newDate;
+}
+
+- (void)triggerShowAdsNoti {
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_NOT_FREE object:nil];
+}
+
+- (void)triggerHideAdsNoti {
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_FREE object:nil];
 }
 
 

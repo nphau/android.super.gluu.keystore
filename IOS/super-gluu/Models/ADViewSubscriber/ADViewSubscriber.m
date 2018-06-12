@@ -64,8 +64,14 @@
 }
 
 -(void)adViewShow:(NSNotification*)notification{
-    [self initUI];
-    self.hidden = NO;
+    
+    BOOL isLicensed = [[NSUserDefaults standardUserDefaults] boolForKey:LICENSED_AD_FREE];
+    if (isLicensed != true) {
+        [self initUI];
+        self.hidden = NO;
+    } else {
+        self.hidden = YES;
+    }
 }
 
 -(void)adViewHide:(NSNotification*)notification{

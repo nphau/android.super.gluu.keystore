@@ -98,7 +98,7 @@ OXPushManager* oxPushManager;
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    if (!_isLogInfo){
+    if (!_isLogInfo) {
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_NOT_FREE object:nil];
     }
 }

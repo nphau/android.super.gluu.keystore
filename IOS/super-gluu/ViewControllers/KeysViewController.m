@@ -175,6 +175,24 @@
     TokenEntity* tokenEntity = [keyHandleArray objectAtIndex:rowToDelete];
     [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:tokenEntity->application userName:tokenEntity->userName];
     [self loadKeyHandlesFromDatabase];
+    
+    // check in mainViewController for matching code. we use the token issuer combined with the username
+    NSString *keyId = [tokenEntity->issuer stringByAppendingString:tokenEntity->userName];
+    [self removeUnlicensedKey:keyId];
+    
+}
+
+    // make sure any key where the license expired, or is no longer valid is removed
+- (void)removeUnlicensedKey:(NSString *)keyUsername {
+    NSMutableArray *userKeys = [NSMutableArray new];
+    NSArray *licensedKeys = [[NSUserDefaults standardUserDefaults] objectForKey:@"licensedKeys"];
+    for (NSString* key in licensedKeys) {
+        if (![key isEqual:keyUsername]) {
+            [userKeys addObject:key];
+        }
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setObject:userKeys forKey:@"licensedKeys"];
 }
 
 - (NSArray *)rightButtons
