@@ -763,7 +763,7 @@
     NSString* issuer = [parameters objectForKey:@"issuer"];
     NSString* username = [parameters objectForKey:@"username"];
     NSString* method = [parameters objectForKey:@"method"];
-    BOOL licensed = [parameters objectForKey:@"licensed"];
+    BOOL isLicensed = [[parameters objectForKey:@"licensed"] boolValue];
     
     BOOL oneStep = username == nil ? YES : NO;
     
@@ -779,10 +779,14 @@
         [UserLoginInfo sharedInstance]->authenticationType = method;
     }
     
-    // we use the token issuer combined with the username
+    // we use the token issuer combined with the username to identify a licensed key
     NSString *keyIssuer = [issuer stringByAppendingString:@"username"];
     
-    if (licensed == true) {
+    // if isLicensed is true, the issuer is a licensed account and
+    // ads should not display. As long as the user has 1 key that is licensed
+    // ads should not display, regardless of other unlicensed keys the user has
+    
+    if (isLicensed == true) {
         [self saveLicensedUserKey:keyIssuer];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:LICENSED_AD_FREE];
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_FREE object:nil];
