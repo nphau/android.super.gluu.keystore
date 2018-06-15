@@ -668,8 +668,6 @@ public class MainNavDrawerActivity extends BaseActivity
     }
 
     public void selectDrawerItem(MenuItem menuItem) {
-        settings.setForLogs(menuItem.getItemId() == R.id.nav_logs);
-        settings.setForKeys(menuItem.getItemId() == R.id.nav_keys);
         reloadLogs();
 
         switch(menuItem.getItemId()) {

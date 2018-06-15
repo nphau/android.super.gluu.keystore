@@ -228,9 +228,9 @@ public class KeyFragmentListAdapter extends BaseAdapter {
             public void onPositiveButton() {
                 Context context = activity.getApplicationContext();
                 AndroidKeyDataStore dataStore = new AndroidKeyDataStore(context);
-                dataStore.deleteKeyHandle(tokenEntry);
                 String uniqueLicenseId = OxPush2Request.getLicenseId(tokenEntry.getIssuer(), tokenEntry.getUserName());
                 Settings.removeLicense(context, uniqueLicenseId);
+                dataStore.deleteKeyHandle(tokenEntry);
                 updateResults(dataStore);
             }
 

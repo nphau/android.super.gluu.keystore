@@ -3,6 +3,7 @@ package org.gluu.super_gluu.app.settings;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import org.gluu.super_gluu.app.fragment.SettingsFragment;
 
@@ -15,9 +16,6 @@ import java.util.Map;
 public class Settings {
 
     private Boolean isEditingModeLogs = false;
-    private Boolean isForLogs = false;
-    private Boolean isForKeys = false;
-
 
     public static boolean isAuthEnabled(Context context) {
         return getFingerprintEnabled(context) || getPinCodeEnabled(context) || isAppLocked(context);
@@ -56,14 +54,6 @@ public class Settings {
         editor.putString(Constant.PIN_CODE, null);
         editor.commit();
     }
-
-    public static void setPinCodeAttempts(Context context, String attempts){
-        SharedPreferences preferences = context.getSharedPreferences(Constant.PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(Constant.PIN_CODE_ATTEMPTS, attempts);
-        editor.commit();
-    }
-
 
     public static int getCurrentPinCodeAttempts(Context context){
         SharedPreferences preferences = context.getSharedPreferences(Constant.PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
@@ -131,18 +121,18 @@ public class Settings {
     }
 
     //todo delete both save accept and get accept if it is confirmed there is no plan to force user to accept license
-    public static void saveAccept(Context context){
-        SharedPreferences preferences = context.getSharedPreferences("IsAcceptLicense", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isAccept", true);
-        editor.commit();
-    }
-
-    public static Boolean getAccept(Context context){
-        SharedPreferences preferences = context.getSharedPreferences("IsAcceptLicense", Context.MODE_PRIVATE);
-        Boolean isAccept = preferences.getBoolean("isAccept", false);
-        return isAccept;
-    }
+//    public static void saveAccept(Context context){
+//        SharedPreferences preferences = context.getSharedPreferences("IsAcceptLicense", Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = preferences.edit();
+//        editor.putBoolean("isAccept", true);
+//        editor.commit();
+//    }
+//
+//    public static Boolean getAccept(Context context){
+//        SharedPreferences preferences = context.getSharedPreferences("IsAcceptLicense", Context.MODE_PRIVATE);
+//        Boolean isAccept = preferences.getBoolean("isAccept", false);
+//        return isAccept;
+//    }
 
     public static Boolean getFirstLoad(Context context){
         SharedPreferences preferences = context.getSharedPreferences(Constant.PIN_CODE_SETTINGS, Context.MODE_PRIVATE);
@@ -305,7 +295,6 @@ public class Settings {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -356,22 +345,6 @@ public class Settings {
 
     public void setEditingModeLogs(Boolean editingModeLogs) {
         isEditingModeLogs = editingModeLogs;
-    }
-
-    public Boolean getForLogs() {
-        return isForLogs;
-    }
-
-    public void setForLogs(Boolean forLogs) {
-        isForLogs = forLogs;
-    }
-
-    public Boolean getForKeys() {
-        return isForKeys;
-    }
-
-    public void setForKeys(Boolean forKeys) {
-        isForKeys = forKeys;
     }
 
     private static Date addMinutesToDate(int minutes, Date beforeTime){
