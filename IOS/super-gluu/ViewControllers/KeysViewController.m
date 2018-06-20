@@ -171,13 +171,14 @@
     [alert showCustom:[UIImage imageNamed:@"delete_action_titleIcon"] color:[[AppConfiguration sharedInstance] systemColor] title:NSLocalizedString(@"Delete", @"Delete") subTitle:NSLocalizedString(@"DeleteKeyHandle", @"Delete KeyHandle") closeButtonTitle:nil duration:0.0f];
 }
 
--(void)deleteRow{
+-(void)deleteRow {
+    
     TokenEntity* tokenEntity = [keyHandleArray objectAtIndex:rowToDelete];
     [[DataStoreManager sharedInstance] deleteTokenEntitiesByID:tokenEntity->application userName:tokenEntity->userName];
     [self loadKeyHandlesFromDatabase];
     
     // check in mainViewController for matching code. we use the token issuer combined with the username
-    NSString *keyId = [tokenEntity->issuer stringByAppendingString:tokenEntity->userName];
+    NSString *keyId = [tokenEntity->application stringByAppendingString:tokenEntity->userName];
     [self removeUnlicensedKey:keyId];
     
 }
@@ -193,6 +194,13 @@
     }
     
     [[NSUserDefaults standardUserDefaults] setObject:userKeys forKey:@"licensedKeys"];
+    
+    if (userKeys.count > 0) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:LICENSED_AD_FREE];
+    } else {
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:LICENSED_AD_FREE];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_NOT_FREE object:nil];
+    }
 }
 
 - (NSArray *)rightButtons

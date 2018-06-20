@@ -91,6 +91,10 @@
     
     [self checkPushNotification];
     
+    if ([[NSUserDefaults standardUserDefaults] valueForKey:LICENSED_AD_FREE] == true) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_FREE object:nil];
+    }
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -117,22 +121,22 @@
 
 
 - (void)setupAdHandling {
-#ifdef ADFREE
-        //skip here
-#else
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideADView:) name:NOTIFICATION_AD_FREE object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initADView:) name:NOTIFICATION_AD_NOT_FREE object:nil];
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadInterstial:) name:NOTIFICATION_INTERSTIAL object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initFullPageBanner:) name:NOTIFICATION_REGISTRATION_SUCCESS object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initFullPageBanner:) name:NOTIFICATION_REGISTRATION_FAILED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initFullPageBanner:) name:NOTIFICATION_AUTENTIFICATION_SUCCESS object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initFullPageBanner:) name:NOTIFICATION_AUTENTIFICATION_FAILED object:nil];
-    
-        //Here we should also check subsciption for AD free
-    [[ADSubsriber sharedInstance] isSubscriptionExpired];
-#endif
+
     bannerView = [[SuperGluuBannerView alloc] init];
     [bannerView createAndLoadInterstitial];
+    
+    //Here we should also check subsciption for AD free
+    [[ADSubsriber sharedInstance] isSubscriptionExpired];
+
 }
 
 - (void)goToSettings {
@@ -779,12 +783,14 @@
         [UserLoginInfo sharedInstance]->authenticationType = method;
     }
     
-    // we use the token issuer combined with the username to identify a licensed key
-    NSString *keyIssuer = [issuer stringByAppendingString:@"username"];
-    
-    // if isLicensed is true, the issuer is a licensed account and
+    // we use the token application combined with the username to identify a licensed key
+    NSString *keyIssuer = [app stringByAppendingString: username];
+        
+    // if isLicensed is true, this is a licensed account and
     // ads should not display. As long as the user has 1 key that is licensed
     // ads should not display, regardless of other unlicensed keys the user has
+    
+    NSLog(@"Licensing part");
     
     if (isLicensed == true) {
         [self saveLicensedUserKey:keyIssuer];
