@@ -99,6 +99,9 @@
 
 #define LICENSED_AD_FREE @"licensed_AD_FREE"
 
+#define LICENSED_KEYS @"licensedKeys"
+
+
 #define USER_GUIDE_URL @"https://gluu.org/docs/supergluu/3.0.0/user-guide/"
 
 #define BLE_TOP_LABEL_TEXT(value) [NSString stringWithFormat:@"You can pair a U2F bluetooth enabled device with %@ to add an additional layer of security to authentications. When enabled, you will be prompted to tap your U2F device after approving the authentication request on %@.", value, value]

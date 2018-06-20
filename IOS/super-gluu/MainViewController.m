@@ -814,31 +814,31 @@
 - (void)saveLicensedUserKey:(NSString *)keyUsername {
     
     NSMutableArray *userKeys = [NSMutableArray new];
-    [userKeys addObjectsFromArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"licensedKeys"]];
+    [userKeys addObjectsFromArray:[[NSUserDefaults standardUserDefaults] objectForKey:LICENSED_KEYS]];
     if (![userKeys containsObject:keyUsername]) {
         [userKeys addObject:keyUsername];
     }
     
-    [[NSUserDefaults standardUserDefaults] setObject:userKeys forKey:@"licensedKeys"];
+    [[NSUserDefaults standardUserDefaults] setObject:userKeys forKey:LICENSED_KEYS];
 }
 
 // see if we have a licensed key
 - (BOOL)userHasLicensedKey {
-    NSArray *licensedKeys = [[NSUserDefaults standardUserDefaults] objectForKey:@"licensedKeys"];
+    NSArray *licensedKeys = [[NSUserDefaults standardUserDefaults] objectForKey:LICENSED_KEYS];
     return licensedKeys.count > 0;
 }
 
 // make sure any key where the license expired, or is no longer valid is removed
 - (void)removeUnlicensedKey:(NSString *)keyUsername {
     NSMutableArray *userKeys = [NSMutableArray new];
-    NSArray *licensedKeys = [[NSUserDefaults standardUserDefaults] objectForKey:@"licensedKeys"];
+    NSArray *licensedKeys = [[NSUserDefaults standardUserDefaults] objectForKey:LICENSED_KEYS];
     for (NSString* key in licensedKeys) {
         if (![key isEqual:keyUsername]) {
             [userKeys addObject:key];
         }
     }
     
-    [[NSUserDefaults standardUserDefaults] setObject:userKeys forKey:@"licensedKeys"];
+    [[NSUserDefaults standardUserDefaults] setObject:userKeys forKey:LICENSED_KEYS];
 }
 
 
