@@ -59,9 +59,9 @@
     [super viewDidLoad];
     
     // on initial load, prompt user to setup secure entry to app
-    if ([GluuUserDefaults hasSeenSecurityPrompt] == false) {
-        [self performSegueWithIdentifier:@"segueToSecurityPrompt" sender:nil];
-    }
+//    if ([GluuUserDefaults hasSeenSecurityPrompt] == false) {
+//        [self performSegueWithIdentifier:@"segueToSecurityPrompt" sender:nil];
+//    }
     
     count = 0;
     
@@ -100,13 +100,15 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
+    [self initQRScanner];
+    
     // make sure the push notification ask happens after the security prompt
     if ([GluuUserDefaults hasSeenNotificationPrompt] == false && [GluuUserDefaults hasSeenSecurityPrompt] == true) {
         
 //        [self registerForPushNotifications];
         [GluuUserDefaults setNotificationPrompt];
     } else {
-        [self initQRScanner];
+        
     }
     
 }

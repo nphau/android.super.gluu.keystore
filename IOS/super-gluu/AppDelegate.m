@@ -221,14 +221,20 @@
     BOOL hasSecurityEnabled = [GluuUserDefaults hasTouchAuthEnabled] == true || [GluuUserDefaults userPin] != nil;
     
     if (hasSecurityEnabled) {
+
+        NSString * storyboardName = @"Landing";
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle: nil];
+        UINavigationController * navC = [storyboard instantiateInitialViewController];
         
-        if ([self.window.rootViewController.presentedViewController isKindOfClass:[BaseNavigationController class]]) {
-            
-            BaseNavigationController *baseNavC = self.window.rootViewController.presentedViewController;
-            
-            [baseNavC unwindToRoot];
-            
-        }
+        [self.window setRootViewController: navC];
+        
+//        if ([self.window.rootViewController.presentedViewController isKindOfClass:[BaseNavigationController class]]) {
+//
+//            BaseNavigationController *baseNavC = self.window.rootViewController.presentedViewController;
+//
+//            [baseNavC unwindToRoot];
+//
+//        }
     }
     
 }

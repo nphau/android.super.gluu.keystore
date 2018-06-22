@@ -74,11 +74,28 @@ class SecurityPromptViewController: UIViewController {
         setupDisplay()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationItem.title = "Add Secure Entry"
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        navigationItem.title = " "
+    }
+    
     func setupDisplay() {
         
-        title = "Add Secure Entry"
-        
         view.backgroundColor = UIColor.Gluu.tableBackground
+        
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.tintColor = .white //UIColor.Gluu.green
+        navigationController?.navigationBar.barTintColor = UIColor.Gluu.green
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
         
         separatorView?.backgroundColor = UIColor.Gluu.tableBackground
         
@@ -115,6 +132,7 @@ class SecurityPromptViewController: UIViewController {
         
         passcodeVC.delegate = self
         passcodeVC.simple = true
+        passcodeVC.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
         
         navigationController?.pushViewController(passcodeVC, animated: true)
         
@@ -124,7 +142,7 @@ class SecurityPromptViewController: UIViewController {
         
         GluuUserDefaults.setSecurityPromptShown()
         
-        dismiss(animated: true, completion: nil)
+        performSegue(withIdentifier: "segueUnwindSecurityPromptToLanding", sender: nil)
     }
 }
 

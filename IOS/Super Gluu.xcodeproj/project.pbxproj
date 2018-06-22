@@ -207,6 +207,8 @@
 		C86B05A72076A037008875D3 /* SubscriptionDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86B05A62076A037008875D3 /* SubscriptionDetailsViewController.swift */; };
 		C86B05A92076A9CA008875D3 /* UIButton+SuperGluu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86B05A82076A9CA008875D3 /* UIButton+SuperGluu.swift */; };
 		C8735EAD2001D07E00722BD5 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8735EAC2001D07E00722BD5 /* BaseNavigationController.swift */; };
+		C887B3F720DC4C3300D99A21 /* Landing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C887B3F620DC4C3300D99A21 /* Landing.storyboard */; };
+		C887B3F920DC4C9E00D99A21 /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C887B3F820DC4C9E00D99A21 /* LandingViewController.swift */; };
 		C8B402B41FE9E71B00202A4B /* AuthHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B402B31FE9E71B00202A4B /* AuthHelper.swift */; };
 		C8B402B61FE9F28C00202A4B /* LaunchSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B402B51FE9F28C00202A4B /* LaunchSetupViewController.swift */; };
 		C8BB756820519DDB00262FAF /* TouchIDAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BB756720519DDB00262FAF /* TouchIDAuth.swift */; };
@@ -409,6 +411,8 @@
 		C86B05A62076A037008875D3 /* SubscriptionDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionDetailsViewController.swift; sourceTree = "<group>"; };
 		C86B05A82076A9CA008875D3 /* UIButton+SuperGluu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIButton+SuperGluu.swift"; path = "Extensions/UIButton+SuperGluu.swift"; sourceTree = "<group>"; };
 		C8735EAC2001D07E00722BD5 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
+		C887B3F620DC4C3300D99A21 /* Landing.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Landing.storyboard; sourceTree = "<group>"; };
+		C887B3F820DC4C9E00D99A21 /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LandingViewController.swift; path = ViewControllers/LandingViewController.swift; sourceTree = "<group>"; };
 		C8B402B31FE9E71B00202A4B /* AuthHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHelper.swift; sourceTree = "<group>"; };
 		C8B402B51FE9F28C00202A4B /* LaunchSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchSetupViewController.swift; sourceTree = "<group>"; };
 		C8BB756720519DDB00262FAF /* TouchIDAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TouchIDAuth.swift; path = "super-gluu/Helpers/TouchIDAuth.swift"; sourceTree = "<group>"; };
@@ -641,6 +645,8 @@
 				BB37DF071C7E0B8E0016D422 /* ViewControllers */,
 				BB37DE571C7E08320016D422 /* AppDelegate.h */,
 				BB37DE581C7E08320016D422 /* AppDelegate.m */,
+				C887B3F620DC4C3300D99A21 /* Landing.storyboard */,
+				C887B3F820DC4C9E00D99A21 /* LandingViewController.swift */,
 				BBB5114A1EF2EF9500E19D8E /* Main.storyboard */,
 				BB37DE5A1C7E08320016D422 /* MainViewController.h */,
 				BB37DE5B1C7E08320016D422 /* MainViewController.m */,
@@ -1109,6 +1115,7 @@
 				BBB5114B1EF2EF9500E19D8E /* Main.storyboard in Resources */,
 				BB37DF351C7E0B8E0016D422 /* gl.png in Resources */,
 				C8419627201A4F05005A4ACC /* LaunchScreen.storyboard in Resources */,
+				C887B3F720DC4C3300D99A21 /* Landing.storyboard in Resources */,
 				BB97CDEA1F1E4FB90033C2A5 /* ProximaNova-Reg.otf in Resources */,
 				BB37DF2A1C7E0B8E0016D422 /* gluuIcon29x3.png in Resources */,
 				BB37DF281C7E0B8E0016D422 /* gluuIcon29.png in Resources */,
@@ -1390,6 +1397,7 @@
 				BB4732BF1EEADDCE007B8173 /* ADSubsriber.m in Sources */,
 				C8F0E2DC1FD21C3800FF9342 /* Color+Extension.swift in Sources */,
 				BB3BE1721C882D0600817A46 /* ApproveDenyViewController.m in Sources */,
+				C887B3F920DC4C9E00D99A21 /* LandingViewController.swift in Sources */,
 				C83D2B051FE2F18B00F9455E /* SecurityPromptViewController.swift in Sources */,
 				BB4EDA481F4EC52700EA807B /* SCLTimerDisplay.m in Sources */,
 				BB37DF3E1C7E0B8E0016D422 /* KeyHandleCell.m in Sources */,

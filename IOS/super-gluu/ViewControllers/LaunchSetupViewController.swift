@@ -101,7 +101,8 @@ class LaunchSetupViewController: UIViewController {
     
     
     func goToHomeScreen() {
-        performSegue(withIdentifier: "SegueLaunchToHome", sender: nil)
+        performSegue(withIdentifier: "segueUnwindSecureEntryToLanding", sender: nil)
+//        performSegue(withIdentifier: "SegueLaunchToHome", sender: nil)
     }
     
     @IBAction func unwindToLaunchSetup(segue:UIStoryboardSegue) {
