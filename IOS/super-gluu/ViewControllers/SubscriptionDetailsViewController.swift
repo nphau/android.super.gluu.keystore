@@ -70,7 +70,14 @@ class SubscriptionDetailsViewController: UIViewController {
     
     @IBAction func purchaseTapped() {
         purchaseButton.showSpinner()
-        ADSubsriber.sharedInstance().tryToSubsribe()
+        ADSubsriber.sharedInstance().purchaseSubscription { (success, message) in
+            if success == true {
+                AdHandler.shared.refreshAdStatus()
+            } else {
+                let errMessage = message ?? "There was an issue."
+                UIAlertView(title: "Unable to purchase", message: errMessage, delegate: nil, cancelButtonTitle: "Ok").show()
+            }
+        }
     }
     
     

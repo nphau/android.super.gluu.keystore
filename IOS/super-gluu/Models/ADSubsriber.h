@@ -14,8 +14,8 @@
 
 + (instancetype) sharedInstance;
 
--(void)isSubscriptionExpired;
--(void)tryToSubsribe;
+- (BOOL)hasValidSubscription;
+- (void)purchaseSubscription:(void (^)(BOOL, NSString *))completion;
 -(void)restorePurchase;
 
 @end

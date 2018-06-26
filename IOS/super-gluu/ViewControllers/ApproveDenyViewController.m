@@ -91,16 +91,16 @@ OXPushManager* oxPushManager;
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    if (!_isLogInfo){
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_FREE object:nil];
-    }
+//    if (!_isLogInfo){
+//        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_FREE object:nil];
+//    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    if (!_isLogInfo) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_NOT_FREE object:nil];
-    }
+//    if (!_isLogInfo) {
+//        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_NOT_FREE object:nil];
+//    }
 }
 
 -(void)initAndStartTimer{

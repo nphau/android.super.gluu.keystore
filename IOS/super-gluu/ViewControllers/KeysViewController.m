@@ -179,28 +179,10 @@
     
     // check in mainViewController for matching code. we use the token issuer combined with the username
     NSString *keyId = [tokenEntity->application stringByAppendingString:tokenEntity->userName];
-    [self removeUnlicensedKey:keyId];
     
-}
-
-    // make sure any key where the license expired, or is no longer valid is removed
-- (void)removeUnlicensedKey:(NSString *)keyUsername {
-    NSMutableArray *userKeys = [NSMutableArray new];
-    NSArray *licensedKeys = [[NSUserDefaults standardUserDefaults] objectForKey:LICENSED_KEYS];
-    for (NSString* key in licensedKeys) {
-        if (![key isEqual:keyUsername]) {
-            [userKeys addObject:key];
-        }
-    }
+    // whether the key is licensed or not, call remove to be sure
+    [GluuUserDefaults removeLicensedKey:keyId];
     
-    [[NSUserDefaults standardUserDefaults] setObject:userKeys forKey:LICENSED_KEYS];
-    
-    if (userKeys.count > 0) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:LICENSED_AD_FREE];
-    } else {
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:LICENSED_AD_FREE];
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_NOT_FREE object:nil];
-    }
 }
 
 - (NSArray *)rightButtons

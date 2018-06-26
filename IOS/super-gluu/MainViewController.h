@@ -27,6 +27,7 @@
     IBOutlet UILabel* scanTextLabel;
     IBOutlet UIView* welcomeView;
     IBOutlet UIView* contentView;
+    IBOutlet ADViewSubscriber* removeAdsView;
 
     BOOL isResultFromScan;
     BOOL isStatusViewVisible;

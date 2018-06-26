@@ -47,6 +47,7 @@ struct GluuConstants {
     static let NOTIFICATION_PROMPT = "notificationPrompt"
     static let NOTIFICATION_AD_FREE = "NOTIFICATION_AD_FREE"
     static let NOTIFICATION_AD_NOT_FREE = "NOTIFICATION_AD_NOT_FREE"
+    static let LICENSED_KEYS = "LICENSED_KEYS"
     
 }
 

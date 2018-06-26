@@ -19,8 +19,6 @@
 #import "NetworkChecker.h"
 #import "IAPShare.h"
 #import <LocalAuthentication/LocalAuthentication.h>
-#import "PinCodeViewController.h"
-#import "PinCodeDelegate.h"
 #import "SuperGluuBannerView.h"
 #import "ADSubsriber.h"
 #import "PushNotificationHelper.h"
@@ -33,7 +31,7 @@
     #import "Super_Gluu-Swift.h"
 #endif
 
-@interface MainViewController () <PAPasscodeViewControllerDelegate, PinCodeDelegate> {
+@interface MainViewController () <PAPasscodeViewControllerDelegate> {
     PeripheralScanner* scanner;
     BOOL isSecureClick;
     BOOL isEnroll;
@@ -42,7 +40,6 @@
     int count;
     
     OXPushManager* oxPushManager;
-    PinCodeViewController* pinView;
     UIAlertController * alert;
     
     SuperGluuBannerView* smallBannerView;
@@ -87,11 +84,15 @@
     BOOL secureClickEnable = [[NSUserDefaults standardUserDefaults] boolForKey:SECURE_CLICK_ENABLED];
     isSecureClick = secureClickEnable;
     [_notificationNetworkView checkNetwork];
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_INTERSTIAL object:nil];
+    
+    [self reloadInterstial];
     
     [self checkPushNotification];
     
-    if ([[NSUserDefaults standardUserDefaults] valueForKey:LICENSED_AD_FREE] == true) {
+    
+    
+    BOOL isLicensed = [[NSUserDefaults standardUserDefaults] valueForKey:LICENSED_AD_FREE];
+    if (isLicensed == true) {
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_FREE object:nil];
     }
     
@@ -100,16 +101,11 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
+    // we init this here because it takes forever to load.
+    // if we wait for the user to tap scan, the camera takes too long loading
+    // and it's a bad user experience.
+    // this will trigger the Camera Permission request
     [self initQRScanner];
-    
-    // make sure the push notification ask happens after the security prompt
-    if ([GluuUserDefaults hasSeenNotificationPrompt] == false && [GluuUserDefaults hasSeenSecurityPrompt] == true) {
-        
-//        [self registerForPushNotifications];
-        [GluuUserDefaults setNotificationPrompt];
-    } else {
-        
-    }
     
 }
 
@@ -127,7 +123,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideADView:) name:NOTIFICATION_AD_FREE object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initADView:) name:NOTIFICATION_AD_NOT_FREE object:nil];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadInterstial:) name:NOTIFICATION_INTERSTIAL object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initFullPageBanner:) name:NOTIFICATION_REGISTRATION_SUCCESS object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initFullPageBanner:) name:NOTIFICATION_REGISTRATION_FAILED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initFullPageBanner:) name:NOTIFICATION_AUTENTIFICATION_SUCCESS object:nil];
@@ -136,9 +131,12 @@
     bannerView = [[SuperGluuBannerView alloc] init];
     [bannerView createAndLoadInterstitial];
     
-    //Here we should also check subsciption for AD free
-    [[ADSubsriber sharedInstance] isSubscriptionExpired];
-
+    BOOL isLicensed = [[NSUserDefaults standardUserDefaults] boolForKey:LICENSED_AD_FREE];
+    if (isLicensed == false) {
+        //Here we should also check subsciption for AD free
+        [[ADSubsriber sharedInstance] isSubscriptionValid];
+    }
+    
 }
 
 - (void)goToSettings {
@@ -306,7 +304,7 @@
 
         [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitleSuccess", @"Success") andMessage:message];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_INTERSTIAL object:nil];
+        [self reloadInterstial];
         
     } else if ([notiName isEqual:NOTIFICATION_REGISTRATION_FAILED]){
         
@@ -320,7 +318,7 @@
         
         [self showAlertViewWithTitle:NSLocalizedString(@"FailedEnrollment", @"Failed Enrollment") andMessage:message];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_INTERSTIAL object:nil];
+        [self reloadInterstial];
         
     } else if ([notiName isEqual:NOTIFICATION_REGISTRATION_STARTING]){
         
@@ -339,7 +337,7 @@
         message = NSLocalizedString(@"SuccessAuthentication", @"Success Authentication");
         [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitleSuccess", @"Success") andMessage:message];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_INTERSTIAL object:nil];
+        [self reloadInterstial];
         
     } else if ([notiName isEqual:NOTIFICATION_AUTENTIFICATION_FAILED]){
         
@@ -353,7 +351,7 @@
 
         [self showAlertViewWithTitle:NSLocalizedString(@"FailedAuthentication", @"Failed Authentication") andMessage:message];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_INTERSTIAL object:nil];
+        [self reloadInterstial];
         
     } else if ([notiName isEqual:NOTIFICATION_AUTENTIFICATION_STARTING]){
         
@@ -660,20 +658,25 @@
 #pragma mark - Ad Handling:
     
 -(void)initADView:(NSNotification*)notification{
+    
     BOOL isLicensed = [[NSUserDefaults standardUserDefaults] boolForKey:LICENSED_AD_FREE];
     if (isLicensed != true) {
         smallBannerView = [[SuperGluuBannerView alloc] initWithAdSize:kGADAdSizeBanner andRootViewController:self];
         smallBannerView.alpha = 1.0;
+        
+        [removeAdsView setHidden:false];
     }
 }
     
--(void)hideADView:(NSNotification*)notification{
+- (void)hideADView:(NSNotification*)notification {
+    [removeAdsView setHidden:true];
+    
     if (smallBannerView != nil){
         [smallBannerView closeAD];
     }
 }
     
--(void)reloadInterstial:(NSNotification*)notification{
+- (void)reloadInterstial {
     BOOL isLicensed = [[NSUserDefaults standardUserDefaults] boolForKey:LICENSED_AD_FREE];
     if (isLicensed != true) {
         if (bannerView == nil){
@@ -683,21 +686,21 @@
     }
 }
     
--(void)initFullPageBanner:(NSNotification*)notification{
+- (void)initFullPageBanner:(NSNotification*)notification {
     BOOL isLicensed = [[NSUserDefaults standardUserDefaults] boolForKey:LICENSED_AD_FREE];
     if (isLicensed != true) {
         [bannerView showInterstitial:self];
     }
 }
     
--(void)reloadFullPageBanner:(NSNotification*)notification{
+- (void)reloadFullPageBanner:(NSNotification*)notification {
     BOOL isLicensed = [[NSUserDefaults standardUserDefaults] boolForKey:LICENSED_AD_FREE];
     if (isLicensed != true) {
         [bannerView createAndLoadInterstitial];
     }
 }
     
--(void)closeAD{
+- (void)closeAD {
     [bannerView closeAD];
 }
 
@@ -795,52 +798,17 @@
     NSLog(@"Licensing part");
     
     if (isLicensed == true) {
-        [self saveLicensedUserKey:keyIssuer];
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:LICENSED_AD_FREE];
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_FREE object:nil];
+        [GluuUserDefaults saveLicensedKey: keyIssuer];
+        [[AdHandler shared] refreshAdStatus];
     } else {
-        [self removeUnlicensedKey:keyIssuer];
-        if (![self userHasLicensedKey]) {
-            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:LICENSED_AD_FREE];
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_NOT_FREE object:nil];
-        }
+        [GluuUserDefaults removeLicensedKey: keyIssuer];
+        [[AdHandler shared] refreshAdStatus];
     }
     
     NSString* mode = oneStep ? NSLocalizedString(@"OneStepMode", @"One Step") : NSLocalizedString(@"TwoStepMode", @"Two Step");
     [UserLoginInfo sharedInstance]->authenticationMode = mode;
     [UserLoginInfo sharedInstance]->locationCity = [parameters objectForKey:@"req_loc"];
     [UserLoginInfo sharedInstance]->locationIP = [parameters objectForKey:@"req_ip"];
-}
-
-// store licensed key identifiers in array
-- (void)saveLicensedUserKey:(NSString *)keyUsername {
-    
-    NSMutableArray *userKeys = [NSMutableArray new];
-    [userKeys addObjectsFromArray:[[NSUserDefaults standardUserDefaults] objectForKey:LICENSED_KEYS]];
-    if (![userKeys containsObject:keyUsername]) {
-        [userKeys addObject:keyUsername];
-    }
-    
-    [[NSUserDefaults standardUserDefaults] setObject:userKeys forKey:LICENSED_KEYS];
-}
-
-// see if we have a licensed key
-- (BOOL)userHasLicensedKey {
-    NSArray *licensedKeys = [[NSUserDefaults standardUserDefaults] objectForKey:LICENSED_KEYS];
-    return licensedKeys.count > 0;
-}
-
-// make sure any key where the license expired, or is no longer valid is removed
-- (void)removeUnlicensedKey:(NSString *)keyUsername {
-    NSMutableArray *userKeys = [NSMutableArray new];
-    NSArray *licensedKeys = [[NSUserDefaults standardUserDefaults] objectForKey:LICENSED_KEYS];
-    for (NSString* key in licensedKeys) {
-        if (![key isEqual:keyUsername]) {
-            [userKeys addObject:key];
-        }
-    }
-    
-    [[NSUserDefaults standardUserDefaults] setObject:userKeys forKey:LICENSED_KEYS];
 }
 
 
@@ -889,7 +857,7 @@
 
 - (void)onResult:(Boolean)result{
     if (result){
-        [pinView dismissViewControllerAnimated:YES completion:nil];
+//        [pinView dismissViewControllerAnimated:YES completion:nil];
         [self provideScanRequest];
     }
 }

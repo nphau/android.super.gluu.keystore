@@ -48,14 +48,40 @@ import UIKit
         UserDefaults.standard.set(true, forKey: GluuConstants.SECURITY_PROMPT_SHOWN)
     }
     
-    class func hasSeenNotificationPrompt() -> Bool {
-        return UserDefaults.standard.bool(forKey: GluuConstants.NOTIFICATION_PROMPT)
+    class func licensedKeys() -> [String]? {
+        return UserDefaults.standard.array(forKey: GluuConstants.LICENSED_KEYS) as? [String]
     }
     
-    class func setNotificationPrompt() {
-        UserDefaults.standard.set(true, forKey: GluuConstants.NOTIFICATION_PROMPT)
+    class func saveLicensedKey(_ key: String) {
+        var newKeyArray = [String]()
+        if var licensedKeys = GluuUserDefaults.licensedKeys() {
+            if licensedKeys.contains(key) == false {
+                licensedKeys.append(key)
+                newKeyArray = licensedKeys
+            }
+        } else {
+            newKeyArray = [key]
+            
+        }
+        
+        UserDefaults.standard.set(newKeyArray, forKey: GluuConstants.LICENSED_KEYS)
+        
+        AdHandler.shared.refreshAdStatus()
     }
     
+    class func removeLicensedKey(_ key: String) {
+        
+        guard let licensedKeys = GluuUserDefaults.licensedKeys(), licensedKeys.contains(key) else {
+            return
+        }
+        
+        let cleanedKeys = licensedKeys.filter({ $0 != key })
+        
+        UserDefaults.standard.set(cleanedKeys, forKey: GluuConstants.LICENSED_KEYS)
+        
+        AdHandler.shared.refreshAdStatus()
+
+    }
 }
 
 
