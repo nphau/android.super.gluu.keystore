@@ -15,7 +15,6 @@
 #import "PushNotificationHelper.h"
 #import <AudioToolbox/AudioServices.h>
 
-
 //#import <UbertestersSDK/Ubertesters.h>
 
 @import GoogleMobileAds;
@@ -64,7 +63,29 @@
     
     [GADMobileAds configureWithApplicationID:@"ca-app-pub-3326465223655655~8301521230"];
     
+    [self setupSwiftyStoreKit];
+    
     return YES;
+}
+
+- (void)setupSwiftyStoreKit {
+    
+    [[PurchaseHandler shared] completeTransactions];
+    
+//        SwiftyStoreKit.completeTransactions(atomically: true) { products in
+//
+//            for product in products {
+//
+//                if product.transaction.transactionState == .purchased || product.transaction.transactionState == .restored {
+//
+//                    if product.needsFinishTransaction {
+//                            // Deliver content from server, then:
+//                        SwiftyStoreKit.finishTransaction(product.transaction)
+//                    }
+//                    print("purchased: \(product)")
+//                }
+//            }
+//        }
 }
 
 #pragma Push Notification
@@ -215,6 +236,9 @@
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    
+    // always update ad status when the user comes into the app
+    [[AdHandler shared] refreshAdStatus];
     
     // if the user has secure entry, go to LaunchSetupVC
     

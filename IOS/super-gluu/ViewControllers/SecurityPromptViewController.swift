@@ -48,20 +48,27 @@ import UIKit
         UserDefaults.standard.set(true, forKey: GluuConstants.SECURITY_PROMPT_SHOWN)
     }
     
+    class func setSubscriptionExpiration(date: Date?) {
+        UserDefaults.standard.set(date, forKey: GluuConstants.SUBSCRIPTION_EXPIRY_DATE)
+    }
+    
+    class func subscriptionExpirationDate() -> Date? {
+        return UserDefaults.standard.value(forKey: GluuConstants.SUBSCRIPTION_EXPIRY_DATE) as? Date
+    }
+    
     class func licensedKeys() -> [String]? {
         return UserDefaults.standard.array(forKey: GluuConstants.LICENSED_KEYS) as? [String]
     }
     
     class func saveLicensedKey(_ key: String) {
-        var newKeyArray = [String]()
+        var newKeyArray: [String]?
         if var licensedKeys = GluuUserDefaults.licensedKeys() {
             if licensedKeys.contains(key) == false {
                 licensedKeys.append(key)
-                newKeyArray = licensedKeys
             }
+            newKeyArray = licensedKeys
         } else {
             newKeyArray = [key]
-            
         }
         
         UserDefaults.standard.set(newKeyArray, forKey: GluuConstants.LICENSED_KEYS)

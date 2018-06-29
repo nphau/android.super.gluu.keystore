@@ -20,6 +20,7 @@ def project_pods
  pod 'CATCurveProgressView'
  pod 'SwiftMessages'
  pod 'SCLAlertView'
+ pod 'SwiftyStoreKit', '~> 0.11'
 
 # pod 'ox-push3', :git => 'https://github.com/GluuFederation/ox-push3.git'
 pod 'ox-push3', :git => 'https://github.com/soulfoodz/oxPush3.git'

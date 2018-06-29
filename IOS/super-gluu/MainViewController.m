@@ -20,9 +20,7 @@
 #import "IAPShare.h"
 #import <LocalAuthentication/LocalAuthentication.h>
 #import "SuperGluuBannerView.h"
-#import "ADSubsriber.h"
 #import "PushNotificationHelper.h"
-
 
 
 #ifdef ADFREE
@@ -55,11 +53,6 @@
     
     [super viewDidLoad];
     
-    // on initial load, prompt user to setup secure entry to app
-//    if ([GluuUserDefaults hasSeenSecurityPrompt] == false) {
-//        [self performSegueWithIdentifier:@"segueToSecurityPrompt" sender:nil];
-//    }
-    
     count = 0;
     
     [self initWiget];
@@ -85,16 +78,10 @@
     isSecureClick = secureClickEnable;
     [_notificationNetworkView checkNetwork];
     
-    [self reloadInterstial];
+    [self reloadFullPageAd];
     
     [self checkPushNotification];
     
-    
-    
-    BOOL isLicensed = [[NSUserDefaults standardUserDefaults] valueForKey:LICENSED_AD_FREE];
-    if (isLicensed == true) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AD_FREE object:nil];
-    }
     
 }
 
@@ -111,6 +98,13 @@
 
 - (void)setupDisplay {
     
+    removeAdsView.layer.shadowColor = [UIColor blackColor].CGColor;
+    removeAdsView.layer.shadowRadius = 3;
+    removeAdsView.layer.shadowOffset = CGSizeMake(0, 1);
+    removeAdsView.layer.shadowOpacity = 0.3;
+    removeAdsView.layer.cornerRadius = CORNER_RADIUS;
+    removeAdsButton.layer.cornerRadius = CORNER_RADIUS;
+    
     SEL sel = @selector(goToSettings);
     UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_menu"] style:UIBarButtonItemStylePlain target:self action:sel];
     self.navigationItem.rightBarButtonItem = menuButton;
@@ -120,22 +114,18 @@
 
 - (void)setupAdHandling {
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideADView:) name:NOTIFICATION_AD_FREE object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initADView:) name:NOTIFICATION_AD_NOT_FREE object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideSmallADView:) name:NOTIFICATION_AD_FREE object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initSmallADView:) name:NOTIFICATION_AD_NOT_FREE object:nil];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initFullPageBanner:) name:NOTIFICATION_REGISTRATION_SUCCESS object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initFullPageBanner:) name:NOTIFICATION_REGISTRATION_FAILED object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initFullPageBanner:) name:NOTIFICATION_AUTENTIFICATION_SUCCESS object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initFullPageBanner:) name:NOTIFICATION_AUTENTIFICATION_FAILED object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showFullPageBanner:) name:NOTIFICATION_REGISTRATION_SUCCESS object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showFullPageBanner:) name:NOTIFICATION_REGISTRATION_FAILED object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showFullPageBanner:) name:NOTIFICATION_AUTENTIFICATION_SUCCESS object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showFullPageBanner:) name:NOTIFICATION_AUTENTIFICATION_FAILED object:nil];
 
     bannerView = [[SuperGluuBannerView alloc] init];
     [bannerView createAndLoadInterstitial];
     
-    BOOL isLicensed = [[NSUserDefaults standardUserDefaults] boolForKey:LICENSED_AD_FREE];
-    if (isLicensed == false) {
-        //Here we should also check subsciption for AD free
-        [[ADSubsriber sharedInstance] isSubscriptionValid];
-    }
+    [[AdHandler shared] refreshAdStatus];
     
 }
 
@@ -304,7 +294,8 @@
 
         [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitleSuccess", @"Success") andMessage:message];
         
-        [self reloadInterstial];
+        [self reloadFullPageAd];
+        [self showFullPageBanner];
         
     } else if ([notiName isEqual:NOTIFICATION_REGISTRATION_FAILED]){
         
@@ -318,7 +309,8 @@
         
         [self showAlertViewWithTitle:NSLocalizedString(@"FailedEnrollment", @"Failed Enrollment") andMessage:message];
         
-        [self reloadInterstial];
+        [self reloadFullPageAd];
+        [self showFullPageBanner];
         
     } else if ([notiName isEqual:NOTIFICATION_REGISTRATION_STARTING]){
         
@@ -337,7 +329,8 @@
         message = NSLocalizedString(@"SuccessAuthentication", @"Success Authentication");
         [self showAlertViewWithTitle:NSLocalizedString(@"AlertTitleSuccess", @"Success") andMessage:message];
         
-        [self reloadInterstial];
+        [self reloadFullPageAd];
+        [self showFullPageBanner];
         
     } else if ([notiName isEqual:NOTIFICATION_AUTENTIFICATION_FAILED]){
         
@@ -351,7 +344,8 @@
 
         [self showAlertViewWithTitle:NSLocalizedString(@"FailedAuthentication", @"Failed Authentication") andMessage:message];
         
-        [self reloadInterstial];
+        [self reloadFullPageAd];
+        [self showFullPageBanner];
         
     } else if ([notiName isEqual:NOTIFICATION_AUTENTIFICATION_STARTING]){
         
@@ -480,6 +474,8 @@
 
 -(void)sendQRCodeRequest:(NSDictionary*)jsonDictionary{
 
+    NSLog(@"Send QR Request");
+    
     if (jsonDictionary != nil){
     
         [AuthHelper sharedInstance].requestDictionary = jsonDictionary;
@@ -657,47 +653,48 @@
     
 #pragma mark - Ad Handling:
     
--(void)initADView:(NSNotification*)notification{
+- (void)initSmallADView:(NSNotification*)notification {
+
+    NSLog(@"Show small banner view");
     
-    BOOL isLicensed = [[NSUserDefaults standardUserDefaults] boolForKey:LICENSED_AD_FREE];
-    if (isLicensed != true) {
+    if (smallBannerView == nil) {
         smallBannerView = [[SuperGluuBannerView alloc] initWithAdSize:kGADAdSizeBanner andRootViewController:self];
-        smallBannerView.alpha = 1.0;
-        
-        [removeAdsView setHidden:false];
     }
+    
+    smallBannerView.alpha = 1.0;
+    [removeAdsView setHidden:false];
+    
 }
     
-- (void)hideADView:(NSNotification*)notification {
+- (void)hideSmallADView:(NSNotification*)notification {
+    
+    NSLog(@"Remove small banner view");
+    
     [removeAdsView setHidden:true];
     
     if (smallBannerView != nil){
-        [smallBannerView closeAD];
+        [smallBannerView removeFromSuperview];
+        smallBannerView = nil;
+    } else {
+        NSLog(@"Small Banner View was nil");
     }
 }
     
-- (void)reloadInterstial {
-    BOOL isLicensed = [[NSUserDefaults standardUserDefaults] boolForKey:LICENSED_AD_FREE];
-    if (isLicensed != true) {
-        if (bannerView == nil){
-            bannerView = [[SuperGluuBannerView alloc] init];
-        }
-        [bannerView createAndLoadInterstitial];
-    }
-}
+- (void)showFullPageBanner {
+    // ad handler shouldShowAds state is checked in function prior to showing ad
     
-- (void)initFullPageBanner:(NSNotification*)notification {
-    BOOL isLicensed = [[NSUserDefaults standardUserDefaults] boolForKey:LICENSED_AD_FREE];
-    if (isLicensed != true) {
-        [bannerView showInterstitial:self];
+    if (bannerView == nil){
+        bannerView = [[SuperGluuBannerView alloc] init];
     }
+    [bannerView showInterstitial:self];
 }
-    
-- (void)reloadFullPageBanner:(NSNotification*)notification {
-    BOOL isLicensed = [[NSUserDefaults standardUserDefaults] boolForKey:LICENSED_AD_FREE];
-    if (isLicensed != true) {
-        [bannerView createAndLoadInterstitial];
+
+- (void)reloadFullPageAd {
+    if (bannerView == nil) {
+        bannerView = [[SuperGluuBannerView alloc] init];
     }
+    
+    [bannerView createAndLoadInterstitial];
 }
     
 - (void)closeAD {
@@ -798,9 +795,11 @@
     NSLog(@"Licensing part");
     
     if (isLicensed == true) {
+        NSLog(@"Saving Licensed Key");
         [GluuUserDefaults saveLicensedKey: keyIssuer];
         [[AdHandler shared] refreshAdStatus];
     } else {
+        NSLog(@"Removing Licensed Key");
         [GluuUserDefaults removeLicensedKey: keyIssuer];
         [[AdHandler shared] refreshAdStatus];
     }

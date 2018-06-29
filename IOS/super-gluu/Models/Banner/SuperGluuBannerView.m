@@ -24,6 +24,9 @@
 -(id)initWithAdSize:(GADAdSize)adSize andRootViewController:(UIViewController*)rootVC{
     //Determine type of AD (banner or interstitial)
     
+    self = [[SuperGluuBannerView alloc] init];
+    self.frame = CGRectMake(0, 0, adSize.size.width, adSize.size.height);
+    
     if (adSize.size.height == kGADAdSizeBanner.size.height &&
         adSize.size.width == kGADAdSizeBanner.size.width) {
     
@@ -42,10 +45,13 @@
             CGFloat adCenterX = screenWidth / 2;
             CGFloat adCenterY = screenHeight - (adHeight / 2);
             
-            bannerView.center = CGPointMake(adCenterX, adCenterY);
+            [self addSubview:bannerView];
+            self.center = CGPointMake(adCenterX, adCenterY);
             
-            [rootVC.view addSubview:bannerView];
-            [rootVC.view bringSubviewToFront:bannerView];
+            bannerView.frame = self.bounds;
+            
+            [rootVC.view addSubview:self];
+            [rootVC.view bringSubviewToFront:self];
             
             [bannerView loadRequest:[GADRequest request]];
             
@@ -67,7 +73,12 @@
     _interstitial.delegate = self;
 }
 
-- (void)showInterstitial:(UIViewController*)rootView{
+- (void)showInterstitial:(UIViewController*)rootView {
+    
+    if ([AdHandler shared].shouldShowAds == false) {
+        return;
+    }
+    
     if (_interstitial.isReady) {
         [_interstitial presentFromRootViewController:rootView];
     } else {
@@ -81,6 +92,7 @@
 
 -(void)closeAD {
     bannerView.hidden = YES;
+    [self removeFromSuperview];
 }
 
 - (void)interstitialDidDismissScreen:(GADInterstitial *)interstitial {

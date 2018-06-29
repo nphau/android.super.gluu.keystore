@@ -8,7 +8,6 @@
 
 #import "PinCodeSettingsTableViewController.h"
 #import "SCLAlertView.h"
-#import "PinCodeViewController.h"
 #import <LocalAuthentication/LocalAuthentication.h>
 
 

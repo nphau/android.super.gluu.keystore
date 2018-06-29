@@ -11,7 +11,6 @@
 #import "LecenseAgreementDelegate.h"
 #import "UserLoginInfo.h"
 #import "CATCurveProgressView.h"
-#import "ADViewSubscriber.h"
 
 @interface ApproveDenyViewController : BaseViewController <UIScrollViewDelegate> {
  
@@ -64,7 +63,6 @@
 @property (assign, nonatomic) BOOL isLogInfo;
 
 @property (strong, nonatomic) UserLoginInfo* userInfo;
-@property (nonatomic, weak) IBOutlet ADViewSubscriber* adFreeView;
 
 -(void)updateInfo;
 

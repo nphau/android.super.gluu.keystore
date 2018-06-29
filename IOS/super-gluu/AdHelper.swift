@@ -13,17 +13,32 @@ import UIKit
     
     static var shared = AdHandler()
     
+    var shouldShowAds = true
+    
     func refreshAdStatus() {
         // if the user has a licensed key, don't show ads
+        
         if GluuUserDefaults.licensedKeys()?.first != nil {
+            shouldShowAds = false
             NotificationCenter.default.post(name: Notification.Name(GluuConstants.NOTIFICATION_AD_FREE), object: nil)
+        
+        } else if let expirationDate = GluuUserDefaults.subscriptionExpirationDate(), expirationDate > Date() {
+            shouldShowAds = false
+            NotificationCenter.default.post(name: Notification.Name(GluuConstants.NOTIFICATION_AD_FREE), object: nil)
+        
         } else {
-            if ADSubsriber.sharedInstance().hasValidSubscription() == true {
-                NotificationCenter.default.post(name: Notification.Name(GluuConstants.NOTIFICATION_AD_FREE), object: nil)
-            } else {
-                NotificationCenter.default.post(name: Notification.Name(GluuConstants.NOTIFICATION_AD_NOT_FREE), object: nil)
-            }
-            //        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:LICENSED_AD_FREE];
+            shouldShowAds = true
+            NotificationCenter.default.post(name: Notification.Name(GluuConstants.NOTIFICATION_AD_NOT_FREE), object: nil)
+            
+//            PurchaseHandler.shared.hasValidSubscription(completion: { (hasSubscription) in
+//                if hasSubscription {
+//                    self.shouldShowAds = false
+//                    NotificationCenter.default.post(name: Notification.Name(GluuConstants.NOTIFICATION_AD_FREE), object: nil)
+//                } else {
+//                    self.shouldShowAds = true
+//                    NotificationCenter.default.post(name: Notification.Name(GluuConstants.NOTIFICATION_AD_NOT_FREE), object: nil)
+//                }
+//            })
         }
     }
 }

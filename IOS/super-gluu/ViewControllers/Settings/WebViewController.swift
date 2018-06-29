@@ -10,22 +10,22 @@ import UIKit
 import WebKit
 import SwiftMessages
 
-class WebViewController: UIViewController {
-
-    enum WebDisplay: String {
-        case privacy = "Privacy Policy"
-        case tos = "Terms of Service"
-        
-        var urlString: String {
-            switch self {
-            case .privacy:
-                return "https://docs.google.com/document/d/1E1xWq28_f-tam7PihkTZXhlqaXVGZxJbVt4cfx15kB4/edit#heading=h.ifitnnlwr25"
-                
-            case .tos:
-                return "https://gluu.org/docs/supergluu/user-guide/"
-            }
+enum WebDisplay: String {
+    case privacy = "Privacy Policy"
+    case tos = "Terms of Service"
+    
+    var urlString: String {
+        switch self {
+        case .privacy:
+            return "https://docs.google.com/document/d/1E1xWq28_f-tam7PihkTZXhlqaXVGZxJbVt4cfx15kB4/edit#heading=h.ifitnnlwr25"
+            
+        case .tos:
+            return "https://gluu.org/docs/supergluu/user-guide/"
         }
     }
+}
+
+class WebViewController: UIViewController {
     
     let webView = WKWebView()
     

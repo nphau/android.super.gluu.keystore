@@ -31,13 +31,13 @@ PODS:
   - FirebaseAnalytics (3.7.0):
     - FirebaseCore (~> 3.5)
     - FirebaseInstanceID (~> 1.0)
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
   - FirebaseCore (3.5.0):
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
   - FirebaseInstanceID (1.0.9)
   - Google-Mobile-Ads-SDK (7.17.0)
   - GoogleToolboxForMac/Defines (2.1.1)
-  - GoogleToolboxForMac/NSData+zlib (2.1.1):
+  - "GoogleToolboxForMac/NSData+zlib (2.1.1)":
     - GoogleToolboxForMac/Defines (= 2.1.1)
   - IAPHelper (1.1)
   - JTMaterialSwitch (1.1)
@@ -51,6 +51,7 @@ PODS:
   - QRCodeReaderViewController (4.0.2)
   - SCLAlertView (0.7.0)
   - SwiftMessages (4.0.0)
+  - SwiftyStoreKit (0.13.2)
   - SWTableViewCell (0.3.7)
 
 DEPENDENCIES:
@@ -66,7 +67,29 @@ DEPENDENCIES:
   - QRCodeReaderViewController (~> 4.0.1)
   - SCLAlertView
   - SwiftMessages
+  - SwiftyStoreKit (~> 0.11)
   - SWTableViewCell (~> 0.3.7)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - AFNetworking
+    - CATCurveProgressView
+    - CocoaAsyncSocket
+    - Firebase
+    - FirebaseAnalytics
+    - FirebaseCore
+    - FirebaseInstanceID
+    - Google-Mobile-Ads-SDK
+    - GoogleToolboxForMac
+    - IAPHelper
+    - JTMaterialSwitch
+    - NHNetworkTime
+    - NSHash
+    - QRCodeReaderViewController
+    - SCLAlertView
+    - SwiftMessages
+    - SwiftyStoreKit
+    - SWTableViewCell
 
 EXTERNAL SOURCES:
   ox-push3:
@@ -95,8 +118,9 @@ SPEC CHECKSUMS:
   QRCodeReaderViewController: e8f27d035b3e72b1d4b1c61ff66458287e3be0ff
   SCLAlertView: 8a14ffc40590c619e183eed2298b854385f30be1
   SwiftMessages: cd565e0e7d095584be1770c012c6b5be4183b5ee
+  SwiftyStoreKit: b7563505440a68c9d9fa70bc43d8a97015519409
   SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
 
-PODFILE CHECKSUM: 6d4aa9e657332ca2f2c29493e8b6eec64d725474
+PODFILE CHECKSUM: d796589b0253ce39fbb51f4cdfd83d5ef9510d5f
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.5.3

@@ -4,12 +4,17 @@ __pycache__/
 *$py.class
 
 
+# Mac
+**.DS_Store
+
 # git
 **.orig
 
 ## Build generated
 build/
+automation_results/*
 DerivedData/
+DerivedData
 
 ## Various settings
 *.pbxuser
@@ -21,6 +26,14 @@ DerivedData/
 *.perspectivev3
 !default.perspectivev3
 xcuserdata/
+
+*.pbxuser
+*.swo
+*.swp
+*.xccheckout
+*.xcscheme
+*.xcscmblueprint
+*.xcuserstate
 
 ## Other
 *.moved-aside
@@ -51,7 +64,14 @@ playground.xcworkspace
 # https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
 #
 Pods/
-
+Pods/*
+Podfile.lock
+xcuserdata
+xcuserdata/*
+UserInterfaceState.xcuserstate
+xcworkspace/
+.xcworkspace/
+*.xcworkspace/
 
 # C extensions
 *.so

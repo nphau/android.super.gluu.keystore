@@ -14,7 +14,6 @@
 #import "UserLoginInfo.h"
 #import "SCLAlertView.h"
 #import "AppConfiguration.h"
-#import "ADSubsriber.h"
 
 @implementation LogsViewController
 
@@ -34,9 +33,9 @@
     
     [editLogsButton setTag:1];
     
-    if ([[ADSubsriber sharedInstance] isSubscribed]){
-        [selectAllView setCenter:CGPointMake(selectAllView.center.x, selectAllView.center.y+50)];
-    }
+//    if ([[ADSubsriber sharedInstance] isSubscribed]){
+//        [selectAllView setCenter:CGPointMake(selectAllView.center.x, selectAllView.center.y+50)];
+//    }
     
     logsTableView.tableFooterView = [[UIView alloc] init];
     logsTableView.allowsMultipleSelectionDuringEditing = YES;

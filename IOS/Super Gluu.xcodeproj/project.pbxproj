@@ -42,10 +42,6 @@
 		BB37DF3F1C7E0B8E0016D422 /* LogsTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB37DF101C7E0B8E0016D422 /* LogsTableCell.m */; };
 		BB37DF421C7E0CBC0016D422 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB37DF411C7E0CBC0016D422 /* CoreData.framework */; };
 		BB3BE1721C882D0600817A46 /* ApproveDenyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB3BE1711C882D0600817A46 /* ApproveDenyViewController.m */; };
-		BB4732BF1EEADDCE007B8173 /* ADSubsriber.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4732BE1EEADDCE007B8173 /* ADSubsriber.m */; };
-		BB4732C01EEADDCE007B8173 /* ADSubsriber.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4732BE1EEADDCE007B8173 /* ADSubsriber.m */; };
-		BB4732C41EEAEE20007B8173 /* ADViewSubscriber.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4732C31EEAEE20007B8173 /* ADViewSubscriber.m */; };
-		BB4732C51EEAEE20007B8173 /* ADViewSubscriber.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4732C31EEAEE20007B8173 /* ADViewSubscriber.m */; };
 		BB4EDA421F4EC52700EA807B /* SCLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDA321F4EC52700EA807B /* SCLAlertView.m */; };
 		BB4EDA431F4EC52700EA807B /* SCLAlertViewResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDA341F4EC52700EA807B /* SCLAlertViewResponder.m */; };
 		BB4EDA441F4EC52700EA807B /* SCLAlertViewStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4EDA361F4EC52700EA807B /* SCLAlertViewStyleKit.m */; };
@@ -188,12 +184,8 @@
 		C8494D0B1FD5E67600CD5FA8 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8494D0A1FD5E67600CD5FA8 /* SettingsTableViewCell.swift */; };
 		C8494D0D1FD5FCB800CD5FA8 /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8494D0C1FD5FCB800CD5FA8 /* Font+Extension.swift */; };
 		C8494D131FD7263F00CD5FA8 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8494D121FD7263F00CD5FA8 /* BaseViewController.m */; };
-		C8494D151FD72A5400CD5FA8 /* LogInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8494D141FD72A5400CD5FA8 /* LogInfoView.swift */; };
-		C8494D161FD72A5400CD5FA8 /* LogInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8494D141FD72A5400CD5FA8 /* LogInfoView.swift */; };
-		C8494D181FD72A6A00CD5FA8 /* LogInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8494D171FD72A6A00CD5FA8 /* LogInfoView.xib */; };
-		C8494D191FD72A6A00CD5FA8 /* LogInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8494D171FD72A6A00CD5FA8 /* LogInfoView.xib */; };
-		C8494D1B1FD72D7200CD5FA8 /* LogDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8494D1A1FD72D7200CD5FA8 /* LogDetailsViewController.swift */; };
-		C8494D1C1FD72D7200CD5FA8 /* LogDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8494D1A1FD72D7200CD5FA8 /* LogDetailsViewController.swift */; };
+		C858D67720E30510000E449E /* PurchaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C858D67620E30510000E449E /* PurchaseHandler.swift */; };
+		C858D67820E37930000E449E /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8494D0A1FD5E67600CD5FA8 /* SettingsTableViewCell.swift */; };
 		C86B05A72076A037008875D3 /* SubscriptionDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86B05A62076A037008875D3 /* SubscriptionDetailsViewController.swift */; };
 		C86B05A92076A9CA008875D3 /* UIButton+SuperGluu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86B05A82076A9CA008875D3 /* UIButton+SuperGluu.swift */; };
 		C8735EAD2001D07E00722BD5 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8735EAC2001D07E00722BD5 /* BaseNavigationController.swift */; };
@@ -237,8 +229,8 @@
 		B84F8928A16117787C96522F /* Pods-Super Gluu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Super Gluu.release.xcconfig"; path = "Pods/Target Support Files/Pods-Super Gluu/Pods-Super Gluu.release.xcconfig"; sourceTree = "<group>"; };
 		BB05D1C41EB08B34007E0B72 /* NetworkChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkChecker.h; path = NetworkChecker/NetworkChecker.h; sourceTree = "<group>"; };
 		BB05D1C51EB08B34007E0B72 /* NetworkChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetworkChecker.m; path = NetworkChecker/NetworkChecker.m; sourceTree = "<group>"; };
-		BB128D841E8006A40041BD21 /* SettingsTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsTableCell.h; path = Settings/Cells/SettingsTableCell.h; sourceTree = "<group>"; };
-		BB128D851E8006A40041BD21 /* SettingsTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsTableCell.m; path = Settings/Cells/SettingsTableCell.m; sourceTree = "<group>"; };
+		BB128D841E8006A40041BD21 /* SettingsTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableCell.h; sourceTree = "<group>"; };
+		BB128D851E8006A40041BD21 /* SettingsTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableCell.m; sourceTree = "<group>"; };
 		BB128D8C1E8266470041BD21 /* BLEDevicesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLEDevicesViewController.h; path = Settings/BLEDevicesViewController.h; sourceTree = "<group>"; };
 		BB128D8D1E8266470041BD21 /* BLEDevicesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLEDevicesViewController.m; path = Settings/BLEDevicesViewController.m; sourceTree = "<group>"; };
 		BB128D921E8903DA0041BD21 /* U2FMessageCoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = U2FMessageCoder.swift; path = "super-gluu/BLEManager/U2FMessageCoder/U2FMessageCoder.swift"; sourceTree = SOURCE_ROOT; };
@@ -292,10 +284,6 @@
 		BB3BE1671C88165800817A46 /* Super-gluu_PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Super-gluu_PrefixHeader.pch"; sourceTree = "<group>"; };
 		BB3BE1701C882D0600817A46 /* ApproveDenyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApproveDenyViewController.h; sourceTree = "<group>"; };
 		BB3BE1711C882D0600817A46 /* ApproveDenyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApproveDenyViewController.m; sourceTree = "<group>"; };
-		BB4732BD1EEADDCE007B8173 /* ADSubsriber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADSubsriber.h; path = Models/ADSubsriber.h; sourceTree = "<group>"; };
-		BB4732BE1EEADDCE007B8173 /* ADSubsriber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADSubsriber.m; path = Models/ADSubsriber.m; sourceTree = "<group>"; };
-		BB4732C21EEAEE20007B8173 /* ADViewSubscriber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADViewSubscriber.h; path = Models/ADViewSubscriber/ADViewSubscriber.h; sourceTree = "<group>"; };
-		BB4732C31EEAEE20007B8173 /* ADViewSubscriber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADViewSubscriber.m; path = Models/ADViewSubscriber/ADViewSubscriber.m; sourceTree = "<group>"; };
 		BB4EDA311F4EC52700EA807B /* SCLAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertView.h; sourceTree = "<group>"; };
 		BB4EDA321F4EC52700EA807B /* SCLAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLAlertView.m; sourceTree = "<group>"; };
 		BB4EDA331F4EC52700EA807B /* SCLAlertViewResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertViewResponder.h; sourceTree = "<group>"; };
@@ -380,13 +368,11 @@
 		C84157081FDA0226008BCF0B /* SingleCellSettingsDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SingleCellSettingsDetailViewController.swift; path = Settings/SingleCellSettingsDetailViewController.swift; sourceTree = "<group>"; };
 		C8419626201A4F05005A4ACC /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = "super-gluu/LaunchScreen.storyboard"; sourceTree = SOURCE_ROOT; };
 		C848322B1FE9A90800679640 /* SwiftMessages+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SwiftMessages+Extension.swift"; path = "Extensions/SwiftMessages+Extension.swift"; sourceTree = "<group>"; };
-		C8494D0A1FD5E67600CD5FA8 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsTableViewCell.swift; path = Settings/Cells/SettingsTableViewCell.swift; sourceTree = "<group>"; };
+		C8494D0A1FD5E67600CD5FA8 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		C8494D0C1FD5FCB800CD5FA8 /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Font+Extension.swift"; path = "Extensions/Font+Extension.swift"; sourceTree = "<group>"; };
 		C8494D111FD7263F00CD5FA8 /* BaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		C8494D121FD7263F00CD5FA8 /* BaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
-		C8494D141FD72A5400CD5FA8 /* LogInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LogInfoView.swift; path = Views/LogInfoView.swift; sourceTree = "<group>"; };
-		C8494D171FD72A6A00CD5FA8 /* LogInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = LogInfoView.xib; path = Views/LogInfoView.xib; sourceTree = "<group>"; };
-		C8494D1A1FD72D7200CD5FA8 /* LogDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDetailsViewController.swift; sourceTree = "<group>"; };
+		C858D67620E30510000E449E /* PurchaseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseHandler.swift; sourceTree = "<group>"; };
 		C86B05A62076A037008875D3 /* SubscriptionDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionDetailsViewController.swift; sourceTree = "<group>"; };
 		C86B05A82076A9CA008875D3 /* UIButton+SuperGluu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIButton+SuperGluu.swift"; path = "Extensions/UIButton+SuperGluu.swift"; sourceTree = "<group>"; };
 		C8735EAC2001D07E00722BD5 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
@@ -533,23 +519,12 @@
 				C841030E1FE0720200B3033D /* PinCodeSettingsTableViewController.m */,
 				C84157081FDA0226008BCF0B /* SingleCellSettingsDetailViewController.swift */,
 				C84157051FD9F695008BCF0B /* TouchIdSettingsDetailViewController.swift */,
-				BB128D831E8006700041BD21 /* Cells */,
 				C8F0E2E11FD227CE00FF9342 /* SettingsViewController.swift */,
 				BB128D8C1E8266470041BD21 /* BLEDevicesViewController.h */,
 				BB128D8D1E8266470041BD21 /* BLEDevicesViewController.m */,
 				C82967611FE9C2C1008FEBE8 /* WebViewController.swift */,
 			);
 			name = Settings;
-			sourceTree = "<group>";
-		};
-		BB128D831E8006700041BD21 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				C8494D0A1FD5E67600CD5FA8 /* SettingsTableViewCell.swift */,
-				BB128D841E8006A40041BD21 /* SettingsTableCell.h */,
-				BB128D851E8006A40041BD21 /* SettingsTableCell.m */,
-			);
-			name = Cells;
 			sourceTree = "<group>";
 		};
 		BB128D911E8903950041BD21 /* U2FMessageCoder */ = {
@@ -607,6 +582,7 @@
 		BB37DE531C7E08320016D422 /* super-gluu */ = {
 			isa = PBXGroup;
 			children = (
+				C858D67620E30510000E449E /* PurchaseHandler.swift */,
 				C837727620E127C9000B00B5 /* AdHelper.swift */,
 				BBDFCCC81EB86BDA0028D8C0 /* Models */,
 				BB79FA361E7A8B2C00AEAE58 /* Extensions */,
@@ -744,9 +720,6 @@
 				C829675D1FE9BE1F008FEBE8 /* AlertView.swift */,
 				C829675F1FE9BE5F008FEBE8 /* AlertView.xib */,
 				C83D2B041FE2F18B00F9455E /* SecurityPromptViewController.swift */,
-				C8494D141FD72A5400CD5FA8 /* LogInfoView.swift */,
-				C8494D171FD72A6A00CD5FA8 /* LogInfoView.xib */,
-				C8494D1A1FD72D7200CD5FA8 /* LogDetailsViewController.swift */,
 				C8494D111FD7263F00CD5FA8 /* BaseViewController.h */,
 				C8494D121FD7263F00CD5FA8 /* BaseViewController.m */,
 				BBF760381EB46268005B9793 /* Notifications */,
@@ -767,21 +740,15 @@
 		BB37DF0C1C7E0B8E0016D422 /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
+				C8494D0A1FD5E67600CD5FA8 /* SettingsTableViewCell.swift */,
+				BB128D841E8006A40041BD21 /* SettingsTableCell.h */,
+				BB128D851E8006A40041BD21 /* SettingsTableCell.m */,
 				BB37DF0D1C7E0B8E0016D422 /* KeyHandleCell.h */,
 				BB37DF0E1C7E0B8E0016D422 /* KeyHandleCell.m */,
 				BB37DF0F1C7E0B8E0016D422 /* LogsTableCell.h */,
 				BB37DF101C7E0B8E0016D422 /* LogsTableCell.m */,
 			);
 			path = TableViewCells;
-			sourceTree = "<group>";
-		};
-		BB4732C11EEAEDE2007B8173 /* ADViewSubscriber */ = {
-			isa = PBXGroup;
-			children = (
-				BB4732C21EEAEE20007B8173 /* ADViewSubscriber.h */,
-				BB4732C31EEAEE20007B8173 /* ADViewSubscriber.m */,
-			);
-			name = ADViewSubscriber;
 			sourceTree = "<group>";
 		};
 		BB4EDA301F4EC52700EA807B /* SCLAlertView */ = {
@@ -869,10 +836,7 @@
 		BBDFCCC81EB86BDA0028D8C0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				BB4732C11EEAEDE2007B8173 /* ADViewSubscriber */,
 				BBDFCCC91EB86BED0028D8C0 /* Banner */,
-				BB4732BD1EEADDCE007B8173 /* ADSubsriber.h */,
-				BB4732BE1EEADDCE007B8173 /* ADSubsriber.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -916,7 +880,6 @@
 				BB37DE4E1C7E08320016D422 /* Frameworks */,
 				BB37DE4F1C7E08320016D422 /* Resources */,
 				5CBF63D57883072BF50E5181 /* [CP] Embed Pods Frameworks */,
-				2446D02862D853AD77D980FA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -972,7 +935,6 @@
 				BB58C17C1EDDB32800FEEC78 /* Frameworks */,
 				BB58C1911EDDB32800FEEC78 /* Resources */,
 				BB58C1AC1EDDB32800FEEC78 /* [CP] Embed Pods Frameworks */,
-				BB58C1AD1EDDB32800FEEC78 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1084,7 +1046,6 @@
 				BBC643C51EF14DEA009FEDD1 /* appConfiguration.plist in Resources */,
 				BB37DF311C7E0B8E0016D422 /* gluuIcon60x3.png in Resources */,
 				BBB7C0E71C884E2600833B12 /* approveIcon.png in Resources */,
-				C8494D181FD72A6A00CD5FA8 /* LogInfoView.xib in Resources */,
 				BB97CDE61F1E4FB90033C2A5 /* ProximaNova-Extrabold.otf in Resources */,
 				BBB7C0E91C8851B900833B12 /* denyIcon.png in Resources */,
 				C82967601FE9BE5F008FEBE8 /* AlertView.xib in Resources */,
@@ -1137,7 +1098,6 @@
 				BBC643C61EF14DEA009FEDD1 /* appConfiguration.plist in Resources */,
 				BB58C19E1EDDB32800FEEC78 /* gluuIcon60x3.png in Resources */,
 				BB58C19F1EDDB32800FEEC78 /* approveIcon.png in Resources */,
-				C8494D191FD72A6A00CD5FA8 /* LogInfoView.xib in Resources */,
 				BB97CDE71F1E4FB90033C2A5 /* ProximaNova-Extrabold.otf in Resources */,
 				BB58C1A01EDDB32800FEEC78 /* denyIcon.png in Resources */,
 				BB97CDE91F1E4FB90033C2A5 /* ProximaNova-Light.otf in Resources */,
@@ -1157,21 +1117,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2446D02862D853AD77D980FA /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Super Gluu/Pods-Super Gluu-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		5CBF63D57883072BF50E5181 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1191,6 +1136,7 @@
 				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
 				"${BUILT_PRODUCTS_DIR}/SWTableViewCell/SWTableViewCell.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyStoreKit/SwiftyStoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/ox-push3/ox_push3.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -1207,6 +1153,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SWTableViewCell.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftMessages.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyStoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ox_push3.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1269,6 +1216,7 @@
 				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
 				"${BUILT_PRODUCTS_DIR}/SWTableViewCell/SWTableViewCell.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyStoreKit/SwiftyStoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/ox-push3/ox_push3.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -1285,26 +1233,12 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SWTableViewCell.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftMessages.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyStoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ox_push3.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Super Gluu - Ad Free/Pods-Super Gluu - Ad Free-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BB58C1AD1EDDB32800FEEC78 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Super Gluu - Ad Free/Pods-Super Gluu - Ad Free-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1320,7 +1254,6 @@
 				BB37DF3F1C7E0B8E0016D422 /* LogsTableCell.m in Sources */,
 				C8B402B41FE9E71B00202A4B /* AuthHelper.swift in Sources */,
 				C8494D0B1FD5E67600CD5FA8 /* SettingsTableViewCell.swift in Sources */,
-				C8494D151FD72A5400CD5FA8 /* LogInfoView.swift in Sources */,
 				BB37DF3C1C7E0B8E0016D422 /* LogsViewController.m in Sources */,
 				BB2459021CBE7B6700035B5B /* NSMutableAttributedString+Color.m in Sources */,
 				BB13D8121EE8413A00F3C41F /* String+Extension.swift in Sources */,
@@ -1329,7 +1262,6 @@
 				C8390619201C145100E4177D /* PushNotificationHelper.m in Sources */,
 				BB79FA2A1E78309000AEAE58 /* PeripheralScanner.swift in Sources */,
 				BB37DE591C7E08320016D422 /* AppDelegate.m in Sources */,
-				C8494D1B1FD72D7200CD5FA8 /* LogDetailsViewController.swift in Sources */,
 				C8735EAD2001D07E00722BD5 /* BaseNavigationController.swift in Sources */,
 				BBDFCCCC1EB86C740028D8C0 /* SuperGluuBannerView.m in Sources */,
 				C848322C1FE9A90800679640 /* SwiftMessages+Extension.swift in Sources */,
@@ -1348,7 +1280,6 @@
 				BB4EDA461F4EC52700EA807B /* SCLSwitchView.m in Sources */,
 				BBC643C91EF14E6F009FEDD1 /* AppConfiguration.m in Sources */,
 				BB128D8E1E8266470041BD21 /* BLEDevicesViewController.m in Sources */,
-				BB4732BF1EEADDCE007B8173 /* ADSubsriber.m in Sources */,
 				C8F0E2DC1FD21C3800FF9342 /* Color+Extension.swift in Sources */,
 				BB3BE1721C882D0600817A46 /* ApproveDenyViewController.m in Sources */,
 				C887B3F920DC4C9E00D99A21 /* LandingViewController.swift in Sources */,
@@ -1370,7 +1301,7 @@
 				BB18D05C1CBCFFAE00A73733 /* PAPasscodeViewController.m in Sources */,
 				C84157091FDA0226008BCF0B /* SingleCellSettingsDetailViewController.swift in Sources */,
 				BB79FA2B1E78309000AEAE58 /* ServiceScanner.swift in Sources */,
-				BB4732C41EEAEE20007B8173 /* ADViewSubscriber.m in Sources */,
+				C858D67720E30510000E449E /* PurchaseHandler.swift in Sources */,
 				C8494D131FD7263F00CD5FA8 /* BaseViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1399,18 +1330,16 @@
 				C8DD92B41FE30C9C000FB9CD /* MainViewController.m in Sources */,
 				BB58C1641EDDB32800FEEC78 /* LogsTableCell.m in Sources */,
 				BB58C1661EDDB32800FEEC78 /* LogsViewController.m in Sources */,
-				BB4732C01EEADDCE007B8173 /* ADSubsriber.m in Sources */,
 				C8F0E2E31FD227CE00FF9342 /* SettingsViewController.swift in Sources */,
-				C8494D161FD72A5400CD5FA8 /* LogInfoView.swift in Sources */,
 				BB58C1671EDDB32800FEEC78 /* NSMutableAttributedString+Color.m in Sources */,
 				C84157071FD9F695008BCF0B /* TouchIdSettingsDetailViewController.swift in Sources */,
 				BB58C1691EDDB32800FEEC78 /* SettingsTableCell.m in Sources */,
+				C858D67820E37930000E449E /* SettingsTableViewCell.swift in Sources */,
 				BBC643CA1EF14E6F009FEDD1 /* AppConfiguration.m in Sources */,
 				BB58C16A1EDDB32800FEEC78 /* PeripheralScanner.swift in Sources */,
 				BB58C16B1EDDB32800FEEC78 /* AppDelegate.m in Sources */,
 				BB58C16C1EDDB32800FEEC78 /* SuperGluuBannerView.m in Sources */,
 				BB58C16D1EDDB32800FEEC78 /* InformationViewController.m in Sources */,
-				BB4732C51EEAEE20007B8173 /* ADViewSubscriber.m in Sources */,
 				BB58C16E1EDDB32800FEEC78 /* KeysViewController.m in Sources */,
 				C841570A1FDA0226008BCF0B /* SingleCellSettingsDetailViewController.swift in Sources */,
 				BB58C1711EDDB32800FEEC78 /* Data+Extension.swift in Sources */,
@@ -1423,7 +1352,6 @@
 				C83D2B061FE2F18B00F9455E /* SecurityPromptViewController.swift in Sources */,
 				BB58C1771EDDB32800FEEC78 /* KeyHandleCell.m in Sources */,
 				BB58C1781EDDB32800FEEC78 /* U2FMessageCoder.swift in Sources */,
-				C8494D1C1FD72D7200CD5FA8 /* LogDetailsViewController.swift in Sources */,
 				BB58C1791EDDB32800FEEC78 /* NetworkChecker.m in Sources */,
 				BB58C17A1EDDB32800FEEC78 /* PAPasscodeViewController.m in Sources */,
 				C839061A201C145100E4177D /* PushNotificationHelper.m in Sources */,
