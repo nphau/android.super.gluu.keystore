@@ -40,7 +40,7 @@
     OXPushManager* oxPushManager;
     UIAlertController * alert;
     
-    SuperGluuBannerView* smallBannerView;
+//    SuperGluuBannerView* smallBannerView;
     SuperGluuBannerView* bannerView;
     
 }
@@ -63,6 +63,7 @@
     
     oxPushManager = [[OXPushManager alloc] init];
     
+    
     //Disable BLE support
 //    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:SECURE_CLICK_ENABLED];
 }
@@ -81,7 +82,6 @@
     [self reloadFullPageAd];
     
     [self checkPushNotification];
-    
     
 }
 
@@ -114,8 +114,8 @@
 
 - (void)setupAdHandling {
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideSmallADView:) name:NOTIFICATION_AD_FREE object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initSmallADView:) name:NOTIFICATION_AD_NOT_FREE object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideBannerAd:) name:NOTIFICATION_AD_FREE object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showBannerAd:) name:NOTIFICATION_AD_NOT_FREE object:nil];
 
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showFullPageBanner:) name:NOTIFICATION_REGISTRATION_SUCCESS object:nil];
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showFullPageBanner:) name:NOTIFICATION_REGISTRATION_FAILED object:nil];
@@ -653,31 +653,22 @@
     
 #pragma mark - Ad Handling:
     
-- (void)initSmallADView:(NSNotification*)notification {
+- (void)showBannerAd:(NSNotification*)notification {
 
     NSLog(@"Show small banner view");
     
-    if (smallBannerView == nil) {
-        smallBannerView = [[SuperGluuBannerView alloc] initWithAdSize:kGADAdSizeBanner andRootViewController:self];
-    }
-    
-    smallBannerView.alpha = 1.0;
+    [smallBannerView loadBannerAd];
+    [smallBannerView setHidden:false];
     [removeAdsView setHidden:false];
     
 }
     
-- (void)hideSmallADView:(NSNotification*)notification {
+- (void)hideBannerAd:(NSNotification*)notification {
     
     NSLog(@"Remove small banner view");
     
     [removeAdsView setHidden:true];
-    
-    if (smallBannerView != nil){
-        [smallBannerView removeFromSuperview];
-        smallBannerView = nil;
-    } else {
-        NSLog(@"Small Banner View was nil");
-    }
+    [smallBannerView setHidden:true];
 }
     
 - (void)showFullPageBanner {
@@ -696,11 +687,6 @@
     
     [bannerView createAndLoadInterstitial];
 }
-    
-- (void)closeAD {
-    [bannerView closeAD];
-}
-
 
 #pragma mark - QRCodeReader Delegate Methods
 

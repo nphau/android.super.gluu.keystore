@@ -13,13 +13,18 @@
     GADBannerView *bannerView;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-     Drawing code
+// add bannerview in Storyboard and use this to display banner ad
+- (void)loadBannerAd {
+    
+    bannerView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
+    bannerView.adUnitID = @"ca-app-pub-3326465223655655/9778254436";
+    bannerView.rootViewController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    
+    [self addSubview:bannerView];
+    CGPoint bannerCenter = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
+    bannerView.center = bannerCenter;
+    [bannerView loadRequest:[GADRequest request]];
 }
-*/
 
 -(id)initWithAdSize:(GADAdSize)adSize andRootViewController:(UIViewController*)rootVC{
     //Determine type of AD (banner or interstitial)
@@ -32,7 +37,7 @@
     
             //Banner
         if (bannerView == nil) {
-            
+            self.backgroundColor = [UIColor redColor];
             bannerView = [[GADBannerView alloc] initWithAdSize:adSize];
             bannerView.adUnitID = @"ca-app-pub-3326465223655655/9778254436";
             bannerView.rootViewController = rootVC;
@@ -43,12 +48,13 @@
             CGFloat adHeight = adSize.size.height;
             
             CGFloat adCenterX = screenWidth / 2;
-            CGFloat adCenterY = screenHeight - (adHeight / 2);
+            CGFloat adCenterY = screenHeight /2; //- (adHeight / 2);
             
-            [self addSubview:bannerView];
             self.center = CGPointMake(adCenterX, adCenterY);
             
             bannerView.frame = self.bounds;
+            
+            [self addSubview:bannerView];
             
             [rootVC.view addSubview:self];
             [rootVC.view bringSubviewToFront:self];

@@ -12,6 +12,7 @@
 #import "UserLoginInfo.h"
 #import "LecenseAgreementDelegate.h"
 #import "NotificationNetworkView.h"
+#import "SuperGluuBannerView.h"
 
 @interface MainViewController : BaseViewController <QRCodeReaderDelegate, ApproveDenyDelegate>{
     
@@ -27,6 +28,7 @@
     IBOutlet UIView* welcomeView;
     IBOutlet UIView* contentView;
     IBOutlet UIView* removeAdsView;
+    IBOutlet SuperGluuBannerView* smallBannerView;
     IBOutlet UIButton* removeAdsButton;
 
     BOOL isResultFromScan;

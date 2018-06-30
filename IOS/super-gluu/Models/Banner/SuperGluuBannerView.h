@@ -21,5 +21,6 @@
 - (void)showInterstitial:(UIViewController*)rootView;
 
 -(void)closeAD;
+-(void)loadBannerAd;
 
 @end

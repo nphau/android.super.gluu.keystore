@@ -188,10 +188,10 @@
                                                     <rect key="frame" x="47" y="30" width="281" height="160"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hJI-oU-xSL">
-                                                            <rect key="frame" x="93.5" y="0.0" width="94" height="116"/>
+                                                            <rect key="frame" x="93.5" y="0.0" width="94" height="116.5"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_logs_header" translatesAutoresizingMaskIntoConstraints="NO" id="yx2-5z-NZw">
-                                                                    <rect key="frame" x="0.0" y="10.5" width="94" height="94"/>
+                                                                    <rect key="frame" x="0.0" y="11" width="94" height="94"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="94" id="2tC-eQ-Gbx"/>
                                                                         <constraint firstAttribute="height" constant="94" id="Way-a6-VJ8"/>
@@ -207,7 +207,7 @@
                                                             </constraints>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="755" text="Each time Super Gluu is used, a transaction log is generated and recorded in your app." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CiG-6f-UzQ">
-                                                            <rect key="frame" x="6" y="131" width="269" height="29"/>
+                                                            <rect key="frame" x="6" y="131.5" width="269" height="28.5"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
                                                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
@@ -1308,6 +1308,14 @@
                                             <constraint firstAttribute="bottom" secondItem="3Ol-GE-QG6" secondAttribute="bottom" constant="8" id="yeM-lD-hWy"/>
                                         </constraints>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ELE-Fg-7mT" customClass="SuperGluuBannerView">
+                                        <rect key="frame" x="27.5" y="553" width="320" height="50"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="6Cs-XV-zsZ"/>
+                                            <constraint firstAttribute="width" constant="320" id="z2X-2F-QeG"/>
+                                        </constraints>
+                                    </view>
                                     <view alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G0I-DM-Z4P">
                                         <rect key="frame" x="31" y="-40" width="319" height="38"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1326,10 +1334,12 @@
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="yve-mW-djg" firstAttribute="top" relation="greaterThanOrEqual" secondItem="CgO-YG-AjP" secondAttribute="bottom" constant="30" id="8Re-3R-ctn"/>
+                                    <constraint firstAttribute="bottom" secondItem="ELE-Fg-7mT" secondAttribute="bottom" id="Lgi-3Z-iRK"/>
                                     <constraint firstAttribute="trailing" secondItem="yve-mW-djg" secondAttribute="trailing" constant="20" id="NAT-vy-fn4"/>
                                     <constraint firstItem="5QX-lk-50V" firstAttribute="width" secondItem="ogb-Jc-RlP" secondAttribute="width" multiplier="144:375" priority="999" id="RLH-eP-OAk"/>
                                     <constraint firstAttribute="bottom" secondItem="yve-mW-djg" secondAttribute="bottom" constant="70" id="bn4-tD-44f"/>
                                     <constraint firstAttribute="trailing" secondItem="CgO-YG-AjP" secondAttribute="trailing" constant="30" id="dqO-4U-YP0"/>
+                                    <constraint firstItem="ELE-Fg-7mT" firstAttribute="centerX" secondItem="ogb-Jc-RlP" secondAttribute="centerX" id="ghb-6O-lJE"/>
                                     <constraint firstItem="CgO-YG-AjP" firstAttribute="leading" secondItem="ogb-Jc-RlP" secondAttribute="leading" constant="30" id="hjZ-hx-npA"/>
                                     <constraint firstItem="yve-mW-djg" firstAttribute="leading" secondItem="ogb-Jc-RlP" secondAttribute="leading" constant="20" id="iGs-Ig-QwL"/>
                                     <constraint firstItem="CgO-YG-AjP" firstAttribute="centerY" secondItem="ogb-Jc-RlP" secondAttribute="centerY" priority="998" constant="-40" id="nCI-0p-YYD"/>
@@ -1389,6 +1399,7 @@
                         <outlet property="removeAdsView" destination="yve-mW-djg" id="vXm-eu-LDK"/>
                         <outlet property="scanButton" destination="ffN-SG-7rx" id="l5O-kn-9tP"/>
                         <outlet property="scanTextLabel" destination="mMq-pl-qUw" id="NAd-Qa-KT4"/>
+                        <outlet property="smallBannerView" destination="ELE-Fg-7mT" id="Blc-Pt-vTu"/>
                         <outlet property="statusLabel" destination="0s9-Pu-KnT" id="gkP-5Z-QdY"/>
                         <outlet property="statusView" destination="G0I-DM-Z4P" id="kF8-0R-Ey7"/>
                         <outlet property="welcomeLabel" destination="FDP-Hk-qh3" id="nxG-dp-AZT"/>
@@ -1411,12 +1422,12 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="p9v-H9-NEp">
+                        <view key="tableFooterView" contentMode="scaleToFill" misplaced="YES" id="p9v-H9-NEp">
                             <rect key="frame" x="0.0" y="97" width="375" height="40"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="When Enabled, access to your Super Gluu app will be protected by touch ID." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V3O-Ze-XTL">
-                                    <rect key="frame" x="15" y="0.0" width="345" height="40"/>
+                                    <rect key="frame" x="15" y="0.0" width="345" height="0.0"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
