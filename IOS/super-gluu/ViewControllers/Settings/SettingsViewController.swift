@@ -28,9 +28,9 @@ enum SettingsTableSections {
             // Removing SSL for time being
             let touchAuth = TouchIDAuth()
             if touchAuth.canEvaluatePolicy() {
-                return [.pinCodes, .touchId] //, .ssl]
+                return [.pinCodes, .touchId, .ssl] //, .ssl]
             } else {
-                return [.pinCodes] //, .ssl]
+                return [.pinCodes, .ssl] //, .ssl]
             }
             
         case .help:

@@ -81,31 +81,3 @@ struct GluuConstants {
     class func notificationAdFree()   -> String { return GluuConstants.NOTIFICATION_AD_FREE }
     class func notificationAdNotFree()   -> String { return GluuConstants.NOTIFICATION_AD_NOT_FREE }
 }
-
-@objc class AlertV: NSObject {
-    
-    private override init() {}
-    
-    
-//    class func alertViewWithCloseButton(yesOrNo: Bool) -> SCLAlertView {
-//
-//        let appearance = SCLAlertView.SCLAppearance(
-//            showCloseButton: yesOrNo
-//        )
-//
-//        let alert = SCLAlertView(appearance: appearance)
-//
-//        return alert
-//
-//    }
-    
-//    - (void)showAlertViewWithTitle:(NSString*)title andMessage:(NSString*)message {
-//
-//    SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-//
-//
-//    [alert showCustom:[[AppConfiguration sharedInstance] systemAlertIcon] color:[[AppConfiguration sharedInstance] systemColor] title:title subTitle:message closeButtonTitle:@"Close" duration:2.0f];
-//
-//    }
-    
-}

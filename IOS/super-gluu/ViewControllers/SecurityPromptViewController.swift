@@ -32,6 +32,14 @@ import UIKit
         return UserDefaults.standard.bool(forKey: GluuConstants.TOUCH_ID_ENABLED)
     }
     
+    class func isSSLEnabled() -> Bool {
+        return UserDefaults.standard.bool(forKey: GluuConstants.SSL_ENABLED)
+    }
+    
+    class func setSSLEnabled(isEnabled: Bool) {
+        UserDefaults.standard.set(isEnabled, forKey: GluuConstants.SSL_ENABLED)
+    }
+    
     class func isFirstLoad() -> Bool {
         return UserDefaults.standard.bool(forKey: GluuConstants.IS_FIRST_LOAD)
     }

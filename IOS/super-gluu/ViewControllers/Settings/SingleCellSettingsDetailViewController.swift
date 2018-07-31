@@ -69,7 +69,8 @@ class SingleCellSettingsDetailViewController: UITableViewController {
         
         switch display {
         case .ssl:
-            return
+            authSwitch.isOn = GluuUserDefaults.isSSLEnabled()
+            navigationItem.title = "Trust SSL"
         
         case .touchId:
             authSwitch.isOn = GluuUserDefaults.hasTouchAuthEnabled()
@@ -83,7 +84,7 @@ class SingleCellSettingsDetailViewController: UITableViewController {
         switch display {
         
         case .ssl:
-            return
+            GluuUserDefaults.setSSLEnabled(isEnabled: sender.isOn)
             
         case .touchId:
             GluuUserDefaults.setTouchAuth(isOn: sender.isOn)
