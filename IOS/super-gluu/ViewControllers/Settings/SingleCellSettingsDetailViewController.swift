@@ -101,7 +101,7 @@ class SingleCellSettingsDetailViewController: UITableViewController {
         
         let height = footerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
         var frame = footerView.frame
-        frame.size.height = height
+        frame.size.height = height + 50
         footerView.frame = frame
         
         tableView.tableFooterView = footerView
