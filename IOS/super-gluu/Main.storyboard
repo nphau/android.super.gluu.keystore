@@ -188,10 +188,10 @@
                                                     <rect key="frame" x="47" y="30" width="281" height="160"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hJI-oU-xSL">
-                                                            <rect key="frame" x="93.5" y="0.0" width="94" height="116"/>
+                                                            <rect key="frame" x="93.5" y="0.0" width="94" height="116.5"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_logs_header" translatesAutoresizingMaskIntoConstraints="NO" id="yx2-5z-NZw">
-                                                                    <rect key="frame" x="0.0" y="11" width="94" height="94"/>
+                                                                    <rect key="frame" x="0.0" y="11.5" width="94" height="94"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="94" id="2tC-eQ-Gbx"/>
                                                                         <constraint firstAttribute="height" constant="94" id="Way-a6-VJ8"/>
@@ -207,7 +207,7 @@
                                                             </constraints>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="755" text="Each time Super Gluu is used, a transaction log is generated and recorded in your app." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CiG-6f-UzQ">
-                                                            <rect key="frame" x="6" y="131" width="269" height="29"/>
+                                                            <rect key="frame" x="6" y="131.5" width="269" height="28.5"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
                                                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
@@ -1422,12 +1422,12 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="p9v-H9-NEp">
+                        <view key="tableFooterView" contentMode="scaleToFill" misplaced="YES" id="p9v-H9-NEp">
                             <rect key="frame" x="0.0" y="97" width="375" height="97"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="When Enabled, access to your Super Gluu app will be protected by touch ID." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V3O-Ze-XTL">
-                                    <rect key="frame" x="15" y="0.0" width="345" height="97"/>
+                                    <rect key="frame" x="15" y="0.0" width="345" height="33"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
