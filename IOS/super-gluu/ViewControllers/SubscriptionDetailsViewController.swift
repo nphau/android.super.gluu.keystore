@@ -27,6 +27,7 @@ class SubscriptionDetailsViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(dismissVC), name: NSNotification.Name(rawValue: GluuConstants.NOTIFICATION_AD_NOT_FREE), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(dismissVC), name: NSNotification.Name(rawValue: GluuConstants.NOTIFICATION_AD_FREE), object: nil)
         
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

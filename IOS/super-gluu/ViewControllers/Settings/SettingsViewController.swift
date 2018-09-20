@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-
+let screenheight = UIScreen.main.bounds.size.height
 let screenwidth = UIScreen.main.bounds.size.width
 
 enum SettingsTableSections {
