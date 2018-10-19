@@ -11,7 +11,7 @@ import com.anjlab.android.iab.v3.TransactionDetails;
 
 import org.gluu.super_gluu.app.settings.Settings;
 
-import SuperGluu.app.R;
+import SuperGluu.app.BuildConfig;
 
 /**
  * Created by nazaryavornytskyy on 6/30/17.
@@ -42,10 +42,7 @@ public class InAppPurchaseService {
             Log.e(TAG, "In-app billing service is unavailable, please upgrade Android Market/Play to version >= 3.9.16");
         }
 
-        String licenseKey = context.getString(R.string.purchase_license_key);
-        String subscriptionId = context.getString(R.string.subscription_id);
-
-        bp = new BillingProcessor(context, licenseKey, null, new BillingProcessor.IBillingHandler() {
+        bp = new BillingProcessor(context, BuildConfig.PURCHASE_LICENSE, null, new BillingProcessor.IBillingHandler() {
             @Override
             public void onProductPurchased(String productId, TransactionDetails details) {
                 Log.e(TAG, "onProductPurchased: " + productId);
@@ -65,11 +62,11 @@ public class InAppPurchaseService {
             public void onBillingInitialized() {
                 Log.e(TAG, "onBillingInitialized");
                 readyToPurchase = true;
-                TransactionDetails transactionDetails = bp.getSubscriptionTransactionDetails(subscriptionId);
+                TransactionDetails transactionDetails = bp.getSubscriptionTransactionDetails(BuildConfig.SUBSCRIPTION_ID);
                 if (transactionDetails != null) {
                     isSubscribed = transactionDetails.purchaseInfo.purchaseData.autoRenewing;
                 }
-                TransactionDetails transactionDetails2 = bp.getPurchaseTransactionDetails(subscriptionId);
+                TransactionDetails transactionDetails2 = bp.getPurchaseTransactionDetails(BuildConfig.SUBSCRIPTION_ID);
                 if (transactionDetails2 != null) {
                     isSubscribed = transactionDetails2.purchaseInfo.purchaseData.purchaseState == PurchaseState.PurchasedSuccessfully;
                 }
@@ -92,9 +89,7 @@ public class InAppPurchaseService {
     }
 
     public void purchase(final Activity activity){
-        String subscriptionId = activity.getString(R.string.subscription_id);
-
-        bp.subscribe(activity, subscriptionId);
+        bp.subscribe(activity, BuildConfig.SUBSCRIPTION_ID);
     }
 
     public void restorePurchase(){
