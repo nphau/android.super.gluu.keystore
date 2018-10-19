@@ -23,3 +23,6 @@ gradle-app.setting
 # Generated files
 bin/
 gen/
+
+# Files for Firebase/Push Notifications
+app/google-services.json
