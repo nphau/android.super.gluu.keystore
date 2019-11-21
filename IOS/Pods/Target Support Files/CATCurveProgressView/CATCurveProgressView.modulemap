@@ -1,6 +1,0 @@
-framework module CATCurveProgressView {
-  umbrella header "CATCurveProgressView-umbrella.h"
-
-  export *
-  module * { export * }
-}
