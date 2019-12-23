@@ -1,13 +1,4 @@
-# super-gluu
-Gluu Mobile Authentication App
+# Super Gluu
+Super Gluu is a push-notification mobile app for two-factor authentication (2FA).
 
-## oxPush2 U2F Workflows
-
-### One Step Workflow
-![oxPush2 One Step workflow](docs/images/oxpush2_one_step_design.png)
-
-### Two Step Workflow
-![oxPush2 Two Step workflow](docs/images/oxpush2_two_step_design.png)
-
-### IOS version
-oxPush authenticator available now for ios devices
+Super Gluu is tightly bundled with the [Gluu Server](https://gluu.org/docs/ce) identity and access management platform, and can be used to achieve 2FA for web and mobile applications that leverage Gluu for authentication.
