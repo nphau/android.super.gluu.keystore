@@ -91,14 +91,14 @@ public class KeyFragmentListAdapter extends BaseAdapter {
 //        view.setTag(position);
         final TokenEntry token = list.get(position);
         if (token != null) {
-            TextView createdDate = view.findViewById(R.id.created_dateKey);
+            TextView createdDateTextView = view.findViewById(R.id.created_dateKey);
             TextView contentView = view.findViewById(R.id.contentKey);
 
             if (contentView != null) {
                 contentView.setText(token.getKeyName());
             }
             String date = token.getCreatedDate();
-            if (createdDate != null && date != null) {
+            if (createdDateTextView != null && date != null) {
                 Date createDate = null;
                 if (Utils.isNotEmpty(date)) {
                     try {
@@ -109,18 +109,28 @@ public class KeyFragmentListAdapter extends BaseAdapter {
                 }
 
                 String createdString = "";
-                if (createdDate != null) {
+                if (createDate != null) {
                     createdString = userDateTimeFormat.format(createDate);
                 }
-                createdDate.setText(createdString);
-            } else {
-                createdDate.setText(R.string.no_date);
+
+                if(!createdString.isEmpty()) {
+                    createdDateTextView.setText(createdString);
+                } else {
+                    createdDateTextView.setText(R.string.no_date);
+                }
+            } else if(createdDateTextView != null){
+                createdDateTextView.setText(R.string.no_date);
             }
             //Setup fonts
             Typeface face = Typeface.createFromAsset(activity.getAssets(), "ProximaNova-Regular.otf");
             Typeface faceTitle = Typeface.createFromAsset(activity.getAssets(), "ProximaNova-Semibold.otf");
-            contentView.setTypeface(faceTitle);
-            createdDate.setTypeface(face);
+            if(contentView != null) {
+                contentView.setTypeface(faceTitle);
+            }
+
+            if(createdDateTextView != null) {
+                createdDateTextView.setTypeface(face);
+            }
         }
         RelativeLayout main_layout = view.findViewById(R.id.key_main_view);
         main_layout.setTag(position);
