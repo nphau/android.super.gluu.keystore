@@ -26,3 +26,5 @@ gen/
 
 # Files for Firebase/Push Notifications
 app/google-services.json
+app/fabric.properties
+keySuperGluu.jks

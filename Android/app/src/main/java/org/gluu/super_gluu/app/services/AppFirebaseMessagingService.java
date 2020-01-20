@@ -42,14 +42,12 @@ public class AppFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Log.d(TAG, "From: " + remoteMessage.getFrom());
-//      "app":"https://ce-release.gluu.org/identity/authentication/authcode", "username": "admin", "method": "enroll", "state": "35e37974-db3d-474b-ba4e-35fda6499ba9", "created": "2016-04-11T09:31:01.020000", "issuer": "https://ce-release.gluu.org"
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
 
             String title = remoteMessage.getData().get("title");
             String message = remoteMessage.getData().get("message");
-//            String requestMessage = remoteMessage.getData().get("request");
             if (Utils.isEmpty(title) || Utils.isEmpty(message)) {
                 Log.e(TAG, "Get unknown push notification message: " + remoteMessage.getData().toString());
                 return;
