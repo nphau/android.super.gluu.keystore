@@ -26,5 +26,7 @@ gen/
 
 # Files for Firebase/Push Notifications
 app/google-services.json
+# Files for Firebase/Push Notifications
 app/fabric.properties
+# Change this for whatever you name your release key
 keySuperGluu.jks

@@ -182,7 +182,7 @@ public class FingerprintAuthenticationDialogFragment extends android.support.v4.
      * button. This can also happen when the user had too many fingerprint attempts.
      */
     private void goToBackup() {
-        mStage = Stage.FINGERPRINT;//PASSWORD;
+        mStage = Stage.FINGERPRINT;
         updateStage();
         mStatusLabel.setText("Too many attempts, try again around 1 minute");
         if(isAdded() && !isDetached() && getResources() != null) {

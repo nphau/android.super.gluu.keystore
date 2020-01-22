@@ -8,7 +8,9 @@ import android.arch.lifecycle.OnLifecycleEvent;
 import android.arch.lifecycle.ProcessLifecycleOwner;
 import android.os.Build;
 import android.support.multidex.MultiDexApplication;
+import android.util.Log;
 
+import SuperGluu.app.BuildConfig;
 import SuperGluu.app.R;
 
 /**
@@ -30,6 +32,9 @@ public class GluuApplication extends MultiDexApplication implements LifecycleObs
         ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
 
         createDefaultNotificationChannel();
+
+        Log.i("boogie", BuildConfig.VENDOR_CERTIFICATE_PRIVATE_KEY);
+        Log.i("boogie", BuildConfig.VENDOR_CERTIFICATE_CERT);
     }
 
     public static boolean isIsAppInForeground() {

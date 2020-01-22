@@ -26,6 +26,8 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
+import SuperGluu.app.BuildConfig;
+
 /**
  * Created by nazaryavornytskyy on 3/1/17.
  */
@@ -34,7 +36,7 @@ public class Fingerprint {
     private Context context;
     // Variable used for storing the key in the Android Keystore container
     private KeyStore keyStore;
-    private static final String KEY_NAME = "androidHive";
+    private static final String KEY_NAME = BuildConfig.FINGERPRINT_NAME;
     private Cipher cipher;
     private KeyguardManager keyguardManager;
     private FingerprintManager fingerprintManager;
