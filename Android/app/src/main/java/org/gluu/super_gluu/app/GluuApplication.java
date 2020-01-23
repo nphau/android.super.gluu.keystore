@@ -32,9 +32,6 @@ public class GluuApplication extends MultiDexApplication implements LifecycleObs
         ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
 
         createDefaultNotificationChannel();
-
-        Log.i("boogie", BuildConfig.VENDOR_CERTIFICATE_PRIVATE_KEY);
-        Log.i("boogie", BuildConfig.VENDOR_CERTIFICATE_CERT);
     }
 
     public static boolean isIsAppInForeground() {

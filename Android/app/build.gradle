@@ -45,8 +45,8 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField "String", "VENDOR_CERTIFICATE_CERT", DEBUG_VENDOR_CERTIFICATE_CERT
-            buildConfigField "String", "VENDOR_CERTIFICATE_PRIVATE_KEY", DEBUG_VENDOR_CERTIFICATE_PRIVATE_KEY
+            buildConfigField "String", "VENDOR_CERTIFICATE_CERT", Gluu_Debug_Vendor_Cert
+            buildConfigField "String", "VENDOR_CERTIFICATE_PRIVATE_KEY", Gluu_Debug_Vendor_Certificate_Private_Key
 
             buildConfigField "String", "OX_SERVER_CERT", "\"\""
             buildConfigField "boolean", "TRUST_ALL_CERT", "false"
@@ -56,11 +56,11 @@ android {
             buildConfigField "String", "BANNER_AD_ID", Gluu_Release_Banner_Ad_Id
             buildConfigField "String", "PURCHASE_LICENSE", Gluu_Purchase_License
             buildConfigField "String", "SUBSCRIPTION_ID", Gluu_Subscription_Id
-            buildConfigField "String", "FINGERPRINT_NAME", FINGERPRINT_NAME
+            buildConfigField "String", "FINGERPRINT_NAME", Gluu_Fingerprint_Name
         }
         release {
-            buildConfigField "String", "VENDOR_CERTIFICATE_CERT", RELEASE_VENDOR_CERTIFICATE_CERT
-            buildConfigField "String", "VENDOR_CERTIFICATE_PRIVATE_KEY", RELEASE_VENDOR_CERTIFICATE_PRIVATE_KEY
+            buildConfigField "String", "VENDOR_CERTIFICATE_CERT", Gluu_Release_Vendor_Cert
+            buildConfigField "String", "VENDOR_CERTIFICATE_PRIVATE_KEY", Gluu_Release_Vendor_Certificate_Private_Key
 
             buildConfigField "String", "OX_SERVER_CERT", "\"\""
             buildConfigField "boolean", "TRUST_ALL_CERT", "false"
@@ -71,7 +71,7 @@ android {
             buildConfigField "String", "BANNER_AD_ID", Gluu_Debug_Banner_Ad_Id
             buildConfigField "String", "PURCHASE_LICENSE", Gluu_Purchase_License
             buildConfigField "String", "SUBSCRIPTION_ID", Gluu_Subscription_Id
-            buildConfigField "String", "FINGERPRINT_NAME", FINGERPRINT_NAME
+            buildConfigField "String", "FINGERPRINT_NAME", Gluu_Fingerprint_Name
 
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
