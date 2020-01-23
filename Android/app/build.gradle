@@ -1,158 +1,143 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.25.3'
+    }
+}
+
 apply plugin: 'com.android.application'
-//apply plugin: 'com.google.gms.google-services'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
 
 android {
     signingConfigs {
         config {
-            keyAlias 'key'
-            keyPassword 'supergluu'
-            storeFile file('/Users/nazaryavornytskyy/super-gluu/Android/keySuperGluu.jks')
-            storePassword 'supergluu'
+            keyAlias Gluu_Key_Alias
+            keyPassword Gluu_Key_Password
+            storeFile file(Gluu_Keystore_File_Location)
+            storePassword Gluu_Store_Password
         }
     }
-    compileSdkVersion 23
-    buildToolsVersion '26.0.1'
+    compileSdkVersion 28
+    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "gluu.org.super.gluu"
         minSdkVersion 21
-        targetSdkVersion 23
-        versionCode 47
-        versionName "3.1.2"
+        targetSdkVersion 28
+        versionCode 63
+        versionName "3.1.3"
         multiDexEnabled true
         signingConfig signingConfigs.config
     }
     dexOptions {
-        incremental true
         javaMaxHeapSize "4g"
     }
-//    productFlavors {
-//        adfree {
-//            applicationIdSuffix ".adfree"
-//            versionNameSuffix "-adfree"
-//            flavorDimension "ad_access"
-//            buildConfigField 'boolean', 'IS_AD', 'false'
-//            signingConfig signingConfigs.config
-//        }
-//        ad {
-//            applicationIdSuffix ".ad"
-//            versionNameSuffix "-ad"
-//            flavorDimension "ad_access"
-//            buildConfigField 'boolean', 'IS_AD', 'true'
-//            signingConfig signingConfigs.config
-//        }
-//    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     buildTypes {
         debug {
-            buildConfigField "String", "VENDOR_CERTIFICATE_CERT",
-                    "          \"30820226308201cca00302010202818100f32c0f96f91b9f00a612ae2969\" +\n" +
-                            "          \"78633dbbb1b13fad7172ee73d1aad27faf81390d265b16f7f2ba8b3e0dbd\" +\n" +
-                            "          \"34f79b9b074268c8cf1c72648efde650e887a438b3ca091ef20b991eb3e7\" +\n" +
-                            "          \"fb31ac726a9866983e1d12f9ae2a317e7d1b103f9b501bbcdead3a2da3c7\" +\n" +
-                            "          \"88cf45e33daba9899c505ed4871871d3b8f86b8b69dfa1996b300a06082a\" +\n" +
-                            "          \"8648ce3d040302305c3120301e06035504031317476c7575206f78507573\" +\n" +
-                            "          \"6832205532462076312e302e30310d300b060355040a1304476c7575310f\" +\n" +
-                            "          \"300d0603550407130641757374696e310b3009060355040813025458310b\" +\n" +
-                            "          \"3009060355040613025553301e170d3136303330313138353934365a170d\" +\n" +
-                            "          \"3139303330313138353934365a305c3120301e06035504031317476c7575\" +\n" +
-                            "          \"206f785075736832205532462076312e302e30310d300b060355040a1304\" +\n" +
-                            "          \"476c7575310f300d0603550407130641757374696e310b30090603550408\" +\n" +
-                            "          \"13025458310b30090603550406130255533059301306072a8648ce3d0201\" +\n" +
-                            "          \"06082a8648ce3d0301070342000480942a7cc21393c9eed8a188a918bba1\" +\n" +
-                            "          \"39532fec67e452aacfcc9d426dd2d07c1bc19283d9caa3a3f6e36e2257d9\" +\n" +
-                            "          \"575fd3e297cab0e287d9f9f0175dea5ba783300a06082a8648ce3d040302\" +\n" +
-                            "          \"03480030450220516c1ac00076b9d511590ce20d756348e8bf41cb97891c\" +\n" +
-                            "          \"7296a8f9b6117016160221008663e0936458bb25d921674e670e96d26090\" +\n" +
-                            "          \"533a8d44b5c921ee4d2a72f9ced1\""
+            buildConfigField "String", "VENDOR_CERTIFICATE_CERT", DEBUG_VENDOR_CERTIFICATE_CERT
+            buildConfigField "String", "VENDOR_CERTIFICATE_PRIVATE_KEY", DEBUG_VENDOR_CERTIFICATE_PRIVATE_KEY
 
-            buildConfigField "String", "VENDOR_CERTIFICATE_PRIVATE_KEY", "\"e759e9d754f05b2b1d3083418d87d3c36647d88f09c48b72b27dd5e934317899\""
-
-//            buildConfigField "String", "OX_SERVER_CERT",
-//                            "                \"-----BEGIN CERTIFICATE-----\" +\n" +
-//                            "                \"MIIDTzCCAjegAwIBAgIEI5ZGBjANBgkqhkiG9w0BAQsFADBYMQswCQYDVQQGEwJ0dDENMAsGA1UE\\n\" +\n" +
-//                            "                \"CBMEVGVzdDENMAsGA1UEBxMEVGVzdDENMAsGA1UEChMEVGVzdDENMAsGA1UECxMEVGVzdDENMAsG\\n\" +\n" +
-//                            "                \"A1UEAxMEVGVzdDAeFw0xNTA1MjcyMDAxMzNaFw0xNTA4MjUyMDAxMzNaMFgxCzAJBgNVBAYTAnR0\\n\" +\n" +
-//                            "                \"MQ0wCwYDVQQIEwRUZXN0MQ0wCwYDVQQHEwRUZXN0MQ0wCwYDVQQKEwRUZXN0MQ0wCwYDVQQLEwRU\\n\" +\n" +
-//                            "                \"ZXN0MQ0wCwYDVQQDEwRUZXN0MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhNxreHN3\\n\" +\n" +
-//                            "                \"eB+PukskK7MOmhDubv52RGQ3HnWC8sHPa6HqQ+/X/giWrQXSdd8PivQcpDjz9U6eNs7o5l0tjUCE\\n\" +\n" +
-//                            "                \"r8Cy/fRh0sS9OkVeoZPWOXEWb+32LtOFuv6cRtgmpO/8v3k/rUrR3Vix1ok9/gP8JHacKzlvk5qe\\n\" +\n" +
-//                            "                \"cXWM/LWg5gaKNXI+kzYkaYf46RxvdnI0umARPwywnTjiIzFs6v418usyhWq4J+EV4xZuPVqvuWgb\\n\" +\n" +
-//                            "                \"xz3UFn3QV1kUsaG1Sviwdy1gRw3nXVjBjsoGxsPvlGLdYX5tpMKLHajf5VfMqWgRlDpGvTJ/xUT+\\n\" +\n" +
-//                            "                \"9r4TzS37tx0yaITxeqTfVPdVRgu53wIDAQABoyEwHzAdBgNVHQ4EFgQUoKxfp9t3gIZBjqkGkFPi\\n\" +\n" +
-//                            "                \"Vbw2R4IwDQYJKoZIhvcNAQELBQADggEBAFxTLXefR102MtwAr63OA0a2EFw0NgoGlohpsptNO6XP\\n\" +\n" +
-//                            "                \"ISkm4olV9kLwp1V53W4rXReX/MIZeMBJVLCWtZLIWKuiEHE54ptwzS9/YjubUYcYZlwpRzuX1tU9\\n\" +\n" +
-//                            "                \"qhFgkl6i0HOOGxcVHht/PL9sGrZ6uOOPwSaJhUgXzDg7rQnCE888fja6/3ywiSwot5y4t31YgtaF\\n\" +\n" +
-//                            "                \"6DYfGgBdz+p604v32ntjtKpQ2A0HBnebe1HVG0fPNd+JKX0rkL/NQEomdFqXBuxdmODyVUfR2bkh\\n\" +\n" +
-//                            "                \"QzHQdLJREpp3UqcgXH0/4bnehsAqt1ej3wkSI219PWHCqPz/q3Wl13anW69NmAwD89H1oLk=\\n\" +\n" +
-//                            "                \"-----END CERTIFICATE-----\""
             buildConfigField "String", "OX_SERVER_CERT", "\"\""
             buildConfigField "boolean", "TRUST_ALL_CERT", "false"
 
-            buildConfigField "String", "PROJECT_NUMBER", "\"815756138308\""
+            buildConfigField "String", "PROJECT_NUMBER", Gluu_Project_Number
+            buildConfigField "String", "INTERSTITIAL_AD_ID", Gluu_Release_Interstitial_Ad_Id
+            buildConfigField "String", "BANNER_AD_ID", Gluu_Release_Banner_Ad_Id
+            buildConfigField "String", "PURCHASE_LICENSE", Gluu_Purchase_License
+            buildConfigField "String", "SUBSCRIPTION_ID", Gluu_Subscription_Id
+            buildConfigField "String", "FINGERPRINT_NAME", FINGERPRINT_NAME
         }
         release {
-            buildConfigField "String", "VENDOR_CERTIFICATE_CERT",
-                    "          \"30820226308201cca00302010202818100f32c0f96f91b9f00a612ae2969\" +\n" +
-                            "          \"78633dbbb1b13fad7172ee73d1aad27faf81390d265b16f7f2ba8b3e0dbd\" +\n" +
-                            "          \"34f79b9b074268c8cf1c72648efde650e887a438b3ca091ef20b991eb3e7\" +\n" +
-                            "          \"fb31ac726a9866983e1d12f9ae2a317e7d1b103f9b501bbcdead3a2da3c7\" +\n" +
-                            "          \"88cf45e33daba9899c505ed4871871d3b8f86b8b69dfa1996b300a06082a\" +\n" +
-                            "          \"8648ce3d040302305c3120301e06035504031317476c7575206f78507573\" +\n" +
-                            "          \"6832205532462076312e302e30310d300b060355040a1304476c7575310f\" +\n" +
-                            "          \"300d0603550407130641757374696e310b3009060355040813025458310b\" +\n" +
-                            "          \"3009060355040613025553301e170d3136303330313138353934365a170d\" +\n" +
-                            "          \"3139303330313138353934365a305c3120301e06035504031317476c7575\" +\n" +
-                            "          \"206f785075736832205532462076312e302e30310d300b060355040a1304\" +\n" +
-                            "          \"476c7575310f300d0603550407130641757374696e310b30090603550408\" +\n" +
-                            "          \"13025458310b30090603550406130255533059301306072a8648ce3d0201\" +\n" +
-                            "          \"06082a8648ce3d0301070342000480942a7cc21393c9eed8a188a918bba1\" +\n" +
-                            "          \"39532fec67e452aacfcc9d426dd2d07c1bc19283d9caa3a3f6e36e2257d9\" +\n" +
-                            "          \"575fd3e297cab0e287d9f9f0175dea5ba783300a06082a8648ce3d040302\" +\n" +
-                            "          \"03480030450220516c1ac00076b9d511590ce20d756348e8bf41cb97891c\" +\n" +
-                            "          \"7296a8f9b6117016160221008663e0936458bb25d921674e670e96d26090\" +\n" +
-                            "          \"533a8d44b5c921ee4d2a72f9ced1\""
-
-            buildConfigField "String", "VENDOR_CERTIFICATE_PRIVATE_KEY", "\"e759e9d754f05b2b1d3083418d87d3c36647d88f09c48b72b27dd5e934317899\""
+            buildConfigField "String", "VENDOR_CERTIFICATE_CERT", RELEASE_VENDOR_CERTIFICATE_CERT
+            buildConfigField "String", "VENDOR_CERTIFICATE_PRIVATE_KEY", RELEASE_VENDOR_CERTIFICATE_PRIVATE_KEY
 
             buildConfigField "String", "OX_SERVER_CERT", "\"\""
             buildConfigField "boolean", "TRUST_ALL_CERT", "false"
 
-            buildConfigField "String", "PROJECT_NUMBER", "\"815756138308\""
+            buildConfigField "String", "PROJECT_NUMBER", Gluu_Project_Number
+
+            buildConfigField "String", "INTERSTITIAL_AD_ID", Gluu_Debug_Interstitial_Ad_Id
+            buildConfigField "String", "BANNER_AD_ID", Gluu_Debug_Banner_Ad_Id
+            buildConfigField "String", "PURCHASE_LICENSE", Gluu_Purchase_License
+            buildConfigField "String", "SUBSCRIPTION_ID", Gluu_Subscription_Id
+            buildConfigField "String", "FINGERPRINT_NAME", FINGERPRINT_NAME
 
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    flavorDimensions "standard"
+
+    productFlavors {
+        gluu {
+            dimension "standard"
+            resValue "string", "versionNumber", "V" + defaultConfig.versionName
+        }
+        whiteLabel {
+            applicationId "com.whitelabel"
+            dimension "standard"
+            resValue "string", "versionNumber", "V1.0.0 - 1"
+        }
+    }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    //    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:multidex:1.0.0'
-    compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.android.support:design:23.2.1'
-    compile 'commons-codec:commons-codec:1.10'
-    compile 'com.google.code.gson:gson:2.2.4'
-    compile 'org.bouncycastle:bcprov-jdk15on:1.54'
-    compile 'com.journeyapps:zxing-android-embedded:3.0.3@aar'
-    compile 'com.google.zxing:core:3.2.1'
-    compile 'com.android.support:support-v4:23.2.1'
-    compile 'com.android.support:recyclerview-v7:23.2.1'
-    compile 'com.github.iammehedi:passcodeview:1.03'
-    compile 'com.hrules:horizontalnumberpicker:1.1.1'
-    compile 'io.reactivex:rxandroid:1.2.0'
-    compile 'com.android.volley:volley:1.0.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    //support libraries
+    implementation "com.android.support:appcompat-v7:$android_support_version"
+    implementation "com.android.support:design:$android_support_version"
+    implementation "com.android.support:support-v4:$android_support_version"
+    implementation "com.android.support:recyclerview-v7:$android_support_version"
+    implementation "com.android.support:cardview-v7:$android_support_version"
+
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    implementation 'commons-codec:commons-codec:1.10'
+    implementation 'com.google.code.gson:gson:2.8.1'
+    implementation 'org.bouncycastle:bcprov-jdk15on:1.56'
+    implementation 'com.journeyapps:zxing-android-embedded:3.3.0@aar'
+    implementation 'com.google.zxing:core:3.3.0'
+    implementation 'com.hrules:horizontalnumberpicker:1.1.1'
+    implementation 'io.reactivex:rxandroid:1.2.1'
+    implementation 'com.android.volley:volley:1.0.0'
     //FCM instead of GMS
-    compile 'com.google.firebase:firebase-messaging:10.2.1'
-    compile 'com.google.android.gms:play-services-gcm:10.2.1'
-    compile 'com.google.firebase:firebase-core:10.2.1'
+    implementation "com.google.firebase:firebase-messaging:$play_services_version"
+    implementation "com.google.android.gms:play-services-gcm:$play_services_version"
+    implementation "com.google.firebase:firebase-core:$play_services_version"
     //Google AD
-    compile 'com.google.firebase:firebase-ads:10.2.1'
+    implementation "com.google.firebase:firebase-ads:$play_services_version"
     //For in app purchases
-    compile 'com.anjlab.android.iab.v3:library:1.0.+'
+    implementation 'com.anjlab.android.iab.v3:library:1.0.44'
     //Circle progressBar
-    compile 'com.dinuscxj:circleprogressbar:1.1.1'
+    implementation 'com.dinuscxj:circleprogressbar:1.1.1'
     //For swipe gesture for table
-    compile 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.0'
+    implementation "com.daimajia.swipelayout:library:1.2.0@aar"
+
+    //Butterknife for view injection
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    // Lifecycles libraries
+    implementation "android.arch.lifecycle:runtime:1.1.1"
+    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
+        transitive = true;
+    }
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -11,9 +11,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
-import SuperGluu.app.BuildConfig;
-
-import org.gluu.super_gluu.app.activities.GluuApplication;
+import org.gluu.super_gluu.app.GluuApplication;
 import org.gluu.super_gluu.util.CertUtils;
 import org.gluu.super_gluu.util.Utils;
 
@@ -43,6 +41,8 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
+import SuperGluu.app.BuildConfig;
+
 /**
  * Network communication service
  *
@@ -70,7 +70,7 @@ public class CommunicationService {
             connection.setRequestMethod("GET");
 
             //Get Response
-            Log.v(TAG,"Response code is:"+connection.getResponseCode());
+            Log.v(TAG,"Response code is: " + connection.getResponseCode());
             InputStream is = connection.getInputStream();
 
             return readStream(is);

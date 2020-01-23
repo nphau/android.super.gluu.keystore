@@ -26,6 +26,8 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
+import SuperGluu.app.BuildConfig;
+
 /**
  * Created by nazaryavornytskyy on 3/1/17.
  */
@@ -34,13 +36,13 @@ public class Fingerprint {
     private Context context;
     // Variable used for storing the key in the Android Keystore container
     private KeyStore keyStore;
-    private static final String KEY_NAME = "androidHive";
+    private static final String KEY_NAME = BuildConfig.FINGERPRINT_NAME;
     private Cipher cipher;
     private KeyguardManager keyguardManager;
     private FingerprintManager fingerprintManager;
     private FingerprintHandler helper;
 
-    public Fingerprint(Context context) {
+    public Fingerprint(Context context, boolean showErrorMessage) {
         this.context = context;
 
         // Initializing both Android Keyguard Manager and Fingerprint Manager
@@ -61,7 +63,7 @@ public class Fingerprint {
                 // for ActivityCompat#requestPermissions for more details.
                 return;
             }
-            if (!fingerprintManager.isHardwareDetected()) {
+            if (fingerprintManager == null || !fingerprintManager.isHardwareDetected()) {
                 /**
                  * An error message will be displayed if the device does not contain the fingerprint hardware.
                  * However if you plan to implement a default authentication method,
@@ -70,9 +72,15 @@ public class Fingerprint {
                  * Intent intent = new Intent(this, DefaultAuthenticationActivity.class);
                  * startActivity(intent);
                  */
-                helper.showToast("Your Device does not have a Fingerprint Sensor");
+                if(showErrorMessage) {
+                    helper.showToast("Your Device does not have a Fingerprint Sensor");
+                }
             }
         }
+    }
+
+    public Fingerprint(Context context) {
+        this(context, true);
     }
 
     public Boolean startFingerprintService() {
@@ -175,5 +183,15 @@ public class Fingerprint {
         } catch (KeyStoreException | CertificateException | UnrecoverableKeyException | IOException | NoSuchAlgorithmException | InvalidKeyException e) {
             throw new RuntimeException("Failed to init Cipher", e);
         }
+    }
+
+    public boolean checkIfFingerprintEnabled() {
+        if (Build.VERSION.SDK_INT <= 22) {
+            return false;
+        }
+
+        fingerprintManager = (FingerprintManager) context.getSystemService(Context.FINGERPRINT_SERVICE);
+
+        return fingerprintManager != null && fingerprintManager.isHardwareDetected();
     }
 }
