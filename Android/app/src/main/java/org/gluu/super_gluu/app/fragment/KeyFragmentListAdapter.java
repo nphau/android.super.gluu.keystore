@@ -28,6 +28,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import SuperGluu.app.R;
 
@@ -36,8 +38,9 @@ import SuperGluu.app.R;
  */
 public class KeyFragmentListAdapter extends BaseAdapter {
 
-    final SimpleDateFormat isoDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
-    final SimpleDateFormat userDateTimeFormat = new SimpleDateFormat("MMM d, yyyy HH:mm:ss");
+    final SimpleDateFormat isoDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+    final SimpleDateFormat userDateTimeFormat = new SimpleDateFormat("MMM d, yyyy h:mm:ss");
+
 
     private List<TokenEntry> list;
     private LayoutInflater mInflater;
@@ -49,6 +52,8 @@ public class KeyFragmentListAdapter extends BaseAdapter {
         this.activity = activity;
         mInflater = LayoutInflater.from(activity);
         mListener = keyHandleInfo;
+        isoDateTimeFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        userDateTimeFormat.setTimeZone(TimeZone.getDefault());
     }
 
     @Override

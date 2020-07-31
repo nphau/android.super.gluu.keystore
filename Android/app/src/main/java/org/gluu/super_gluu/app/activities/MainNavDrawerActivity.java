@@ -326,7 +326,7 @@ public class MainNavDrawerActivity extends BaseActivity
 
     private void setupInterstitialAd(){
 
-        if(!areAdsDisabled()) {
+        if(!adsDisabled()) {
             interstitialAd = new InterstitialAd(MainNavDrawerActivity.this);
             interstitialAd.setAdUnitId(BuildConfig.INTERSTITIAL_AD_ID);
             final AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
@@ -456,8 +456,8 @@ public class MainNavDrawerActivity extends BaseActivity
     }
 
     @Override
-    public boolean areAdsDisabled() {
-        return !getResources().getBoolean(R.bool.adsEnabled) ||
+    public boolean adsDisabled() {
+        return !BuildConfig.ADS_ENABLED ||
                 Settings.isLicensed(context) ||
                 Settings.getPurchase(context);
     }

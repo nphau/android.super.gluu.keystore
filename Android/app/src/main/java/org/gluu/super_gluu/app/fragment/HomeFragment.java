@@ -90,7 +90,7 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
 
     public interface GluuAdListener {
         void showInterstitialAd();
-        boolean areAdsDisabled();
+        boolean adsDisabled();
     }
 
     GluuAdListener gluuAdListener;
@@ -159,10 +159,12 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
 
     private void setupBannerAd() {
 
-        if(gluuAdListener.areAdsDisabled()) {
+        if(gluuAdListener.adsDisabled()) {
             adView.setVisibility(View.GONE);
             removeAdView.setVisibility(View.GONE);
         } else {
+            adView.setVisibility(View.VISIBLE);
+            removeAdView.setVisibility(View.VISIBLE);
             MobileAds.initialize(getActivity().getApplicationContext(), BuildConfig.BANNER_AD_ID);
             AdRequest adRequest = new AdRequest.Builder().build();
             adView.loadAd(adRequest);
@@ -326,7 +328,7 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
 
     public void showInterstitialAd() {
 
-        if(!gluuAdListener.areAdsDisabled()) {
+        if(!gluuAdListener.adsDisabled()) {
             gluuAdListener.showInterstitialAd();
         }
     }
@@ -405,9 +407,12 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
     }
 
     private void handleAdBroadcastIntent(Boolean isAdFree){
-        if (isAdFree) {
+        if (isAdFree || !BuildConfig.ADS_ENABLED) {
             removeAdView.setVisibility(View.GONE);
             adView.setVisibility(View.GONE);
+        } else {
+            removeAdView.setVisibility(View.VISIBLE);
+            adView.setVisibility(View.VISIBLE);
         }
     }
 

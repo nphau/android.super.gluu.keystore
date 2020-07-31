@@ -386,11 +386,6 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
                 LogState state = isEnroll ? LogState.ENROL_DECLINED : LogState.LOGIN_DECLINED;
                 log.setLogState(state);
             } else {
-                if(isEnroll && tokenResponse.isDuplicate()) {
-                    setFinalStatus(R.string.duplicate_enrollment_title);
-                    return;
-                }
-
                 setFinalStatus(isEnroll ? R.string.enroll_result_success : R.string.auth_result_success);
                 LogState state = isEnroll ? LogState.ENROL_SUCCESS : LogState.LOGIN_SUCCESS;
                 log.setLogState(state);

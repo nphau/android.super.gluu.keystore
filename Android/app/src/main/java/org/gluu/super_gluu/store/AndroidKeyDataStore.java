@@ -31,7 +31,7 @@ import SuperGluu.app.BuildConfig;
 
 /**
  * Provides methods to store key pair in application preferences
- *
+ * <p>
  * Created by Yuriy Movchan on 12/28/2015.
  */
 public class AndroidKeyDataStore implements DataStore {
@@ -64,28 +64,35 @@ public class AndroidKeyDataStore implements DataStore {
 
     @Override
     public void storeTokenEntry(TokenEntry tokenEntry) {
-        Boolean isSave = true;
-        List<String> tokens = getTokenEntries();
-        for (String tokenStr : tokens){
+        if (tokenEntry == null) {
+            return;
+        }
+
+        ArrayList<String> tokens = new ArrayList<String>(getTokenEntries());
+        for (String tokenStr : tokens) {
             TokenEntry token = new Gson().fromJson(tokenStr, TokenEntry.class);
-            if (token.getUserName().equalsIgnoreCase(tokenEntry.getUserName())){//token.getIssuer().equalsIgnoreCase(tokenEntry.getIssuer()
-                isSave = false;
+            if (token == null) {
+                continue;
+            }
+            String tokenUserName = (token.getUserName() != null) ? token.getUserName() : "";
+            String tokenApplication = (token.getApplication() != null) ? token.getApplication() : "";
+            if (tokenUserName.equalsIgnoreCase(tokenEntry.getUserName())
+                    && tokenApplication.equals(tokenEntry.getApplication())) {
+                deleteTokenEntry(token.getKeyHandle());
             }
         }
-        if (isSave) {
-            String keyHandleKey = keyHandleToKey(tokenEntry.getKeyHandle());
+        String keyHandleKey = keyHandleToKey(tokenEntry.getKeyHandle());
 
-            final String tokenEntryString = new Gson().toJson(tokenEntry);
-            if (BuildConfig.DEBUG)
-                Log.d(TAG, "Storing new keyHandle: " + keyHandleKey + " with tokenEntry: " + tokenEntryString);
+        final String tokenEntryString = new Gson().toJson(tokenEntry);
+        if (BuildConfig.DEBUG)
+            Log.d(TAG, "Storing new keyHandle: " + keyHandleKey + " with tokenEntry: " + tokenEntryString);
 
-            final SharedPreferences keySettings = context.getSharedPreferences(U2F_KEY_PAIR_FILE, Context.MODE_PRIVATE);
+        final SharedPreferences keySettings = context.getSharedPreferences(U2F_KEY_PAIR_FILE, Context.MODE_PRIVATE);
 
-            keySettings.edit().putString(keyHandleKey, tokenEntryString).commit();
+        keySettings.edit().putString(keyHandleKey, tokenEntryString).commit();
 
-            final SharedPreferences keyCounts = context.getSharedPreferences(U2F_KEY_COUNT_FILE, Context.MODE_PRIVATE);
-            keyCounts.edit().putInt(keyHandleKey, 0).commit();
-        }
+        final SharedPreferences keyCounts = context.getSharedPreferences(U2F_KEY_COUNT_FILE, Context.MODE_PRIVATE);
+        keyCounts.edit().putInt(keyHandleKey, 0).commit();
     }
 
     @Override
