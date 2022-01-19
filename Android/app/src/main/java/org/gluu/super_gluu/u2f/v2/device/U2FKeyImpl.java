@@ -164,7 +164,8 @@ public class U2FKeyImpl implements U2FKey {
         if (BuildConfig.DEBUG) Log.d(TAG, "userPresence: " + userPresence);
         if (BuildConfig.DEBUG) Log.d(TAG, "counter: " + counter);
         if (BuildConfig.DEBUG) Log.d(TAG, "signature: " + Utils.encodeHexString(signature));
-
+        if (BuildConfig.DEBUG) Log.d(TAG, "applicationSha256 :" + Utils.encodeHexString(applicationSha256));
+        if (BuildConfig.DEBUG) Log.d(TAG, "challengeSha256: " + Utils.encodeHexString(challengeSha256));
         if (BuildConfig.DEBUG) Log.d(TAG, "<< authenticate");
 
         return new AuthenticateResponse(userPresence, counter, signature);

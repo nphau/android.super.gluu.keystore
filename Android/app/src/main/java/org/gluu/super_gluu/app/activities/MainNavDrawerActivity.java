@@ -20,16 +20,21 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
+
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.material.navigation.NavigationView;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentManager.OnBackStackChangedListener;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -39,7 +44,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.gson.Gson;
 
 import org.gluu.super_gluu.app.GluuApplication;
@@ -58,9 +62,11 @@ import org.gluu.super_gluu.app.fragment.SettingsPinCode;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
 import org.gluu.super_gluu.app.model.LogInfo;
 import org.gluu.super_gluu.app.purchase.InAppPurchaseService;
+import org.gluu.super_gluu.app.services.AppFirebaseInstanceIDService;
 import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.device.DeviceUuidManager;
 import org.gluu.super_gluu.model.OxPush2Request;
+import org.gluu.super_gluu.model.U2fMetaData;
 import org.gluu.super_gluu.net.CommunicationService;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
 import org.gluu.super_gluu.u2f.v2.SoftwareDevice;
@@ -160,6 +166,9 @@ public class MainNavDrawerActivity extends BaseActivity
     //For purchases
     private InAppPurchaseService inAppPurchaseService = new InAppPurchaseService();
 
+    // For Push Notifications
+    private AppFirebaseInstanceIDService firebaseInstanceIDService = new AppFirebaseInstanceIDService();
+
     //endregion
 
     //region lifecycle and activity methods
@@ -201,6 +210,8 @@ public class MainNavDrawerActivity extends BaseActivity
         setupInterstitialAd();
 
         setupInitialFragment();
+
+        firebaseInstanceIDService.onTokenRefresh(this);
     }
 
     @Override
@@ -327,23 +338,28 @@ public class MainNavDrawerActivity extends BaseActivity
     private void setupInterstitialAd(){
 
         if(!areAdsDisabled()) {
-            interstitialAd = new InterstitialAd(MainNavDrawerActivity.this);
-            interstitialAd.setAdUnitId(BuildConfig.INTERSTITIAL_AD_ID);
-            final AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
-            interstitialAd.setAdListener(new AdListener() {
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
                 @Override
-                public void onAdLoaded() {
-                    super.onAdLoaded();
-                }
-                @Override
-                public void onAdClosed() {
-                    super.onAdClosed();
-                    if(interstitialAd != null) {
-                        interstitialAd.loadAd(adRequestBuilder.build());
-                    }
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
                 }
             });
-            interstitialAd.loadAd(adRequestBuilder.build());
+//            interstitialAd = new InterstitialAd(MainNavDrawerActivity.this);
+//            interstitialAd.setAdUnitId(BuildConfig.INTERSTITIAL_AD_ID);
+//            final AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
+//            interstitialAd.setAdListener(new AdListener() {
+//                @Override
+//                public void onAdLoaded() {
+//                    super.onAdLoaded();
+//                }
+//                @Override
+//                public void onAdClosed() {
+//                    super.onAdClosed();
+//                    if(interstitialAd != null) {
+//                        interstitialAd.loadAd(adRequestBuilder.build());
+//                    }
+//                }
+//            });
+//            interstitialAd.loadAd(adRequestBuilder.build());
         }
     }
 
@@ -417,9 +433,9 @@ public class MainNavDrawerActivity extends BaseActivity
     }
 
     @Override
-    public TokenResponse onSign(String jsonRequest, String origin, Boolean isDeny)
+    public TokenResponse onSign(String jsonRequest, U2fMetaData u2fMetaData, Boolean isDeny)
             throws JSONException, IOException, U2FException {
-        return u2f.sign(jsonRequest, origin, isDeny);
+        return u2f.sign(jsonRequest, u2fMetaData, isDeny);
     }
 
     @Override
@@ -448,11 +464,11 @@ public class MainNavDrawerActivity extends BaseActivity
 
     @Override
     public void showInterstitialAd() {
-        if(interstitialAd == null) {
-            setupInterstitialAd();
-        } else if(interstitialAd.isLoaded()) {
-            interstitialAd.show();
-        }
+//        if(interstitialAd == null) {
+//            setupInterstitialAd();
+//        } else if(interstitialAd.isLoaded()) {
+//            interstitialAd.show();
+//        }
     }
 
     @Override
@@ -573,9 +589,9 @@ public class MainNavDrawerActivity extends BaseActivity
             }
 
             @Override
-            public TokenResponse onSign(String jsonRequest, String origin, Boolean isDeny)
+            public TokenResponse onSign(String jsonRequest, U2fMetaData u2fMetaData, Boolean isDeny)
                     throws JSONException, IOException, U2FException {
-                return u2f.sign(jsonRequest, origin, isDeny);
+                return u2f.sign(jsonRequest, u2fMetaData, isDeny);
             }
 
             @Override
