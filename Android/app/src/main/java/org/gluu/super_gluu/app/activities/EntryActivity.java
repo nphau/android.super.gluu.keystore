@@ -4,11 +4,9 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import android.view.View;
-
-import com.crashlytics.android.Crashlytics;
 
 import org.gluu.super_gluu.app.GluuApplication;
 import org.gluu.super_gluu.app.customview.CustomToast;
@@ -26,7 +24,6 @@ import org.gluu.super_gluu.app.settings.Settings;
 
 import SuperGluu.app.BuildConfig;
 import SuperGluu.app.R;
-import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by nazaryavornytskyy on 3/22/16.
@@ -261,11 +258,11 @@ public class EntryActivity extends BaseActivity implements
     }
 
     private void startFabric() {
-        if (BuildConfig.DEBUG) {
-            Fabric.with(this);
-        } else {
-            Fabric.with(this, new Crashlytics());
-        }
+//        if (BuildConfig.DEBUG) {
+//            Fabric.with(this);
+//        } else {
+//            Fabric.with(this, new Crashlytics());
+//        }
     }
 
 }

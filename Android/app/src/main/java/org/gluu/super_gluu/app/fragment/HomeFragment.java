@@ -14,9 +14,9 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.cardview.widget.CardView;
 import android.util.Log;
 import android.util.Pair;
 import android.view.KeyEvent;
@@ -41,6 +41,7 @@ import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.app.customview.CustomToast;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
 import org.gluu.super_gluu.model.OxPush2Request;
+import org.gluu.super_gluu.model.U2fMetaData;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
 import org.gluu.super_gluu.u2f.v2.SoftwareDevice;
 import org.gluu.super_gluu.u2f.v2.exception.U2FException;
@@ -163,7 +164,7 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
             adView.setVisibility(View.GONE);
             removeAdView.setVisibility(View.GONE);
         } else {
-            MobileAds.initialize(getActivity().getApplicationContext(), BuildConfig.BANNER_AD_ID);
+//            MobileAds.initialize(getActivity().getApplicationContext(), BuildConfig.BANNER_AD_ID);
             AdRequest adRequest = new AdRequest.Builder().build();
             adView.loadAd(adRequest);
         }
@@ -367,8 +368,8 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
             }
 
             @Override
-            public TokenResponse onSign(String jsonRequest, String origin, Boolean isDeny) throws JSONException, IOException, U2FException {
-                return u2f.sign(jsonRequest, origin, isDeny);
+            public TokenResponse onSign(String jsonRequest, U2fMetaData u2fMetaData, Boolean isDeny) throws JSONException, IOException, U2FException {
+                return u2f.sign(jsonRequest, u2fMetaData, isDeny);
             }
 
             @Override
