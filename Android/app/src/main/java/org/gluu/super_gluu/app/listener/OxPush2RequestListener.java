@@ -30,9 +30,4 @@ public interface OxPush2RequestListener {
     TokenResponse onEnroll(String jsonRequest, OxPush2Request oxPush2Request, Boolean isDeny) throws JSONException, IOException, U2FException;
 
     DataStore onGetDataStore();
-
-    void onAdFreeButtonClick();
-
-    void onPurchaseRestored();
-
 }

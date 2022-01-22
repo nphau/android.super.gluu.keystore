@@ -115,10 +115,7 @@ dependencies {
     //FCM instead of GMS
     implementation "com.google.firebase:firebase-messaging:$play_services_version"
     implementation "com.google.android.gms:play-services-gcm:17.0.0"
-    implementation 'com.google.android.gms:play-services-ads:20.5.0'
     implementation "com.google.firebase:firebase-core:$play_services_version"
-    //Google AD
-    implementation "com.google.firebase:firebase-ads:20.5.0"
     //For in app purchases
     implementation 'com.anjlab.android.iab.v3:library:1.0.44'
     //Circle progressBar

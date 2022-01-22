@@ -21,10 +21,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
 
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.material.navigation.NavigationView;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
@@ -42,8 +38,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
 import com.google.gson.Gson;
 
 import org.gluu.super_gluu.app.GluuApplication;
@@ -128,8 +122,6 @@ public class MainNavDrawerActivity extends BaseActivity
 
     private Settings settings = new Settings();
 
-    private InterstitialAd interstitialAd;
-
     private BroadcastReceiver mPushMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -162,9 +154,6 @@ public class MainNavDrawerActivity extends BaseActivity
             }
         }
     };
-
-    //For purchases
-    private InAppPurchaseService inAppPurchaseService = new InAppPurchaseService();
 
     // For Push Notifications
     private AppFirebaseInstanceIDService firebaseInstanceIDService = new AppFirebaseInstanceIDService();
@@ -204,11 +193,6 @@ public class MainNavDrawerActivity extends BaseActivity
         //temporary turn off rotation
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
-        //Init InAPP-Purchase service
-        initIAPurchaseService();
-
-        setupInterstitialAd();
-
         setupInitialFragment();
 
         firebaseInstanceIDService.onTokenRefresh(this);
@@ -241,8 +225,7 @@ public class MainNavDrawerActivity extends BaseActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (inAppPurchaseService.isHandleResult(requestCode, resultCode, data))
-            super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -277,7 +260,6 @@ public class MainNavDrawerActivity extends BaseActivity
 
     @Override
     protected void onDestroy() {
-        inAppPurchaseService.deInitPurchaseService();
         super.onDestroy();
     }
     //endregion
@@ -307,19 +289,6 @@ public class MainNavDrawerActivity extends BaseActivity
         setupToggleState();
     }
 
-    private void initGoogleADS(Boolean isShow){
-        Intent intent = new Intent("on-ad-free-event");
-        intent.putExtra("isAdFree", isShow);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-    }
-
-    private void initIAPurchaseService(){
-        inAppPurchaseService.initInAppService(context);
-        //Init GoogleMobile AD
-        inAppPurchaseService.setCustomEventListener(isSubscribed -> initGoogleADS(isSubscribed));
-        inAppPurchaseService.reloadPurchaseService();
-    }
-
     private void checkUserCameraPermission(){
         Log.i(TAG, "Show camera button pressed. Checking permission.");
         // Check if the Camera permission is already available.
@@ -332,34 +301,6 @@ public class MainNavDrawerActivity extends BaseActivity
             // Camera permissions is already available, show the camera preview.
             Log.i(TAG,
                     "CAMERA permission has already been granted. Displaying camera preview.");
-        }
-    }
-
-    private void setupInterstitialAd(){
-
-        if(!areAdsDisabled()) {
-            MobileAds.initialize(this, new OnInitializationCompleteListener() {
-                @Override
-                public void onInitializationComplete(InitializationStatus initializationStatus) {
-                }
-            });
-//            interstitialAd = new InterstitialAd(MainNavDrawerActivity.this);
-//            interstitialAd.setAdUnitId(BuildConfig.INTERSTITIAL_AD_ID);
-//            final AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
-//            interstitialAd.setAdListener(new AdListener() {
-//                @Override
-//                public void onAdLoaded() {
-//                    super.onAdLoaded();
-//                }
-//                @Override
-//                public void onAdClosed() {
-//                    super.onAdClosed();
-//                    if(interstitialAd != null) {
-//                        interstitialAd.loadAd(adRequestBuilder.build());
-//                    }
-//                }
-//            });
-//            interstitialAd.loadAd(adRequestBuilder.build());
         }
     }
 
@@ -407,28 +348,6 @@ public class MainNavDrawerActivity extends BaseActivity
     public void onQrRequest(final OxPush2Request oxPush2Request) {
         if (!this.isDestroyed()) {
             doQrRequest(oxPush2Request);
-        }
-    }
-
-    @Override
-    public void onAdFreeButtonClick(){
-        if (inAppPurchaseService.readyToPurchase) {
-            if (!inAppPurchaseService.isSubscribed) {
-                inAppPurchaseService.purchase(MainNavDrawerActivity.this);
-            } else {
-                initGoogleADS(true);
-            }
-        }
-    }
-
-    @Override
-    public void onPurchaseRestored() {
-        if (inAppPurchaseService.readyToPurchase) {
-            if (!inAppPurchaseService.isSubscribed) {
-                inAppPurchaseService.restorePurchase();
-            } else {
-                initGoogleADS(true);
-            }
         }
     }
 
@@ -604,12 +523,6 @@ public class MainNavDrawerActivity extends BaseActivity
             public DataStore onGetDataStore() {
                 return dataStore;
             }
-
-            @Override
-            public void onAdFreeButtonClick(){}
-
-            @Override
-            public void onPurchaseRestored() {}
         });
 
         return processManager;

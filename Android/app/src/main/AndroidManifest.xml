@@ -7,6 +7,7 @@
 
     <!-- Keeps the processor from sleeping when a message is received. -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
 
     <!-- Creates a custom permission so only this app can receive its messages. -->
     <permission android:name="${applicationId}.permission.C2D_MESSAGE" android:protectionLevel="signature" />
@@ -40,10 +41,6 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/push_icon" />
-
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3932761366188106~9645642924"/>
 
         <activity
             android:name="org.gluu.super_gluu.app.activities.EntryActivity"
@@ -79,6 +76,7 @@
         </service>
         <service
             android:name="org.gluu.super_gluu.app.services.AppFirebaseMessagingService"
+            android:enabled="true"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
