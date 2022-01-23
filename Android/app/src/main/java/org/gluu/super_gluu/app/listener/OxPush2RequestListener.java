@@ -8,6 +8,7 @@ package org.gluu.super_gluu.app.listener;
 
 
 import org.gluu.super_gluu.model.OxPush2Request;
+import org.gluu.super_gluu.model.U2fMetaData;
 import org.gluu.super_gluu.u2f.v2.exception.U2FException;
 import org.gluu.super_gluu.u2f.v2.model.TokenResponse;
 import org.gluu.super_gluu.u2f.v2.store.DataStore;
@@ -24,14 +25,9 @@ public interface OxPush2RequestListener {
 
     void onQrRequest(OxPush2Request oxPush2Request);
 
-    TokenResponse onSign(String jsonRequest, String origin, Boolean isDeny) throws JSONException, IOException, U2FException;
+    TokenResponse onSign(String jsonRequest, U2fMetaData u2fMetaData, Boolean isDeny) throws JSONException, IOException, U2FException;
 
     TokenResponse onEnroll(String jsonRequest, OxPush2Request oxPush2Request, Boolean isDeny) throws JSONException, IOException, U2FException;
 
     DataStore onGetDataStore();
-
-    void onAdFreeButtonClick();
-
-    void onPurchaseRestored();
-
 }

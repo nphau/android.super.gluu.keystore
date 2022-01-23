@@ -10,7 +10,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v4.content.LocalBroadcastManager;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 
@@ -319,7 +319,7 @@ public class ProcessManager {//extends Fragment implements View.OnClickListener 
         if (isEnroll) {
             tokenResponse = oxPush2RequestListener.onEnroll(challengeJson, oxPush2Request, isDeny);
         } else {
-            tokenResponse = oxPush2RequestListener.onSign(challengeJson, u2fMetaData.getIssuer(), isDeny);
+            tokenResponse = oxPush2RequestListener.onSign(challengeJson, u2fMetaData, isDeny);
         }
 
         if (tokenResponse == null) {

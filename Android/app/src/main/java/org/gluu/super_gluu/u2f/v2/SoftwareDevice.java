@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import org.gluu.super_gluu.app.services.AppFirebaseInstanceIDService;
 import org.gluu.super_gluu.device.DeviceUuidManager;
 import org.gluu.super_gluu.model.OxPush2Request;
+import org.gluu.super_gluu.model.U2fMetaData;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
 import org.gluu.super_gluu.u2f.v2.cert.KeyPairGeneratorImpl;
 import org.gluu.super_gluu.u2f.v2.codec.RawMessageCodec;
@@ -169,7 +170,7 @@ public class SoftwareDevice {
         return tokenResponse;
     }
 
-    public TokenResponse sign(String jsonRequest, String origin, Boolean isDeny) throws JSONException, U2FException {
+    public TokenResponse sign(String jsonRequest, U2fMetaData u2fMetaData, Boolean isDeny) throws JSONException, U2FException {
         if (BuildConfig.DEBUG) Log.d(TAG, "Starting to process sign request: " + jsonRequest);
         JSONObject request = (JSONObject) new JSONTokener(jsonRequest).nextValue();
 
@@ -189,6 +190,14 @@ public class SoftwareDevice {
         AuthenticateResponse authenticateResponse = null;
         String authenticatedChallenge = null;
         JSONObject authRequest = null;
+
+        JSONObject clientData = new JSONObject();
+        if (isDeny){
+            clientData.put(JSON_PROPERTY_REQUEST_TYPE, AUTHENTICATE_CANCEL_TYPE);
+        } else {
+            clientData.put(JSON_PROPERTY_REQUEST_TYPE, REQUEST_TYPE_AUTHENTICATE);
+        }
+
         for (int i = 0; i < authenticateRequestArray.length(); i++) {
             if (BuildConfig.DEBUG) Log.d(TAG, "Process authentication request: " + authRequest);
             authRequest = (JSONObject) authenticateRequestArray.get(i);
@@ -199,8 +208,20 @@ public class SoftwareDevice {
 
             String version = authRequest.getString(JSON_PROPERTY_VERSION);
             String appParam = authRequest.getString(JSON_PROPERTY_APP_ID);
-            String challenge = authRequest.getString(JSON_PROPERTY_SERVER_CHALLENGE);
             byte[] keyHandle = Base64.decode(authRequest.getString(JSON_PROPERTY_KEY_HANDLE), Base64.URL_SAFE | Base64.NO_WRAP);
+            String challenge = authRequest.getString(JSON_PROPERTY_SERVER_CHALLENGE);
+            clientData.put(JSON_PROPERTY_SERVER_CHALLENGE, authRequest.getString(JSON_PROPERTY_SERVER_CHALLENGE));
+
+            String fidoVersion = u2fMetaData.getVersion();
+            Float ver = new Float(fidoVersion);
+
+            // 2.0 == old implementation
+            if (ver == 2) {
+                clientData.put(JSON_PROPERTY_SERVER_ORIGIN, u2fMetaData.getIssuer());
+            } else {
+                clientData.put(JSON_PROPERTY_SERVER_ORIGIN, authRequest.getString(JSON_PROPERTY_APP_ID));
+                challenge = clientData.toString();
+            }
 
             authenticateResponse = u2fKey.authenticate(new AuthenticateRequest(version, AuthenticateRequest.USER_PRESENCE_SIGN, challenge, appParam, keyHandle));
             if (BuildConfig.DEBUG) Log.d(TAG, "Authentication response: " + authenticateResponse);
@@ -214,18 +235,10 @@ public class SoftwareDevice {
             return null;
         }
 
-        JSONObject clientData = new JSONObject();
-        if (isDeny){
-            clientData.put(JSON_PROPERTY_REQUEST_TYPE, AUTHENTICATE_CANCEL_TYPE);
-        } else {
-            clientData.put(JSON_PROPERTY_REQUEST_TYPE, REQUEST_TYPE_AUTHENTICATE);
-        }
-        clientData.put(JSON_PROPERTY_SERVER_CHALLENGE, authRequest.getString(JSON_PROPERTY_SERVER_CHALLENGE));
-        clientData.put(JSON_PROPERTY_SERVER_ORIGIN, origin);
-
         String keyHandle = authRequest.getString(JSON_PROPERTY_KEY_HANDLE);
-        String clientDataString = clientData.toString();
         byte[] resp = rawMessageCodec.encodeAuthenticateResponse(authenticateResponse);
+
+        String clientDataString = clientData.toString();
 
         JSONObject response = new JSONObject();
         response.put("signatureData", Utils.base64UrlEncode(resp));
@@ -282,5 +295,4 @@ public class SoftwareDevice {
 
         return "unknown";
     }
-
 }

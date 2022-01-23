@@ -14,9 +14,9 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.cardview.widget.CardView;
 import android.util.Log;
 import android.util.Pair;
 import android.view.KeyEvent;
@@ -27,9 +27,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -41,6 +38,7 @@ import org.gluu.super_gluu.app.customview.CustomAlert;
 import org.gluu.super_gluu.app.customview.CustomToast;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
 import org.gluu.super_gluu.model.OxPush2Request;
+import org.gluu.super_gluu.model.U2fMetaData;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
 import org.gluu.super_gluu.u2f.v2.SoftwareDevice;
 import org.gluu.super_gluu.u2f.v2.exception.U2FException;
@@ -71,15 +69,6 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
     @BindView(R.id.button_scan)
     Button scanButton;
 
-    @BindView(R.id.adView)
-    AdView adView;
-
-    @BindView(R.id.remove_ad_card_view)
-    CardView removeAdView;
-
-    @BindView(R.id.button_remove_ads)
-    Button removeAdsButton;
-
     @BindView(R.id.welcome_text_view)
     TextView welcomeTextView;
     @BindView(R.id.description_text_view)
@@ -95,18 +84,6 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
 
     GluuAdListener gluuAdListener;
 
-    private BroadcastReceiver adBroadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            boolean isAdFree = intent.getBooleanExtra("isAdFree", false);
-
-            if (context != null) {
-                handleAdBroadcastIntent(isAdFree);
-            }
-        }
-    };
-
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -115,20 +92,6 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
             if (context != null && messageId != 0) {
                 showDialog(messageId);
             }
-        }
-    };
-
-    private BroadcastReceiver onAdFree = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            runSubscribeFlow();
-        }
-    };
-
-    private BroadcastReceiver onRestorePurchase = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            runRestorePurchaseFlow();
         }
     };
 
@@ -145,28 +108,8 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
         this.u2f = new SoftwareDevice(getActivity(), dataStore);
 
         scanButton.setOnClickListener(scanView -> submit());
-        removeAdsButton.setOnClickListener(buttonView -> runSubscribeFlow());
-
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(onAdFree,
-                new IntentFilter("on-ad-free-flow"));
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(onRestorePurchase,
-                new IntentFilter("on-restore-purchase-flow"));
-
-        setupBannerAd();
 
         return view;
-    }
-
-    private void setupBannerAd() {
-
-        if(gluuAdListener.areAdsDisabled()) {
-            adView.setVisibility(View.GONE);
-            removeAdView.setVisibility(View.GONE);
-        } else {
-            MobileAds.initialize(getActivity().getApplicationContext(), BuildConfig.BANNER_AD_ID);
-            AdRequest adRequest = new AdRequest.Builder().build();
-            adView.loadAd(adRequest);
-        }
     }
 
     @Override
@@ -180,20 +123,10 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
         }
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
                 new IntentFilter("ox_request-precess-event"));
-
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(adBroadcastReceiver,
-                new IntentFilter("on-ad-free-event"));
-
-        if(adView != null) {
-            adView.resume();
-        }
     }
 
     @Override
     public void onPause() {
-        if(adView != null) {
-            adView.pause();
-        }
         super.onPause();
     }
 
@@ -201,14 +134,10 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
     public void onStop() {
         super.onStop();
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mMessageReceiver);
-        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(adBroadcastReceiver);
     }
 
     @Override
     public void onDestroy() {
-        if(adView != null) {
-            adView.destroy();
-        }
         super.onDestroy();
     }
 
@@ -263,18 +192,6 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
         }
 
         return false;
-    }
-
-    private void runSubscribeFlow(){
-        if (oxPush2RequestListener != null) {
-            oxPush2RequestListener.onAdFreeButtonClick();
-        }
-    }
-
-    private void runRestorePurchaseFlow(){
-        if (oxPush2RequestListener != null) {
-            oxPush2RequestListener.onPurchaseRestored();
-        }
     }
 
     private void onQrRequest(OxPush2Request oxPush2Request){
@@ -367,8 +284,8 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
             }
 
             @Override
-            public TokenResponse onSign(String jsonRequest, String origin, Boolean isDeny) throws JSONException, IOException, U2FException {
-                return u2f.sign(jsonRequest, origin, isDeny);
+            public TokenResponse onSign(String jsonRequest, U2fMetaData u2fMetaData, Boolean isDeny) throws JSONException, IOException, U2FException {
+                return u2f.sign(jsonRequest, u2fMetaData, isDeny);
             }
 
             @Override
@@ -380,12 +297,6 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
             public DataStore onGetDataStore() {
                 return dataStore;
             }
-
-            @Override
-            public void onAdFreeButtonClick(){}
-
-            @Override
-            public void onPurchaseRestored() {}
         });
 
         return processManager;
@@ -402,13 +313,6 @@ public class HomeFragment extends Fragment implements TextView.OnEditorActionLis
         }
 
         return false;
-    }
-
-    private void handleAdBroadcastIntent(Boolean isAdFree){
-        if (isAdFree) {
-            removeAdView.setVisibility(View.GONE);
-            adView.setVisibility(View.GONE);
-        }
     }
 
     private class Constant {

@@ -20,16 +20,17 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
+
+import com.google.android.material.navigation.NavigationView;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentManager.OnBackStackChangedListener;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -37,9 +38,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.gson.Gson;
 
 import org.gluu.super_gluu.app.GluuApplication;
@@ -58,9 +56,11 @@ import org.gluu.super_gluu.app.fragment.SettingsPinCode;
 import org.gluu.super_gluu.app.listener.OxPush2RequestListener;
 import org.gluu.super_gluu.app.model.LogInfo;
 import org.gluu.super_gluu.app.purchase.InAppPurchaseService;
+import org.gluu.super_gluu.app.services.AppFirebaseInstanceIDService;
 import org.gluu.super_gluu.app.settings.Settings;
 import org.gluu.super_gluu.device.DeviceUuidManager;
 import org.gluu.super_gluu.model.OxPush2Request;
+import org.gluu.super_gluu.model.U2fMetaData;
 import org.gluu.super_gluu.net.CommunicationService;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
 import org.gluu.super_gluu.u2f.v2.SoftwareDevice;
@@ -122,8 +122,6 @@ public class MainNavDrawerActivity extends BaseActivity
 
     private Settings settings = new Settings();
 
-    private InterstitialAd interstitialAd;
-
     private BroadcastReceiver mPushMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -157,8 +155,8 @@ public class MainNavDrawerActivity extends BaseActivity
         }
     };
 
-    //For purchases
-    private InAppPurchaseService inAppPurchaseService = new InAppPurchaseService();
+    // For Push Notifications
+    private AppFirebaseInstanceIDService firebaseInstanceIDService = new AppFirebaseInstanceIDService();
 
     //endregion
 
@@ -195,12 +193,9 @@ public class MainNavDrawerActivity extends BaseActivity
         //temporary turn off rotation
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
-        //Init InAPP-Purchase service
-        initIAPurchaseService();
-
-        setupInterstitialAd();
-
         setupInitialFragment();
+
+        firebaseInstanceIDService.onTokenRefresh(this);
     }
 
     @Override
@@ -230,8 +225,7 @@ public class MainNavDrawerActivity extends BaseActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (inAppPurchaseService.isHandleResult(requestCode, resultCode, data))
-            super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -266,7 +260,6 @@ public class MainNavDrawerActivity extends BaseActivity
 
     @Override
     protected void onDestroy() {
-        inAppPurchaseService.deInitPurchaseService();
         super.onDestroy();
     }
     //endregion
@@ -296,19 +289,6 @@ public class MainNavDrawerActivity extends BaseActivity
         setupToggleState();
     }
 
-    private void initGoogleADS(Boolean isShow){
-        Intent intent = new Intent("on-ad-free-event");
-        intent.putExtra("isAdFree", isShow);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-    }
-
-    private void initIAPurchaseService(){
-        inAppPurchaseService.initInAppService(context);
-        //Init GoogleMobile AD
-        inAppPurchaseService.setCustomEventListener(isSubscribed -> initGoogleADS(isSubscribed));
-        inAppPurchaseService.reloadPurchaseService();
-    }
-
     private void checkUserCameraPermission(){
         Log.i(TAG, "Show camera button pressed. Checking permission.");
         // Check if the Camera permission is already available.
@@ -321,29 +301,6 @@ public class MainNavDrawerActivity extends BaseActivity
             // Camera permissions is already available, show the camera preview.
             Log.i(TAG,
                     "CAMERA permission has already been granted. Displaying camera preview.");
-        }
-    }
-
-    private void setupInterstitialAd(){
-
-        if(!areAdsDisabled()) {
-            interstitialAd = new InterstitialAd(MainNavDrawerActivity.this);
-            interstitialAd.setAdUnitId(BuildConfig.INTERSTITIAL_AD_ID);
-            final AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
-            interstitialAd.setAdListener(new AdListener() {
-                @Override
-                public void onAdLoaded() {
-                    super.onAdLoaded();
-                }
-                @Override
-                public void onAdClosed() {
-                    super.onAdClosed();
-                    if(interstitialAd != null) {
-                        interstitialAd.loadAd(adRequestBuilder.build());
-                    }
-                }
-            });
-            interstitialAd.loadAd(adRequestBuilder.build());
         }
     }
 
@@ -395,31 +352,9 @@ public class MainNavDrawerActivity extends BaseActivity
     }
 
     @Override
-    public void onAdFreeButtonClick(){
-        if (inAppPurchaseService.readyToPurchase) {
-            if (!inAppPurchaseService.isSubscribed) {
-                inAppPurchaseService.purchase(MainNavDrawerActivity.this);
-            } else {
-                initGoogleADS(true);
-            }
-        }
-    }
-
-    @Override
-    public void onPurchaseRestored() {
-        if (inAppPurchaseService.readyToPurchase) {
-            if (!inAppPurchaseService.isSubscribed) {
-                inAppPurchaseService.restorePurchase();
-            } else {
-                initGoogleADS(true);
-            }
-        }
-    }
-
-    @Override
-    public TokenResponse onSign(String jsonRequest, String origin, Boolean isDeny)
+    public TokenResponse onSign(String jsonRequest, U2fMetaData u2fMetaData, Boolean isDeny)
             throws JSONException, IOException, U2FException {
-        return u2f.sign(jsonRequest, origin, isDeny);
+        return u2f.sign(jsonRequest, u2fMetaData, isDeny);
     }
 
     @Override
@@ -448,11 +383,11 @@ public class MainNavDrawerActivity extends BaseActivity
 
     @Override
     public void showInterstitialAd() {
-        if(interstitialAd == null) {
-            setupInterstitialAd();
-        } else if(interstitialAd.isLoaded()) {
-            interstitialAd.show();
-        }
+//        if(interstitialAd == null) {
+//            setupInterstitialAd();
+//        } else if(interstitialAd.isLoaded()) {
+//            interstitialAd.show();
+//        }
     }
 
     @Override
@@ -573,9 +508,9 @@ public class MainNavDrawerActivity extends BaseActivity
             }
 
             @Override
-            public TokenResponse onSign(String jsonRequest, String origin, Boolean isDeny)
+            public TokenResponse onSign(String jsonRequest, U2fMetaData u2fMetaData, Boolean isDeny)
                     throws JSONException, IOException, U2FException {
-                return u2f.sign(jsonRequest, origin, isDeny);
+                return u2f.sign(jsonRequest, u2fMetaData, isDeny);
             }
 
             @Override
@@ -588,12 +523,6 @@ public class MainNavDrawerActivity extends BaseActivity
             public DataStore onGetDataStore() {
                 return dataStore;
             }
-
-            @Override
-            public void onAdFreeButtonClick(){}
-
-            @Override
-            public void onPurchaseRestored() {}
         });
 
         return processManager;
