@@ -242,7 +242,7 @@ public class SoftwareDevice {
 
         JSONObject response = new JSONObject();
         response.put("signatureData", Utils.base64UrlEncode(resp));
-        response.put("clientData", Utils.base64UrlEncode(clientDataString.getBytes(Charset.forName("ASCII"))));
+        response.put("clientData", Utils.base64UrlEncode(authenticatedChallenge.getBytes(Charset.forName("ASCII"))));
         response.put("keyHandle", keyHandle);
 
         TokenResponse tokenResponse = new TokenResponse();
