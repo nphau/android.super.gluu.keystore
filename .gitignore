@@ -134,3 +134,5 @@ Android/app/gluu/debug/app-gluu-debug.apk
 Android/app/gluu/debug/output-metadata.json
 Android/app/gluu/release/app-gluu-release.apk
 Android/app/gluu/release/output-metadata.json
+.idea
+.gradle

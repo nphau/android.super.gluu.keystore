@@ -20,6 +20,8 @@ import org.gluu.super_gluu.device.DeviceUuidManager;
 import org.gluu.super_gluu.model.OxPush2Request;
 import org.gluu.super_gluu.model.U2fMetaData;
 import org.gluu.super_gluu.store.AndroidKeyDataStore;
+import org.gluu.super_gluu.u2f.v2.cert.AndroidKeyPairGeneratorImpl;
+import org.gluu.super_gluu.u2f.v2.cert.KeyPairGenerator;
 import org.gluu.super_gluu.u2f.v2.cert.KeyPairGeneratorImpl;
 import org.gluu.super_gluu.u2f.v2.codec.RawMessageCodec;
 import org.gluu.super_gluu.u2f.v2.codec.RawMessageCodecImpl;
@@ -77,13 +79,13 @@ public class SoftwareDevice {
     private final Context context;
 
     private final RawMessageCodec rawMessageCodec;
-    private final KeyPairGeneratorImpl keyPairGenerator;
+    private final KeyPairGenerator keyPairGenerator;
     private U2FKeyImpl u2fKey;
 
     public SoftwareDevice(Context context, DataStore dataStore) {
         this.context = context;
         this.rawMessageCodec = new RawMessageCodecImpl();
-        this.keyPairGenerator = new KeyPairGeneratorImpl();
+        this.keyPairGenerator = new AndroidKeyPairGeneratorImpl();
 
         final X509Certificate vendorCertificate = CertUtils.loadHexEncodedCertificate(BuildConfig.VENDOR_CERTIFICATE_CERT);
         final PrivateKey vendorCertificatePrivateKey;

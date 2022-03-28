@@ -36,6 +36,24 @@ allprojects {
     }
 }
 
+task zipAll(type: Zip) {
+    archiveBaseName = rootProject.name
+    from(rootDir) {
+        exclude '**/.idea/**'
+        exclude '**/build/**'
+        exclude '.gradle/**'
+        exclude '**/*.iml'
+        exclude '**/*.dll'
+        exclude '**/*.so'
+        exclude '**/local.properties'
+    }
+    destinationDirectory = file("$buildDir/dist")
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+//Skip unused gradle task
+gradle.taskGraph.whenReady { graph ->
+    // graph.allTasks.findAll { it.name ==~ /processGluuDebugGoogleServices.*/ }*.enabled = false
 }
